@@ -1,0 +1,14 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "src/ui/styles/_fonts";
+
+.profileBody {
+  padding-top: $body-top-padding;
+  padding-left: $body-side-padding;
+  padding-right: $body-side-padding;
+  padding-bottom: $body-top-padding;
+  margin-top: $page-header-height;
+  margin-bottom: $page-header-height;
+
+  @include book-font;
+}

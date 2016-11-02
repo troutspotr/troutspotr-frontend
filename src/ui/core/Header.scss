@@ -1,0 +1,26 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+
+.header {
+  height: $page-header-height;
+  background-color: $dark-blue;
+  padding: 17px 30px 0 30px;
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  z-index: 100;
+}
+
+.icon {
+  height: 36px;
+  width: 147px;
+  float: left;
+}
+
+.exit {
+  margin-top: 7px;
+  float: right;
+  color: $white;
+  font-size: 16px;
+  font-weight: 500;
+}

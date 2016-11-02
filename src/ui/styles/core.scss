@@ -1,0 +1,101 @@
+@import "base";
+@import "~normalize.css/normalize";
+@import "_colors";
+@import "_fonts";
+@import "_variables";
+
+// Some best-practice CSS that's useful for most apps
+// Just remove them if they're not what you want
+html {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  @include book-font;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+* {
+  outline: none !important;
+  outline-offset: 0;
+}
+
+label {
+  @include medium-font;
+}
+
+// Bootstrap overrides
+:global {
+  // get rid of annoying form highlights
+  textarea:hover,
+  input:hover,
+  textarea:active,
+  input:active,
+  textarea:focus,
+  input:focus,
+  button:focus,
+  button:active,
+  button:hover,
+  label:focus,
+  .btn:active,
+  .form-control:focus,
+  .btn.active {
+    outline: 0px !important;
+    -webkit-appearance: none;
+    box-shadow: none;
+    border-color: 1px solid #ccc;
+  }
+
+  .form-control:focus {
+    border-color: inherit !important;
+  }
+
+  .form-control[disabled], fieldset[disabled] .form-control
+  .form-control {
+    border-radius: 0px;
+    border-color: #B1CBDC;
+  }
+
+  .form-control {
+    border-radius: 0px;
+    height: 40px;
+    border-color: $dark-blue;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .btn-lg {
+    border-radius: 3px;
+    font-size: 14px;
+  }
+
+  .btn-primary {
+    background-color: $dark-blue;
+  }
+
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background-color: darken($dark-blue, 10%);
+  }
+
+  .btn-info {
+    background-color: $light-blue;
+  }
+
+  .btn-info:hover,
+  .btn-info:focus {
+    background-color: darken($light-blue, 10%);
+  }
+}

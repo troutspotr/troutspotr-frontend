@@ -1,0 +1,460 @@
+{
+  "version": "0.0.0",
+  "motd": "Keep 'em wet!",
+  "created": "Wed Nov 02 2016 09:38:16 GMT-0500 (CDT)",
+
+  "tableOfContents": {
+    "mn": {
+      "id": "mn",
+      "type": "state",
+      "name": "Minnesota",
+      "shortName": "MN",
+      "parent": null,
+      "url": null,
+      "children": {
+        "superior": {
+          "id": "superior",
+          "name": "Lake Superior Tributaries",
+          "shortName": "Superior",
+          "parent": "mn",
+          "type": "region",
+          "url": null,
+          "children": {
+            "324": {
+              "id": "324",
+              "type": "stream",
+              "name": "Knife River, West Branch",
+              "shortName": "Knife River, W Br",
+              "parent": "superior",
+              "url": null,
+              "lengthMi": 32.32,
+              "pubAccessibleTroutStreamLength": 12.3,
+              "troutSteamLength": 16,
+              "pubAccessibleStreamLength": 20,
+              "tributaries": [],
+              "children": null,
+              "confluenceStream": {
+                "id": null,
+                "name": "St. Lawrence River"
+              },
+              "roadCrossings": [
+                {
+                  "name": "County Road 123",
+                  "roadType": "County Road",
+                  "signNumber": "123",
+                  "streamId": 324,
+                  "roadId": 999,
+                  "latitude": -91,
+                  "longitude": 41,
+                  "isSafe": true,
+                  "mileOffset": 23.1231
+                },
+                {
+                  "name": "Sherpa Rd",
+                  "roadType": "Road",
+                  "signNumber": null,
+                  "streamId": 324,
+                  "roadId": 4153,
+                  "latitude": -91.3,
+                  "longitude": 41.1,
+                  "isSafe": false,
+                  "mileOffset": 23.0
+                },
+                {
+                  "name": "Interstate 90",
+                  "roadType": "Interstate",
+                  "signNumber": "90",
+                  "streamId": 324,
+                  "roadId": 1322,
+                  "latitude": -91.2,
+                  "longitude": 41.2,
+                  "isSafe": false,
+                  "mileOffset": 21.1231
+                }
+              ]
+            },
+            "432": {
+              "id": "432",
+              "type": "stream",
+              "name": "Fortythree Creek, West Branch",
+              "shortName": "Fortythree Creek, W Br",
+              "parent": "superior",
+              "url": null,
+              "lengthMi": 32.32,
+              "children": null,
+              "pubAccessibleTroutStreamLength": 12.3,
+              "troutSteamLength": 16,
+              "pubAccessibleStreamLength": 20,
+              "tributaries": [],
+              "confluenceStream": {
+                "id": null,
+                "name": "St. Lawrence River"
+              },
+              "roadCrossings": [
+                {
+                  "name": "County Road 123",
+                  "roadType": "County Road",
+                  "signNumber": "123",
+                  "streamId": 432,
+                  "roadId": 999,
+                  "latitude": -91,
+                  "longitude": 41,
+                  "isSafe": true,
+                  "mileOffset": 23.1231
+                },
+                {
+                  "name": "Interstate 90",
+                  "roadType": "Interstate",
+                  "signNumber": "90",
+                  "streamId": 432,
+                  "roadId": 1322,
+                  "latitude": -91.2,
+                  "longitude": 41.2,
+                  "isSafe": false,
+                  "mileOffset": 21.1231
+                }
+              ]
+            }
+          }
+        },
+        "driftless": {
+          "id": "driftless",
+          "name": "Southeast Driftless",
+          "shortName": "Driftless",
+          "parent": "mn",
+          "type": "region",
+          "url": null,
+          "children": {
+            "9887": {
+              "id": "9887",
+              "type": "stream",
+              "name": "Whitewater River, West Branch",
+              "shortName": "Whitewater River, W Br",
+              "parent": "driftless",
+              "url": null,
+              "lengthMi": 2.32,
+              "pubAccessibleTroutStreamLength": 0.3,
+              "troutSteamLength": 0.5,
+              "pubAccessibleStreamLength": 1,
+              "tributaries": [],
+              "children": null,
+              "confluenceStream": {
+                "id": null,
+                "name": "St. Lawrence River"
+              },
+              "roadCrossings": [
+                {
+                  "name": "County Road 123",
+                  "roadType": "County Road",
+                  "signNumber": "123",
+                  "streamId": 9887,
+                  "roadId": 999,
+                  "latitude": -91,
+                  "longitude": 41,
+                  "isSafe": true,
+                  "mileOffset": 23.1231
+                },
+                {
+                  "name": "Sherpa Rd",
+                  "roadType": "Road",
+                  "signNumber": null,
+                  "streamId": 9887,
+                  "roadId": 4153,
+                  "latitude": -91.3,
+                  "longitude": 41.1,
+                  "isSafe": false,
+                  "mileOffset": 23.0
+                },
+                {
+                  "name": "Interstate 90",
+                  "roadType": "Interstate",
+                  "signNumber": "90",
+                  "streamId": 9887,
+                  "roadId": 1322,
+                  "latitude": -91.2,
+                  "longitude": 41.2,
+                  "isSafe": false,
+                  "mileOffset": 21.1231
+                }
+              ]
+            },
+            "6466556": {
+              "id": "6466556",
+              "type": "stream",
+              "name": "Fortythree Creek, West Branch",
+              "shortName": "Fortythree Creek, W Br",
+              "parent": "driftless",
+              "url": null,
+              "lengthMi": 32.32,
+              "children": null,
+              "pubAccessibleTroutStreamLength": 12.3,
+              "troutSteamLength": 16,
+              "pubAccessibleStreamLength": 20,
+              "tributaries": [],
+              "confluenceStream": {
+                "id": null,
+                "name": "St. Lawrence River"
+              },
+              "roadCrossings": [
+                {
+                  "name": "County Road 123",
+                  "roadType": "County Road",
+                  "signNumber": "123",
+                  "streamId": 6466556,
+                  "roadId": 999,
+                  "latitude": -91,
+                  "longitude": 41,
+                  "isSafe": true,
+                  "mileOffset": 23.1231
+                },
+                {
+                  "name": "Interstate 90",
+                  "roadType": "Interstate",
+                  "signNumber": "90",
+                  "streamId": 6466556,
+                  "roadId": 1322,
+                  "latitude": -91.2,
+                  "longitude": 41.2,
+                  "isSafe": false,
+                  "mileOffset": 21.1231
+                }
+              ]
+            }
+          }
+        }
+      }
+      
+    },
+    "ia": {
+      "id": "ia",
+      "type": "state",
+      "name": "Iowa",
+      "shortName": "IA",
+      "parent": null,
+      "url": null,
+      "children": {
+        "driftless": {
+          "id": "driftless",
+          "name": "Northeast Driftless",
+          "shortName": "Driftless",
+          "parent": "ia",
+          "type": "region",
+          "url": null,
+          "children": {
+            "18838": {
+              "id": "18838",
+              "type": "stream",
+              "name": "Whitewater River, West Branch",
+              "shortName": "Whitewater River, W Br",
+              "parent": "driftless",
+              "url": null,
+              "lengthMi": 2.32,
+              "pubAccessibleTroutStreamLength": 0.3,
+              "troutSteamLength": 0.5,
+              "pubAccessibleStreamLength": 1,
+              "tributaries": [],
+              "children": null,
+              "confluenceStream": {
+                "id": null,
+                "name": "St. Lawrence River"
+              },
+              "roadCrossings": [
+                {
+                  "name": "County Road 123",
+                  "roadType": "County Road",
+                  "signNumber": "123",
+                  "streamId": 18838,
+                  "roadId": 999,
+                  "latitude": -91,
+                  "longitude": 41,
+                  "isSafe": true,
+                  "mileOffset": 23.1231
+                },
+                {
+                  "name": "Sherpa Rd",
+                  "roadType": "Road",
+                  "signNumber": null,
+                  "streamId": 18838,
+                  "roadId": 4153,
+                  "latitude": -91.3,
+                  "longitude": 41.1,
+                  "isSafe": false,
+                  "mileOffset": 23.0
+                },
+                {
+                  "name": "Interstate 90",
+                  "roadType": "Interstate",
+                  "signNumber": "90",
+                  "streamId": 18838,
+                  "roadId": 1322,
+                  "latitude": -91.2,
+                  "longitude": 41.2,
+                  "isSafe": false,
+                  "mileOffset": 21.1231
+                }
+              ]
+            },
+            "847362111": {
+              "id": "847362111",
+              "type": "stream",
+              "name": "Waterloo Creek",
+              "shortName": "Waterloo Creek",
+              "parent": "driftless",
+              "url": null,
+              "lengthMi": 32.32,
+              "children": null,
+              "pubAccessibleTroutStreamLength": 12.3,
+              "troutSteamLength": 16,
+              "pubAccessibleStreamLength": 20,
+              "tributaries": [],
+              "confluenceStream": {
+                "id": null,
+                "name": "St. Lawrence River"
+              },
+              "roadCrossings": [
+                {
+                  "name": "County Road 123",
+                  "roadType": "County Road",
+                  "signNumber": "123",
+                  "streamId": 847362111,
+                  "roadId": 999,
+                  "latitude": -91,
+                  "longitude": 41,
+                  "isSafe": true,
+                  "mileOffset": 23.1231
+                },
+                {
+                  "name": "Interstate 90",
+                  "roadType": "Interstate",
+                  "signNumber": "90",
+                  "streamId": 847362111,
+                  "roadId": 1322,
+                  "latitude": -91.2,
+                  "longitude": 41.2,
+                  "isSafe": false,
+                  "mileOffset": 21.1231
+                }
+              ]
+            }
+          }
+        }
+      }
+      
+    },
+    "wi": {
+      "id": "wi",
+      "type": "state",
+      "name": "Wisconsin",
+      "shortName": "WI",
+      "parent": null,
+      "url": null,
+      "children": {
+        "west": {
+          "id": "west",
+          "name": "Western Driftless",
+          "shortName": "Western Driftless",
+          "parent": "wi",
+          "type": "region",
+          "url": null,
+          "children": {
+            "18838": {
+              "id": "18838",
+              "type": "stream",
+              "name": "Whitewater River, West Branch",
+              "shortName": "Whitewater River, W Br",
+              "parent": "driftless",
+              "url": null,
+              "lengthMi": 2.32,
+              "pubAccessibleTroutStreamLength": 0.3,
+              "troutSteamLength": 0.5,
+              "pubAccessibleStreamLength": 1,
+              "tributaries": [],
+              "children": null,
+              "confluenceStream": {
+                "id": null,
+                "name": "St. Lawrence River"
+              },
+              "roadCrossings": [
+                {
+                  "name": "County Road 123",
+                  "roadType": "County Road",
+                  "signNumber": "123",
+                  "streamId": 18838,
+                  "roadId": 999,
+                  "latitude": -91,
+                  "longitude": 41,
+                  "isSafe": true,
+                  "mileOffset": 23.1231
+                },
+                {
+                  "name": "Sherpa Rd",
+                  "roadType": "Road",
+                  "signNumber": null,
+                  "streamId": 18838,
+                  "roadId": 4153,
+                  "latitude": -91.3,
+                  "longitude": 41.1,
+                  "isSafe": false,
+                  "mileOffset": 23.0
+                },
+                {
+                  "name": "Interstate 90",
+                  "roadType": "Interstate",
+                  "signNumber": "90",
+                  "streamId": 18838,
+                  "roadId": 1322,
+                  "latitude": -91.2,
+                  "longitude": 41.2,
+                  "isSafe": false,
+                  "mileOffset": 21.1231
+                }
+              ]
+            },
+            "847362111": {
+              "id": "847362111",
+              "type": "stream",
+              "name": "Waterloo Creek",
+              "shortName": "Waterloo Creek",
+              "parent": "driftless",
+              "url": null,
+              "lengthMi": 32.32,
+              "children": null,
+              "pubAccessibleTroutStreamLength": 12.3,
+              "troutSteamLength": 16,
+              "pubAccessibleStreamLength": 20,
+              "tributaries": [],
+              "confluenceStream": {
+                "id": null,
+                "name": "St. Lawrence River"
+              },
+              "roadCrossings": [
+                {
+                  "name": "County Road 123",
+                  "roadType": "County Road",
+                  "signNumber": "123",
+                  "streamId": 847362111,
+                  "roadId": 999,
+                  "latitude": -91,
+                  "longitude": 41,
+                  "isSafe": true,
+                  "mileOffset": 23.1231
+                },
+                {
+                  "name": "Interstate 90",
+                  "roadType": "Interstate",
+                  "signNumber": "90",
+                  "streamId": 847362111,
+                  "roadId": 1322,
+                  "latitude": -91.2,
+                  "longitude": 41.2,
+                  "isSafe": false,
+                  "mileOffset": 21.1231
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

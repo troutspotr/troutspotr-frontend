@@ -1,5 +1,5 @@
-let swInstaller = require('offline-plugin/runtime')
-swInstaller.install()
+// let swInstaller = require('offline-plugin/runtime')
+// swInstaller.install()
 // import 'ui/styles/core.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'

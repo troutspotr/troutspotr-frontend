@@ -3,12 +3,15 @@
 @import "src/ui/styles/_fonts";
 
 .profileBody {
-  padding-top: $body-top-padding;
-  padding-left: $body-side-padding;
-  padding-right: $body-side-padding;
-  padding-bottom: $body-top-padding;
-  margin-top: $page-header-height;
-  margin-bottom: $page-header-height;
+  // padding-top: $body-top-padding;
+  // padding-left: $body-side-padding;
+  // padding-right: $body-side-padding;
+  // padding-bottom: $body-top-padding;
+  // margin-top: $page-header-height;
+  // margin-bottom: $page-header-height;
+  margin-top: $header-height;
+  height: calc(100% - 60px);
+  background-color: $green;
 
   @include book-font;
 }

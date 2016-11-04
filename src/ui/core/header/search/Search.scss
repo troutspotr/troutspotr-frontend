@@ -1,0 +1,24 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+
+$padding: 7px;
+
+.streamSearch {
+  input[type="search"] {
+    max-width: 160px;
+    width: calc(100% - 10px);
+    background-color: transparent;
+    border: 1px solid $white;
+    height: 30px;
+    border-radius: 15px;
+    font-size: 18px;
+    color: $white;
+    padding-left: $padding;
+    padding-right: $padding;
+    resize: horizontal;
+  }
+
+  input[type="search"]::placeholder {
+    color: #555;
+  }
+}

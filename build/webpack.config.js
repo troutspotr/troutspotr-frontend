@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const config = require('../config')
 const debug = require('debug')('app:webpack:config')
-const OfflinePlugin = require('offline-plugin')
+// const OfflinePlugin = require('offline-plugin')
 
 const paths = config.utils_paths
 const __DEV__ = config.globals.__DEV__
@@ -27,15 +27,10 @@ const webpackConfig = {
 // ------------------------------------
 const APP_ENTRY = paths.client('main.js')
 
-// let appEntry = __DEV__
-//     ? [APP_ENTRY].concat(`webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`)
-//     : [APP_ENTRY]
-
-var appEntry = [APP_ENTRY]
-
 webpackConfig.entry = {
-  // polyfill: 'babel-polyfill',
-  app :appEntry,
+  app : __DEV__
+    ? [APP_ENTRY].concat(`webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`)
+    : [APP_ENTRY],
   vendor : config.compiler_vendors
 }
 
@@ -64,29 +59,29 @@ webpackConfig.plugins = [
     minify   : {
       collapseWhitespace : true
     }
-  }),
-  new OfflinePlugin({
-    // publicPath: config.compiler_public_path,
-    publicPath: '/',
-    caches: {
-      main: ['data/mn/mn.topo.json', 'favicon.ico', ':rest:']
-    },
-    externals: ['data/mn/mn.topo.json', 'favicon.ico'],
-    updateStrategy: 'all',
-    AppCache: {
-      FALLBACK: { '/': '/' }
-    },
-    ServiceWorker: {
-      navigateFallbackURL: '/'
-    },
-    relativePaths: false
   })
+  // new OfflinePlugin({
+  //   // publicPath: config.compiler_public_path,
+  //   publicPath: '/',
+  //   caches: {
+  //     main: ['data/mn/mn.topo.json', 'favicon.ico', ':rest:']
+  //   },
+  //   externals: ['data/mn/mn.topo.json', 'favicon.ico'],
+  //   updateStrategy: 'all',
+  //   AppCache: {
+  //     FALLBACK: { '/': '/' }
+  //   },
+  //   ServiceWorker: {
+  //     navigateFallbackURL: '/'
+  //   },
+  //   relativePaths: false
+  // })
 ]
 
 if (__DEV__) {
   debug('Enable plugins for live development (HMR, NoErrors).')
   webpackConfig.plugins.push(
-    // new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   )
 } else if (__PROD__) {
@@ -237,7 +232,7 @@ webpackConfig.module.loaders.push(
   { test: /\.ttf(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream' },
   { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
   { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
-  { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }
+  { test: /\.(png|jpg|gif)$/,    loader: 'url?limit=8192' }
 )
 /* eslint-enable */
 

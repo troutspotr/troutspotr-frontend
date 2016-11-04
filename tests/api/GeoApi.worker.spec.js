@@ -1,4 +1,4 @@
-import {default as geoWorker } from 'api/GeoApi.worker'
+import { default as geoWorker } from 'api/GeoApi.worker'
 import { GeoApi, buildGeoEndpoint } from 'api/GeoApi'
 import GeoMnData from 'static/data/mn/mn.topo.json'
 import { config } from 'api/BaseApi.config'

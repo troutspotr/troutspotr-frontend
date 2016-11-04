@@ -95,6 +95,7 @@
     "imports-loader": "^0.6.5",
     "ip": "^1.1.2",
     "json-loader": "^0.5.4",
+    "localforage": "^1.4.3",
     "lodash": "^4.16.1",
     "mapbox-gl": "^0.25.1",
     "moment": "^2.15.1",

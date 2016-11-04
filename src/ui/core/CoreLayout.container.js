@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from './Header.container'
+import Header from './header/Header.container'
 import classes from './CoreLayout.scss'
 
 const CoreLayoutContainer = React.createClass({
@@ -9,7 +9,7 @@ const CoreLayoutContainer = React.createClass({
 
   render () {
     return (
-      <div>
+      <div style={{ height: '100%' }}>
         <Header />
         <div className={classes.profileBody}>
           { this.props.children }

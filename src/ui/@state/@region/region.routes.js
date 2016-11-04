@@ -5,11 +5,20 @@ import StreamViewSelectFooter from './StreamViewSelectFooter.component'
 
 // import regionRoutes from './@region/region.routes'
 // import { injectReducer } from '../../store/reducers'
-
+const AVAILABLE_VIEWS = ['list', 'map']
+const PREFERED_VIEW_DEFAULT = AVAILABLE_VIEWS[0]
 const createRoutes = (store) => ({
   path        : '/:state/:region',
   component   : RegionContainer,
-  indexRoute  : { component: StreamViewSelectFooter },
+  indexRoute  : {
+    onEnter: (args, replace) => {
+      debugger
+      let { pathname } = args.location
+      let redirectLocation = `${pathname}/${PREFERED_VIEW_DEFAULT}`
+      replace(redirectLocation)
+    }
+  },
+
   // getComponent (nextState, cb) {
   //   /*  Webpack - use 'require.ensure' to create a split point
   //       and embed an async module loader (jsonp) when bundling   */

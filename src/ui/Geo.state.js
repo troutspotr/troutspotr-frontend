@@ -46,8 +46,6 @@ export const fetchGeoViaWebWorker = (stateId) => {
         dispatch(setGeoData(results))
       })
       webWorker.postMessage(stateId)
-      // let gettingProfile = GeoApi.getStateStreamData(stateId)
-      // let [profile] = await Promise.all([gettingProfile])
     } catch (error) {
       console.log(error)
       dispatch(setGeoDataFailed())

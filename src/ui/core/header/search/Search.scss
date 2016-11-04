@@ -5,7 +5,8 @@ $padding: 7px;
 
 .streamSearch {
   input[type="search"] {
-    width: 160px;
+    max-width: 160px;
+    width: calc(100% - 10px);
     background-color: transparent;
     border: 1px solid $white;
     height: 30px;
@@ -14,6 +15,7 @@ $padding: 7px;
     color: $white;
     padding-left: $padding;
     padding-right: $padding;
+    resize: horizontal;
   }
 
   input[type="search"]::placeholder {

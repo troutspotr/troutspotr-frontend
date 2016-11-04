@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react'
-import classes from './Header.scss'
+import classes from './BackButton.scss'
 import { Link } from 'react-router'
 
 const BackButtonComponent = React.createClass({
   propTypes: {
     previous:  PropTypes.string,
-    isEnabled: PropTypes.bool.isRequired
+    isEnabled: PropTypes.bool.isRequired,
+
+    expandMinimap: PropTypes.func.isRequired
   },
 
   onClick () {
@@ -13,9 +15,9 @@ const BackButtonComponent = React.createClass({
   },
 
   render () {
-    let to = this.props.previous
+    let { previous, isEnabled } = this.props
     return (
-      <Link to={to} className={classes.backButton}>
+      <Link to={previous} className={isEnabled ? classes.backButton : classes.inactive}>
         <span className={classes.chevronContainer}>
           <span className={classes.chevron + ' ' + classes.left} />
         </span>

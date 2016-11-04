@@ -1,23 +1,51 @@
-.tl {
-  top: 0;
-  left: 0;
-  position: absolute;
-}
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
 
-.tr {
-  top: 0;
-  right: 0;
-  position: absolute;
-}
+.minimapContent {
+  transform: scale(1);
+  transition: 0.2s ease-in-out;
+  transform-origin: right top;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border-color: $off-white;
+  border-width: 1px;
+  border-style: solid;
 
-.bl {
-  bottom: 0;
-  left: 0;
-  position: absolute;
-}
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
 
-.br {
-  bottom: 0;
-  right: 0;
-  position: absolute;
+  &.expand {
+    transform: translateY(55px) scale(14.42);
+    border-color: transparent;
+  }
+
+  .tl {
+    top: 0;
+    left: 0;
+    position: absolute;
+  }
+
+  .tr {
+    top: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  .bl {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+  }
+
+  .br {
+    bottom: 0;
+    right: 0;
+    position: absolute;
+  }
 }

@@ -1,6 +1,10 @@
 import { connect } from 'react-redux'
 import HeaderComponent from './Header.component'
-console.log(HeaderComponent)
+import { titleSelector, isTitleVisibleSelector } from './title/Title.selectors'
+import { subtitleSelector } from './subtitle/Subtitle.selectors'
+import { isSearchVisibleSelector } from './search/Search.selectors'
+// import { asdf, asdf } from './search/SearchSelector'
+// console.log(HeaderComponent)
 // import { saveBuilderProfile, fetchCompany } from './Profile.state'
 // import { loadingStatusSelector, savingStatusSelector } from './Profile.selectors'
 const mapDispatchToProps = {
@@ -10,10 +14,10 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
   return {
-    // loadingStatus: loadingStatusSelector(state),
-    // savingStatus: savingStatusSelector(state),
-    // currentFormProfile: formDataSelector(state),
-    // currentCompany: companySelector(state)
+    subtitle: subtitleSelector(state),
+    title: titleSelector(state),
+    isTitleVisible: isTitleVisibleSelector(state),
+    isSearchVisible: isSearchVisibleSelector(state)
   }
 }
 

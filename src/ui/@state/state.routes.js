@@ -4,7 +4,7 @@ import RegionSelectComponent from './RegionSelect.component'
 import StateContainer from './State.container'
 
 import regionRoutes from './@region/region.routes'
-console.log(regionRoutes, 'region routes')
+// console.log(regionRoutes, 'region routes')
 // import { injectReducer } from '../../store/reducers'
 
 const createRoutes = (store) => ({

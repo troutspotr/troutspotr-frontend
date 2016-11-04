@@ -1,19 +1,19 @@
 import { connect } from 'react-redux'
 import MinimapComponent from './Minimap.component'
-// import { saveBuilderProfile, fetchCompany } from './Profile.state'
+import { isExpaned } from './Minimap.state'
+import { isExpandedSelector } from './Minimap.selectors'
+import { withRouter } from 'react-router'
+import { isRootPageSelector } from 'ui/Location.selectors'
 // import { loadingStatusSelector, savingStatusSelector } from './Profile.selectors'
 const mapDispatchToProps = {
-  // saveProfile: (companyId, profileId, profile) => saveBuilderProfile(companyId, profileId, profile),
-  // loadCompany: (companyId) => fetchCompany(companyId)
+  expand: (expanded) => isExpaned(expanded)
 }
 
 const mapStateToProps = (state) => {
   return {
-    // loadingStatus: loadingStatusSelector(state),
-    // savingStatus: savingStatusSelector(state),
-    // currentFormProfile: formDataSelector(state),
-    // currentCompany: companySelector(state)
+    isExpanded: isExpandedSelector(state),
+    isRootPage: isRootPageSelector(state)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MinimapComponent)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MinimapComponent))

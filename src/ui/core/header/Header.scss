@@ -25,50 +25,27 @@ $smallFontSize: 0.85em;
 
 .header {
   margin-top: 5px;
-  margin-left: $default-margin;
+  margin-left: 0px;
   margin-right: 0px;
   display: flex;
 }
 
-.backButton {
-  width: 30px;
-  height: 40px;
-  border: 0px solid $off-white;
-  border-radius: 50%;
-  background: transparent;
+// .backButton {
+//   width: 30px;
+//   height: 40px;
+//   border: 1px solid $off-white;
+//   border-radius: 50%;
+//   background: transparent;
 
-  // margin: 5px;
-  display: inline-block;
-}
+//   // margin: 5px;
+//   display: inline-block;
+// }
 
 .backButtonContainer {
   order: 1;
-}
-
-.chevronContainer {
-  width: 100%;
-  text-align: center;
-  align-self: center;
-}
-
-.chevron::before {
-  border-style: solid;
-  border-width: 0.25em 0.25em 0 0;
-  content: '';
-  display: inline-block;
-  height: 1em;
-  left: 0px;
-  position: relative;
-  top: $largeFontSize;
-  transform: rotate(-45deg);
-  vertical-align: top;
-  width: 1em;
-  color: $white;
-}
-
-.chevron.left:before {
-  left: 0px;
-  transform: rotate(-135deg);
+  background-color: transparentize($blue, 0.8);
+  min-width: 50px;
+  max-width: 50px;
 }
 
 .minimap {
@@ -80,30 +57,17 @@ $smallFontSize: 0.85em;
   position: relative;
   right: 0;
   top: 0;
-  background-color: transparentize($red, 0.5);
-  transform-origin: right top;
-  transition: 4.3s ease-in-out;
-
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
+  background-color: transparentize($red, 0.8);
 }
 
 // calc(100vmin / 50px)
-.minimap:hover {
-  transform: translateY(55px) scale(14.42);
-
-  // transform: scale(calc(100vmin / 1));
-}
 
 .details {
   padding-top: 0px;
   order: 2;
   flex-grow: 1;
+  background-color: transparentize($green, 0.8);
+  padding-left: 10px;
 
   .top {
     color: $off-white;

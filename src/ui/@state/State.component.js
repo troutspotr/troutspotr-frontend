@@ -14,7 +14,6 @@ const StateComponent = React.createClass({
   // },
 
   render () {
-    console.log('children:', this.props.children)
     return (<div style={{ height: '100%' }}>
       {this.props.children}
     </div>)

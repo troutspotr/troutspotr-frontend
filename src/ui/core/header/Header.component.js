@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 // import classes from './Header.scss'
-import BackButtonComponent from './BackButton.component'
+import BackButtonContainer from './backButton/BackButton.container'
 import SearchComponent from './search/Search.container'
 import MinimapComponent from './minimap/Minimap.container'
 import HeaderLayout from './Header.layout'
+import TitleComponent from './title/Title.component'
+import SubtitleComponent from './subtitle/Subtitle.component'
 
-const RENDER_SEARCH = false
 const HeaderContainer = React.createClass({
   propTypes: {
+    subtitle: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    isTitleVisible: PropTypes.bool.isRequired,
+    isSearchVisible: PropTypes.bool.isRequired
   },
 
   // let regionId = this.props.params.regionId || null;
@@ -17,7 +22,7 @@ const HeaderContainer = React.createClass({
   },
 
   renderSearch () {
-    if (RENDER_SEARCH) {
+    if (this.props.isSearchVisible) {
       return (<SearchComponent />)
     }
 
@@ -25,20 +30,21 @@ const HeaderContainer = React.createClass({
   },
 
   renderLocationSubtitle () {
-    return (<span>MN, Driftless Region</span>)
+    return (<SubtitleComponent
+      subtitle={this.props.subtitle} />)
   },
 
   renderTitle () {
-    let isVisible = RENDER_SEARCH === false
-    if (isVisible === false) {
+    if (this.props.isTitleVisible === false) {
       return null
     }
-
-    return (<span>Whitewater River, North Branch</span>)
+    return (<TitleComponent
+      title={this.props.title}
+      isVisible={this.props.isTitleVisible} />)
   },
 
   renderBackButton () {
-    return (<BackButtonComponent
+    return (<BackButtonContainer
       previous={'/'}
       isEnabled={false} />)
   },

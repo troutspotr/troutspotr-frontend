@@ -1,11 +1,9 @@
-import { combineReducers } from 'redux'
-// import profileReducer from './_profile/Profile.state'
-// import upgradeReducer from './_profile/_upgrade/Upgrade.state'
-import geoReducer from './Geo.state'
-// import { reducer as formReducer } from 'redux-form'
-// import mapReducer from './map/Map.state'
-export default combineReducers({
-  geo: geoReducer
-  // form: formReducer
-  // map: mapReducer
-})
+// import { combineReducers } from 'redux'
+// import geoReducer from './Geo.state'
+// import minimapReducer from './core/header/minimap/Minimap.state'
+// export default combineReducers({
+//   geo: geoReducer,
+//   minimap: minimapReducer
+//   // form: formReducer
+//   // map: mapReducer
+// })

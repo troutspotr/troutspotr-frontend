@@ -129,7 +129,7 @@ const MinimapComponent = React.createClass({
     }
 
     if (pathname === '/') {
-      return `/${stateId}/newRegion`
+      return `/${stateId}/${newRegion}`
     }
 
     let tokens = pathname.split('/')

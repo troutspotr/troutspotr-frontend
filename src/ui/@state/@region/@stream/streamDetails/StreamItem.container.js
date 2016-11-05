@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
-import RegionLayout from './Region.layout'
-import { viewSelector } from 'ui/core/Core.selectors'
+import StreamItemComponent from './StreamItem.component'
 // import { saveBuilderProfile, fetchCompany } from './Profile.state'
 // import { loadingStatusSelector, savingStatusSelector } from './Profile.selectors'
 const mapDispatchToProps = {
@@ -10,7 +9,6 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
   return {
-    view: viewSelector(state)
     // loadingStatus: loadingStatusSelector(state),
     // savingStatus: savingStatusSelector(state),
     // currentFormProfile: formDataSelector(state),
@@ -18,4 +16,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegionLayout)
+export default connect(mapStateToProps, mapDispatchToProps)(StreamItemComponent)

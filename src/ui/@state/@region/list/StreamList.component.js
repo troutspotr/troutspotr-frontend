@@ -18,7 +18,7 @@ const FAKE_STREAMS = [
 ]
 const StreamListComponent = React.createClass({
   propTypes: {
-    children: React.PropTypes.element
+    // children: React.PropTypes.element
     // streams: PropTypes.array.isRequired,
     // getSouthEasternStreams: PropTypes.func.isRequired
   },

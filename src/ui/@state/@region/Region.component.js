@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
-// import classes from './BubblesList.scss'
+import classes from './Region.scss'
 // import BubbleComponent from './Bubble.component'
 import { Link } from 'react-router'
 const RegionComponent = React.createClass({
   propTypes: {
-    // streams: PropTypes.array.isRequired,
+    children: PropTypes.element.isRequired
     // getSouthEasternStreams: PropTypes.func.isRequired
   },
 
@@ -13,13 +13,9 @@ const RegionComponent = React.createClass({
   // },
 
   render () {
-    return (<div>
-      Region Selection:
-      <ul>
-        <li><Link to='/mn/driftless'>Go To Driftless</Link></li>
-        <li><Link to='/mn/superior'>Go To Superior</Link></li>
-        <li><Link to='/mn/interior'>Go To Interior</Link></li>
-      </ul>
+    return (<div className={classes.regionContainer}>
+      container
+      {this.props.children}
     </div>)
   }
 })

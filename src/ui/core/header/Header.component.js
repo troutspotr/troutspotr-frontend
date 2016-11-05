@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 // import classes from './Header.scss'
 import BackButtonContainer from './backButton/BackButton.container'
-import SearchComponent from './search/Search.container'
-import MinimapComponent from './minimap/Minimap.container'
+import SearchContainer from './search/Search.container'
+import MinimapContainer from './minimap/Minimap.container'
 import HeaderLayout from './Header.layout'
 import TitleComponent from './title/Title.component'
 import SubtitleComponent from './subtitle/Subtitle.component'
@@ -12,18 +12,22 @@ const HeaderContainer = React.createClass({
     subtitle: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     isTitleVisible: PropTypes.bool.isRequired,
-    isSearchVisible: PropTypes.bool.isRequired
+    isSearchVisible: PropTypes.bool.isRequired,
+    params: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
   },
 
   // let regionId = this.props.params.regionId || null;
 
   renderMinimap () {
-    return (<MinimapComponent />)
+    return (<MinimapContainer
+      params={this.props.params}
+      location={this.props.location} />)
   },
 
   renderSearch () {
     if (this.props.isSearchVisible) {
-      return (<SearchComponent />)
+      return (<SearchContainer />)
     }
 
     return null

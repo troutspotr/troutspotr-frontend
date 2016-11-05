@@ -10,8 +10,6 @@ const HeaderContainer = React.createClass({
     search: PropTypes.element
   },
 
-  // let regionId = this.props.params.regionId || null;
-
   render () {
     return (
       <div className={classes.headerContainer} role='navigation'>
@@ -27,7 +25,7 @@ const HeaderContainer = React.createClass({
             </div>
           </div>
 
-          <div className={classes.minimap}>{this.props.minimap}</div>
+          <div className={classes.minimapContainer}>{this.props.minimap}</div>
         </div>
       </div>
     )

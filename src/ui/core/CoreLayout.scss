@@ -11,7 +11,8 @@
   // margin-bottom: $page-header-height;
   margin-top: $header-height;
   height: calc(100% - 60px);
-  background-color: $green;
+
+  // background-color: $green;
 
   @include book-font;
 }

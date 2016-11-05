@@ -34,7 +34,7 @@ const config = {
   compiler_css_modules     : true,
   compiler_babel : {
     cacheDirectory : true,
-    plugins        : ['transform-runtime'], //'transform-async-functions', 'transform-regenerator'],
+    plugins        : ['transform-runtime', 'lodash'], //'transform-async-functions', 'transform-regenerator'],
     presets        : ['es2015', 'react', 'stage-0']
   },
   compiler_devtool         : 'source-map',
@@ -53,11 +53,12 @@ const config = {
     'react-router',
     'redux',
     'axios',
-    'lodash',
-    'redux-actions'
-    // 'd3',
-    // 'topojson',
-    // 'turf'
+    // 'lodash',
+    'redux-actions',
+    'topojson-client',
+    'turf',
+    'd3-geo',
+    'd3-path'
   ],
 
   // ----------------------------------

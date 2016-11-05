@@ -4,13 +4,15 @@ import headerClasses from '../Header.scss'
 import kirby from './kirby.gif'
 import { isRootPageByUrl } from 'ui/Location.selectors'
 import { Link } from 'react-router'
-// import ExampleSvg from './ExampleMinnesota.svg'
 const MINIMAP_WIDTH = 50
+const REGION_INDEX = 2
+const STATE_INDEX = 1
 const MinimapComponent = React.createClass({
   propTypes: {
     isExpanded: PropTypes.bool.isRequired,
     router: PropTypes.object.isRequired,
     isRootPage: PropTypes.bool.isRequired,
+    location: PropTypes.object.isRequired,
 
     expand: PropTypes.func.isRequired
   },
@@ -92,17 +94,13 @@ const MinimapComponent = React.createClass({
 
     let minimumDimension = Math.min(width, height - 60)
     let ratio = minimumDimension / MINIMAP_WIDTH
-    // console.log(ratio)
-    // console.log(headerClasses.minimap)
     let soughtClassRule = `.${classes.minimapContent}.${classes.expand}`
 
     let result = this.getCSSRule(soughtClassRule)
-    // console.log(soughtClassRule, result)
     result.style.transform = `translateY(${MINIMAP_WIDTH + 5}px) scale(${ratio})`
   },
 
   onSelectState (e) {
-    // console.log('state selected')
     if (this.props.isRootPage) {
       return
     }
@@ -122,24 +120,49 @@ const MinimapComponent = React.createClass({
     this.props.expand(false)
   },
 
+  // take a url like '/mn/driftless/map/123'
+  // and swap out region like '/mn/YOUR_REGION/map/123'
+  swapRegion ({ pathname }, newRegion) {
+    let stateId = 'mn'
+    if (pathname == null) {
+      return '/'
+    }
+
+    if (pathname === '/') {
+      return `/${stateId}/newRegion`
+    }
+
+    let tokens = pathname.split('/')
+    tokens[REGION_INDEX] = newRegion
+    tokens[STATE_INDEX] = stateId
+    let locationIsTooLong = tokens.length > 4
+    if (locationIsTooLong) {
+      // turn '/mn/myRegion/map/123123123123'
+      // into '/mn/myRegion/map'
+      tokens = tokens.slice(0, 4)
+    }
+    let newUrl = `${tokens.join('/')}`
+    return newUrl
+  },
+
   render () {
-    let { isExpanded } = this.props
+    let { isExpanded, location } = this.props
     let expandClass = isExpanded ? classes.expand : null
     // console.log(isExpanded, expandClass)
     return (
       <div className={classes.minimapContent + ' ' + expandClass} onClick={this.onSelectState}>
         <img src={kirby} />
         <span className={classes.tl}>
-          <Link to={'/mn/driftless'} onClick={this.selectRegion}>tl</Link>
+          <Link to={this.swapRegion(location, 'tl')} onClick={this.selectRegion}>tl</Link>
         </span>
         <span className={classes.tr}>
-          <Link to={'/mn/driftless'} onClick={this.selectRegion}>tr</Link>
+          <Link to={this.swapRegion(location, 'tr')} onClick={this.selectRegion}>tr</Link>
         </span>
         <span className={classes.bl}>
-          <Link to={'/mn/driftless'} onClick={this.selectRegion}>bl</Link>
+          <Link to={this.swapRegion(location, 'bl')} onClick={this.selectRegion}>bl</Link>
         </span>
         <span className={classes.br}>
-          <Link to={'/mn/driftless'} onClick={this.selectRegion}>br</Link>
+          <Link to={this.swapRegion(location, 'br')} onClick={this.selectRegion}>br</Link>
         </span>
       </div>
     )

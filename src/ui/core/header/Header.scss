@@ -6,9 +6,6 @@ $largeFontSize: 1.25em;
 $smallFontSize: 0.85em;
 
 .headerContainer {
-  // padding-top: 5px;
-  // padding-left: $default-margin;
-  // padding-right: $default-margin;
   height: $header-height;
   background-color: transparentize($background, 0.5);
   position: fixed;
@@ -30,17 +27,6 @@ $smallFontSize: 0.85em;
   display: flex;
 }
 
-// .backButton {
-//   width: 30px;
-//   height: 40px;
-//   border: 1px solid $off-white;
-//   border-radius: 50%;
-//   background: transparent;
-
-//   // margin: 5px;
-//   display: inline-block;
-// }
-
 .backButtonContainer {
   order: 1;
   background-color: transparentize($blue, 0.8);
@@ -48,7 +34,7 @@ $smallFontSize: 0.85em;
   max-width: 50px;
 }
 
-.minimap {
+.minimapContainer {
   order: 3;
   min-width: 50px;
   max-width: 50px;

@@ -20,21 +20,45 @@ const CoreLayoutContainer = React.createClass({
     return isRegionDefined && isStateDefined
   },
 
+  renderDebugContainer () {
+    return (<div className={classes.debug}>
+      <span className={classes.tl}>
+        top-left
+      </span>
+      <span className={classes.tr}>
+        top-right
+      </span>
+      <span className={classes.bl}>
+        bottom-left
+      </span>
+      <span className={classes.br}>
+        bottom-right
+      </span>
+    </div>)
+  },
+
   render () {
     let isFooterVisible = this.isFooterVisible()
     console.log(this.props)
     return (
-      <div style={{ height: '100%' }}>
-        <Header
-          params={this.props.params}
-          location={this.props.location} />
-        <div className={classes.profileBody}>
-          { this.props.children }
-        </div>
-        {isFooterVisible &&
-          <Footer
+      <div className={classes.coreLayout}>
+        <div className={classes.headerLayout}>
+          {true && <Header
             params={this.props.params}
             location={this.props.location} />}
+        </div>
+        <div className={classes.coreContentLayout}>
+          {this.renderDebugContainer()}
+          <div className={classes.coreContent}>
+            { this.props.children }
+          </div>
+        </div>
+        <div className={classes.footerLayout}>
+          {isFooterVisible &&
+            <Footer
+              params={this.props.params}
+              location={this.props.location} />}
+        </div>
       </div>
     )
   }

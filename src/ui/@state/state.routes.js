@@ -10,7 +10,7 @@ import regionRoutes from './@region/region.routes'
 const createRoutes = (store) => ({
   path        : '/:state',
   component   : StateContainer,
-  indexRoute  : { component: RegionSelectComponent },
+  // indexRoute  : { component: RegionSelectComponent },
   // getComponent (nextState, cb) {
   //   /*  Webpack - use 'require.ensure' to create a split point
   //       and embed an async module loader (jsonp) when bundling   */

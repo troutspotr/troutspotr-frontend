@@ -16,7 +16,7 @@ const MapComponent = React.createClass({
   render () {
     return (<div className={classes.mapContainer}>
       Map Component
-      <Link to='/mn/superior/map/123'>Go To superior map with stream 123</Link>
+      <Link to='/mn/superior/123'>Go To superior map with stream 123</Link>
     </div>)
   }
 })

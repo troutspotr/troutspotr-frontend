@@ -13,10 +13,9 @@ const RegionComponent = React.createClass({
   // },
 
   render () {
-    return (<div className={classes.regionContainer}>
-      container
-      {this.props.children}
-    </div>)
+    return (
+      this.props.children
+    )
   }
 })
 export default RegionComponent

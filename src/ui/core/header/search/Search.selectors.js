@@ -21,7 +21,7 @@ export const isSearchVisibleSelector = createSelector(
     let params = location.pathname.split('/')
       .filter(x => x.length > 0)
 
-    let isOnStreamDetails = params.length > 3
+    let isOnStreamDetails = params.length > 2
     if (isOnStreamDetails) {
       return false
     }

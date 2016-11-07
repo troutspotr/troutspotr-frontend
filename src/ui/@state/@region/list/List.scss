@@ -2,5 +2,30 @@
 @import "src/ui/styles/_variables";
 
 .listViewContainer {
-  background-color: $green;
+  background-color: purple;
+
+  // height: calc(100% - (#{$header-height} + 40px));
+  overflow: auto;
+
+  // calc(100% - ($header-height + 40px));dd
+  width: 100%;
+
+  /* display: inline-block; */
+  // position: relative;
+  // top: $header-height;
+  // bottom: 40px;
+
+  // enable scrollign on iOS
+  -webkit-overflow-scrolling: touch;
+
+  .list {
+    // background-color: $blue;
+    // position: absolute;
+    // top: 60px;
+    // height: calc(100vh - (20px + 30px));
+    // overflow: scroll-x;
+    // right: 0px;
+    // left: 0px;
+ 
+  }
 }

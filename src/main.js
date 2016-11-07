@@ -1,6 +1,6 @@
 // let swInstaller = require('offline-plugin/runtime')
 // swInstaller.install()
-// import 'ui/styles/core.scss'
+import 'ui/styles/core.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { browserHistory } from 'react-router'
@@ -35,7 +35,7 @@ let render = () => {
 // ========================================================
 if (__DEV__) {
   if (window.devToolsExtension) {
-    window.devToolsExtension.open()
+    // window.devToolsExtension.open()
   }
 }
 

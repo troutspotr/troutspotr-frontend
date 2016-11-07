@@ -7,7 +7,7 @@ console.log(MAP, LIST)
 const RegionLayout = React.createClass({
   propTypes: {
     view: PropTypes.string.isRequired,
-    children: PropTypes.element.isRequired
+    children: PropTypes.element
   },
 
   renderMap () {
@@ -22,8 +22,7 @@ const RegionLayout = React.createClass({
     let { view } = this.props
 
     return (
-      <div>
-        <div>THIS IS LAYOUT</div>
+      <div className={classes.regionContainer}>
         {view === MAP && this.renderMap()}
         {view === LIST && this.renderList()}
 

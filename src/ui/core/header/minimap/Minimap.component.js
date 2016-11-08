@@ -152,6 +152,12 @@ const MinimapComponent = React.createClass({
     return newUrl
   },
 
+  renderSneezeGuard () {
+    return (<div className={classes.sneezeGuard}>
+          Sneeze Guard
+        </div>)
+  },
+
   render () {
     let { isExpanded, location } = this.props
     let expandClass = isExpanded ? classes.expand : null

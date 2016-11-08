@@ -3,6 +3,7 @@ import locationReducer from './location'
 import geoReducer from './Geo.state'
 import coreReducer from './core/Core.state'
 import minimapReducer from './core/header/minimap/Minimap.state'
+import mapboxModuleReducer from './core/MapboxModule.state'
 // console.log(locationReducer, minimapReducer)
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -10,6 +11,7 @@ export const makeRootReducer = (asyncReducers) => {
     minimap: minimapReducer,
     core: coreReducer,
     location: locationReducer,
+    mapModule: mapboxModuleReducer,
     ...asyncReducers
   })
 }

@@ -25,7 +25,7 @@ describe('api/GeoApi.worker', () => {
     server.respondWith('GET', apiRoot + ENDPOINT_TEST,
       [200,
        { 'Content-Type': 'application/json' },
-       JSON.stringify(GeoMnData)])
+        JSON.stringify(GeoMnData)])
 
     var w2 = work(geoWorker)
     w2.addEventListener('message', function (ev) {
@@ -42,7 +42,7 @@ describe('api/GeoApi.worker', () => {
     server.respondWith('GET', apiRoot + ENDPOINT_TEST,
       [200,
        { 'Content-Type': 'application/json' },
-       JSON.stringify(GeoMnData)])
+        JSON.stringify(GeoMnData)])
 
     var w2 = work(geoWorker)
 

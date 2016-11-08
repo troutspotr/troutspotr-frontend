@@ -13,36 +13,6 @@ export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 export const setViewToMap = createAction(REGION_SET_VIEW, x => MAP)
 export const setViewToList = createAction(REGION_SET_VIEW, x => LIST)
 
-/*  This is a thunk, meaning it is a function that immediately
-    returns a function for lazy evaluation. It is incredibly useful for
-    creating async actions, especially when combined with redux-thunk!
-
-    NOTE: This is solely for demonstration purposes. In a real application,
-    you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
-    reducer take care of this logic.  */
-
-export const setViewToListAsync = () => {
-  return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        dispatch(setViewToList())
-        resolve()
-      }, 200)
-    })
-  }
-}
-
-export const setViewToMapAsync = () => {
-  return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        dispatch(setViewToMap())
-        resolve()
-      }, 200)
-    })
-  }
-}
-
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -58,9 +28,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  view: LIST,
-  isMapModuleLoaded: false,
-  isMapReadyToDisplay: false
+  view: LIST
 }
 
 export default function counterReducer (state = initialState, action) {

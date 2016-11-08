@@ -8,6 +8,7 @@
   padding-left: $default-margin;
   padding-right: $default-margin;
   border-top: 2px solid $off-white;
+  touch-action: manipulation;
 
   .item {
     align-self: center;

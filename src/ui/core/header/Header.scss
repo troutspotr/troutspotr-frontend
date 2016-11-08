@@ -8,7 +8,11 @@ $smallFontSize: 0.85em;
 .headerContainer {
   // height: $header-height;
   // background-color: transparentize($background, 0.5);
-  // position: fixed;
+
+  // BLURRY KIRBY FIX. I don't know why, but iOS safari
+  // gets blurry unless the header is set to fixed position.
+  height: $header-height;
+  position: fixed;
   width: 100%;
 
   // top: 0px;

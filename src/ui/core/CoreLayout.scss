@@ -7,6 +7,7 @@
   max-height: 100%;
   display: flex;
   flex-direction: column;
+  -webkit-overflow-scrolling: auto;
 
   // background-color: transparentize($green, 0.8);
 }
@@ -14,6 +15,7 @@
 .headerLayout {
   order: 1;
   height: $header-height;
+  z-index: 100;
 
   // background-color: transparentize($red, 0.8);
   flex-shrink: 0;
@@ -22,6 +24,7 @@
 .footerLayout {
   order: 3;
   height: $footer-height;
+  z-index: 100;
 
   // background-color: transparentize($blue, 0.8);
   flex-shrink: 0;
@@ -29,55 +32,16 @@
 
 .coreContentLayout {
   order: 2;
-  flex-grow: 1;
-
-  // background-color: transparentize($yellow, 0.8);
-  height: calc(100% - (#{$header-height} + #{$footer-height}));
-  position: relative;
   overflow-y: auto;
+
+  // height: calc(100% - (#{$header-height} + #{$footer-height}));
+  flex-grow: 2;
+  position: relative;
   -webkit-overflow-scrolling: touch;
-
-  .debug {
-    .tl {
-      top: 0;
-      left: 0;
-      position: absolute;
-    }
-
-    .tr {
-      top: 0;
-      right: 0;
-      position: absolute;
-    }
-
-    .bl {
-      bottom: 0;
-      left: 0;
-      position: absolute;
-    }
-
-    .br {
-      bottom: 0;
-      right: 0;
-      position: absolute;
-    }
-  }
+  flex: 1;
 }
 
 .coreContent {
-  // padding-top: $body-top-padding;
-  // padding-left: $body-side-padding;
-  // padding-right: $body-side-padding;
-  // padding-bottom: $body-top-padding;
-  // margin-top: $page-header-height;
-  // margin-bottom: $page-header-height;
-  // margin-top: $header-height;
-  // background-color: $red;
-
-  // position: absolute;
-  // overflow: auto;
-  -webkit-overflow-scrolling: touch;
-
   // background-color: $green;
 
   @include book-font;

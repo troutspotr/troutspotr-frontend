@@ -1,19 +1,18 @@
 import { connect } from 'react-redux'
 import MapComponent from './Map.component'
-// import { saveBuilderProfile, fetchCompany } from './Profile.state'
-// import { loadingStatusSelector, savingStatusSelector } from './Profile.selectors'
+import { loadMapModuleAsync } from 'ui/core/MapboxModule.state'
+import { mapboxModuleSelector, isMapboxModuleLoadedSelector } from 'ui/core/MapboxModule.selectors'
+
 const mapDispatchToProps = {
-  // saveProfile: (companyId, profileId, profile) => saveBuilderProfile(companyId, profileId, profile),
-  // loadCompany: (companyId) => fetchCompany(companyId)
+  loadMapModuleAsync: () => loadMapModuleAsync()
 }
 
 const mapStateToProps = (state) => {
-  return {
-    // loadingStatus: loadingStatusSelector(state),
-    // savingStatus: savingStatusSelector(state),
-    // currentFormProfile: formDataSelector(state),
-    // currentCompany: companySelector(state)
+  let props = {
+    mapboxModule: mapboxModuleSelector(state),
+    mapboxModuleStatus: isMapboxModuleLoadedSelector(state)
   }
+  return props
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapComponent)

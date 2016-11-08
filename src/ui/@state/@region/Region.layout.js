@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import classes from './Region.scss'
 import { MAP, LIST } from 'ui/core/Core.state'
-import MapComponent from './map/Map.component'
+import MapContainer from './map/Map.container'
 import ListComponent from './list/StreamList.component'
 console.log(MAP, LIST)
 const RegionLayout = React.createClass({
@@ -11,22 +11,26 @@ const RegionLayout = React.createClass({
   },
 
   renderMap () {
-    return <MapComponent>map</MapComponent>
+    let { view } = this.props
+    let isVisible = view === MAP
+    return <MapContainer
+      isVisible={isVisible} />
   },
 
   renderList () {
-    return <ListComponent>list</ListComponent>
+    let { view } = this.props
+    let isVisible = view === LIST
+    return <ListComponent
+      isVisible={isVisible} />
   },
 
   render () {
     let { view } = this.props
-
     return (
       <div className={classes.regionContainer}>
-        {view === MAP && this.renderMap()}
-        {view === LIST && this.renderList()}
-
-        {this.props.children}
+        {this.renderMap()}
+        {this.renderList()}
+        {view === LIST && this.props.children}
       </div>
 
     )

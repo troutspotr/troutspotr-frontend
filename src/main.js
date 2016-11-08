@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom'
 import { browserHistory } from 'react-router'
 import configureStore from 'ui/configureStore'
 import TroutMapsAppContainer from 'ui/TroutMapsApp.container'
+import FastClick from 'fastclick'
 // import routes from 'ui/routes'
 
 // ========================================================
@@ -71,4 +72,43 @@ if (__DEV__) {
 // ========================================================
 // Go!
 // ========================================================
-render()
+
+setTimeout(render, 5500)
+// render()
+
+// ========================================================
+// Set up FastClick
+// ========================================================
+try {
+  const isIos = function () {
+        // Reference: http://stackoverflow.com/questions/9038625/detect-if-device-is-ios#answer-9039885
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+  }
+
+  const isRunningStandalone = function () {
+        // Bullet proof way to check if iOS standalone
+    var isRunningiOSStandalone = window.navigator.standalone
+
+    // Reliable way (in newer browsers) to check if Android standalone.
+    // http://stackoverflow.com/questions/21125337/how-to-detect-if-web-app-running-standalone-on-chrome-mobile#answer-34516083
+    var isRunningAndroidStandalone = window.matchMedia('(display-mode: standalone)').matches
+
+    return isRunningiOSStandalone || isRunningAndroidStandalone
+  }
+
+  if (isIos() && isRunningStandalone()) {
+        // Initialize Fast Click
+        // Even with the latest webkit updates, unfortunatley iOS standalone apps still have the 350ms click delay,
+        // so we need to bring in fastclick to alleviate this.
+        // See http://stackoverflow.com/questions/39951945/ios-standalone-app-300ms-click-delay
+    if ('addEventListener' in document) {
+      document.addEventListener('DOMContentLoaded', function () {
+        FastClick.attach(document.body)
+      }, false)
+    }
+  }
+} catch (e) {
+  debugger
+  console.log('whoops')
+  alert(e.message)
+}

@@ -1,14 +1,22 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Header from './header/Header.container'
 import classes from './CoreLayout.scss'
 import Footer from './footer/Footer.container'
+import SneezeGuardComponent from './sneezeGuard/SneezeGuard.component'
+import { isExpandedSelector } from './header/minimap/Minimap.selectors'
+import { isExpaned as expandMinimap } from './header/minimap/Minimap.state'
 import { REGION_PARAM_NAME, STATE_PARAM_NAME } from 'ui/core/RouteConstants.js'
+import { isRootPageSelector } from 'ui/Location.selectors'
 
 const CoreLayoutContainer = React.createClass({
   propTypes: {
     children: React.PropTypes.element.isRequired,
     params: React.PropTypes.object.isRequired,
-    location: React.PropTypes.object.isRequired
+    location: React.PropTypes.object.isRequired,
+    isMinimapExpanded: React.PropTypes.bool.isRequired,
+    isRoot: React.PropTypes.bool.isRegionDefined,
+    closeMinimap: React.PropTypes.func.isRequired
   },
 
   // only show the footer if they've selected a region.
@@ -18,23 +26,6 @@ const CoreLayoutContainer = React.createClass({
     let isStateDefined = params[STATE_PARAM_NAME] != null
 
     return isRegionDefined && isStateDefined
-  },
-
-  renderDebugContainer () {
-    return (<div className={classes.debug}>
-      <span className={classes.tl}>
-        top-left
-      </span>
-      <span className={classes.tr}>
-        top-right
-      </span>
-      <span className={classes.bl}>
-        bottom-left
-      </span>
-      <span className={classes.br}>
-        bottom-right
-      </span>
-    </div>)
   },
 
   render () {
@@ -47,21 +38,35 @@ const CoreLayoutContainer = React.createClass({
             params={this.props.params}
             location={this.props.location} />}
         </div>
-        <div className={classes.coreContentLayout}>
-          {this.renderDebugContainer()}
-          <div className={classes.coreContent}>
-            { this.props.children }
-          </div>
-        </div>
         <div className={classes.footerLayout}>
           {isFooterVisible &&
             <Footer
               params={this.props.params}
               location={this.props.location} />}
         </div>
+        <div className={classes.coreContentLayout}>
+          <div className={classes.coreContent}>
+            { this.props.children }
+            {this.props.isMinimapExpanded && <SneezeGuardComponent close={this.props.isRoot ? null : this.props.closeMinimap} />}
+          </div>
+        </div>
+        
       </div>
     )
   }
 })
 
-export default CoreLayoutContainer
+const mapDispatchToProps = {
+  closeMinimap: () => expandMinimap(false)
+}
+
+const mapStateToProps = (state) => {
+  return {
+    isMinimapExpanded: isExpandedSelector(state),
+    isRoot: isRootPageSelector(state)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoreLayoutContainer)
+
+// export default CoreLayoutContainer

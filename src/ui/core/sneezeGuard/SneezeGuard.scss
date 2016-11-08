@@ -1,0 +1,12 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+
+.sneezeGuard {
+  background-color: transparentize($background, 0.3);
+  z-index: 50;
+  position: fixed;
+  top: $header-height;
+  bottom: $footer-height;
+  left: 0;
+  right: 0;
+}

@@ -14,9 +14,7 @@ const StateComponent = React.createClass({
   // },
 
   render () {
-    return (<div style={{ height: '100%' }}>
-      {this.props.children}
-    </div>)
+    return (this.props.children)
   }
 })
 export default StateComponent

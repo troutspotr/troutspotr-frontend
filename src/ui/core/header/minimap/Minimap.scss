@@ -1,9 +1,15 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 
+.sneezeGuard {
+  display: none;
+  touch-action: manipulation;
+}
+
 .minimapContent {
   transform: scale(1);
   transition: 0.2s ease-in-out;
+  touch-action: manipulation;
   transform-origin: right top;
   height: 100%;
   margin: 0;
@@ -11,6 +17,9 @@
   border-color: $off-white;
   border-width: 1px;
   border-style: solid;
+  position: relative;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 
   img {
     position: absolute;
@@ -21,7 +30,9 @@
   }
 
   &.expand {
-    transform: translateY(55px) scale(14.42);
+    transform: translateY(55px) translateX(0px) scale(14.42);
+    backface-visibility: hidden;
+    transform: translateZ(0);
     border-color: transparent;
   }
 

@@ -1,8 +1,7 @@
 import React from 'react'
-import classes from './Map.scss'
+import classes from './StreamItem.scss'
 // import BubbleComponent from './Bubble.component'
-import { Link } from 'react-router'
-const MapComponent = React.createClass({
+const StreamItemComponent = React.createClass({
   propTypes: {
     // children: React.PropTypes.element
     // streams: PropTypes.array.isRequired,
@@ -14,10 +13,9 @@ const MapComponent = React.createClass({
   // },
 
   render () {
-    return (<div className={classes.mapContainer}>
-      Map Component
-      <Link to='/mn/superior/map/123'>Go To superior map with stream 123</Link>
+    return (<div className={classes.streamItemContainer}>
+      Stream DETAIL Item Component
     </div>)
   }
 })
-export default MapComponent
+export default StreamItemComponent

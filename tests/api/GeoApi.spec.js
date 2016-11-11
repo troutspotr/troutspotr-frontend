@@ -23,7 +23,7 @@ describe('api/GeoApi', () => {
     server.respondWith('GET', apiRoot + ENDPOINT_TEST,
       [200,
        { 'Content-Type': 'application/json' },
-       JSON.stringify(GeoMnData)])
+        JSON.stringify(GeoMnData)])
 
     let geoApi = new GeoApi()
     geoApi.getStateStreamData(STATE_NAME)

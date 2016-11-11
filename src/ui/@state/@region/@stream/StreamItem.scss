@@ -1,0 +1,10 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+
+.streamItemContainer {
+  background-color: $background;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}

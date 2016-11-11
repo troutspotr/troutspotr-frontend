@@ -13,6 +13,7 @@
 		}
 	],
 	"theme_color": "#ffffff",
+	"background_color": "#111111",
 	"start_url": "http:\/\/www.troutspotr.com",
 	"display": "standalone",
 	"orientation": "portrait"

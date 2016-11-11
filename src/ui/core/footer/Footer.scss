@@ -2,17 +2,13 @@
 @import "src/ui/styles/_variables";
 
 .footer {
-  background-color: transparentize($blue, 0.8);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
+  // background-color: transparentize($blue, 0.8);
   display: flex;
   justify-content: space-between;
   padding-left: $default-margin;
   padding-right: $default-margin;
   border-top: 2px solid $off-white;
+  touch-action: manipulation;
 
   .item {
     align-self: center;

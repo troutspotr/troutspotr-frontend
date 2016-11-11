@@ -19,7 +19,7 @@ describe('api (axios)', () => {
     server.respondWith('GET', ENDPOINT_TEST,
       [200,
        { 'Content-Type': 'application/json' },
-       '{ "response": "1"}'])
+        '{ "response": "1"}'])
 
     // let baseApiTestInstance = new BaseApi(null, null, configFunc)
     axios.get(ENDPOINT_TEST, null)
@@ -38,7 +38,7 @@ describe('api (axios)', () => {
     server.respondWith('GET', FULL_REQUEST_PATH,
       [200,
        { 'Content-Type': 'application/json' },
-       '{ "response": "1"}'])
+        '{ "response": "1"}'])
 
     // let baseApiTestInstance = new BaseApi(null, null, configFunc)
     let customAxios = axios.create({ baseURL: BASE_ENDPOINT + '/' })

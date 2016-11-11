@@ -9,7 +9,10 @@ import {
 
 const FooterComponent = React.createClass({
   propTypes: {
-    params:  PropTypes.object.isRequired
+    params:  PropTypes.object.isRequired,
+    view: PropTypes.string.isRequired,
+    setViewToMap: PropTypes.func.isRequired,
+    setViewToList: PropTypes.func.isRequired
   },
 
   onClick () {
@@ -35,8 +38,8 @@ const FooterComponent = React.createClass({
   render () {
     console.log(this.props.params)
     return (<div className={classes.footer}>
-      <Link to={this.createRoute('list')} className={classes.item}>List</Link>
-      <Link to={this.createRoute('map')} className={classes.item}>Map</Link>
+      <button onClick={this.props.setViewToList} className={classes.item}>List</button>
+      <button onClick={this.props.setViewToMap} className={classes.item}>Map</button>
       <Link to={'/'} className={classes.item}>Help</Link>
     </div>)
   }

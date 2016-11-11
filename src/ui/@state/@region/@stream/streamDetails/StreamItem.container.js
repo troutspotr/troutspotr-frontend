@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import MapComponent from './Map.component'
+import StreamItemComponent from './StreamItem.component'
 // import { saveBuilderProfile, fetchCompany } from './Profile.state'
 // import { loadingStatusSelector, savingStatusSelector } from './Profile.selectors'
 const mapDispatchToProps = {
@@ -16,4 +16,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(StreamItemComponent)

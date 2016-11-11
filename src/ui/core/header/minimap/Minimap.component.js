@@ -4,6 +4,7 @@ import headerClasses from '../Header.scss'
 import kirby from './kirby.gif'
 import { isRootPageByUrl } from 'ui/Location.selectors'
 import { Link } from 'react-router'
+import debounce from 'lodash/debounce'
 const MINIMAP_WIDTH = 50
 const REGION_INDEX = 2
 const STATE_INDEX = 1
@@ -19,8 +20,9 @@ const MinimapComponent = React.createClass({
 
   componentWillMount () {
     if (window) {
-      window.addEventListener('resize', this.resizeEvent)
-      window.addEventListener('orientationchange', this.resizeEvent)
+      this.debouncedResizeEvent = debounce(this.resizeEvent, 500)
+      window.addEventListener('resize', this.debouncedResizeEvent)
+      window.addEventListener('orientationchange', this.debouncedResizeEvent)
     }
 
     this.listenToRoutes()
@@ -44,13 +46,13 @@ const MinimapComponent = React.createClass({
   },
 
   componentDidMount () {
-    setTimeout(this.resizeEvent, 100)
+    setTimeout(this.resizeEvent, 500)
   },
 
   componentWillUnmount () {
     if (window) {
-      window.removeEventListener('resize', this.resizeEvent)
-      window.removeEventListener('orientationchange', this.resizeEvent)
+      window.removeEventListener('resize', this.debouncedResizeEvent)
+      window.removeEventListener('orientationchange', this.debouncedResizeEvent)
     }
   },
 
@@ -92,12 +94,17 @@ const MinimapComponent = React.createClass({
     let width = (window.innerWidth > 0) ? window.innerWidth : screen.width
     let height = (window.innerHeight > 0) ? window.innerHeight : screen.height
 
-    let minimumDimension = Math.min(width, height - 60)
+    let minimumDimension = Math.min(width, height - 120)
     let ratio = minimumDimension / MINIMAP_WIDTH
     let soughtClassRule = `.${classes.minimapContent}.${classes.expand}`
 
     let result = this.getCSSRule(soughtClassRule)
-    result.style.transform = `translateY(${MINIMAP_WIDTH + 5}px) scale(${ratio})`
+    let translateY = MINIMAP_WIDTH + 15
+    let translateX = (width - (ratio * MINIMAP_WIDTH)) / 2
+    let newStyle = `translateY(${translateY}px) translateX(${-translateX}px) scale(${ratio})`
+
+    result.style.transform = newStyle
+    console.log('finished resetting style for scale')
   },
 
   onSelectState (e) {
@@ -129,7 +136,7 @@ const MinimapComponent = React.createClass({
     }
 
     if (pathname === '/') {
-      return `/${stateId}/newRegion`
+      return `/${stateId}/${newRegion}`
     }
 
     let tokens = pathname.split('/')
@@ -145,9 +152,16 @@ const MinimapComponent = React.createClass({
     return newUrl
   },
 
+  renderSneezeGuard () {
+    return (<div className={classes.sneezeGuard}>
+          Sneeze Guard
+        </div>)
+  },
+
   render () {
     let { isExpanded, location } = this.props
     let expandClass = isExpanded ? classes.expand : null
+    console.log('rendering minimap')
     // console.log(isExpanded, expandClass)
     return (
       <div className={classes.minimapContent + ' ' + expandClass} onClick={this.onSelectState}>

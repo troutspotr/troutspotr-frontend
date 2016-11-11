@@ -1,0 +1,23 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+
+.mapContainer {
+  // background-color: $red;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.invisible {
+  composes: mapContainer;
+  visibility: hidden;
+}

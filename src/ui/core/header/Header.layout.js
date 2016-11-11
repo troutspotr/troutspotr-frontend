@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import classes from './Header.scss'
 
-const HeaderContainer = React.createClass({
+const HeaderLayout = React.createClass({
   propTypes: {
     backButton:  PropTypes.element,
     locationSubtitle: PropTypes.element,
@@ -31,4 +31,4 @@ const HeaderContainer = React.createClass({
     )
   }
 })
-export default HeaderContainer
+export default HeaderLayout

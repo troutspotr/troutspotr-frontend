@@ -29,7 +29,7 @@ describe('api/BaseApi', () => {
     server.respondWith('GET', ENDPOINT_TEST,
       [200,
        { 'Content-Type': 'application/json' },
-       '{ "response": "success"}'])
+        '{ "response": "success"}'])
 
     let baseApiTestInstance = new BaseApi()
     baseApiTestInstance.get(FAKE_ENDPOINT, null)
@@ -45,7 +45,7 @@ describe('api/BaseApi', () => {
     server.respondWith('GET', ENDPOINT_TEST,
       [200,
        { 'Content-Type': 'application/json' },
-       '{ "response": "success"}'])
+        '{ "response": "success"}'])
 
     let baseApiTestInstance = new BaseApi(null, configFunc())
     baseApiTestInstance.get(FAKE_ENDPOINT, null)

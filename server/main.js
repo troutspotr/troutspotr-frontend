@@ -6,10 +6,12 @@ const config = require('../config')
 
 const app = express()
 const paths = config.utils_paths
+var compress = require('compression')
 
 // This rewrites all routes requests to the root /index.html file
 // (ignoring file requests). If you want to implement universal
 // rendering, you'll want to remove this middleware.
+app.use(compress())
 app.use(require('connect-history-api-fallback')())
 
 // ------------------------------------
@@ -36,6 +38,7 @@ if (config.env === 'development') {
   // these files. This middleware doesn't need to be enabled outside
   // of development since this directory will be copied into ~/dist
   // when the application is compiled.
+  
   app.use(express.static(paths.client('static')))
 } else {
   debug(

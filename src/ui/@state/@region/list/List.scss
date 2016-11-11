@@ -1,0 +1,40 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+
+.listViewContainer {
+  // background-color: purple;
+
+  // height: calc(100% - (#{$header-height} + 40px));
+  overflow: auto;
+
+  // calc(100% - ($header-height + 40px));dd
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  overflow-y: auto;
+
+  /* display: inline-block; */
+  // position: relative;
+  // top: $header-height;
+  // bottom: 40px;
+
+  // enable scrollign on iOS
+  -webkit-overflow-scrolling: touch;
+
+  .list {
+    // background-color: $blue;
+    // position: absolute;
+    // top: 60px;
+    // height: calc(100vh - (20px + 30px));
+    // overflow: scroll-x;
+    // right: 0px;
+    // left: 0px;
+ 
+  }
+}
+
+.invisible {
+  composes: listViewContainer;
+  visibility: hidden;
+}

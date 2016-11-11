@@ -1,17 +1,17 @@
+import { createAction } from 'redux-actions'
+
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
+export const MAP = 'map'
+export const LIST = 'list'
+export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function increment (value = 1) {
-  return {
-    type    : COUNTER_INCREMENT,
-    payload : value
-  }
-}
+export const setViewToMap = createAction(REGION_SET_VIEW, x => MAP)
+export const setViewToList = createAction(REGION_SET_VIEW, x => LIST)
 
 /*  This is a thunk, meaning it is a function that immediately
     returns a function for lazy evaluation. It is incredibly useful for
@@ -21,33 +21,48 @@ export function increment (value = 1) {
     you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
     reducer take care of this logic.  */
 
-export const doubleAsync = () => {
+export const setViewToListAsync = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        dispatch(increment(getState().counter))
+        dispatch(setViewToList())
         resolve()
       }, 200)
     })
   }
 }
 
-export const actions = {
-  increment,
-  doubleAsync
+export const setViewToMapAsync = () => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        dispatch(setViewToMap())
+        resolve()
+      }, 200)
+    })
+  }
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [COUNTER_INCREMENT] : (state, action) => state + action.payload
+  [REGION_SET_VIEW] : (state, { payload }) => {
+    let view = payload || initialState.view
+    let newState = { ...state, ...{ view } }
+    return newState
+  }
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = 0
+const initialState = {
+  view: LIST,
+  isMapModuleLoaded: false,
+  isMapReadyToDisplay: false
+}
+
 export default function counterReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 

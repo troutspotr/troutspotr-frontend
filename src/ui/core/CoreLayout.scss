@@ -2,16 +2,46 @@
 @import "src/ui/styles/_variables";
 @import "src/ui/styles/_fonts";
 
-.profileBody {
-  // padding-top: $body-top-padding;
-  // padding-left: $body-side-padding;
-  // padding-right: $body-side-padding;
-  // padding-bottom: $body-top-padding;
-  // margin-top: $page-header-height;
-  // margin-bottom: $page-header-height;
-  margin-top: $header-height;
-  height: calc(100% - 60px);
+.coreLayout {
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  -webkit-overflow-scrolling: auto;
 
+  // background-color: transparentize($green, 0.8);
+}
+
+.headerLayout {
+  order: 1;
+  height: $header-height;
+  z-index: 100;
+
+  // background-color: transparentize($red, 0.8);
+  flex-shrink: 0;
+}
+
+.footerLayout {
+  order: 3;
+  height: $footer-height;
+  z-index: 100;
+
+  // background-color: transparentize($blue, 0.8);
+  flex-shrink: 0;
+}
+
+.coreContentLayout {
+  order: 2;
+  overflow-y: auto;
+
+  // height: calc(100% - (#{$header-height} + #{$footer-height}));
+  flex-grow: 2;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+.coreContent {
   // background-color: $green;
 
   @include book-font;

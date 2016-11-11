@@ -6,11 +6,16 @@ $largeFontSize: 1.25em;
 $smallFontSize: 0.85em;
 
 .headerContainer {
+  // height: $header-height;
+  // background-color: transparentize($background, 0.5);
+
+  // BLURRY KIRBY FIX. I don't know why, but iOS safari
+  // gets blurry unless the header is set to fixed position.
   height: $header-height;
-  background-color: transparentize($background, 0.5);
   position: fixed;
   width: 100%;
-  top: 0px;
+
+  // top: 0px;
   z-index: 100;
   border-bottom: $off-white;
   border-bottom-width: 1px;
@@ -29,7 +34,8 @@ $smallFontSize: 0.85em;
 
 .backButtonContainer {
   order: 1;
-  background-color: transparentize($blue, 0.8);
+
+  // background-color: transparentize($blue, 0.8);
   min-width: 50px;
   max-width: 50px;
 }
@@ -40,10 +46,8 @@ $smallFontSize: 0.85em;
   max-width: 50px;
   height: 50px;
   z-index: 1000;
-  position: relative;
-  right: 0;
-  top: 0;
-  background-color: transparentize($red, 0.8);
+
+  // background-color: transparentize($red, 0.8);
 }
 
 // calc(100vmin / 50px)
@@ -52,7 +56,8 @@ $smallFontSize: 0.85em;
   padding-top: 0px;
   order: 2;
   flex-grow: 1;
-  background-color: transparentize($green, 0.8);
+
+  // background-color: transparentize($green, 0.8);
   padding-left: 10px;
 
   .top {

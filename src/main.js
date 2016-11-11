@@ -73,7 +73,7 @@ if (__DEV__) {
 // Go!
 // ========================================================
 
-setTimeout(render, 5500)
+setTimeout(render, 0)
 // render()
 
 // ========================================================
@@ -81,7 +81,7 @@ setTimeout(render, 5500)
 // ========================================================
 try {
   const isIos = function () {
-        // Reference: http://stackoverflow.com/questions/9038625/detect-if-device-is-ios#answer-9039885
+    // Reference: http://stackoverflow.com/questions/9038625/detect-if-device-is-ios#answer-9039885
     return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
   }
 
@@ -108,7 +108,5 @@ try {
     }
   }
 } catch (e) {
-  debugger
-  console.log('whoops')
   alert(e.message)
 }

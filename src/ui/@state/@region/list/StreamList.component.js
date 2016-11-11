@@ -135,20 +135,6 @@ const StreamListComponent = React.createClass({
       </div>)
   },
 
-  // componentDidMount () {
-  //   this.props.getSouthEasternStreams()
-  // }
- // {FAKE_STREAMS.map((stream, index) => {
- //              let url = stream.replace(' ', '_')
- //              return (
- //                <li key={index}>
- //                  <StreamItemComponent
- //                    title={stream}
- //                    url={`/mn/asdf/${url}`} />
- //                </li>)
- //            })
- //            }
-
   render () {
     console.log('visiblility of stream list is', this.props.isVisible)
     return (
@@ -168,5 +154,4 @@ const StreamListComponent = React.createClass({
       </div>)
   }
 })
-// {this.renderNonsenseContent()}
 export default StreamListComponent

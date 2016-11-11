@@ -29,7 +29,7 @@ export const loadMapModuleAsync = () => {
       try {
         require.ensure([], require => {
           let mapboxGl = require('mapbox-gl/dist/mapbox-gl')
-          dispatch(setMapModuleSuccess(mapboxGl))
+          setTimeout(() => dispatch(setMapModuleSuccess(mapboxGl)), 0)
         }, 'mapLibrary')
       } catch (e) {
         dispatch(setMapModuleFailed())

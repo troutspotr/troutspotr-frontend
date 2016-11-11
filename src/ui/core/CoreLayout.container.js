@@ -15,7 +15,7 @@ const CoreLayoutContainer = React.createClass({
     params: React.PropTypes.object.isRequired,
     location: React.PropTypes.object.isRequired,
     isMinimapExpanded: React.PropTypes.bool.isRequired,
-    isRoot: React.PropTypes.bool.isRegionDefined,
+    isRoot: React.PropTypes.bool.isRequired,
     closeMinimap: React.PropTypes.func.isRequired
   },
 
@@ -50,7 +50,7 @@ const CoreLayoutContainer = React.createClass({
             {this.props.isMinimapExpanded && <SneezeGuardComponent close={this.props.isRoot ? null : this.props.closeMinimap} />}
           </div>
         </div>
-        
+
       </div>
     )
   }
@@ -61,10 +61,12 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => {
-  return {
+  let props = {
     isMinimapExpanded: isExpandedSelector(state),
     isRoot: isRootPageSelector(state)
   }
+
+  return props
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoreLayoutContainer)

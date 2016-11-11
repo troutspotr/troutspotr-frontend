@@ -4,7 +4,9 @@ import React, { PropTypes } from 'react'
 const MapboxGlComponent = React.createClass({
   propTypes: {
     mapbox: PropTypes.object.isRequired,
-    elementId: PropTypes.string.isRequired
+    elementId: PropTypes.string.isRequired,
+
+    onMapLoadCallback: PropTypes.func.isRequired
   },
 
   onClick () {
@@ -15,10 +17,35 @@ const MapboxGlComponent = React.createClass({
     console.log('MAP MOUNTED')
     this.map = new this.props.mapbox.Map({
       container: this.props.elementId, // container id
-      style: 'mapbox://styles/mapbox/dark-v9', // stylesheet location
+      style: 'mapbox://styles/andest01/citblizjo000z2hmlcmodgxxq', // stylesheet location
       center: [-74.50, 40], // starting position
       zoom: 9 // starting zoom
     })
+
+    this.props.onMapLoadCallback(false)
+    this.map.once('load', this.onMapLoad)
+    this.map.on('data', this.onDataLoad)
+    this.map.on('layer.add', e => { console.log(e) })
+  },
+
+  onMapLoad (e) {
+    console.log('map fully loaded', e)
+    // this.props.onMapLoadCallback(true)
+  },
+
+  onDataLoad (e) {
+    if (e.dataType !== 'style') {
+      return
+    }
+
+    console.log('data of some kind loaded...', e)
+    this.props.onMapLoadCallback(true)
+  },
+
+  componentWillUnMount () {
+    if (this.map) {
+      this.map.remove()
+    }
   },
 
   render () {

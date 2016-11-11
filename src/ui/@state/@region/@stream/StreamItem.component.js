@@ -1,5 +1,5 @@
 import React from 'react'
-// import classes from './BubblesList.scss'
+import classes from './StreamItem.scss'
 // import BubbleComponent from './Bubble.component'
 const StreamItemComponent = React.createClass({
   propTypes: {
@@ -13,7 +13,7 @@ const StreamItemComponent = React.createClass({
   // },
 
   render () {
-    return (<div>
+    return (<div className={classes.streamItemContainer}>
       Stream DETAIL Item Component
     </div>)
   }

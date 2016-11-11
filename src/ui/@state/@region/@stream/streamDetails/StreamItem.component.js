@@ -14,7 +14,7 @@ const StreamItemComponent = React.createClass({
 
   render () {
     return (<div>
-      Stream DETAIL Item Component
+      Stream DETAIL Item Component 2
     </div>)
   }
 })

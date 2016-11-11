@@ -2,15 +2,17 @@ import React, { PropTypes } from 'react'
 import classes from './Map.scss'
 import MapboxGlContainer from './MapboxGlMap/MapboxGl.container'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-
+import LoadingComponent from 'ui/core/loading/Loading.component'
 const MAP_ID = 'primary_map_id'
 const MapComponent = React.createClass({
   propTypes: {
     mapboxModule: PropTypes.object,
     mapboxModuleStatus: PropTypes.string.isRequired,
     isVisible: PropTypes.bool.isRequired,
+    isReadyToInsertLayers: PropTypes.bool.isRequired,
 
-    loadMapModuleAsync: PropTypes.func.isRequired
+    loadMapModuleAsync: PropTypes.func.isRequired,
+    setIsMapInitialized: PropTypes.func.isRequired
   },
 
   componentDidMount () {
@@ -42,19 +44,21 @@ const MapComponent = React.createClass({
   renderMap () {
     return (<MapboxGlContainer
       mapbox={this.props.mapboxModule}
+      onMapLoadCallback={this.props.setIsMapInitialized}
       elementId={MAP_ID} />)
   },
 
   renderLoading () {
-    return (<div>loading...</div>)
+    return (<LoadingComponent subTitle={'Loading Map'} />)
   },
 
   render () {
     let isMapLoaded = this.props.mapboxModuleStatus === LOADING_CONSTANTS.IS_SUCCESS
+    let { isReadyToInsertLayers } = this.props
     return (<div className={this.props.isVisible ? classes.mapContainer : classes.invisible}>
       <div id={MAP_ID} className={classes.map} />
       {isMapLoaded && this.renderMap()}
-      {isMapLoaded === false && this.renderLoading()}
+      {isReadyToInsertLayers === false && this.renderLoading()}
     </div>)
   }
 })

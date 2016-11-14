@@ -10,6 +10,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => {
   return {
     view: viewSelector(state)
+
     // subtitle: subtitleSelector(state),
     // title: titleSelector(state),
     // isTitleVisible: isTitleVisibleSelector(state),

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import * as topojson from 'topojson'
+import * as topojson from 'topojson-client'
 
 export const transformGeo = (topojsonObject) => {
   let geoJsonObjects = decompress(topojsonObject, topojson)

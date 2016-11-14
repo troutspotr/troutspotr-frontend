@@ -17,9 +17,7 @@ $smallFontSize: 0.85em;
 
   // top: 0px;
   z-index: 100;
-  border-bottom: $off-white;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
+  border-bottom: 1px solid transparentize($off-white, 0.7);
 
   // overflow: hidden;
   font-size: $fontSize;

@@ -7,12 +7,32 @@
   justify-content: space-between;
   padding-left: $default-margin;
   padding-right: $default-margin;
-  border-top: 2px solid $off-white;
+  border-top: 1px solid transparentize($off-white, 0.7);
   touch-action: manipulation;
+}
 
-  .item {
-    align-self: center;
-    width: 100px;
-    text-align: center;
-  }
+.item {
+  align-self: center;
+  width: 100px;
+  text-align: center;
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  font: inherit;
+  font-size: 1.2em;
+  color: $off-white;
+  height: 35px;
+  transition: all 0.1s;
+  border-bottom: 0px solid #444;
+  text-decoration: none;
+
+  /*border is optional*/
+
+  cursor: pointer;
+}
+
+.selected {
+  composes: item;
+  border-bottom: 5px solid $blue;
+  color: $blue;
 }

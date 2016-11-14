@@ -5,6 +5,7 @@ import kirby from './kirby.gif'
 import { isRootPageByUrl } from 'ui/Location.selectors'
 import { Link } from 'react-router'
 import debounce from 'lodash/debounce'
+import * as d3 from 'd3-geo'
 const MINIMAP_WIDTH = 50
 const REGION_INDEX = 2
 const STATE_INDEX = 1
@@ -14,11 +15,17 @@ const MinimapComponent = React.createClass({
     router: PropTypes.object.isRequired,
     isRootPage: PropTypes.bool.isRequired,
     location: PropTypes.object.isRequired,
+    statesGeoJson: PropTypes.object.isRequired,
+    countiesGeoJson: PropTypes.object.isRequired,
+    regionsGeoJson: PropTypes.object.isRequired,
+    streamCentroidsGeoJson: PropTypes.object.isRequired,
 
-    expand: PropTypes.func.isRequired
+    expand: PropTypes.func.isRequired,
+    fetchTableOfContents: PropTypes.func.isRequired
   },
 
   componentWillMount () {
+    this.props.fetchTableOfContents()
     if (window) {
       this.debouncedResizeEvent = debounce(this.resizeEvent, 500)
       window.addEventListener('resize', this.debouncedResizeEvent)
@@ -152,10 +159,24 @@ const MinimapComponent = React.createClass({
     return newUrl
   },
 
-  renderSneezeGuard () {
-    return (<div className={classes.sneezeGuard}>
-          Sneeze Guard
-        </div>)
+  zoomToRegion (region) {
+
+  },
+
+  renderStates () {
+
+  },
+
+  renderCounties () {
+
+  },
+
+  renderRegions () {
+
+  },
+
+  renderStreamCentroids () {
+
   },
 
   render () {

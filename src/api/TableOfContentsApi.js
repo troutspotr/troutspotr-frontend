@@ -1,12 +1,23 @@
 import BaseApi from './BaseApi'
-export const buildGeoEndpoint = () => {
-  return `data/tableOfContents.json`
+import * as topojson from 'topojson-client'
+export const buildTableOfContentsEndpoint = () => {
+  return `data/v1/TableOfContents.topo.json`
 }
 export class TableOfContentsApi extends BaseApi {
-  getTableOfContents () {
-    console.log('calling endpoint')
-    let endpoint = buildGeoEndpoint()
-    return this.get(endpoint)
+  async getTableOfContents () {
+    let endpoint = buildTableOfContentsEndpoint()
+    let tocTopojson = await this.get(endpoint)
+    let states = topojson.feature(tocTopojson, tocTopojson.objects.minnesota)
+    let counties = topojson.feature(tocTopojson, tocTopojson.objects.minnesota_county)
+    let regions = topojson.feature(tocTopojson, tocTopojson.objects.region)
+    let streamCentroids = topojson.feature(tocTopojson, tocTopojson.objects.stream_centroids)
+
+    return {
+      states,
+      counties,
+      regions,
+      streamCentroids
+    }
   }
 }
 

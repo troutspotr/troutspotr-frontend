@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 // import { Link } from 'react-router'
-
+import classes from '../Map.scss'
 const MapboxGlComponent = React.createClass({
   propTypes: {
     mapbox: PropTypes.object.isRequired,
@@ -19,13 +19,18 @@ const MapboxGlComponent = React.createClass({
       container: this.props.elementId, // container id
       style: 'mapbox://styles/andest01/citblizjo000z2hmlcmodgxxq', // stylesheet location
       center: [-74.50, 40], // starting position
-      zoom: 9 // starting zoom
+      zoom: 4 // starting zoom
     })
 
     this.props.onMapLoadCallback(false)
     this.map.once('load', this.onMapLoad)
     this.map.on('data', this.onDataLoad)
     this.map.on('layer.add', e => { console.log(e) })
+  },
+
+  shouldComponentUpdate () {
+    // do not re-render via diff:
+    return false
   },
 
   onMapLoad (e) {
@@ -49,7 +54,7 @@ const MapboxGlComponent = React.createClass({
   },
 
   render () {
-    return null
+    <div id={this.props.elementId} className={classes.map} />
   }
 })
 export default MapboxGlComponent

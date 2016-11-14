@@ -2,17 +2,24 @@ import GeoApi from 'api/GeoApi'
 import GeoApiWebWorker from 'api/GeoApi.worker'
 import { transformGeo } from 'api/GeoApi.transform'
 import work from 'webworkify-webpack'
-// import {TextEncoder, TextDecoder, EncodingIndexes} from 'text-encoding';
-// import CategoriesApi from 'api/CategoriesApi'
+import TableOfContentsApi from 'api/TableOfContentsApi.js'
 import { createAction } from 'redux-actions'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 export const GEO_SET_GEO = 'GEO_SET_GEO'
 export const GEO_SET_LOADING = 'GEO_SET_LOADING'
 export const GEO_SET_LOADING_FAILED = 'GEO_SET_LOADING_FAILED'
 
+export const GEO_SET_TABLE_OF_CONTENTS = 'GEO_SET_TABLE_OF_CONTENTS'
+export const GEO_TABLE_OF_CONTENTS_LOADING = 'GEO_TABLE_OF_CONTENTS_LOADING'
+export const GEO_TABLE_OF_CONTENTS_LOADING_FAILED = 'GEO_TABLE_OF_CONTENTS_LOADING_FAILED'
+
 export const setGeoData = createAction(GEO_SET_GEO)
 export const setGeoDataLoading = createAction(GEO_SET_LOADING)
 export const setGeoDataFailed = createAction(GEO_SET_LOADING_FAILED)
+
+export const setTableOfContents = createAction(GEO_SET_TABLE_OF_CONTENTS)
+export const setTableOfContentsLoading = createAction(GEO_TABLE_OF_CONTENTS_LOADING)
+export const setTableOfContentsFailed = createAction(GEO_TABLE_OF_CONTENTS_LOADING_FAILED)
 
 export const fetchGeo = (stateId) => {
   return async (dispatch) => {
@@ -23,10 +30,24 @@ export const fetchGeo = (stateId) => {
       let [geoData] = await Promise.all([gettingGeoData])
       console.log('got thangs')
       let transformedGeoJson = transformGeo(geoData)
-      dispatch(setGeoData({ transformedGeoJson, categories: null }))
+      dispatch(setGeoData({ transformedGeoJson }))
     } catch (error) {
       console.log(error)
       dispatch(setGeoDataFailed())
+    }
+  }
+}
+
+export const fetchTableOfContents = () => {
+  return async (dispatch) => {
+    dispatch(setTableOfContentsLoading())
+    try {
+      let gettingTableOfContents = TableOfContentsApi.getTableOfContents()
+      let [tableOfContents] = await Promise.all([gettingTableOfContents])
+      dispatch(setTableOfContents(tableOfContents))
+    } catch (error) {
+      console.log(error)
+      dispatch(setTableOfContentsFailed())
     }
   }
 }
@@ -64,8 +85,6 @@ const ACTION_HANDLERS = {
       ...state,
 
       ...{
-      //   company: desiredProfile,
-      //   categories: payload.categories,
         streamDictionary: payload,
         loadingStatus: LOADING_CONSTANTS.IS_SUCCESS
       }
@@ -80,6 +99,29 @@ const ACTION_HANDLERS = {
   [GEO_SET_LOADING_FAILED]: (state, { payload }) => {
     console.log('failed')
     let newState = { ...state, ...{ loadingStatus: LOADING_CONSTANTS.IS_FAILED } }
+    return newState
+  },
+
+  [GEO_SET_TABLE_OF_CONTENTS]: (state, { payload }) => {
+    let newState = {
+      ...state,
+
+      ...{
+        statesGeoJson: payload.states,
+        countiesGeoJson: payload.counties,
+        regionsGeoJson: payload.regions,
+        streamCentroidsGeoJson: payload.streamCentroids,
+        tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_SUCCESS
+      }
+    }
+    return newState
+  },
+  [GEO_TABLE_OF_CONTENTS_LOADING]: (state, { payload }) => {
+    let newState = { ...state, ...{ tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_PENDING } }
+    return newState
+  },
+  [GEO_TABLE_OF_CONTENTS_LOADING_FAILED]: (state, { payload }) => {
+    let newState = { ...state, ...{ tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_FAILED } }
     return newState
   }
 }
@@ -98,6 +140,13 @@ export const initialState = {
   countyDictionary: {},
 
   regulationsDictionary: {},
+
+  tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_NOT_STARTED,
+
+  statesGeoJson: {},
+  countiesGeoJson: {},
+  regionsGeoJson: {},
+  streamCentroidsGeoJson: {},
 
   loadingStatus: LOADING_CONSTANTS.IS_NOT_STARTED
 }

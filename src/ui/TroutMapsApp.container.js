@@ -13,7 +13,7 @@ class TroutMapsAppContainer extends Component {
   }
 
   onRouteUpdate (a, b, c) {
-    console.log('change happened.', a, b, c)
+    // console.log('change happened.', a, b, c)
     // isExpaned
   }
 

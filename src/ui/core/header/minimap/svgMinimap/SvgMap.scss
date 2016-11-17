@@ -1,0 +1,42 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+
+.polygon {
+  fill: transparent;
+  stroke-width: 0.3px;
+  stroke-linejoin: round;
+}
+
+.states {
+  composes: polygon;
+  stroke: $off-white;
+}
+
+.regions {
+  composes: polygon;
+
+  a {
+    stroke: $off-white;
+    fill: transparentize($background, 0.3);
+  }
+
+  a:hover {
+    stroke: $off-white;
+    fill: $green;
+  }
+}
+
+.counties {
+  composes: polygon;
+}
+
+.centroids {
+  composes: polygon;
+  fill: $blue;
+}
+
+.expand from '../Minimap.scss' {
+  .regions {
+    stroke-width: 0.1px;
+  }
+}

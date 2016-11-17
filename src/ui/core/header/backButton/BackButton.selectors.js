@@ -21,7 +21,7 @@ export const isEnabledSelector = createSelector(
       .filter(x => x.length > 0)
 
     let isOnStreamDetails = params.length > 2
-    console.log(isOnStreamDetails)
+    // console.log(isOnStreamDetails)
     return isOnStreamDetails
   }
 )

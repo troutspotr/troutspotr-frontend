@@ -22,8 +22,6 @@ const FooterComponent = React.createClass({
 
   render () {
     let { view } = this.props
-    console.log(LIST, MAP)
-    console.log(classes.selected, classes.item)
     return (<div className={classes.footer}>
       <button onClick={this.props.setViewToList} className={view === LIST ? classes.selected : classes.item}>List</button>
       <button onClick={this.props.setViewToMap} className={view === MAP ? classes.selected : classes.item}>Map</button>

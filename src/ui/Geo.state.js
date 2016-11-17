@@ -5,6 +5,7 @@ import work from 'webworkify-webpack'
 import TableOfContentsApi from 'api/TableOfContentsApi.js'
 import { createAction } from 'redux-actions'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
+import { keyBy, lowerCase } from 'lodash'
 export const GEO_SET_GEO = 'GEO_SET_GEO'
 export const GEO_SET_LOADING = 'GEO_SET_LOADING'
 export const GEO_SET_LOADING_FAILED = 'GEO_SET_LOADING_FAILED'
@@ -108,8 +109,14 @@ const ACTION_HANDLERS = {
 
       ...{
         statesGeoJson: payload.states,
+        statesDictionary: keyBy(payload.states.features, s => lowerCase(s.properties.short_name)),
+
         countiesGeoJson: payload.counties,
+        countyDictionary: keyBy(payload.counties.features, c => lowerCase(c.properties.gid)),
+
         regionsGeoJson: payload.regions,
+        regionDictionary: keyBy(payload.regions.features, r => lowerCase(r.properties.name)),
+
         streamCentroidsGeoJson: payload.streamCentroids,
         tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_SUCCESS
       }
@@ -144,6 +151,7 @@ export const initialState = {
   tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_NOT_STARTED,
 
   statesGeoJson: {},
+  statesDictionary: {},
   countiesGeoJson: {},
   regionsGeoJson: {},
   streamCentroidsGeoJson: {},

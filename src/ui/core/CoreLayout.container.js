@@ -30,7 +30,7 @@ const CoreLayoutContainer = React.createClass({
 
   render () {
     let isFooterVisible = this.isFooterVisible()
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <div className={classes.coreLayout}>
         <div className={classes.headerLayout}>

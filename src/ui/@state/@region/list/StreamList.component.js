@@ -91,7 +91,7 @@ const StreamListComponent = React.createClass({
   },
 
   componentDidMount () {
-    console.log('LIST VIEW MOUNTED')
+    // console.log('LIST VIEW MOUNTED')
   },
 
   renderNonsenseContent () {
@@ -136,7 +136,6 @@ const StreamListComponent = React.createClass({
   },
 
   render () {
-    console.log('visiblility of stream list is', this.props.isVisible)
     return (
       <div className={this.props.isVisible ? classes.listViewContainer : classes.invisible}>
         <ul className={classes.list}>

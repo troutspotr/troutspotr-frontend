@@ -16,7 +16,6 @@ const MapComponent = React.createClass({
   },
 
   componentDidMount () {
-    console.log('MAP CONTAINER MOUNTED')
   },
 
   componentWillUnmount () {

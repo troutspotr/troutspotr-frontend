@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react'
 import classes from './Minimap.scss'
-import headerClasses from '../Header.scss'
 import kirby from './kirby.gif'
 import { isRootPageByUrl } from 'ui/Location.selectors'
 import { Link } from 'react-router'
 import debounce from 'lodash/debounce'
-import * as d3 from 'd3-geo'
+import SvgMapComponent from './svgMinimap/SvgMap.component'
+
 const MINIMAP_WIDTH = 50
-const REGION_INDEX = 2
-const STATE_INDEX = 1
+// const REGION_INDEX = 2
+// const STATE_INDEX = 1
+
 const MinimapComponent = React.createClass({
   propTypes: {
     isExpanded: PropTypes.bool.isRequired,
@@ -19,6 +20,9 @@ const MinimapComponent = React.createClass({
     countiesGeoJson: PropTypes.object.isRequired,
     regionsGeoJson: PropTypes.object.isRequired,
     streamCentroidsGeoJson: PropTypes.object.isRequired,
+    tableOfContentsLoadingStatus: PropTypes.string.isRequired,
+    selectedState: PropTypes.object,
+    selectedRegion: PropTypes.object,
 
     expand: PropTypes.func.isRequired,
     fetchTableOfContents: PropTypes.func.isRequired
@@ -111,7 +115,7 @@ const MinimapComponent = React.createClass({
     let newStyle = `translateY(${translateY}px) translateX(${-translateX}px) scale(${ratio})`
 
     result.style.transform = newStyle
-    console.log('finished resetting style for scale')
+    // console.log('finished resetting style for scale')
   },
 
   onSelectState (e) {
@@ -122,12 +126,13 @@ const MinimapComponent = React.createClass({
     this.props.expand(!this.props.isExpanded)
   },
 
-  selectRegion (e) {
+  selectRegion (e, region) {
     let shouldRespond = this.props.isExpanded
 
     // do not response to clicks when not expanded
     if (shouldRespond === false) {
-      return
+      e.preventDefault()
+      return false
     }
 
     e.stopPropagation()
@@ -136,57 +141,32 @@ const MinimapComponent = React.createClass({
 
   // take a url like '/mn/driftless/map/123'
   // and swap out region like '/mn/YOUR_REGION/map/123'
-  swapRegion ({ pathname }, newRegion) {
-    let stateId = 'mn'
-    if (pathname == null) {
-      return '/'
-    }
+  // swapRegion ({ pathname }, newRegion) {
+  //   let stateId = 'mn'
+  //   if (pathname == null) {
+  //     return '/'
+  //   }
 
-    if (pathname === '/') {
-      return `/${stateId}/${newRegion}`
-    }
+  //   if (pathname === '/') {
+  //     return `/${stateId}/${newRegion}`
+  //   }
 
-    let tokens = pathname.split('/')
-    tokens[REGION_INDEX] = newRegion
-    tokens[STATE_INDEX] = stateId
-    let locationIsTooLong = tokens.length > 4
-    if (locationIsTooLong) {
-      // turn '/mn/myRegion/map/123123123123'
-      // into '/mn/myRegion/map'
-      tokens = tokens.slice(0, 4)
-    }
-    let newUrl = `${tokens.join('/')}`
-    return newUrl
-  },
+  //   let tokens = pathname.split('/')
+  //   tokens[REGION_INDEX] = newRegion
+  //   tokens[STATE_INDEX] = stateId
+  //   let locationIsTooLong = tokens.length > 4
+  //   if (locationIsTooLong) {
+  //     // turn '/mn/myRegion/map/123123123123'
+  //     // into '/mn/myRegion/map'
+  //     tokens = tokens.slice(0, 4)
+  //   }
+  //   let newUrl = `${tokens.join('/')}`
+  //   return newUrl
+  // },
 
-  zoomToRegion (region) {
+  /*
 
-  },
-
-  renderStates () {
-
-  },
-
-  renderCounties () {
-
-  },
-
-  renderRegions () {
-
-  },
-
-  renderStreamCentroids () {
-
-  },
-
-  render () {
-    let { isExpanded, location } = this.props
-    let expandClass = isExpanded ? classes.expand : null
-    console.log('rendering minimap')
-    // console.log(isExpanded, expandClass)
-    return (
-      <div className={classes.minimapContent + ' ' + expandClass} onClick={this.onSelectState}>
-        <img src={kirby} />
+          <img src={kirby} />
         <span className={classes.tl}>
           <Link to={this.swapRegion(location, 'tl')} onClick={this.selectRegion}>tl</Link>
         </span>
@@ -199,6 +179,26 @@ const MinimapComponent = React.createClass({
         <span className={classes.br}>
           <Link to={this.swapRegion(location, 'br')} onClick={this.selectRegion}>br</Link>
         </span>
+
+        */
+
+  render () {
+    let { isExpanded, location } = this.props
+    let expandClass = isExpanded ? classes.expand : null
+    let isMapMinimapLoaded = this.props.statesGeoJson != null && this.props.statesGeoJson.features != null
+    return (
+      <div className={classes.minimapContent + ' ' + expandClass} onClick={this.onSelectState}>
+        {isMapMinimapLoaded && <SvgMapComponent
+          statesGeoJson={this.props.statesGeoJson}
+          countiesGeoJson={this.props.countiesGeoJson}
+          regionsGeoJson={this.props.regionsGeoJson}
+          streamCentroidsGeoJson={this.props.streamCentroidsGeoJson}
+          selectedRegion={this.props.selectedRegion}
+          selectedState={this.props.selectedState}
+          width={MINIMAP_WIDTH}
+          height={MINIMAP_WIDTH}
+          location={this.props.location}
+          selectRegion={this.selectRegion} />}
       </div>
     )
   }

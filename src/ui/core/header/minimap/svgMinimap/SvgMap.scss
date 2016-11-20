@@ -33,6 +33,7 @@
 .centroids {
   composes: polygon;
   fill: $blue;
+  pointer-events: none;
 }
 
 .selectedStreamCentroid {

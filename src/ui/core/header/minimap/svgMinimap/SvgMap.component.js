@@ -19,9 +19,6 @@ const getProjectionFromFeature = (feature, { width, height, radius }) => {
   return projection
 }
 
-// const REGION_INDEX = 2
-// const STATE_INDEX = 1
-
 const SvgMapComponent = React.createClass({
   propTypes: {
     statesGeoJson: PropTypes.object.isRequired,
@@ -128,11 +125,6 @@ const SvgMapComponent = React.createClass({
   },
 
   renderStreamCentroids () {
-    let isDebugging = true
-    if (isDebugging) {
-      return null
-    }
-    
     let { streamCentroidsGeoJson } = this.props
     if (isEmpty(streamCentroidsGeoJson)) {
       return null

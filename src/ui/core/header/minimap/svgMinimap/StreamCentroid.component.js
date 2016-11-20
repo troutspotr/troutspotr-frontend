@@ -29,12 +29,10 @@ const StreamCentroidComponent = React.createClass({
 
   shouldComponentUpdate (nextProps, nextState) {
     let isSame = nextProps.geoJson === this.props.geoJson
-    // console.log(isSame)
     return isSame === false
   },
 
   render () {
-    // console.log('rendering')
     let json = { type: 'Point', coordinates: this.props.geoJson.centroid, properties: this.props.geoJson }
     let path = this.props.pathGenerator(json)
     return (<path data-name={json.properties.name} d={path} />)

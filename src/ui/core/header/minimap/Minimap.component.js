@@ -29,16 +29,12 @@ const MinimapComponent = React.createClass({
     console.log('fetch!')
     this.props.fetchTableOfContents()
     if (window) {
-      this.debouncedResizeEvent = debounce(this.resizeEvent, 1000)
+      this.debouncedResizeEvent = debounce(this.resizeEvent, 200)
       window.addEventListener('resize', this.debouncedResizeEvent)
       window.addEventListener('orientationchange', this.debouncedResizeEvent)
     }
 
     this.listenToRoutes()
-    setInterval(() => {
-      console.log(this.props.isExpanded)
-      this.props.expand(this.props.isExpanded === false)
-    }, 600)
   },
 
   listenToRoutes () {
@@ -59,7 +55,7 @@ const MinimapComponent = React.createClass({
   },
 
   componentDidMount () {
-    setTimeout(this.resizeEvent, 1000)
+    setTimeout(this.resizeEvent, 20)
   },
 
   componentWillUnmount () {

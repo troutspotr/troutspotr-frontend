@@ -1,18 +1,14 @@
 import { connect } from 'react-redux'
 import SearchComponent from './Search.component'
-// import { saveBuilderProfile, fetchCompany } from './Profile.state'
-// import { loadingStatusSelector, savingStatusSelector } from './Profile.selectors'
+import { updateSearchText } from 'ui/core/Core.state'
+import { searchTextSelector } from 'ui/core/Core.selectors'
 const mapDispatchToProps = {
-  // saveProfile: (companyId, profileId, profile) => saveBuilderProfile(companyId, profileId, profile),
-  // loadCompany: (companyId) => fetchCompany(companyId)
+  updateSearchText: (text) => updateSearchText(text)
 }
 
 const mapStateToProps = (state) => {
   return {
-    // loadingStatus: loadingStatusSelector(state),
-    // savingStatus: savingStatusSelector(state),
-    // currentFormProfile: formDataSelector(state),
-    // currentCompany: companySelector(state)
+    searchText: searchTextSelector(state)
   }
 }
 

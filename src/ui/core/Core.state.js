@@ -1,4 +1,7 @@
 import { createAction } from 'redux-actions'
+import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
+import TableOfContentsApi from 'api/TableOfContentsApi.js'
+import { keyBy, lowerCase } from 'lodash'
 
 // ------------------------------------
 // Constants
@@ -13,33 +16,34 @@ export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 export const setViewToMap = createAction(REGION_SET_VIEW, x => MAP)
 export const setViewToList = createAction(REGION_SET_VIEW, x => LIST)
 
-/*  This is a thunk, meaning it is a function that immediately
-    returns a function for lazy evaluation. It is incredibly useful for
-    creating async actions, especially when combined with redux-thunk!
+export const GEO_SET_TABLE_OF_CONTENTS = 'GEO_SET_TABLE_OF_CONTENTS'
+export const GEO_TABLE_OF_CONTENTS_LOADING = 'GEO_TABLE_OF_CONTENTS_LOADING'
+export const GEO_TABLE_OF_CONTENTS_LOADING_FAILED = 'GEO_TABLE_OF_CONTENTS_LOADING_FAILED'
+export const GEO_UPDATE_SEARCH_TEXT = 'GEO_UPDATE_SEARCH_TEXT'
 
-    NOTE: This is solely for demonstration purposes. In a real application,
-    you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
-    reducer take care of this logic.  */
+export const setTableOfContents = createAction(GEO_SET_TABLE_OF_CONTENTS)
+export const setTableOfContentsLoading = createAction(GEO_TABLE_OF_CONTENTS_LOADING)
+export const setTableOfContentsFailed = createAction(GEO_TABLE_OF_CONTENTS_LOADING_FAILED)
 
-export const setViewToListAsync = () => {
-  return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        dispatch(setViewToList())
-        resolve()
-      }, 200)
-    })
+const updateSearchTextAction = createAction(GEO_UPDATE_SEARCH_TEXT)
+export const updateSearchText = (searchText) => {
+  return async (dispatch) => {
+    // TODO: debounce this and check for 3 character limit
+    dispatch(updateSearchTextAction(searchText))
   }
 }
 
-export const setViewToMapAsync = () => {
-  return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        dispatch(setViewToMap())
-        resolve()
-      }, 200)
-    })
+export const fetchTableOfContents = () => {
+  return async (dispatch) => {
+    dispatch(setTableOfContentsLoading())
+    try {
+      let gettingTableOfContents = TableOfContentsApi.getTableOfContents()
+      let [tableOfContents] = await Promise.all([gettingTableOfContents])
+      dispatch(setTableOfContents(tableOfContents))
+    } catch (error) {
+      console.log(error)
+      dispatch(setTableOfContentsFailed())
+    }
   }
 }
 
@@ -51,6 +55,39 @@ const ACTION_HANDLERS = {
     let view = payload || initialState.view
     let newState = { ...state, ...{ view } }
     return newState
+  },
+
+  [GEO_SET_TABLE_OF_CONTENTS]: (state, { payload }) => {
+    let newState = {
+      ...state,
+
+      ...{
+        statesGeoJson: payload.states,
+        statesDictionary: keyBy(payload.states.features, s => lowerCase(s.properties.short_name)),
+
+        countiesGeoJson: payload.counties,
+        countyDictionary: keyBy(payload.counties.features, c => lowerCase(c.properties.gid)),
+
+        regionsGeoJson: payload.regions,
+        regionDictionary: keyBy(payload.regions.features, r => lowerCase(r.properties.name)),
+
+        streamCentroidsGeoJson: payload.streamCentroids,
+        tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_SUCCESS
+      }
+    }
+    return newState
+  },
+  [GEO_TABLE_OF_CONTENTS_LOADING]: (state, { payload }) => {
+    let newState = { ...state, ...{ tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_PENDING } }
+    return newState
+  },
+  [GEO_TABLE_OF_CONTENTS_LOADING_FAILED]: (state, { payload }) => {
+    let newState = { ...state, ...{ tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_FAILED } }
+    return newState
+  },
+  [GEO_UPDATE_SEARCH_TEXT]: (state, { payload }) => {
+    let newState = { ...state, ...{ searchText: payload } }
+    return newState
   }
 }
 
@@ -60,7 +97,13 @@ const ACTION_HANDLERS = {
 const initialState = {
   view: LIST,
   isMapModuleLoaded: false,
-  isMapReadyToDisplay: false
+  isMapReadyToDisplay: false,
+  searchText: '',
+  statesGeoJson: {},
+  statesDictionary: {},
+  countiesGeoJson: {},
+  regionsGeoJson: {},
+  tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_NOT_STARTED
 }
 
 export default function counterReducer (state = initialState, action) {

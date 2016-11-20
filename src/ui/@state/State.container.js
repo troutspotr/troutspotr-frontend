@@ -1,19 +1,16 @@
 import { connect } from 'react-redux'
 import StateComponent from './State.component'
-// import { saveBuilderProfile, fetchCompany } from './Profile.state'
-// import { loadingStatusSelector, savingStatusSelector } from './Profile.selectors'
+import { fetchStateData } from './State.state'
+import { selectedStateIdSelector } from 'ui/core/Core.selectors'
 const mapDispatchToProps = {
-  // saveProfile: (companyId, profileId, profile) => saveBuilderProfile(companyId, profileId, profile),
-  // loadCompany: (companyId) => fetchCompany(companyId)
+  fetchStateData: stateId => fetchStateData(stateId)
 }
 
 const mapStateToProps = (state) => {
-  return {
-    // loadingStatus: loadingStatusSelector(state),
-    // savingStatus: savingStatusSelector(state),
-    // currentFormProfile: formDataSelector(state),
-    // currentCompany: companySelector(state)
+  let props = {
+    selectedState: selectedStateIdSelector(state)
   }
+  return props
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StateComponent)

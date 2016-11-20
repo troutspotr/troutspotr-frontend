@@ -1,8 +1,8 @@
 import RegionLayout from './Region.container'
-import RegionComponent from './Region.component'
+// import RegionComponent from './Region.component'
 // import RegionLayout from './Region.layout'
-const AVAILABLE_VIEWS = ['list', 'map']
-const PREFERED_VIEW_DEFAULT = AVAILABLE_VIEWS[0]
+// const AVAILABLE_VIEWS = ['list', 'map']
+// const PREFERED_VIEW_DEFAULT = AVAILABLE_VIEWS[0]
 
 const createRoutes = (store) => ({
   path        : '/:state/:region',

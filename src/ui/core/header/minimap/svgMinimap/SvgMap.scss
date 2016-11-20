@@ -35,6 +35,11 @@
   fill: $blue;
 }
 
+.selectedStreamCentroid {
+  composes: polygon;
+  fill: $blue;
+}
+
 .expand from '../Minimap.scss' {
   .regions {
     stroke-width: 0.1px;

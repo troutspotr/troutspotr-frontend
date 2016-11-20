@@ -3,16 +3,22 @@ const debug = require('debug')('app:server')
 const webpack = require('webpack')
 const webpackConfig = require('../build/webpack.config')
 const config = require('../config')
+const history = require('connect-history-api-fallback')
 
 const app = express()
 const paths = config.utils_paths
 var compress = require('compression')
-
+app.use(compress())
 // This rewrites all routes requests to the root /index.html file
 // (ignoring file requests). If you want to implement universal
 // rendering, you'll want to remove this middleware.
-app.use(compress())
-app.use(require('connect-history-api-fallback')())
+app.use(history({
+  // disableDotRule: true,
+  verbose: true,
+  rewrites: [
+    { from: /@/, to: '/index.html' }
+  ]
+}))
 
 // ------------------------------------
 // Apply Webpack HMR Middleware

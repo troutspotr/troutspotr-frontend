@@ -4,14 +4,14 @@ import React from 'react'
 
 const StateComponent = React.createClass({
   propTypes: {
-    // streams: PropTypes.array.isRequired,
-    // getSouthEasternStreams: PropTypes.func.isRequired
+    selectedState: React.PropTypes.string.isRequired,
+    fetchStateData: React.PropTypes.func.isRequired,
     children: React.PropTypes.element
   },
 
-  // componentDidMount () {
-  //   this.props.getSouthEasternStreams()
-  // },
+  componentDidMount () {
+    this.props.fetchStateData(this.props.selectedState)
+  },
 
   render () {
     return (this.props.children)

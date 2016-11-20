@@ -48,6 +48,10 @@ const MapComponent = React.createClass({
   },
 
   renderLoading () {
+    if (this.props.isVisible === false) {
+      return null
+    }
+
     return (<LoadingComponent subTitle={'Loading Map'} />)
   },
 

@@ -1,14 +1,10 @@
 import React, { PropTypes } from 'react'
 import classes from './Minimap.scss'
-import kirby from './kirby.gif'
 import { isRootPageByUrl } from 'ui/Location.selectors'
-import { Link } from 'react-router'
 import debounce from 'lodash/debounce'
 import SvgMapComponent from './svgMinimap/SvgMap.component'
 
 const MINIMAP_WIDTH = 50
-// const REGION_INDEX = 2
-// const STATE_INDEX = 1
 
 const MinimapComponent = React.createClass({
   propTypes: {
@@ -19,24 +15,30 @@ const MinimapComponent = React.createClass({
     statesGeoJson: PropTypes.object.isRequired,
     countiesGeoJson: PropTypes.object.isRequired,
     regionsGeoJson: PropTypes.object.isRequired,
-    streamCentroidsGeoJson: PropTypes.object.isRequired,
+    streamCentroidsGeoJson: PropTypes.array,
     tableOfContentsLoadingStatus: PropTypes.string.isRequired,
     selectedState: PropTypes.object,
     selectedRegion: PropTypes.object,
+    selectedStreamCentroid: PropTypes.object,
 
     expand: PropTypes.func.isRequired,
     fetchTableOfContents: PropTypes.func.isRequired
   },
 
   componentWillMount () {
+    console.log('fetch!')
     this.props.fetchTableOfContents()
     if (window) {
-      this.debouncedResizeEvent = debounce(this.resizeEvent, 500)
+      this.debouncedResizeEvent = debounce(this.resizeEvent, 1000)
       window.addEventListener('resize', this.debouncedResizeEvent)
       window.addEventListener('orientationchange', this.debouncedResizeEvent)
     }
 
     this.listenToRoutes()
+    setInterval(() => {
+      console.log(this.props.isExpanded)
+      this.props.expand(this.props.isExpanded === false)
+    }, 600)
   },
 
   listenToRoutes () {
@@ -57,7 +59,7 @@ const MinimapComponent = React.createClass({
   },
 
   componentDidMount () {
-    setTimeout(this.resizeEvent, 500)
+    setTimeout(this.resizeEvent, 1000)
   },
 
   componentWillUnmount () {
@@ -102,6 +104,7 @@ const MinimapComponent = React.createClass({
   },
 
   resizeEvent () {
+    
     let width = (window.innerWidth > 0) ? window.innerWidth : screen.width
     let height = (window.innerHeight > 0) ? window.innerHeight : screen.height
 
@@ -139,68 +142,32 @@ const MinimapComponent = React.createClass({
     this.props.expand(false)
   },
 
-  // take a url like '/mn/driftless/map/123'
-  // and swap out region like '/mn/YOUR_REGION/map/123'
-  // swapRegion ({ pathname }, newRegion) {
-  //   let stateId = 'mn'
-  //   if (pathname == null) {
-  //     return '/'
-  //   }
-
-  //   if (pathname === '/') {
-  //     return `/${stateId}/${newRegion}`
-  //   }
-
-  //   let tokens = pathname.split('/')
-  //   tokens[REGION_INDEX] = newRegion
-  //   tokens[STATE_INDEX] = stateId
-  //   let locationIsTooLong = tokens.length > 4
-  //   if (locationIsTooLong) {
-  //     // turn '/mn/myRegion/map/123123123123'
-  //     // into '/mn/myRegion/map'
-  //     tokens = tokens.slice(0, 4)
-  //   }
-  //   let newUrl = `${tokens.join('/')}`
-  //   return newUrl
-  // },
-
-  /*
-
-          <img src={kirby} />
-        <span className={classes.tl}>
-          <Link to={this.swapRegion(location, 'tl')} onClick={this.selectRegion}>tl</Link>
-        </span>
-        <span className={classes.tr}>
-          <Link to={this.swapRegion(location, 'tr')} onClick={this.selectRegion}>tr</Link>
-        </span>
-        <span className={classes.bl}>
-          <Link to={this.swapRegion(location, 'bl')} onClick={this.selectRegion}>bl</Link>
-        </span>
-        <span className={classes.br}>
-          <Link to={this.swapRegion(location, 'br')} onClick={this.selectRegion}>br</Link>
-        </span>
-
-        */
-
   render () {
-    let { isExpanded, location } = this.props
+    console.log('render minimap')
+    let { isExpanded, selectedStreamCentroid } = this.props
     let expandClass = isExpanded ? classes.expand : null
     let isMapMinimapLoaded = this.props.statesGeoJson != null && this.props.statesGeoJson.features != null
+    let isViewingStreamDetailsAndNotExpanded = selectedStreamCentroid != null && isExpanded === false
+
+    let streamCentroidsGeoJson = isViewingStreamDetailsAndNotExpanded
+      ? emptyArray
+      : this.props.streamCentroidsGeoJson
     return (
       <div className={classes.minimapContent + ' ' + expandClass} onClick={this.onSelectState}>
         {isMapMinimapLoaded && <SvgMapComponent
           statesGeoJson={this.props.statesGeoJson}
           countiesGeoJson={this.props.countiesGeoJson}
           regionsGeoJson={this.props.regionsGeoJson}
-          streamCentroidsGeoJson={this.props.streamCentroidsGeoJson}
+          streamCentroidsGeoJson={streamCentroidsGeoJson}
           selectedRegion={this.props.selectedRegion}
           selectedState={this.props.selectedState}
+          selectedStreamCentroid={this.props.selectedStreamCentroid}
           width={MINIMAP_WIDTH}
           height={MINIMAP_WIDTH}
-          location={this.props.location}
           selectRegion={this.selectRegion} />}
       </div>
     )
   }
 })
+const emptyArray = []
 export default MinimapComponent

@@ -5,21 +5,16 @@ export const buildTableOfContentsEndpoint = () => {
 }
 export class TableOfContentsApi extends BaseApi {
   async getTableOfContents () {
-    console.log('why am i being called');
     let endpoint = buildTableOfContentsEndpoint()
     let tocTopojson = await this.get(endpoint)
     let states = topojson.feature(tocTopojson, tocTopojson.objects.minnesota)
     let counties = topojson.feature(tocTopojson, tocTopojson.objects.minnesota_county)
     let regions = topojson.feature(tocTopojson, tocTopojson.objects.region)
-    let streamCentroids = {
-      features: tocTopojson.objects.stream_centroids.geometries
-    }
-    // console.log(streamCentroids.features.map(f => f.geometry.coordinates))
+    console.log('got table of contents')
     return {
       states,
       counties,
-      regions,
-      streamCentroids
+      regions
     }
   }
 }

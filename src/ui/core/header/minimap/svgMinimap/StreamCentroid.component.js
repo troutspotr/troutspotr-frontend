@@ -6,8 +6,8 @@ const StreamCentroidComponent = React.createClass({
   propTypes: {
     geoJson: PropTypes.object.isRequired,
     isSelected: PropTypes.bool.isRequired,
-    pathGenerator: PropTypes.func.isRequired
-    // projection: PropTypes.func.isRequired
+    pathGenerator: PropTypes.func.isRequired,
+    projection: PropTypes.func.isRequired
   },
 
   componentWillMount () {
@@ -27,8 +27,15 @@ const StreamCentroidComponent = React.createClass({
 
   },
 
+  shouldComponentUpdate (nextProps, nextState) {
+    let isSame = nextProps.geoJson === this.props.geoJson
+    // console.log(isSame)
+    return isSame === false
+  },
+
   render () {
-    let json = this.props.geoJson
+    // console.log('rendering')
+    let json = { type: 'Point', coordinates: this.props.geoJson.centroid, properties: this.props.geoJson }
     let path = this.props.pathGenerator(json)
     return (<path data-name={json.properties.name} d={path} />)
   }

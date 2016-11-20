@@ -14,7 +14,7 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  border-color: $off-white;
+  border-color: transparentize($off-white, 0.7);
   border-width: 1px;
   border-style: solid;
   position: relative;

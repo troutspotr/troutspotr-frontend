@@ -31,6 +31,11 @@
   cursor: pointer;
 }
 
+.help {
+  composes: item;
+  padding-top: 7px !important;
+}
+
 .selected {
   composes: item;
   border-bottom: 5px solid $blue;

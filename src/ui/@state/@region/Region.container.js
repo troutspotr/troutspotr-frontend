@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import RegionLayout from './Region.layout'
 import { fetchRegionData } from './Region.state'
-import { visibleTroutStreams } from './Region.selectors'
+import { visibleTroutStreams, regionLoadingStatusSelector } from './Region.selectors'
 import { selectedStateIdSelector, selectedRegionIdSelector, viewSelector } from 'ui/core/Core.selectors'
 const mapDispatchToProps = {
   fetchRegionData: (stateId, regionId) => fetchRegionData(stateId, regionId)
@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
     view: viewSelector(state),
     troutStreams: visibleTroutStreams(state),
     selectedState: selectedStateIdSelector(state),
-    selectedRegion: selectedRegionIdSelector(state)
+    selectedRegion: selectedRegionIdSelector(state),
+    regionLoadingStatus: regionLoadingStatusSelector(state)
   }
 
   return props

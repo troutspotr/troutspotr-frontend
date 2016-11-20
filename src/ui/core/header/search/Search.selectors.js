@@ -5,13 +5,17 @@ import { isExpandedSelector } from '../minimap/Minimap.selectors'
 export const isSearchVisibleSelector = createSelector(
   [locationSelector, isExpandedSelector, isRootPageSelector],
   (location, isMinimapExpanded, isRootPage) => {
+    if (isRootPage) {
+      return false
+    }
+
     if (isMinimapExpanded) {
       return true
     }
 
-    if (isRootPage) {
-      return true
-    }
+    // if (isRootPage) {
+    //   return true
+    // }
 
     // I don't really know how to do this part yet..
     // i would like to have more sophisticated access

@@ -52,27 +52,27 @@ const SvgMapComponent = React.createClass({
       .pointRadius(1.6)
   },
 
-  shouldComponentUpdate (nextProps, nextState) {
-    let desiredProps = ['statesGeoJson',
-      'countiesGeoJson',
-      'regionsGeoJson',
-      'streamCentroidsGeoJson',
-      'selectedRegion',
-      'selectedState',
-      'width',
-      'height',
-      'selectedStreamCentroid']
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   let desiredProps = ['statesGeoJson',
+  //     'countiesGeoJson',
+  //     'regionsGeoJson',
+  //     'streamCentroidsGeoJson',
+  //     'selectedRegion',
+  //     'selectedState',
+  //     'width',
+  //     'height',
+  //     'selectedStreamCentroid']
 
-    let differentProps = desiredProps.filter(prop => {
-      let isDifferent = nextProps[prop] !== this.props[prop]
-      if (isDifferent) {
-        console.log('mismatch!', prop)
-      }
-      return isDifferent
-    })
+  //   let differentProps = desiredProps.filter(prop => {
+  //     let isDifferent = nextProps[prop] !== this.props[prop]
+  //     if (isDifferent) {
+  //       console.log('mismatch!', prop)
+  //     }
+  //     return isDifferent
+  //   })
 
-    return differentProps.length > 1
-  },
+  //   return differentProps.length > 1
+  // },
 
   componentDidMount () {
   },

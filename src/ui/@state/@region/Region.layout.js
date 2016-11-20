@@ -3,6 +3,8 @@ import classes from './Region.scss'
 import { MAP, LIST } from 'ui/core/Core.state'
 import MapContainer from './map/Map.container'
 import ListComponent from './list/StreamList.container'
+import LoadingComponent from 'ui/core/loading/Loading.component'
+import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 // console.log(MAP, LIST)
 const RegionLayout = React.createClass({
   propTypes: {
@@ -10,12 +12,32 @@ const RegionLayout = React.createClass({
     children: PropTypes.element,
     fetchRegionData: PropTypes.func.isRequired,
     selectedState: PropTypes.string.isRequired,
-    selectedRegion: PropTypes.string.isRequired
+    selectedRegion: PropTypes.string.isRequired,
+    regionLoadingStatus: PropTypes.string.isRequired
   },
 
   componentDidMount () {
     let { fetchRegionData, selectedState, selectedRegion } = this.props
     fetchRegionData(selectedState, selectedRegion)
+  },
+
+  componentWillReceiveProps (nextProps) {
+    let { selectedState, selectedRegion } = nextProps
+    let nextCombo = (selectedState + selectedRegion).toLowerCase()
+    let currentCombo = (this.props.selectedState + this.props.selectedRegion).toLowerCase()
+
+    if (nextCombo !== currentCombo) {
+      console.log('props changed, loading next region')
+      this.props.fetchRegionData(selectedState, selectedRegion)
+    }
+  },
+
+  renderLoading () {
+    if (this.props.regionLoadingStatus === LOADING_CONSTANTS.IS_PENDING) {
+      return (<LoadingComponent subTitle={'Loading New Region'} />)
+    }
+
+    return null
   },
 
   renderMap () {
@@ -39,6 +61,7 @@ const RegionLayout = React.createClass({
         {this.renderMap()}
         {this.renderList()}
         {view === LIST && this.props.children}
+        {this.renderLoading()}
       </div>
 
     )

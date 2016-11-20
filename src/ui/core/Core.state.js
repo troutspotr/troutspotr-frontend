@@ -63,13 +63,13 @@ const ACTION_HANDLERS = {
 
       ...{
         statesGeoJson: payload.states,
-        statesDictionary: keyBy(payload.states.features, s => lowerCase(s.properties.short_name)),
+        statesDictionary: keyBy(payload.states.features, s => s.properties.short_name.toLowerCase()),
 
         countiesGeoJson: payload.counties,
-        countyDictionary: keyBy(payload.counties.features, c => lowerCase(c.properties.gid)),
+        countyDictionary: keyBy(payload.counties.features, c => c.properties.gid),
 
         regionsGeoJson: payload.regions,
-        regionDictionary: keyBy(payload.regions.features, r => lowerCase(r.properties.name)),
+        regionDictionary: keyBy(payload.regions.features, r => r.properties.name.toLowerCase()),
 
         streamCentroidsGeoJson: payload.streamCentroids,
         tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_SUCCESS

@@ -8,12 +8,13 @@ export const isTitleVisibleSelector = createSelector([isSearchVisibleSelector], 
 })
 
 const PLACEHOLDER_TITLE = ''
-const SELECT_REGION = 'Select Region'
+const WELCOME_TITLE = 'Welcome'
+// const SELECT_REGION = 'Select Region'
 export const subtitleSelector = createSelector(
   [isRootPageSelector, selectedRegionSelector, selectedStateSelector],
   (isRootPage, selectedRegion, selectedState) => {
     if (isRootPage) {
-      return SELECT_REGION
+      return WELCOME_TITLE
     }
     let isOnlyStateSelected = selectedState != null && selectedRegion == null
     if (isOnlyStateSelected) {

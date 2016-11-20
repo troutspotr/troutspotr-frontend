@@ -34,7 +34,7 @@ const RegionComponent = React.createClass({
     let json = this.props.geoJson
     let path = this.props.pathGenerator(json.geometry)
     return (
-      <Link onClick={e => this.props.selectRegion(e, json)} to={`/${this.props.stateName}/${json.properties.name}`}>
+      <Link onClick={e => this.props.selectRegion(e, json)} to={`/${this.props.stateName.toLowerCase()}/${json.properties.name.toLowerCase()}`}>
         <path data-name={json.properties.name} d={path} />
       </Link>)
   }

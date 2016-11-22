@@ -48,12 +48,16 @@ const MapboxGlComponent = React.createClass({
 
     // did our geoJson change?
     if (isReadyToInsertLayers === false) {
+      console.log('props changed but not ready')
       return
     }
     let { sources } = this.props
+    console.log('props changed...')
     let isSourceChanged = sources !== nextProps.sources
     if (isSourceChanged) {
-      this.safelySetSources(this.map, sources)
+      this.safelySetSources(this.map, nextProps.sources)
+    } else {
+      console.log('but source didnt get set')
     }
   },
 

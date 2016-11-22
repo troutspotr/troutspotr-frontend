@@ -15,8 +15,8 @@ const emptyGeoJson = {
 export const isReadyToInsertLayersSelector = createSelector(
   [isMapboxModuleLoadedSelector, getMapInteractivitySelector, regionLoadingStatusSelector],
   (isMapboxModuleLoaded, interactivity, regionStatus) => {
-    let isDataReady = regionStatus === LOADING_CONSTANTS.IS_SUCCESS
+    // let isDataReady = regionStatus === LOADING_CONSTANTS.IS_SUCCESS
     let isMapModuleLoaded = isMapboxModuleLoaded === LOADING_CONSTANTS.IS_SUCCESS
-    let result = isDataReady && isMapModuleLoaded && interactivity.isMapInitialized
+    let result = isMapModuleLoaded && interactivity.isMapInitialized
     return result
   })

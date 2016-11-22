@@ -19,11 +19,6 @@
     stroke: $off-white;
     fill: transparentize($background, 0.3);
   }
-
-  a:hover {
-    stroke: $off-white;
-    fill: $green;
-  }
 }
 
 .counties {
@@ -32,13 +27,24 @@
 
 .centroids {
   composes: polygon;
-  fill: $blue;
+  fill: transparentize($blue, 0.3);
   pointer-events: none;
 }
 
 .selectedStreamCentroid {
   composes: polygon;
   fill: $blue;
+}
+
+.selectedRegions {
+  pointer-events: none;
+
+  a {
+    stroke: $blue;
+    stroke-width: 0.7px;
+  }
+
+  composes: polygon;
 }
 
 .expand from '../Minimap.scss' {

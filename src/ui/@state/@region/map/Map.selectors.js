@@ -1,10 +1,11 @@
 import { createSelector } from 'reselect'
 import { isMapboxModuleLoadedSelector } from 'ui/core/MapboxModule.selectors'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-export const getMapCamera = state => state.map.camera
-export const getMapGround = state => state.map.ground
-export const getMapSettings = state => state.map.settings
-export const getMapInteractivity = state => state.map.interactivity
+import { regionLoadingStatusSelector } from 'ui/@state/@region/Region.selectors'
+export const getMapCameraSelector = state => state.map.camera
+export const getMapGroundSelector = state => state.map.ground
+export const getMapSettingsSelector = state => state.map.settings
+export const getMapInteractivitySelector = state => state.map.interactivity
 
 const emptyGeoJson = {
   type: 'FeatureCollection',
@@ -12,9 +13,9 @@ const emptyGeoJson = {
 }
 
 export const isReadyToInsertLayersSelector = createSelector(
-  [isMapboxModuleLoadedSelector, getMapInteractivity],
-  (isMapboxModuleLoaded, interactivity) => {
-    let isDataReady = true
+  [isMapboxModuleLoadedSelector, getMapInteractivitySelector, regionLoadingStatusSelector],
+  (isMapboxModuleLoaded, interactivity, regionStatus) => {
+    let isDataReady = regionStatus === LOADING_CONSTANTS.IS_SUCCESS
     let isMapModuleLoaded = isMapboxModuleLoaded === LOADING_CONSTANTS.IS_SUCCESS
     let result = isDataReady && isMapModuleLoaded && interactivity.isMapInitialized
     return result

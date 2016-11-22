@@ -44,7 +44,7 @@ if (config.env === 'development') {
   // these files. This middleware doesn't need to be enabled outside
   // of development since this directory will be copied into ~/dist
   // when the application is compiled.
-  
+
   app.use(express.static(paths.client('static')))
 } else {
   debug(

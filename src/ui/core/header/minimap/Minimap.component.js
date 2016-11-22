@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import classes from './Minimap.scss'
-import { isRootPageByUrl } from 'ui/Location.selectors'
+import { isRootPageByUrl, isStatePageByUrl } from 'ui/Location.selectors'
 import debounce from 'lodash/debounce'
 import SvgMapComponent from './svgMinimap/SvgMap.component'
 
@@ -45,7 +45,7 @@ const MinimapComponent = React.createClass({
     }
 
     router.listen(({ pathname }) => {
-      if (isRootPageByUrl(pathname)) {
+      if (isRootPageByUrl(pathname) || isStatePageByUrl(pathname)) {
         this.props.expand(true)
         return
       }
@@ -100,7 +100,6 @@ const MinimapComponent = React.createClass({
   },
 
   resizeEvent () {
-    
     let width = (window.innerWidth > 0) ? window.innerWidth : screen.width
     let height = (window.innerHeight > 0) ? window.innerHeight : screen.height
 
@@ -139,11 +138,10 @@ const MinimapComponent = React.createClass({
   },
 
   render () {
-    console.log('render minimap')
-    let { isExpanded, selectedStreamCentroid } = this.props
+    let { isExpanded } = this.props
     let expandClass = isExpanded ? classes.expand : null
     let isMapMinimapLoaded = this.props.statesGeoJson != null && this.props.statesGeoJson.features != null
-    let isViewingStreamDetailsAndNotExpanded = selectedStreamCentroid != null && isExpanded === false
+    let isViewingStreamDetailsAndNotExpanded = isExpanded === false
 
     let streamCentroidsGeoJson = isViewingStreamDetailsAndNotExpanded
       ? emptyArray

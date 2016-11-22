@@ -1,12 +1,24 @@
 import React, { PropTypes } from 'react'
 // import { Link } from 'react-router'
 import classes from '../Map.scss'
+import MapboxGlLayerComponent from './MapboxGl.component.layer'
 const MapboxGlComponent = React.createClass({
   propTypes: {
     mapbox: PropTypes.object.isRequired,
     elementId: PropTypes.string.isRequired,
+    camera: PropTypes.object.isRequired,
+    ground: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired,
+    interactivity: PropTypes.object.isRequired,
+    onMapLoadCallback: PropTypes.func.isRequired,
+    isReadyToInsertLayers: PropTypes.bool.isRequired,
+    sources: PropTypes.array.isRequired,
+    // layers: PropTypes.array.isRequired,
+    // filters: PropTypes.array.isRequired,
+    layerPackage: PropTypes.array.isRequired,
 
-    onMapLoadCallback: PropTypes.func.isRequired
+    onFeatureClick: PropTypes.func.isRequires,
+    onFeatureHover: PropTypes.func.isRequires
   },
 
   onClick () {
@@ -16,26 +28,61 @@ const MapboxGlComponent = React.createClass({
   componentDidMount () {
     console.log('MAP MOUNTED')
     this.map = new this.props.mapbox.Map({
-      container: this.props.elementId, // container id
-      style: 'mapbox://styles/andest01/citblizjo000z2hmlcmodgxxq', // stylesheet location
-      center: [-74.50, 40], // starting position
-      zoom: 4 // starting zoom
+      container: this.props.elementId,
+      style: 'mapbox://styles/andest01/civrfvrrh004h2jpb8ag0wsjf',
+      center: [-93.50, 42],
+      zoom: 4
     })
 
+    this.map.dragRotate.disable()
+    this.map.touchZoomRotate.disableRotation()
     this.props.onMapLoadCallback(false)
     this.map.once('load', this.onMapLoad)
-    this.map.on('data', this.onDataLoad)
+    this.map.once('data', this.onDataLoad)
     this.map.on('layer.add', e => { console.log(e) })
   },
 
-  shouldComponentUpdate () {
-    // do not re-render via diff:
-    return false
+  componentWillReceiveProps (nextProps) {
+    let { isReadyToInsertLayers } = nextProps
+    console.log(isReadyToInsertLayers)
+
+    // did our geoJson change?
+    if (isReadyToInsertLayers === false) {
+      return
+    }
+    let { sources } = this.props
+    let isSourceChanged = sources !== nextProps.sources
+    if (isSourceChanged) {
+      this.safelySetSources(this.map, sources)
+    }
   },
+
+  setSourceOnStyleLoad (e) {
+
+  },
+
+  safelySetSources (map, sources) {
+    sources.forEach(source => {
+      let { sourceId, sourceData } = source
+      let jsonSource = {
+        type: 'geojson',
+        data: sourceData
+      }
+      let mapSource = map.getSource(sourceId)
+      if (mapSource == null) {
+        map.addSource(sourceId, jsonSource)
+      } else {
+        mapSource.setData(sourceData)
+      }
+    })
+  },
+
+  // shouldComponentUpdate () {
+  //   return false
+  // },
 
   onMapLoad (e) {
     console.log('map fully loaded', e)
-    // this.props.onMapLoadCallback(true)
   },
 
   onDataLoad (e) {
@@ -43,7 +90,7 @@ const MapboxGlComponent = React.createClass({
       return
     }
 
-    console.log('data of some kind loaded...', e)
+    this.safelySetSources(this.map, this.props.sources)
     this.props.onMapLoadCallback(true)
   },
 
@@ -54,7 +101,18 @@ const MapboxGlComponent = React.createClass({
   },
 
   render () {
-    <div id={this.props.elementId} className={classes.map} />
+    // return null
+    return (<div id={this.props.elementId} className={classes.map}>
+      {this.props.isReadyToInsertLayers &&
+        this.props.layerPackage.map(mapLayer => {
+          return (<MapboxGlLayerComponent
+            map={this.map}
+            layers={mapLayer.layers}
+            filters={mapLayer.filters}
+            onFeatureClick={this.props.onFeatureClick}
+            onFeatureHover={this.props.onFeatureHover} />)
+        })}
+    </div>)
   }
 })
 export default MapboxGlComponent

@@ -5,6 +5,12 @@ import { displayedCentroidDictionarySelector } from 'ui/@state/State.selectors'
 export const troutStreamDictionarySelector = state => state.region.troutStreamDictionary
 export const regionLoadingStatusSelector = state => state.region.regionLoadingStatus
 
+export const troutStreamSectionsSelector = state => state.region.troutStreamSections
+export const restrictionSectionsSelector = state => state.region.restrictionSections
+export const streamsSelector = state => state.region.streams
+export const palSectionsSelector = state => state.region.palSections
+export const streamAccessPointSelector = state => state.region.streamAccessPoint
+export const palsSelector = state => state.region.pals
 
 const EMPTY_STREAMS = []
 export const visibleTroutStreams = createSelector(
@@ -20,6 +26,11 @@ export const visibleTroutStreams = createSelector(
 
     let streamArray = values(troutStreamDictionary)
     let filteredStreams = streamArray.filter(streamItem => has(displayedDictionary, streamItem.stream.properties.gid))
-    console.log('lots of work')
     return filteredStreams
+  })
+
+export const visibleTroutStreamIdsSelector = createSelector(
+  [visibleTroutStreams],
+  (visibleStreams) => {
+    return visibleStreams.map(s => s.stream.properties.gid)
   })

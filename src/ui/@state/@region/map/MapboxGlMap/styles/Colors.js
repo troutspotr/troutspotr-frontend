@@ -1,0 +1,5 @@
+export const StreamGray = 'hsl(199, 18%, 32%)'
+export const StreamBlue = 'hsl(199, 99%, 61%)'
+export const PalGreen = 'hsl(67, 89%, 48%)'
+export const RestrictionYellow = 'hsl(52, 100%, 50%)'
+export const MoodyGray = 'hsl(0, 0%, 13%)'

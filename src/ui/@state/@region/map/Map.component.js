@@ -10,7 +10,10 @@ const MapComponent = React.createClass({
     mapboxModuleStatus: PropTypes.string.isRequired,
     isVisible: PropTypes.bool.isRequired,
     isReadyToInsertLayers: PropTypes.bool.isRequired,
-
+    camera: PropTypes.object.isRequired,
+    ground: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired,
+    interactivity: PropTypes.object.isRequired,
     loadMapModuleAsync: PropTypes.func.isRequired,
     setIsMapInitialized: PropTypes.func.isRequired
   },
@@ -32,7 +35,8 @@ const MapComponent = React.createClass({
     let previousModuleLoadStatus = this.props.mapboxModuleStatus
     let currentlyVisible = nextProps.isVisible
 
-    let isVisibleAndNeedsLoad = currentlyVisible && previousModuleLoadStatus === LOADING_CONSTANTS.IS_NOT_STARTED
+    let isVisibleAndNeedsLoad = currentlyVisible &&
+      previousModuleLoadStatus === LOADING_CONSTANTS.IS_NOT_STARTED
 
     if (isVisibleAndNeedsLoad) {
       this.props.loadMapModuleAsync()
@@ -44,6 +48,13 @@ const MapComponent = React.createClass({
     return (<MapboxGlContainer
       mapbox={this.props.mapboxModule}
       onMapLoadCallback={this.props.setIsMapInitialized}
+      camera={this.props.camera}
+      ground={this.props.ground}
+      settings={this.props.settings}
+      interactivity={this.props.interactivity}
+      onFeatureClick={this.onFeatureClick}
+      onFeatureHover={this.onFeatureHover}
+      isReadyToInsertLayers={this.props.isReadyToInsertLayers}
       elementId={MAP_ID} />)
   },
 
@@ -55,29 +66,22 @@ const MapComponent = React.createClass({
     return (<LoadingComponent subTitle={'Loading Map'} />)
   },
 
+  onFeatureClick (feature) {
+    // this.props.selectState(feature.properties);
+  },
+
+  onFeatureHover (feature) {
+
+  },
+
   render () {
     let isMapLoaded = this.props.mapboxModuleStatus === LOADING_CONSTANTS.IS_SUCCESS
     let { isReadyToInsertLayers } = this.props
     return (<div className={this.props.isVisible ? classes.mapContainer : classes.invisible}>
-      <div id={MAP_ID} className={classes.map} />
       {isMapLoaded && this.renderMap()}
       {isReadyToInsertLayers === false && this.renderLoading()}
     </div>)
   }
 })
 
-// <Link to='/mn/superior/123'>Go To superior map with stream 123</Link>
 export default MapComponent
-
-// function loadMapAsync () {
-//   return new Promise((resolve, reject) => {
-//     try {
-//       require.ensure([], require => {
-//         const key = 'pk.eyJ1IjoiYW5kZXN0MDEiLCJhIjoibW02QnJLSSJ9._I2ruvGf4OGDxlZBU2m3KQ'
-//         let mapboxGl = require('mapbox-gl/dist/mapbox-gl')
-//         mapboxGl.accessToken = key
-//         resolve({ mapboxGl })
-//       }, 'map')
-//     } catch (e) {
-//     }
-//   }) }

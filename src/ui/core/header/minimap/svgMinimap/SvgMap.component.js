@@ -45,34 +45,12 @@ const SvgMapComponent = React.createClass({
 
     this.pathGenerator = d3.geoPath()
       .projection(this.projection)
-      .pointRadius(0.4)
+      .pointRadius(0.3)
 
     this.selectedCentroidPathGenerator = d3.geoPath()
       .projection(this.projection)
       .pointRadius(1.6)
   },
-
-  // shouldComponentUpdate (nextProps, nextState) {
-  //   let desiredProps = ['statesGeoJson',
-  //     'countiesGeoJson',
-  //     'regionsGeoJson',
-  //     'streamCentroidsGeoJson',
-  //     'selectedRegion',
-  //     'selectedState',
-  //     'width',
-  //     'height',
-  //     'selectedStreamCentroid']
-
-  //   let differentProps = desiredProps.filter(prop => {
-  //     let isDifferent = nextProps[prop] !== this.props[prop]
-  //     if (isDifferent) {
-  //       console.log('mismatch!', prop)
-  //     }
-  //     return isDifferent
-  //   })
-
-  //   return differentProps.length > 1
-  // },
 
   componentDidMount () {
   },
@@ -105,6 +83,36 @@ const SvgMapComponent = React.createClass({
 
   renderCounties () {
     return null
+  },
+
+  renderSelectedRegions () {
+    let { selectedRegion, regionsGeoJson, selectedStreamCentroid } = this.props
+    let isStreamSelected = isEmpty(selectedStreamCentroid) === false
+    if (isStreamSelected) {
+      // if thre's a selected stream, we don't have to display the selected region.
+      // it's pretty obvious.
+      return null
+    }
+    let selectedRegionId = isEmpty(selectedRegion) === false
+      ? selectedRegion.properties.name.toLowerCase()
+      : null
+    if (selectedRegionId == null) {
+      return null
+    }
+
+    let selectedRegions = regionsGeoJson.features.filter(f => f.properties.name.toLowerCase() === selectedRegionId)
+    if (selectedRegions.length === 0) {
+    }
+
+    return selectedRegions.map(region => {
+      return (<RegionComponent
+        geoJson={region}
+        isSelected
+        isLoading={false}
+        pathGenerator={this.pathGenerator}
+        stateName={FAKE_STATE_NAME}
+        selectRegion={() => { }} />)
+    })
   },
 
   renderRegions () {
@@ -160,7 +168,6 @@ const SvgMapComponent = React.createClass({
   },
 
   render () {
-    console.log('render svg map')
     return (
       <svg
         id='minimap'
@@ -173,6 +180,9 @@ const SvgMapComponent = React.createClass({
         </g>
         {this.renderStates()}
         {this.renderRegions()}
+        <g className={classes.selectedRegions}>
+          {this.renderSelectedRegions()}
+        </g>
         <g className={classes.centroids}>
           {this.renderStreamCentroids()}
         </g>

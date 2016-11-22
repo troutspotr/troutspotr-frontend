@@ -25,8 +25,10 @@ export const transformGeo = (topojsonObject) => {
     //   })
   })
 
-  console.log('finished now!!!')
-  return streamDictionary
+  return {
+    streamDictionary,
+    ...geoJsonObjects
+  }
 }
 
 export const createStreamDictionaries = (geoJsonObjects) => {
@@ -118,15 +120,33 @@ export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
 
 export const decompress = (topojsonObject) => {
   // let bounds = topojson.feature(topojsonObject, topojsonObject.objects.bounding_square_circles)
-  return {
+  let dictionary = {
     trout_stream_section: topojson.feature(topojsonObject, topojsonObject.objects.troutSection),
     restriction_section: topojson.feature(topojsonObject, topojsonObject.objects.restrictionSection),
     streamProperties: topojson.feature(topojsonObject, topojsonObject.objects.stream),
     pal_routes: topojson.feature(topojsonObject, topojsonObject.objects.palSection),
-    stream_access_point: topojson.feature(topojsonObject, topojsonObject.objects.accessPoint),
     pal: topojson.feature(topojsonObject, topojsonObject.objects.pal)
     // stream_tributary: topojson.feature(topojsonObject, topojsonObject.objects.stream_tributary),
     // bounding_circles: bounds
   }
+  // TODO: HACK. for some reason mapshaper and topojson aren't working for me.
+  // MANUALLY turn this into a geojson point feature collection.
+  dictionary.stream_access_point = {
+    features: topojsonObject.objects.accessPoint.geometries.map(x => {
+      return {
+        geometry: {
+          type: 'Point',
+          coordinates: x.coordinates
+        },
+        id: x.id,
+        properties: x.properties,
+        type: 'Feature'
+      }
+    }),
+    type: 'FeatureCollection'
+  }
+
+  //  topojson.feature(topojsonObject, topojsonObject.objects.accessPoint)
+  return dictionary
 }
 

@@ -16,7 +16,6 @@ export class RegionApi extends BaseApi {
     let endpoint = buildRegionEndpoint(stateName, regionName)
     let regionGeoData = await this.get(endpoint)
     let transformedData = transformGeo(regionGeoData)
-    console.log('downloaded region geo data for ' + regionName)
     return transformedData
   }
 }

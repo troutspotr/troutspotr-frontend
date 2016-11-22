@@ -61,7 +61,13 @@ const ACTION_HANDLERS = {
       ...state,
 
       ...{
-        troutStreamDictionary: payload,
+        troutStreamDictionary: payload.streamDictionary,
+        troutStreamSections: payload.trout_stream_section,
+        restrictionSections: payload.restriction_section,
+        streams: payload.streamProperties,
+        palSections: payload.pal_routes,
+        streamAccessPoint: payload.stream_access_point,
+        pals: payload.pal,
         regionLoadingStatus: LOADING_CONSTANTS.IS_SUCCESS
       }
     }
@@ -83,6 +89,12 @@ const ACTION_HANDLERS = {
 const initialState = {
   view: LIST,
   troutStreamDictionary: {},
+  troutStreamSections: null,
+  restrictionSections: null,
+  streams: null,
+  palSections: null,
+  streamAccessPoint: null,
+  pals: null,
   regionLoadingStatus: LOADING_CONSTANTS.IS_NOT_STARTED
 }
 

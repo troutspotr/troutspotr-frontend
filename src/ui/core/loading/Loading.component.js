@@ -9,7 +9,6 @@ const LoadingComponent = React.createClass({
   },
 
   render () {
-    console.log(classes.title)
     return (
       <div className={classes.box}>
         <div className={classes.title}>{this.props.title}</div>

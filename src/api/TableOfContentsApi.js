@@ -10,7 +10,6 @@ export class TableOfContentsApi extends BaseApi {
     let states = topojson.feature(tocTopojson, tocTopojson.objects.minnesota)
     let counties = topojson.feature(tocTopojson, tocTopojson.objects.minnesota_county)
     let regions = topojson.feature(tocTopojson, tocTopojson.objects.region)
-    console.log('got table of contents')
     return {
       states,
       counties,

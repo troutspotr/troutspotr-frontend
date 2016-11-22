@@ -65,7 +65,7 @@ webpackConfig.plugins = [
     minify   : {
       collapseWhitespace : true
     }
-  }),
+  })
   // new OfflinePlugin({
   //   // publicPath: config.compiler_public_path,
   //   publicPath: '/',

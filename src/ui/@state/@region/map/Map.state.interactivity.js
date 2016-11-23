@@ -1,8 +1,6 @@
 'use strict'
-import {
-  createAction, handleActions
-}
-from 'redux-actions'
+import { createAction, handleActions } from 'redux-actions'
+import extent from 'turf-extent'
 // import { getSelectedStateProperties } from '../sidebar/Sidebar.selectors'
 import { mapCameraActions, BOUNDING_BOX_OF_LOWER_48_STATES } from './Map.state.camera'
 // ------------------------------------
@@ -30,10 +28,10 @@ export const setIsMapInitialized = createAction(MAP_INTERACTIVITY_IS_MAP_INITIAL
   return { isMapInitialized }
 })
 
-export const selectMapFeature = (stateId) => {
+export const selectMapFeature = (feature) => {
   return (dispatch, getState) => {
-    let selectedState = null
-    let boundingBox = selectedState.bbox
+    let selectedState = feature
+    let boundingBox = extent(selectedState)
 
     let newCorners = [
         [boundingBox[0], boundingBox[1]],

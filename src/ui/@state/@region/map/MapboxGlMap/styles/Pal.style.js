@@ -6,7 +6,7 @@ export const PalStyle = {
   'id': PAL_SECTION_LAYER_ID,
   'type': 'fill',
   'source': PALS_SOURCE_ID,
-  'interactive': true,
+  'interactive': false,
   'filter': [
     '==',
     '$type',

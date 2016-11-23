@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import mapboxGl from 'mapbox-gl/dist/mapbox-gl'
 import { debounce } from 'lodash'
 
-const MapboxGlComponentLayer = React.createClass({
+const MapboxGlLayerComponent = React.createClass({
   propTypes: {
     // sourceData: PropTypes.object.isRequired,
     // sourceId: PropTypes.string.isRequired,
@@ -21,11 +21,12 @@ const MapboxGlComponentLayer = React.createClass({
     this.addFilters(this.props.map, this.props.filters)
     // load interactivity.
     const DEBOUNCE_DELAY_MS = 80
-    let debounceOptions = { maxWait: 120 }
+    let debounceOptions = { maxWait: 20 }
 
     // We should debounce our events to reduce load on CPU.
     this.proxyOnLayerMouseOver = debounce(this.onLayerMouseOver, DEBOUNCE_DELAY_MS, debounceOptions)
-    this.proxyOnUpdateLayerFilter = debounce(this.updateLayerFilter, 80, { maxWait: 130 })
+    this.proxyOnUpdateLayerFilter = debounce(this.updateLayerFilter, 20, { maxWait: 20 })
+    this.proxyOnClick = debounce(this.onLayerClick, 20, { maxWait: 20 })
     this.props.layers
       .filter(layer => layer.layerDefinition.interactive)
       .forEach(layer => {
@@ -33,7 +34,7 @@ const MapboxGlComponentLayer = React.createClass({
         // but without a ton of needless canvas queries.
         // The idea is better performance.
         this.props.map.on('mousemove', this.proxyOnLayerMouseOver)
-        this.props.map.on('click', this.onLayerClick)
+        this.props.map.on('click', this.proxyOnClick)
       })
   },
 
@@ -50,11 +51,17 @@ const MapboxGlComponentLayer = React.createClass({
   },
 
   getInteractiveFeaturesOverPoint (point) {
+    let BOX_DIMENSION = 15
+    let boundingBox = [
+      [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
+      [point.x + BOX_DIMENSION / 2, point.y + BOX_DIMENSION / 2]
+    ]
+
     let interactiveLayerNames = this.props.layers
       .filter(layer => layer.layerDefinition.interactive)
       .map(layer => layer.layerDefinition.id)
 
-    var features = this.props.map.queryRenderedFeatures(point, { layers: interactiveLayerNames })
+    var features = this.props.map.queryRenderedFeatures(boundingBox, { layers: interactiveLayerNames })
     return features
   },
 
@@ -93,21 +100,16 @@ const MapboxGlComponentLayer = React.createClass({
   },
 
   onLayerClick (e) {
-    if (this.props.onFeatureClick == null) {
-      return
-    }
-
     let features = this.getInteractiveFeaturesOverPoint(e.point)
     if (features == null || features.length === 0) {
       return
     }
-
+    
     this.props.onFeatureClick(features[0])
   },
 
   addFilters (map, filters) {
     filters.forEach(filter => {
-      console.log(filter, filters)
       // check to see if we already have it.
       map.setFilter(filter.layerId, filter.filterDefinition)
     })
@@ -131,4 +133,4 @@ const MapboxGlComponentLayer = React.createClass({
   }
 })
 
-export default MapboxGlComponentLayer
+export default MapboxGlLayerComponent

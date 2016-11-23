@@ -7,7 +7,7 @@ export const RestrictionSectionActiveStyle = {
   'type': 'line',
   'source': RESTRICTION_SECTIONS_SOURCE_ID,
   'source-layer': 'restrictionSection-19bqjx',
-  'interactive': true,
+  'interactive': false,
   'layout': {
     'visibility': 'visible',
     'line-cap': 'butt',
@@ -40,8 +40,18 @@ export const RestrictionSectionActiveStyle = {
           ]
         ]
       ]
+    }, // colors.RestrictionYellow
+    'line-color': {
+      property: 'restriction_id',
+      type: 'categorical',
+      stops: [
+        [0, colors.RestrictionYellow],
+        [7, '#FF4E10'],
+        [8, colors.RestrictionYellow],
+        [100, colors.RestrictionYellow]
+      ]
+
     },
-    'line-color': colors.RestrictionYellow,
     'line-gap-width': {
       'base': 1.4,
       'stops': [
@@ -93,7 +103,7 @@ export const RestrictionSectionQuietStyle = {
   'type': 'line',
   'source': RESTRICTION_SECTIONS_SOURCE_ID,
   'source-layer': 'restrictionSection-19bqjx',
-  'interactive': true,
+  'interactive': false,
   'layout': {
     'visibility': 'visible',
     'line-cap': 'butt',

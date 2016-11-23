@@ -105,9 +105,10 @@ export const layersSelector = createSelector(
     palSectionsLayers,
     accessPointsLayers
   ) => {
-    let layers = [].concat(streamLayers,
-      troutSectionsLayers,
+    let layers = [].concat(
       palLayers,
+      streamLayers,
+      troutSectionsLayers,
       restrictionSectionsLayers,
       palSectionsLayers,
       accessPointsLayers)

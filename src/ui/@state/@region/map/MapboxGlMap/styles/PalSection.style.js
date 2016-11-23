@@ -6,7 +6,7 @@ export const PalSectionActiveStyle = {
   'id': PAL_SECTIONS_ACTIVE_LAYER_ID,
   'type': 'line',
   'source': PAL_SECTIONS_SOURCE_ID,
-  'interactive': true,
+  'interactive': false,
   'filter': [
     '==',
     '$type',
@@ -54,46 +54,13 @@ export const PalSectionActiveStyle = {
       0
     ]
   }
-  // 'paint': {
-  //   'line-color': colors.PalGreen,
-  //   'line-width': {
-  //     'base': 1.5,
-  //     'stops': [
-  //       [
-  //         8.5,
-  //         1
-  //       ],
-  //       [
-  //         10,
-  //         1.25
-  //       ],
-  //       [
-  //         18,
-  //         26
-  //       ]
-  //     ]
-  //   },
-  //   'line-opacity': {
-  //     'base': 1.3,
-  //     'stops': [
-  //       [
-  //         12,
-  //         1
-  //       ],
-  //       [
-  //         15,
-  //         0
-  //       ]
-  //     ]
-  //   }
-  // }
 }
 
 export const PalSectionQuietStyle = {
   'id': PAL_SECTIONS_QUITE_LAYER_ID,
   'type': 'line',
   'source': PAL_SECTIONS_SOURCE_ID,
-  'interactive': true,
+  'interactive': false,
   'layout': {
     'visibility': 'visible',
     'line-cap': 'round',

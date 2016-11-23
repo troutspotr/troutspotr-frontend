@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-// import { Link } from 'react-router'
+import MapboxGlComponentCamera from './MapboxGl.component.camera'
 import classes from '../Map.scss'
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
 const MapboxGlComponent = React.createClass({
@@ -10,11 +10,9 @@ const MapboxGlComponent = React.createClass({
     ground: PropTypes.object.isRequired,
     settings: PropTypes.object.isRequired,
     interactivity: PropTypes.object.isRequired,
-    onMapLoadCallback: PropTypes.func.isRequired,
+    setIsMapInitialized: PropTypes.func.isRequired,
     isReadyToInsertLayers: PropTypes.bool.isRequired,
     sources: PropTypes.array.isRequired,
-    // layers: PropTypes.array.isRequired,
-    // filters: PropTypes.array.isRequired,
     layerPackage: PropTypes.array.isRequired,
 
     onFeatureClick: PropTypes.func.isRequires,
@@ -29,14 +27,32 @@ const MapboxGlComponent = React.createClass({
     console.log('MAP MOUNTED')
     this.map = new this.props.mapbox.Map({
       container: this.props.elementId,
-      style: 'mapbox://styles/andest01/civrfvrrh004h2jpb8ag0wsjf',
+      style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
       center: [-93.50, 42],
-      zoom: 4
+      zoom: 4,
+      maxZoom: 18,
+      boxZoom: false,
+      dragRotate: false,
+      keyboard: false
     })
+
+    // setTimeout(() => { this.map.resize() }, 20)
+
+    if (this.props.camera.bounds != null) {
+      // overpad the map just a bit, and an instant later, zoom out, set max bounds, and zoom back in.
+      this.map.fitBounds(this.props.camera.bounds, { linear: false, padding: 20, speed: 1000 })
+      setTimeout(() => {
+        let zoomedOut = this.map.getZoom() * 0.80
+        this.map.setZoom(zoomedOut)
+        // let currentBounds = this.map.getBounds()
+        // this.map.setMaxBounds(currentBounds)
+        this.map.fitBounds(this.props.camera.bounds, { linear: false, padding: 80, speed: 100 })
+      }, 100)
+    }
 
     this.map.dragRotate.disable()
     this.map.touchZoomRotate.disableRotation()
-    this.props.onMapLoadCallback(false)
+    this.props.setIsMapInitialized(false)
     this.map.once('load', this.onMapLoad)
     this.map.once('data', this.onDataLoad)
     this.map.on('layer.add', e => { console.log(e) })
@@ -44,20 +60,15 @@ const MapboxGlComponent = React.createClass({
 
   componentWillReceiveProps (nextProps) {
     let { isReadyToInsertLayers } = nextProps
-    console.log(isReadyToInsertLayers)
 
     // did our geoJson change?
     if (isReadyToInsertLayers === false) {
-      console.log('props changed but not ready')
       return
     }
     let { sources } = this.props
-    console.log('props changed...')
     let isSourceChanged = sources !== nextProps.sources
     if (isSourceChanged) {
       this.safelySetSources(this.map, nextProps.sources)
-    } else {
-      console.log('but source didnt get set')
     }
   },
 
@@ -95,12 +106,13 @@ const MapboxGlComponent = React.createClass({
     }
 
     this.safelySetSources(this.map, this.props.sources)
-    this.props.onMapLoadCallback(true)
+    this.props.setIsMapInitialized(true)
   },
 
-  componentWillUnMount () {
+  componentWillUnmount () {
     if (this.map) {
       this.map.remove()
+      this.props.setIsMapInitialized(false)
     }
   },
 
@@ -116,6 +128,10 @@ const MapboxGlComponent = React.createClass({
             onFeatureClick={this.props.onFeatureClick}
             onFeatureHover={this.props.onFeatureHover} />)
         })}
+      {this.props.isReadyToInsertLayers && <MapboxGlComponentCamera
+        camera={this.props.camera}
+        map={this.map}
+        mapbox={this.props.mapbox} /> }
     </div>)
   }
 })

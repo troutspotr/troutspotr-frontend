@@ -56,7 +56,7 @@ const config = {
     // 'lodash',
     'redux-actions',
     'topojson-client',
-    'turf',
+    // 'turf',
     'd3-geo',
     'd3-path'
   ],

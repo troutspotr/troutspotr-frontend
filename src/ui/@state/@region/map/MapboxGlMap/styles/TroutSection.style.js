@@ -5,7 +5,7 @@ export const TroutSectionActiveStyle = {
   'id': TROUT_SECTIONS_ACTIVE_LAYER_ID,
   'type': 'line',
   'source': TROUT_STREAM_SECTIONS_SOURCE_ID,
-  'interactive': true,
+  'interactive': false,
   'layout': {
     'visibility': 'visible',
     'line-join': 'round',
@@ -37,7 +37,7 @@ export const TroutSectionQuietStyle = {
   'id': TROUT_SECTIONS_QUITE_LAYER_ID,
   'type': 'line',
   'source': TROUT_STREAM_SECTIONS_SOURCE_ID,
-  'interactive': true,
+  'interactive': false,
   'layout': {
     'visibility': 'visible',
     'line-join': 'round',

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import { isEmpty, every, values, has } from 'lodash'
-import { displayedCentroidDictionarySelector } from 'ui/@state/State.selectors'
+import { displayedCentroidDictionarySelector, displayedStreamCentroidDataSelector } from 'ui/@state/State.selectors'
 export const troutStreamDictionarySelector = state => state.region.troutStreamDictionary
 export const regionLoadingStatusSelector = state => state.region.regionLoadingStatus
 
@@ -33,4 +33,19 @@ export const visibleTroutStreamIdsSelector = createSelector(
   [visibleTroutStreams],
   (visibleStreams) => {
     return visibleStreams.map(s => s.stream.properties.gid)
+  })
+
+export const selectedStreamObjectSelector = createSelector(
+  [troutStreamDictionarySelector, displayedStreamCentroidDataSelector],
+  (streamDictionary, displayedCentroid) => {
+    // assume things aren't loaded yet. see displayedStreamCentroidDataSelector for details
+    if (displayedCentroid == null) {
+      return null
+    }
+
+    if (has(streamDictionary, displayedCentroid.gid) === false) {
+      return null
+    }
+
+    return streamDictionary[displayedCentroid.gid]
   })

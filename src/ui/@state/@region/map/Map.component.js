@@ -3,6 +3,7 @@ import classes from './Map.scss'
 import MapboxGlContainer from './MapboxGlMap/MapboxGl.container'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import LoadingComponent from 'ui/core/loading/Loading.component'
+import { browserHistory } from 'react-router'
 const MAP_ID = 'primary_map_id'
 const MapComponent = React.createClass({
   propTypes: {
@@ -14,8 +15,12 @@ const MapComponent = React.createClass({
     ground: PropTypes.object.isRequired,
     settings: PropTypes.object.isRequired,
     interactivity: PropTypes.object.isRequired,
+    selectedState: React.PropTypes.string.isRequired,
+    selectedRegion: React.PropTypes.string.isRequired,
+    selectedGeometry: React.PropTypes.object,
     loadMapModuleAsync: PropTypes.func.isRequired,
-    setIsMapInitialized: PropTypes.func.isRequired
+    setIsMapInitialized: PropTypes.func.isRequired,
+    selectMapFeature: PropTypes.func.isRequired
   },
 
   componentDidMount () {
@@ -32,6 +37,16 @@ const MapComponent = React.createClass({
   },
 
   componentWillReceiveProps (nextProps) {
+    if (nextProps.selectedGeometry !== this.props.selectedGeometry) {
+      if (nextProps.selectedGeometry != null) {
+        debugger
+        this.props.selectMapFeature({
+          type: 'FeatureCollection',
+          features: nextProps.selectedGeometry.sections
+        })
+      }
+    }
+    
     let previousModuleLoadStatus = this.props.mapboxModuleStatus
     let currentlyVisible = nextProps.isVisible
 
@@ -47,7 +62,7 @@ const MapComponent = React.createClass({
   renderMap () {
     return (<MapboxGlContainer
       mapbox={this.props.mapboxModule}
-      onMapLoadCallback={this.props.setIsMapInitialized}
+      setIsMapInitialized={this.props.setIsMapInitialized}
       camera={this.props.camera}
       ground={this.props.ground}
       settings={this.props.settings}
@@ -67,11 +82,14 @@ const MapComponent = React.createClass({
   },
 
   onFeatureClick (feature) {
-    // this.props.selectState(feature.properties);
+    console.log('click happen!', feature)
+    let slug = feature.properties.slug
+    let { selectedState, selectedRegion } = this.props
+    browserHistory.push(`/${selectedState}/${selectedRegion}/${slug}`)
   },
 
   onFeatureHover (feature) {
-
+    // console.log('hover happen!', feature)
   },
 
   render () {

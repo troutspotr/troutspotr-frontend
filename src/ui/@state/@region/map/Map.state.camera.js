@@ -20,7 +20,7 @@ const DEFAULT_CAMERA_STATE = {
   bearing: 0.0,
   angle: 0.0,
   pixelBuffer: 20.0,
-  animationSpeed: 0.7
+  animationSpeed: 1.3
 }
 
 // ------------------------------------

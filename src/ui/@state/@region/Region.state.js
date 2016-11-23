@@ -1,8 +1,14 @@
 import { createAction } from 'redux-actions'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import RegionApi from 'api/RegionApi'
-import { keyBy, lowerCase } from 'lodash'
-
+import { keyBy, lowerCase, isEmpty, has } from 'lodash'
+import {
+  selectedStateSelector,
+  selectedRegionSelector,
+  statesDictionarySelector,
+  regionsDictionarySelector } from 'ui/core/Core.selectors'
+import { troutStreamDictionarySelector } from './Region.selectors'
+import { selectMapFeature } from 'ui/@state/@region/map/Map.state.interactivity'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -25,7 +31,7 @@ export const setRegionDataLoading = createAction(REGION_SET_REGION_LOADING)
 export const setRegionDataFailed = createAction(REGION_SET_REGION_LOADING_FAILED)
 
 export const fetchRegionData = (stateName, regionName) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(setRegionDataLoading())
     try {
       if (stateName == null) {
@@ -39,12 +45,60 @@ export const fetchRegionData = (stateName, regionName) => {
       let gettingRegion = RegionApi.getRegionData(stateName, regionName)
       let [regionData] = await Promise.all([gettingRegion])
       dispatch(setRegionData(regionData))
+      // get selectedRegion and fly to coordinates
+      let selectedRegion = selectedRegionSelector(getState())
+      if (selectedRegion == null || isEmpty(selectedRegion)) {
+        return
+      }
+
+      dispatch(selectMapFeature(selectedRegion))
     } catch (error) {
       console.log(error)
       dispatch(setRegionDataFailed())
     }
   }
 }
+
+// export const navigateToStreamBySlug = (stateName, regionName, streamSlug) => {
+//   return async (dispatch, getState) => {
+//     if (stateName == null || regionName == null || streamSlug == null) {
+//       throw new Error(`could not navigate to ${stateName}/${regionName}/${streamSlug}`)
+//     }
+//     let state = getState()
+//     let statesDictionary = statesDictionarySelector(state)
+//     let regionsDictionary = regionsDictionarySelector(state)
+
+//     // this may be different given the above.
+//     let streamsDictionary = troutStreamDictionarySelector(state)
+
+//     // check to see if the state exists.
+
+//     // dispatch(setRegionDataLoading())
+//     // try {
+//     //   if (stateName == null) {
+//     //     throw new Error('stateName cannot be null')
+//     //   }
+
+//     //   if (regionName == null) {
+//     //     throw new Error('regionName cannot be null')
+//     //   }
+
+//     //   let gettingRegion = RegionApi.getRegionData(stateName, regionName)
+//     //   let [regionData] = await Promise.all([gettingRegion])
+//     //   dispatch(setRegionData(regionData))
+//     //   // get selectedRegion and fly to coordinates
+//     //   let selectedRegion = selectedRegionSelector(getState())
+//     //   if (selectedRegion == null || isEmpty(selectedRegion)) {
+//     //     return
+//     //   }
+
+//     //   dispatch(selectMapFeature(selectedRegion))
+//     // } catch (error) {
+//     //   console.log(error)
+//     //   dispatch(setRegionDataFailed())
+//     // }
+//   }
+// }
 
 // ------------------------------------
 // Action Handlers

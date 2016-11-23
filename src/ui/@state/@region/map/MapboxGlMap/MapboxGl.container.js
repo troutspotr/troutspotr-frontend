@@ -3,7 +3,7 @@ import MapboxGlComponent from './MapboxGl.component'
 // import * as region from 'ui/@state/@region/Region.selectors'
 // import * as sourceLayerSelectors from './MapboxGl.selectors.source'
 import { getMapboxGlSources } from './sources/Source.selectors'
-import { getLayerPackage } from './MapboxGl.selectors.source'
+import { getLayerPackage } from './MapboxGl.selectors.layerPackage'
 // import { getStreamFilters } from './filters/Filters.selectors'
 // import { layersSelector } from './styles/Style.selectors'
 

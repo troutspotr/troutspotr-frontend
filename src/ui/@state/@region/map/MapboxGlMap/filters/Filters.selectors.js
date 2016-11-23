@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 // import * as regionSelectors from 'ui/@state/@region/Region.selectors'
 // import { isEmpty } from 'lodash'
 import * as regionSelectors from 'ui/@state/@region/Region.selectors'
+import { displayedStreamCentroidDataSelector } from 'ui/@state/State.selectors'
 
 // import { PALS_SOURCE_ID,
 //   TROUT_STREAM_SECTIONS_SOURCE_ID,
@@ -33,26 +34,43 @@ export const STREAM_ACCESS_POINTS_MARKER_CENTER_QUITE_LAYER_ID = 'stream-access-
 
 export const PAL_SECTION_LAYER_ID = 'pal-layer'
 
+export const getSelectedStreamFilter = createSelector(
+  [
+    regionSelectors.visibleTroutStreamIdsSelector,
+    displayedStreamCentroidDataSelector
+  ],
+  (
+    visibleIds,
+    displayedStreamCentroid
+  ) => {
+    let isStreamSelected = displayedStreamCentroid != null
+    if (isStreamSelected) {
+      return [displayedStreamCentroid.gid]
+    }
+
+    return visibleIds
+  })
+
 export const getStreamsActiveFilter = createSelector(
-  [regionSelectors.visibleTroutStreamIdsSelector],
+  [getSelectedStreamFilter],
   (visibleTroutStreamIds) => {
     return ['in', 'gid'].concat(visibleTroutStreamIds)
   })
 
 export const getStreamsQuietFilter = createSelector(
-  [regionSelectors.visibleTroutStreamIdsSelector],
+  [getSelectedStreamFilter],
   (visibleTroutStreamIds) => {
     return ['!in', 'gid'].concat(visibleTroutStreamIds)
   })
 
 export const getDerivedFeatureActiveFilter = createSelector(
-  [regionSelectors.visibleTroutStreamIdsSelector],
+  [getSelectedStreamFilter],
   (visibleTroutStreamIds) => {
     return ['in', 'stream_gid'].concat(visibleTroutStreamIds)
   })
 
 export const getDerivedFeatureQuietFilter = createSelector(
-  [regionSelectors.visibleTroutStreamIdsSelector],
+  [getSelectedStreamFilter],
   (visibleTroutStreamIds) => {
     return ['!in', 'stream_gid'].concat(visibleTroutStreamIds)
   })
@@ -80,7 +98,7 @@ const STREAM_ACCESS_POINT_FILER_BASE = [
 ]
 
 export const getAccessPointActiveFilter = createSelector(
-  [regionSelectors.visibleTroutStreamIdsSelector,
+  [getSelectedStreamFilter,
     getDerivedFeatureActiveFilter],
   (visibleTroutStreamIds, derivedFeatureActiveFilter) => {
     // console.log(STREAM_ACCESS_POINT_FILER_BASE)
@@ -91,7 +109,7 @@ export const getAccessPointActiveFilter = createSelector(
   })
 
 export const getAccessPointQuietFilter = createSelector(
-  [regionSelectors.visibleTroutStreamIdsSelector,
+  [getSelectedStreamFilter,
     getDerivedFeatureQuietFilter],
   (visibleTroutStreamIds, derivedQuietFilter) => {
     // console.log(STREAM_ACCESS_POINT_FILER_BASE)

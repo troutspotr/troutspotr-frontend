@@ -1,6 +1,8 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 
+$heafty-bottom-margin: 50vmin;
+
 .listViewContainer {
   // background-color: purple;
 
@@ -23,6 +25,8 @@
   -webkit-overflow-scrolling: touch;
 
   .list {
+    padding: $default-margin $default-margin $heafty-bottom-margin $default-margin;
+
     // background-color: $blue;
     // position: absolute;
     // top: 60px;

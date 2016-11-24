@@ -1,0 +1,14 @@
+@import "src/ui/styles/_fonts";
+
+.zeldaText {
+  @include medium-font;
+
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+
+  &:after {
+    content: "\00a0";
+  }
+}

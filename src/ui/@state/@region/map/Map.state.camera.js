@@ -19,7 +19,7 @@ const DEFAULT_CAMERA_STATE = {
   bounds: BOUNDING_BOX_OF_LOWER_48_STATES,
   bearing: 0.0,
   angle: 0.0,
-  pixelBuffer: 20.0,
+  pixelBuffer: 60,
   animationSpeed: 1.3
 }
 

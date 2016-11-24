@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import mapboxGl from 'mapbox-gl/dist/mapbox-gl'
 import { debounce } from 'lodash'
 
 const MapboxGlLayerComponent = React.createClass({
@@ -27,6 +26,7 @@ const MapboxGlLayerComponent = React.createClass({
     this.proxyOnLayerMouseOver = debounce(this.onLayerMouseOver, DEBOUNCE_DELAY_MS, debounceOptions)
     this.proxyOnUpdateLayerFilter = debounce(this.updateLayerFilter, 20, { maxWait: 20 })
     this.proxyOnClick = debounce(this.onLayerClick, 20, { maxWait: 20 })
+    // need to delete this line and move it up.
     this.props.layers
       .filter(layer => layer.layerDefinition.interactive)
       .forEach(layer => {
@@ -51,7 +51,7 @@ const MapboxGlLayerComponent = React.createClass({
   },
 
   getInteractiveFeaturesOverPoint (point) {
-    let BOX_DIMENSION = 15
+    let BOX_DIMENSION = 30
     let boundingBox = [
       [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
       [point.x + BOX_DIMENSION / 2, point.y + BOX_DIMENSION / 2]
@@ -117,8 +117,8 @@ const MapboxGlLayerComponent = React.createClass({
 
   addLayers (map, layers) {
     layers.forEach(layer => {
-      // map.addLayer(layer.layerDefinition, layer.insertBefore)
-      map.addLayer(layer.layerDefinition)
+      map.addLayer(layer.layerDefinition, layer.insertBefore)
+      // map.addLayer(layer.layerDefinition)
     })
   },
 

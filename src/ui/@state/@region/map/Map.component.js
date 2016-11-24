@@ -4,6 +4,10 @@ import MapboxGlContainer from './MapboxGlMap/MapboxGl.container'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import LoadingComponent from 'ui/core/loading/Loading.component'
 import { browserHistory } from 'react-router'
+import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
+import RestrictionComponent from 'ui/core/regulations/Restriction.component'
+import PublicBridgesComponent from 'ui/core/streamDetails/PublicBridges.component'
+import { isEmpty } from 'lodash'
 const MAP_ID = 'primary_map_id'
 const MapComponent = React.createClass({
   propTypes: {
@@ -20,7 +24,8 @@ const MapComponent = React.createClass({
     selectedGeometry: React.PropTypes.object,
     loadMapModuleAsync: PropTypes.func.isRequired,
     setIsMapInitialized: PropTypes.func.isRequired,
-    selectMapFeature: PropTypes.func.isRequired
+    selectMapFeature: PropTypes.func.isRequired,
+    specialRegulations: PropTypes.array.isRequired
   },
 
   componentDidMount () {
@@ -36,17 +41,63 @@ const MapComponent = React.createClass({
     }
   },
 
+  renderSpecialRegulationsOverlay () {
+    let { selectedGeometry, specialRegulations } = this.props
+    if (isEmpty(selectedGeometry) || specialRegulations.length === 0) {
+      return null
+    }
+    let specialRegulationsElement = (<div>
+      <div className={classes.specialRegulationsTitle}>Special Regulations</div>
+      {
+        specialRegulations.map((reg, index) => {
+          return (<RestrictionComponent
+            key={index}
+            color={reg.isFishSanctuary ? 'red' : 'yellow'}
+            pattern={reg.isFishSanctuary ? 'solid' : 'stipple'}
+            text={reg.legalText}
+            length={reg.roundedLength + ' mi'} />)
+        })
+      }
+    </div>)
+
+    return (
+      <MessageOverlay position='bottom'>
+        {specialRegulationsElement}
+      </MessageOverlay>)
+  },
+
+  renderStreamDetailsOverlay () {
+    let { selectedGeometry } = this.props
+    if (isEmpty(selectedGeometry)) {
+      return null
+    }
+
+    let number = selectedGeometry.accessPoints
+      .filter(x => x.properties.is_over_trout_stream && x.properties.is_over_publicly_accessible_land)
+      .length
+
+    // let { selectedGeometry } = this.props
+    // if (isEmpty(selectedGeometry)) {
+    //   return null
+    // }
+
+    return (
+      <MessageOverlay position='top'>
+        <PublicBridgesComponent
+          number={number} />
+      </MessageOverlay>)
+  },
+
   componentWillReceiveProps (nextProps) {
     if (nextProps.selectedGeometry !== this.props.selectedGeometry) {
       if (nextProps.selectedGeometry != null) {
-        debugger
         this.props.selectMapFeature({
           type: 'FeatureCollection',
           features: nextProps.selectedGeometry.sections
         })
       }
     }
-    
+
     let previousModuleLoadStatus = this.props.mapboxModuleStatus
     let currentlyVisible = nextProps.isVisible
 
@@ -60,17 +111,21 @@ const MapComponent = React.createClass({
   },
 
   renderMap () {
-    return (<MapboxGlContainer
-      mapbox={this.props.mapboxModule}
-      setIsMapInitialized={this.props.setIsMapInitialized}
-      camera={this.props.camera}
-      ground={this.props.ground}
-      settings={this.props.settings}
-      interactivity={this.props.interactivity}
-      onFeatureClick={this.onFeatureClick}
-      onFeatureHover={this.onFeatureHover}
-      isReadyToInsertLayers={this.props.isReadyToInsertLayers}
-      elementId={MAP_ID} />)
+    return (<div>
+      <MapboxGlContainer
+        mapbox={this.props.mapboxModule}
+        setIsMapInitialized={this.props.setIsMapInitialized}
+        camera={this.props.camera}
+        ground={this.props.ground}
+        settings={this.props.settings}
+        interactivity={this.props.interactivity}
+        onFeatureClick={this.onFeatureClick}
+        onFeatureHover={this.onFeatureHover}
+        isReadyToInsertLayers={this.props.isReadyToInsertLayers}
+        elementId={MAP_ID} />
+      {this.renderSpecialRegulationsOverlay()}
+      {this.renderStreamDetailsOverlay()}
+    </div>)
   },
 
   renderLoading () {

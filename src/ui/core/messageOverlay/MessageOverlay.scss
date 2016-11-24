@@ -1,0 +1,35 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "src/ui/styles/_fonts";
+
+$messageBackground: transparentize($background, 0.3);
+
+.container {
+  background-color: $messageBackground;
+  position: absolute;
+  pointer-events: none;
+  padding: ($default-margin / 2) $default-margin;
+  z-index: 10000;
+}
+
+.top {
+  composes: container;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.bottom {
+  composes: container;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.center {
+  composes: container;
+}
+
+.fullscreen {
+  composes: container;
+}

@@ -1,0 +1,63 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "src/ui/styles/_fonts";
+
+$circle-size: 1em;
+
+.container {
+  display: flex;
+  font-size: 12px;
+  margin-bottom: 5px;
+
+  .symbol {
+    order: 1;
+    min-width: 25px;
+    height: $circle-size * 0.6;
+    border-width: 0.12em;
+    border-radius: 0px;
+    border-left-style: none;
+    border-right-style: none;
+    line-height: $circle-size - 0.2em;
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+    top: 3px;
+  }
+
+  .length {
+    order: 2;
+    min-width: 40px;
+    text-align: right;
+  }
+
+  .definition {
+    order: 3;
+    flex-grow: 2;
+    padding-left: 10px;
+  }
+}
+
+.solid {
+  border-style: solid;
+}
+
+.stipple {
+  border-style: dashed;
+}
+
+.dot {
+  border-style: dotted;
+}
+
+// COLORS
+.red {
+  border-color: $red;
+}
+
+.yellow {
+  border-color: $yellow;
+}
+
+.blue {
+  border-color: $blue;
+}

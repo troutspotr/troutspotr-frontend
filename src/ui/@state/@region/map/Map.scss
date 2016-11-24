@@ -1,8 +1,8 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
+@import "src/ui/styles/_fonts";
 
 .mapContainer {
-  // background-color: $red;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -20,4 +20,12 @@
 .invisible {
   composes: mapContainer;
   visibility: hidden;
+}
+
+.specialRegulationsTitle {
+  font-size: 18px;
+  color: $white;
+  margin-bottom: 5px;
+
+  @include medium-font;
 }

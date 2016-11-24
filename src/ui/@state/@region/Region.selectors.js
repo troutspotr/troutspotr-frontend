@@ -1,7 +1,14 @@
 import { createSelector } from 'reselect'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-import { isEmpty, every, values, has } from 'lodash'
-import { displayedCentroidDictionarySelector, displayedStreamCentroidDataSelector } from 'ui/@state/State.selectors'
+import { selectedStateIdSelector,
+  selectedRegionIdSelector,
+  viewSelector,
+  searchTextSelector } from 'ui/core/Core.selectors'
+
+import { isEmpty, every, values, has, round } from 'lodash'
+import { displayedCentroidDictionarySelector,
+  displayedStreamCentroidDataSelector,
+  regulationsSelector } from 'ui/@state/State.selectors'
 export const troutStreamDictionarySelector = state => state.region.troutStreamDictionary
 export const regionLoadingStatusSelector = state => state.region.regionLoadingStatus
 
@@ -48,4 +55,83 @@ export const selectedStreamObjectSelector = createSelector(
     }
 
     return streamDictionary[displayedCentroid.gid]
+  })
+
+export const showNoResultsFoundSelector = createSelector(
+  [searchTextSelector, regionLoadingStatusSelector, visibleTroutStreams, selectedStreamObjectSelector],
+  (text, regionLoading, streams, selectedStreamObject) => {
+    if (regionLoading !== LOADING_CONSTANTS.IS_SUCCESS) {
+      return false
+    }
+
+    if (text.length === 0) {
+      return false
+    }
+
+    if (isEmpty(selectedStreamObject) === false) {
+      return false
+    }
+
+    if (streams.length === 0) {
+      return true
+    }
+
+    return false
+  })
+
+const EMPTY_REGS = []
+const MAGICAL_FISH_SANCTUARY_ID = 7
+export const getSpecialRegulationsSelector = createSelector(
+  [selectedStreamObjectSelector, regulationsSelector],
+  (selectedStream, regulations) => {
+    if (isEmpty(selectedStream)) {
+      return EMPTY_REGS
+    }
+
+    if (isEmpty(regulations)) {
+      return EMPTY_REGS
+    } 
+
+    let specialRegulationsDictionary = selectedStream.restrictions.map(r => {
+      let { stream_gid, restriction_id, start, stop } = r.properties
+      let regulation = regulations[restriction_id]
+      if (regulation == null) {
+        console.warn('found null regulation for id ' + restriction_id)
+        return null
+      }
+      let isFishSanctuary = regulation.id === MAGICAL_FISH_SANCTUARY_ID
+      let length = stop - start
+      // let roundedLength = round(length, 1)
+      let { startTime, stopTime, shortText, legalText } = regulation
+      return {
+        startTime: new Date(startTime),
+        stopTime: new Date(stopTime),
+        // roundedLength: roundedLength,
+        isFishSanctuary,
+        restrictionId: restriction_id,
+        streamId: stream_gid,
+        shortText,
+        legalText,
+        length
+      }
+    }).reduce((dictionary, item) => {
+      if (has(dictionary, item.restrictionId)) {
+        dictionary[item.restrictionId].length += item.length
+        return dictionary
+      }
+
+      dictionary[item.restrictionId] = item
+      return dictionary
+    }, {})
+
+    let specialRegulationsArray = values(specialRegulationsDictionary)
+
+    specialRegulationsArray.forEach(reg => {
+      reg.roundedLength = reg.length < 1.0
+        ? round(reg.length, 2)
+        : round(reg.length, 1)
+    })
+
+
+    return specialRegulationsArray
   })

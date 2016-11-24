@@ -1,5 +1,6 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
+@import "src/ui/styles/ZeldaText";
 
 .regionContainer {
   // background-color: $yellow;
@@ -13,3 +14,16 @@
 }
 
 .active {}
+
+.clearSearchTitle {
+  color: $white;
+  font-size: 1em;
+}
+
+.actionButton {
+  composes: zeldaText;
+  color: $blue;
+  pointer-events: all;
+  cursor: pointer;
+  font-size: 1em;
+}

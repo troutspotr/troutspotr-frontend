@@ -28,7 +28,8 @@ const StreamListComponent = React.createClass({
               <li key={index}>
                 <StreamItemComponent
                   title={fakeName}
-                  url={`/${selectedState}/${selectedRegion}/${url}`} />
+                  url={`/${selectedState}/${selectedRegion}/${url}`}
+                  streamObject={stream} />
               </li>)
           })
           }

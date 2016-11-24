@@ -1,10 +1,10 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 
-.sneezeGuard {
-  display: none;
-  touch-action: manipulation;
-}
+// .sneezeGuard {
+//   display: none;
+//   // touch-action: manipulation;
+// }
 
 .minimapContent {
   transform: scale(1);
@@ -20,6 +20,8 @@
   position: relative;
   backface-visibility: hidden;
   transform: translateZ(0);
+  touch-action: manipulation;
+  pointer-events: all;
 
   img {
     position: absolute;

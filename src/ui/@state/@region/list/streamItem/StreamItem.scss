@@ -1,0 +1,34 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "src/ui/styles/_fonts";
+@import "src/ui/styles/ZeldaText";
+@import "src/ui/styles/NumberCircle";
+
+.container {
+  margin-bottom: 15px;
+  font-size: 12px;
+
+  .header {
+    font-size: 1.5em;
+    color: $white;
+    text-decoration: none;
+
+    @include medium-font;
+  }
+}
+
+.closed {
+  composes: zeldaText;
+  color: $red;
+}
+
+.open {
+  composes: zeldaText;
+  color: $off-white;
+}
+
+.publicBridgesBadge {
+  composes: numberCircle;
+  color: $green;
+  font-size: 0.8em;
+}

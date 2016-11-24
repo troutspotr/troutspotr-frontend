@@ -36,19 +36,8 @@ export const PalSectionActiveStyle = {
         ]
       ]
     },
-    'line-opacity': {
-      'base': 1.3,
-      'stops': [
-        [
-          12,
-          1
-        ],
-        [
-          15,
-          0
-        ]
-      ]
-    },
+    // credit goes to MMA
+    'line-opacity': 1.0,
     'line-dasharray': [
       1,
       0

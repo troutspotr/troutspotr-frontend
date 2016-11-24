@@ -11,11 +11,11 @@ export const AccessPointLabelActiveStyle = {
   'type': 'symbol',
   'source': STREAM_ACCESS_POINTS_SOURCE_ID,
   'interactive': false,
-  'minzoom': 12,
+  'minzoom': 10,
   'layout': {
     'text-field': '{street_name}',
     'text-anchor': 'left',
-    'text-size': 14,
+    'text-size': 12,
     'text-offset': [
       0.5,
       0
@@ -42,7 +42,7 @@ export const AccessPointLabelQuietStyle = {
   'layout': {
     'text-field': '{street_name}',
     'text-anchor': 'left',
-    'text-size': 14,
+    'text-size': 12,
     'text-offset': [
       0.5,
       0

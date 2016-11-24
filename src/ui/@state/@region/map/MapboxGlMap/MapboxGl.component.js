@@ -26,6 +26,7 @@ const MapboxGlComponent = React.createClass({
   componentDidMount () {
     console.log('MAP MOUNTED')
     this.map = new this.props.mapbox.Map({
+      attributionControl: true,
       container: this.props.elementId,
       style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
       center: [-93.50, 42],

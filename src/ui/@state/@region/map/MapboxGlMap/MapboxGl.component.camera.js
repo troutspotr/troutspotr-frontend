@@ -1,9 +1,7 @@
 'use strict'
 
 import React, { PropTypes } from 'react'
-// import _ from 'lodash'
 import { isEqual } from 'lodash'
-// import mapboxGl from 'mapbox-gl'
 
 const MapboxGlComponentCamera = React.createClass({
   propTypes: {
@@ -15,7 +13,7 @@ const MapboxGlComponentCamera = React.createClass({
   componentDidMount () {
   },
 
-  setBounds ({ bounds, bearing = 0, angle = 0, animationSpeed = 1.4, pixelBuffer = 0 }) {
+  setBounds ({ bounds, bearing = 0, angle = 0, animationSpeed = 1.4, pixelBuffer = 40 }) {
     if (this.props.map == null) {
       /* eslint-disable no-console */
       console.warn('Map was driven prior to being available.')

@@ -25,7 +25,6 @@
 .stream {
   composes: content;
   order: 1;
-  flex-grow: 1;
   position: relative;
   overflow-y: auto;
 }
@@ -47,8 +46,8 @@
   }
 
   .details {
-    border-left: 1px solid transparentize($off-white, 0.7);
-    padding-left: 10px;
+    // border-left: 1px solid transparentize($off-white, 0.7);
+    padding-left: $default-margin;
   }
 }
 
@@ -58,8 +57,13 @@
   }
 
   .content {
-    min-height: 50%;
+    height: 100%;
     min-width: 100%;
+
+    // max-height: auto;
+
+    // flex-grow: 1;
+ 
   }
 
   .details {

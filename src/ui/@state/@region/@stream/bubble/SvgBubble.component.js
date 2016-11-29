@@ -105,10 +105,9 @@ const SvgBubbleComponent = React.createClass({
       <div className={classes.container}>
         <svg
           viewBox={`0 0 ${this.width} ${this.height}`}
-          preserveAspectRatio='xMidYMid slice'
+          preserveAspectRatio='xMinYMin meet'
           version='1.1'
           xmlns='http://www.w3.org/2000/svg'
-          height='100%'
           id={'trout_stream_' + name + '_' + id} >
           <title>{name} {id}</title>
           <defs>

@@ -3,7 +3,12 @@ import classes from './Details.scss'
 import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import { has } from 'lodash'
 
-const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+export const crossingTypes = {
+  publicTrout: 'publicTrout',
+  permissionRequired: 'permissionRequired',
+  unsafe: 'unsafe',
+  uninteresting: 'uninteresting'
+}
 
 const DetailsComponent = React.createClass({
   propTypes: {
@@ -49,18 +54,28 @@ const DetailsComponent = React.createClass({
     let dictionary = {
       publicLandAndTroutStream: [],
       troutStreamOnly: [],
-      uninteresting: []
+      uninteresting: [],
+      unsafe: []
     }
 
     let bridgeGroups = accessPoints.reduce((current, element) => {
       let props = element.properties
-      let { is_over_publicly_accessible_land, is_over_trout_stream } = props
-      if (is_over_trout_stream === 0) {
+      // let { is_over_publicly_accessible_land, is_over_trout_stream, isParkable, bridgeType } = props
+      let { bridgeType } = props
+      console.log(bridgeType)
+      if (bridgeType === crossingTypes.uninteresting) {
         current.uninteresting.push(element)
+        return current
       }
 
-      if (is_over_publicly_accessible_land) {
+      if (bridgeType === crossingTypes.unsafe) {
+        current.unsafe.push(element)
+        return current
+      }
+
+      if (bridgeType === crossingTypes.publicTrout) {
         current.publicLandAndTroutStream.push(element)
+        return current
       }
 
       current.troutStreamOnly.push(element)
@@ -69,7 +84,7 @@ const DetailsComponent = React.createClass({
 
     let publicTroutStreamBridgeElements = bridgeGroups.publicLandAndTroutStream.map((bridge, index) => {
       let { street_name } = bridge.properties
-      let letter = alphabet[index]
+      let letter = bridge.properties.alphabetLetter
       let bridgeClass = classes.publicBridgeTroutStream
       let badgeElement = (<span className={bridgeClass}>{letter}</span>)
       return (<div className={classes.listItem}>
@@ -80,8 +95,21 @@ const DetailsComponent = React.createClass({
 
     let troutStreamBridgeElements = bridgeGroups.troutStreamOnly.map((bridge, index) => {
       let { street_name } = bridge.properties
-      let letter = alphabet[index]
+      let letter = bridge.properties.alphabetLetter
       let bridgeClass = classes.bridgeOverTroutStream
+      let badgeElement = (<span className={bridgeClass}>{letter}</span>)
+      // return (<div className={classes.listItem}>{badgeElement} {street_name}</div>)
+      return (<div className={classes.listItem}>
+        <span>{badgeElement}</span>
+        <span className={classes.listText}>{street_name}</span>
+      </div>)
+    })
+
+
+    let unsafeTroutStreamBridgeElements = bridgeGroups.unsafe.map((bridge, index) => {
+      let { street_name } = bridge.properties
+      let letter = bridge.properties.alphabetLetter
+      let bridgeClass = classes.unsafeBridgeOverTroutStream
       let badgeElement = (<span className={bridgeClass}>{letter}</span>)
       // return (<div className={classes.listItem}>{badgeElement} {street_name}</div>)
       return (<div className={classes.listItem}>
@@ -92,13 +120,17 @@ const DetailsComponent = React.createClass({
 
     return (<div>
     <div className={classes.title}>Bridges</div>
-      <div className={classes.listHeader}>Over publicly fishable land</div>
+      <div className={classes.listHeader}>With access to publicly fishable land</div>
       <div className={classes.list}>
         {publicTroutStreamBridgeElements}
       </div>
-      <div className={classes.listHeader}>Landowner permission required</div>
+      <div className={classes.listHeader}>Access requires Landowner permission</div>
       <div className={classes.list}>
         {troutStreamBridgeElements}
+      </div>
+      <div className={classes.listHeader}>Unsafe to park</div>
+      <div className={classes.list}>
+        {unsafeTroutStreamBridgeElements}
       </div>
     </div>)
   },

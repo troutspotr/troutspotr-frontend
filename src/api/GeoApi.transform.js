@@ -1,6 +1,8 @@
 // import _ from 'lodash'
-import { groupBy, keyBy, valuesIn } from 'lodash'
+import { groupBy, keyBy, valuesIn, has } from 'lodash'
 import * as topojson from 'topojson-client'
+
+
 
 export const transformGeo = (topojsonObject, stateData) => {
   let geoJsonObjects = decompress(topojsonObject, stateData)
@@ -112,6 +114,8 @@ export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
             }
             return previousResult.concat(currentItem)
           }, [])
+
+      entry.accessPoints = addLettersToCrossings(entry.accessPoints)
       entry.circle = tempCircleDictionary[streamId]
       return dictionary
     }, {})
@@ -132,7 +136,7 @@ export const decompress = (topojsonObject, stateData) => {
   }
 
   // time to update our objects to be more useful upstream!
-  let regsDictionary = keyBy(stateData.regulations, 'id')
+  let regsDictionary = stateData.regulationsDictionary
   let watersDictionary = stateData.waterOpeners
 
   dictionary.restriction_section.features.forEach(feature => {
@@ -158,8 +162,9 @@ export const decompress = (topojsonObject, stateData) => {
 
   // TODO: HACK. for some reason mapshaper and topojson aren't working for me.
   // MANUALLY turn this into a geojson point feature collection.
+  updateRoadCrossingProperties(topojsonObject.objects.accessPoint.geometries, stateData.roadTypesDictionary)
   dictionary.stream_access_point = {
-    features: topojsonObject.objects.accessPoint.geometries.map(x => {
+    features: topojsonObject.objects.accessPoint.geometries.map((x, index) => {
       return {
         geometry: {
           type: 'Point',
@@ -190,5 +195,56 @@ export const decompress = (topojsonObject, stateData) => {
 
   //  topojson.feature(topojsonObject, topojsonObject.objects.accessPoint)
   return dictionary
+}
+
+const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+const alphabetLength = alphabet.length
+export const crossingTypes = {
+  publicTrout: 'publicTrout',
+  permissionRequired: 'permissionRequired',
+  unsafe: 'unsafe',
+  uninteresting: 'uninteresting'
+}
+
+const addLettersToCrossings = (roadCrossings) => {
+  let interestingRoadCrossings = roadCrossings.filter(rc => rc.properties.bridgeType !== crossingTypes.uninteresting)
+
+  // let currentAlphabetIndex = 0
+  interestingRoadCrossings.forEach(({ properties }, index) => {
+    properties.alphabetLetter = alphabet[index % alphabetLength]
+  })
+  return roadCrossings
+}
+
+const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
+  apFeatures.forEach(({ properties }, index) => {
+    // get rid of this 0 vs 1 nonsense
+    properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land === 1
+    properties.is_over_trout_stream = properties.is_over_trout_stream === 1
+    var roadTypeId = properties.road_type_id
+    let roadType = roadTypesDictionary[roadTypeId]
+    let isParkable = roadType.isParkable
+    properties.isParkable = isParkable
+    properties.bridgeType = determineBridgeType(properties, roadTypesDictionary)
+    properties.alphabetLetter = ' '
+  })
+  return apFeatures
+}
+
+const determineBridgeType = (bridgeProperties, roadTypesDictionary) => {
+  let { is_over_publicly_accessible_land, is_over_trout_stream, isParkable } = bridgeProperties
+  if (is_over_trout_stream === false) {
+    return crossingTypes.uninteresting
+  }
+
+  if (isParkable === false) {
+    return crossingTypes.unsafe
+  }
+
+  if (is_over_publicly_accessible_land === false) {
+    return crossingTypes.permissionRequired
+  }
+
+  return crossingTypes.publicTrout
 }
 

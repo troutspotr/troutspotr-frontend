@@ -25,9 +25,9 @@
 .listItem {
   font-size: 12px;
   clear: both;
-
-  // margin-bottom: 5px;
-  display: flex;
+  margin-bottom: 10px;
+  display: inline-flex;
+  width: 100%;
 }
 
 .listText {
@@ -60,6 +60,12 @@
   composes: numberCircle;
   composes: badge;
   color: $blue;
+}
+
+.unsafeBridgeOverTroutStream {
+  composes: numberCircle;
+  composes: badge;
+  color: $red;
 }
 
 .bridge {

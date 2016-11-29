@@ -87,12 +87,12 @@ const STREAM_ACCESS_POINT_FILER_BASE = [
     [
       '==',
       'is_over_publicly_accessible_land',
-      1
+      true
     ],
     [
-      '>=',
+      '==',
       'is_over_trout_stream',
-      1
+      true
     ]
   ]
 ]

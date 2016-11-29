@@ -14,7 +14,6 @@ const RestrictionComponent = React.createClass({
     let { color, pattern, text, length } = this.props
     let colorClass = classes[color]
     let patternClass = classes[pattern]
-    console.log(classes, classes.yellow, classes[pattern])
     return (
       <div className={classes.container}>
         <span className={classes.symbol + ' ' + colorClass + ' ' + patternClass} />

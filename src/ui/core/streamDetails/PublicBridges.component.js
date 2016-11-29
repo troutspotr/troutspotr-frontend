@@ -4,9 +4,7 @@ import classes from './PublicBridges.scss'
 
 const PublicBridgesComponent = React.createClass({
   propTypes: {
-    number: PropTypes.number.isRequired,
-    // color: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired
+    number: PropTypes.number.isRequired
   },
 
   renderOpenBridges () {

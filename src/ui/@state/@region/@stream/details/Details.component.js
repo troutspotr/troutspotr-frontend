@@ -26,7 +26,7 @@ const DetailsComponent = React.createClass({
     let restrictionElements = restrictions.map((restriction, index) => {
       let text = 'fake thing'
       let color = 'yellow'
-      let length = 18.2
+      let length = '18.2'
       let pattern = 'solid'
       return <RestrictionComponent
         text={text}
@@ -105,7 +105,6 @@ const DetailsComponent = React.createClass({
       </div>)
     })
 
-
     let unsafeTroutStreamBridgeElements = bridgeGroups.unsafe.map((bridge, index) => {
       let { street_name } = bridge.properties
       let letter = bridge.properties.alphabetLetter
@@ -119,7 +118,7 @@ const DetailsComponent = React.createClass({
     })
 
     return (<div>
-    <div className={classes.title}>Bridges</div>
+      <div className={classes.title}>Bridges</div>
       <div className={classes.listHeader}>With access to publicly fishable land</div>
       <div className={classes.list}>
         {publicTroutStreamBridgeElements}
@@ -145,7 +144,7 @@ const DetailsComponent = React.createClass({
 
     let tributaryElements = tributaries.map((tributary, index) => {
       let { name } = tributary.properties.streamData.stream.properties
-      
+
       let color = 'yellow'
       let length = 18.2
       let pattern = 'solid'

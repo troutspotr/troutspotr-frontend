@@ -2,8 +2,6 @@
 import { groupBy, keyBy, valuesIn, has } from 'lodash'
 import * as topojson from 'topojson-client'
 
-
-
 export const transformGeo = (topojsonObject, stateData) => {
   let geoJsonObjects = decompress(topojsonObject, stateData)
   let dictionaries = createStreamDictionaries(geoJsonObjects)
@@ -177,6 +175,8 @@ export const decompress = (topojsonObject, stateData) => {
     }),
     type: 'FeatureCollection'
   }
+
+  debugger
 
   dictionary.tributary = {
     features: topojsonObject.objects.tributary.geometries.map(x => {

@@ -7,6 +7,7 @@ import LoadingComponent from 'ui/core/loading/Loading.component'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
 import { isEmpty } from 'lodash'
+import SvgSpriteSheet from './svgSpriteSheet/SvgSpriteSheet.component'
 // console.log(MAP, LIST)
 const RegionLayout = React.createClass({
   propTypes: {
@@ -84,6 +85,7 @@ const RegionLayout = React.createClass({
     let { view } = this.props
     return (
       <div className={classes.regionContainer}>
+        <SvgSpriteSheet/>
         {this.renderMap()}
         {this.renderList()}
         {view === LIST && this.props.children}

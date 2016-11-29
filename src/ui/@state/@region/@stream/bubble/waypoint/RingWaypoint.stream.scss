@@ -1,0 +1,45 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "./RingWaypoint";
+
+$TRIBUTARY_FONT_SIZE: 6px;
+$TRIBUTARY_HIGHLIGHT_FONT_SIZE: 8px;
+
+.tributaryWaypoint {
+  composes: waypoint;
+}
+
+.tributary {
+  font-size: $TRIBUTARY_FONT_SIZE;
+  opacity: 0.5;
+}
+
+.icon_tributary {
+  fill: $blue;
+}
+
+.tributaryWaypoint:focus .tributary,
+.tributaryWaypoint:hover .tributary {
+  font-size: $TRIBUTARY_HIGHLIGHT_FONT_SIZE;
+  opacity: 1.0;
+  animation: tributary-fade ($HOVER_SPEED * 5);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes tributary-fade {
+  0% {
+    font-size: $TRIBUTARY_FONT_SIZE;
+    opacity: 0.5;
+  }
+
+  33% {
+    font-size: $TRIBUTARY_HIGHLIGHT_FONT_SIZE;
+    opacity: 1.0;
+  }
+
+  100% {
+    font-size: $TRIBUTARY_HIGHLIGHT_FONT_SIZE;
+    opacity: 1.0;
+  }
+}

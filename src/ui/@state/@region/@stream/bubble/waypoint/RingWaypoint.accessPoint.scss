@@ -1,0 +1,19 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "./RingWaypoint";
+
+.roadSignText {
+  fill: #fff;
+  font-size: 0.6em;
+  text-decoration: none;
+}
+
+.roadSignText:hover,
+.roadSignText:focus {
+  text-decoration: none;
+}
+
+.roadSignTextDark {
+  fill: $off_white;
+  composes: roadSignText;
+}

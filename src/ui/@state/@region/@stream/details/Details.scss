@@ -1,0 +1,70 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "src/ui/styles/_fonts";
+@import "src/ui/styles/NumberCircle";
+
+.container {}
+
+.title {
+  color: $white;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 1.1;
+  font-family: sans-serif;
+  font-weight: 500;
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+
+.list {
+  columns: 2 2em;
+  column-gap: 1em;
+  font-size: 1.0em;
+}
+
+.listItem {
+  font-size: 12px;
+  clear: both;
+
+  // margin-bottom: 5px;
+  display: flex;
+}
+
+.listText {
+  flex-grow: 1;
+  order: 2;
+}
+
+.listHeader {
+  composes: listItem;
+  color: $white;
+}
+
+.listHeader:not(:first-child) {
+  margin-top: 5px;
+}
+
+.badge {
+  font-size: 12px;
+  order: 1;
+  margin-right: 3px;
+}
+
+.publicBridgeTroutStream {
+  composes: numberCircle;
+  composes: badge;
+  color: $green;
+}
+
+.bridgeOverTroutStream {
+  composes: numberCircle;
+  composes: badge;
+  color: $blue;
+}
+
+.bridge {
+  composes: numberCircle;
+  color: $gray;
+  font-size: 12px;
+  order: 1;
+}

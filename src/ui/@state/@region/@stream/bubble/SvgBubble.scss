@@ -1,0 +1,246 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+
+$stream_width: 0.05em * 2;
+$section_width: $stream_width * 3;
+$restriction_width: $section_width;
+$pal_width: $stream_width * 7;
+
+$MN_HIGHWAY_BLUE: #223A74;
+$MN_HIGHWAY_YELLOW: #FECC08;
+
+$RAILROAD_YELLOW: #FFD136;
+$RAILROAD_BLACK: #010101;
+
+$tributary_width: $stream_width;
+$tributary_pal_width: $tributary_width * 7;
+
+:global {
+  .usHighway {
+    stroke: $off_white;
+    stroke-width: 0.1em;
+    fill: $yellow;
+  }
+
+  .mnCounty {
+    stroke: $off_white;
+    stroke-width: 0.05em;
+    fill: $yellow;
+  }
+
+  .usInterstate {
+    stroke: $off_white;
+    stroke-width: 0.05em;
+    fill: $yellow;
+  }
+
+  .mnHighway {
+    .background {
+      fill: $MN_HIGHWAY_YELLOW;
+      stroke: $off_white;
+      stroke-width: 0.05em;
+    }
+
+    .state {
+      // fill: $MN_HIGHWAY_BLUE;
+      display: none;
+    }
+
+    .backdrop {
+      fill: $MN_HIGHWAY_BLUE;
+    }
+
+    .minnesota {
+      // fill: $MN_HIGHWAY_BLUE;
+      display: none;
+    }
+
+    .roadNumber {
+       // fill: #FFFFFF;
+      display: none;
+    }
+  }
+
+  .externalLink {
+    fill: $off_white;
+    .externalLink_arrow {
+      fill: $blue;
+    }
+  }
+
+  .railroad {
+    fill: $off_white;
+
+    .railroad_highlight {
+      fill: $MN_HIGHWAY_YELLOW;
+    }
+
+    .railroad_border {
+      fill: $RAILROAD_BLACK;
+    }
+  }
+}
+
+// $small_font_size: .875em;
+
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+
+  svg {
+    height: 100%;
+    display: block;
+    margin: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .container {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 544px) {
+  .container {
+    font-size: 20px;
+  }
+}
+
+.stream {
+  fill: none;
+  stroke: $gray;
+  stroke-width: $stream_width;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.section {
+  composes: stream;
+  stroke: $blue;
+  stroke-width: $section_width;
+  animation: section-fade 700ms;
+  animation-iteration-count: 1;
+}
+
+.restriction {
+  composes: stream;
+  stroke: $yellow;
+  stroke-width: $restriction_width;
+}
+
+.fishSanctuary {
+  composes: restriction;
+  stroke: $red;
+  stroke-width: $restriction_width;
+}
+
+.pal {
+  composes: stream;
+  stroke: $green;
+
+  // stroke-linecap: butt;
+  stroke-width: $pal_width;
+  animation: pal-fade 1000ms;
+  animation-iteration-count: 1;
+}
+
+@keyframes pal-fade {
+  0% {
+    opacity: 0;
+    stroke-width: $pal_width * 0;
+  }
+
+  50% {
+    opacity: 0.8;
+    stroke-width: $pal_width * 0.3;
+  }
+
+  100% {
+    opacity: 1.0;
+    stroke-width: $pal_width;
+  }
+}
+
+@keyframes section-fade {
+  0% {
+    opacity: 0;
+    stroke-width: $section_width * 0.3;
+  }
+
+  50% {
+    opacity: 0.9;
+    stroke-width: $section_width * 0.5;
+  }
+
+  100% {
+    opacity: 1.0;
+    stroke-width: $section_width;
+  }
+}
+
+.accessPoint:hover {
+  fill: $red;
+  stroke-dasharray: 1,4;
+}
+
+.accessPoint:hover .accessPointConnector {
+  fill: $red;
+  stroke-dasharray: 1,4;
+  stroke: $off_white;
+}
+
+.accessPointStream {
+  stroke-width: 1px;
+}
+
+.accessPoint:hover .accessPointStream {
+  fill: $red;
+  stroke-width: 20px;
+  stroke-color: $red;
+}
+
+
+// ✅ TODO: remove this and palce it in /ring
+.tributaryText {
+  // composes: radialText;
+  fill: $white; 
+}
+
+.tributaries {
+  opacity: 0.6;
+}
+
+.tributary {
+  composes: section;
+  stroke-width: $tributary_width;
+  stroke: transparentize($white, 0.3);
+}
+
+.tributarySection {
+  composes: tributary;
+  stroke: $blue;
+}
+
+.tributaryDot {
+  fill: $blue;
+}
+
+.tributaryPalSection {
+  composes: tributary;
+  stroke: $green;
+
+  // stroke-linecap: butt;
+  stroke-width: $tributary_pal_width;
+  animation: pal-fade 1000ms;
+  animation-iteration-count: 1;
+}
+
+.highwaySign {
+  width: 5px;
+  height: 5px;
+}
+

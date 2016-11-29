@@ -40,8 +40,13 @@
   pointer-events: none;
 
   a {
+    stroke: transparentize($blue, 0.7);
+    stroke-width: 0.4px;
+  }
+
+  a:hover {
     stroke: $blue;
-    stroke-width: 0.7px;
+    stroke-width: 0.4px;
   }
 
   composes: polygon;

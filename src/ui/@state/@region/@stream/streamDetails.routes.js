@@ -5,8 +5,8 @@ export default (store) => ({
   /*  Async getComponent is only invoked when route matches   */
   getComponent (nextState, cb) {
     require.ensure([], (require) => {
-      const StreamItem = require('./StreamItem.container').default
+      const StreamItem = require('./StreamDetails.container').default
       cb(null, StreamItem)
-    }, 'streamItem')
+    }, 'streamDetails')
   }
 })

@@ -8,22 +8,22 @@ export const transformGeo = (topojsonObject, stateData) => {
   let streamDictionary = createStreamDictionary(geoJsonObjects, dictionaries)
     // update with tributaries.
   valuesIn(streamDictionary).forEach(stream => {
-    // let streamId = stream.stream.properties.gid
-    // let tribs = dictionaries.tributaries[streamId]
-    // stream.tributaries = tribs == null
-    //   ? []
-    //   : dictionaries.tributaries[streamId].map(t => {
-    //     let tributaryId = t.properties.tributary_gid
-    //     return {
-    //       ...t,
-    //       ...{
-    //         properties: {
-    //           ...t.properties,
-    //           streamData: streamDictionary[tributaryId]
-    //         }
-    //       }
-    //     }
-    //   })
+    let streamId = stream.stream.properties.gid
+    let tribs = dictionaries.tributaries[streamId]
+    stream.tributaries = tribs == null
+      ? []
+      : dictionaries.tributaries[streamId].map(t => {
+        let tributaryId = t.properties.tributary_gid
+        return {
+          ...t,
+          ...{
+            properties: {
+              ...t.properties,
+              streamData: streamDictionary[tributaryId]
+            }
+          }
+        }
+      })
   })
 
   return {
@@ -37,19 +37,19 @@ export const createStreamDictionaries = (geoJsonObjects) => {
   let restrictionsMap = groupBy(geoJsonObjects.restriction_section.features, 'properties.stream_gid')
   let palMap = groupBy(geoJsonObjects.pal_routes.features, 'properties.stream_gid')
   let accessMap = groupBy(geoJsonObjects.stream_access_point.features, 'properties.stream_gid')
-  // let tributaries = groupBy(geoJsonObjects.stream_tributary.features
-  //     .filter(x => x.properties.linear_offset > 0.0001 && x.properties.linear_offset < 0.999),
-  //      'properties.stream_gid')
+  let tributaries = groupBy(geoJsonObjects.tributary.features
+      .filter(x => x.properties.linear_offset > 0.0001 && x.properties.linear_offset < 0.999),
+       'properties.stream_gid')
 
-  // let tempCircleDictionary = keyBy(geoJsonObjects.bounding_circles.features, 'properties.gid')
+  let tempCircleDictionary = keyBy(geoJsonObjects.boundingCircle.features, 'properties.gid')
 
   return {
     sectionsMap,
     restrictionsMap,
     palMap,
-    accessMap
-    // tributaries,
-    // tempCircleDictionary
+    accessMap,
+    tributaries,
+    tempCircleDictionary
   }
 }
 
@@ -59,8 +59,8 @@ export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
     sectionsMap,
     restrictionsMap,
     palMap,
-    accessMap
-    // tempCircleDictionary
+    accessMap,
+    tempCircleDictionary
   } = dictionaries
 
   let streamDictionary = geoJsonObjects.streamProperties.features
@@ -112,7 +112,7 @@ export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
             }
             return previousResult.concat(currentItem)
           }, [])
-      // entry.circle = tempCircleDictionary[streamId]
+      entry.circle = tempCircleDictionary[streamId]
       return dictionary
     }, {})
 
@@ -120,15 +120,15 @@ export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
 }
 
 export const decompress = (topojsonObject, stateData) => {
-  // let bounds = topojson.feature(topojsonObject, topojsonObject.objects.bounding_square_circles)
+  let bounds = topojson.feature(topojsonObject, topojsonObject.objects.boundingCircle)
   let dictionary = {
     trout_stream_section: topojson.feature(topojsonObject, topojsonObject.objects.troutSection),
     restriction_section: topojson.feature(topojsonObject, topojsonObject.objects.restrictionSection),
     streamProperties: topojson.feature(topojsonObject, topojsonObject.objects.stream),
     pal_routes: topojson.feature(topojsonObject, topojsonObject.objects.palSection),
-    pal: topojson.feature(topojsonObject, topojsonObject.objects.pal)
-    // stream_tributary: topojson.feature(topojsonObject, topojsonObject.objects.stream_tributary),
-    // bounding_circles: bounds
+    pal: topojson.feature(topojsonObject, topojsonObject.objects.pal),
+    // tributary: topojson.feature(topojsonObject, topojsonObject.objects.tributary),
+    boundingCircle: bounds
   }
 
   // time to update our objects to be more useful upstream!
@@ -160,6 +160,21 @@ export const decompress = (topojsonObject, stateData) => {
   // MANUALLY turn this into a geojson point feature collection.
   dictionary.stream_access_point = {
     features: topojsonObject.objects.accessPoint.geometries.map(x => {
+      return {
+        geometry: {
+          type: 'Point',
+          coordinates: x.coordinates
+        },
+        id: x.id,
+        properties: x.properties,
+        type: 'Feature'
+      }
+    }),
+    type: 'FeatureCollection'
+  }
+
+  dictionary.tributary = {
+    features: topojsonObject.objects.tributary.geometries.map(x => {
       return {
         geometry: {
           type: 'Point',

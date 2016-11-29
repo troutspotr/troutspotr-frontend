@@ -17,7 +17,7 @@ const SearchComponent = React.createClass({
         <input
           id='streamSearch'
           type='search'
-          placeholder='Search'
+          placeholder='Search Streams'
           value={this.props.searchText}
           onChange={this.onTextChange}
           role='search' />

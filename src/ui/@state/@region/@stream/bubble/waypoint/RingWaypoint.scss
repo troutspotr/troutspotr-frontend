@@ -1,0 +1,171 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+
+$small_font_size: 0.875em;
+$smallest_font_size: 0.75em;
+$HOVER_SPEED: 250ms;
+$DESATURATE_AMOUNT: 10%;
+$LOW_OPACITY: 0.3;
+$MEDIUM_OPACITY: 0.6;
+
+@function quite-label-colors($color) {
+  @return transparentize(desaturate(lighten($color, 20%), $DESATURATE_AMOUNT), 0.4);
+}
+
+.waypoint {
+  cursor: pointer;
+  font: $small_font_size sans-serif;
+  outline: none;
+  box-shadow: none !important;
+  opacity: $MEDIUM_OPACITY;
+
+  .target {
+    fill: $off_white;
+  }
+
+  .line {
+    fill: black;
+    stroke: green;
+  }
+
+  &:hover,
+  &:focus {
+    opacity: 1.0;
+    animation: fade-in $HOVER_SPEED;
+    animation-iteration-count: 1;
+
+    .icon,
+    .text {
+      fill: $off_white;
+      font-color: $off_white;
+      animation: fade-in $HOVER_SPEED;
+      animation-iteration-count: 1;
+    }
+  }
+}
+
+.waypointBoring {
+  composes: waypoint;
+  opacity: $LOW_OPACITY;
+  font-size: $smallest_font_size;
+}
+
+.label {
+  .locationMarker {
+    fill: $white;
+  }
+
+  .icon {
+    text-decoration: none;
+  }
+
+  .text {
+    fill: $white;
+    display: none;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    fill: $white;
+    opacity: $MEDIUM_OPACITY;
+    font-color: $white;
+  }
+
+  100% {
+    fill: $off_white;
+    font-color: $off_white;
+    opacity: 1.0;
+  }
+}
+
+@keyframes label-fade-in {
+  0% {
+    opacity: $MEDIUM_OPACITY;
+  }
+
+  100% {
+    opacity: 1.0;
+  }
+}
+
+.waypoint:focus {
+  outline: none;
+  box-shadow: none !important;
+}
+
+.label {
+  alignment-baseline: central;
+  fill: quite-label-colors($off_white);
+}
+
+.accessPoint:focus,
+.accessPoint:hover {
+  fill: none;
+  stroke-dasharray: 1,4;
+}
+
+.waypoint:focus .accessPointConnector,
+.waypoint:hover .accessPointConnector {
+  opacity: 1.0;
+  animation: line-fade $HOVER_SPEED;
+  animation-iteration-count: 1;
+
+  // stroke: $whiteER;
+}
+
+.accessPointStream {
+  stroke-width: 1px;
+}
+
+.accessPoint:hover .accessPointStream {
+  fill: none;
+  stroke-width: 20px;
+  stroke-color: $red;
+}
+
+.accessPoint:hover .accessPointDot {
+  fill: $red;
+}
+
+.accessPointConnector {
+  fill: none;
+  stroke: $off_white;
+  stroke-dasharray: 1,4;
+  stroke-width: 1px;
+  opacity: 0.0;
+  pointer-events: none;
+}
+
+@keyframes line-fade {
+  0% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 1.0;
+  }
+}
+
+.accessPointDot {
+  fill: quite-label-colors($off_white);
+}
+
+.subjectAccessPointDot {
+  composes: accessPointDot;
+  fill: transparentize($white, 0.6);
+}
+
+.dot {
+  fill: inherit;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: $MEDIUM_OPACITY;
+  }
+
+  100% {
+    opacity: 1.0;
+  }
+}

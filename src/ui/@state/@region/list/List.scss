@@ -4,28 +4,18 @@
 $heafty-bottom-margin: 50vmin;
 
 .listViewContainer {
-  // background-color: purple;
-
-  // height: calc(100% - (#{$header-height} + 40px));
   overflow: auto;
-
-  // calc(100% - ($header-height + 40px));dd
   position: absolute;
   top: 0;
   bottom: 0;
   width: 100%;
   overflow-y: auto;
 
-  /* display: inline-block; */
-  // position: relative;
-  // top: $header-height;
-  // bottom: 40px;
-
   // enable scrollign on iOS
   -webkit-overflow-scrolling: touch;
 
   .list {
-    padding: $default-margin $default-margin $heafty-bottom-margin $default-margin;
+    padding: $default-margin $default-margin $heafty-bottom-margin 10px;
 
     // background-color: $blue;
     // position: absolute;

@@ -1,4 +1,4 @@
-import * as colors from './Colors'
+import * as colors from 'ui/core/Colors'
 import { STREAM_ACCESS_POINTS_ACTIVE_LAYER_ID,
   STREAM_ACCESS_POINTS_QUITE_LAYER_ID,
   STREAM_ACCESS_POINTS_MARKER_BORDER_ACTIVE_LAYER_ID,

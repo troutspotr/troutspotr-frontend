@@ -1,4 +1,4 @@
-import * as colors from './Colors'
+import * as colors from 'ui/core/Colors'
 import { TROUT_SECTIONS_ACTIVE_LAYER_ID, TROUT_SECTIONS_QUITE_LAYER_ID } from '../filters/Filters.selectors'
 import { TROUT_STREAM_SECTIONS_SOURCE_ID } from '../sources/Source.selectors'
 export const TroutSectionActiveStyle = {

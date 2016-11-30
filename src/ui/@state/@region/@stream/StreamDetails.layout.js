@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import classes from './StreamDetails.scss'
 import SvgBubbleComponent from './bubble/SvgBubble.component'
-import DetailsComponent from './details/Details.component'
+import DetailsContainer from './details/Details.container'
 const StreamItemComponent = React.createClass({
   propTypes: {
     selectedStream: PropTypes.object
@@ -23,7 +23,7 @@ const StreamItemComponent = React.createClass({
       return null
     }
 
-    return (<DetailsComponent selectedStream={this.props.selectedStream} />)
+    return (<DetailsContainer selectedStream={this.props.selectedStream} />)
   },
 
   render () {

@@ -25,7 +25,7 @@ const MapComponent = React.createClass({
     loadMapModuleAsync: PropTypes.func.isRequired,
     setIsMapInitialized: PropTypes.func.isRequired,
     selectMapFeature: PropTypes.func.isRequired,
-    specialRegulations: PropTypes.array.isRequired
+    specialRegulationsCurrentSeason: PropTypes.array.isRequired
   },
 
   componentDidMount () {
@@ -42,22 +42,14 @@ const MapComponent = React.createClass({
   },
 
   renderSpecialRegulationsOverlay () {
-    let now = new Date()
-    let { selectedGeometry, specialRegulations } = this.props
-    if (isEmpty(selectedGeometry) || specialRegulations.length === 0) {
+    let { selectedGeometry, specialRegulationsCurrentSeason } = this.props
+    if (isEmpty(selectedGeometry) || specialRegulationsCurrentSeason.length === 0) {
       return null
     }
     let specialRegulationsElement = (<div>
       <div className={classes.specialRegulationsTitle}>Special Regulations</div>
       {
-        specialRegulations.filter(sp => {
-          let { startTime, stopTime } = sp
-          if (startTime == null || stopTime == null) {
-            return true
-          }
-          let isInBounds = startTime < now && stopTime > now
-          return isInBounds
-        }).map((reg, index) => {
+        specialRegulationsCurrentSeason.map((reg, index) => {
           return (<RestrictionComponent
             key={index}
             color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}

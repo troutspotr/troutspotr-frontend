@@ -11,28 +11,24 @@ export const crossingTypes = {
 
 const DetailsComponent = React.createClass({
   propTypes: {
-    selectedStream: PropTypes.object
+    selectedStream: PropTypes.object,
+    specialRegulationsCurrentSeason: PropTypes.array.isRequired
   },
 
   renderRestrictions () {
-    let { selectedStream } = this.props
-    let { restrictions } = selectedStream
-    let hasNoRestrictions = restrictions.length === 0
+    let { specialRegulationsCurrentSeason } = this.props
+    let hasNoRestrictions = specialRegulationsCurrentSeason.length === 0
     if (hasNoRestrictions) {
       return null
     }
 
-    let restrictionElements = restrictions.map((restriction, index) => {
-      let text = 'fake thing'
-      let color = 'yellow'
-      let length = '18.2'
-      let pattern = 'solid'
-      return <RestrictionComponent
-        text={text}
-        color={color}
-        length={length}
-        pattern={pattern}
-        key={index} />
+    let restrictionElements = specialRegulationsCurrentSeason.map((reg, index) => {
+      return (<RestrictionComponent
+        key={index}
+        color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
+        pattern={'solid'}
+        text={reg.legalText}
+        length={reg.roundedLength + ' mi'} />)
     })
     return (<div>
       <div className={classes.title}>Special Regulations</div>
@@ -115,17 +111,22 @@ const DetailsComponent = React.createClass({
 
     return (<div>
       <div className={classes.title}>Bridges</div>
-      <div className={classes.listHeader}>With access to publicly fishable land</div>
+      {this.createBridgeListSummaryElement('With access to publicly fishable land', publicTroutStreamBridgeElements)}
+      {this.createBridgeListSummaryElement('Access requires Landowner permission', troutStreamBridgeElements)}
+      {this.createBridgeListSummaryElement('Unsafe to park', unsafeTroutStreamBridgeElements)}
+    </div>)
+  },
+
+  createBridgeListSummaryElement (title, bridgeElements) {
+    if (bridgeElements.length == 0) {
+      return null
+    }
+
+    return (
+      <div>
+         <div className={classes.listHeader}>{title}</div>
       <div className={classes.list}>
-        {publicTroutStreamBridgeElements}
-      </div>
-      <div className={classes.listHeader}>Access requires Landowner permission</div>
-      <div className={classes.list}>
-        {troutStreamBridgeElements}
-      </div>
-      <div className={classes.listHeader}>Unsafe to park</div>
-      <div className={classes.list}>
-        {unsafeTroutStreamBridgeElements}
+        {bridgeElements}
       </div>
     </div>)
   },

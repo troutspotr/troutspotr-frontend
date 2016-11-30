@@ -147,3 +147,24 @@ export const getSpecialRegulationsSelector = createSelector(
 
     return specialRegulationsArray
   })
+
+export const getSpecialRegulationsCurrentSeasonSelector = createSelector(
+  [getSpecialRegulationsSelector],
+  (specialRegulations) => {
+    if (isEmpty(specialRegulations)) {
+      return EMPTY_REGS
+    }
+    // TODO: should I be creating state in selectors?
+    // no... but whatever.
+    let now = new Date()
+    let inSeasonRegs = specialRegulations.filter(sp => {
+      let { startTime, stopTime } = sp
+      if (startTime == null || stopTime == null) {
+        return true
+      }
+      let isInBounds = startTime < now && stopTime > now
+      return isInBounds
+    })
+    return inSeasonRegs
+  })
+

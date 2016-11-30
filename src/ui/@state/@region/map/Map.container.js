@@ -4,7 +4,7 @@ import { loadMapModuleAsync } from 'ui/core/MapboxModule.state'
 import { mapboxModuleSelector, isMapboxModuleLoadedSelector } from 'ui/core/MapboxModule.selectors'
 import { setIsMapInitialized, selectMapFeature } from './Map.state.interactivity'
 import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/core/Core.selectors'
-import { selectedStreamObjectSelector, getSpecialRegulationsSelector } from 'ui/@state/@region/Region.selectors'
+import { selectedStreamObjectSelector, getSpecialRegulationsCurrentSeasonSelector } from 'ui/@state/@region/Region.selectors'
 import { withRouter } from 'react-router'
 
 import {
@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
     selectedState: selectedStateIdSelector(state),
     selectedRegion: selectedRegionIdSelector(state),
     selectedGeometry: selectedStreamObjectSelector(state),
-    specialRegulations: getSpecialRegulationsSelector(state)
+    specialRegulationsCurrentSeason: getSpecialRegulationsCurrentSeasonSelector(state)
   }
   return props
 }

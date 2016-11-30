@@ -209,7 +209,7 @@ export const AccessPointMarkerCenterActiveStyle =
           ],
           [
             10,
-            5.5
+            6
           ]
         ]
       }
@@ -235,7 +235,7 @@ export const AccessPointMarkerCenterQuietStyle =
           ],
           [
             10,
-            5.5
+            6
           ]
         ]
       }

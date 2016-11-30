@@ -118,17 +118,17 @@ const DetailsComponent = React.createClass({
   },
 
   createBridgeListSummaryElement (title, bridgeElements) {
-    if (bridgeElements.length == 0) {
+    if (bridgeElements.length === 0) {
       return null
     }
 
     return (
       <div>
-         <div className={classes.listHeader}>{title}</div>
-      <div className={classes.list}>
-        {bridgeElements}
-      </div>
-    </div>)
+        <div className={classes.listHeader}>{title}</div>
+        <div className={classes.list}>
+          {bridgeElements}
+        </div>
+      </div>)
   },
 
   renderTributaries () {

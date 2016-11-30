@@ -5,7 +5,12 @@ import RingWaypointLabelComponent from './RingWaypoint.component.label'
 
 import accessPointClasses from './RingWaypoint.accessPoint.scss'
 import waypointClasses from './RingWaypoint.scss'
-
+export const crossingTypes = {
+  publicTrout: 'publicTrout',
+  permissionRequired: 'permissionRequired',
+  unsafe: 'unsafe',
+  uninteresting: 'uninteresting'
+}
 const RingWaypointAccessPointComponent = React.createClass({
   propTypes: {
     accessPoint: PropTypes.object.isRequired,
@@ -32,39 +37,32 @@ const RingWaypointAccessPointComponent = React.createClass({
     return this.renderLabelMarker(offsetLocationDegrees, labelOffsetFromRadius)
   },
 
-  renderDefaultMarker () {
-    return <circle
-      className={accessPointClasses.accessPointLabelPoint}
-      cx={0}
-      cy={0}
-      r='8' />
+  renderDefaultMarker (text, className) {
+    let asdf = -6
+    return (<g className={className}>
+      <circle
+        cx={0}
+        cy={0}
+        r={-asdf + 2} />
+      <text
+        textAnchor='middle' x={asdf + 6} y={asdf + 9}
+        dominantBaseline='central'>{text}</text>
+    </g>)
   },
 
   decideRoadShield (roadType) {
-    if (roadType === 1) {
-      // interstate
-      return this.renderInterstateIcon
-    } else if (roadType === 2) {
-      // us highway
-      return this.renderUsHighwayIcon
-    } else if (roadType === 3) {
-      // railroad
-      return this.renderRailroadIcon
-    } else if (roadType === 4) {
-      // mn highway
-      return this.renderMnHighwayIcon
-    } else if (roadType === 5) {
-      // mn county state highway
-      return this.renderMnCountyRoad
-    } else if (roadType === 6) {
-      // mn something something...
-      return this.renderMnCountyRoad
-    } else if (roadType === 7) {
-      // mn county road
-      return this.renderMnCountyRoad
-    }
+    let { alphabetLetter, bridgeType } = roadType.properties
 
-    return this.renderDefaultMarker
+    if (bridgeType === crossingTypes.publicTrout) {
+      return this.renderDefaultMarker(alphabetLetter, accessPointClasses.publicTroutBridge)
+    } else if (bridgeType === crossingTypes.permissionRequired) {
+      return this.renderDefaultMarker(alphabetLetter, accessPointClasses.troutBridge)
+    } else if (bridgeType === crossingTypes.unsafe) {
+      return this.renderDefaultMarker(alphabetLetter, accessPointClasses.unsafeBridge)
+    } else if (bridgeType === crossingTypes.uninteresting) {
+      return this.renderDefaultMarker(alphabetLetter, accessPointClasses.uninterestingBridge)
+    }
+    // return this.renderDefaultMarker
   },
 
   getXCoordinate (radialPosition, labelOffsetFromRadius, width) {
@@ -209,9 +207,10 @@ const RingWaypointAccessPointComponent = React.createClass({
     let roadNumber = this.props.accessPoint.properties.road_shield_text
     let isBoring = this.props.accessPoint.properties.is_over_trout_stream !== 1
     let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
-    let iconComponent = this.decideRoadShield(roadType)(roadNumber)
-    return <g >
-      <a onClick={this.onClick} className={waypointCssClass} xlinkHref={'#'}>
+
+    let iconComponent = this.decideRoadShield(accessPoint)
+    return (<g >
+      <a className={waypointCssClass} onClick={this.onClick} xlinkHref={'#'}>
         <RingWaypointLineComponent
           subjectCoordinates={accessPointWorldCoodinates}
           normalizedOffset={normalizedOffset}
@@ -227,7 +226,7 @@ const RingWaypointAccessPointComponent = React.createClass({
           marker={markerComponent}
           />
       </a>
-    </g>
+    </g>)
   }
 })
 

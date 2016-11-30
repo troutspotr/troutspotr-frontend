@@ -3,9 +3,9 @@
 @import "./RingWaypoint";
 
 .roadSignText {
-  fill: #fff;
-  font-size: 0.6em;
-  text-decoration: none;
+  // fill: #fff;
+  // font-size: 0.6em;
+  // text-decoration: none;
 }
 
 .roadSignText:hover,
@@ -16,4 +16,39 @@
 .roadSignTextDark {
   fill: $off_white;
   composes: roadSignText;
+}
+
+.bridge {
+  text {
+    stroke: none;
+    font-size: 0.75em;
+  }
+
+  circle {
+    fill: transparent;
+  }
+}
+
+.publicTroutBridge {
+  composes: bridge;
+  stroke: $green;
+  fill: $green;
+}
+
+.troutBridge {
+  composes: bridge;
+  stroke: $blue;
+  fill: $blue;
+}
+
+.unsafeBridge {
+  composes: bridge;
+  stroke: $red;
+  fill: $red;
+}
+
+.uninterestingBridge {
+  composes: bridge;
+  stroke: $gray;
+  fill: $gray;
 }

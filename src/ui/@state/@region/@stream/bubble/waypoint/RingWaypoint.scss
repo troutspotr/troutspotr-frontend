@@ -6,7 +6,7 @@ $smallest_font_size: 0.75em;
 $HOVER_SPEED: 250ms;
 $DESATURATE_AMOUNT: 10%;
 $LOW_OPACITY: 0.3;
-$MEDIUM_OPACITY: 0.6;
+$MEDIUM_OPACITY: 0.9;
 
 @function quite-label-colors($color) {
   @return transparentize(desaturate(lighten($color, 20%), $DESATURATE_AMOUNT), 0.4);
@@ -46,8 +46,9 @@ $MEDIUM_OPACITY: 0.6;
 
 .waypointBoring {
   composes: waypoint;
-  opacity: $LOW_OPACITY;
-  font-size: $smallest_font_size;
+
+  // opacity: $LOW_OPACITY;
+  // font-size: $smallest_font_size;
 }
 
 .label {
@@ -96,7 +97,8 @@ $MEDIUM_OPACITY: 0.6;
 
 .label {
   alignment-baseline: central;
-  fill: quite-label-colors($off_white);
+
+  // fill: quite-label-colors($off_white);
 }
 
 .accessPoint:focus,

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import classes from './Micromap.scss'
+import classes from './MicroMap.scss'
 import * as colors from 'ui/core/Colors'
 import * as d3Geo from 'd3-geo'
 // import * as d3Path from 'd3-path'

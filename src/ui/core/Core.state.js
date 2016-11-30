@@ -29,7 +29,8 @@ const updateSearchTextAction = createAction(GEO_UPDATE_SEARCH_TEXT)
 export const updateSearchText = (searchText) => {
   return async (dispatch) => {
     // TODO: debounce this and check for 3 character limit
-    dispatch(updateSearchTextAction(searchText))
+    let sanitizedString = searchText == null ? '' : searchText.trim()
+    dispatch(updateSearchTextAction(sanitizedString))
   }
 }
 

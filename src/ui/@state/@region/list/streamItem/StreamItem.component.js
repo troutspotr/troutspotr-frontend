@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classes from './StreamItem.scss'
+import MicroMapComponent from 'ui/core/microMap/MicroMap.component'
 // import BubbleComponent from './Bubble.component'
 // import { some } from 'lodash'
 /* eslint-disable camelcase */
@@ -164,11 +165,19 @@ const StreamItemComponent = React.createClass({
     let { title, url, streamObject } = this.props
     return (
       <div className={classes.container}>
-        <Link to={url} className={classes.header}>
-          {title}
-        </Link>
-        {this.renderOpenOrClosed(streamObject)}
-        {this.renderOpenBridges(streamObject)}
+        <div className={classes.media}>
+          <MicroMapComponent
+            streamObject={streamObject}
+            id={streamObject.stream.properties.slug + '-canvas'} />
+        </div>
+
+        <div className={classes.body}>
+          <Link to={url} className={classes.header}>
+            {title}
+          </Link>
+          {this.renderOpenOrClosed(streamObject)}
+          {this.renderOpenBridges(streamObject)}
+        </div>
       </div>)
   }
 })

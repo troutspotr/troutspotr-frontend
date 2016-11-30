@@ -1,4 +1,4 @@
-import * as colors from './Colors'
+import * as colors from 'ui/core/Colors'
 import { STREAM_ACTIVE_LAYER_ID, STREAM_QUITE_LAYER_ID } from '../filters/Filters.selectors'
 import { STREAMS_SOURCE_ID } from '../sources/Source.selectors'
 export const StreamActiveStyle = {

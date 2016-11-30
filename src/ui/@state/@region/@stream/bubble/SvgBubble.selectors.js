@@ -1,7 +1,7 @@
 // import _ from 'lodash'
 import * as d3 from 'd3-geo'
 // import { createSelector } from 'reselect'
-const ANIMATION_SCALE = 2.0
+const ANIMATION_SCALE = 1
 export const getStreamDictionary = state => state.bubbles.streamDictionary
 export const getSelectedStreamGid = state => state.bubbles.streamDictioanry
 
@@ -22,16 +22,16 @@ export const getProjectionFromFeature = (feature, { width, height, radius }) => 
 
 export const getTiming = (props, animationScale = ANIMATION_SCALE, sectionsLength, accessPointsLength) => {
   let obj = {}
-  obj.baseStreamOffset = (1000 * props.index) * animationScale
-  obj.baseStreamLength = (1000) * animationScale
-  obj.basePalOffset = (obj.baseStreamOffset + obj.baseStreamLength + 300 * animationScale)
-  obj.baseTroutSectionOffset = (obj.baseStreamOffset + obj.baseStreamLength + 600 * animationScale)
-  obj.baseRestrictionOffset = (obj.baseStreamOffset + obj.baseStreamLength + 900 * animationScale)
-  obj.baseAccessPointOffset = (obj.baseStreamOffset + obj.baseStreamLength + 1200 * animationScale)
+  obj.baseStreamOffset = (0 * props.index) * animationScale
+  obj.baseStreamLength = (500) * animationScale
+  obj.basePalOffset = (obj.baseStreamOffset + 0 + 0 * animationScale)
+  obj.baseTroutSectionOffset = (obj.baseStreamOffset + 0 + 300 * animationScale)
+  obj.baseRestrictionOffset = (obj.baseStreamOffset + 0 + 600 * animationScale)
+  obj.baseAccessPointOffset = (obj.baseStreamOffset + 0 + 900 * animationScale)
 
-  obj.palSectionSpeed = 900 * animationScale
+  obj.palSectionSpeed = 800 * animationScale
   obj.troutSectionSpeed = (800 * animationScale / Math.max(props.streamPackage.sections.length, 1))
-  obj.accessPointSpeed = (1600 * animationScale / Math.max(props.streamPackage.accessPoints.length, 1))
+  obj.accessPointSpeed = (800 * animationScale / Math.max(props.streamPackage.accessPoints.length, 1))
 
   return obj
 }

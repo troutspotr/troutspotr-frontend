@@ -5,12 +5,12 @@ import RegionComponent from './Region.component'
 import { isEmpty } from 'lodash'
 import StreamCentroidComponent from './StreamCentroid.component'
 
-const getProjectionFromFeature = (feature, { width, height, radius }) => {
+export const getProjectionFromFeature = (feature, { width, height, radius, buffer = 2 }) => {
   let streamGeometry = feature
   let diameter = radius * 2
   let centroid = d3.geoCentroid(streamGeometry)
 
-  let lower = [(width - diameter) / 2 + 2, (height - diameter) / 2 + 2]
+  let lower = [(width - diameter) / 2 + buffer, (height - diameter) / 2 + buffer]
   let upper = [width - lower[0], height - lower[1]]
   let projection = d3.geoOrthographic()
     .rotate([-centroid[0], -centroid[1], 0])

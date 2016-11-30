@@ -52,8 +52,8 @@ const StreamComponent = React.createClass({
     return <g id='stream-stream'>
       <SvgAnimatedPathComponent
         cssName={classes.stream}
-        offset={this.props.timing.baseStreamOffset}
-        length={this.props.timing.baseStreamLength}
+        offset={0}
+        length={0}
         path={this.props.pathGenerator(this.props.streamPackage.stream.geometry)} />
     </g>
   },

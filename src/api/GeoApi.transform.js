@@ -1,5 +1,6 @@
 // import _ from 'lodash'
 /* eslint-disable camelcase */
+// import simplify from 'turf-simplify'
 import { groupBy, keyBy, valuesIn, has } from 'lodash'
 import * as topojson from 'topojson-client'
 
@@ -56,6 +57,9 @@ export const createStreamDictionaries = (geoJsonObjects) => {
   }
 }
 
+// this
+// const SIMPLIFICATION_TOLERANCE_IN_DEGREES = 0.0009
+// const IS_HIGH_QUALITY = false
 export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
   const MINIMUM_LENGTH_MILES = 0.05
   let {
@@ -118,6 +122,14 @@ export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
 
       entry.accessPoints = addLettersToCrossings(entry.accessPoints)
       entry.circle = tempCircleDictionary[streamId]
+
+      // simplify points
+      console.log('before', entry.stream.geometry.coordinates.length)
+      // entry.stream = simplify(entry.stream, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY)
+      // entry.sections = entry.sections.map(section => simplify(section, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY))
+      // entry.palSections = entry.palSections.map(section => simplify(section, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY))
+      // entry.restrictions = entry.restrictions.map(section => simplify(section, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY))
+      // console.log('after', entry.stream.geometry.coordinates.length)
       return dictionary
     }, {})
 

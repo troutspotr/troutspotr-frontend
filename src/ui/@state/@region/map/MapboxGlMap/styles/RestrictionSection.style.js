@@ -1,4 +1,4 @@
-import * as colors from './Colors'
+import * as colors from 'ui/core/Colors'
 import { RESTRICTION_SECTIONS_ACTIVE_LAYER_ID, RESTRICTION_SECTIONS_QUITE_LAYER_ID } from '../filters/Filters.selectors'
 import { RESTRICTION_SECTIONS_SOURCE_ID } from '../sources/Source.selectors'
 

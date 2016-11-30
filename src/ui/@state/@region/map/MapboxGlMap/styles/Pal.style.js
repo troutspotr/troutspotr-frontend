@@ -1,4 +1,4 @@
-import * as colors from './Colors'
+import * as colors from 'ui/core/Colors'
 import { PAL_SECTION_LAYER_ID } from '../filters/Filters.selectors'
 import { PALS_SOURCE_ID } from '../sources/Source.selectors'
 

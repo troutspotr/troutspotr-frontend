@@ -10,7 +10,7 @@ import RingWaypointAccessPointComponent from './waypoint/RingWaypoint.component.
 import RingWaypointStreamComponent from './waypoint/RingWaypoint.component.stream'
 
 const DIMENSIONS = 500
-const SQUISH_FACTOR = 0.95
+const SQUISH_FACTOR = 0.90
 const ROTATE_PHASE = Math.PI / 2
 const RADIUS = 160
 

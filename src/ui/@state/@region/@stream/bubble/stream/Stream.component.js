@@ -52,9 +52,9 @@ const StreamComponent = React.createClass({
     return <g id='stream-stream'>
       <SvgAnimatedPathComponent
         cssName={classes.stream}
-        path={this.props.pathGenerator(this.props.streamPackage.stream.geometry)}
         offset={this.props.timing.baseStreamOffset}
-        length={this.props.timing.baseStreamLength} />
+        length={this.props.timing.baseStreamLength}
+        path={this.props.pathGenerator(this.props.streamPackage.stream.geometry)} />
     </g>
   },
 
@@ -81,12 +81,23 @@ const StreamComponent = React.createClass({
         let className = restriction.properties.restriction_id === FISH_SANCTUARY_ID
           ? classes.fishSanctuary
           : classes.restriction
-        return (<SvgAnimatedPathComponent
-          offset={this.props.timing.baseRestrictionOffset}
-          length={this.props.timing.baseStreamLength}
-          cssName={className}
-          key={restriction.properties.gid}
-          path={this.props.pathGenerator(restriction.geometry)} />)
+        let thePath = this.props.pathGenerator(restriction.geometry)
+        return (
+          <g>
+            <SvgAnimatedPathComponent
+              offset={this.props.timing.baseRestrictionOffset}
+              length={this.props.timing.baseStreamLength}
+              cssName={className}
+              key={restriction.properties.gid}
+              path={thePath} />
+            <SvgAnimatedPathComponent
+              offset={this.props.timing.baseRestrictionOffset}
+              length={this.props.timing.baseStreamLength}
+              cssName={classes.restrictionBackground}
+              key={restriction.properties.gid}
+              path={thePath} />
+          </g>
+          )
       })
     }
     </g>)
@@ -94,10 +105,11 @@ const StreamComponent = React.createClass({
 
   render () {
     return <g>
-      {this.renderPalSections()}
+      {this.renderRestrictions()}
       {this.renderStream()}
       {this.renderTroutStreamSections()}
-      {this.renderRestrictions()}
+      {this.renderPalSections()}
+      
     </g>
   }
 })

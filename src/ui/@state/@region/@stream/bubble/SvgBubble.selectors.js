@@ -11,7 +11,7 @@ export const getProjectionFromFeature = (feature, { width, height, radius }) => 
   // console.log(d3.geoCentroid)
   let centroid = d3.geoCentroid(streamGeometry)
 
-  let lower = [(width - diameter) / 2 + 10, (height - diameter) / 2 + 10]
+  let lower = [(width - diameter) / 2 + 20, (height - diameter) / 2 + 20]
   let upper = [width - lower[0], height - lower[1]]
   let projection = d3.geoOrthographic()
     .rotate([-centroid[0], -centroid[1], 0])

@@ -61,6 +61,7 @@ const RingWaypointStreamComponent = React.createClass({
     }
 
     let streamData = this.props.stream.properties.streamData
+    debugger
     let labelText = streamData.stream.properties.name
 
     let { projection } = this.props

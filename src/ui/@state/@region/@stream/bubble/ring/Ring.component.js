@@ -28,9 +28,9 @@ const RingComponent = React.createClass({
     })
   },
 
-  // componentWillMount () {
-  //   this.props.timing = this.props.timing || getTiming(this.props, ANIMATION_SCALE / 4)
-  // },
+  componentWillUnmount () {
+    console.log('unmounting')
+  },
 
   renderPalRings () {
     return this.props.streamPackage.palSections.map((pal, palIndex) => {
@@ -73,19 +73,32 @@ const RingComponent = React.createClass({
       let className = restriction.properties.restriction_id === FISH_SANCTUARY_ID
         ? classes.fishSanctuary
         : classes.restriction
-      return (<RingSectionComponent
-        timing={{ offset, length: this.props.timing.baseStreamLength }}
-        cssName={className}
-        key={restriction.properties.gid}
-        layout={this.props.layout}
-        length={this.props.streamPackage.stream.properties.length_mi}
-        start={restriction.properties.start}
-        stop={restriction.properties.stop} />)
+      return (
+        <g>
+          <RingSectionComponent
+            timing={{ offset, length: this.props.timing.baseStreamLength }}
+            cssName={className}
+            key={restriction.properties.gid}
+            layout={this.props.layout}
+            length={this.props.streamPackage.stream.properties.length_mi}
+            start={restriction.properties.start}
+            stop={restriction.properties.stop} />)
+          <RingSectionComponent
+            timing={{ offset, length: this.props.timing.baseStreamLength }}
+            cssName={classes.restrictionBackground}
+            key={restriction.properties.gid}
+            layout={this.props.layout}
+            length={this.props.streamPackage.stream.properties.length_mi}
+            start={restriction.properties.start}
+            stop={restriction.properties.stop} />
+        </g>
+      )
     })
   },
 
   renderStreamRing () {
     // return this.props.streamPackage.stream
+    console.log(classes.stream)
     let streamLength = this.props.streamPackage.stream.properties.length_mi
     return (<RingSectionComponent
       timing={{ offset: this.props.timing.baseStreamOffset, length: this.props.timing.baseStreamLength }}
@@ -108,9 +121,9 @@ const RingComponent = React.createClass({
   render () {
     return (
       <g id='ring'>
-        <g id='ring-pal'>
+        <g id='ring-restrictions'>
           {
-          this.renderPalRings()
+          this.renderRestrictionRings()
         }
         </g>
 
@@ -125,9 +138,10 @@ const RingComponent = React.createClass({
           this.renderSectionRings()
         }
         </g>
-        <g id='ring-restrictions'>
+        
+        <g id='ring-pal'>
           {
-          this.renderRestrictionRings()
+          this.renderPalRings()
         }
         </g>
         <g id='ring-axis'>

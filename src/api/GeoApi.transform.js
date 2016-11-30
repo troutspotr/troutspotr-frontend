@@ -1,6 +1,6 @@
 // import _ from 'lodash'
 /* eslint-disable camelcase */
-import { groupBy, keyBy, valuesIn } from 'lodash'
+import { groupBy, keyBy, valuesIn, has } from 'lodash'
 import * as topojson from 'topojson-client'
 
 export const transformGeo = (topojsonObject, stateData) => {
@@ -13,7 +13,9 @@ export const transformGeo = (topojsonObject, stateData) => {
     let tribs = dictionaries.tributaries[streamId]
     stream.tributaries = tribs == null
       ? []
-      : dictionaries.tributaries[streamId].map(t => {
+      : dictionaries.tributaries[streamId].filter(t => {
+        return has(streamDictionary, t.properties.tributary_gid)
+      }).map(t => {
         let tributaryId = t.properties.tributary_gid
         return {
           ...t,

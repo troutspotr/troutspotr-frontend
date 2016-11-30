@@ -50,6 +50,10 @@ const SvgBubbleComponent = React.createClass({
     this.timing = getTiming(this.props)
   },
 
+  componentWillUnmount () {
+    
+  },
+
   renderWaypoints () {
     let { accessPoints, tributaries } = this.props.streamPackage
     let waypoints = sortBy(concat(accessPoints, tributaries), 'properties.linear_offset')

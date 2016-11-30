@@ -10,39 +10,52 @@ const SvgAnimatedCircle = React.createClass({
   },
 
   componentWillMount () {
-
+    this.componentPath = null
   },
 
   animate (path, lengthInMilliseconds, pathLength) {
+    if (this.componentPath == null) {
+      return
+    }
+
+    let holderPath = this.componentPath
     // Trigger a layout so styles are calculated & the browser
     // picks up the starting position before animating
     // path.removeAttribute('style.stroke')
-    path.style.removeProperty('stroke')
-    path.getBoundingClientRect()
+    holderPath.style.removeProperty('stroke')
+    holderPath.getBoundingClientRect()
     // Define our transition
-    path.style.transition = path.style.WebkitTransition =
+    holderPath.style.transition = holderPath.style.WebkitTransition =
       `stroke-dashoffset ${lengthInMilliseconds}ms ease-out`
     // Go!
-    path.style.strokeDashoffset = '0'
+    holderPath.style.strokeDashoffset = '0'
   },
 
   onCreatePath (path) {
-    let length = path.getTotalLength()
+    this.componentPath = path
+    let length = this.componentPath.getTotalLength()
 
-    path.style.transition = path.style.WebkitTransition =
+    this.componentPath.style.transition = this.componentPath.style.WebkitTransition =
       'none'
     // Set up the starting positions
-    path.style.strokeDasharray = length + ' ' + length
-    path.style.stroke = 'none'
+    this.componentPath.style.strokeDasharray = length + ' ' + length
+    this.componentPath.style.stroke = 'none'
 
     // force it to go backwards - from upstream to downstream.
-    path.style.strokeDashoffset = -length
-    setTimeout(() => { this.animate(path, this.props.length, length) }, this.props.offset)
-  },
+    this.componentPath.style.strokeDashoffset = -length
+    // setTimeout(() => {
+    //   if (this.componentPath == null) {
+    //     return
+    //   }
 
+    //   this.animate(this.componentPath, this.props.length, length)
+    // }, this.props.offset)
+  },
+// ref={this.onCreatePath}
   render () {
     return (
-      <path ref={this.onCreatePath}
+      
+      <path 
         className={this.props.cssName}
         cx={this.props.coordinates[0]}
         cy={this.props.coordinates[1]}

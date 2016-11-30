@@ -61,7 +61,6 @@ const DetailsComponent = React.createClass({
       let props = element.properties
       // let { is_over_publicly_accessible_land, is_over_trout_stream, isParkable, bridgeType } = props
       let { bridgeType } = props
-      console.log(bridgeType)
       if (bridgeType === crossingTypes.uninteresting) {
         current.uninteresting.push(element)
         return current

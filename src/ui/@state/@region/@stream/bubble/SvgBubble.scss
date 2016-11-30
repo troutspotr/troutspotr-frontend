@@ -1,10 +1,10 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 
-$stream_width: 0.05em * 2;
-$section_width: $stream_width * 3;
-$restriction_width: $section_width;
-$pal_width: $stream_width * 7;
+$stream_width: 0.05em * 4;
+$section_width: $stream_width * 1.2;
+$restriction_width: $section_width * 3.5;
+$pal_width: $stream_width * 1.5;
 
 $MN_HIGHWAY_BLUE: #223A74;
 $MN_HIGHWAY_YELLOW: #FECC08;
@@ -111,16 +111,20 @@ $tributary_pal_width: $tributary_width * 7;
   }
 }
 
-.stream {
+.streamComponent {
   fill: none;
-  stroke: $gray;
   stroke-width: $stream_width;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
+.stream {
+  composes: streamComponent;
+  stroke: $gray;
+}
+
 .section {
-  composes: stream;
+  composes: streamComponent;
   stroke: $blue;
   stroke-width: $section_width;
   animation: section-fade 700ms;
@@ -128,9 +132,19 @@ $tributary_pal_width: $tributary_width * 7;
 }
 
 .restriction {
-  composes: stream;
+  composes: streamComponent;
   stroke: $yellow;
+  stroke-linecap: butt;
+  stroke-linejoin: butt;
   stroke-width: $restriction_width;
+}
+
+.restrictionBackground {
+  composes: streamComponent;
+  stroke: $background;
+  stroke-linecap: butt;
+  stroke-linejoin: butt;
+  stroke-width: $restriction_width * 0.85;
 }
 
 .fishSanctuary {
@@ -140,7 +154,7 @@ $tributary_pal_width: $tributary_width * 7;
 }
 
 .pal {
-  composes: stream;
+  composes: streamComponent;
   stroke: $green;
 
   // stroke-linecap: butt;

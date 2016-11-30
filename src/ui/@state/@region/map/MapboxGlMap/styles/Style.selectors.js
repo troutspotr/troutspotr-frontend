@@ -61,14 +61,20 @@ export const accessPointsLayerSelector = createSelector(
     let borderQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerBorderQuietStyle, UNDER_LABEL_PLACEHOLDER)
     let centerActiveLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerCenterActiveStyle, UNDER_LABEL_PLACEHOLDER)
     let centerQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerCenterQuietStyle, UNDER_LABEL_PLACEHOLDER)
+    let labelLetterActiveLayer = layerGeneratorBetter(accessPointStyles.AccessPointLetterLabelActiveStyle, UNDER_LABEL_PLACEHOLDER)
+    let labelletterQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointLabelLetterQuietStyle, UNDER_LABEL_PLACEHOLDER)
 
     return [
-      labelActiveLayer,
-      labelQuietLayer,
+
       borderActiveLayer,
       borderQuietLayer,
       centerActiveLayer,
-      centerQuietLayer
+      centerQuietLayer,
+      labelActiveLayer,
+      labelQuietLayer,
+      labelLetterActiveLayer,
+      labelletterQuietLayer
+
     ]
   })
 

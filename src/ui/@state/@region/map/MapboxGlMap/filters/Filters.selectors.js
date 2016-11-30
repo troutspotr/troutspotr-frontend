@@ -26,6 +26,9 @@ export const RESTRICTION_SECTIONS_QUITE_LAYER_ID = 'restriction-sections-quiet-l
 export const STREAM_ACCESS_POINTS_ACTIVE_LAYER_ID = 'stream-access-points-active-layer'
 export const STREAM_ACCESS_POINTS_QUITE_LAYER_ID = 'stream-access-points-quiet-layer'
 
+export const STREAM_ACCESS_POINTS_LETTER_ACTIVE_LAYER_ID = 'stream-access-points-letter-active-layer'
+export const STREAM_ACCESS_POINTS_LETTER_QUITE_LAYER_ID = 'stream-access-points-letter-quiet-layer'
+
 export const STREAM_ACCESS_POINTS_MARKER_BORDER_ACTIVE_LAYER_ID = 'stream-access-points-marker-border-active-layer'
 export const STREAM_ACCESS_POINTS_MARKER_BORDER_QUITE_LAYER_ID = 'stream-access-points-marker-border-quiet-layer'
 

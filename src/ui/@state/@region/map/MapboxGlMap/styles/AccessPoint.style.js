@@ -4,7 +4,9 @@ import { STREAM_ACCESS_POINTS_ACTIVE_LAYER_ID,
   STREAM_ACCESS_POINTS_MARKER_BORDER_ACTIVE_LAYER_ID,
   STREAM_ACCESS_POINTS_MARKER_BORDER_QUITE_LAYER_ID,
   STREAM_ACCESS_POINTS_MARKER_CENTER_ACTIVE_LAYER_ID,
-  STREAM_ACCESS_POINTS_MARKER_CENTER_QUITE_LAYER_ID } from '../filters/Filters.selectors'
+  STREAM_ACCESS_POINTS_MARKER_CENTER_QUITE_LAYER_ID,
+  STREAM_ACCESS_POINTS_LETTER_ACTIVE_LAYER_ID,
+  STREAM_ACCESS_POINTS_LETTER_QUITE_LAYER_ID } from '../filters/Filters.selectors'
 import { STREAM_ACCESS_POINTS_SOURCE_ID } from '../sources/Source.selectors'
 export const AccessPointLabelActiveStyle = {
   'id': STREAM_ACCESS_POINTS_ACTIVE_LAYER_ID,
@@ -14,10 +16,12 @@ export const AccessPointLabelActiveStyle = {
   'minzoom': 10,
   'layout': {
     'text-field': '{street_name}',
+    // 'text-allow-overlap': true,
+    // 'text-ignore-placement': true,
     'text-anchor': 'left',
     'text-size': 12,
     'text-offset': [
-      0.5,
+      1.0,
       0
     ],
     'text-font': [
@@ -41,14 +45,60 @@ export const AccessPointLabelQuietStyle = {
   'minzoom': 12,
   'layout': {
     'text-field': '{street_name}',
+    // 'text-allow-overlap': true,
+    // 'text-ignore-placement': true,
     'text-anchor': 'left',
     'text-size': 12,
     'text-offset': [
-      0.5,
+      1.0,
       0
     ],
     'text-font': [
       'DIN Offc Pro Regular',
+      'Arial Unicode MS Regular'
+    ]
+  },
+  'paint': {
+    'text-color': colors.MoodyGray
+  }
+}
+
+export const AccessPointLetterLabelActiveStyle = {
+  'id': STREAM_ACCESS_POINTS_LETTER_ACTIVE_LAYER_ID,
+  'type': 'symbol',
+  'source': STREAM_ACCESS_POINTS_SOURCE_ID,
+  'interactive': false,
+  'minzoom': 10,
+  'layout': {
+    'text-field': '{alphabetLetter}',
+    // 'text-allow-overlap': true,
+    // 'text-ignore-placement': true,
+    'text-anchor': 'center',
+    'text-size': 10,
+    'text-font': [
+      'DIN Offc Pro Bold',
+      'Arial Unicode MS Regular'
+    ]
+  },
+  'paint': {
+    'text-color': colors.MoodyGray
+  }
+}
+
+export const AccessPointLabelLetterQuietStyle = {
+  'id': STREAM_ACCESS_POINTS_LETTER_QUITE_LAYER_ID,
+  'type': 'symbol',
+  'source': STREAM_ACCESS_POINTS_SOURCE_ID,
+  'interactive': false,
+  'minzoom': 12,
+  'layout': {
+    'text-field': '{alphabetLetter}',
+    // 'text-allow-overlap': true,
+    // 'text-ignore-placement': true,
+    'text-anchor': 'center',
+    'text-size': 10,
+    'text-font': [
+      'DIN Offc Pro Bold',
       'Arial Unicode MS Regular'
     ]
   },
@@ -96,7 +146,7 @@ export const AccessPointMarkerBorderActiveStyle = {
         ]
       ]
     },
-    'circle-radius': 6
+    'circle-radius': 8
   }
 }
 
@@ -136,7 +186,7 @@ export const AccessPointMarkerBorderQuietStyle = {
         ]
       ]
     },
-    'circle-radius': 6
+    'circle-radius': 8
   }
 }
 
@@ -159,7 +209,7 @@ export const AccessPointMarkerCenterActiveStyle =
           ],
           [
             10,
-            4
+            5.5
           ]
         ]
       }
@@ -185,7 +235,7 @@ export const AccessPointMarkerCenterQuietStyle =
           ],
           [
             10,
-            4
+            5.5
           ]
         ]
       }

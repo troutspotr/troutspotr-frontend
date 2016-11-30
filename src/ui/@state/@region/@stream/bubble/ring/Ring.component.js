@@ -138,7 +138,7 @@ const RingComponent = React.createClass({
           this.renderSectionRings()
         }
         </g>
-        
+
         <g id='ring-pal'>
           {
           this.renderPalRings()

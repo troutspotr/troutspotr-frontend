@@ -97,7 +97,7 @@ const StreamComponent = React.createClass({
               key={restriction.properties.gid}
               path={thePath} />
           </g>
-          )
+        )
       })
     }
     </g>)
@@ -109,7 +109,7 @@ const StreamComponent = React.createClass({
       {this.renderStream()}
       {this.renderTroutStreamSections()}
       {this.renderPalSections()}
-      
+
     </g>
   }
 })

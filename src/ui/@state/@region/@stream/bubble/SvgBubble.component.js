@@ -51,7 +51,7 @@ const SvgBubbleComponent = React.createClass({
   },
 
   componentWillUnmount () {
-    
+
   },
 
   renderWaypoints () {

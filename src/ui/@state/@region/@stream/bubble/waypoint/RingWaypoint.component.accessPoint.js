@@ -203,8 +203,8 @@ const RingWaypointAccessPointComponent = React.createClass({
     let labelText = this.getLabelText()
 
     let markerComponent = this.getMarkerComponent()
-    let roadType = this.props.accessPoint.properties.road_type_id
-    let roadNumber = this.props.accessPoint.properties.road_shield_text
+    // let roadType = this.props.accessPoint.properties.road_type_id
+    // let roadNumber = this.props.accessPoint.properties.road_shield_text
     let isBoring = this.props.accessPoint.properties.is_over_trout_stream !== 1
     let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
 

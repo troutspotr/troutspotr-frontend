@@ -54,8 +54,8 @@ const SvgAnimatedCircle = React.createClass({
 // ref={this.onCreatePath}
   render () {
     return (
-      
-      <path 
+
+      <path
         className={this.props.cssName}
         cx={this.props.coordinates[0]}
         cy={this.props.coordinates[1]}

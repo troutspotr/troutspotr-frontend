@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
 import classes from './Details.scss'
 import RestrictionComponent from 'ui/core/regulations/Restriction.component'
-import { has } from 'lodash'
-
+/* eslint-disable camelcase */
 export const crossingTypes = {
   publicTrout: 'publicTrout',
   permissionRequired: 'permissionRequired',
@@ -98,7 +97,6 @@ const DetailsComponent = React.createClass({
       let letter = bridge.properties.alphabetLetter
       let bridgeClass = classes.bridgeOverTroutStream
       let badgeElement = (<span className={bridgeClass}>{letter}</span>)
-      // return (<div className={classes.listItem}>{badgeElement} {street_name}</div>)
       return (<div className={classes.listItem}>
         <span>{badgeElement}</span>
         <span className={classes.listText}>{street_name}</span>
@@ -110,7 +108,6 @@ const DetailsComponent = React.createClass({
       let letter = bridge.properties.alphabetLetter
       let bridgeClass = classes.unsafeBridgeOverTroutStream
       let badgeElement = (<span className={bridgeClass}>{letter}</span>)
-      // return (<div className={classes.listItem}>{badgeElement} {street_name}</div>)
       return (<div className={classes.listItem}>
         <span>{badgeElement}</span>
         <span className={classes.listText}>{street_name}</span>
@@ -145,9 +142,9 @@ const DetailsComponent = React.createClass({
     let tributaryElements = tributaries.map((tributary, index) => {
       let { name } = tributary.properties.streamData.stream.properties
 
-      let color = 'yellow'
-      let length = 18.2
-      let pattern = 'solid'
+      // let color = 'yellow'
+      // let length = 18.2
+      // let pattern = 'solid'
 
       return <div key={index} className={classes.listItem}>{name}</div>
     })

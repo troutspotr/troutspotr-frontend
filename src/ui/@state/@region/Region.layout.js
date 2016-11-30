@@ -85,7 +85,7 @@ const RegionLayout = React.createClass({
     let { view } = this.props
     return (
       <div className={classes.regionContainer}>
-        <SvgSpriteSheet/>
+        <SvgSpriteSheet />
         {this.renderMap()}
         {this.renderList()}
         {view === LIST && this.props.children}

@@ -84,11 +84,6 @@ const MapComponent = React.createClass({
       .filter(x => x.properties.is_over_trout_stream && x.properties.is_over_publicly_accessible_land)
       .length
 
-    // let { selectedGeometry } = this.props
-    // if (isEmpty(selectedGeometry)) {
-    //   return null
-    // }
-
     return (
       <MessageOverlay position='top'>
         <PublicBridgesComponent

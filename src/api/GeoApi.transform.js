@@ -1,5 +1,6 @@
 // import _ from 'lodash'
-import { groupBy, keyBy, valuesIn, has } from 'lodash'
+/* eslint-disable camelcase */
+import { groupBy, keyBy, valuesIn } from 'lodash'
 import * as topojson from 'topojson-client'
 
 export const transformGeo = (topojsonObject, stateData) => {
@@ -175,8 +176,6 @@ export const decompress = (topojsonObject, stateData) => {
     }),
     type: 'FeatureCollection'
   }
-
-  debugger
 
   dictionary.tributary = {
     features: topojsonObject.objects.tributary.geometries.map(x => {

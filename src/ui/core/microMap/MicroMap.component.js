@@ -10,7 +10,6 @@ const STREAM_WIDTH = LINE_WIDTH
 const TROUT_SECTION_WIDTH = LINE_WIDTH * 1.5
 const PUBLIC_SECTION = LINE_WIDTH * 2
 const END_POINT_SIZE = LINE_WIDTH * 2
-const publicTrout = 'publicTrout'
 const SneezeGuardComponent = React.createClass({
   propTypes: {
     streamObject: PropTypes.object.isRequired,
@@ -49,7 +48,7 @@ const SneezeGuardComponent = React.createClass({
 
     return context
   },
-  
+
   renderCanvas () {
     let { geoPath, context } = this
     // render petri dish

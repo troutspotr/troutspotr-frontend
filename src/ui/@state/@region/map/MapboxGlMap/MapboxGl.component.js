@@ -33,7 +33,7 @@ const MapboxGlComponent = React.createClass({
       style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
       center: [-93.50, 42],
       zoom: 4,
-      maxZoom: 18,
+      maxZoom: 18
       // boxZoom: false,
       // dragRotate: false,
       // keyboard: false

@@ -37,19 +37,31 @@ const SvgAnimatedPathComponent = React.createClass({
 
     // there is a lot of DOM unmounting and apparently recycling.
     // I had to remove all classes and then specifically add my own here.
-    for (let i = path.classList.length - 1; i >= 0; i--) {
-      let classListItem = path.classList.item(i)
-      console.log(classListItem)
-      path.classList.remove(classListItem)
+    // Basically, I'm just trying to add the classes that were in props to the actual real-deal
+    // path element. You know, normal stuff.
+
+    // also, we need to check for IE 11, which DOES NOT have classList for SVG elements
+    let hasClassList = path.classList != null
+    if (hasClassList) {
+      // manually remove all the items, starting from the end and moving backwards
+      for (let i = path.classList.length - 1; i >= 0; i--) {
+        let classListItem = path.classList.item(i)
+        console.log(classListItem)
+        path.classList.remove(classListItem)
+      }
+
+      // now that the list is empty, ADD OUR CLASSES BACK.
+      cssNames.forEach(token => {
+        path.classList.add(token)
+      })
+    } else if (path.getAttribute) {
+      // https://github.com/Polymer/polymer/commit/0f5bfa5b56582bde3928fcc7d2ef62ccd42984bf
+      // Used that link to learn how to add/remove classes manually in IE. YUUUCKY.
+      let classNames = path.getAttribute('class')
+      let newClassNames = cssNames.join(' ')
+      path.setAttribute('class', newClassNames);
     }
-    // if (cssNames.length !== path.classList.length) {
-    //   console.log(cssNames, path.classList)
-    // }
-
-    cssNames.forEach(token => {
-      path.classList.add(token)
-    })
-
+    
     path.getBoundingClientRect()
     // Define our transition
     path.style.transition = path.style.WebkitTransition =

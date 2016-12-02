@@ -124,7 +124,7 @@ export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
       entry.circle = tempCircleDictionary[streamId]
 
       // simplify points
-      console.log('before', entry.stream.geometry.coordinates.length)
+      // console.log('before', entry.stream.geometry.coordinates.length)
       // entry.stream = simplify(entry.stream, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY)
       // entry.sections = entry.sections.map(section => simplify(section, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY))
       // entry.palSections = entry.palSections.map(section => simplify(section, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY))

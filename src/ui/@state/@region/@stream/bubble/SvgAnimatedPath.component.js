@@ -57,11 +57,10 @@ const SvgAnimatedPathComponent = React.createClass({
     } else if (path.getAttribute) {
       // https://github.com/Polymer/polymer/commit/0f5bfa5b56582bde3928fcc7d2ef62ccd42984bf
       // Used that link to learn how to add/remove classes manually in IE. YUUUCKY.
-      let classNames = path.getAttribute('class')
       let newClassNames = cssNames.join(' ')
-      path.setAttribute('class', newClassNames);
+      path.setAttribute('class', newClassNames)
     }
-    
+
     path.getBoundingClientRect()
     // Define our transition
     path.style.transition = path.style.WebkitTransition =

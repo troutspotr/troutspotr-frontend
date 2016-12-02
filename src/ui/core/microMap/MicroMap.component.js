@@ -10,7 +10,7 @@ const STREAM_WIDTH = LINE_WIDTH
 const TROUT_SECTION_WIDTH = LINE_WIDTH * 1.5
 const PUBLIC_SECTION = LINE_WIDTH * 2
 const END_POINT_SIZE = LINE_WIDTH * 2
-
+const publicTrout = 'publicTrout'
 const SneezeGuardComponent = React.createClass({
   propTypes: {
     streamObject: PropTypes.object.isRequired,
@@ -49,7 +49,7 @@ const SneezeGuardComponent = React.createClass({
 
     return context
   },
-
+  
   renderCanvas () {
     let { geoPath, context } = this
     // render petri dish
@@ -59,6 +59,10 @@ const SneezeGuardComponent = React.createClass({
     // let endGeometry = streamCoordinates[0]
     // let endPoint = { 'type': 'Point', 'coordinates': endGeometry }
     // this.renderPointOnStream(this.projection, context, endPoint, colors.StreamGray, 3)
+    // this.props.streamObject.accessPoints.filter(x => x.properties.bridgeType === publicTrout)
+    //   .forEach(publicAccess => {
+    //     this.renderPointOnStream(this.projection, context, publicAccess.geometry, colors.StreamGray, 4)
+    //   })
 
     // render stream
     this.renderStream(geoPath, context, this.props.streamObject.stream, colors.StreamGray, STREAM_WIDTH)
@@ -131,11 +135,12 @@ const SneezeGuardComponent = React.createClass({
     if (context == null) {
       return
     }
-
+    context.save()
     context.fillStyle = color
     let canvasCoordiantes = projection(coordinates)
     context.lineWidth = 1
     context.strokeStyle = color
+    context.globalAlpha = 0.4
     context.beginPath()
     context.arc(canvasCoordiantes[0], canvasCoordiantes[1], radius, 0, TAU, true)
     // context.fill()

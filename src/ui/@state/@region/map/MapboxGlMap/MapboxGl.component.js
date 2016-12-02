@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import MapboxGlComponentCamera from './MapboxGl.component.camera'
 import classes from '../Map.scss'
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
+import { isEmpty } from 'lodash'
 const MapboxGlComponent = React.createClass({
   propTypes: {
     mapbox: PropTypes.object.isRequired,
@@ -14,7 +15,8 @@ const MapboxGlComponent = React.createClass({
     isReadyToInsertLayers: PropTypes.bool.isRequired,
     sources: PropTypes.array.isRequired,
     layerPackage: PropTypes.array.isRequired,
-
+    isVisible: PropTypes.bool.isRequired,
+    selectedGeometry: PropTypes.object,
     onFeatureClick: PropTypes.func.isRequires,
     onFeatureHover: PropTypes.func.isRequires
   },
@@ -28,13 +30,13 @@ const MapboxGlComponent = React.createClass({
     this.map = new this.props.mapbox.Map({
       attributionControl: true,
       container: this.props.elementId,
-      style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
+      style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
       center: [-93.50, 42],
       zoom: 4,
       maxZoom: 18,
-      boxZoom: false,
-      dragRotate: false,
-      keyboard: false
+      // boxZoom: false,
+      // dragRotate: false,
+      // keyboard: false
     })
 
     // setTimeout(() => { this.map.resize() }, 20)
@@ -71,6 +73,21 @@ const MapboxGlComponent = React.createClass({
     if (isSourceChanged) {
       this.safelySetSources(this.map, nextProps.sources)
     }
+
+    let isUserLookingAtMap = isEmpty(nextProps.isVisible)
+    let isUserHitBackButton = isEmpty(this.props.selectedGeometry) === false && isEmpty(nextProps.selectedGeometry)
+    let shouldBounceOutALittle = isUserLookingAtMap && isUserHitBackButton
+    if (shouldBounceOutALittle) {
+      let currentZoom = this.map.getZoom()
+
+      if (currentZoom > 9) {
+        this.map.zoomTo(currentZoom * 0.9)
+      }
+    }
+  },
+
+  zoomOutALittle () {
+
   },
 
   setSourceOnStyleLoad (e) {

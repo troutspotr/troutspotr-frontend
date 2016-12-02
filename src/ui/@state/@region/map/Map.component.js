@@ -117,7 +117,9 @@ const MapComponent = React.createClass({
         onFeatureClick={this.onFeatureClick}
         onFeatureHover={this.onFeatureHover}
         isReadyToInsertLayers={this.props.isReadyToInsertLayers}
-        elementId={MAP_ID} />
+        elementId={MAP_ID}
+        isVisible={this.props.isVisible}
+        selectedGeometry={this.props.selectedGeometry} />
       {this.renderSpecialRegulationsOverlay()}
       {this.renderStreamDetailsOverlay()}
     </div>)

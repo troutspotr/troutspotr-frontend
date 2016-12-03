@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import StreamListComponent from './StreamList.component'
-import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/core/Core.selectors'
+import { selectedStateIdSelector, selectedRegionIdSelector, isListVisible } from 'ui/core/Core.selectors'
 import { visibleTroutStreams } from '../Region.selectors'
 
 // import { saveBuilderProfile, fetchCompany } from './Profile.state'
@@ -14,7 +14,8 @@ const mapStateToProps = (state) => {
   let props = {
     visibleTroutStreams: visibleTroutStreams(state),
     selectedState: selectedStateIdSelector(state),
-    selectedRegion: selectedRegionIdSelector(state)
+    selectedRegion: selectedRegionIdSelector(state),
+    isListVisible: isListVisible(state)
   }
 
   return props

@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import { locationSelector, isRootPageSelector } from 'ui/Location.selectors'
+import { LIST } from './Core.state'
 // import { regionsDictionarySelector, statesDictionarySelector } from 'ui/Geo.selectors'
 import { isEmpty, has } from 'lodash'
 
@@ -18,6 +19,12 @@ export const searchTextSelector = state => state.core.searchText
 export const viewSelector = state => {
   return state.core.view
 }
+
+export const isListVisible = createSelector(
+  [viewSelector],
+  (view) => {
+    return view === LIST
+  })
 
 export const selectedStateIdSelector = createSelector(
   [isRootPageSelector, locationSelector],

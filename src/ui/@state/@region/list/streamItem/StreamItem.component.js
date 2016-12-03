@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classes from './StreamItem.scss'
-import MicroMapComponent from 'ui/core/microMap/MicroMap.component'
+import MicroMapContainer from 'ui/core/microMap/MicroMap.container'
 // import BubbleComponent from './Bubble.component'
 // import { some } from 'lodash'
 /* eslint-disable camelcase */
@@ -166,7 +166,7 @@ const StreamItemComponent = React.createClass({
     return (
       <div className={classes.container}>
         <div className={classes.media}>
-          <MicroMapComponent
+          <MicroMapContainer
             streamObject={streamObject}
             id={streamObject.stream.properties.slug + '-canvas'} />
         </div>

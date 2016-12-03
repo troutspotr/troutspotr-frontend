@@ -86,8 +86,8 @@ const RegionLayout = React.createClass({
     return (
       <div className={classes.regionContainer}>
         <SvgSpriteSheet />
-        {this.renderMap()}
         {this.renderList()}
+        {this.renderMap()}
         {view === LIST && this.props.children}
         {this.renderLoading()}
         {this.renderNoElementsFoundInRegionOverlay()}

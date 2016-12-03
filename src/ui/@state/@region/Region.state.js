@@ -47,7 +47,7 @@ export const fetchRegionData = (stateName, regionName) => {
         return
       }
 
-      dispatch(selectMapFeature(selectedRegion))
+      setTimeout(() => dispatch(selectMapFeature(selectedRegion)), 300)
     } catch (error) {
       console.log(error)
       dispatch(setRegionDataFailed())

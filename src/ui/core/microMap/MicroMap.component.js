@@ -49,61 +49,69 @@ const SneezeGuardComponent = React.createClass({
     return context
   },
 
-  renderCanvas () {
-    let { geoPath, context } = this
+  renderCanvas (streamObject) {
+    this.projection = getProjectionFromFeature(streamObject.circle, this.dimensions)
+    this.geoPath = d3Geo.geoPath()
+      .projection(this.projection)
+      .pointRadius(END_POINT_SIZE)
+      .context(this.canvasContext)
+    let { geoPath, canvasContext } = this
+    // the first thing we do is clear the context right away.
+    canvasContext.clearRect(0, 0, this.width, this.height)
     // render petri dish
-    // this.renderPetriDish(context, colors.MoodyGray)
-    // render end point
-    // let streamCoordinates = this.props.streamObject.stream.geometry.coordinates
-    // let endGeometry = streamCoordinates[0]
-    // let endPoint = { 'type': 'Point', 'coordinates': endGeometry }
-    // this.renderPointOnStream(this.projection, context, endPoint, colors.StreamGray, 3)
-    // this.props.streamObject.accessPoints.filter(x => x.properties.bridgeType === publicTrout)
-    //   .forEach(publicAccess => {
-    //     this.renderPointOnStream(this.projection, context, publicAccess.geometry, colors.StreamGray, 4)
-    //   })
+    // this.renderPetriDish(canvasContext, colors.MoodyGray)
 
     // render stream
-    this.renderStream(geoPath, context, this.props.streamObject.stream, colors.StreamGray, STREAM_WIDTH)
+    this.renderStream(geoPath, canvasContext, streamObject.stream, colors.StreamGray, STREAM_WIDTH)
 
     // render sections
-    this.props.streamObject.sections.forEach(section => {
-      this.renderStream(geoPath, context, section, colors.StreamBlue, TROUT_SECTION_WIDTH)
+    streamObject.sections.forEach(section => {
+      this.renderStream(geoPath, canvasContext, section, colors.StreamBlue, TROUT_SECTION_WIDTH)
     })
 
     // render public sections
-    this.props.streamObject.palSections.forEach(section => {
-      this.renderStream(geoPath, context, section, colors.PalGreen, PUBLIC_SECTION)
+    streamObject.palSections.forEach(section => {
+      this.renderStream(geoPath, canvasContext, section, colors.PalGreen, PUBLIC_SECTION)
     })
   },
 
+  componentWillUpdate (nextProps) {
+    this.fireRenderToCanvas(nextProps.streamObject, true)
+  },
+
   componentDidMount () {
+    console.log('did mount')
     if (this.canvasElement == null) {
       return
     }
+
     let { height, width } = this.canvasElement.getBoundingClientRect()
-    this.context = this.setUpCanvas(width, height)
     this.width = width
     this.height = height
-    let dimensions = {
+    this.canvasContext = this.setUpCanvas(this.width, this.height)
+    this.dimensions = {
       width,
       height,
       radius: Math.min(width, height) * 0.5,
       buffer: 1
     }
 
-    this.projection = getProjectionFromFeature(this.props.streamObject.circle, dimensions)
-    this.geoPath = d3Geo.geoPath()
-      .projection(this.projection)
-      .pointRadius(END_POINT_SIZE)
-      .context(this.context)
-
     // it's polite to save our canvas style here.
     // draw a big rectangle to clear our canvas.
-    this.context.fillStyle = colors.MoodyGray
-    // context.fillRect(0, 0, width, height)
-    this.context.save()
-    this.renderCanvas()
+    this.canvasContext.fillStyle = colors.MoodyGray
+    this.canvasContext.save()
+
+    this.fireRenderToCanvas(this.props.streamObject, true)
+  },
+
+  fireRenderToCanvas (streamObject, delay = true) {
+    if (delay === false) {
+      this.renderCanvas(streamObject)
+      return
+    }
+
+    let offset = Math.floor(Math.random() * 5) + 5
+    setTimeout(() => this.renderCanvas(streamObject), offset)
   },
 
   renderStream (path, context, geoJson, color = 'red', thickness = 1) {
@@ -116,6 +124,10 @@ const SneezeGuardComponent = React.createClass({
     }
     context.lineWidth = thickness
     context.strokeStyle = color
+    if (context.beginPath == null) {
+      console.log(context)
+    }
+
     context.beginPath()
     path(geoJson)
     context.stroke()
@@ -159,7 +171,7 @@ const SneezeGuardComponent = React.createClass({
   },
 
   componentWillUnmount () {
-
+    console.log('unmounted')
   },
 
   onClick (e) {
@@ -173,12 +185,14 @@ const SneezeGuardComponent = React.createClass({
     this.canvasElement = canvasElement
   },
 
-  shouldComponentUpdate () {
+  shouldComponentUpdate (nextProps) {
+    if (nextProps.streamObject.stream.properties.gid !== this.props.streamObject.stream.properties.gid) {
+      return true
+    }
     return false
   },
 
   render () {
-    console.log('rendering in micromap')
     return (
       <div onClick={this.onClick} className={classes.container}>
         <canvas id={this.props.id} className={classes.microMap} ref={this.renderMap} />

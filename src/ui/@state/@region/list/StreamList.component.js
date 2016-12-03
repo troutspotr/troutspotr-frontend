@@ -1,11 +1,11 @@
 import React from 'react'
 import classes from './List.scss'
 // import BubbleComponent from './Bubble.component'
-import StreamItemComponent from './streamItem/StreamItem.component'
+import StreamItemContainer from './streamItem/StreamItem.container'
 
 const StreamListComponent = React.createClass({
   propTypes: {
-    isVisible: React.PropTypes.bool.isRequired,
+    isListVisible: React.PropTypes.bool.isRequired,
     visibleTroutStreams: React.PropTypes.array.isRequired,
     selectedState: React.PropTypes.string.isRequired,
     selectedRegion: React.PropTypes.string.isRequired
@@ -16,17 +16,17 @@ const StreamListComponent = React.createClass({
   },
 
   render () {
-    let { selectedRegion, selectedState, visibleTroutStreams, isVisible } = this.props
+    let { selectedRegion, selectedState, visibleTroutStreams, isListVisible } = this.props
     return (
-      <div className={isVisible ? classes.listViewContainer : classes.invisible}>
+      <div className={isListVisible ? classes.listViewContainer : classes.invisible}>
         <ul className={classes.list}>
           {visibleTroutStreams.map((stream, index) => {
             let realStream = stream.stream
             let fakeName = realStream.properties.name
             let url = realStream.properties.slug
             return (
-              <li key={realStream.properties.gid}>
-                <StreamItemComponent
+              <li key={index}>
+                <StreamItemContainer
                   title={fakeName}
                   url={`/${selectedState}/${selectedRegion}/${url}`}
                   streamObject={stream} />

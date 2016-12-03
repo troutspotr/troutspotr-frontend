@@ -17,12 +17,13 @@ const MapboxGlComponent = React.createClass({
     layerPackage: PropTypes.array.isRequired,
     isVisible: PropTypes.bool.isRequired,
     selectedGeometry: PropTypes.object,
+    selectedRegionId: PropTypes.string.isRequired,
     onFeatureClick: PropTypes.func.isRequires,
     onFeatureHover: PropTypes.func.isRequires
   },
 
   onClick () {
-
+ 
   },
 
   componentDidMount () {
@@ -30,7 +31,8 @@ const MapboxGlComponent = React.createClass({
     this.map = new this.props.mapbox.Map({
       attributionControl: true,
       container: this.props.elementId,
-      style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
+      // style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
+      style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
       center: [-93.50, 42],
       zoom: 4,
       maxZoom: 18
@@ -76,8 +78,9 @@ const MapboxGlComponent = React.createClass({
 
     let isUserLookingAtMap = isEmpty(nextProps.isVisible)
     let isUserHitBackButton = isEmpty(this.props.selectedGeometry) === false && isEmpty(nextProps.selectedGeometry)
+    let userChangedRegions = this.props.selectedRegionId !== nextProps.selectedRegionId
     let shouldBounceOutALittle = isUserLookingAtMap && isUserHitBackButton
-    if (shouldBounceOutALittle) {
+    if (userChangedRegions === false && shouldBounceOutALittle) {
       let currentZoom = this.map.getZoom()
 
       if (currentZoom > 9) {

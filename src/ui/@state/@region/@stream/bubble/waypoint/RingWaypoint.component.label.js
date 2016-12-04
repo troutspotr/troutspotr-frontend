@@ -28,9 +28,7 @@ const RingWaypointLabelComponent = React.createClass({
       throw new Error('argumetns cannot be null')
     }
 
-    let textAnchor = offset > 180
-      ? 'center'
-      : 'center'
+    let textAnchor = 'center'
 
     return (<g transform={labelTextTransform} className={waypointClasses.text}>
       <text

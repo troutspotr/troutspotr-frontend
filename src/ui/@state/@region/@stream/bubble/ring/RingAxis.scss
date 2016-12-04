@@ -1,7 +1,7 @@
 @import "src/ui/styles/_colors";
 
 .radialText {
-  font: 0.8em sans-serif;
+  font: 0.6em sans-serif;
   font-stretch: ultra-condensed;
   fill: $blueGray;
   stroke: none;
@@ -11,7 +11,7 @@
 
 .radialTextSmall {
   composes: radialText;
-  font: 0.8em sans-serif;
+  font: 0.6em sans-serif;
   fill: $blueGray;
 }
 
@@ -20,7 +20,7 @@
   stroke: $blueGray;
 
   // stroke-dasharray: 1,4;
-  stroke-width: 0.1em;
+  stroke-width: 0.08em;
 }
 
 .radial {}

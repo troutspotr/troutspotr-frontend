@@ -9,10 +9,10 @@ import RingComponent from './ring/Ring.component'
 import RingWaypointAccessPointContainer from './waypoint/RingWaypoint.container.accessPoint'
 import RingWaypointStreamComponent from './waypoint/RingWaypoint.component.stream'
 
-const DIMENSIONS = 500
+const DIMENSIONS = 300
 const SQUISH_FACTOR = 0.90
 const ROTATE_PHASE = Math.PI / 2
-const RADIUS = 175
+const RADIUS = (DIMENSIONS / 2) - 50
 
 const SvgBubbleComponent = React.createClass({
   propTypes: {

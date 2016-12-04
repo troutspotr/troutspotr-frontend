@@ -82,7 +82,7 @@
 .unsafeBridgeOverTroutStream {
   composes: numberCircle;
   composes: badge;
-  color: $red;
+  color: $blueGray;
 }
 
 .bridge {
@@ -117,8 +117,8 @@
 .selectedUnsafeBridgeOverTroutStream {
   composes: unsafeBridgeOverTroutStream;
   composes: selectedBridge;
-  color: $red;
-  background-color: $red;
+  color: $blueGray;
+  background-color: $blueGray;
 }
 
 .googleLink {

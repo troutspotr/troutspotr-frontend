@@ -57,11 +57,12 @@
 
 .unsafeBridge {
   composes: bridge;
-  stroke: $red;
-  fill: $red;
+  stroke: $blueGray;
+  fill: $blueGray;
 }
 
 .uninterestingBridge {
+  display: none;
   composes: bridge;
   stroke: $gray;
   fill: $gray;
@@ -81,8 +82,8 @@
 
 .selectedUnsafeBridge {
   composes: selectedBridge;
-  stroke: $red;
-  fill: $red;
+  stroke: $blueGray;
+  fill: $blueGray;
 }
 
 .selectedUninterestingBridge {

@@ -42,14 +42,13 @@ const RingWaypointAccessPointComponent = React.createClass({
   },
 
   renderDefaultMarker (text, className) {
-    let asdf = -6
     return (<g className={className}>
       <circle
         cx={0}
         cy={0}
-        r={-asdf + 2} />
+        r={8} />
       <text
-        textAnchor='middle' x={asdf + 6} y={asdf + 9}
+        textAnchor='middle' x={0} y={4}
         dominantBaseline='central'>{text}</text>
     </g>)
   },
@@ -198,6 +197,10 @@ const RingWaypointAccessPointComponent = React.createClass({
 
   render () {
     let { accessPoint, projection } = this.props
+    let isUninteresting = accessPoint.properties.bridgeType === crossingTypes.uninteresting
+    if (isUninteresting) {
+      return null
+    }
     let normalizedOffset = accessPoint.properties.linear_offset
     let accessPointWorldCoodinates = {
       latitude: accessPoint.properties.centroid_latitude,

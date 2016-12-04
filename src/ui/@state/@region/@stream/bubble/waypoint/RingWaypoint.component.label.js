@@ -29,8 +29,8 @@ const RingWaypointLabelComponent = React.createClass({
     }
 
     let textAnchor = offset > 180
-      ? 'end'
-      : 'start'
+      ? 'center'
+      : 'center'
 
     return (<g transform={labelTextTransform} className={waypointClasses.text}>
       <text
@@ -49,13 +49,9 @@ const RingWaypointLabelComponent = React.createClass({
   },
 
   getLabelTextTransform (rotationDegrees, radialOffset) {
-    let rotate = rotationDegrees > 180
-      ? 'rotate(180)'
-      : 'rotate(0)'
+    let rotate = rotationDegrees
 
-    let textXPos = rotationDegrees > 180
-      ? -12
-      : 12
+    let textXPos = 0
 
     let translate = `translate(${textXPos}, 0)`
     let transform = `${rotate} ${translate}`
@@ -63,8 +59,8 @@ const RingWaypointLabelComponent = React.createClass({
   },
 
   getIconTransform (rotationDegrees, radialOffset) {
-    let rotate = rotationDegrees > 180 ? 180 : 0
-    let transform = `translate(5,0)rotate(${rotate})`
+    let rotate = rotationDegrees
+    let transform = `translate(5,0) rotate(${-rotate + 90})`
     return transform
   },
 
@@ -96,7 +92,6 @@ const RingWaypointLabelComponent = React.createClass({
       </g>
       <g transform='translate(5, 0)' >
         {debuggerIcon}
-        {debuggerText}
       </g>
     </g>
   }

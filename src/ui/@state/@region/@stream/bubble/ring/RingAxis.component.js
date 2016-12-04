@@ -29,37 +29,27 @@ const RingAxisComponent = React.createClass({
 
     return times(ticks + 1).map(index => {
       let rotationDegrees = tickDegrees * index - rotatePhaseDegrees
-
       if (rotationDegrees > 90) {
         // console.log(index)
       }
 
-      let humanReadableRotationDegrees = rotationDegrees > 90
-        ? 180
-        : 0
-
-      // let transform = rotationDegrees > 90
-      //   ? 'rotate(180)'
-      //   : 'rotate(0)'
-
       let textAnchor = rotationDegrees > 90
-        ? 'end'
-        : 'start'
+        ? 'middle'
+        : 'middle'
 
-      let xPos = rotationDegrees > 90
-        ? -9
-        : 9
+      let xPos = 0
 
       // let preRotate = `rotate(${rotationDegrees})`
       // let offsetTranslate = `translate(${radius},0)`
       let secondTranslate = `translate(${width * 0.5},${height * 0.5})`
       let rotate = `rotate(${rotationDegrees})`
-      let firstTranslate = `translate(${radius}, 0)`
-      let transform = `${secondTranslate}  ${rotate} ${firstTranslate}`
+      let firstTranslate = `translate(${radius + 20}, 0)`
+      let counterRotation = `rotate(${-rotationDegrees})`
+      let transform = `${secondTranslate}  ${rotate} ${firstTranslate} ${counterRotation}`
       return (
         <g key={index} transform={transform}>
-          <line className={ringClasses.radialGuide} x1={0} x2={0 + 3} />
-          <g transform={`rotate(${humanReadableRotationDegrees})`}>
+          <line transform={`rotate(${rotationDegrees}) translate(-10, 0)`} className={ringClasses.radialGuide} x1={-2} x2={2} />
+          <g>
             {
             index % tickMod === 0
             ? (<text

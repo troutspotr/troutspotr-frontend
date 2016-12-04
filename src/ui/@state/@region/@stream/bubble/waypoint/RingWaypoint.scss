@@ -50,7 +50,8 @@ $MEDIUM_OPACITY: 0.9;
 
 .label {
   .locationMarker {
-    fill: $white;
+    // fill: $white;
+    fill: $blueGray;
   }
 
   .icon {
@@ -171,7 +172,7 @@ $MEDIUM_OPACITY: 0.9;
 
 .accessPointConnector {
   fill: none;
-  stroke: $off_white;
+  stroke: $blueGray;
   stroke-dasharray: 1,4;
   stroke-width: 1px;
   opacity: 0.0;

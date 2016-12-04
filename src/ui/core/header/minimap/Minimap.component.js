@@ -3,7 +3,8 @@ import classes from './Minimap.scss'
 import { isRootPageByUrl, isStatePageByUrl } from 'ui/Location.selectors'
 import debounce from 'lodash/debounce'
 import SvgMapComponent from './svgMinimap/SvgMap.component'
-
+import ActionButtonComponent from '../actionButton/ActionButton.component'
+import { isEmpty } from 'lodash'
 const MINIMAP_WIDTH = 50
 
 const MinimapComponent = React.createClass({
@@ -113,11 +114,11 @@ const MinimapComponent = React.createClass({
     let newStyle = `translateY(${translateY}px) translateX(${-translateX}px) scale(${ratio})`
 
     result.style.transform = newStyle
-    // console.log('finished resetting style for scale')
   },
 
   onSelectState (e) {
-    if (this.props.isRootPage) {
+    let isNoRegionSelected = isEmpty(this.props.selectedRegion)
+    if (this.props.isRootPage || isNoRegionSelected) {
       return
     }
 
@@ -137,6 +138,21 @@ const MinimapComponent = React.createClass({
     this.props.expand(false)
   },
 
+  backButtonPressed () {
+    if (this.props.isRootPage) {
+      return
+    }
+    if (this.props.isExpanded === false) {
+      return
+    }
+
+    if (isEmpty(this.props.selectedRegion)) {
+      return
+    }
+
+    this.props.expand(false)
+  },
+
   render () {
     let { isExpanded } = this.props
     let expandClass = isExpanded ? classes.expand : null
@@ -147,18 +163,28 @@ const MinimapComponent = React.createClass({
       ? emptyArray
       : this.props.streamCentroidsGeoJson
     return (
-      <div className={classes.minimapContent + ' ' + expandClass} onClick={this.onSelectState}>
-        {isMapMinimapLoaded && <SvgMapComponent
-          statesGeoJson={this.props.statesGeoJson}
-          countiesGeoJson={this.props.countiesGeoJson}
-          regionsGeoJson={this.props.regionsGeoJson}
-          streamCentroidsGeoJson={streamCentroidsGeoJson}
-          selectedRegion={this.props.selectedRegion}
-          selectedState={this.props.selectedState}
-          selectedStreamCentroid={this.props.selectedStreamCentroid}
-          width={MINIMAP_WIDTH}
-          height={MINIMAP_WIDTH}
-          selectRegion={this.selectRegion} />}
+      <div className={classes.container}>
+        <div className={classes.backButtonContainer}>
+          <ActionButtonComponent
+            onClick={this.backButtonPressed}
+            isActive={this.props.isRootPage === false && this.props.isExpanded && isEmpty(this.props.selectedRegion) === false} >
+            <span className={classes.close + ' ' + classes.black}></span>
+          </ActionButtonComponent>
+        </div>
+        <div className={classes.minimapContent + ' ' + expandClass} onClick={this.onSelectState}>
+          {isMapMinimapLoaded && <SvgMapComponent
+            statesGeoJson={this.props.statesGeoJson}
+            countiesGeoJson={this.props.countiesGeoJson}
+            regionsGeoJson={this.props.regionsGeoJson}
+            streamCentroidsGeoJson={streamCentroidsGeoJson}
+            selectedRegion={this.props.selectedRegion}
+            selectedState={this.props.selectedState}
+            selectedStreamCentroid={this.props.selectedStreamCentroid}
+            width={MINIMAP_WIDTH}
+            height={MINIMAP_WIDTH}
+            selectRegion={this.selectRegion} />}
+        </div>
+
       </div>
     )
   }

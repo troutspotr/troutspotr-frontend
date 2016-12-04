@@ -12,6 +12,13 @@ export const isRootPageSelector = createSelector(
   }
 )
 
+export const isStatePageSelector = createSelector(
+  [locationSelector], (location) => {
+    let isState = isStatePageByUrl(location.pathname)
+    return isState
+  }
+)
+
 export const isRootPageByUrl = url => {
   let isRoot = url === ROOT
   return isRoot

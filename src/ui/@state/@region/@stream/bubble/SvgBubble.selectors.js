@@ -1,4 +1,3 @@
-// import _ from 'lodash'
 import * as d3 from 'd3-geo'
 // import { createSelector } from 'reselect'
 const ANIMATION_SCALE = 1

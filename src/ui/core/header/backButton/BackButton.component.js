@@ -6,7 +6,6 @@ const BackButtonComponent = React.createClass({
   propTypes: {
     previous:  PropTypes.string,
     isEnabled: PropTypes.bool.isRequired,
-
     expandMinimap: PropTypes.func.isRequired
   },
 

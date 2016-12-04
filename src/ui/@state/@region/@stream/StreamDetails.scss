@@ -27,12 +27,13 @@
   order: 1;
   position: relative;
   overflow-y: auto;
+  height: 60%;
 }
 
 .details {
   composes: content;
   order: 2;
-  flex-grow: 1;
+  height: 40%;
 }
 
 @media (orientation: landscape) {
@@ -41,13 +42,14 @@
   }
 
   .content {
-    min-height: 100%;
-    min-width: 50%;
+    width: 50%;
+    height: 100%;
   }
 
   .details {
-    // border-left: 1px solid transparentize($off-white, 0.7);
     padding-left: $default-margin;
+    width: 50%;
+    height: 100%;
   }
 }
 
@@ -56,15 +58,7 @@
     flex-direction: column;
   }
 
-  .content {
-    height: 100%;
-    min-width: 100%;
-
-    // max-height: auto;
-
-    // flex-grow: 1;
- 
-  }
+  .content {}
 
   .details {
     border-top: 1px solid transparentize($off-white, 0.7);

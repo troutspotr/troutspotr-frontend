@@ -1,8 +1,6 @@
 import { createSelector } from 'reselect'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import { searchTextSelector } from 'ui/core/Core.selectors'
-// import { waterOpenersDictionarySelector, regulationsSelector } from 'ui/@state/State.selectors'
-
 import { isEmpty, values, has, round } from 'lodash'
 import { displayedCentroidDictionarySelector,
   displayedStreamCentroidDataSelector,
@@ -16,6 +14,9 @@ export const streamsSelector = state => state.region.streams
 export const palSectionsSelector = state => state.region.palSections
 export const streamAccessPointSelector = state => state.region.streamAccessPoint
 export const palsSelector = state => state.region.pals
+export const hoveredStreamSelector = state => state.region.hoveredStream
+export const hoveredRoadSelector = state => state.region.hoveredRoad
+export const selectedRoadSelector = state => state.region.selectedRoad
 
 const EMPTY_STREAMS = []
 export const visibleTroutStreams = createSelector(
@@ -118,7 +119,6 @@ export const getSpecialRegulationsSelector = createSelector(
       return {
         startTime: start_time,
         stopTime: end_time,
-        // roundedLength: roundedLength,
         isFishSanctuary,
         isOpenerOverride,
         restrictionId: restriction_id,
@@ -146,6 +146,20 @@ export const getSpecialRegulationsSelector = createSelector(
     })
 
     return specialRegulationsArray
+  })
+
+export const getSelectedRoadSelector = createSelector(
+  [selectedStreamObjectSelector, selectedRoadSelector],
+  (selectedStreamObject, selectedRoad) => {
+    if (isEmpty(selectedStreamObject)) {
+      return null
+    }
+
+    if (isEmpty(selectedStreamObject.accessPoints)) {
+      return null
+    }
+
+    return selectedRoad
   })
 
 export const getSpecialRegulationsCurrentSeasonSelector = createSelector(

@@ -9,13 +9,11 @@ const SvgAnimatedPathComponent = React.createClass({
   },
 
   componentWillMount () {
-    console.log('mounting right now')
     this.componentPath = null
   },
 
   componentWillUnmount () {
     this.componentPath = null
-    console.log('animated path unmounting')
   },
 
   shouldComponentUpdate () {
@@ -46,7 +44,6 @@ const SvgAnimatedPathComponent = React.createClass({
       // manually remove all the items, starting from the end and moving backwards
       for (let i = path.classList.length - 1; i >= 0; i--) {
         let classListItem = path.classList.item(i)
-        console.log(classListItem)
         path.classList.remove(classListItem)
       }
 

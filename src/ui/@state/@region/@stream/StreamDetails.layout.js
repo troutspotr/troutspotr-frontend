@@ -4,7 +4,8 @@ import SvgBubbleComponent from './bubble/SvgBubble.component'
 import DetailsContainer from './details/Details.container'
 const StreamItemComponent = React.createClass({
   propTypes: {
-    selectedStream: PropTypes.object
+    selectedStream: PropTypes.object,
+    selectedRoad: PropTypes.object
   },
 
   renderStream () {
@@ -22,7 +23,6 @@ const StreamItemComponent = React.createClass({
     if (selectedStream == null) {
       return null
     }
-
     return (<DetailsContainer selectedStream={this.props.selectedStream} />)
   },
 
@@ -33,7 +33,6 @@ const StreamItemComponent = React.createClass({
           <div className={classes.stream}>
             {this.renderStream()}
           </div>
-
           <div className={classes.details}>
             {this.renderDetails()}
           </div>

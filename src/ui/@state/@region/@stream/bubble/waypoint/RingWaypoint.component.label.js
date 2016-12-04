@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-// import _ from 'lodash'
 // import classes from '../SvgBubble.scss'
 import waypointClasses from './RingWaypoint.scss'
 // import accessPointClasses from './RingWaypoint.accessPoint.scss'

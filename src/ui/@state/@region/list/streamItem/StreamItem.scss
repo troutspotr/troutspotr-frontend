@@ -48,6 +48,21 @@
   color: $yellow;
 }
 
+.emphasis {
+  composes: zeldaText;
+  color: $white;
+}
+
+.deemphasis {
+  composes: open;
+  color: $blueGray;
+}
+
+.openGreen {
+  composes: open;
+  color: $green;
+}
+
 .publicBridgesBadge {
   composes: numberCircle;
   color: $green;
@@ -57,4 +72,37 @@
 .publicBridgesBadgeDull {
   composes: publicBridgesBadge;
   color: $off-white;
+}
+
+.microLength {
+  list-style: none;
+  display: inline-flex;
+  font-size: 10px;
+  width: 100%;
+
+  // background: $gray;
+
+  .trout {
+    color: $blue;
+    order: 3;
+    text-align: left;
+    flex-grow: 1;
+
+    // composes: lengthItem;
+ 
+  }
+
+  .marker {
+    order: 2;
+  }
+
+  .public {
+    color: $green;
+    order: 1;
+    text-align: right;
+    flex-grow: 1;
+
+    // composes: lengthItem;
+ 
+  }
 }

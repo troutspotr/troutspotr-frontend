@@ -6,13 +6,13 @@ import { concat, sortBy } from 'lodash'
 import StreamComponent from './stream/Stream.component'
 import { getProjectionFromFeature, getTiming } from './SvgBubble.selectors'
 import RingComponent from './ring/Ring.component'
-import RingWaypointAccessPointComponent from './waypoint/RingWaypoint.component.accessPoint'
+import RingWaypointAccessPointContainer from './waypoint/RingWaypoint.container.accessPoint'
 import RingWaypointStreamComponent from './waypoint/RingWaypoint.component.stream'
 
 const DIMENSIONS = 500
 const SQUISH_FACTOR = 0.90
 const ROTATE_PHASE = Math.PI / 2
-const RADIUS = 160
+const RADIUS = 175
 
 const SvgBubbleComponent = React.createClass({
   propTypes: {
@@ -80,7 +80,7 @@ const SvgBubbleComponent = React.createClass({
   },
 
   renderAccessPoint (accessPoint, accessPointsIndex) {
-    return <RingWaypointAccessPointComponent
+    return <RingWaypointAccessPointContainer
       accessPoint={accessPoint}
       key={accessPoint.properties.gid}
       timing={this.timing}

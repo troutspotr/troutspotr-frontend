@@ -97,8 +97,6 @@ const RingComponent = React.createClass({
   },
 
   renderStreamRing () {
-    // return this.props.streamPackage.stream
-    console.log(classes.stream)
     let streamLength = this.props.streamPackage.stream.properties.length_mi
     return (<RingSectionComponent
       timing={{ offset: this.props.timing.baseStreamOffset, length: this.props.timing.baseStreamLength }}

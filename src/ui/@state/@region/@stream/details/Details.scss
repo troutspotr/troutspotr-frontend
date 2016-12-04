@@ -28,6 +28,20 @@
   margin-bottom: 10px;
   display: inline-flex;
   width: 100%;
+  cursor: pointer;
+}
+
+.hoveredItem {
+  composes: listItem;
+  text-decoration: underline;
+}
+
+.selectedItem {
+  composes: listItem;
+  font-weight: bold;
+  color: $white;
+  text-decoration: underline;
+  margin-bottom: 0px;
 }
 
 .listText {
@@ -38,6 +52,8 @@
 .listHeader {
   composes: listItem;
   color: $white;
+  text-decoration: none !important;
+  cursor: default;
 }
 
 .listHeader:not(:first-child) {
@@ -74,4 +90,44 @@
   color: $gray;
   font-size: 12px;
   order: 1;
+}
+
+.selectedBridge {
+  composes: bridge;
+  font-weight: bold;
+  color: black !important;
+
+  // the only time you'll see black in this app
+}
+
+.selectedPublicBridgeTroutStream {
+  composes: publicBridgeTroutStream;
+  composes: selectedBridge;
+  color: $green;
+  background-color: $green;
+}
+
+.selectedBridgeOverTroutStream {
+  composes: bridgeOverTroutStream;
+  composes: selectedBridge;
+  color: $blue;
+  background-color: $blue;
+}
+
+.selectedUnsafeBridgeOverTroutStream {
+  composes: unsafeBridgeOverTroutStream;
+  composes: selectedBridge;
+  color: $red;
+  background-color: $red;
+}
+
+.googleLink {
+  color: $blue;
+  text-decoration: none;
+  margin-left: 5px;
+  font-weight: normal;
+}
+
+.googleLink:after {
+  content: '\29C9';
 }

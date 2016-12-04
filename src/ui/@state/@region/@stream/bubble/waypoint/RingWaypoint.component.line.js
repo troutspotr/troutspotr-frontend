@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import _ from 'lodash'
+import { flatten, map } from 'lodash'
 // import classes from '../SvgBubble.scss'
 import waypointClasses from './RingWaypoint.scss'
 
@@ -27,8 +27,8 @@ const RingWaypointLineComponent = React.createClass({
       return null
     }
 
-    let coordinateArray = _.flatten(
-      _.map(screenCoordinates, x => [x.dotXScreenCoordinate, x.dotYScreenCoordinate]))
+    let coordinateArray = flatten(
+      map(screenCoordinates, x => [x.dotXScreenCoordinate, x.dotYScreenCoordinate]))
 
     let polylinePoints = coordinateArray.join(',')
 

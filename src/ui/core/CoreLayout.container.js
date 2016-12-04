@@ -7,7 +7,7 @@ import SneezeGuardComponent from './sneezeGuard/SneezeGuard.component'
 import { isExpandedSelector } from './header/minimap/Minimap.selectors'
 import { isExpaned as expandMinimap } from './header/minimap/Minimap.state'
 import { REGION_PARAM_NAME, STATE_PARAM_NAME } from 'ui/core/RouteConstants.js'
-import { isRootPageSelector } from 'ui/Location.selectors'
+import { isRootPageSelector, isStatePageSelector } from 'ui/Location.selectors'
 
 const CoreLayoutContainer = React.createClass({
   propTypes: {
@@ -16,6 +16,7 @@ const CoreLayoutContainer = React.createClass({
     location: React.PropTypes.object.isRequired,
     isMinimapExpanded: React.PropTypes.bool.isRequired,
     isRoot: React.PropTypes.bool.isRequired,
+    isState: React.PropTypes.bool.isRequired,
     closeMinimap: React.PropTypes.func.isRequired
   },
 
@@ -47,7 +48,7 @@ const CoreLayoutContainer = React.createClass({
         <div className={classes.coreContentLayout}>
           <div className={classes.coreContent}>
             { this.props.children }
-            {this.props.isMinimapExpanded && <SneezeGuardComponent close={this.props.isRoot ? null : this.props.closeMinimap} />}
+            {this.props.isMinimapExpanded && <SneezeGuardComponent close={this.props.isRoot || this.props.isState ? null : this.props.closeMinimap} />}
           </div>
         </div>
 
@@ -63,7 +64,8 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => {
   let props = {
     isMinimapExpanded: isExpandedSelector(state),
-    isRoot: isRootPageSelector(state)
+    isRoot: isRootPageSelector(state),
+    isState: isStatePageSelector(state)
   }
 
   return props

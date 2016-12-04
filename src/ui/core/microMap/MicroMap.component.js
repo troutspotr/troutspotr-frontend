@@ -80,7 +80,6 @@ const SneezeGuardComponent = React.createClass({
   },
 
   componentDidMount () {
-    console.log('did mount')
     if (this.canvasElement == null) {
       return
     }
@@ -124,10 +123,6 @@ const SneezeGuardComponent = React.createClass({
     }
     context.lineWidth = thickness
     context.strokeStyle = color
-    if (context.beginPath == null) {
-      console.log(context)
-    }
-
     context.beginPath()
     path(geoJson)
     context.stroke()
@@ -154,7 +149,6 @@ const SneezeGuardComponent = React.createClass({
     context.globalAlpha = 0.4
     context.beginPath()
     context.arc(canvasCoordiantes[0], canvasCoordiantes[1], radius, 0, TAU, true)
-    // context.fill()
     context.stroke()
     context.restore()
   },
@@ -171,7 +165,7 @@ const SneezeGuardComponent = React.createClass({
   },
 
   componentWillUnmount () {
-    console.log('unmounted')
+    // console.log('unmounted')
   },
 
   onClick (e) {

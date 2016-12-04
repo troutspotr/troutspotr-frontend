@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classes from './StreamItem.scss'
 import MicroMapContainer from 'ui/core/microMap/MicroMap.container'
+// import LengthRatioComponent from './LengthRatio.component'
+// import LengthSentenceComponent from './LengthSentence.component'
 // import BubbleComponent from './Bubble.component'
 // import { some } from 'lodash'
 /* eslint-disable camelcase */
@@ -22,7 +24,7 @@ const StreamItemComponent = React.createClass({
         <span className={statusClass}>
           {statusText}
         </span>
-        {explainerText} until {dateText}
+        {explainerText}until {dateText}
       </div>)
   },
 
@@ -157,12 +159,20 @@ const StreamItemComponent = React.createClass({
       : (<span className={bridgeClass}>{number}</span>)
     return (
       <div>
-        {countSymbol} {noun} over publically fishable land.
+        {countSymbol}{noun} over publically fishable land.
       </div>)
   },
 
+/*            <LengthRatioComponent
+            streamLength={streamLength}
+            troutLength={troutLength}
+            publicLength={publicLength} />
+*/
   render () {
     let { title, url, streamObject } = this.props
+    // let streamLength = streamObject.stream.properties.length_mi
+    // let troutLength = streamObject.stream.properties.trout_stream_section_length
+    // let publicLength = streamObject.stream.properties.publicly_accessible_trout_stream_section_length
     return (
       <div className={classes.container}>
         <div className={classes.media}>

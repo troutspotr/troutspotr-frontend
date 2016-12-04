@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import _ from 'lodash'
+import { startsWith, isEmpty } from 'lodash'
 import RingWaypointLineComponent from './RingWaypoint.component.line'
 import RingWaypointLabelComponent from './RingWaypoint.component.label'
 
@@ -16,6 +16,10 @@ const RingWaypointAccessPointComponent = React.createClass({
     accessPoint: PropTypes.object.isRequired,
     timing: PropTypes.object.isRequired,
     projection: PropTypes.func.isRequired,
+    selectedAccessPoint: PropTypes.object,
+    hoveredRoad: PropTypes.object,
+    setSelectedRoad: PropTypes.func.isRequired,
+    setHoveredRoad: PropTypes.func.isRequired,
     layout: PropTypes.shape({
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,
@@ -50,17 +54,16 @@ const RingWaypointAccessPointComponent = React.createClass({
     </g>)
   },
 
-  decideRoadShield (roadType) {
+  decideRoadShield (roadType, isSelected) {
     let { alphabetLetter, bridgeType } = roadType.properties
-
     if (bridgeType === crossingTypes.publicTrout) {
-      return this.renderDefaultMarker(alphabetLetter, accessPointClasses.publicTroutBridge)
+      return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedPublicTroutBridge : accessPointClasses.publicTroutBridge)
     } else if (bridgeType === crossingTypes.permissionRequired) {
-      return this.renderDefaultMarker(alphabetLetter, accessPointClasses.troutBridge)
+      return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedTroutBridge : accessPointClasses.troutBridge)
     } else if (bridgeType === crossingTypes.unsafe) {
-      return this.renderDefaultMarker(alphabetLetter, accessPointClasses.unsafeBridge)
+      return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedUnsafeBridge : accessPointClasses.unsafeBridge)
     } else if (bridgeType === crossingTypes.uninteresting) {
-      return this.renderDefaultMarker(alphabetLetter, accessPointClasses.uninterestingBridge)
+      return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedUninterestingBridge : accessPointClasses.uninterestingBridge)
     }
     // return this.renderDefaultMarker
   },
@@ -72,11 +75,17 @@ const RingWaypointAccessPointComponent = React.createClass({
 
   onClick (e) {
     e.preventDefault()
-    // let { centroid_latitude, centroid_longitude } = this.props.accessPoint.properties
-    let centroidLatitude = this.props.accessPoint.properties.centroid_latitude
-    let centroidLongitude = this.props.accessPoint.properties.centroid_longitude
-    let url = `https://www.google.com/maps/@${centroidLatitude},${centroidLongitude},16z`
-    window.open(url, '_blank')
+    this.props.setSelectedRoad(this.props.accessPoint)
+  },
+
+  onMouseEnter (e) {
+    e.preventDefault()
+    this.props.setHoveredRoad(this.props.accessPoint)
+  },
+
+  onMouseLeave (e) {
+    e.preventDefault()
+    this.props.setHoveredRoad(null)
   },
 
   renderInterstateIcon (number) {
@@ -165,11 +174,11 @@ const RingWaypointAccessPointComponent = React.createClass({
         return `${roadTypeDictionary[roadId].prefix} ${this.props.accessPoint.properties.road_shield_text}`
       }
 
-      if (roadId === 5 && _.startsWith(streetName, roadTypeDictionary[roadId].defaultStart)) {
+      if (roadId === 5 && startsWith(streetName, roadTypeDictionary[roadId].defaultStart)) {
         return ''
       }
 
-      if (roadId === 7 && _.startsWith(streetName, roadTypeDictionary[roadId].defaultStart)) {
+      if (roadId === 7 && startsWith(streetName, roadTypeDictionary[roadId].defaultStart)) {
         return `${roadTypeDictionary[roadId].prefix} ${this.props.accessPoint.properties.road_shield_text}`
       }
 
@@ -205,12 +214,24 @@ const RingWaypointAccessPointComponent = React.createClass({
     let markerComponent = this.getMarkerComponent()
     // let roadType = this.props.accessPoint.properties.road_type_id
     // let roadNumber = this.props.accessPoint.properties.road_shield_text
-    let isBoring = this.props.accessPoint.properties.is_over_trout_stream !== 1
-    let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
+    // let isBoring = this.props.accessPoint.properties.is_over_trout_stream !== 1
+    let selectedAccessPoint = this.props.selectedAccessPoint
+    let hoveredRoad = this.props.hoveredRoad
+    let isSelected = isEmpty(selectedAccessPoint) === false && accessPoint.properties.gid === selectedAccessPoint.properties.gid
+    let isHovered = isEmpty(hoveredRoad) === false && accessPoint.properties.gid === hoveredRoad.properties.gid
+    // let isHovered = false
+    // let isSelected = true
 
-    let iconComponent = this.decideRoadShield(accessPoint)
-    return (<g >
-      <a className={waypointCssClass} onClick={this.onClick} xlinkHref={'#'}>
+    // let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
+    let waypointCssClass = isSelected ? waypointClasses.selectedWaypoint : isHovered ? waypointClasses.hoveredWaypoint  : waypointClasses.waypoint
+    let iconComponent = this.decideRoadShield(accessPoint, isSelected)
+    return (<g>
+      <a
+        className={waypointCssClass}
+        onClick={this.onClick}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
+        xlinkHref={'#'}>
         <RingWaypointLineComponent
           subjectCoordinates={accessPointWorldCoodinates}
           normalizedOffset={normalizedOffset}

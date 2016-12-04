@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import ringClasses from './RingAxis.scss'
-import _ from 'lodash'
+import { times } from 'lodash'
 
 const TICK_MOD = 20
 const RADIANS_TO_DEGREES = 180 / Math.PI
@@ -27,7 +27,7 @@ const RingAxisComponent = React.createClass({
     let rotatePhaseDegrees = rotatePhase * RADIANS_TO_DEGREES
     let isReallyLongStream = length > 50
 
-    return _.times(ticks + 1).map(index => {
+    return times(ticks + 1).map(index => {
       let rotationDegrees = tickDegrees * index - rotatePhaseDegrees
 
       if (rotationDegrees > 90) {

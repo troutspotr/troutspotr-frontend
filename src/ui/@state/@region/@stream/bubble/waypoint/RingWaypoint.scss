@@ -28,27 +28,24 @@ $MEDIUM_OPACITY: 0.9;
     stroke: green;
   }
 
-  &:hover,
-  &:focus {
-    opacity: 1.0;
-    animation: fade-in $HOVER_SPEED;
-    animation-iteration-count: 1;
+  // &:hover,
+  // &:focus {
+  //   opacity: 1.0;
+  //   animation: fade-in $HOVER_SPEED;
+  //   animation-iteration-count: 1;
 
-    .icon,
-    .text {
-      fill: $off_white;
-      font-color: $off_white;
-      animation: fade-in $HOVER_SPEED;
-      animation-iteration-count: 1;
-    }
-  }
+  //   .icon,
+  //   .text {
+  //     fill: $off_white;
+  //     font-color: $off_white;
+  //     animation: fade-in $HOVER_SPEED;
+  //     animation-iteration-count: 1;
+  //   }
+  // }
 }
 
 .waypointBoring {
   composes: waypoint;
-
-  // opacity: $LOW_OPACITY;
-  // font-size: $smallest_font_size;
 }
 
 .label {
@@ -101,20 +98,62 @@ $MEDIUM_OPACITY: 0.9;
   // fill: quite-label-colors($off_white);
 }
 
-.accessPoint:focus,
-.accessPoint:hover {
-  fill: none;
-  stroke-dasharray: 1,4;
-}
-
-.waypoint:focus .accessPointConnector,
-.waypoint:hover .accessPointConnector {
+.selectedWaypoint {
+  composes: waypoint;
   opacity: 1.0;
-  animation: line-fade $HOVER_SPEED;
+  animation: fade-in $HOVER_SPEED;
   animation-iteration-count: 1;
 
-  // stroke: $whiteER;
+  .icon,
+  .text {
+    fill: $off_white;
+    font-color: $off_white;
+    animation: fade-in $HOVER_SPEED;
+    animation-iteration-count: 1;
+  }
+
+  .accessPointConnector {
+    opacity: 1.0;
+    animation: line-fade $HOVER_SPEED;
+    animation-iteration-count: 1;
+  }
 }
+
+.hoveredWaypoint {
+  composes: waypoint;
+  opacity: 1.0;
+  animation: fade-in $HOVER_SPEED;
+  animation-iteration-count: 1;
+
+  .icon,
+  .text {
+    fill: $off_white;
+    font-color: $off_white;
+    animation: fade-in $HOVER_SPEED;
+    animation-iteration-count: 1;
+  }
+
+  .accessPointConnector {
+    opacity: 1.0;
+    animation: line-fade $HOVER_SPEED;
+    animation-iteration-count: 1;
+  }
+}
+
+// .accessPoint:focus,
+// .accessPoint:hover {
+//   fill: none;
+//   stroke-dasharray: 1,4;
+// }
+
+// .waypoint:focus .accessPointConnector,
+// .waypoint:hover .accessPointConnector {
+//   opacity: 1.0;
+//   animation: line-fade $HOVER_SPEED;
+//   animation-iteration-count: 1;
+
+//   // stroke: $whiteER;
+// }
 
 .accessPointStream {
   stroke-width: 1px;

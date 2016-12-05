@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import classes from './Region.scss'
 import { MAP, LIST } from 'ui/core/Core.state'
 import MapContainer from './map/Map.container'
-import ListComponent from './list/StreamList.container'
+import CountyListContainer from './list/CountyList.container'
 import LoadingComponent from 'ui/core/loading/Loading.component'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
@@ -77,7 +77,7 @@ const RegionLayout = React.createClass({
   renderList () {
     let { view } = this.props
     let isVisible = view === LIST
-    return <ListComponent
+    return <CountyListContainer
       isVisible={isVisible} />
   },
 

@@ -40,6 +40,7 @@ export const fetchTableOfContents = () => {
     try {
       let gettingTableOfContents = TableOfContentsApi.getTableOfContents()
       let [tableOfContents] = await Promise.all([gettingTableOfContents])
+      console.log(tableOfContents)
       dispatch(setTableOfContents(tableOfContents))
     } catch (error) {
       console.log(error)

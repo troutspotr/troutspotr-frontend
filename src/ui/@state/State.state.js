@@ -33,6 +33,7 @@ export const fetchStateData = (stateName) => {
 
       let gettingStateData = StateApi.getStateData(stateName)
       let [stateData] = await Promise.all([gettingStateData])
+      console.log(stateData)
       dispatch(setStateData(stateData))
     } catch (error) {
       console.log(error)

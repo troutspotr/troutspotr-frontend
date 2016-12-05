@@ -1,11 +1,12 @@
 import { createSelector } from 'reselect'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-import { searchTextSelector } from 'ui/core/Core.selectors'
+import { searchTextSelector, countiesDictionarySelector, selectedRegionSelector } from 'ui/core/Core.selectors'
 import { getHashSelector } from 'ui/Location.selectors'
-import { isEmpty, values, has, round, find } from 'lodash'
+import { isEmpty, values, has, round, find, keys } from 'lodash'
 import { displayedCentroidDictionarySelector,
   displayedStreamCentroidDataSelector,
-  regulationsSelector, waterOpenersDictionarySelector } from 'ui/@state/State.selectors'
+  regulationsSelector, waterOpenersDictionarySelector,
+  regionIndexSelector } from 'ui/@state/State.selectors'
 export const troutStreamDictionarySelector = state => state.region.troutStreamDictionary
 export const regionLoadingStatusSelector = state => state.region.regionLoadingStatus
 
@@ -188,6 +189,63 @@ export const getSpecialRegulationsCurrentSeasonSelector = createSelector(
       return isInBounds
     })
     return inSeasonRegs
+  })
+
+const EMPTY_COUNTIES_ARRAY = []
+export const getCountyListSelector = createSelector(
+  [
+    regionIndexSelector,
+    displayedCentroidDictionarySelector,
+    countiesDictionarySelector,
+    selectedRegionSelector,
+    troutStreamDictionarySelector
+  ],
+  (
+    regionIndex,
+    displayedCentroidDictionarySelector,
+    countiesDictionary,
+    selectedRegion,
+    troutStreamDictionary
+  ) => {
+    if (isEmpty(selectedRegion)) {
+      return EMPTY_COUNTIES_ARRAY
+    }
+
+    if (isEmpty(troutStreamDictionary)) {
+      return EMPTY_COUNTIES_ARRAY
+    }
+
+    let regionName = 'driftless'
+    if (has(regionIndex, regionName) === false) {
+      return EMPTY_COUNTIES_ARRAY
+    }
+
+    let countiesInSelectedRegionDictionary = regionIndex[regionName]
+    let countyIdsInSelectedRegion = keys(countiesInSelectedRegionDictionary)
+    let countyObjects = countyIdsInSelectedRegion.map(id => {
+      let streamIdsInRegion = countiesInSelectedRegionDictionary[id]
+      let county = countiesDictionary[id]
+      let { gid, name, stream_count } = county.properties
+      let visibleStreamIdsInCounty = streamIdsInRegion.filter(streamId => has(displayedCentroidDictionarySelector, streamId))
+      let visibleStreamsInCounty = visibleStreamIdsInCounty.map(streamId => troutStreamDictionary[streamId])
+
+      let countyList = {
+        gid,
+        name,
+        streamCount: stream_count,
+        streams: visibleStreamsInCounty
+      }
+
+      return countyList
+    })
+
+    let filteredCountyObjects = countyObjects.filter(x => x.streams.length > 0)
+    if (filteredCountyObjects.length === 0) {
+      // prevent further calculations by other selectors
+      return EMPTY_COUNTIES_ARRAY
+    }
+
+    return filteredCountyObjects
   })
 
 // export const selectedRoadSelector = createSelector(

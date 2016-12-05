@@ -18,22 +18,20 @@ const StreamListComponent = React.createClass({
   render () {
     let { selectedRegion, selectedState, visibleTroutStreams, isListVisible } = this.props
     return (
-      <div className={isListVisible ? classes.listViewContainer : classes.invisible}>
-        <ul className={classes.list}>
-          {visibleTroutStreams.map((stream, index) => {
-            let realStream = stream.stream
-            let fakeName = realStream.properties.name
-            let url = realStream.properties.slug
-            return (
-              <li key={realStream.properties.slug}>
-                <StreamItemContainer
-                  title={fakeName}
-                  url={`/${selectedState}/${selectedRegion}/${url}`}
-                  streamObject={stream} />
-              </li>)
-          })
-          }
-        </ul>
+      <div className={classes.streamList}>
+        {visibleTroutStreams.map((stream, index) => {
+          let realStream = stream.stream
+          let fakeName = realStream.properties.name
+          let url = realStream.properties.slug
+          return (
+            <div key={realStream.properties.slug}>
+              <StreamItemContainer
+                title={fakeName}
+                url={`/${selectedState}/${selectedRegion}/${url}`}
+                streamObject={stream} />
+            </div>)
+        })
+        }
       </div>)
   }
 })

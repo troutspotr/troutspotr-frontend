@@ -16,19 +16,48 @@ $heafty-bottom-margin: 50vmin;
 
   .list {
     padding: $default-margin $default-margin $heafty-bottom-margin 10px;
-
-    // background-color: $blue;
-    // position: absolute;
-    // top: 60px;
-    // height: calc(100vh - (20px + 30px));
-    // overflow: scroll-x;
-    // right: 0px;
-    // left: 0px;
- 
   }
 }
 
 .invisible {
   composes: listViewContainer;
   visibility: hidden;
+}
+
+.listTitle {
+  font-size: 18px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+@media only screen and (min-width: 50px) and (max-width: 640px) {
+  .streamList {
+    columns: 1 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media only screen and (min-width: 640px) and (max-width: 960px) {
+  .streamList {
+    columns: 2 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media only screen and (min-width: 961px) and (max-width: 1280px) {
+  .streamList {
+    columns: 3 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media only screen and (min-width: 1281px) {
+  .streamList {
+    columns: 4 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
 }

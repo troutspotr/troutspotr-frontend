@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import RingWaypointAccessPointComponent from './RingWaypoint.component.accessPoint'
 import { locationSelector } from 'ui/Location.selectors'
-import { 
+import {
   getSelectedRoadSelector,
   hoveredRoadSelector } from 'ui/@state/@region/Region.selectors'
 import { setHoveredRoad, setSelectedRoad } from 'ui/@state/@region/Region.state'

@@ -5,7 +5,7 @@ const LengthRatioComponent = React.createClass({
   propTypes: {
     streamLength: React.PropTypes.number.isRequired,
     troutLength: React.PropTypes.number.isRequired,
-    publicLength: React.PropTypes.number.isRequired,
+    publicLength: React.PropTypes.number.isRequired
   },
 
   componentDidMount () {
@@ -13,7 +13,7 @@ const LengthRatioComponent = React.createClass({
   },
 
   render () {
-    let { streamLength, troutLength, publicLength } = this.props
+    let { troutLength, publicLength } = this.props
 
     return (
       <ul className={classes.microLength}>

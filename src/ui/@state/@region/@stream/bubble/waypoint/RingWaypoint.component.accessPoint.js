@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { startsWith, isEmpty } from 'lodash'
 import RingWaypointLineComponent from './RingWaypoint.component.line'
 import RingWaypointLabelComponent from './RingWaypoint.component.label'
-import { Link } from 'react-router'
 import accessPointClasses from './RingWaypoint.accessPoint.scss'
 import waypointClasses from './RingWaypoint.scss'
 export const crossingTypes = {
@@ -81,13 +80,16 @@ const RingWaypointAccessPointComponent = React.createClass({
   decideRoadShield (roadType, isSelected) {
     let { alphabetLetter, bridgeType } = roadType.properties
     if (bridgeType === crossingTypes.publicTrout) {
-      return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedPublicTroutBridge : accessPointClasses.publicTroutBridge)
+      return this.renderDefaultMarker(
+        alphabetLetter, isSelected ? accessPointClasses.selectedPublicTroutBridge : accessPointClasses.publicTroutBridge)
     } else if (bridgeType === crossingTypes.permissionRequired) {
       return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedTroutBridge : accessPointClasses.troutBridge)
     } else if (bridgeType === crossingTypes.unsafe) {
       return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedUnsafeBridge : accessPointClasses.unsafeBridge)
     } else if (bridgeType === crossingTypes.uninteresting) {
-      return null //this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedUninterestingBridge : accessPointClasses.uninterestingBridge)
+      return null
+      // this.renderDefaultMarker(
+      //  alphabetLetter, isSelected ? accessPointClasses.selectedUninterestingBridge : accessPointClasses.uninterestingBridge)
     }
     // return this.renderDefaultMarker
   },
@@ -258,7 +260,7 @@ const RingWaypointAccessPointComponent = React.createClass({
     // let isSelected = true
 
     // let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
-    let waypointCssClass = isSelected ? waypointClasses.selectedWaypoint : isHovered ? waypointClasses.hoveredWaypoint  : waypointClasses.waypoint
+    let waypointCssClass = isSelected ? waypointClasses.selectedWaypoint : isHovered ? waypointClasses.hoveredWaypoint : waypointClasses.waypoint
     let iconComponent = this.decideRoadShield(accessPoint, isSelected)
     let hash = `#${accessPoint.properties.slug}`
     return (<g>

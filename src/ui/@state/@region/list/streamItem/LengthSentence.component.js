@@ -51,7 +51,9 @@ const LengthSentenceComponent = React.createClass({
 
     return (
       <span>
-        This is a <span className={streamSummary.className}>{streamSummary.name}</span>river. It has <span className={classes.openEmphasis}>{troutLength} miles of trout habitat</span>with <span className={classes.openGreen}>{publicLength} miles of public water.</span>
+        This is a <span className={streamSummary.className}>{streamSummary.name}
+        </span>river. It has <span className={classes.openEmphasis}>{troutLength} miles of trout habitat</span>
+        with <span className={classes.openGreen}>{publicLength} miles of public water.</span>
       </span>)
   }
 })

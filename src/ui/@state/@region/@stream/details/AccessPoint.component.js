@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import classes from './Details.scss'
-import { Link } from 'react-router'
+// import { Link } from 'react-router'
 // import { isEmpty } from 'lodash'
 /* eslint-disable camelcase */
 export const crossingTypes = {
@@ -21,7 +21,7 @@ const AccessPointComponent = React.createClass({
     isHovered: PropTypes.bool.isRequired,
     location: PropTypes.object.isRequired,
 
-    onHover: PropTypes.func.isRequired,
+    onHover: PropTypes.func.isRequired
     // onSelect: PropTypes.func.isRequired
   },
 

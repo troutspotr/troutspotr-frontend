@@ -33,7 +33,7 @@ export const selectMapFeature = (feature, isPoint) => {
   return (dispatch, getState) => {
     let selectedState = isPoint ? circle(feature, 0.2, 4)
     : feature
-    
+
     let boundingBox = extent(selectedState)
 
     let newCorners = [

@@ -48,7 +48,8 @@ const CoreLayoutContainer = React.createClass({
         <div className={classes.coreContentLayout}>
           <div className={classes.coreContent}>
             { this.props.children }
-            {this.props.isMinimapExpanded && <SneezeGuardComponent close={this.props.isRoot || this.props.isState ? null : this.props.closeMinimap} />}
+            {this.props.isMinimapExpanded &&
+              <SneezeGuardComponent close={this.props.isRoot || this.props.isState ? null : this.props.closeMinimap} />}
           </div>
         </div>
 

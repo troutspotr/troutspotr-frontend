@@ -23,7 +23,7 @@ const MapboxGlComponent = React.createClass({
   },
 
   onClick () {
- 
+
   },
 
   componentDidMount () {

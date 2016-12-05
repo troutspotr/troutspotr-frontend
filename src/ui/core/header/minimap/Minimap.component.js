@@ -168,7 +168,7 @@ const MinimapComponent = React.createClass({
           <ActionButtonComponent
             onClick={this.backButtonPressed}
             isActive={this.props.isRootPage === false && this.props.isExpanded && isEmpty(this.props.selectedRegion) === false} >
-            <span className={classes.close + ' ' + classes.black}></span>
+            <span className={classes.close + ' ' + classes.black} />
           </ActionButtonComponent>
         </div>
         <div className={classes.minimapContent + ' ' + expandClass} onClick={this.onSelectState}>

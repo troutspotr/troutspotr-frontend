@@ -82,7 +82,7 @@ const RingWaypointLabelComponent = React.createClass({
     let labelOffsetFromRadius = radius + 28
     let offsetLocationDegrees = 360 * arcCompressionRatio * normalizedOffset
     let containerTransform = this.getContainerTransform(offsetLocationDegrees, labelOffsetFromRadius)
-    let debuggerText = this.renderLabelText(this.props.labelText, offsetLocationDegrees)
+    // let debuggerText = this.renderLabelText(this.props.labelText, offsetLocationDegrees)
     let debuggerIcon = this.renderInterstateIcon(offsetLocationDegrees)
     return <g className={waypointClasses.label} transform={containerTransform}>
       <g className={waypointClasses.locationMarker}>

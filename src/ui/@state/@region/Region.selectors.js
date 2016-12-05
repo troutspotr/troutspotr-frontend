@@ -18,7 +18,6 @@ export const palsSelector = state => state.region.pals
 export const hoveredStreamSelector = state => state.region.hoveredStream
 export const hoveredRoadSelector = state => state.region.hoveredRoad
 
-
 const EMPTY_STREAMS = []
 export const visibleTroutStreams = createSelector(
   [

@@ -252,7 +252,6 @@ export const getCountyListSelector = createSelector(
         console.log(e)
         console.log(visibleStreamsInCounty)
       }
-      
     })
 
     let filteredCountyObjects = countyObjects.filter(x => x.streams.length > 0)

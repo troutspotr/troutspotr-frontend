@@ -4,7 +4,7 @@ import { selectedStateIdSelector, selectedRegionIdSelector, isListVisible } from
 import { getCountyListSelector } from '../Region.selectors'
 
 const mapDispatchToProps = {
-  
+
 }
 
 const mapStateToProps = (state) => {

@@ -16,7 +16,7 @@ const StreamListComponent = React.createClass({
   },
 
   render () {
-    let { selectedRegion, selectedState, visibleTroutStreams, isListVisible } = this.props
+    let { selectedRegion, selectedState, visibleTroutStreams } = this.props
     return (
       <div className={classes.streamList}>
         {visibleTroutStreams.map((stream, index) => {

@@ -53,7 +53,7 @@ const AccessPointComponent = React.createClass({
   renderOpenInGoogleMapsLink (selectedAccessPoint) {
     let { centroid_latitude, centroid_longitude } = selectedAccessPoint.properties
     let url = `https://www.google.com/maps/@${centroid_latitude},${centroid_longitude},${DEFAULT_ZOOM}z`
-    return (<a onClick={this.openGoogleMaps} className={classes.googleLink} href={url} target='_blank'>Google</a>)
+    return (<a onClick={this.openGoogleMaps} className={classes.googleLink} href={url} target='_blank'>GMap</a>)
   },
 
   mapAccessPoints (bridge, defaultBridgeClass, selectedBridgeClass, isSelected, isHovered) {
@@ -65,7 +65,6 @@ const AccessPointComponent = React.createClass({
     let badgeElement = (<span className={bridgeClass}>{letter}</span>)
     let textClass = isSelected ? classes.selectedItem : classes.listText
     let listItemClass = isHovered ? classes.hoveredItem : classes.listItem
-    console.log(this.props.location)
     let hash = `#${this.props.accessPoint.properties.slug}`
     return (<a
       href={hash}

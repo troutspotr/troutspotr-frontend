@@ -260,7 +260,6 @@ const RingWaypointAccessPointComponent = React.createClass({
     // let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
     let waypointCssClass = isSelected ? waypointClasses.selectedWaypoint : isHovered ? waypointClasses.hoveredWaypoint  : waypointClasses.waypoint
     let iconComponent = this.decideRoadShield(accessPoint, isSelected)
-    console.log(this.props.location)
     let hash = `#${accessPoint.properties.slug}`
     return (<g>
       <a

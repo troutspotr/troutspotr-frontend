@@ -41,7 +41,6 @@ export const selectMapFeature = (feature, isPoint) => {
         [boundingBox[2], boundingBox[3]]
     ]
     let selectedBounds = { bounds: newCorners }
-    console.log('setting bounds')
     dispatch(mapCameraActions.setCameraBounds(selectedBounds))
   }
 }

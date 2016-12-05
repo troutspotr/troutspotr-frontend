@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-
+import { isEmpty } from 'lodash'
 export const locationSelector = state => {
   return state.location
 }
@@ -18,6 +18,22 @@ export const isStatePageSelector = createSelector(
     return isState
   }
 )
+
+export const getHashSelector = createSelector(
+  [locationSelector],
+  (location) => {
+    if (isEmpty(location)) {
+      return null
+    }
+
+    if (isEmpty(location.hash)) {
+      return null
+    }
+    if (location.hash.charAt(0) === '#') {
+      return location.hash.substring(1)
+    }
+    return location.hash
+  })
 
 export const isRootPageByUrl = url => {
   let isRoot = url === ROOT

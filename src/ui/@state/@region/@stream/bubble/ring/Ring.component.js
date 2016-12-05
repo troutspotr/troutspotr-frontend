@@ -32,6 +32,10 @@ const RingComponent = React.createClass({
     console.log('unmounting')
   },
 
+  shouldComponentUpdate (nextProps) {
+    return false
+  },
+
   renderPalRings () {
     return this.props.streamPackage.palSections.map((pal, palIndex) => {
       let streamLength = this.props.streamPackage.stream.properties.length_mi

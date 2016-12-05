@@ -29,6 +29,7 @@
   display: inline-flex;
   width: 100%;
   cursor: pointer;
+  color: $off-white;
 }
 
 .hoveredItem {
@@ -123,6 +124,7 @@
 
 .googleLink {
   color: $blue;
+  display: inline;
   text-decoration: none;
   margin-left: 5px;
   font-weight: normal;

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { startsWith, isEmpty } from 'lodash'
 import RingWaypointLineComponent from './RingWaypoint.component.line'
 import RingWaypointLabelComponent from './RingWaypoint.component.label'
-
+import { Link } from 'react-router'
 import accessPointClasses from './RingWaypoint.accessPoint.scss'
 import waypointClasses from './RingWaypoint.scss'
 export const crossingTypes = {
@@ -18,8 +18,10 @@ const RingWaypointAccessPointComponent = React.createClass({
     projection: PropTypes.func.isRequired,
     selectedAccessPoint: PropTypes.object,
     hoveredRoad: PropTypes.object,
-    setSelectedRoad: PropTypes.func.isRequired,
+    // setSelectedRoad: PropTypes.func.isRequired,
     setHoveredRoad: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
     layout: PropTypes.shape({
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,
@@ -27,6 +29,29 @@ const RingWaypointAccessPointComponent = React.createClass({
       arcCompressionRatio: PropTypes.number.isRequired,
       rotatePhase: PropTypes.number.isRequired
     })
+  },
+
+  shouldComponentUpdate (nextProps) {
+    let gid = this.props.accessPoint.properties.gid
+    let { selectedAccessPoint, hoveredRoad } = this.props
+
+    let isSelected = isEmpty(selectedAccessPoint) === false && gid === selectedAccessPoint.properties.gid
+    let isHovered = isEmpty(hoveredRoad) === false && gid === hoveredRoad.properties.gid
+
+    let nextSelectedAccessPoint = nextProps.selectedAccessPoint
+    let nextHoveredRoad = nextProps.hoveredRoad
+
+    let wasSelected = isEmpty(nextSelectedAccessPoint) === false && gid === nextSelectedAccessPoint.properties.gid
+    let wasHovered = isEmpty(nextHoveredRoad) === false && gid === nextHoveredRoad.properties.gid
+
+    if (isSelected || wasSelected) {
+      return true
+    }
+
+    if (isHovered || wasHovered) {
+      return true
+    }
+    return false
   },
 
   renderTargetMarker (dotXScreenCoordinate, dotYScreenCoordinate) {
@@ -62,7 +87,7 @@ const RingWaypointAccessPointComponent = React.createClass({
     } else if (bridgeType === crossingTypes.unsafe) {
       return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedUnsafeBridge : accessPointClasses.unsafeBridge)
     } else if (bridgeType === crossingTypes.uninteresting) {
-      return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedUninterestingBridge : accessPointClasses.uninterestingBridge)
+      return null //this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedUninterestingBridge : accessPointClasses.uninterestingBridge)
     }
     // return this.renderDefaultMarker
   },
@@ -73,8 +98,15 @@ const RingWaypointAccessPointComponent = React.createClass({
   },
 
   onClick (e) {
+    // i swear this is the dumbest thing...
+    // but clicking on links in mobile safari added to homescreen
+    // causes it to try to bug out and open a new tab in ios safari.
+    // https://www.bennadel.com/blog/2302-preventing-links-in-standalone-iphone-applications-from-opening-in-mobile-safari.htm
+
     e.preventDefault()
-    this.props.setSelectedRoad(this.props.accessPoint)
+    let hash = `#${this.props.accessPoint.properties.slug}`
+    location.href = hash
+    return false
   },
 
   onMouseEnter (e) {
@@ -228,13 +260,15 @@ const RingWaypointAccessPointComponent = React.createClass({
     // let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
     let waypointCssClass = isSelected ? waypointClasses.selectedWaypoint : isHovered ? waypointClasses.hoveredWaypoint  : waypointClasses.waypoint
     let iconComponent = this.decideRoadShield(accessPoint, isSelected)
+    console.log(this.props.location)
+    let hash = `#${accessPoint.properties.slug}`
     return (<g>
       <a
+        xlinkHref={hash}
         className={waypointCssClass}
         onClick={this.onClick}
         onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
-        xlinkHref={'#'}>
+        onMouseLeave={this.onMouseLeave}>
         <RingWaypointLineComponent
           subjectCoordinates={accessPointWorldCoodinates}
           normalizedOffset={normalizedOffset}

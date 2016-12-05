@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import classes from './Details.scss'
+import { Link } from 'react-router'
 // import { isEmpty } from 'lodash'
 /* eslint-disable camelcase */
 export const crossingTypes = {
@@ -18,9 +19,10 @@ const AccessPointComponent = React.createClass({
     defaultClass: PropTypes.string.isRequired,
     isSelected: PropTypes.bool.isRequired,
     isHovered: PropTypes.bool.isRequired,
+    location: PropTypes.object.isRequired,
 
     onHover: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired
+    // onSelect: PropTypes.func.isRequired
   },
 
   onMouseLeave (e) {
@@ -34,13 +36,24 @@ const AccessPointComponent = React.createClass({
   },
 
   onClick (e) {
-    this.props.onSelect(this.props.accessPoint)
+    e.preventDefault()
+    let hash = `#${this.props.accessPoint.properties.slug}`
+    location.href = hash
+    // return false
+  },
+
+  openGoogleMaps (e) {
+    // when it rains it pours. Because of the iOS add to start menu
+    // bug, we have to manually do this. yuck. whatever.
+    e.preventDefault()
+    window.open(e.target.href, '_blank')
+    return false
   },
 
   renderOpenInGoogleMapsLink (selectedAccessPoint) {
     let { centroid_latitude, centroid_longitude } = selectedAccessPoint.properties
     let url = `https://www.google.com/maps/@${centroid_latitude},${centroid_longitude},${DEFAULT_ZOOM}z`
-    return (<a className={classes.googleLink} href={url} target='_blank'>Google</a>)
+    return (<a onClick={this.openGoogleMaps} className={classes.googleLink} href={url} target='_blank'>Google</a>)
   },
 
   mapAccessPoints (bridge, defaultBridgeClass, selectedBridgeClass, isSelected, isHovered) {
@@ -52,14 +65,17 @@ const AccessPointComponent = React.createClass({
     let badgeElement = (<span className={bridgeClass}>{letter}</span>)
     let textClass = isSelected ? classes.selectedItem : classes.listText
     let listItemClass = isHovered ? classes.hoveredItem : classes.listItem
-    return (<div
+    console.log(this.props.location)
+    let hash = `#${this.props.accessPoint.properties.slug}`
+    return (<a
+      href={hash}
       className={listItemClass}
+      onClick={this.onClick}
       onMouseEnter={this.onMouseEnter}
-      onMouseLeave={this.onMouseLeave}
-      onClick={this.onClick}>
+      onMouseLeave={this.onMouseLeave} >
       <span>{badgeElement}</span>
       <span className={textClass}>{street_name} {isSelected && this.renderOpenInGoogleMapsLink(bridge)}</span>
-    </div>)
+    </a>)
   },
 
   render () {

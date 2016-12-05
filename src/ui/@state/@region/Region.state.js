@@ -22,7 +22,7 @@ export const REGION_SET_REGION_DATA = 'REGION_SET_REGION_DATA'
 export const REGION_SET_REGION_LOADING = 'REGION_SET_REGION_LOADING'
 export const REGION_SET_REGION_LOADING_FAILED = 'REGION_SET_REGION_LOADING_FAILED'
 export const REGION_SET_HOVERED_ROAD = 'REGION_SET_HOVERED_ROAD'
-export const REGION_SET_SELECTED_ROAD = 'REGION_SET_SELECTED_ROAD'
+// export const REGION_SET_SELECTED_ROAD = 'REGION_SET_SELECTED_ROAD'
 export const REGION_SET_HOVERED_STREAM = 'REGION_SET_HOVERED_STREAM'
 
 export const setRegionData = createAction(REGION_SET_REGION_DATA)
@@ -30,7 +30,7 @@ export const setRegionDataLoading = createAction(REGION_SET_REGION_LOADING)
 export const setRegionDataFailed = createAction(REGION_SET_REGION_LOADING_FAILED)
 
 export const setHoveredRoad = createAction(REGION_SET_HOVERED_ROAD)
-export const setSelectedRoad = createAction(REGION_SET_SELECTED_ROAD)
+// export const setSelectedRoad = createAction(REGION_SET_SELECTED_ROAD)
 export const setHoveredStream = createAction(REGION_SET_HOVERED_STREAM)
 
 export const fetchRegionData = (stateName, regionName) => {
@@ -86,8 +86,8 @@ const ACTION_HANDLERS = {
         pals: payload.pal,
         regionLoadingStatus: LOADING_CONSTANTS.IS_SUCCESS,
         hoveredStream: initialState.hoveredStream,
-        hoveredRoad: initialState.hoveredRoad,
-        selectedRoad: initialState.selectedRoad
+        hoveredRoad: initialState.hoveredRoad
+        // selectedRoad: initialState.selectedRoad
       }
     }
     return newState
@@ -104,11 +104,11 @@ const ACTION_HANDLERS = {
     let newState = { ...state, ...{ hoveredRoad: payload } }
     return newState
   },
-  [REGION_SET_SELECTED_ROAD]: (state, { payload }) => {
-    let newState = { ...state, ...{ selectedRoad: payload } }
-    console.log('selected a road', payload)
-    return newState
-  },
+  // [REGION_SET_SELECTED_ROAD]: (state, { payload }) => {
+  //   let newState = { ...state, ...{ selectedRoad: payload } }
+  //   console.log('selected a road', payload)
+  //   return newState
+  // },
   [REGION_SET_HOVERED_STREAM]: (state, { payload }) => {
     let newState = { ...state, ...{ hoveredStream: payload } }
     return newState
@@ -128,7 +128,7 @@ const initialState = {
   streamAccessPoint: null,
   pals: null,
   hoveredStream: null,
-  selectedRoad: null,
+  // selectedRoad: null,
   hoveredRoad: null,
   regionLoadingStatus: LOADING_CONSTANTS.IS_NOT_STARTED
 }

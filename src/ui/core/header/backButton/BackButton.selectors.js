@@ -38,6 +38,5 @@ export const previousSelector = createSelector([isEnabledSelector, locationSelec
   params.pop()
 
   let previous = `/${params.join('/')}`
-  console.log(previous)
   return previous
 })

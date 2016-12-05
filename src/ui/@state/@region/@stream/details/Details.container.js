@@ -4,6 +4,7 @@ import { getSpecialRegulationsCurrentSeasonSelector,
   getSelectedRoadSelector,
   hoveredStreamSelector,
   hoveredRoadSelector } from 'ui/@state/@region/Region.selectors'
+import { locationSelector } from 'ui/Location.selectors'
 import { setHoveredRoad, setHoveredStream, setSelectedRoad } from 'ui/@state/@region/Region.state'
 const mapDispatchToProps = {
   setHoveredRoad: (accessPoint) => setHoveredRoad(accessPoint || null),
@@ -16,7 +17,8 @@ const mapStateToProps = (state) => {
     specialRegulationsCurrentSeason: getSpecialRegulationsCurrentSeasonSelector(state),
     selectedAccessPoint: getSelectedRoadSelector(state),
     hoveredStream: hoveredStreamSelector(state),
-    hoveredRoad: hoveredRoadSelector(state)
+    hoveredRoad: hoveredRoadSelector(state),
+    location: locationSelector(state)
   }
   return props
 }

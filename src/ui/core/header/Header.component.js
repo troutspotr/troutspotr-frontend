@@ -10,7 +10,7 @@ import SubtitleComponent from './subtitle/Subtitle.component'
 const HeaderContainer = React.createClass({
   propTypes: {
     subtitle: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     isTitleVisible: PropTypes.bool.isRequired,
     isSearchVisible: PropTypes.bool.isRequired,
     params: PropTypes.object.isRequired,

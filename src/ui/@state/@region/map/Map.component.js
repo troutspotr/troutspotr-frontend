@@ -25,7 +25,8 @@ const MapComponent = React.createClass({
     loadMapModuleAsync: PropTypes.func.isRequired,
     setIsMapInitialized: PropTypes.func.isRequired,
     selectMapFeature: PropTypes.func.isRequired,
-    specialRegulationsCurrentSeason: PropTypes.array.isRequired
+    specialRegulationsCurrentSeason: PropTypes.array.isRequired,
+    selectedRoad: PropTypes.object
   },
 
   componentDidMount () {
@@ -91,6 +92,14 @@ const MapComponent = React.createClass({
           features: nextProps.selectedGeometry.sections
         })
       }
+    } else if (nextProps.selectedRoad !== this.props.selectedRoad) {
+      console.log('lets jump to the road')
+      this.props.selectMapFeature(nextProps.selectedRoad, true)
+    } else if (nextProps.selectedRoad == null && this.props.selectedRoad != null) {
+      this.props.selectMapFeature({
+        type: 'FeatureCollection',
+        features: nextProps.selectedGeometry.sections
+      })
     }
 
     let previousModuleLoadStatus = this.props.mapboxModuleStatus

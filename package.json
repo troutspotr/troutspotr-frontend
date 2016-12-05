@@ -172,6 +172,7 @@
     "style-loader": "^0.13.1",
     "text-encoding": "^0.6.1",
     "topojson-client": "^2.1.0",
+    "turf-circle": "^3.0.12",
     "turf-extent": "^1.0.4",
     "turf-simplify": "^3.0.12",
     "url-loader": "^0.5.6",

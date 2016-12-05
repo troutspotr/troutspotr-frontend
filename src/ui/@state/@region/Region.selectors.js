@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import { searchTextSelector } from 'ui/core/Core.selectors'
-import { isEmpty, values, has, round } from 'lodash'
+import { getHashSelector } from 'ui/Location.selectors'
+import { isEmpty, values, has, round, find } from 'lodash'
 import { displayedCentroidDictionarySelector,
   displayedStreamCentroidDataSelector,
   regulationsSelector, waterOpenersDictionarySelector } from 'ui/@state/State.selectors'
@@ -16,7 +17,7 @@ export const streamAccessPointSelector = state => state.region.streamAccessPoint
 export const palsSelector = state => state.region.pals
 export const hoveredStreamSelector = state => state.region.hoveredStream
 export const hoveredRoadSelector = state => state.region.hoveredRoad
-export const selectedRoadSelector = state => state.region.selectedRoad
+
 
 const EMPTY_STREAMS = []
 export const visibleTroutStreams = createSelector(
@@ -149,8 +150,8 @@ export const getSpecialRegulationsSelector = createSelector(
   })
 
 export const getSelectedRoadSelector = createSelector(
-  [selectedStreamObjectSelector, selectedRoadSelector],
-  (selectedStreamObject, selectedRoad) => {
+  [selectedStreamObjectSelector, getHashSelector],
+  (selectedStreamObject, hash) => {
     if (isEmpty(selectedStreamObject)) {
       return null
     }
@@ -159,7 +160,15 @@ export const getSelectedRoadSelector = createSelector(
       return null
     }
 
-    return selectedRoad
+    if (isEmpty(hash)) {
+      return null
+    }
+
+    let accessPoint = find(selectedStreamObject.accessPoints, ap => ap.properties.slug === hash)
+    if (accessPoint == null) {
+      return null
+    }
+    return accessPoint
   })
 
 export const getSpecialRegulationsCurrentSeasonSelector = createSelector(
@@ -182,3 +191,9 @@ export const getSpecialRegulationsCurrentSeasonSelector = createSelector(
     return inSeasonRegs
   })
 
+// export const selectedRoadSelector = createSelector(
+//   [getHashSelector, selectedStreamObjectSelector],
+//   (hash, selectedStreamObjectSelector) => {
+
+//   })
+// export const selectedRoadSelector = state => state.region.selectedRoad

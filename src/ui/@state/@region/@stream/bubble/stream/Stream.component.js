@@ -30,6 +30,10 @@ const StreamComponent = React.createClass({
   //   this.props.timing = this.props.timing || getTiming(this.props, ANIMATION_SCALE)
   // },
 
+  shouldComponentUpdate (nextProps) {
+    return false
+  },
+
   renderPalSections () {
     let streamLength = this.props.streamPackage.stream.properties.length_mi
     return (<g id='stream-pal'>

@@ -1,7 +1,7 @@
 // import _ from 'lodash'
 /* eslint-disable camelcase */
 // import simplify from 'turf-simplify'
-import { groupBy, keyBy, valuesIn, has } from 'lodash'
+import { groupBy, keyBy, valuesIn, has, kebabCase, uniqBy } from 'lodash'
 import * as topojson from 'topojson-client'
 
 export const transformGeo = (topojsonObject, stateData) => {
@@ -29,7 +29,6 @@ export const transformGeo = (topojsonObject, stateData) => {
         }
       })
   })
-
   return {
     streamDictionary,
     ...geoJsonObjects
@@ -240,6 +239,7 @@ const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
     properties.isParkable = isParkable
     properties.bridgeType = determineBridgeType(properties, roadTypesDictionary)
     properties.alphabetLetter = ' '
+    properties.slug = `${kebabCase(properties.street_name)}@${properties.linear_offset}`
   })
   return apFeatures
 }

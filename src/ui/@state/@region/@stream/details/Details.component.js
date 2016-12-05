@@ -20,6 +20,7 @@ const DetailsComponent = React.createClass({
     selectedAccessPoint: PropTypes.object,
     hoveredStream: PropTypes.object,
     hoveredRoad: PropTypes.object,
+    location: PropTypes.object.isRequired,
 
     setHoveredRoad: PropTypes.func.isRequired,
     setSelectedRoad: PropTypes.func.isRequired,
@@ -68,6 +69,7 @@ const DetailsComponent = React.createClass({
       defaultClass={defaultBridgeClass}
       isSelected={isSelected}
       isHovered={isHovered}
+      location={this.props.location}
       onHover={this.props.setHoveredRoad}
       onSelect={this.props.setSelectedRoad} />)
   },

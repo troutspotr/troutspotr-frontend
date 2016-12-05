@@ -17,7 +17,7 @@ const SvgAnimatedPathComponent = React.createClass({
   },
 
   shouldComponentUpdate () {
-    return false
+    // return false
   },
 
   animate (lengthInMilliseconds, pathLength) {

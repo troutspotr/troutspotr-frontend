@@ -34,6 +34,7 @@
   composes: content;
   order: 2;
   height: 40%;
+  padding-bottom: $default-margin;
 }
 
 @media (orientation: landscape) {

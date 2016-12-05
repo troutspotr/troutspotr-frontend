@@ -25,7 +25,7 @@ const StreamListComponent = React.createClass({
             let fakeName = realStream.properties.name
             let url = realStream.properties.slug
             return (
-              <li key={index}>
+              <li key={realStream.properties.slug}>
                 <StreamItemContainer
                   title={fakeName}
                   url={`/${selectedState}/${selectedRegion}/${url}`}

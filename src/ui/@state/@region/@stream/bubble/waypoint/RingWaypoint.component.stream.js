@@ -75,25 +75,26 @@ const RingWaypointStreamComponent = React.createClass({
     // return the root object that allows hovering, highlighting, etc.
     let icon = this.renderLabelMarker()
     let marker = <rect x='-3' y='-0.5' width='5' height='1' />
-    return <g>
-      <a
-        onClick={this.onClick}
-        className={streamClasses.tributaryWaypoint + ' ' + waypointClasses.waypoint}
-        xlinkHref={'#'}>
-        <RingWaypointLineComponent
-          subjectCoordinates={tributaryConfluenceCoordinates}
-          normalizedOffset={normalizedOffset}
-          projection={this.props.projection}
-          layout={this.props.layout} />
-        {this.renderStream(subjectScreenCoordinates[0], subjectScreenCoordinates[1], streamData)}
-        <RingWaypointLabelComponent
-          layout={this.props.layout}
-          normalizedOffset={normalizedOffset}
-          marker={marker}
-          icon={icon}
-          labelText={labelText} />
-      </a>
-    </g>
+    return null
+    // return (<g>
+    //   <a
+    //     onClick={this.onClick}
+    //     className={streamClasses.tributaryWaypoint + ' ' + waypointClasses.waypoint}
+    //     xlinkHref={'#'}>
+    //     <RingWaypointLineComponent
+    //       subjectCoordinates={tributaryConfluenceCoordinates}
+    //       normalizedOffset={normalizedOffset}
+    //       projection={this.props.projection}
+    //       layout={this.props.layout} />
+    //     {this.renderStream(subjectScreenCoordinates[0], subjectScreenCoordinates[1], streamData)}
+    //     <RingWaypointLabelComponent
+    //       layout={this.props.layout}
+    //       normalizedOffset={normalizedOffset}
+    //       marker={marker}
+    //       icon={icon}
+    //       labelText={labelText} />
+    //   </a>
+    // </g>)
   }
 })
 

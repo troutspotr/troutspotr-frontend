@@ -2,6 +2,7 @@
 @import "src/ui/styles/_variables";
 @import "src/ui/styles/_fonts";
 @import "src/ui/styles/NumberCircle";
+@import "src/ui/styles/ZeldaText";
 
 .container {}
 
@@ -22,14 +23,50 @@
   font-size: 1.0em;
 }
 
-.listItem {
+@media (orientation: portrait) and (max-width: 330px) {
+  .list {
+    columns: 1 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 750px) {
+  .list {
+    columns: 1 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: portrait) and (min-width: 590px) {
+  .list {
+    columns: 3 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+.listItemBasis {
   font-size: 12px;
   clear: both;
   margin-bottom: 10px;
   display: inline-flex;
   width: 100%;
-  cursor: pointer;
   color: $off-white;
+}
+
+.listItem {
+  composes: listItemBasis;
+
+  // font-size: 12px;
+  // clear: both;
+  // margin-bottom: 10px;
+  // display: inline-flex;
+  // width: 100%;
+  cursor: pointer;
+
+  // color: $off-white;
 }
 
 .hoveredItem {
@@ -132,4 +169,23 @@
 
 .googleLink:after {
   content: '\29C9';
+}
+
+.species {
+  font-size: 12px;
+}
+
+.brownTrout {
+  composes: zeldaText;
+  color: $yellow;
+}
+
+.brookTrout {
+  composes: zeldaText;
+  color: $green;
+}
+
+.rainbowTrout {
+  composes: zeldaText;
+  color: $red;
 }

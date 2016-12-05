@@ -113,10 +113,6 @@ const MapboxGlComponent = React.createClass({
     })
   },
 
-  // shouldComponentUpdate () {
-  //   return false
-  // },
-
   onMapLoad (e) {
     console.log('map fully loaded', e)
   },

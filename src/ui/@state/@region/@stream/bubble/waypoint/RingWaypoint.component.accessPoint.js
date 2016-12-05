@@ -30,28 +30,28 @@ const RingWaypointAccessPointComponent = React.createClass({
     })
   },
 
-  shouldComponentUpdate (nextProps) {
-    let gid = this.props.accessPoint.properties.gid
-    let { selectedAccessPoint, hoveredRoad } = this.props
+  // shouldComponentUpdate (nextProps) {
+  //   let gid = this.props.accessPoint.properties.gid
+  //   let { selectedAccessPoint, hoveredRoad } = this.props
 
-    let isSelected = isEmpty(selectedAccessPoint) === false && gid === selectedAccessPoint.properties.gid
-    let isHovered = isEmpty(hoveredRoad) === false && gid === hoveredRoad.properties.gid
+  //   let isSelected = isEmpty(selectedAccessPoint) === false && gid === selectedAccessPoint.properties.gid
+  //   let isHovered = isEmpty(hoveredRoad) === false && gid === hoveredRoad.properties.gid
 
-    let nextSelectedAccessPoint = nextProps.selectedAccessPoint
-    let nextHoveredRoad = nextProps.hoveredRoad
+  //   let nextSelectedAccessPoint = nextProps.selectedAccessPoint
+  //   let nextHoveredRoad = nextProps.hoveredRoad
 
-    let wasSelected = isEmpty(nextSelectedAccessPoint) === false && gid === nextSelectedAccessPoint.properties.gid
-    let wasHovered = isEmpty(nextHoveredRoad) === false && gid === nextHoveredRoad.properties.gid
+  //   let wasSelected = isEmpty(nextSelectedAccessPoint) === false && gid === nextSelectedAccessPoint.properties.gid
+  //   let wasHovered = isEmpty(nextHoveredRoad) === false && gid === nextHoveredRoad.properties.gid
 
-    if (isSelected || wasSelected) {
-      return true
-    }
+  //   if (isSelected || wasSelected) {
+  //     return true
+  //   }
 
-    if (isHovered || wasHovered) {
-      return true
-    }
-    return false
-  },
+  //   if (isHovered || wasHovered) {
+  //     return true
+  //   }
+  //   return false
+  // },
 
   renderTargetMarker (dotXScreenCoordinate, dotYScreenCoordinate) {
     return <circle
@@ -261,11 +261,14 @@ const RingWaypointAccessPointComponent = React.createClass({
 
     // let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
     let waypointCssClass = isSelected ? waypointClasses.selectedWaypoint : isHovered ? waypointClasses.hoveredWaypoint : waypointClasses.waypoint
+    console.log(waypointCssClass)
     let iconComponent = this.decideRoadShield(accessPoint, isSelected)
     let hash = `#${accessPoint.properties.slug}`
+    // return null
     return (<g>
       <a
         xlinkHref={hash}
+        key={accessPoint.properties.gid}
         className={waypointCssClass}
         onClick={this.onClick}
         onMouseEnter={this.onMouseEnter}

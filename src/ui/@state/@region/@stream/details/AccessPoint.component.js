@@ -46,6 +46,7 @@ const AccessPointComponent = React.createClass({
     // when it rains it pours. Because of the iOS add to start menu
     // bug, we have to manually do this. yuck. whatever.
     e.preventDefault()
+    debugger
     window.open(e.target.href, '_blank')
     return false
   },

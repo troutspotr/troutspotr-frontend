@@ -76,13 +76,13 @@ const SvgBubbleComponent = React.createClass({
   },
 
   renderAccessPoints () {
-    return this.props.streamPackage.accessPoints.map(this.renderAccessPoint)
+    return this.props.streamPackage.accessPoints.map((item, index) => this.renderAccessPoint(item, index))
   },
 
   renderAccessPoint (accessPoint, accessPointsIndex) {
     return <RingWaypointAccessPointContainer
       accessPoint={accessPoint}
-      key={accessPoint.properties.gid}
+      key={accessPointsIndex}
       timing={this.timing}
       projection={this.projection}
       layout={this.layout} />

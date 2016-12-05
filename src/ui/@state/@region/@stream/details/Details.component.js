@@ -4,6 +4,7 @@ import classes from './Details.scss'
 import { isEmpty } from 'lodash'
 import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import AccessPointComponent from './AccessPoint.component'
+import SpeciesComponent from './Species.component'
 /* eslint-disable camelcase */
 export const crossingTypes = {
   publicTrout: 'publicTrout',
@@ -61,6 +62,7 @@ const DetailsComponent = React.createClass({
     let hoveredRoad = this.props.hoveredRoad
     let isSelected = isEmpty(selectedAccessPoint) === false && bridge.properties.gid === selectedAccessPoint.properties.gid
     let isHovered = isEmpty(hoveredRoad) === false && bridge.properties.gid === hoveredRoad.properties.gid
+    console.log(bridge.properties.gid)
     return (<AccessPointComponent
       key={key}
       accessPoint={bridge}
@@ -74,12 +76,13 @@ const DetailsComponent = React.createClass({
       onSelect={this.props.setSelectedRoad} />)
   },
 
-  renderBridges () {
+  renderBridgesBody () {
     let { selectedStream } = this.props
     let { accessPoints } = selectedStream
-    let hasNoRestrictions = accessPoints.length === 0
-    if (hasNoRestrictions) {
-      return null
+    let hasNoBridges = accessPoints.length === 0
+
+    if (hasNoBridges) {
+      return <div className={classes.listItemBasis}>None.</div>
     }
 
     let dictionary = {
@@ -125,10 +128,18 @@ const DetailsComponent = React.createClass({
     })
 
     return (<div>
-      <div className={classes.title}>Bridges</div>
       {this.createBridgeListSummaryElement('With access to publicly fishable land', publicTroutStreamBridgeElements)}
       {this.createBridgeListSummaryElement('Access requires Landowner permission', troutStreamBridgeElements)}
       {this.createBridgeListSummaryElement('Unsafe to park', unsafeTroutStreamBridgeElements)}
+    </div>)
+  },
+
+  renderBridges () {
+    let bridgesBody = this.renderBridgesBody()
+
+    return (<div>
+      <div className={classes.title}>Bridges</div>
+      {bridgesBody}
     </div>)
   },
 
@@ -167,12 +178,17 @@ const DetailsComponent = React.createClass({
     </div>)
   },
 
+  renderSpecies () {
+    return <SpeciesComponent selectedStream={this.props.selectedStream} />
+  },
+
   render () {
     return (
       <div className={classes.container}>
         {this.renderBridges()}
         {this.renderRestrictions()}
         {this.renderTributaries()}
+        {this.renderSpecies() }
       </div>)
   }
 })

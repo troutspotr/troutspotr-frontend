@@ -20,6 +20,7 @@ const CountyListComponent = React.createClass({
     let { gid, name, streams } = county
     return (<li key={gid}>
       <div className={classes.listHeaderContainer}>
+
         <div className={classes.listTitle}>{name} Co.</div>
       </div>
       <StreamListComponent
@@ -46,6 +47,7 @@ const CountyListComponent = React.createClass({
     return (
       <div className={isListVisible ? classes.listViewContainer : classes.invisible}>
         {this.renderCounties()}
+        <div className={classes.godAwfulPlaceholder} />
       </div>)
   }
 })

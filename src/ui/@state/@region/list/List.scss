@@ -1,7 +1,7 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 
-$heafty-bottom-margin: 50vmin;
+$heafty-bottom-margin: 50vh;
 
 .listViewContainer {
   overflow: auto;
@@ -11,11 +11,10 @@ $heafty-bottom-margin: 50vmin;
   left: 0;
   right: 0;
   overflow-y: auto;
-  padding-bottom: $heafty-bottom-margin;
+
+  // padding-bottom: $heafty-bottom-margin;
 
   // padding-top: $default-margin;
-
-  padding-left: 10px;
 
   // enable scrollign on iOS
   -webkit-overflow-scrolling: touch;
@@ -23,6 +22,10 @@ $heafty-bottom-margin: 50vmin;
   .list {
     padding: $default-margin $default-margin $heafty-bottom-margin 10px;
   }
+}
+
+.godAwfulPlaceholder {
+  height: $heafty-bottom-margin;
 }
 
 .invisible {
@@ -33,8 +36,9 @@ $heafty-bottom-margin: 50vmin;
 .listHeaderContainer {
   position: sticky;
   padding-top: 5px;
-  top: 0px;
+  top: -2px;
   height: 30px;
+  border-top: 1px solid transparentize($off-white, 0.85);
   background-color: transparentize($background, 0.2);
 }
 
@@ -42,7 +46,7 @@ $heafty-bottom-margin: 50vmin;
   font-size: 18px;
   color: #fff;
   font-weight: 500;
-  margin-left: 0px;
+  margin-left: 10px;
   margin-bottom: 10px;
 }
 
@@ -53,6 +57,7 @@ $heafty-bottom-margin: 50vmin;
 
 .streamList {
   padding-top: 10px;
+  padding-left: 10px;
 
   // margin-bottom: 40px;
   // margin-left: 10px;

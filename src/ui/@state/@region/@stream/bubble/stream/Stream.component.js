@@ -87,18 +87,16 @@ const StreamComponent = React.createClass({
           : classes.restriction
         let thePath = this.props.pathGenerator(restriction.geometry)
         return (
-          <g>
+          <g key={restriction.properties.gid}>
             <SvgAnimatedPathComponent
               offset={this.props.timing.baseRestrictionOffset}
               length={this.props.timing.baseStreamLength}
               cssName={className}
-              key={restriction.properties.gid}
               path={thePath} />
             <SvgAnimatedPathComponent
               offset={this.props.timing.baseRestrictionOffset}
               length={this.props.timing.baseStreamLength}
               cssName={classes.restrictionBackground}
-              key={restriction.properties.gid}
               path={thePath} />
           </g>
         )

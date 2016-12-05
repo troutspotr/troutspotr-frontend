@@ -55,6 +55,34 @@ const MinimapComponent = React.createClass({
     })
   },
 
+  shouldComponentUpdate (nextProps) {
+    if (nextProps.isExpanded !== this.props.isExpanded) {
+      return true
+    }
+
+    if (nextProps.selectedState !== this.props.selectedState) {
+      return true
+    }
+
+    if (nextProps.selectedRegion !== this.props.selectedRegion) {
+      return true
+    }
+
+    if (nextProps.tableOfContentsLoadingStatus !== this.props.tableOfContentsLoadingStatus) {
+      return true
+    }
+
+    if (nextProps.isExpanded && nextProps.streamCentroidsGeoJson !== this.props.streamCentroidsGeoJson) {
+      return true
+    }
+
+    if (nextProps.selectedStreamCentroid !== this.props.selectedStreamCentroid) {
+      return true
+    }
+
+    return false
+  },
+
   componentDidMount () {
     setTimeout(this.resizeEvent, 20)
   },
@@ -154,6 +182,7 @@ const MinimapComponent = React.createClass({
   },
 
   render () {
+    console.log('rendering minimap')
     let { isExpanded } = this.props
     let expandClass = isExpanded ? classes.expand : null
     let isMapMinimapLoaded = this.props.statesGeoJson != null && this.props.statesGeoJson.features != null
@@ -162,12 +191,13 @@ const MinimapComponent = React.createClass({
     let streamCentroidsGeoJson = isViewingStreamDetailsAndNotExpanded
       ? emptyArray
       : this.props.streamCentroidsGeoJson
+    let isCloseButtonActive = this.props.isRootPage === false && this.props.isExpanded && isEmpty(this.props.selectedRegion) === false
     return (
       <div className={classes.container}>
         <div className={classes.backButtonContainer}>
           <ActionButtonComponent
-            onClick={this.backButtonPressed}
-            isActive={this.props.isRootPage === false && this.props.isExpanded && isEmpty(this.props.selectedRegion) === false} >
+            click={this.backButtonPressed}
+            isActive={isCloseButtonActive} >
             <span className={classes.close + ' ' + classes.black} />
           </ActionButtonComponent>
         </div>

@@ -6,9 +6,18 @@ import ReactDOM from 'react-dom'
 import { browserHistory } from 'react-router'
 import configureStore from 'ui/configureStore'
 import TroutMapsAppContainer from 'ui/TroutMapsApp.container'
-import 'babel-polyfill'
+// import 'babel-polyfill'
+// import Perf from 'react-addons-perf'
+// window.Perf = Perf
 // import FastClick from 'fastclick'
 // import routes from 'ui/routes'
+
+import Promise from 'promise-polyfill'
+
+// To add to window
+if (!window.Promise) {
+  window.Promise = Promise
+}
 
 // ========================================================
 // Store and History Instantiation

@@ -29,6 +29,22 @@ const RegionComponent = React.createClass({
 
   },
 
+  shouldComponentUpdate (nextProps) {
+    if (this.props.geoJson !== nextProps.geoJson) {
+      return true
+    }
+
+    if (this.props.stateName !== nextProps.stateName) {
+      return true
+    }
+
+    if (this.props.isLoading !== nextProps.isLoading) {
+      return true
+    }
+
+    return false
+  },
+
   render () {
     let json = this.props.geoJson
     let path = this.props.pathGenerator(json.geometry)

@@ -3,7 +3,7 @@ import {
   createAction, handleActions
 }
 from 'redux-actions'
-import _ from 'lodash'
+import { find } from 'lodash'
 
 // ------------------------------------
 // Constants
@@ -39,7 +39,7 @@ export const mapGroundActions = {
 
 var actionHandlers = {
   MAP_GROUND_SET_MAP_STYLE: (state, { payload: { styleName } }) => {
-    let soughtStyle = _.find(state.availableMapStyles, 'name', styleName)
+    let soughtStyle = find(state.availableMapStyles, 'name', styleName)
     if (soughtStyle == null) {
       return state
     }

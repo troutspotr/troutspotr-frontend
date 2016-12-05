@@ -104,10 +104,11 @@ const SvgMapComponent = React.createClass({
     if (selectedRegions.length === 0) {
     }
 
-    return selectedRegions.map(region => {
+    return selectedRegions.map((region, index) => {
       return (<RegionComponent
         geoJson={region}
         isSelected
+        key={index}
         isLoading={false}
         pathGenerator={this.pathGenerator}
         stateName={FAKE_STATE_NAME}
@@ -123,6 +124,7 @@ const SvgMapComponent = React.createClass({
           geoJson={region}
           isSelected={false}
           isLoading={false}
+          key={index}
           pathGenerator={this.pathGenerator}
           stateName={FAKE_STATE_NAME}
           selectRegion={this.props.selectRegion} />)
@@ -142,6 +144,7 @@ const SvgMapComponent = React.createClass({
       return (
         <StreamCentroidComponent
           geoJson={centroid}
+          key={index}
           isSelected={index % 2 === 0}
           isLoading={index < 400}
           pathGenerator={this.pathGenerator}
@@ -171,7 +174,7 @@ const SvgMapComponent = React.createClass({
     return (
       <svg
         id='minimap'
-        viewbox={`0 0 ${this.props.width} ${this.props.height}`}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
         height={this.props.height + 'px'}
         width={this.props.width + 'px'}
         preserveAspectRatio='xMidYMid meet'>

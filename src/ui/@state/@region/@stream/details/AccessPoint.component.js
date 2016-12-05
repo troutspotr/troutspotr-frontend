@@ -46,15 +46,15 @@ const AccessPointComponent = React.createClass({
     // when it rains it pours. Because of the iOS add to start menu
     // bug, we have to manually do this. yuck. whatever.
     e.preventDefault()
-    debugger
-    window.open(e.target.href, '_blank')
+    let address = e.target.getAttribute('href')
+    window.open(address, '_blank')
     return false
   },
 
   renderOpenInGoogleMapsLink (selectedAccessPoint) {
     let { centroid_latitude, centroid_longitude } = selectedAccessPoint.properties
     let url = `https://www.google.com/maps/@${centroid_latitude},${centroid_longitude},${DEFAULT_ZOOM}z`
-    return (<a onClick={this.openGoogleMaps} className={classes.googleLink} href={url} target='_blank'>GMap</a>)
+    return (<span onClick={this.openGoogleMaps} className={classes.googleLink} href={url} target='_blank'>Google Maps</span>)
   },
 
   mapAccessPoints (bridge, defaultBridgeClass, selectedBridgeClass, isSelected, isHovered) {

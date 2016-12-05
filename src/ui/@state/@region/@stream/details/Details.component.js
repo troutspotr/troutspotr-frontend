@@ -62,7 +62,6 @@ const DetailsComponent = React.createClass({
     let hoveredRoad = this.props.hoveredRoad
     let isSelected = isEmpty(selectedAccessPoint) === false && bridge.properties.gid === selectedAccessPoint.properties.gid
     let isHovered = isEmpty(hoveredRoad) === false && bridge.properties.gid === hoveredRoad.properties.gid
-    console.log(bridge.properties.gid)
     return (<AccessPointComponent
       key={key}
       accessPoint={bridge}

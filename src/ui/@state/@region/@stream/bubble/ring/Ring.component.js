@@ -78,11 +78,10 @@ const RingComponent = React.createClass({
         ? classes.fishSanctuary
         : classes.restriction
       return (
-        <g>
+        <g key={restriction.properties.gid}>
           <RingSectionComponent
             timing={{ offset, length: this.props.timing.baseStreamLength }}
             cssName={className}
-            key={restriction.properties.gid}
             layout={this.props.layout}
             length={this.props.streamPackage.stream.properties.length_mi}
             start={restriction.properties.start}
@@ -90,7 +89,6 @@ const RingComponent = React.createClass({
           <RingSectionComponent
             timing={{ offset, length: this.props.timing.baseStreamLength }}
             cssName={classes.restrictionBackground}
-            key={restriction.properties.gid}
             layout={this.props.layout}
             length={this.props.streamPackage.stream.properties.length_mi}
             start={restriction.properties.start}

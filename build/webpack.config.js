@@ -89,7 +89,7 @@ webpackConfig.plugins = [
   //   // In `disabled` mode you can use this plugin to just generate Webpack Stats JSON file by setting `generateStatsFile` to `true`.
   //   analyzerMode: 'server',
   //   // Port that will be used by in `server` mode to start HTTP server.
-  //   analyzerPort: 8888,
+  //   analyzerPort: 6565,
   //   // Path to bundle report file that will be generated in `static` mode.
   //   // If relative path is provided, it will be relative to bundles output directory
   //   reportFilename: 'report.html',

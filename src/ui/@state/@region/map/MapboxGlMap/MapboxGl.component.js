@@ -18,8 +18,8 @@ const MapboxGlComponent = React.createClass({
     isVisible: PropTypes.bool.isRequired,
     selectedGeometry: PropTypes.object,
     selectedRegionId: PropTypes.string.isRequired,
-    onFeatureClick: PropTypes.func.isRequires,
-    onFeatureHover: PropTypes.func.isRequires
+    onFeatureClick: PropTypes.func.isRequired,
+    onFeatureHover: PropTypes.func.isRequired
   },
 
   onClick () {

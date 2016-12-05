@@ -103,6 +103,7 @@ const SvgBubbleComponent = React.createClass({
   },
 
   render () {
+    console.log('making bubble')
     let name = this.props.streamPackage.stream.properties.name
     let id = this.props.streamPackage.stream.properties.gid
     return (

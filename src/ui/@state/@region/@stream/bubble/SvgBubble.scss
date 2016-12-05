@@ -90,7 +90,7 @@ $tributary_pal_width: $tributary_width * 7;
   right: 0;
   left: 0;
   margin: auto;
-
+  transform: translateZ(0);
   svg {
     height: 100%;
     max-width: 100%;

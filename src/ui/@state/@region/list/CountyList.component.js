@@ -19,7 +19,9 @@ const CountyListComponent = React.createClass({
   renderCounty (county, index) {
     let { gid, name, streams } = county
     return (<li key={gid}>
-      <div className={classes.listTitle}>{name} Co.</div>
+      <div className={classes.listHeaderContainer}>
+        <div className={classes.listTitle}>{name} Co.</div>
+      </div>
       <StreamListComponent
         isListVisible={this.props.isListVisible}
         visibleTroutStreams={streams}
@@ -34,7 +36,7 @@ const CountyListComponent = React.createClass({
       return null
     }
 
-    return (<ul className={classes.list}>
+    return (<ul >
       {visibleCounties.map((county, index) => this.renderCounty(county, index))}
     </ul>)
   },

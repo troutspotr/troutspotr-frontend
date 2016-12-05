@@ -8,8 +8,14 @@ $heafty-bottom-margin: 50vmin;
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
   overflow-y: auto;
+  padding-bottom: $heafty-bottom-margin;
+
+  // padding-top: $default-margin;
+
+  padding-left: 10px;
 
   // enable scrollign on iOS
   -webkit-overflow-scrolling: touch;
@@ -24,18 +30,40 @@ $heafty-bottom-margin: 50vmin;
   visibility: hidden;
 }
 
+.listHeaderContainer {
+  position: sticky;
+  padding-top: 5px;
+  top: 0px;
+  height: 30px;
+  background-color: transparentize($background, 0.2);
+}
+
 .listTitle {
   font-size: 18px;
-  margin-top: 40px;
+  color: #fff;
+  font-weight: 500;
+  margin-left: 0px;
+  margin-bottom: 10px;
+}
+
+.streamItemContainer {
+  display: inline-flex;
   width: 100%;
 }
 
+.streamList {
+  padding-top: 10px;
+
+  // margin-bottom: 40px;
+  // margin-left: 10px;
+}
+
 @media only screen and (min-width: 50px) and (max-width: 640px) {
-  .streamList {
-    columns: 1 2em;
-    column-gap: 1em;
-    font-size: 1.0em;
-  }
+  // .streamList {
+  //   columns: 1 2em;
+  //   column-gap: 1em;
+  //   font-size: 1.0em;
+  // }
 }
 
 @media only screen and (min-width: 640px) and (max-width: 960px) {

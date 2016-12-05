@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import { searchTextSelector, countiesDictionarySelector, selectedRegionSelector } from 'ui/core/Core.selectors'
 import { getHashSelector } from 'ui/Location.selectors'
-import { isEmpty, values, has, round, find, keys } from 'lodash'
+import { isEmpty, values, has, round, find, keys, sortBy, keyBy } from 'lodash'
 import { displayedCentroidDictionarySelector,
   displayedStreamCentroidDataSelector,
   regulationsSelector, waterOpenersDictionarySelector,
@@ -52,6 +52,12 @@ export const visibleTroutStreamIdsSelector = createSelector(
   [visibleTroutStreams],
   (visibleStreams) => {
     return visibleStreams.map(s => s.stream.properties.gid)
+  })
+
+export const visibleTroutStreamDictionarySelector = createSelector(
+  [visibleTroutStreams],
+  (visibleStreams) => {
+    return keyBy(visibleStreams, s => s.stream.properties.gid)
   })
 
 export const selectedStreamObjectSelector = createSelector(
@@ -198,14 +204,16 @@ export const getCountyListSelector = createSelector(
     displayedCentroidDictionarySelector,
     countiesDictionarySelector,
     selectedRegionSelector,
-    troutStreamDictionarySelector
+    troutStreamDictionarySelector,
+    visibleTroutStreamDictionarySelector
   ],
   (
     regionIndex,
     displayedCentroidDictionarySelector,
     countiesDictionary,
     selectedRegion,
-    troutStreamDictionary
+    troutStreamDictionary,
+    visibleTroutStreamDictionary
   ) => {
     if (isEmpty(selectedRegion)) {
       return EMPTY_COUNTIES_ARRAY
@@ -215,7 +223,11 @@ export const getCountyListSelector = createSelector(
       return EMPTY_COUNTIES_ARRAY
     }
 
-    let regionName = 'driftless'
+    if (isEmpty(visibleTroutStreamDictionary)) {
+      return EMPTY_COUNTIES_ARRAY
+    }
+
+    let regionName = selectedRegion.properties.name.toLowerCase()
     if (has(regionIndex, regionName) === false) {
       return EMPTY_COUNTIES_ARRAY
     }
@@ -226,17 +238,21 @@ export const getCountyListSelector = createSelector(
       let streamIdsInRegion = countiesInSelectedRegionDictionary[id]
       let county = countiesDictionary[id]
       let { gid, name, stream_count } = county.properties
-      let visibleStreamIdsInCounty = streamIdsInRegion.filter(streamId => has(displayedCentroidDictionarySelector, streamId))
-      let visibleStreamsInCounty = visibleStreamIdsInCounty.map(streamId => troutStreamDictionary[streamId])
-
-      let countyList = {
-        gid,
-        name,
-        streamCount: stream_count,
-        streams: visibleStreamsInCounty
+      let visibleStreamIdsInCounty = streamIdsInRegion.filter(streamId => has(visibleTroutStreamDictionary, streamId))
+      let visibleStreamsInCounty = visibleStreamIdsInCounty.map(streamId => visibleTroutStreamDictionary[streamId])
+      try {
+        let countyList = {
+          gid,
+          name,
+          streamCount: stream_count,
+          streams: sortBy(visibleStreamsInCounty, x => x.stream.properties.name)
+        }
+        return countyList
+      } catch (e) {
+        console.log(e)
+        console.log(visibleStreamsInCounty)
       }
-
-      return countyList
+      
     })
 
     let filteredCountyObjects = countyObjects.filter(x => x.streams.length > 0)

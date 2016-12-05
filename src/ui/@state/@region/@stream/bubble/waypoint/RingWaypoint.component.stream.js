@@ -37,7 +37,7 @@ const RingWaypointStreamComponent = React.createClass({
         className={waypointClasses.target}
         cx={dotXScreenCoordinate}
         cy={dotYScreenCoordinate}
-        r='1' />
+        r='1.5' />
     </g>)
   },
 
@@ -50,7 +50,7 @@ const RingWaypointStreamComponent = React.createClass({
       className={streamClasses.icon_tributary}
       cx={0}
       cy={0}
-      r='8' />
+      r='0.001' />
   },
 
   render () {
@@ -73,8 +73,10 @@ const RingWaypointStreamComponent = React.createClass({
 
     // let cssName = svgBubbleClasses.accessPoint
     // return the root object that allows hovering, highlighting, etc.
-    let icon = this.renderLabelMarker()
-    let marker = <rect x='-3' y='-0.5' width='5' height='1' />
+    // let icon = this.renderLabelMarker()
+    // let marker = <rect x='-3' y='-0.5' width='5' height='1' />
+    // let icon = null
+    // let marker = null
     // return null
     return (<g>
       <a
@@ -87,15 +89,16 @@ const RingWaypointStreamComponent = React.createClass({
           projection={this.props.projection}
           layout={this.props.layout} />
         {this.renderStream(subjectScreenCoordinates[0], subjectScreenCoordinates[1], streamData)}
-        <RingWaypointLabelComponent
-          layout={this.props.layout}
-          normalizedOffset={normalizedOffset}
-          marker={marker}
-          icon={icon}
-          labelText={labelText} />
       </a>
     </g>)
   }
 })
+/*
+<RingWaypointLabelComponent
+          layout={this.props.layout}
+          normalizedOffset={normalizedOffset}
+          marker={marker}
+          icon={icon}
+          labelText={labelText} />*/
 
 export default RingWaypointStreamComponent

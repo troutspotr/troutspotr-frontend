@@ -106,9 +106,9 @@ $MEDIUM_OPACITY: 0.9;
   animation-iteration-count: 1;
 
   .target {
-    fill: $background;
-    stroke-width: 0.3em;
-    stroke: transparentize($white, 0.2);
+    fill: transparentize($red, 0);
+    stroke-width: 0.4em;
+    stroke: transparentize($background, 0.3);
   }
 
   .icon,
@@ -178,9 +178,9 @@ $MEDIUM_OPACITY: 0.9;
 
 .accessPointConnector {
   fill: none;
-  stroke: $white;
-  stroke-dasharray: 1,4;
-  stroke-width: 1px;
+  stroke: $off-white;
+  stroke-dasharray: 1.5,5;
+  stroke-width: 1.25px;
   opacity: 0.0;
   pointer-events: none;
 }

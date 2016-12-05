@@ -58,7 +58,7 @@ const RingWaypointAccessPointComponent = React.createClass({
       className={waypointClasses.target}
       cx={dotXScreenCoordinate}
       cy={dotYScreenCoordinate}
-      r='1' />
+      r='1.5' />
   },
 
   renderUsHighway (offsetLocationDegrees, radius, width, height, labelOffsetFromRadius) {

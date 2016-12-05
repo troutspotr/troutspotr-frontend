@@ -182,7 +182,6 @@ const MinimapComponent = React.createClass({
   },
 
   render () {
-    console.log('rendering minimap')
     let { isExpanded } = this.props
     let expandClass = isExpanded ? classes.expand : null
     let isMapMinimapLoaded = this.props.statesGeoJson != null && this.props.statesGeoJson.features != null

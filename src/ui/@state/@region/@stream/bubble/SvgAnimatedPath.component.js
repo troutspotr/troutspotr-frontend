@@ -61,7 +61,6 @@ const SvgAnimatedPathComponent = React.createClass({
     path.getBoundingClientRect()
     // Define our transition
     let transition = `stroke-dashoffset ${lengthInMilliseconds}ms cubic-bezier(0.390, 0.575, 0.565, 1.000) ${delay}ms`
-    console.log(transition)
     path.style.transition = path.style.WebkitTransition = transition
 
     // Go!
@@ -85,7 +84,6 @@ const SvgAnimatedPathComponent = React.createClass({
     this.componentPath.style.stroke = 'none'
 
     // force it to go backwards - from upstream to downstream.
-    console.log(this.props.offset)
     this.componentPath.style.strokeDashoffset = -length
     setTimeout(() => {
       this.animate(this.props.length, length)

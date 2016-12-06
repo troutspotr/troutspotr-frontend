@@ -189,3 +189,54 @@
   composes: zeldaText;
   color: $red;
 }
+
+.number {
+  composes: zeldaText;
+  order: 2;
+  text-align: left;
+}
+
+.totalMiles {
+  composes: number;
+  color: $off-white;
+}
+
+.troutMiles {
+  composes: number;
+  color: $blue;
+}
+
+.publicMiles {
+  composes: number;
+  color: $green;
+}
+
+.summaryContainer {
+  display: flex;
+  align-items: baseline;
+}
+
+.marker {
+  min-width: 10px;
+  order: 1;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.publicMarker {
+  composes: marker;
+  height: 0.3em;
+  background-color: $green;
+}
+
+.troutMarker {
+  composes: marker;
+  height: 0.2em;
+  background-color: $blue;
+}
+
+.waterMarker {
+  composes: marker;
+  height: 0.1em;
+  background-color: $blueGray;
+}

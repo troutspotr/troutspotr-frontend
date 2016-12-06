@@ -5,6 +5,7 @@ import { isEmpty } from 'lodash'
 import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import AccessPointComponent from './AccessPoint.component'
 import SpeciesComponent from './Species.component'
+import SummaryComponent from './Summary.component'
 /* eslint-disable camelcase */
 export const crossingTypes = {
   publicTrout: 'publicTrout',
@@ -181,9 +182,14 @@ const DetailsComponent = React.createClass({
     return <SpeciesComponent selectedStream={this.props.selectedStream} />
   },
 
+  renderSummary () {
+    return <SummaryComponent selectedStream={this.props.selectedStream} />
+  },
+
   render () {
     return (
       <div className={classes.container}>
+        {this.renderSummary()}
         {this.renderBridges()}
         {this.renderRestrictions()}
         {this.renderTributaries()}

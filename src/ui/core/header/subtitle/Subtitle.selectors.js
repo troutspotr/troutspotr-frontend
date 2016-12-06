@@ -8,6 +8,7 @@ export const isTitleVisibleSelector = createSelector([isSearchVisibleSelector], 
 })
 
 const PLACEHOLDER_TITLE = ''
+const EN_DASH = '–'
 const WELCOME_TITLE = 'Welcome'
 // const SELECT_REGION = 'Select Region'
 export const subtitleSelector = createSelector(
@@ -19,7 +20,7 @@ export const subtitleSelector = createSelector(
     let isOnlyStateSelected = selectedState != null && selectedRegion == null
     if (isOnlyStateSelected) {
       let state = selectedState.properties.name
-      return `${state}`
+      return `${state} ${EN_DASH} select your Region.`
     }
 
     let isBothStateAndRegionSelected = !isEmpty(selectedState) && !isEmpty(selectedRegion)

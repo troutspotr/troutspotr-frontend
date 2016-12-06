@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import MapboxGlComponentCamera from './MapboxGl.component.camera'
 import classes from '../Map.scss'
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
-import { isEmpty } from 'lodash'
+import { isEmpty, debounce, flatten } from 'lodash'
 const MapboxGlComponent = React.createClass({
   propTypes: {
     mapbox: PropTypes.object.isRequired,
@@ -31,14 +31,14 @@ const MapboxGlComponent = React.createClass({
     this.map = new this.props.mapbox.Map({
       attributionControl: true,
       container: this.props.elementId,
-      // style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
-      style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
+      style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
+      // style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
       center: [-93.50, 42],
       zoom: 4,
-      maxZoom: 18
-      // boxZoom: false,
-      // dragRotate: false,
-      // keyboard: false
+      maxZoom: 18,
+      boxZoom: false,
+      dragRotate: false,
+      keyboard: false
     })
 
     // setTimeout(() => { this.map.resize() }, 20)
@@ -49,8 +49,6 @@ const MapboxGlComponent = React.createClass({
       setTimeout(() => {
         let zoomedOut = this.map.getZoom() * 0.80
         this.map.setZoom(zoomedOut)
-        // let currentBounds = this.map.getBounds()
-        // this.map.setMaxBounds(currentBounds)
         this.map.fitBounds(this.props.camera.bounds, { linear: false, padding: 80, speed: 100 })
       }, 100)
     }
@@ -61,6 +59,53 @@ const MapboxGlComponent = React.createClass({
     this.map.once('load', this.onMapLoad)
     this.map.once('data', this.onDataLoad)
     this.map.on('layer.add', e => { console.log(e) })
+
+    // load interactivity.
+    const DEBOUNCE_DELAY_MS = 80
+    let debounceOptions = { maxWait: 20 }
+
+    // We should debounce our events to reduce load on CPU.
+    this.proxyOnLayerMouseOver = debounce(this.onLayerMouseOver, DEBOUNCE_DELAY_MS, debounceOptions)
+    // this.proxyOnUpdateLayerFilter = debounce(this.updateLayerFilter, 20, { maxWait: 20 })
+    this.proxyOnClick = debounce(this.onLayerClick, 20, { maxWait: 20 })
+
+    this.map.on('mousemove', this.proxyOnLayerMouseOver)
+    this.map.on('click', this.proxyOnClick)
+  },
+
+  onLayerMouseOver (e) {
+    let features = this.getInteractiveFeaturesOverPoint(e.point)
+    this.map.getCanvas().style.cursor = features.length ? 'pointer' : ''
+    if (this.props.onFeatureHover != null) {
+      if (features == null || features.length === 0) {
+        return
+      }
+
+      this.props.onFeatureHover(features[0])
+    }
+  },
+
+  getInteractiveFeaturesOverPoint (point) {
+    let BOX_DIMENSION = 20
+    let boundingBox = [
+      [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
+      [point.x + BOX_DIMENSION / 2, point.y + BOX_DIMENSION / 2]
+    ]
+
+    let interactiveLayers = flatten(this.props.layerPackage.map(x => x.layers))
+      .filter(layer => layer.layerDefinition.interactive)
+      .map(layer => layer.layerDefinition.id)
+    var features = this.map.queryRenderedFeatures(boundingBox, { layers: interactiveLayers })
+    return features
+  },
+
+  onLayerClick (e) {
+    let features = this.getInteractiveFeaturesOverPoint(e.point)
+    if (features == null || features.length === 0) {
+      return
+    }
+    console.log(features)
+    this.props.onFeatureClick(features)
   },
 
   componentWillReceiveProps (nextProps) {
@@ -82,10 +127,13 @@ const MapboxGlComponent = React.createClass({
     let shouldBounceOutALittle = isUserLookingAtMap && isUserHitBackButton
     if (userChangedRegions === false && shouldBounceOutALittle) {
       let currentZoom = this.map.getZoom()
-
-      if (currentZoom > 9) {
-        this.map.zoomTo(currentZoom * 0.9)
-      }
+      let zoomOutBoost = currentZoom > 16 ? -2.5 : -0.2
+      let newZoom = (currentZoom * 0.9) + zoomOutBoost
+      console.log('zoom', currentZoom, newZoom)
+      this.map.easeTo({ bearing: 0, pitch: 0, zoom: newZoom })
+      // if (currentZoom > 9) {
+      //   this.map.zoomTo(currentZoom * 0.9)
+      // }
     }
   },
 
@@ -141,9 +189,7 @@ const MapboxGlComponent = React.createClass({
           return (<MapboxGlLayerComponent
             map={this.map}
             layers={mapLayer.layers}
-            filters={mapLayer.filters}
-            onFeatureClick={this.props.onFeatureClick}
-            onFeatureHover={this.props.onFeatureHover} />)
+            filters={mapLayer.filters} />)
         })}
       {this.props.isReadyToInsertLayers && <MapboxGlComponentCamera
         camera={this.props.camera}

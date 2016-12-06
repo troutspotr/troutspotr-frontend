@@ -11,6 +11,7 @@ export const MAP_CAMERA_SET_BEARING = 'MAP_CAMERA_SET_BEARING'
 export const MAP_CAMERA_SET_ANGLE = 'MAP_CAMERA_SET_ANGLE'
 export const MAP_CAMERA_SET_PIXEL_BUFFER = 'MAP_CAMERA_SET_PIXEL_BUFFER'
 export const MAP_CAMERA_SET_ANIMATION_SPEED = 'MAP_CAMERA_SET_ANIMATION_SPEED'
+export const MAP_CAMERA_SET_CAMERA = 'MAP_CAMERA_SET_CAMERA'
 
 // ------------------------------------
 // Default State
@@ -31,13 +32,15 @@ export const setCameraBearing = createAction(MAP_CAMERA_SET_BEARING)
 export const setCameraAngle = createAction(MAP_CAMERA_SET_ANGLE)
 export const setCameraPixelBuffer = createAction(MAP_CAMERA_SET_PIXEL_BUFFER)
 export const setCameraAnimationSpeed = createAction(MAP_CAMERA_SET_ANIMATION_SPEED)
+export const setCamera = createAction(MAP_CAMERA_SET_CAMERA)
 
 export const mapCameraActions = {
   setCameraBounds,
   setCameraBearing,
   setCameraAngle,
   setCameraPixelBuffer,
-  setCameraAnimationSpeed
+  setCameraAnimationSpeed,
+  setCamera
 }
 
 const MERCATOR_PROJECTION_BOUNDS = {
@@ -82,16 +85,26 @@ const actionHandlers = {
     return { ...state, bounds: cleanedBounds }
   },
 
-  MAP_CAMERA_SET_BEARING: (state, { payload: { bearing } }) => {
-    return { ...state, bearing }
+  MAP_CAMERA_SET_BEARING: (state, { payload }) => {
+    let newState = { ...state }
+    newState.bearing = payload
+    return newState
   },
 
-  MAP_CAMERA_SET_ANGLE: (state, { payload: { angle } }) => {
-    return { ...state, angle: clamp(angle, 0, 360) }
+  MAP_CAMERA_SET_ANGLE: (state, { payload }) => {
+    // return { ...state, angle: clamp(payload, 0, 360) }
+    let newState = { ...state }
+    newState.angle = clamp(payload, 0, 360)
+    return newState
   },
 
   MAP_CAMERA_SET_PIXEL_BUFFER: (state, { payload: { pixelBuffer } }) => {
     return { ...state, pixelBuffer: clamp(pixelBuffer, 0, 500) }
+  },
+
+  MAP_CAMERA_SET_CAMERA: (state, { payload }) => {
+    let newState = { ...state, ...payload }
+    return newState
   },
 
   MAP_CAMERA_SET_ANIMATION_SPEED: (state, { payload: { animationSpeed } }) => {

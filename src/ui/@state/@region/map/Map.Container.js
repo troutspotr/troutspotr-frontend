@@ -2,11 +2,12 @@ import { connect } from 'react-redux'
 import MapComponent from './Map.component'
 import { loadMapModuleAsync } from 'ui/core/MapboxModule.state'
 import { mapboxModuleSelector, isMapboxModuleLoadedSelector } from 'ui/core/MapboxModule.selectors'
-import { setIsMapInitialized, selectMapFeature } from './Map.state.interactivity'
+import { setIsMapInitialized, selectMapFeature, selectFoculPoint } from './Map.state.interactivity'
 import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/core/Core.selectors'
 import { selectedStreamObjectSelector,
   getSpecialRegulationsCurrentSeasonSelector,
-  getSelectedRoadSelector } from 'ui/@state/@region/Region.selectors'
+  getSelectedRoadSelector,
+  troutStreamDictionarySelector } from 'ui/@state/@region/Region.selectors'
 import { withRouter } from 'react-router'
 
 import {
@@ -19,7 +20,8 @@ import {
 const mapDispatchToProps = {
   loadMapModuleAsync: () => loadMapModuleAsync(),
   setIsMapInitialized: isInitialized => setIsMapInitialized(isInitialized),
-  selectMapFeature: (feature, isPoint = false) => selectMapFeature(feature, isPoint)
+  selectMapFeature: (feature) => selectMapFeature(feature),
+  selectFoculPoint: (feature) => selectFoculPoint(feature)
 }
 
 const mapStateToProps = (state) => {
@@ -35,7 +37,8 @@ const mapStateToProps = (state) => {
     selectedRegion: selectedRegionIdSelector(state),
     selectedGeometry: selectedStreamObjectSelector(state),
     specialRegulationsCurrentSeason: getSpecialRegulationsCurrentSeasonSelector(state),
-    selectedRoad: getSelectedRoadSelector(state)
+    selectedRoad: getSelectedRoadSelector(state),
+    streamDictionary: troutStreamDictionarySelector(state)
   }
   return props
 }

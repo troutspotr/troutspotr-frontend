@@ -29,19 +29,37 @@ export const setIsMapInitialized = createAction(MAP_INTERACTIVITY_IS_MAP_INITIAL
   return { isMapInitialized }
 })
 
-export const selectMapFeature = (feature, isPoint) => {
+export const selectMapFeature = (feature) => {
   return (dispatch, getState) => {
-    let selectedState = isPoint ? circle(feature, 0.2, 4)
-    : feature
-
+    let selectedState = feature
     let boundingBox = extent(selectedState)
 
     let newCorners = [
         [boundingBox[0], boundingBox[1]],
         [boundingBox[2], boundingBox[3]]
     ]
-    let selectedBounds = { bounds: newCorners }
-    dispatch(mapCameraActions.setCameraBounds(selectedBounds))
+    let newCamera = { bounds: newCorners, bearing: 0 }
+
+    dispatch(mapCameraActions.setCamera(newCamera))
+    // dispatch(mapCameraActions.setCameraBounds(selectedBounds))
+  }
+}
+
+export const selectFoculPoint = (feature) => {
+  return (dispatch, getState) => {
+    if (feature == null) {
+      console.log('null feature')
+      throw new Error('feature cannot be null')
+    }
+
+    let selectedState = circle(feature, 0.1, 4)
+    let boundingBox = extent(selectedState)
+    let newCorners = [
+        [boundingBox[0], boundingBox[1]],
+        [boundingBox[2], boundingBox[3]]
+    ]
+    let newCamera = { bounds: newCorners, bearing: 60 }
+    dispatch(mapCameraActions.setCamera(newCamera))
   }
 }
 

@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { PropTypes } from 'react'
-import { isEqual } from 'lodash'
+// import { isEqual } from 'lodash'
 
 const MapboxGlComponentCamera = React.createClass({
   propTypes: {
@@ -22,16 +22,17 @@ const MapboxGlComponentCamera = React.createClass({
     }
 
     let mapBounds = this.props.mapbox.LngLatBounds.convert(bounds)
+    this.props.map.easeTo({ bearing: bearing, pitch: angle })
     this.props.map.fitBounds(mapBounds, { speed: animationSpeed,
       padding: pixelBuffer,
       pitch: bearing
     })
   },
 
-  setOrientation ({ bearing, angle }) {
-    this.props.map.setBearing(angle)
-    this.props.map.setPitch(bearing)
-  },
+  // setOrientation ({ bearing, angle }) {
+  //   this.props.map.setBearing(angle)
+  //   this.props.map.setPitch(bearing)
+  // },
 
   componentWillUpdate (nextProps) {
   },
@@ -42,19 +43,7 @@ const MapboxGlComponentCamera = React.createClass({
     let isBoundsChanged = previousCamera.bounds !== camera.bounds
     if (isBoundsChanged) {
       this.setBounds(camera)
-      return true
     }
-
-    let previousOrientation = { bearing: previousCamera.bearing, angle: previousCamera.angle }
-    let currentOrientation = { bearing: camera.bearing, angle: camera.angle }
-
-    let isOrientationChanged = isEqual(previousOrientation, currentOrientation) === false
-    if (isOrientationChanged) {
-      this.setOrientation(camera)
-      return true
-    }
-
-    return false
   },
 
   componentDidUpdate (previousProps) {

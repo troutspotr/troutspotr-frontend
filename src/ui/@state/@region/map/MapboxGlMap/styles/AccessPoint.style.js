@@ -12,7 +12,7 @@ export const AccessPointLabelActiveStyle = {
   'id': STREAM_ACCESS_POINTS_ACTIVE_LAYER_ID,
   'type': 'symbol',
   'source': STREAM_ACCESS_POINTS_SOURCE_ID,
-  'interactive': false,
+  'interactive': true,
   'minzoom': 10,
   'layout': {
     'text-field': '{street_name}',
@@ -67,7 +67,7 @@ export const AccessPointLetterLabelActiveStyle = {
   'id': STREAM_ACCESS_POINTS_LETTER_ACTIVE_LAYER_ID,
   'type': 'symbol',
   'source': STREAM_ACCESS_POINTS_SOURCE_ID,
-  'interactive': false,
+  'interactive': true,
   'minzoom': 10,
   'layout': {
     'text-field': '{alphabetLetter}',

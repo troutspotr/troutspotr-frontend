@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
-import { locationSelector, isRootPageSelector } from 'ui/Location.selectors'
-
+import { locationSelector, isRootPageSelector, getHashSelector } from 'ui/Location.selectors'
+import { isEmpty } from 'lodash'
 export const isEnabledSelector = createSelector(
   [locationSelector, isRootPageSelector],
   (location, isRootPage) => {
@@ -26,17 +26,27 @@ export const isEnabledSelector = createSelector(
   }
 )
 
-export const previousSelector = createSelector([isEnabledSelector, locationSelector], (isEnabled, location) => {
-  if (isEnabled === false) {
-    return null
-  }
+export const previousSelector = createSelector(
+  [isEnabledSelector, locationSelector, getHashSelector],
+  (isEnabled, location, hash) => {
+    if (isEnabled === false) {
+      return null
+    }
 
-  let params = location.pathname.split('/')
-    .filter(x => x.length > 0)
+    let params = location.pathname.split('/')
+      .filter(x => x.length > 0)
 
-  // chop off the last part.
-  params.pop()
+    // chop off the last part.
+    let isStreamSelected = params.length === 3
 
-  let previous = `/${params.join('/')}`
-  return previous
-})
+    let isAccessPointSelected = isStreamSelected && isEmpty(hash) === false
+    if (isAccessPointSelected) {
+      // just remove the hash
+      let routeWithoutHash = `/${params.join('/')}`
+      return routeWithoutHash
+    }
+
+    params.pop()
+    let previous = `/${params.join('/')}`
+    return previous
+  })

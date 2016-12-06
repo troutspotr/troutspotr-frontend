@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import StreamComponent from '../stream/Stream.component'
 import RingWaypointLineComponent from './RingWaypoint.component.line'
-import RingWaypointLabelComponent from './RingWaypoint.component.label'
+// import RingWaypointLabelComponent from './RingWaypoint.component.label'
 
 import streamClasses from './RingWaypoint.stream.scss'
 import waypointClasses from './RingWaypoint.scss'
@@ -61,7 +61,7 @@ const RingWaypointStreamComponent = React.createClass({
     }
 
     let streamData = this.props.stream.properties.streamData
-    let labelText = streamData.stream.properties.name
+    // let labelText = streamData.stream.properties.name
 
     let { projection } = this.props
 
@@ -99,6 +99,6 @@ const RingWaypointStreamComponent = React.createClass({
           normalizedOffset={normalizedOffset}
           marker={marker}
           icon={icon}
-          labelText={labelText} />*/
+          labelText={labelText} /> */
 
 export default RingWaypointStreamComponent

@@ -32,8 +32,8 @@ const MapboxGlComponent = React.createClass({
       attributionControl: true,
       container: this.props.elementId,
       // style: 'mapbox://styles/andest01/ciwfc17nv00582ql7c7tbrk9h', // debug
-      // style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
-      style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
+      style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
+      // style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
       center: [-93.50, 42],
       zoom: 4,
       maxZoom: 18,

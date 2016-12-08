@@ -29,6 +29,7 @@ const SvgMapComponent = React.createClass({
     selectedState: PropTypes.object,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
+    getIsOpen: PropTypes.func.isRequired,
     // location: PropTypes.object.isRequired,
     selectedStreamCentroid: PropTypes.object,
 
@@ -139,14 +140,15 @@ const SvgMapComponent = React.createClass({
     if (isEmpty(streamCentroidsGeoJson)) {
       return null
     }
-
     let paths = streamCentroidsGeoJson.map((centroid, index) => {
+      let isOpen = this.props.getIsOpen(centroid.waterId)
       return (
         <StreamCentroidComponent
           geoJson={centroid}
           key={index}
           isSelected={index % 2 === 0}
           isLoading={index < 400}
+          isOpen={isOpen}
           pathGenerator={this.pathGenerator}
           projection={this.projection} />)
     })
@@ -165,6 +167,7 @@ const SvgMapComponent = React.createClass({
       <StreamCentroidComponent
         geoJson={selectedStreamCentroid}
         isSelected
+        isOpen={this.props.getIsOpen(selectedStreamCentroid.waterId)}
         isLoading={false}
         pathGenerator={this.selectedCentroidPathGenerator}
         projection={this.projection} />)

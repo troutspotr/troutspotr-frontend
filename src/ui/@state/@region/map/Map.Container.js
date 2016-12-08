@@ -7,7 +7,8 @@ import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/core/Core.
 import { selectedStreamObjectSelector,
   getSpecialRegulationsCurrentSeasonSelector,
   getSelectedRoadSelector,
-  troutStreamDictionarySelector } from 'ui/@state/@region/Region.selectors'
+  troutStreamDictionarySelector,
+  isFinishedLoadingRegion } from 'ui/@state/@region/Region.selectors'
 import { withRouter } from 'react-router'
 
 import {
@@ -38,7 +39,8 @@ const mapStateToProps = (state) => {
     selectedGeometry: selectedStreamObjectSelector(state),
     specialRegulationsCurrentSeason: getSpecialRegulationsCurrentSeasonSelector(state),
     selectedRoad: getSelectedRoadSelector(state),
-    streamDictionary: troutStreamDictionarySelector(state)
+    streamDictionary: troutStreamDictionarySelector(state),
+    isRegionFinishedLoading: isFinishedLoadingRegion(state)
   }
   return props
 }

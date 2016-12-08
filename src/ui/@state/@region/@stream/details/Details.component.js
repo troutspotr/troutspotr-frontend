@@ -183,7 +183,10 @@ const DetailsComponent = React.createClass({
   },
 
   renderSummary () {
-    return <SummaryComponent selectedStream={this.props.selectedStream} />
+    return (
+      <div>
+        <SummaryComponent selectedStream={this.props.selectedStream} />
+      </div>)
   },
 
   render () {

@@ -21,7 +21,7 @@ const MinimapComponent = React.createClass({
     selectedState: PropTypes.object,
     selectedRegion: PropTypes.object,
     selectedStreamCentroid: PropTypes.object,
-
+    getIsOpen: PropTypes.func.isRequired,
     expand: PropTypes.func.isRequired,
     fetchTableOfContents: PropTypes.func.isRequired
   },
@@ -205,6 +205,7 @@ const MinimapComponent = React.createClass({
             countiesGeoJson={this.props.countiesGeoJson}
             regionsGeoJson={this.props.regionsGeoJson}
             streamCentroidsGeoJson={streamCentroidsGeoJson}
+            getIsOpen={this.props.getIsOpen}
             selectedRegion={this.props.selectedRegion}
             selectedState={this.props.selectedState}
             selectedStreamCentroid={this.props.selectedStreamCentroid}

@@ -1,9 +1,6 @@
 import React from 'react'
-import markerClasses from 'ui/core/regulations/Restriction.scss'
-// import classes from './StreamDetails.scss'
-// import classes from './MapOverlay.scss'
+import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 import PublicBridgesComponent from 'ui/core/streamDetails/PublicBridges.component'
-// import { round } from 'lodash'
 const Region = React.createClass({
   propTypes: {
     selectedStream: React.PropTypes.object.isRequired
@@ -16,8 +13,13 @@ const Region = React.createClass({
       .length
 
     return (
-      <PublicBridgesComponent
-        number={number} />)
+      <div>
+        <RegulationsSummaryContainer
+          streamObject={selectedStream} />
+        <br />
+        <PublicBridgesComponent
+          number={number} />
+      </div>)
   },
 
   componentDidMount () {

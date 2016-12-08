@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { searchTextSelector, selectedStreamIdSelector } from 'ui/core/Core.selectors'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-import { isEmpty, every, keyBy, has } from 'lodash'
+import { isEmpty, every, keyBy, has, reduce } from 'lodash'
 export const regionIndexSelector = state => state.state.regionIndex
 export const regulationsSelector = state => state.state.regulations
 export const roadTypesSelector = state => state.state.roadTypes
@@ -10,7 +10,42 @@ export const streamCentroidsSelector = state => state.state.streamCentroids
 export const stateDataLoadingStatusSelector = state => state.state.stateDataLoadingStatus
 export const slugDictionarySelector = state => state.state.slugDictionary
 export const streamIdDictionarySelector = state => state.state.streamIdDictionary
-export const waterOpenersDictionarySelector = state => state.state.waterOpeners
+export const waterOpenersDictionaryStateSelector = state => state.state.waterOpeners
+/* eslint-disable camelcase */
+export const waterOpenersDictionarySelector = createSelector(
+  [waterOpenersDictionaryStateSelector],
+  (waterDictionary) => {
+    let now = new Date()
+
+    let watersLookup = reduce(waterDictionary, (dictionary, water, index) => {
+      let key = water.id
+      let openSeasons = water.openers.filter(opener => {
+        let { end_time, start_time } = opener
+        let isWithinBounds = now < end_time && now >= start_time
+        return isWithinBounds
+      })
+
+      let isOpenSeason = openSeasons.length >= 1
+
+      let newObject = { ...water, isOpenSeason, openSeasons }
+      dictionary[key] = newObject
+      return dictionary
+      // dictionary['id']
+    }, {})
+
+    return watersLookup
+  })
+
+const EMPTY_FUNCTION = () => { return null }
+export const getWatersObjectSelector = createSelector(
+  [waterOpenersDictionarySelector],
+  (waterDictionary) => {
+    if (waterDictionary == null) {
+      return EMPTY_FUNCTION
+    }
+
+    return (waterId) => { return waterDictionary[waterId] }
+  })
 
 const emptyCentroids = []
 export const displayedCentroids = createSelector(

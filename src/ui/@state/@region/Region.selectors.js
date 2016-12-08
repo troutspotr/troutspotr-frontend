@@ -19,23 +19,32 @@ export const palsSelector = state => state.region.pals
 export const hoveredStreamSelector = state => state.region.hoveredStream
 export const hoveredRoadSelector = state => state.region.hoveredRoad
 
+export const isFinishedLoadingRegion = createSelector(
+  [regionLoadingStatusSelector],
+  (regionLoadingStatus) => {
+    if (regionLoadingStatus !== LOADING_CONSTANTS.IS_SUCCESS) {
+      return false
+    }
+
+    return true
+  })
 const EMPTY_STREAMS = []
 export const visibleTroutStreams = createSelector(
   [
     displayedCentroidDictionarySelector,
     troutStreamDictionarySelector,
-    regionLoadingStatusSelector,
+    isFinishedLoadingRegion,
     waterOpenersDictionarySelector,
     regulationsSelector
   ],
   (
     displayedDictionary,
     troutStreamDictionary,
-    loadingStatus,
+    isRegionLoaded,
     waterOpenersDictionary,
     regulationsDictionary
   ) => {
-    if (loadingStatus !== LOADING_CONSTANTS.IS_SUCCESS) {
+    if (isRegionLoaded === false) {
       return EMPTY_STREAMS
     }
 
@@ -262,10 +271,3 @@ export const getCountyListSelector = createSelector(
 
     return filteredCountyObjects
   })
-
-// export const selectedRoadSelector = createSelector(
-//   [getHashSelector, selectedStreamObjectSelector],
-//   (hash, selectedStreamObjectSelector) => {
-
-//   })
-// export const selectedRoadSelector = state => state.region.selectedRoad

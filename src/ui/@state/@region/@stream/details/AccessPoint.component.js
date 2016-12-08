@@ -19,7 +19,7 @@ const AccessPointComponent = React.createClass({
     defaultClass: PropTypes.string.isRequired,
     isSelected: PropTypes.bool.isRequired,
     isHovered: PropTypes.bool.isRequired,
-    location: PropTypes.object.isRequired,
+    location: PropTypes.object,
 
     onHover: PropTypes.func.isRequired
     // onSelect: PropTypes.func.isRequired
@@ -37,6 +37,11 @@ const AccessPointComponent = React.createClass({
 
   onClick (e) {
     e.preventDefault()
+    // other folks use this component and don't need
+    // so much fancy stuff.
+    if (location == null) {
+      return
+    }
     let hash = `#${this.props.accessPoint.properties.slug}`
     location.href = hash
     // return false

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import classes from './Details.scss'
 import RestrictionComponent from 'ui/core/regulations/Restriction.component'
+import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 // import { Link } from 'react-router'
 /* eslint-disable camelcase */
 
@@ -56,6 +57,8 @@ const SummaryComponent = React.createClass({
 
     return (<div>
       <div className={classes.title}>Summary</div>
+      <RegulationsSummaryContainer streamObject={this.props.selectedStream} />
+      <br />
       {viewModels.map((viewModel, index) => {
         return (<div key={index} >
           {this.renderSummary(viewModel)}

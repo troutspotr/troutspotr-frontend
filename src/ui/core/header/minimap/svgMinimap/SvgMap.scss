@@ -32,8 +32,15 @@
 
 .centroids {
   composes: polygon;
-  fill: transparentize($blue, 0.3);
   pointer-events: none;
+
+  .closed {
+    fill: transparentize($blueGray, 0.3);
+  }
+
+  .open {
+    fill: transparentize($blue, 0.3);
+  }
 }
 
 .selectedStreamCentroid {

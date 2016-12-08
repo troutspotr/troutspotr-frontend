@@ -29,7 +29,8 @@ const MapComponent = React.createClass({
     selectFoculPoint: PropTypes.func.isRequired,
     specialRegulationsCurrentSeason: PropTypes.array.isRequired,
     selectedRoad: PropTypes.object,
-    streamDictionary: PropTypes.object.isRequired
+    streamDictionary: PropTypes.object.isRequired,
+    isRegionFinishedLoading: PropTypes.bool.isRequired
   },
 
   componentDidMount () {
@@ -173,6 +174,10 @@ const MapComponent = React.createClass({
 
   renderLoading () {
     if (this.props.isVisible === false) {
+      return null
+    }
+
+    if (this.props.isRegionFinishedLoading === false) {
       return null
     }
 

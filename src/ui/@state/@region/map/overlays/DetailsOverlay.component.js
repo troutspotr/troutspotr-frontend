@@ -13,7 +13,8 @@ const DetailsOverlayComponent = React.createClass({
     selectedState: React.PropTypes.string.isRequired,
     selectedRegion: React.PropTypes.string.isRequired,
     selectedAccessPoint: PropTypes.object,
-    streamDictionary: PropTypes.object
+    streamDictionary: PropTypes.object,
+    selectedStream: PropTypes.object
   },
 
   componentDidMount () {
@@ -54,9 +55,6 @@ const DetailsOverlayComponent = React.createClass({
   },
 
   render () {
-    let { selectedStream, selectedAccessPoint } = this.props
-    let isRegionViewOverride = isEmpty(selectedStream) && isEmpty(selectedAccessPoint)
-
     return (
       <MessageOverlay position='top'>
         <div className={classes.container}>

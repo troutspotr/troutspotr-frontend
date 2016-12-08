@@ -39,15 +39,15 @@
   color: $off-white;
 }
 
-.openEmphasis {
-  composes: open;
-  color: $blue;
-}
+// .openEmphasis {
+//   composes: open;
+//   color: $blue;
+// }
 
-.openCaution {
-  composes: open;
-  color: $yellow;
-}
+// .openCaution {
+//   composes: open;
+//   color: $yellow;
+// }
 
 .emphasis {
   composes: zeldaText;

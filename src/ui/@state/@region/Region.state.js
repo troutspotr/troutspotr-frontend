@@ -3,7 +3,8 @@ import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import RegionApi from 'api/RegionApi'
 import { isEmpty } from 'lodash'
 import { selectedRegionSelector } from 'ui/core/Core.selectors'
-import { selectMapFeature } from 'ui/@state/@region/map/Map.state.interactivity'
+import { selectedStreamObjectSelector, getSelectedRoadSelector } from './Region.selectors'
+import { selectMapFeature, selectFoculPoint } from 'ui/@state/@region/map/Map.state.interactivity'
 
 // ------------------------------------
 // Constants
@@ -49,11 +50,28 @@ export const fetchRegionData = (stateName, regionName) => {
       let [regionData] = await Promise.all([gettingRegion])
       dispatch(setRegionData(regionData))
       // get selectedRegion and fly to coordinates
-      let selectedRegion = selectedRegionSelector(getState())
+      let state = getState()
+      let selectedRegion = selectedRegionSelector(state)
       if (selectedRegion == null || isEmpty(selectedRegion)) {
         return
       }
 
+      // determine where to go. this might not be the best place to determine this.
+      let selectedStream = selectedStreamObjectSelector(state)
+      let selectedRoad = getSelectedRoadSelector(state)
+      let isStreamSelected = isEmpty(selectedStream) === false && isEmpty(selectedRoad)
+      let isRoadSelected = isEmpty(selectedStream) === false && isEmpty(selectedRoad) === false
+
+      if (isStreamSelected) {
+        setTimeout(() => dispatch(selectMapFeature(selectedStream.stream)), 300)
+        return
+      } else if (isRoadSelected) {
+        setTimeout(() => dispatch(selectFoculPoint(selectedRoad)), 300)
+        return
+      }
+
+      // give the JS engine just a second to catch its breath before
+      // navigating. it gives a better appearance to the user.
       setTimeout(() => dispatch(selectMapFeature(selectedRegion)), 300)
     } catch (error) {
       console.log(error)

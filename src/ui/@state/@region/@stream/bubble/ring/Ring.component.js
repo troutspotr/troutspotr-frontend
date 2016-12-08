@@ -29,7 +29,7 @@ const RingComponent = React.createClass({
   },
 
   componentWillUnmount () {
-    console.log('unmounting')
+    // console.log('unmounting')
   },
 
   shouldComponentUpdate (nextProps) {

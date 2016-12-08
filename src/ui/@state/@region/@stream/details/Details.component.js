@@ -128,9 +128,9 @@ const DetailsComponent = React.createClass({
     })
 
     return (<div>
-      {this.createBridgeListSummaryElement('With access to publicly fishable land', publicTroutStreamBridgeElements)}
-      {this.createBridgeListSummaryElement('Access requires Landowner permission', troutStreamBridgeElements)}
-      {this.createBridgeListSummaryElement('Unsafe to park', unsafeTroutStreamBridgeElements)}
+      {this.createBridgeListSummaryElement('With access to publicly fishable land:', publicTroutStreamBridgeElements)}
+      {this.createBridgeListSummaryElement('Access requires Landowner permission:', troutStreamBridgeElements)}
+      {this.createBridgeListSummaryElement('Unsafe to park:', unsafeTroutStreamBridgeElements)}
     </div>)
   },
 

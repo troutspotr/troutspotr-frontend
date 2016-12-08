@@ -40,7 +40,7 @@ export const fetchTableOfContents = () => {
     try {
       let gettingTableOfContents = TableOfContentsApi.getTableOfContents()
       let [tableOfContents] = await Promise.all([gettingTableOfContents])
-      console.log(tableOfContents)
+      // console.log(tableOfContents)
       dispatch(setTableOfContents(tableOfContents))
     } catch (error) {
       console.log(error)
@@ -97,7 +97,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  view: LIST,
+  view: MAP,
   isMapModuleLoaded: false,
   isMapReadyToDisplay: false,
   searchText: '',

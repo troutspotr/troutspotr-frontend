@@ -1,6 +1,6 @@
 import * as colors from 'ui/core/Colors'
-import { STREAM_ACCESS_POINTS_ACTIVE_LAYER_ID,
-  STREAM_ACCESS_POINTS_QUITE_LAYER_ID,
+import { STREAM_ACCESS_POINTS_ACTIVE_LABEL_LAYER_ID,
+  STREAM_ACCESS_POINTS_QUITE_LABEL_LAYER_ID,
   STREAM_ACCESS_POINTS_MARKER_BORDER_ACTIVE_LAYER_ID,
   STREAM_ACCESS_POINTS_MARKER_BORDER_QUITE_LAYER_ID,
   STREAM_ACCESS_POINTS_MARKER_CENTER_ACTIVE_LAYER_ID,
@@ -9,7 +9,7 @@ import { STREAM_ACCESS_POINTS_ACTIVE_LAYER_ID,
   STREAM_ACCESS_POINTS_LETTER_QUITE_LAYER_ID } from '../filters/Filters.selectors'
 import { STREAM_ACCESS_POINTS_SOURCE_ID } from '../sources/Source.selectors'
 export const AccessPointLabelActiveStyle = {
-  'id': STREAM_ACCESS_POINTS_ACTIVE_LAYER_ID,
+  'id': STREAM_ACCESS_POINTS_ACTIVE_LABEL_LAYER_ID,
   'type': 'symbol',
   'source': STREAM_ACCESS_POINTS_SOURCE_ID,
   'interactive': true,
@@ -30,23 +30,35 @@ export const AccessPointLabelActiveStyle = {
     ]
   },
   'paint': {
-    'text-color': colors.PalGreen,
+    'text-color': colors.White,
+
+    // Mapbox GL does not yet support data driven text color.
+    // Not yet... soon!
+    // 'text-color': {
+    //   property: 'bridgeType',
+    //   type: 'categorical',
+    //   stops: [
+    //     ['permissionRequired', colors.StreamBlue],
+    //     ['123', colors.PalGreen],
+    //     ['unsafe', colors.MoodyGray],
+    //     ['uninteresting', 'red']
+    //   ]
+    // },
     'text-halo-blur': 0,
     'text-halo-color': colors.MoodyGray,
-    'text-halo-width': 3
+    'text-halo-width': 1.5
   }
 }
 
 export const AccessPointLabelQuietStyle = {
-  'id': STREAM_ACCESS_POINTS_QUITE_LAYER_ID,
+  'id': STREAM_ACCESS_POINTS_QUITE_LABEL_LAYER_ID,
   'type': 'symbol',
   'source': STREAM_ACCESS_POINTS_SOURCE_ID,
   'interactive': false,
   'minzoom': 12,
   'layout': {
+    'visibility': 'none',
     'text-field': '{street_name}',
-    // 'text-allow-overlap': true,
-    // 'text-ignore-placement': true,
     'text-anchor': 'left',
     'text-size': 12,
     'text-offset': [
@@ -59,7 +71,8 @@ export const AccessPointLabelQuietStyle = {
     ]
   },
   'paint': {
-    'text-color': colors.MoodyGray
+
+    'text-color': colors.Red
   }
 }
 
@@ -90,7 +103,7 @@ export const AccessPointLabelLetterQuietStyle = {
   'type': 'symbol',
   'source': STREAM_ACCESS_POINTS_SOURCE_ID,
   'interactive': false,
-  'minzoom': 12,
+  'minzoom': 10,
   'layout': {
     'text-field': '{alphabetLetter}',
     // 'text-allow-overlap': true,
@@ -106,7 +119,7 @@ export const AccessPointLabelLetterQuietStyle = {
     'text-color': colors.MoodyGray,
     'text-halo-blur': 0,
     // 'text-halo-color': colors.MoodyGray,
-    'text-halo-width': 3
+    'text-halo-width': 1.5
   }
 }
 
@@ -197,7 +210,17 @@ export const AccessPointMarkerCenterActiveStyle =
     'type': 'circle',
     'interactive': false,
     'paint': {
-      'circle-color': colors.PalGreen,
+      // 'circle-color': colors.PalGreen,
+      'circle-color': {
+        property: 'bridgeType',
+        type: 'categorical',
+        stops: [
+          ['publicTrout', colors.PalGreen],
+          ['permissionRequired', colors.StreamBlue],
+          ['unsafe', colors.MoodyGray],
+          ['uninteresting', 'red']
+        ]
+      },
       'circle-opacity': 1,
       'circle-blur': 0,
       'circle-radius': {

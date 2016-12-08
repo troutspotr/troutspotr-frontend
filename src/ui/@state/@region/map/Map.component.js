@@ -4,9 +4,10 @@ import MapboxGlContainer from './MapboxGlMap/MapboxGl.container'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import LoadingComponent from 'ui/core/loading/Loading.component'
 import { browserHistory } from 'react-router'
-import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
-import RestrictionComponent from 'ui/core/regulations/Restriction.component'
-import PublicBridgesComponent from 'ui/core/streamDetails/PublicBridges.component'
+// import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
+// import RestrictionComponent from 'ui/core/regulations/Restriction.component'
+import RegulationsOverlayContainer from './overlays/RegulationsOverlay.container'
+import DetailsOverlay from './overlays/DetailsOverlay.container'
 import { isEmpty, find, has } from 'lodash'
 const MAP_ID = 'primary_map_id'
 const MapComponent = React.createClass({
@@ -44,47 +45,82 @@ const MapComponent = React.createClass({
     }
   },
 
-  renderSpecialRegulationsOverlay () {
-    let { selectedGeometry, specialRegulationsCurrentSeason } = this.props
-    if (isEmpty(selectedGeometry) || specialRegulationsCurrentSeason.length === 0) {
-      return null
-    }
-    let specialRegulationsElement = (<div>
-      <div className={classes.specialRegulationsTitle}>Special Regulations</div>
-      {
-        specialRegulationsCurrentSeason.map((reg, index) => {
-          return (<RestrictionComponent
-            key={index}
-            color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
-            pattern={reg.isFishSanctuary ? 'solid' : 'stipple'}
-            text={reg.legalText}
-            length={reg.roundedLength + ' mi'} />)
-        })
-      }
-    </div>)
-
-    return (
-      <MessageOverlay position='bottom'>
-        {specialRegulationsElement}
-      </MessageOverlay>)
+  renderDetailsOverlay () {
+    return <DetailsOverlay />
   },
 
-  renderStreamDetailsOverlay () {
-    let { selectedGeometry } = this.props
-    if (isEmpty(selectedGeometry)) {
-      return null
-    }
-
-    let number = selectedGeometry.accessPoints
-      .filter(x => x.properties.is_over_trout_stream && x.properties.is_over_publicly_accessible_land)
-      .length
-
-    return (
-      <MessageOverlay position='top'>
-        <PublicBridgesComponent
-          number={number} />
-      </MessageOverlay>)
+  renderRegulationsOverlay () {
+    return <RegulationsOverlayContainer />
   },
+
+  // renderRegionViewLegendOverlay () {
+  //   let { selectedGeometry, selectedRoad } = this.props
+  //   let isRegionView = isEmpty(selectedGeometry) && isEmpty(selectedRoad)
+  //   if (isRegionView === false) {
+  //     return null
+  //   }
+
+  //   return (
+  //     <MessageOverlay position='top'>
+  //       <div>region view</div>
+  //     </MessageOverlay>)
+  // },
+
+  // renderAccessPointOverlay () {
+  //   let { selectedGeometry, selectedRoad } = this.props
+  //   let isAccessPointView = isEmpty(selectedGeometry) === false && isEmpty(selectedRoad) === false
+  //   if (isAccessPointView === false) {
+  //     return null
+  //   }
+
+  //   return (
+  //     <MessageOverlay position='top'>
+  //       <div>access point view</div>
+  //     </MessageOverlay>)
+  // },
+
+  // renderStreamDetailsOverlay () {
+  //   let { selectedGeometry, selectedRoad } = this.props
+  //   let isStreamDetailsView = isEmpty(selectedGeometry) === false && isEmpty(selectedRoad)
+  //   if (isStreamDetailsView === false) {
+  //     return null
+  //   }
+
+  //   let number = selectedGeometry.accessPoints
+  //     .filter(x => x.properties.is_over_trout_stream && x.properties.is_over_publicly_accessible_land)
+  //     .length
+
+  //   return (
+  //     <MessageOverlay position='top'>
+  //       <PublicBridgesComponent
+  //         number={number} />
+  //     </MessageOverlay>)
+  // },
+
+  // renderSpecialRegulationsOverlay () {
+  //   let { selectedGeometry, specialRegulationsCurrentSeason } = this.props
+  //   if (isEmpty(selectedGeometry) || specialRegulationsCurrentSeason.length === 0) {
+  //     return null
+  //   }
+  //   let specialRegulationsElement = (<div>
+  //     <div className={classes.specialRegulationsTitle}>Special Regulations</div>
+  //     {
+  //       specialRegulationsCurrentSeason.map((reg, index) => {
+  //         return (<RestrictionComponent
+  //           key={index}
+  //           color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
+  //           pattern={reg.isFishSanctuary ? 'solid' : 'stipple'}
+  //           text={reg.legalText}
+  //           length={reg.roundedLength + ' mi'} />)
+  //       })
+  //     }
+  //   </div>)
+
+  //   return (
+  //     <MessageOverlay position='bottom'>
+  //       {specialRegulationsElement}
+  //     </MessageOverlay>)
+  // },
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.selectedGeometry !== this.props.selectedGeometry) {
@@ -130,8 +166,8 @@ const MapComponent = React.createClass({
         elementId={MAP_ID}
         isVisible={this.props.isVisible}
         selectedGeometry={this.props.selectedGeometry} />
-      {this.renderSpecialRegulationsOverlay()}
-      {this.renderStreamDetailsOverlay()}
+      {this.renderDetailsOverlay()}
+      {this.renderRegulationsOverlay()}
     </div>)
   },
 

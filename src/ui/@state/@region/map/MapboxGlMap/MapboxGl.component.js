@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import MapboxGlComponentCamera from './MapboxGl.component.camera'
 import classes from '../Map.scss'
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
-import { isEmpty, debounce, flatten } from 'lodash'
+import { isEmpty, debounce, flatten, clamp } from 'lodash'
 const MapboxGlComponent = React.createClass({
   propTypes: {
     mapbox: PropTypes.object.isRequired,
@@ -31,13 +31,14 @@ const MapboxGlComponent = React.createClass({
     this.map = new this.props.mapbox.Map({
       attributionControl: true,
       container: this.props.elementId,
-      style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
-      // style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
+      // style: 'mapbox://styles/andest01/ciwfc17nv00582ql7c7tbrk9h', // debug
+      // style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
+      style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
       center: [-93.50, 42],
       zoom: 4,
       maxZoom: 18,
       boxZoom: false,
-      dragRotate: false,
+      dragRotate: true,
       keyboard: false
     })
 
@@ -127,14 +128,20 @@ const MapboxGlComponent = React.createClass({
     let shouldBounceOutALittle = isUserLookingAtMap && isUserHitBackButton
     if (userChangedRegions === false && shouldBounceOutALittle) {
       let currentZoom = this.map.getZoom()
-      let zoomOutBoost = currentZoom > 16 ? -2.5 : -0.2
-      let newZoom = (currentZoom * 0.9) + zoomOutBoost
-      console.log('zoom', currentZoom, newZoom)
-      this.map.easeTo({ bearing: 0, pitch: 0, zoom: newZoom })
-      // if (currentZoom > 9) {
-      //   this.map.zoomTo(currentZoom * 0.9)
-      // }
+      let clampedZoom = Math.max(Math.min(currentZoom, 17), 12)
+      let boostMultiplier = (clampedZoom - 11.5) / 4
+      console.log(boostMultiplier)
+      let newZoom = this.getZoomBackbounce(currentZoom)
+      setTimeout(() => this.map.easeTo({ bearing: 0, pitch: 0, zoom: newZoom }), 30)
     }
+  },
+
+  getZoomBackbounce (currentZoom, minZoom = 10, maxZoom = 15, boostMultiplier = 3.5) {
+    let clampedZoom = clamp(currentZoom, minZoom, maxZoom)
+    let normalizedBoost = (clampedZoom - minZoom) / (maxZoom - minZoom)
+    let boostBack = (normalizedBoost * boostMultiplier) + 0.2
+    console.log(currentZoom, boostBack)
+    return currentZoom - boostBack
   },
 
   zoomOutALittle () {
@@ -162,7 +169,7 @@ const MapboxGlComponent = React.createClass({
   },
 
   onMapLoad (e) {
-    console.log('map fully loaded', e)
+    // console.log('map fully loaded', e)
   },
 
   onDataLoad (e) {
@@ -185,9 +192,10 @@ const MapboxGlComponent = React.createClass({
     // return null
     return (<div id={this.props.elementId} className={classes.map}>
       {this.props.isReadyToInsertLayers &&
-        this.props.layerPackage.map(mapLayer => {
+        this.props.layerPackage.map((mapLayer, index) => {
           return (<MapboxGlLayerComponent
             map={this.map}
+            key={index}
             layers={mapLayer.layers}
             filters={mapLayer.filters} />)
         })}

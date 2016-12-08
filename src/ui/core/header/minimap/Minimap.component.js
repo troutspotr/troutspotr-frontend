@@ -27,7 +27,6 @@ const MinimapComponent = React.createClass({
   },
 
   componentWillMount () {
-    console.log('fetch!')
     this.props.fetchTableOfContents()
     if (window) {
       this.debouncedResizeEvent = debounce(this.resizeEvent, 200)

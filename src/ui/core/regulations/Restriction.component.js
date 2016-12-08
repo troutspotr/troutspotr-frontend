@@ -20,7 +20,6 @@ const RestrictionComponent = React.createClass({
     let hollowClass = hollow ? classes.hollow : ''
     let heightMultiplier = this.props.heightMultiplier == null ? 0 : this.props.heightMultiplier
     let heightOverride = heightMultiplier > 0 ? { height: heightMultiplier + 'em' } : {}
-    console.log(heightOverride)
     return (
       <div className={classes.container}>
         <span style={heightOverride} className={patternClass + ' ' + colorClass + ' ' + hollowClass} />

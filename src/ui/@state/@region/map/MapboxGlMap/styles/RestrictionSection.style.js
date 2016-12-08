@@ -6,7 +6,6 @@ export const RestrictionSectionActiveStyle = {
   'id': RESTRICTION_SECTIONS_ACTIVE_LAYER_ID,
   'type': 'line',
   'source': RESTRICTION_SECTIONS_SOURCE_ID,
-  'source-layer': 'restrictionSection-19bqjx',
   'interactive': false,
   'layout': {
     'visibility': 'visible',
@@ -105,7 +104,6 @@ export const RestrictionSectionQuietStyle = {
   'id': RESTRICTION_SECTIONS_QUITE_LAYER_ID,
   'type': 'line',
   'source': RESTRICTION_SECTIONS_SOURCE_ID,
-  'source-layer': 'restrictionSection-19bqjx',
   'interactive': false,
   'layout': {
     'visibility': 'visible',

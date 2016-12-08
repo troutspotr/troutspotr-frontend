@@ -38,7 +38,15 @@
 
 .selected {
   composes: item;
-  border-bottom: 5px solid $blue;
-  color: $blue;
+  color: $off-white;
   font-weight: bold;
+}
+
+.underlight {
+  height: 5px;
+  background-color: $off-white;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

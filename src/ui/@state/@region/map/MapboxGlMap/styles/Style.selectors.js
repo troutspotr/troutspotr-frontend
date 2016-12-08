@@ -65,7 +65,6 @@ export const accessPointsLayerSelector = createSelector(
     let labelletterQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointLabelLetterQuietStyle, UNDER_LABEL_PLACEHOLDER)
 
     return [
-
       borderActiveLayer,
       borderQuietLayer,
       centerActiveLayer,
@@ -117,6 +116,7 @@ export const layersSelector = createSelector(
       troutSectionsLayers,
       restrictionSectionsLayers,
       palSectionsLayers,
-      accessPointsLayers)
+      accessPointsLayers
+    )
     return layers
   })

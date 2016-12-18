@@ -26,9 +26,11 @@ const FooterComponent = React.createClass({
     let { view, selectedStream } = this.props
     let listText = isEmpty(selectedStream) ? 'List' : 'Details'
     return (<div className={classes.footer}>
-      <button onClick={this.props.setViewToList} className={view === LIST ? classes.selected : classes.item}>{listText}</button>
-      <button onClick={this.props.setViewToMap} className={view === MAP ? classes.selected : classes.item}>Map</button>
-      <Link to={'/'} className={classes.help}>Help</Link>
+      <div className={classes.menu}>
+        <button onClick={this.props.setViewToList} className={view === LIST ? classes.selected : classes.item}>{listText}</button>
+        <button onClick={this.props.setViewToMap} className={view === MAP ? classes.selected : classes.item}>Map</button>
+        <Link to={'/'} className={classes.help}>Help</Link>
+      </div>
     </div>)
   }
 })

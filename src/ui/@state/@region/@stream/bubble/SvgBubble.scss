@@ -96,6 +96,8 @@ $tributary_pal_width: $tributary_width * 7;
     max-width: 100%;
     display: block;
     margin: auto;
+    will-change: transform;
+    transform: translateZ(0);
   }
 }
 

@@ -3,12 +3,17 @@
 
 .footer {
   // background-color: transparentize($blue, 0.8);
-  display: flex;
-  justify-content: space-between;
+
   padding-left: $default-margin;
   padding-right: $default-margin;
   border-top: 1px solid transparentize($off-white, 0.7);
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
   touch-action: manipulation;
+  max-width: 400px;
 }
 
 .item {
@@ -38,7 +43,7 @@
 
 .selected {
   composes: item;
-  color: $off-white;
+  color: $blue;
   font-weight: bold;
 }
 

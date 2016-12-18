@@ -1,7 +1,7 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 
-$heafty-bottom-margin: 50vh;
+$hefty-bottom-margin: 50vh;
 
 .listViewContainer {
   overflow: auto;
@@ -12,7 +12,7 @@ $heafty-bottom-margin: 50vh;
   right: 0;
   overflow-y: auto;
 
-  // padding-bottom: $heafty-bottom-margin;
+  // padding-bottom: $hefty-bottom-margin;
 
   // padding-top: $default-margin;
 
@@ -20,17 +20,17 @@ $heafty-bottom-margin: 50vh;
   -webkit-overflow-scrolling: touch;
 
   .list {
-    padding: $default-margin $default-margin $heafty-bottom-margin 10px;
+    padding: $default-margin $default-margin $hefty-bottom-margin 10px;
   }
 }
 
 .godAwfulPlaceholder {
-  height: $heafty-bottom-margin;
+  height: $hefty-bottom-margin;
 }
 
 .invisible {
   composes: listViewContainer;
-  visibility: hidden;
+  display: none;
 }
 
 .listHeaderContainer {

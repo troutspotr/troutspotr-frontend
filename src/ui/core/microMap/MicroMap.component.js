@@ -105,8 +105,8 @@ const SneezeGuardComponent = React.createClass({
     // draw a big rectangle to clear our canvas.
     this.canvasContext.fillStyle = colors.MoodyGray
     this.canvasContext.save()
-
-    this.fireRenderToCanvas(this.props.streamObject, true)
+    let offset = (Math.random() * 5) + 20
+    setTimeout(() => this.fireRenderToCanvas(this.props.streamObject, true), offset)
   },
 
   fireRenderToCanvas (streamObject, delay = true) {

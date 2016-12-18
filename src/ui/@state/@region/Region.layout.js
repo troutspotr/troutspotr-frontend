@@ -19,6 +19,7 @@ const RegionLayout = React.createClass({
     regionLoadingStatus: PropTypes.string.isRequired,
     troutStreams: PropTypes.array,
     // searchText: PropTypes.string.isRequired,
+    selectedStream: PropTypes.object,
     clearText: PropTypes.func.isRequired,
     streams: PropTypes.object,
     showNoResultsFoundOverlay: PropTypes.bool.isRequired
@@ -75,8 +76,8 @@ const RegionLayout = React.createClass({
   },
 
   renderList () {
-    let { view } = this.props
-    let isVisible = view === LIST
+    let { view, selectedStream } = this.props
+    let isVisible = view === LIST && isEmpty(selectedStream)
     return <CountyListContainer
       isVisible={isVisible} />
   },

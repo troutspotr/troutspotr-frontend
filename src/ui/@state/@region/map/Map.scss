@@ -20,7 +20,7 @@
 
 .invisible {
   composes: mapContainer;
-  visibility: hidden;
+  display: none;
 }
 
 .specialRegulationsTitle {

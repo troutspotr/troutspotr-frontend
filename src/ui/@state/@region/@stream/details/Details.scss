@@ -23,25 +23,49 @@
   font-size: 1.0em;
 }
 
-@media (orientation: portrait) and (max-width: 330px) {
-  .list {
-    columns: 1 2em;
-    column-gap: 1em;
-    font-size: 1.0em;
-  }
-}
-
-@media (orientation: landscape) and (max-width: 754px) {
-  .list {
-    columns: 1 2em;
-    column-gap: 1em;
-    font-size: 1.0em;
-  }
-}
-
-@media (orientation: portrait) and (min-width: 590px) {
+@media (orientation: portrait) and (min-width: 801px) {
   .list {
     columns: 3 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 800px) {
+  .list {
+    columns: 2 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 450px) {
+  .list {
+    columns: 1 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 1300px) {
+  .list {
+    columns: 3 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 855px) {
+  .list {
+    columns: 2 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 854px) {
+  .list {
+    columns: 1 2em;
     column-gap: 1em;
     font-size: 1.0em;
   }

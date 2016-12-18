@@ -5,7 +5,7 @@ import * as d3Geo from 'd3-geo'
 // import * as d3Path from 'd3-path'
 import { getProjectionFromFeature } from 'ui/core/header/minimap/svgMinimap/SvgMap.component'
 
-// calling getBoundingClientRect in WebKit is 
+// calling getBoundingClientRect in WebKit is
 // excruciatingly slow. CACHE IT FOR PERFORMANCE!
 let boundingRectangleCache = null
 const TAU = Math.PI * 2

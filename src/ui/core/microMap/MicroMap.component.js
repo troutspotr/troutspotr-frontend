@@ -4,6 +4,10 @@ import * as colors from 'ui/core/Colors'
 import * as d3Geo from 'd3-geo'
 // import * as d3Path from 'd3-path'
 import { getProjectionFromFeature } from 'ui/core/header/minimap/svgMinimap/SvgMap.component'
+
+// calling getBoundingClientRect in WebKit is 
+// excruciatingly slow. CACHE IT FOR PERFORMANCE!
+let boundingRectangleCache = null
 const TAU = Math.PI * 2
 const LINE_WIDTH = 0.5
 const STREAM_WIDTH = LINE_WIDTH
@@ -83,8 +87,10 @@ const SneezeGuardComponent = React.createClass({
     if (this.canvasElement == null) {
       return
     }
-
-    let { height, width } = this.canvasElement.getBoundingClientRect()
+    if (boundingRectangleCache == null) {
+      boundingRectangleCache = this.canvasElement.getBoundingClientRect()
+    }
+    let { height, width } = boundingRectangleCache
     this.width = width
     this.height = height
     this.canvasContext = this.setUpCanvas(this.width, this.height)
@@ -109,8 +115,7 @@ const SneezeGuardComponent = React.createClass({
       return
     }
 
-    let offset = Math.floor(Math.random() * 5) + 5
-    setTimeout(() => this.renderCanvas(streamObject), offset)
+    this.renderCanvas(streamObject)
   },
 
   renderStream (path, context, geoJson, color = 'red', thickness = 1) {

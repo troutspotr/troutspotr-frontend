@@ -176,17 +176,19 @@ export const decompress = (topojsonObject, stateData) => {
   // MANUALLY turn this into a geojson point feature collection.
   updateRoadCrossingProperties(topojsonObject.objects.accessPoint.geometries, stateData.roadTypesDictionary)
   dictionary.stream_access_point = {
-    features: topojsonObject.objects.accessPoint.geometries.map((x, index) => {
-      return {
-        geometry: {
-          type: 'Point',
-          coordinates: x.coordinates
-        },
-        id: x.id,
-        properties: x.properties,
-        type: 'Feature'
-      }
-    }),
+    features: topojsonObject.objects.accessPoint.geometries
+      .filter(x => x.properties.bridgeType !== crossingTypes.uninteresting)
+      .map((x, index) => {
+        return {
+          geometry: {
+            type: 'Point',
+            coordinates: x.coordinates
+          },
+          id: x.id,
+          properties: x.properties,
+          type: 'Feature'
+        }
+      }),
     type: 'FeatureCollection'
   }
 

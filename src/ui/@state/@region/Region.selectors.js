@@ -7,6 +7,7 @@ import { displayedCentroidDictionarySelector,
   displayedStreamCentroidDataSelector,
   regulationsSelector, waterOpenersDictionarySelector,
   regionIndexSelector } from 'ui/@state/State.selectors'
+import { getRegulationsSummarySelector } from 'ui/core/regulations/RegulationsSummary.selectors'
 export const troutStreamDictionarySelector = state => state.region.troutStreamDictionary
 export const regionLoadingStatusSelector = state => state.region.regionLoadingStatus
 
@@ -214,7 +215,8 @@ export const getCountyListSelector = createSelector(
     countiesDictionarySelector,
     selectedRegionSelector,
     troutStreamDictionarySelector,
-    visibleTroutStreamDictionarySelector
+    visibleTroutStreamDictionarySelector,
+    getRegulationsSummarySelector
   ],
   (
     regionIndex,
@@ -222,7 +224,8 @@ export const getCountyListSelector = createSelector(
     countiesDictionary,
     selectedRegion,
     troutStreamDictionary,
-    visibleTroutStreamDictionary
+    visibleTroutStreamDictionary,
+    getRegulations
   ) => {
     if (isEmpty(selectedRegion)) {
       return EMPTY_COUNTIES_ARRAY
@@ -249,12 +252,28 @@ export const getCountyListSelector = createSelector(
       let { gid, name, stream_count } = county.properties
       let visibleStreamIdsInCounty = streamIdsInRegion.filter(streamId => has(visibleTroutStreamDictionary, streamId))
       let visibleStreamsInCounty = visibleStreamIdsInCounty.map(streamId => visibleTroutStreamDictionary[streamId])
+      let byOpenStatus = (stream) => {
+        let summary = getRegulations(stream)
+        if (summary.isOpenSeason) {
+          return 0
+        }
+
+        if (summary.hasRegulationThatOverridesOpenSeason && summary.isOpenSeason === false) {
+          return 100
+        }
+
+        return 10000
+      }
+
+      let byName = (stream) => {
+        return stream.stream.properties.name
+      }
       try {
         let countyList = {
           gid,
           name,
           streamCount: stream_count,
-          streams: sortBy(visibleStreamsInCounty, x => x.stream.properties.name)
+          streams: sortBy(visibleStreamsInCounty, [byOpenStatus, byName])
         }
         return countyList
       } catch (e) {

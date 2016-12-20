@@ -12,7 +12,7 @@ const TAU = Math.PI * 2
 const LINE_WIDTH = 0.5
 const STREAM_WIDTH = LINE_WIDTH
 const TROUT_SECTION_WIDTH = LINE_WIDTH * 1.5
-const PUBLIC_SECTION = LINE_WIDTH * 2
+const PUBLIC_SECTION = LINE_WIDTH * 2.6
 const END_POINT_SIZE = LINE_WIDTH * 2
 const SneezeGuardComponent = React.createClass({
   propTypes: {

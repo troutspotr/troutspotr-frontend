@@ -37,7 +37,7 @@ const SummaryComponent = React.createClass({
         textClass: 'green',
         pattern: 'solid',
         text: 'Publicly fishable land',
-        heightMultiplier: 0.3
+        heightMultiplier: 0.4
       },
       {
         miles: trout_stream_section_length,

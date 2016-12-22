@@ -59,6 +59,11 @@ class AnonymouseAnalyzerApi {
   }
 
   recordEvent (key, data) {
+    let doNotTrackUser = navigator != null && navigator.doNotTrack == 1
+    if (doNotTrackUser) {
+      return
+    }
+
     Keen.ready(() => {
       this.client.recordEvent(key, data)
     })
@@ -66,3 +71,4 @@ class AnonymouseAnalyzerApi {
 }
 
 export default new AnonymouseAnalyzerApi()
+

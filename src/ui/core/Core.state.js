@@ -2,7 +2,7 @@ import { createAction } from 'redux-actions'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import TableOfContentsApi from 'api/TableOfContentsApi.js'
 import { keyBy } from 'lodash'
-
+import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -54,6 +54,7 @@ export const fetchTableOfContents = () => {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [REGION_SET_VIEW] : (state, { payload }) => {
+    AnonymousAnalyzerApi.recordEvent('view_change', { view: payload })
     let view = payload || initialState.view
     let newState = { ...state, ...{ view } }
     return newState

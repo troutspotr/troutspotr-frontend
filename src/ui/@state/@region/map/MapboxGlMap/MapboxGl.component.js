@@ -27,16 +27,15 @@ const MapboxGlComponent = React.createClass({
   },
 
   componentDidMount () {
-    console.log('MAP MOUNTED')
     this.map = new this.props.mapbox.Map({
       attributionControl: true,
       container: this.props.elementId,
       // style: 'mapbox://styles/andest01/ciwfc17nv00582ql7c7tbrk9h', // debug
-      style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
-      // style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
+      // style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
+      style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
       center: [-93.50, 42],
       zoom: 4,
-      maxZoom: 18,
+      maxZoom: 18.0,
       boxZoom: false,
       dragRotate: true,
       keyboard: false
@@ -105,7 +104,6 @@ const MapboxGlComponent = React.createClass({
     if (features == null || features.length === 0) {
       return
     }
-    console.log(features)
     this.props.onFeatureClick(features)
   },
 
@@ -175,6 +173,16 @@ const MapboxGlComponent = React.createClass({
   onDataLoad (e) {
     if (e.dataType !== 'style') {
       return
+    }
+
+    // add our satellite source first:
+    const satelliteId = 'mapbox://mapbox.satellite'
+    if (this.map.getSource(satelliteId) == null) {
+      this.map.addSource(satelliteId, {
+        url: 'mapbox://mapbox.satellite',
+        type: 'raster',
+        tileSize: 256
+      })
     }
 
     this.safelySetSources(this.map, this.props.sources)

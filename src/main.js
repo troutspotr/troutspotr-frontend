@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom'
 import { browserHistory } from 'react-router'
 import configureStore from 'ui/configureStore'
 import TroutMapsAppContainer from 'ui/TroutMapsApp.container'
+import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 // import 'babel-polyfill'
 // import Perf from 'react-addons-perf'
 // window.Perf = Perf
@@ -84,6 +85,8 @@ if (__DEV__) {
 // ========================================================
 
 setTimeout(render, 0)
+AnonymousAnalyzerApi.recordEvent('page_initialized', {})
+
 // render()
 
 // ========================================================

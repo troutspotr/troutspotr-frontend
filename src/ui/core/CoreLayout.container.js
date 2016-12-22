@@ -8,11 +8,13 @@ import { isExpandedSelector } from './header/minimap/Minimap.selectors'
 import { isExpaned as expandMinimap } from './header/minimap/Minimap.state'
 import { REGION_PARAM_NAME, STATE_PARAM_NAME } from 'ui/core/RouteConstants.js'
 import { isRootPageSelector, isStatePageSelector } from 'ui/Location.selectors'
-
+import { withRouter } from 'react-router'
+import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 const CoreLayoutContainer = React.createClass({
   propTypes: {
     children: React.PropTypes.element.isRequired,
     params: React.PropTypes.object.isRequired,
+    router: React.PropTypes.object.isRequired,
     location: React.PropTypes.object.isRequired,
     isMinimapExpanded: React.PropTypes.bool.isRequired,
     isRoot: React.PropTypes.bool.isRequired,
@@ -27,6 +29,22 @@ const CoreLayoutContainer = React.createClass({
     let isStateDefined = params[STATE_PARAM_NAME] != null
 
     return isRegionDefined && isStateDefined
+  },
+
+  componentWillMount () {
+    this.listenToRoutes()
+  },
+
+  listenToRoutes () {
+    let { router } = this.props
+    if (router == null) {
+      console.log('No router found. Check Minimap component')
+      return
+    }
+
+    router.listen(({ pathname }) => {
+      AnonymousAnalyzerApi.recordEvent('page_navigation', {})
+    })
   },
 
   render () {
@@ -72,6 +90,6 @@ const mapStateToProps = (state) => {
   return props
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CoreLayoutContainer)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CoreLayoutContainer))
 
 // export default CoreLayoutContainer

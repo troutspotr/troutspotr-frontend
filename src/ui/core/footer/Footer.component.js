@@ -3,11 +3,6 @@ import { Link } from 'react-router'
 import classes from './Footer.scss'
 import { MAP, LIST } from 'ui/@state/@region/Region.state'
 import { isEmpty } from 'lodash'
-// import {
-//   REGION_PARAM_NAME,
-//   STATE_PARAM_NAME,
-//   STREAM_PARAM_NAME
-// } from 'ui/core/RouteConstants.js'
 
 const FooterComponent = React.createClass({
   propTypes: {
@@ -16,10 +11,6 @@ const FooterComponent = React.createClass({
     setViewToMap: PropTypes.func.isRequired,
     setViewToList: PropTypes.func.isRequired,
     selectedStream: PropTypes.object
-  },
-
-  onClick () {
-
   },
 
   render () {

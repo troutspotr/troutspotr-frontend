@@ -18,3 +18,11 @@
   composes: importantNote;
   color: $blue;
 }
+
+.specialRegulationsTitle {
+  font-size: 12px;
+  color: $white;
+  margin-bottom: 5px;
+
+  @include medium-font;
+}

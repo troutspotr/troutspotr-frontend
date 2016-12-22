@@ -77,7 +77,6 @@ const AccessPointDetails = React.createClass({
   render () {
     return (<div className={classes.container}>
       <RegulationsSummaryContainer streamObject={this.props.selectedStream} />
-      <br />
       {this.renderAccessPoint()}
     </div>)
   }

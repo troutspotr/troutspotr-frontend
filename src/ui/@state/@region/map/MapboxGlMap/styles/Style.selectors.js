@@ -1,11 +1,9 @@
 import { createSelector } from 'reselect'
-import * as regionSelectors from 'ui/@state/@region/Region.selectors'
-console.log(regionSelectors.visibleTroutStreamIdsSelector)
-console.log(regionSelectors.streamsSelector)
-// import { isEmpty } from 'lodash'
+// import * as regionSelectors from 'ui/@state/@region/Region.selectors'
 import * as streamStyles from './Stream.style'
 import * as troutSectionStyles from './TroutSection.style'
 import * as palStyles from './Pal.style'
+import * as satelliteStyles from './Satellite.style'
 import * as restrictionSectionStyles from './RestrictionSection.style'
 import * as palSectionStyles from './PalSection.style'
 import * as accessPointStyles from './AccessPoint.style'
@@ -33,6 +31,13 @@ export const palLayersSelector = createSelector(
   [],
   () => {
     let activeLayer = layerGeneratorBetter(palStyles.PalStyle, UNDER_ROAD_PLACEHOLDER)
+    return [activeLayer]
+  })
+
+export const satelliteLayersSelector = createSelector(
+  [],
+  () => {
+    let activeLayer = layerGeneratorBetter(satelliteStyles.SatelliteStyle, UNDER_ROAD_PLACEHOLDER)
     return [activeLayer]
   })
 

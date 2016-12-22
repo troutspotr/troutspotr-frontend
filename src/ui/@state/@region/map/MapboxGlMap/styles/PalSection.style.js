@@ -20,19 +20,23 @@ export const PalSectionActiveStyle = {
   'paint': {
     'line-color': colors.PalGreen,
     'line-width': {
-      'base': 1.4,
+      'base': 1.5,
       'stops': [
         [
           8.5,
-          2
+          1
         ],
         [
           10,
-          2.75
+          1.25
         ],
         [
-          18,
-          30
+          16.5,
+          16
+        ],
+        [
+          18.0,
+          7
         ]
       ]
     },
@@ -57,33 +61,25 @@ export const PalSectionQuietStyle = {
   },
   'paint': {
     'line-color': colors.StreamGray,
+
     'line-width': {
-      'base': 1.4,
+      'base': 1.5,
       'stops': [
         [
           8.5,
-          2
-        ],
-        [
-          10,
-          2.75
-        ],
-        [
-          18,
-          30
-        ]
-      ]
-    },
-    'line-opacity': {
-      'base': 1.3,
-      'stops': [
-        [
-          12,
           1
         ],
         [
-          15,
-          0
+          10,
+          1.25
+        ],
+        [
+          16.5,
+          16
+        ],
+        [
+          18.0,
+          3
         ]
       ]
     },

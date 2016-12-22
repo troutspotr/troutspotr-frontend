@@ -25,8 +25,12 @@ export const TroutSectionActiveStyle = {
           1.25
         ],
         [
-          18,
-          26
+          16.5,
+          16
+        ],
+        [
+          18.0,
+          7
         ]
       ]
     }
@@ -57,8 +61,12 @@ export const TroutSectionQuietStyle = {
           1.25
         ],
         [
-          18,
-          26
+          16.5,
+          22
+        ],
+        [
+          18.0,
+          15
         ]
       ]
     }

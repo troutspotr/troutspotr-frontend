@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import classes from './Details.scss'
-// import { Link } from 'react-router'
-// import { isEmpty } from 'lodash'
+import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 /* eslint-disable camelcase */
 export const crossingTypes = {
   publicTrout: 'publicTrout',
@@ -53,6 +52,7 @@ const AccessPointComponent = React.createClass({
     e.preventDefault()
     let address = e.target.getAttribute('href')
     window.open(address, '_blank')
+    AnonymousAnalyzerApi.recordEvent('open_in_google_maps', { address })
     return false
   },
 

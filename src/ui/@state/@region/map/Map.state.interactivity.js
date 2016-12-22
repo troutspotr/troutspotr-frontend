@@ -51,7 +51,7 @@ export const selectFoculPoint = (feature) => {
       throw new Error('feature cannot be null')
     }
 
-    let selectedState = circle(feature, 0.1, 4)
+    let selectedState = circle(feature, 0.12, 4)
     let boundingBox = extent(selectedState)
     let newCorners = [
         [boundingBox[0], boundingBox[1]],

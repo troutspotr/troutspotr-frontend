@@ -31,7 +31,6 @@ const RegulationsSummary = React.createClass({
       openers,
       openSeasonOverrides } = this.getIsOpenStatus(streamObject)
     // let { stream, restrictions } = streamObject
-
     if (isOpenSeason === false && hasRegulationThatOverridesOpenSeason === false) {
       // plain vanilla closed. Get lost, bub.
       let openerDate = streamObject.stream.properties.openers.filter(x => x.start_time > now)

@@ -16,7 +16,6 @@ const Region = React.createClass({
       <div>
         <RegulationsSummaryContainer
           streamObject={selectedStream} />
-        <br />
         <PublicBridgesComponent
           number={number} />
       </div>)

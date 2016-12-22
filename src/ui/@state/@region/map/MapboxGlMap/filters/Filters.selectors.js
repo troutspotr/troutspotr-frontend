@@ -36,6 +36,7 @@ export const STREAM_ACCESS_POINTS_MARKER_CENTER_ACTIVE_LAYER_ID = 'stream-access
 export const STREAM_ACCESS_POINTS_MARKER_CENTER_QUITE_LAYER_ID = 'stream-access-points-marker-center-quiet-layer'
 
 export const PAL_SECTION_LAYER_ID = 'pal-layer'
+export const SATELLITE_LAYER_ID = 'satellite-layer'
 
 export const getSelectedStreamFilter = createSelector(
   [

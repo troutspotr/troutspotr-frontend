@@ -15,11 +15,8 @@ export class StateApi extends BaseApi {
 
     let endpoint = buildStateEndpoint(stateName)
     if (has(stateCache, endpoint)) {
-      console.log('RETURNING FROM CACHE')
       return stateCache[endpoint]
     }
-
-    console.log('trying to retrieve')
 
     let gettingState = this.get(endpoint)
       .then(stateMetadata => {

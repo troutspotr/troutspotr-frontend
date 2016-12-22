@@ -145,7 +145,7 @@
     "karma-webpack-with-fast-source-maps": "^1.9.2",
     "localforage": "^1.4.3",
     "lodash": "^4.16.1",
-    "mapbox-gl": "^0.25.1",
+    "mapbox-gl": "^0.29.0",
     "mocha": "^3.0.1",
     "moment": "^2.15.1",
     "node-sass": "^3.7.0",

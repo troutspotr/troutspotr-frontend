@@ -11,10 +11,21 @@ export const getLayerPackage = createSelector(
     styles.restrictionSectionsLayersSelector,
     styles.palSectionsLayersSelector,
     styles.accessPointsLayerSelector,
+    styles.satelliteLayersSelector,
     filters.getStreamFilters],
-  (streams, troutSections, palLayers, restrictions, palSections, accessPoints, streamFilters) => {
+  (
+    streams,
+    troutSections,
+    palLayers,
+    restrictions,
+    palSections,
+    accessPoints,
+    satellite,
+    streamFilters
+  ) => {
     let filterLookupTable = keyBy(streamFilters, 'layerId')
     let result = [
+      satellite,
       palLayers,
       streams,
       troutSections,

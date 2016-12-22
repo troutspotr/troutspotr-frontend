@@ -59,6 +59,7 @@ class AnonymouseAnalyzerApi {
   }
 
   recordEvent (key, data) {
+    /* eslint-disable eqeqeq */
     let doNotTrackUser = navigator != null && navigator.doNotTrack == 1
     if (doNotTrackUser) {
       return

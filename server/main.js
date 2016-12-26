@@ -4,11 +4,13 @@ const webpack = require('webpack')
 const webpackConfig = require('../build/webpack.config')
 const config = require('../config')
 const history = require('connect-history-api-fallback')
-
 const app = express()
 const paths = config.utils_paths
 var compress = require('compression')
+const seoInterceptor = require('./Interceptor')
 app.use(compress())
+app.use(seoInterceptor)
+
 // This rewrites all routes requests to the root /index.html file
 // (ignoring file requests). If you want to implement universal
 // rendering, you'll want to remove this middleware.
@@ -38,8 +40,8 @@ if (config.env === 'development') {
     lazy        : false,
     stats       : config.compiler_stats
   }))
-  app.use(require('webpack-hot-middleware')(compiler))
 
+  app.use(require('webpack-hot-middleware')(compiler))
   // Serve static assets from ~/src/static since Webpack is unaware of
   // these files. This middleware doesn't need to be enabled outside
   // of development since this directory will be copied into ~/dist

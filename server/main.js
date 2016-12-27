@@ -7,9 +7,14 @@ const history = require('connect-history-api-fallback')
 const app = express()
 const paths = config.utils_paths
 var compress = require('compression')
-const seoInterceptor = require('./Interceptor')
+const createSeoInterceptor = require('./Interceptor')
+const GetSiteDictionary = require('./GetSiteDictionary')
+GetSiteDictionary().then(function(dictionary) {
+  console.log('huzza')
+})
+
 app.use(compress())
-app.use(seoInterceptor)
+// app.use(seoInterceptor)
 
 // This rewrites all routes requests to the root /index.html file
 // (ignoring file requests). If you want to implement universal

@@ -18,20 +18,18 @@ var regionNames = toc.objects.region.geometries.map(function (g) {
   return g.properties.name.toLocaleLowerCase()
 })
 
-console.log(regionNames)
-
 // let endpoints = regionNames.map(r => { buildEndpoint('mn', r) })
 var pullRegionsFromRegionNames = regionNames.map(regionName => {
   var endpoint = buildEndpoint('mn', regionName)
-  console.log(endpoint)
   return fs.readFileAsync(endpoint)
     .then(bin => {
       var json = JSON.parse(bin)
       var regionDictionary = transformGeo(json, formattedStateData)
-      // console.log('region dictionary', regionDictionary)
+      var streamObjects = _.values(regionDictionary.streamDictionary)
+      var slugDictionary = _.keyBy(streamObjects, 'stream.properties.slug')
       return {
         id: regionName,
-        data: regionDictionary
+        data: slugDictionary
       }
     })
 })

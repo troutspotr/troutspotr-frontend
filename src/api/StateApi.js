@@ -37,7 +37,6 @@ export class StateApi extends BaseApi {
           roadTypesDictionary: keyBy(stateMetadata.roadTypes, 'id'),
           palTypesDictionary: keyBy(stateMetadata.palTypes, 'id')
         }
-
         return result
       })
 

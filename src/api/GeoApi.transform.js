@@ -1,50 +1,56 @@
-// import _ from 'lodash'
 /* eslint-disable camelcase */
-// import simplify from 'turf-simplify'
-import { groupBy, keyBy, valuesIn, has, kebabCase } from 'lodash'
-import * as topojson from 'topojson-client'
+const groupBy = require('lodash/groupBy')
+const keyBy = require('lodash/keyBy')
+const valuesIn = require('lodash/valuesIn')
+const has = require('lodash/has')
+const kebabCase = require('lodash/kebabCase')
+const topojson = require('topojson-client')
+// import * as topojson from 'topojson-client'
+// import { groupBy, keyBy, valuesIn, has, kebabCase } from 'lodash'
 
-export const transformGeo = (topojsonObject, stateData) => {
-  let geoJsonObjects = decompress(topojsonObject, stateData)
-  let dictionaries = createStreamDictionaries(geoJsonObjects)
-  let streamDictionary = createStreamDictionary(geoJsonObjects, dictionaries)
+const transformGeo = (topojsonObject, stateData) => {
+  var geoJsonObjects = decompress(topojsonObject, stateData)
+  var dictionaries = createStreamDictionaries(geoJsonObjects)
+  var streamDictionary = createStreamDictionary(geoJsonObjects, dictionaries)
     // update with tributaries.
   valuesIn(streamDictionary).forEach(stream => {
-    let streamId = stream.stream.properties.gid
-    let tribs = dictionaries.tributaries[streamId]
+    var streamId = stream.stream.properties.gid
+    var tribs = dictionaries.tributaries[streamId]
     stream.tributaries = tribs == null
       ? []
       : dictionaries.tributaries[streamId].filter(t => {
         return has(streamDictionary, t.properties.tributary_gid)
       }).map(t => {
-        let tributaryId = t.properties.tributary_gid
-        return {
-          ...t,
-          ...{
-            properties: {
-              ...t.properties,
-              streamData: streamDictionary[tributaryId]
-            }
+        var tributaryId = t.properties.tributary_gid
+        return Object.assign(
+          t,
+          {
+            properties: Object.assign(
+              t.properties,
+              { streamData: streamDictionary[tributaryId] }
+            )
           }
-        }
+        )
       })
   })
-  return {
-    streamDictionary,
-    ...geoJsonObjects
-  }
+  var t = Object.assign(
+    { streamDictionary: streamDictionary },
+    geoJsonObjects
+  )
+  debugger
+  return t
 }
 
-export const createStreamDictionaries = (geoJsonObjects) => {
-  let sectionsMap = groupBy(geoJsonObjects.trout_stream_section.features, 'properties.stream_gid')
-  let restrictionsMap = groupBy(geoJsonObjects.restriction_section.features, 'properties.stream_gid')
-  let palMap = groupBy(geoJsonObjects.pal_routes.features, 'properties.stream_gid')
-  let accessMap = groupBy(geoJsonObjects.stream_access_point.features, 'properties.stream_gid')
-  let tributaries = groupBy(geoJsonObjects.tributary.features
+const createStreamDictionaries = (geoJsonObjects) => {
+  var sectionsMap = groupBy(geoJsonObjects.trout_stream_section.features, 'properties.stream_gid')
+  var restrictionsMap = groupBy(geoJsonObjects.restriction_section.features, 'properties.stream_gid')
+  var palMap = groupBy(geoJsonObjects.pal_routes.features, 'properties.stream_gid')
+  var accessMap = groupBy(geoJsonObjects.stream_access_point.features, 'properties.stream_gid')
+  var tributaries = groupBy(geoJsonObjects.tributary.features
       .filter(x => x.properties.linear_offset > 0.0001 && x.properties.linear_offset < 0.999),
        'properties.stream_gid')
 
-  let tempCircleDictionary = keyBy(geoJsonObjects.boundingCircle.features, 'properties.gid')
+  var tempCircleDictionary = keyBy(geoJsonObjects.boundingCircle.features, 'properties.gid')
 
   return {
     sectionsMap,
@@ -59,21 +65,26 @@ export const createStreamDictionaries = (geoJsonObjects) => {
 // this
 // const SIMPLIFICATION_TOLERANCE_IN_DEGREES = 0.0009
 // const IS_HIGH_QUALITY = false
-export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
+const createStreamDictionary = (geoJsonObjects, dictionaries) => {
   const MINIMUM_LENGTH_MILES = 0.05
-  let {
-    sectionsMap,
-    restrictionsMap,
-    palMap,
-    accessMap,
-    tempCircleDictionary
-  } = dictionaries
+  var sectionsMap = dictionaries.sectionsMap
+  var restrictionsMap = dictionaries.restrictionsMap
+  var palMap = dictionaries.palMap
+  var accessMap = dictionaries.accessMap
+  var tempCircleDictionary = dictionaries.tempCircleDictionary
+  // var {
+  //   sectionsMap,
+  //   restrictionsMap,
+  //   palMap,
+  //   accessMap,
+  //   tempCircleDictionary
+  // } = dictionaries
 
-  let streamDictionary = geoJsonObjects.streamProperties.features
+  var streamDictionary = geoJsonObjects.streamProperties.features
     .reduce((dictionary, currentItem, index) => {
-      let streamId = currentItem.properties.gid
+      var streamId = currentItem.properties.gid
       dictionary[streamId] = {}
-      let entry = dictionary[streamId]
+      var entry = dictionary[streamId]
       entry.stream = currentItem
 
       entry.sections = sectionsMap[streamId]
@@ -97,20 +108,20 @@ export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
             }
 
             // get the last item
-            let previousItem = previousResult[previousResult.length - 1]
-            let previousRoadName = previousItem.properties.street_name
+            var previousItem = previousResult[previousResult.length - 1]
+            var previousRoadName = previousItem.properties.street_name
             // TODO: HACK: This is wrong, but it will work.
             // data needs to disolve on TIS_C
-            let currentRoadName = currentItem.properties.street_name
-            let isSameRoad = currentRoadName === previousRoadName
+            var currentRoadName = currentItem.properties.street_name
+            var isSameRoad = currentRoadName === previousRoadName
             if (isSameRoad) {
               // check to see if distance is too close.
-              let length = entry.stream.properties.length_mi
-              let previousOffset = previousItem.properties.linear_offset * length
-              let currentOffset = currentItem.properties.linear_offset * length
-              let distance = Math.abs(currentOffset - previousOffset)
+              var length = entry.stream.properties.length_mi
+              var previousOffset = previousItem.properties.linear_offset * length
+              var currentOffset = currentItem.properties.linear_offset * length
+              var distance = Math.abs(currentOffset - previousOffset)
 
-              let isTooClose = distance < MINIMUM_LENGTH_MILES
+              var isTooClose = distance < MINIMUM_LENGTH_MILES
               if (isTooClose) {
                 // SKIP THIS ITEM - IT'S CLEARLY A DUPLICATE
                 return previousResult
@@ -135,9 +146,9 @@ export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
   return streamDictionary
 }
 
-export const decompress = (topojsonObject, stateData) => {
-  let bounds = topojson.feature(topojsonObject, topojsonObject.objects.boundingCircle)
-  let dictionary = {
+const decompress = (topojsonObject, stateData) => {
+  var bounds = topojson.feature(topojsonObject, topojsonObject.objects.boundingCircle)
+  var dictionary = {
     trout_stream_section: topojson.feature(topojsonObject, topojsonObject.objects.troutSection),
     restriction_section: topojson.feature(topojsonObject, topojsonObject.objects.restrictionSection),
     streamProperties: topojson.feature(topojsonObject, topojsonObject.objects.stream),
@@ -148,11 +159,11 @@ export const decompress = (topojsonObject, stateData) => {
   }
 
   // time to update our objects to be more useful upstream!
-  let regsDictionary = stateData.regulationsDictionary
-  let watersDictionary = stateData.waterOpeners
+  var regsDictionary = stateData.regulationsDictionary
+  var watersDictionary = stateData.waterOpeners
 
   dictionary.restriction_section.features.forEach(feature => {
-    let props = feature.properties
+    var props = feature.properties
     if (props.start_time != null) {
       props.start_time = new Date(props.start_time)
     }
@@ -167,7 +178,7 @@ export const decompress = (topojsonObject, stateData) => {
 
   // update waters
   dictionary.streamProperties.features.forEach(feature => {
-    let props = feature.properties
+    var props = feature.properties
     props.openers = watersDictionary[props.water_id].openers
     // let openers = watersDictionary[props.water_id]
   })
@@ -213,7 +224,7 @@ export const decompress = (topojsonObject, stateData) => {
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 const alphabetLength = alphabet.length
-export const crossingTypes = {
+const crossingTypes = {
   publicTrout: 'publicTrout',
   permissionRequired: 'permissionRequired',
   unsafe: 'unsafe',
@@ -221,23 +232,24 @@ export const crossingTypes = {
 }
 
 const addLettersToCrossings = (roadCrossings) => {
-  let interestingRoadCrossings = roadCrossings.filter(rc => rc.properties.bridgeType !== crossingTypes.uninteresting)
+  var interestingRoadCrossings = roadCrossings.filter(rc => rc.properties.bridgeType !== crossingTypes.uninteresting)
 
   // let currentAlphabetIndex = 0
-  interestingRoadCrossings.forEach(({ properties }, index) => {
-    properties.alphabetLetter = alphabet[index % alphabetLength]
+  interestingRoadCrossings.forEach((feature, index) => {
+    feature.properties.alphabetLetter = alphabet[index % alphabetLength]
   })
   return roadCrossings
 }
 
 const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
-  apFeatures.forEach(({ properties }, index) => {
+  apFeatures.forEach((feature, index) => {
+    var properties = feature.properties
     // get rid of this 0 vs 1 nonsense
-    properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land === 1
+    properties.is_over_publivarcly_accessible_land = properties.is_over_publicly_accessible_land === 1
     properties.is_over_trout_stream = properties.is_over_trout_stream === 1
     var roadTypeId = properties.road_type_id
-    let roadType = roadTypesDictionary[roadTypeId]
-    let isParkable = roadType.isParkable
+    var roadType = roadTypesDictionary[roadTypeId]
+    var isParkable = roadType.isParkable
     properties.isParkable = isParkable
     properties.bridgeType = determineBridgeType(properties, roadTypesDictionary)
     properties.alphabetLetter = ' '
@@ -247,7 +259,9 @@ const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
 }
 
 const determineBridgeType = (bridgeProperties, roadTypesDictionary) => {
-  let { is_over_publicly_accessible_land, is_over_trout_stream, isParkable } = bridgeProperties
+  var is_over_publicly_accessible_land = bridgeProperties.is_over_publicly_accessible_land
+  var is_over_trout_stream = bridgeProperties.is_over_trout_stream
+  var isParkable = bridgeProperties.isParkable
   if (is_over_trout_stream === false) {
     return crossingTypes.uninteresting
   }
@@ -263,3 +277,9 @@ const determineBridgeType = (bridgeProperties, roadTypesDictionary) => {
   return crossingTypes.publicTrout
 }
 
+module.exports = {
+  transformGeo: transformGeo,
+  crossingTypes: crossingTypes,
+  decompress: decompress,
+  createStreamDictionaries: createStreamDictionaries
+}

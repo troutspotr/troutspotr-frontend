@@ -37,6 +37,7 @@ var pullRegionsFromRegionNames = regionNames.map(regionName => {
 var gettingAllRegions = Promise.all(pullRegionsFromRegionNames)
 
 const getSiteDictionary = () => {
+  console.log('getting site dictionary')
   var dictionary = {
     'mn': {
       data: formattedStateData,

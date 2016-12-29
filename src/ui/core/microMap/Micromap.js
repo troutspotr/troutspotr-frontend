@@ -4,7 +4,7 @@ import * as d3Geo from 'd3-geo'
 import * as d3Path from 'd3-path'
 // let window = window || null
 const TAU = Math.PI * 2
-const LINE_WIDTH = 0.5 * 4
+const LINE_WIDTH = 0.5 * 1
 const STREAM_WIDTH = LINE_WIDTH
 const TROUT_SECTION_WIDTH = LINE_WIDTH * 1.5
 const PUBLIC_SECTION = LINE_WIDTH * 2.6

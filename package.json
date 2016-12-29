@@ -22,7 +22,8 @@
     "deploy:dev": "better-npm-run deploy:dev",
     "deploy:prod": "better-npm-run deploy:prod",
     "codecov": "cat coverage/*/lcov.info | codecov",
-    "prodStart": "better-npm-run prodStart"
+    "prodStart": "better-npm-run prodStart",
+    "generateImages": "better-npm-run generateImages:debug"
   },
   "betterScripts": {
     "compile": {
@@ -79,7 +80,7 @@
       }
     },
     "generateImages:debug": {
-      "command": "babel-node --presets [es2015,react,stage-0] --plugins [transform-runtime,lodash] --inspect bin/generateImages.js ",
+      "command": "babel-node --presets es2015,react,stage-0 --plugins transform-runtime,lodash bin/generateImages.js ",
       "env": {
         "NODE_ENV": "production",
         "DEBUG": "app:*"

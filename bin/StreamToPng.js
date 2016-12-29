@@ -21,7 +21,9 @@ const DIMENSIONS = {
 }
 
 const saveAsPng = (stream, directory, width = WIDTH, height = HEIGHT) => {
+  console.log('trying to save stream')
   if (stream.stream.properties.slug == null || stream.stream.properties.slug.length === 0) {
+    console.log('stream properties are wrong. bailing.')
     return
   }
 

@@ -6,13 +6,15 @@ var Promise = require('bluebird')
 // var fs = Promise.promisifyAll(require('fs'))
 var mkdirp = Promise.promisifyAll(require('mkdirp'))
 
-import { getSiteDictionary } from './getSiteDictionary'
+import getSiteDictionary from '../server/GetSiteDictionary'
 
 const saveRegionImages = (path, region, imageGenerator) => {
-  let streams = _.values(region.streamDictionary)
+  let streams = _.values(region)
+  console.log('got the streams', streams.length)
   let svgs = async.map(
     streams,
     (s, cb) => {
+      console.log('generating image')
       imageGenerator(s, path)
       cb(null, null)
     },
@@ -31,18 +33,18 @@ const renderStreamAsSvg = async (streamData, directory = './images') => {
 }
 
 const renderStreamAsPng = async (streamData, directory = './images') => {
+  console.log('trying to save as png')
   return saveStreamAsPng(streamData, directory)
 }
 
 const saveImages = async (stateData, region, regionName, statePath) => {
-  // let statePath = `./images/${stateName}`
   let path = `${statePath}/${regionName}`
   await mkdirp.mkdirpAsync(path)
-
   // saveRegionImages(path, region, renderStreamAsSvg)
+  console.log('saving images')
   saveRegionImages(path, region, renderStreamAsPng)
 }
-let rootImageDirectory = `./src/static/images/`
+let rootImageDirectory = `./src/static/images`
 
 const SaveThemAll = async (root) => {
   await mkdirp.mkdirpAsync(root)

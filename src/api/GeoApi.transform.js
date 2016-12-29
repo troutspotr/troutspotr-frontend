@@ -37,7 +37,6 @@ const transformGeo = (topojsonObject, stateData) => {
     { streamDictionary: streamDictionary },
     geoJsonObjects
   )
-  debugger
   return t
 }
 

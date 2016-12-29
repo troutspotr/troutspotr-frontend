@@ -1,9 +1,8 @@
 var async = require('async')
-import saveStreamAsSvg from './StreamToSvg'
+// import saveStreamAsSvg from './StreamToSvg'
 import saveStreamAsPng from './StreamToPng'
 import _ from 'lodash'
 var Promise = require('bluebird')
-// var fs = Promise.promisifyAll(require('fs'))
 var mkdirp = Promise.promisifyAll(require('mkdirp'))
 
 import getSiteDictionary from '../server/GetSiteDictionary'
@@ -28,9 +27,9 @@ const saveRegionImages = (path, region, imageGenerator) => {
   return svgs
 }
 
-const renderStreamAsSvg = async (streamData, directory = './images') => {
-  return saveStreamAsSvg(streamData, directory)
-}
+// const renderStreamAsSvg = async (streamData, directory = './images') => {
+//   return saveStreamAsSvg(streamData, directory)
+// }
 
 const renderStreamAsPng = async (streamData, directory = './images') => {
   console.log('trying to save as png')

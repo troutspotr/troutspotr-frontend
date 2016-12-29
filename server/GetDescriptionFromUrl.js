@@ -57,7 +57,8 @@ const getStreamDescription = function (route, tags) {
 
   var publicLengthSentence = Math.round(publicLength) + ' miles of publicly fishable land.'
   tags.name = `${route.streamData.stream.properties.name}` // 'Winnebago Creek, Driftless region, Minnesota'
-  tags.description = `${route.streamData.stream.properties.name} has ${bridgeSentence} ${publicLengthSentence} ${_.capitalize(route.region)} region, Minnesota.`
+  tags.description =
+  `${route.streamData.stream.properties.name} has ${bridgeSentence} ${publicLengthSentence} ${_.capitalize(route.region)} region, Minnesota.`
   tags.imageUrl = getImageUrl(route, tags.parentSite)
   return tags
 }

@@ -1,4 +1,4 @@
-import { drawStreamToCanvas, setUpCanvas, drawBackground, drawRingToCanvas, renderPetriDish } from '../src/ui/core/micromap/Micromap'
+import { drawStreamToCanvas, setUpCanvas, drawBackground, drawRingToCanvas } from '../src/ui/core/micromap/Micromap'
 import * as colors from '../src/ui/core/Colors'
 var Promise = require('bluebird')
 var fs = Promise.promisifyAll(require('fs'))

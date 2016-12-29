@@ -1,7 +1,7 @@
 import { getProjectionFromFeature } from '../header/minimap/svgMinimap/GetProjectionFromFeature'
 import * as colors from '../../core/Colors'
 import * as d3Geo from 'd3-geo'
-import * as d3Path from 'd3-path'
+// import * as d3Path from 'd3-path'
 // let window = window || null
 const TAU = Math.PI * 2
 const LINE_WIDTH = 0.5 * 1
@@ -90,28 +90,24 @@ const renderStream = (path, context, geoJson, color = 'red', thickness = 1) => {
   context.stroke()
 }
 
-const renderArc = (arcPath, context, geoJson, color = 'red', thickness = 1) => {
+// const renderPointOnStream = (projection, context, { coordinates }, color = 'red', radius = 1) => {
+//   if (projection == null) {
+//     return
+//   }
 
-}
-
-const renderPointOnStream = (projection, context, { coordinates }, color = 'red', radius = 1) => {
-  if (projection == null) {
-    return
-  }
-
-  if (context == null) {
-    return
-  }
-  context.save()
-  context.fillStyle = color
-  let canvasCoordiantes = projection(coordinates)
-  context.lineWidth = 1
-  context.strokeStyle = color
-  context.globalAlpha = 0.4
-  context.beginPath()
-  context.arc(canvasCoordiantes[0], canvasCoordiantes[1], radius, 0, TAU, true)
-  context.stroke()
-}
+//   if (context == null) {
+//     return
+//   }
+//   context.save()
+//   context.fillStyle = color
+//   let canvasCoordiantes = projection(coordinates)
+//   context.lineWidth = 1
+//   context.strokeStyle = color
+//   context.globalAlpha = 0.4
+//   context.beginPath()
+//   context.arc(canvasCoordiantes[0], canvasCoordiantes[1], radius, 0, TAU, true)
+//   context.stroke()
+// }
 
 export const renderPetriDish = (context, dimensions, color) => {
   let { width, height } = dimensions

@@ -4,7 +4,7 @@ const cheerio = require('cheerio')
 const TwitterSeo = require('./TwitterSeo')
 const OpenGraphSeo = require('./OpenGraphSeo')
 const parseUrl = require('./ParseUrl')
-const fs = require('fs')
+// const fs = require('fs')
 var createSeoInterceptor = function (siteMapDictionary) {
   return interceptor(function (req, res) {
     return {

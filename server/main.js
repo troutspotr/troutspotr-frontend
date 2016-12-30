@@ -15,7 +15,6 @@ GetSiteDictionary().then(function (dictionary) {
 })
 
 const createServer = function (dictionary, app) {
-  console.log(dictionary)
   var seoInterceptor = createSeoInterceptor(dictionary)
   app.use(seoInterceptor)
 

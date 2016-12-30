@@ -11,7 +11,6 @@ var createSeoInterceptor = function (siteMapDictionary) {
       // Only HTML responses will be intercepted
       isInterceptable: function () {
         var contentType = res
-        console.log('response', contentType.req.originalUrl)
         if (contentType == null || contentType.req == null || contentType.req.originalUrl.indexOf('.json') >= 0) {
           return false
         }
@@ -46,7 +45,6 @@ var interceptIndex = function (siteMapDictionary, req, body, send) {
 const updateDocument = function ($document, metatags) {
   _.forEach(metatags, function (value, key) {
     var id = '#' + key
-    console.log(id)
     $document(id).attr('content', value)
   })
   return $document

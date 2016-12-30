@@ -12,11 +12,11 @@ const getDescriptionFromUrl = function (routeData) {
   }
 
   if (_.isEmpty(routeData)) {
-    console.log('stuff was empty')
     return seoDescription
   }
 
-  return getStreamDescription(routeData, getRegionDescription(routeData, getStateDescription(routeData, seoDescription)))
+  var t = getStreamDescription(routeData, getRegionDescription(routeData, getStateDescription(routeData, seoDescription)))
+  return t
 }
 
 const getStateDescription = function (route, tags) {
@@ -43,7 +43,6 @@ const getStreamDescription = function (route, tags) {
   if (_.isEmpty(route.streamData) && _.isEmpty(route.regionData)) {
     return tags
   }
-
   var publicBridges = 3
   var publicLength = 12.3
   var bridgeSentence = ''

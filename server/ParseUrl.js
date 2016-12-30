@@ -3,7 +3,6 @@ const url = require('url')
 
 const parseUrl = function (path, dictionary) {
   var route = getRoute(path)
-  console.log(route)
   if (_.isEmpty(route.state) === false && _.has(dictionary, route.state)) {
     route.stateData = dictionary[route.state].data
   } else {
@@ -16,7 +15,6 @@ const parseUrl = function (path, dictionary) {
       _.has(dictionary[route.state].regions, route.region)) {
     route.regionData = dictionary[route.state].regions[route.region].data
   } else {
-    console.log('bailed')
     return route
   }
 

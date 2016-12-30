@@ -7,7 +7,7 @@ const kebabCase = require('lodash/kebabCase')
 const topojson = require('topojson-client')
 // import * as topojson from 'topojson-client'
 // import { groupBy, keyBy, valuesIn, has, kebabCase } from 'lodash'
-
+const MINIMUM_LENGTH_MILES = 0.05
 const transformGeo = (topojsonObject, stateData) => {
   var geoJsonObjects = decompress(topojsonObject, stateData)
   var dictionaries = createStreamDictionaries(geoJsonObjects)
@@ -65,7 +65,6 @@ const createStreamDictionaries = (geoJsonObjects) => {
 // const SIMPLIFICATION_TOLERANCE_IN_DEGREES = 0.0009
 // const IS_HIGH_QUALITY = false
 const createStreamDictionary = (geoJsonObjects, dictionaries) => {
-  const MINIMUM_LENGTH_MILES = 0.05
   var sectionsMap = dictionaries.sectionsMap
   var restrictionsMap = dictionaries.restrictionsMap
   var palMap = dictionaries.palMap
@@ -101,44 +100,10 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
         ? []
         : accessMap[streamId]
           .sort((a, b) => b.properties.linear_offset - a.properties.linear_offset)
-          .reduce((previousResult, currentItem, currentIndex) => {
-            if (currentIndex === 0) {
-              return previousResult.concat(currentItem)
-            }
-
-            // get the last item
-            var previousItem = previousResult[previousResult.length - 1]
-            var previousRoadName = previousItem.properties.street_name
-            // TODO: HACK: This is wrong, but it will work.
-            // data needs to disolve on TIS_C
-            var currentRoadName = currentItem.properties.street_name
-            var isSameRoad = currentRoadName === previousRoadName
-            if (isSameRoad) {
-              // check to see if distance is too close.
-              var length = entry.stream.properties.length_mi
-              var previousOffset = previousItem.properties.linear_offset * length
-              var currentOffset = currentItem.properties.linear_offset * length
-              var distance = Math.abs(currentOffset - previousOffset)
-
-              var isTooClose = distance < MINIMUM_LENGTH_MILES
-              if (isTooClose) {
-                // SKIP THIS ITEM - IT'S CLEARLY A DUPLICATE
-                return previousResult
-              }
-            }
-            return previousResult.concat(currentItem)
-          }, [])
 
       entry.accessPoints = addLettersToCrossings(entry.accessPoints)
       entry.circle = tempCircleDictionary[streamId]
 
-      // simplify points
-      // console.log('before', entry.stream.geometry.coordinates.length)
-      // entry.stream = simplify(entry.stream, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY)
-      // entry.sections = entry.sections.map(section => simplify(section, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY))
-      // entry.palSections = entry.palSections.map(section => simplify(section, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY))
-      // entry.restrictions = entry.restrictions.map(section => simplify(section, SIMPLIFICATION_TOLERANCE_IN_DEGREES, IS_HIGH_QUALITY))
-      // console.log('after', entry.stream.geometry.coordinates.length)
       return dictionary
     }, {})
 
@@ -153,7 +118,6 @@ const decompress = (topojsonObject, stateData) => {
     streamProperties: topojson.feature(topojsonObject, topojsonObject.objects.stream),
     pal_routes: topojson.feature(topojsonObject, topojsonObject.objects.palSection),
     pal: topojson.feature(topojsonObject, topojsonObject.objects.pal),
-    // tributary: topojson.feature(topojsonObject, topojsonObject.objects.tributary),
     boundingCircle: bounds
   }
 
@@ -185,9 +149,11 @@ const decompress = (topojsonObject, stateData) => {
   // TODO: HACK. for some reason mapshaper and topojson aren't working for me.
   // MANUALLY turn this into a geojson point feature collection.
   updateRoadCrossingProperties(topojsonObject.objects.accessPoint.geometries, stateData.roadTypesDictionary)
+
+  topojsonObject.objects.accessPoint.geometries = topojsonObject.objects.accessPoint.geometries
+    .filter(filterBadAccessPoints)
   dictionary.stream_access_point = {
     features: topojsonObject.objects.accessPoint.geometries
-      .filter(x => x.properties.bridgeType !== crossingTypes.uninteresting)
       .map((x, index) => {
         return {
           geometry: {
@@ -233,7 +199,6 @@ const crossingTypes = {
 const addLettersToCrossings = (roadCrossings) => {
   var interestingRoadCrossings = roadCrossings.filter(rc => rc.properties.bridgeType !== crossingTypes.uninteresting)
 
-  // let currentAlphabetIndex = 0
   interestingRoadCrossings.forEach((feature, index) => {
     feature.properties.alphabetLetter = alphabet[index % alphabetLength]
   })
@@ -246,6 +211,7 @@ const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
     // get rid of this 0 vs 1 nonsense
     properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land === 1
     properties.is_over_trout_stream = properties.is_over_trout_stream === 1
+    properties.is_previous_neighbor_same_road = properties.is_previous_neighbor_same_road === 1
     var roadTypeId = properties.road_type_id
     var roadType = roadTypesDictionary[roadTypeId]
     var isParkable = roadType.isParkable
@@ -274,6 +240,22 @@ const determineBridgeType = (bridgeProperties, roadTypesDictionary) => {
   }
 
   return crossingTypes.publicTrout
+}
+
+const filterBadAccessPoints = (ap) => {
+  if (ap.properties.gid === 2678) {
+  }
+  var isUninteresting = ap.properties.bridgeType === crossingTypes.uninteresting
+  if (isUninteresting) {
+    return false
+  }
+
+  var isTooClose = ap.properties.is_previous_neighbor_same_road && ap.properties.distance_to_previous_neighbor < MINIMUM_LENGTH_MILES
+  if (isTooClose) {
+    return false
+  }
+
+  return true
 }
 
 module.exports = {

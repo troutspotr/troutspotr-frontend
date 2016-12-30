@@ -43,8 +43,8 @@ const getStreamDescription = function (route, tags) {
   if (_.isEmpty(route.streamData) && _.isEmpty(route.regionData)) {
     return tags
   }
-  var publicBridges = 3
-  var publicLength = 12.3
+  var publicBridges = route.streamData.accessPoints.filter(x => x.properties.bridgeType === `publicTrout`).length
+  var publicLength = Math.round(route.streamData.stream.properties.publicly_accessible_trout_stream_section_length)
   var bridgeSentence = ''
   if (publicBridges === 0) {
     bridgeSentence = 'No bridges over publicly fishable land.'

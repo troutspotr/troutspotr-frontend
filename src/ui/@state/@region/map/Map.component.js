@@ -4,8 +4,6 @@ import MapboxGlContainer from './MapboxGlMap/MapboxGl.container'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import LoadingComponent from 'ui/core/loading/Loading.component'
 import { browserHistory } from 'react-router'
-// import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
-// import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import RegulationsOverlayContainer from './overlays/RegulationsOverlay.container'
 import DetailsOverlay from './overlays/DetailsOverlay.container'
 import { isEmpty, find, has } from 'lodash'
@@ -54,90 +52,45 @@ const MapComponent = React.createClass({
     return <RegulationsOverlayContainer />
   },
 
-  // renderRegionViewLegendOverlay () {
-  //   let { selectedGeometry, selectedRoad } = this.props
-  //   let isRegionView = isEmpty(selectedGeometry) && isEmpty(selectedRoad)
-  //   if (isRegionView === false) {
-  //     return null
-  //   }
+  performZoomOnFeature (nextProps) {
+    if (isEmpty(nextProps.selectedGeometry)) {
+      return
+    }
 
-  //   return (
-  //     <MessageOverlay position='top'>
-  //       <div>region view</div>
-  //     </MessageOverlay>)
-  // },
-
-  // renderAccessPointOverlay () {
-  //   let { selectedGeometry, selectedRoad } = this.props
-  //   let isAccessPointView = isEmpty(selectedGeometry) === false && isEmpty(selectedRoad) === false
-  //   if (isAccessPointView === false) {
-  //     return null
-  //   }
-
-  //   return (
-  //     <MessageOverlay position='top'>
-  //       <div>access point view</div>
-  //     </MessageOverlay>)
-  // },
-
-  // renderStreamDetailsOverlay () {
-  //   let { selectedGeometry, selectedRoad } = this.props
-  //   let isStreamDetailsView = isEmpty(selectedGeometry) === false && isEmpty(selectedRoad)
-  //   if (isStreamDetailsView === false) {
-  //     return null
-  //   }
-
-  //   let number = selectedGeometry.accessPoints
-  //     .filter(x => x.properties.is_over_trout_stream && x.properties.is_over_publicly_accessible_land)
-  //     .length
-
-  //   return (
-  //     <MessageOverlay position='top'>
-  //       <PublicBridgesComponent
-  //         number={number} />
-  //     </MessageOverlay>)
-  // },
-
-  // renderSpecialRegulationsOverlay () {
-  //   let { selectedGeometry, specialRegulationsCurrentSeason } = this.props
-  //   if (isEmpty(selectedGeometry) || specialRegulationsCurrentSeason.length === 0) {
-  //     return null
-  //   }
-  //   let specialRegulationsElement = (<div>
-  //     <div className={classes.specialRegulationsTitle}>Special Regulations</div>
-  //     {
-  //       specialRegulationsCurrentSeason.map((reg, index) => {
-  //         return (<RestrictionComponent
-  //           key={index}
-  //           color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
-  //           pattern={reg.isFishSanctuary ? 'solid' : 'stipple'}
-  //           text={reg.legalText}
-  //           length={reg.roundedLength + ' mi'} />)
-  //       })
-  //     }
-  //   </div>)
-
-  //   return (
-  //     <MessageOverlay position='bottom'>
-  //       {specialRegulationsElement}
-  //     </MessageOverlay>)
-  // },
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.selectedGeometry !== this.props.selectedGeometry) {
+    let isNewStreamSelection = nextProps.selectedGeometry !== this.props.selectedGeometry
+    let isSelectedNewRoad = nextProps.selectedRoad !== this.props.selectedRoad && isEmpty(nextProps.selectedRoad) === false
+    if (isNewStreamSelection) {
+      if (isSelectedNewRoad) {
+        this.props.selectFoculPoint(nextProps.selectedRoad)
+        return
+      }
       if (nextProps.selectedGeometry != null) {
         this.props.selectMapFeature({
           type: 'FeatureCollection',
           features: nextProps.selectedGeometry.sections
         })
+        return
       }
-    } else if (nextProps.selectedRoad !== this.props.selectedRoad && isEmpty(nextProps.selectedRoad) === false) {
+    }
+
+    if (isSelectedNewRoad) {
       this.props.selectFoculPoint(nextProps.selectedRoad)
-    } else if (nextProps.selectedRoad == null && this.props.selectedRoad != null) {
+      return
+    }
+
+    if (nextProps.selectedRoad == null && this.props.selectedRoad != null) {
       this.props.selectMapFeature({
         type: 'FeatureCollection',
         features: nextProps.selectedGeometry.sections
       })
+    }
+  },
+
+  componentWillReceiveProps (nextProps) {
+    try {
+      this.performZoomOnFeature(nextProps)
+    } catch (e) {
+      console.log(e)
     }
 
     let previousModuleLoadStatus = this.props.mapboxModuleStatus
@@ -184,66 +137,98 @@ const MapComponent = React.createClass({
     return (<LoadingComponent subTitle={'Loading Map'} />)
   },
 
+  userSelectedStreamAndAccessPoint (stream, accessPoint) {
+    let { selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad } = this.props
+    let hasSelectedGeometry = isEmpty(selectedGeometry) === false
+    let roadSlug = accessPoint.properties.slug
+    let streamId = accessPoint.properties.stream_gid
+    let streamSlug = streamDictionary[streamId].stream.properties.slug
+    let isSelectedStreamAlreadySelected = hasSelectedGeometry && selectedGeometry.stream.properties.gid === stream.properties.gid
+    let isAccessPointAlreadySelected = selectedRoad != null && selectedRoad.properties.slug === roadSlug
+    if (isSelectedStreamAlreadySelected) {
+      if (isAccessPointAlreadySelected) {
+        // just zoom in on the road.
+        this.props.selectFoculPoint(selectedRoad)
+      }
+      browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
+      return
+    }
+
+    // assume the user selected a new stream.
+    browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}`)
+  },
+
+  userSelectedStream (stream) {
+    let { selectedGeometry, selectedState, selectedRegion } = this.props
+    let hasSelectedGeometry = isEmpty(selectedGeometry) === false
+    let slug = stream.properties.slug
+    let isAlreadySelected = hasSelectedGeometry && selectedGeometry.stream.properties.gid === stream.properties.gid
+    if (isAlreadySelected) {
+      // zoom in anyways - they selected the stream. jsut recenter, would ya?
+      this.props.selectMapFeature({
+        type: 'FeatureCollection',
+        features: selectedGeometry.sections
+      })
+    }
+    browserHistory.push(`/${selectedState}/${selectedRegion}/${slug}`)
+  },
+
+  userSelectedAccessPoint (accessPoint) {
+    let { selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad } = this.props
+    let hasSelectedGeometry = isEmpty(selectedGeometry) === false
+    let streamId = accessPoint.properties.stream_gid
+    let streamSlug = streamDictionary[streamId].stream.properties.slug
+    let roadSlug = accessPoint.properties.slug
+
+    if (hasSelectedGeometry) {
+      let soughtRoad = find(selectedGeometry.accessPoints, ap => ap.properties.slug === accessPoint.properties.slug)
+      let isSelectedRoadOnSelectedGeometry = isEmpty(soughtRoad) === false
+      if (isSelectedRoadOnSelectedGeometry) {
+        // check to see that it's already selected.
+        let isAlreadySelected = selectedRoad != null && selectedRoad.properties.slug === roadSlug
+        if (isAlreadySelected) {
+          // zoom in anyways - they selected the stream. jsut recenter, would ya?
+          this.props.selectFoculPoint(selectedRoad)
+        }
+        browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
+      } else {
+        console.log('i believe the road was different than the stream - do you want to jump anyways?')
+      }
+
+      return
+    }
+
+    // they clicked on an access point but not a stream.
+    // let's just zoom in on what they selected.
+    browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
+  },
+
   onFeatureClick (features) {
     if (isEmpty(features)) {
       return
     }
-    let { selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad } = this.props
-    let hasSelectedGeometry = isEmpty(selectedGeometry) === false
+
     let stream = find(features, x => has(x.properties, 'water_id'))
     let accessPoint = find(features, x => has(x.properties, 'alphabetLetter'))
 
-    if (stream == null && accessPoint == null) {
+    if (isEmpty(stream) && isEmpty(accessPoint)) {
       return
     }
 
-    let selectionPreference = 'preferPoint'
-
-    if (selectionPreference === 'preferPoint' && isEmpty(accessPoint) === false) {
-      console.log('it appears you clicked on or near an access point but not a strema', accessPoint)
-      if (hasSelectedGeometry) {
-        let soughtRoad = find(selectedGeometry.accessPoints, ap => ap.properties.slug === accessPoint.properties.slug)
-        let isSelectedRoadOnSelectedGeometry = isEmpty(soughtRoad) === false
-        if (isSelectedRoadOnSelectedGeometry) {
-          let roadSlug = soughtRoad.properties.slug
-          let streamSlug = selectedGeometry.stream.properties.slug
-          console.log('i believe you selected a road and you want to zoom in on it.', soughtRoad)
-          // check to see that it's already selected.
-          let isAlreadySelected = selectedRoad != null && selectedRoad.properties.slug === roadSlug
-          if (isAlreadySelected) {
-            // zoom in anyways - they selected the stream. jsut recenter, would ya?
-            this.props.selectFoculPoint(selectedRoad)
-          }
-          browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
-        } else {
-          console.log('i believe the road was different than the stream - do you want to jump anyways?')
-        }
-      } else {
-        // they clicked on an access point but not a stream.
-        // let's assume they clicked on the access point's stream.
-        let streamId = accessPoint.properties.stream_gid
-        let streamSlug = streamDictionary[streamId].stream.properties.slug
-        browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}`)
-      }
-    } else if (isEmpty(stream) === false) {
-      // they clicked on a stream and not an access point.
-      let slug = stream.properties.slug
-      let isAlreadySelected = hasSelectedGeometry && selectedGeometry.stream.properties.gid === stream.properties.gid
-      if (isAlreadySelected) {
-        // zoom in anyways - they selected the stream. jsut recenter, would ya?
-        this.props.selectMapFeature({
-          type: 'FeatureCollection',
-          features: selectedGeometry.sections
-        })
-      }
-      browserHistory.push(`/${selectedState}/${selectedRegion}/${slug}`)
+    if (isEmpty(stream) && isEmpty(accessPoint) === false) {
+      this.userSelectedAccessPoint(accessPoint)
+      return
     }
 
-    // console.log('click happen!', feature)
+    if (isEmpty(stream) === false && isEmpty(accessPoint) === false) {
+      this.userSelectedStreamAndAccessPoint(stream, accessPoint)
+    } else if (isEmpty(stream) === false) {
+      this.userSelectedStream(stream)
+    }
   },
 
   onFeatureHover (feature) {
-    // console.log('hover happen!', feature)
+
   },
 
   render () {

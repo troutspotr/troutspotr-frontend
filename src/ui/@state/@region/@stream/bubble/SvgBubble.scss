@@ -1,6 +1,6 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
-
+@import "src/ui/styles/_fonts";
 $stream_width: 0.05em * 1.5;
 $section_width: $stream_width * 1.2;
 $restriction_width: $section_width * 5;
@@ -91,13 +91,14 @@ $tributary_pal_width: $tributary_width * 7;
   left: 0;
   margin: auto;
   transform: translateZ(0);
-  svg {
+  .svgContainer {
     height: 100%;
     max-width: 100%;
     display: block;
     margin: auto;
     will-change: transform;
     transform: translateZ(0);
+    @include book-font;
   }
 }
 
@@ -199,27 +200,6 @@ $tributary_pal_width: $tributary_width * 7;
     stroke-width: $section_width;
   }
 }
-
-// .accessPoint:hover {
-//   fill: $red;
-//   stroke-dasharray: 1,4;
-// }
-
-// .accessPoint:hover .accessPointConnector {
-//   fill: $red;
-//   stroke-dasharray: 1,4;
-//   stroke: $off_white;
-// }
-
-// .accessPointStream {
-//   stroke-width: 1px;
-// }
-
-// .accessPoint:hover .accessPointStream {
-//   fill: $red;
-//   stroke-width: 20px;
-//   stroke-color: $red;
-// }
 
 
 // ✅ TODO: remove this and palce it in /ring

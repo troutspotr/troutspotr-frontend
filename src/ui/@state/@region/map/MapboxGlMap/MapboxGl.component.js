@@ -75,6 +75,10 @@ const MapboxGlComponent = React.createClass({
 
   onLayerMouseOver (e) {
     let features = this.getInteractiveFeaturesOverPoint(e.point)
+    if (features == null) {
+      return
+    }
+
     this.map.getCanvas().style.cursor = features.length ? 'pointer' : ''
     if (this.props.onFeatureHover != null) {
       if (features == null || features.length === 0) {
@@ -126,9 +130,6 @@ const MapboxGlComponent = React.createClass({
     let shouldBounceOutALittle = isUserLookingAtMap && isUserHitBackButton
     if (userChangedRegions === false && shouldBounceOutALittle) {
       let currentZoom = this.map.getZoom()
-      let clampedZoom = Math.max(Math.min(currentZoom, 17), 12)
-      let boostMultiplier = (clampedZoom - 11.5) / 4
-      console.log(boostMultiplier)
       let newZoom = this.getZoomBackbounce(currentZoom)
       setTimeout(() => this.map.easeTo({ bearing: 0, pitch: 0, zoom: newZoom }), 30)
     }
@@ -138,7 +139,6 @@ const MapboxGlComponent = React.createClass({
     let clampedZoom = clamp(currentZoom, minZoom, maxZoom)
     let normalizedBoost = (clampedZoom - minZoom) / (maxZoom - minZoom)
     let boostBack = (normalizedBoost * boostMultiplier) + 0.2
-    console.log(currentZoom, boostBack)
     return currentZoom - boostBack
   },
 

@@ -95,7 +95,6 @@ export const displayedStreamCentroidDataSelector = createSelector(
       return slugDictionary[selectedStreamId]
     }
 
-    console.log('cannot find stream')
     return null
   })
 

@@ -108,6 +108,7 @@ const SvgBubbleComponent = React.createClass({
     return (
       <div className={classes.container}>
         <svg
+          className={classes.svgContainer}
           viewBox={`0 0 ${this.width} ${this.height}`}
           preserveAspectRatio='xMinYMin meet'
           version='1.1'

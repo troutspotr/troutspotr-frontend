@@ -244,7 +244,7 @@ const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
   apFeatures.forEach((feature, index) => {
     var properties = feature.properties
     // get rid of this 0 vs 1 nonsense
-    properties.is_over_publivarcly_accessible_land = properties.is_over_publicly_accessible_land === 1
+    properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land === 1
     properties.is_over_trout_stream = properties.is_over_trout_stream === 1
     var roadTypeId = properties.road_type_id
     var roadType = roadTypesDictionary[roadTypeId]

@@ -4,12 +4,13 @@ import RingWaypointLineComponent from './RingWaypoint.component.line'
 import RingWaypointLabelComponent from './RingWaypoint.component.label'
 import accessPointClasses from './RingWaypoint.accessPoint.scss'
 import waypointClasses from './RingWaypoint.scss'
-export const crossingTypes = {
-  publicTrout: 'publicTrout',
-  permissionRequired: 'permissionRequired',
-  unsafe: 'unsafe',
-  uninteresting: 'uninteresting'
-}
+import { crossingTypes } from 'api/GeoApi.transform'
+// export const crossingTypes = {
+//   publicTrout: 'publicTrout',
+//   permissionRequired: 'permissionRequired',
+//   unsafe: 'unsafe',
+//   uninteresting: 'uninteresting'
+// }
 const RingWaypointAccessPointComponent = React.createClass({
   propTypes: {
     accessPoint: PropTypes.object.isRequired,

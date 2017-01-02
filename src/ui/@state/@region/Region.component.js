@@ -1,7 +1,4 @@
 import React, { PropTypes } from 'react'
-// import classes from './Region.scss'
-// import BubbleComponent from './Bubble.component'
-// import { Link } from 'react-router'
 const RegionComponent = React.createClass({
   propTypes: {
     children: PropTypes.element.isRequired,

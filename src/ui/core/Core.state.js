@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import TableOfContentsApi from 'api/TableOfContentsApi.js'
-import { keyBy, lowerCase } from 'lodash'
+import { keyBy } from 'lodash'
 
 // ------------------------------------
 // Constants

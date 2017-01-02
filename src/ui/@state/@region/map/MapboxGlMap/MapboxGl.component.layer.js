@@ -104,7 +104,7 @@ const MapboxGlLayerComponent = React.createClass({
     if (features == null || features.length === 0) {
       return
     }
-    
+
     this.props.onFeatureClick(features[0])
   },
 

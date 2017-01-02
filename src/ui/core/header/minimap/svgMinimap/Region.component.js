@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import classes from './SvgMap.scss'
 
 const RegionComponent = React.createClass({
   propTypes: {

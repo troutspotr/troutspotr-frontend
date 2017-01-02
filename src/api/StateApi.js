@@ -36,7 +36,7 @@ export class StateApi extends BaseApi {
 
       return stateMetadata
     })
-    
+
     stateCache[endpoint] = gettingState
     return stateCache[endpoint]
   }

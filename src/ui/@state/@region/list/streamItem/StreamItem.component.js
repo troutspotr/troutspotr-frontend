@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classes from './StreamItem.scss'
 // import BubbleComponent from './Bubble.component'
-import { some } from 'lodash'
-
+// import { some } from 'lodash'
+/* eslint-disable camelcase */
 const StreamItemComponent = React.createClass({
   propTypes: {
     title: PropTypes.string.isRequired,
@@ -26,7 +26,7 @@ const StreamItemComponent = React.createClass({
   },
 
   getIsOpenStatus (streamObject) {
-    let { stream, restrictions } = streamObject
+    let { stream } = streamObject
     let now = new Date()
     if (stream.properties.water_id === 3) {
 
@@ -66,7 +66,7 @@ const StreamItemComponent = React.createClass({
       isOpenSeason,
       openers,
       openSeasonOverrides } = this.getIsOpenStatus(streamObject)
-    let { stream, restrictions } = streamObject
+    // let { stream, restrictions } = streamObject
 
     if (isOpenSeason === false && hasRegulationThatOverridesOpenSeason === false) {
       // plain vanilla closed. Get lost, bub.
@@ -149,7 +149,7 @@ const StreamItemComponent = React.createClass({
     let bridgeClass = isDull
       ? classes.publicBridgesBadgeDull
       : classes.publicBridgesBadge
-      
+
     let noun = number === 1 ? ' bridge' : ' bridges'
     let countSymbol = number === 0
       ? 'No'

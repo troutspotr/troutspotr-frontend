@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 import { browserHistory } from 'react-router'
 import configureStore from 'ui/configureStore'
 import TroutMapsAppContainer from 'ui/TroutMapsApp.container'
-import FastClick from 'fastclick'
+// import FastClick from 'fastclick'
 // import routes from 'ui/routes'
 
 // ========================================================

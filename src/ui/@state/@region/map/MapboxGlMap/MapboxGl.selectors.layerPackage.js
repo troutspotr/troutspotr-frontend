@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { isEmpty, keyBy, has } from 'lodash'
+import { keyBy } from 'lodash'
 
 import * as filters from './filters/Filters.selectors'
 import * as styles from './styles/Style.selectors'

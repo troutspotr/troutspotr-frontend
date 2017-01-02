@@ -1,12 +1,9 @@
 import { createSelector } from 'reselect'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-import { selectedStateIdSelector,
-  selectedRegionIdSelector,
-  viewSelector,
-  searchTextSelector } from 'ui/core/Core.selectors'
+import { searchTextSelector } from 'ui/core/Core.selectors'
 // import { waterOpenersDictionarySelector, regulationsSelector } from 'ui/@state/State.selectors'
 
-import { isEmpty, every, values, has, round } from 'lodash'
+import { isEmpty, values, has, round } from 'lodash'
 import { displayedCentroidDictionarySelector,
   displayedStreamCentroidDataSelector,
   regulationsSelector, waterOpenersDictionarySelector } from 'ui/@state/State.selectors'
@@ -104,13 +101,13 @@ export const getSpecialRegulationsSelector = createSelector(
 
     if (isEmpty(regulations)) {
       return EMPTY_REGS
-    } 
+    }
 
     let specialRegulationsDictionary = selectedStream.restrictions.map(r => {
       let { stream_gid, restriction_id, start, stop, end_time, start_time } = r.properties
       let regulation = regulations[restriction_id]
       if (regulation == null) {
-        console.warn('found null regulation for id ' + restriction_id)
+        // console.warn('found null regulation for id ' + restriction_id)
         return null
       }
       let isFishSanctuary = regulation.id === MAGICAL_FISH_SANCTUARY_ID

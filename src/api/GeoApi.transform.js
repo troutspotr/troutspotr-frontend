@@ -1,5 +1,5 @@
 // import _ from 'lodash'
-import { groupBy, keyBy, valuesIn, has } from 'lodash'
+import { groupBy, keyBy, valuesIn } from 'lodash'
 import * as topojson from 'topojson-client'
 
 export const transformGeo = (topojsonObject, stateData) => {
@@ -150,16 +150,11 @@ export const decompress = (topojsonObject, stateData) => {
   })
 
   // update waters
-  try
-  {
-    dictionary.streamProperties.features.forEach(feature => {
-      let props = feature.properties
-      props.openers = watersDictionary[props.water_id].openers
-      // let openers = watersDictionary[props.water_id]
-    })
-  } catch (e) {
-    console.log(e)
-  }
+  dictionary.streamProperties.features.forEach(feature => {
+    let props = feature.properties
+    props.openers = watersDictionary[props.water_id].openers
+    // let openers = watersDictionary[props.water_id]
+  })
 
   // TODO: HACK. for some reason mapshaper and topojson aren't working for me.
   // MANUALLY turn this into a geojson point feature collection.

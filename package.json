@@ -130,9 +130,7 @@
     "url-loader": "^0.5.6",
     "webpack": "^1.12.14",
     "webworkify-webpack": "^1.1.7",
-    "yargs": "^5.0.0"
-  },
-  "devDependencies": {
+    "yargs": "^5.0.0",
     "babel-core": "^6.16.0",
     "babel-eslint": "^6.0.0-beta.6",
     "babel-plugin-istanbul": "^2.0.1",
@@ -172,5 +170,8 @@
     "webpack-bundle-analyzer": "^1.4.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2"
+  },
+  "devDependencies": {
+    
   }
 }

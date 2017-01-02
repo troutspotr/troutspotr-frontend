@@ -1,5 +1,5 @@
 {
-  "name": "poh-backend",
+  "name": "Trout-Spotr",
   "version": "0.0.1",
   "description": "Trout Maps",
   "main": "index.js",
@@ -39,9 +39,10 @@
       }
     },
     "start:prod": {
-      "command": "babel-node bin/server",
+      "command": "node bin/server",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "DEBUG": "app:*"
       }
     },
     "deploy": {

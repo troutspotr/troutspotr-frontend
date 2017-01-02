@@ -1,12 +1,13 @@
-import _ from 'lodash'
+// import _ from 'lodash'
+import { groupBy, keyBy, valuesIn, has } from 'lodash'
 import * as topojson from 'topojson-client'
 
-export const transformGeo = (topojsonObject) => {
-  let geoJsonObjects = decompress(topojsonObject, topojson)
-  let dictionaries = createStreamDictionaries(geoJsonObjects, _)
-  let streamDictionary = createStreamDictionary(geoJsonObjects, dictionaries, _)
+export const transformGeo = (topojsonObject, stateData) => {
+  let geoJsonObjects = decompress(topojsonObject, stateData)
+  let dictionaries = createStreamDictionaries(geoJsonObjects)
+  let streamDictionary = createStreamDictionary(geoJsonObjects, dictionaries)
     // update with tributaries.
-  _.valuesIn(streamDictionary).forEach(stream => {
+  valuesIn(streamDictionary).forEach(stream => {
     // let streamId = stream.stream.properties.gid
     // let tribs = dictionaries.tributaries[streamId]
     // stream.tributaries = tribs == null
@@ -32,15 +33,15 @@ export const transformGeo = (topojsonObject) => {
 }
 
 export const createStreamDictionaries = (geoJsonObjects) => {
-  let sectionsMap = _.groupBy(geoJsonObjects.trout_stream_section.features, 'properties.stream_gid')
-  let restrictionsMap = _.groupBy(geoJsonObjects.restriction_section.features, 'properties.stream_gid')
-  let palMap = _.groupBy(geoJsonObjects.pal_routes.features, 'properties.stream_gid')
-  let accessMap = _.groupBy(geoJsonObjects.stream_access_point.features, 'properties.stream_gid')
-  // let tributaries = _.groupBy(geoJsonObjects.stream_tributary.features
+  let sectionsMap = groupBy(geoJsonObjects.trout_stream_section.features, 'properties.stream_gid')
+  let restrictionsMap = groupBy(geoJsonObjects.restriction_section.features, 'properties.stream_gid')
+  let palMap = groupBy(geoJsonObjects.pal_routes.features, 'properties.stream_gid')
+  let accessMap = groupBy(geoJsonObjects.stream_access_point.features, 'properties.stream_gid')
+  // let tributaries = groupBy(geoJsonObjects.stream_tributary.features
   //     .filter(x => x.properties.linear_offset > 0.0001 && x.properties.linear_offset < 0.999),
   //      'properties.stream_gid')
 
-  // let tempCircleDictionary = _.keyBy(geoJsonObjects.bounding_circles.features, 'properties.gid')
+  // let tempCircleDictionary = keyBy(geoJsonObjects.bounding_circles.features, 'properties.gid')
 
   return {
     sectionsMap,
@@ -118,7 +119,7 @@ export const createStreamDictionary = (geoJsonObjects, dictionaries) => {
   return streamDictionary
 }
 
-export const decompress = (topojsonObject) => {
+export const decompress = (topojsonObject, stateData) => {
   // let bounds = topojson.feature(topojsonObject, topojsonObject.objects.bounding_square_circles)
   let dictionary = {
     trout_stream_section: topojson.feature(topojsonObject, topojsonObject.objects.troutSection),
@@ -129,6 +130,37 @@ export const decompress = (topojsonObject) => {
     // stream_tributary: topojson.feature(topojsonObject, topojsonObject.objects.stream_tributary),
     // bounding_circles: bounds
   }
+
+  // time to update our objects to be more useful upstream!
+  let regsDictionary = keyBy(stateData.regulations, 'id')
+  let watersDictionary = stateData.waterOpeners
+
+  dictionary.restriction_section.features.forEach(feature => {
+    let props = feature.properties
+    if (props.start_time != null) {
+      props.start_time = new Date(props.start_time)
+    }
+
+    if (props.end_time != null) {
+      props.end_time = new Date(props.end_time)
+    }
+
+    // add the restriction
+    props.restriction = regsDictionary[props.restriction_id]
+  })
+
+  // update waters
+  try
+  {
+    dictionary.streamProperties.features.forEach(feature => {
+      let props = feature.properties
+      props.openers = watersDictionary[props.water_id].openers
+      // let openers = watersDictionary[props.water_id]
+    })
+  } catch (e) {
+    console.log(e)
+  }
+
   // TODO: HACK. for some reason mapshaper and topojson aren't working for me.
   // MANUALLY turn this into a geojson point feature collection.
   dictionary.stream_access_point = {

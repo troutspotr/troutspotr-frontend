@@ -48,6 +48,9 @@ export const RestrictionSectionActiveStyle = {
         [0, colors.RestrictionYellow],
         [7, '#FF4E10'],
         [8, colors.RestrictionYellow],
+        [17, colors.RestrictionYellow],
+        [18, colors.StreamBlue],
+        [19, colors.RestrictionYellow],
         [100, colors.RestrictionYellow]
       ]
 

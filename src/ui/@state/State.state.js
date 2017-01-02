@@ -58,6 +58,7 @@ const ACTION_HANDLERS = {
       ...{
         regionIndex: payload.regionIndex,
         regulations: keyBy(payload.regulations, x => x.id),
+        waterOpeners: payload.waterOpeners,
         roadTypes: payload.roadTypes,
         palTypes: payload.palTypes,
         streamCentroids: payload.streamCentroids,

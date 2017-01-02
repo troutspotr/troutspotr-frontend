@@ -42,6 +42,7 @@ const MapComponent = React.createClass({
   },
 
   renderSpecialRegulationsOverlay () {
+    let now = new Date()
     let { selectedGeometry, specialRegulations } = this.props
     if (isEmpty(selectedGeometry) || specialRegulations.length === 0) {
       return null
@@ -49,10 +50,17 @@ const MapComponent = React.createClass({
     let specialRegulationsElement = (<div>
       <div className={classes.specialRegulationsTitle}>Special Regulations</div>
       {
-        specialRegulations.map((reg, index) => {
+        specialRegulations.filter(sp => {
+          let { startTime, stopTime } = sp
+          if (startTime == null || stopTime == null) {
+            return true
+          }
+          let isInBounds = startTime < now && stopTime > now
+          return isInBounds
+        }).map((reg, index) => {
           return (<RestrictionComponent
             key={index}
-            color={reg.isFishSanctuary ? 'red' : 'yellow'}
+            color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
             pattern={reg.isFishSanctuary ? 'solid' : 'stipple'}
             text={reg.legalText}
             length={reg.roundedLength + ' mi'} />)

@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import StreamListComponent from './StreamList.component'
 import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/core/Core.selectors'
 import { visibleTroutStreams } from '../Region.selectors'
+
 // import { saveBuilderProfile, fetchCompany } from './Profile.state'
 // import { loadingStatusSelector, savingStatusSelector } from './Profile.selectors'
 const mapDispatchToProps = {

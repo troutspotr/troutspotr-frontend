@@ -4,11 +4,12 @@ import { selectedStateIdSelector,
   selectedRegionIdSelector,
   viewSelector,
   searchTextSelector } from 'ui/core/Core.selectors'
+// import { waterOpenersDictionarySelector, regulationsSelector } from 'ui/@state/State.selectors'
 
 import { isEmpty, every, values, has, round } from 'lodash'
 import { displayedCentroidDictionarySelector,
   displayedStreamCentroidDataSelector,
-  regulationsSelector } from 'ui/@state/State.selectors'
+  regulationsSelector, waterOpenersDictionarySelector } from 'ui/@state/State.selectors'
 export const troutStreamDictionarySelector = state => state.region.troutStreamDictionary
 export const regionLoadingStatusSelector = state => state.region.regionLoadingStatus
 
@@ -21,8 +22,20 @@ export const palsSelector = state => state.region.pals
 
 const EMPTY_STREAMS = []
 export const visibleTroutStreams = createSelector(
-  [displayedCentroidDictionarySelector, troutStreamDictionarySelector, regionLoadingStatusSelector],
-  (displayedDictionary, troutStreamDictionary, loadingStatus) => {
+  [
+    displayedCentroidDictionarySelector,
+    troutStreamDictionarySelector,
+    regionLoadingStatusSelector,
+    waterOpenersDictionarySelector,
+    regulationsSelector
+  ],
+  (
+    displayedDictionary,
+    troutStreamDictionary,
+    loadingStatus,
+    waterOpenersDictionary,
+    regulationsDictionary
+  ) => {
     if (loadingStatus !== LOADING_CONSTANTS.IS_SUCCESS) {
       return EMPTY_STREAMS
     }
@@ -81,6 +94,7 @@ export const showNoResultsFoundSelector = createSelector(
 
 const EMPTY_REGS = []
 const MAGICAL_FISH_SANCTUARY_ID = 7
+const MAGICAL_OPEN_ID = 18
 export const getSpecialRegulationsSelector = createSelector(
   [selectedStreamObjectSelector, regulationsSelector],
   (selectedStream, regulations) => {
@@ -93,21 +107,23 @@ export const getSpecialRegulationsSelector = createSelector(
     } 
 
     let specialRegulationsDictionary = selectedStream.restrictions.map(r => {
-      let { stream_gid, restriction_id, start, stop } = r.properties
+      let { stream_gid, restriction_id, start, stop, end_time, start_time } = r.properties
       let regulation = regulations[restriction_id]
       if (regulation == null) {
         console.warn('found null regulation for id ' + restriction_id)
         return null
       }
       let isFishSanctuary = regulation.id === MAGICAL_FISH_SANCTUARY_ID
+      let isOpenerOverride = regulation.id === MAGICAL_OPEN_ID
       let length = stop - start
       // let roundedLength = round(length, 1)
-      let { startTime, stopTime, shortText, legalText } = regulation
+      let { shortText, legalText } = regulation
       return {
-        startTime: new Date(startTime),
-        stopTime: new Date(stopTime),
+        startTime: start_time,
+        stopTime: end_time,
         // roundedLength: roundedLength,
         isFishSanctuary,
+        isOpenerOverride,
         restrictionId: restriction_id,
         streamId: stream_gid,
         shortText,
@@ -131,7 +147,6 @@ export const getSpecialRegulationsSelector = createSelector(
         ? round(reg.length, 2)
         : round(reg.length, 1)
     })
-
 
     return specialRegulationsArray
   })

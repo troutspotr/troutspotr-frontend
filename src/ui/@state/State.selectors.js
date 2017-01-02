@@ -10,6 +10,7 @@ export const streamCentroidsSelector = state => state.state.streamCentroids
 export const stateDataLoadingStatusSelector = state => state.state.stateDataLoadingStatus
 export const slugDictionarySelector = state => state.state.slugDictionary
 export const streamIdDictionarySelector = state => state.state.streamIdDictionary
+export const waterOpenersDictionarySelector = state => state.state.waterOpeners
 
 const emptyCentroids = []
 export const displayedCentroids = createSelector(

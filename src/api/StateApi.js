@@ -1,7 +1,12 @@
 import BaseApi from './BaseApi'
+import { has, keyBy } from 'lodash'
+
 export const buildStateEndpoint = (stateName) => {
   return `/data/v1/${stateName}/${stateName}.data.json`
 }
+
+let stateCache = {}
+
 export class StateApi extends BaseApi {
   async getStateData (stateName) {
     if (stateName == null) {
@@ -9,11 +14,31 @@ export class StateApi extends BaseApi {
     }
 
     let endpoint = buildStateEndpoint(stateName)
-    let stateMetadata = await this.get(endpoint)
+    if (has(stateCache, endpoint)) {
+      console.log('RETURNING FROM CACHE')
+      return stateCache[endpoint]
+    }
 
-    console.log('downloaded state metadata for ' + stateName)
-    console.log('version: ' + stateMetadata.version)
-    return stateMetadata
+    console.log('trying to retrieve')
+
+    let gettingState = this.get(endpoint)
+    gettingState.then(stateMetadata => {
+      console.log('downloaded state metadata for ' + stateName)
+      console.log('version: ' + stateMetadata.version)
+      let regsDictionary = keyBy(stateMetadata.regulations, 'id')
+      for (var prop in stateMetadata.waterOpeners) {
+        stateMetadata.waterOpeners[prop].openers.forEach(opener => {
+          opener.end_time = new Date(opener.end_time)
+          opener.start_time = new Date(opener.start_time)
+          opener.restriction = regsDictionary[opener.restriction_id]
+        })
+      }
+
+      return stateMetadata
+    })
+    
+    stateCache[endpoint] = gettingState
+    return stateCache[endpoint]
   }
 }
 

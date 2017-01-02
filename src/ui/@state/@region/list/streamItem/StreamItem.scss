@@ -27,8 +27,23 @@
   color: $off-white;
 }
 
+.openEmphasis {
+  composes: open;
+  color: $blue;
+}
+
+.openCaution {
+  composes: open;
+  color: $yellow;
+}
+
 .publicBridgesBadge {
   composes: numberCircle;
   color: $green;
   font-size: 0.8em;
+}
+
+.publicBridgesBadgeDull {
+  composes: publicBridgesBadge;
+  color: $off-white;
 }

@@ -22,6 +22,7 @@ const RegionLayout = React.createClass({
     selectedStream: PropTypes.object,
     clearText: PropTypes.func.isRequired,
     streams: PropTypes.object,
+    hasAgreedToTerms: PropTypes.bool.isRequired,
     showNoResultsFoundOverlay: PropTypes.bool.isRequired
   },
 
@@ -83,7 +84,11 @@ const RegionLayout = React.createClass({
   },
 
   render () {
-    let { view } = this.props
+    let { view, hasAgreedToTerms } = this.props
+    if (hasAgreedToTerms === false) {
+      return null
+    }
+
     return (
       <div className={classes.regionContainer}>
         <SvgSpriteSheet />

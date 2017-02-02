@@ -84,7 +84,7 @@ if (__DEV__) {
 // Go!
 // ========================================================
 
-setTimeout(render, 0)
+setTimeout(render, 1000)
 AnonymousAnalyzerApi.recordEvent('page_initialized', {})
 
 // render()

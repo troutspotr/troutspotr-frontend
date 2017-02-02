@@ -9,7 +9,8 @@ import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 export const MAP = 'map'
 export const LIST = 'list'
 export const REGION_SET_VIEW = 'REGION_SET_VIEW'
-
+export const HAS_AGREED_TO_TERMS = 'HAS_AGREED_TO_TERMS'
+export const SET_AGREEMENT_STATE = 'SET_AGREEMENT_STATE'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -24,6 +25,8 @@ export const GEO_UPDATE_SEARCH_TEXT = 'GEO_UPDATE_SEARCH_TEXT'
 export const setTableOfContents = createAction(GEO_SET_TABLE_OF_CONTENTS)
 export const setTableOfContentsLoading = createAction(GEO_TABLE_OF_CONTENTS_LOADING)
 export const setTableOfContentsFailed = createAction(GEO_TABLE_OF_CONTENTS_LOADING_FAILED)
+export const setAgreeToTerms = createAction(HAS_AGREED_TO_TERMS)
+export const setAgreementState = createAction(SET_AGREEMENT_STATE)
 
 const updateSearchTextAction = createAction(GEO_UPDATE_SEARCH_TEXT)
 export const updateSearchText = (searchText) => {
@@ -31,6 +34,13 @@ export const updateSearchText = (searchText) => {
     // TODO: debounce this and check for 3 character limit
     let sanitizedString = searchText == null ? '' : searchText.trim()
     dispatch(updateSearchTextAction(sanitizedString))
+  }
+}
+
+export const agreeToTerms = (isAgreed) => {
+  return (dispatch) => {
+    let agreement = isAgreed ? 'true' : 'false'
+    dispatch(setAgreeToTerms(agreement))
   }
 }
 
@@ -91,7 +101,50 @@ const ACTION_HANDLERS = {
   [GEO_UPDATE_SEARCH_TEXT]: (state, { payload }) => {
     let newState = { ...state, ...{ searchText: payload } }
     return newState
+  },
+  [HAS_AGREED_TO_TERMS]: (state, { payload }) => {
+    if (localStorage != null && localStorage.setItem != null) {
+      try {
+        localStorage.setItem(HAS_AGREED_TO_TERMS, payload)
+      } catch (e) {
+        console.log('could not store token; perhaps private mode?')
+      }
+    }
+
+    let newState = { ...state, ...{ hasAgreedToTerms: payload === 'true' } }
+    return newState
+  },
+  [SET_AGREEMENT_STATE]: (state, { payload }) => {
+    // localStorage.setItem(HAS_AGREED_TO_TERMS, payload)
+
+    let { view, time } = payload
+    if (view == null || time == null) {
+      throw new Error('view and time cannot be null')
+    }
+
+    if (view === 'intro') {
+      let newState = { ...state, ...{ hasSeenIntroScreen: true } }
+      AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+      return newState
+    } else if (view === 'termsOfService') {
+      let newState = { ...state, ...{ hasSeenTermsOfService: true } }
+      AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+      return newState
+    } else if (view === 'privacyPolicy') {
+      let newState = { ...state, ...{ hasSeenPrivacyPolicy: true } }
+      AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+      return newState
+    }
+    return { ...state }
   }
+}
+
+const getHasAgreedToTerms = () => {
+  if (localStorage == null) {
+    return false
+  }
+
+  return localStorage.getItem(HAS_AGREED_TO_TERMS) === 'true'
 }
 
 // ------------------------------------
@@ -106,11 +159,14 @@ const initialState = {
   statesDictionary: {},
   countiesGeoJson: {},
   regionsGeoJson: {},
-  tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_NOT_STARTED
+  tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_NOT_STARTED,
+  hasSeenIntroScreen: false,
+  hasSeenTermsOfService: false,
+  hasSeenPrivacyPolicy: false,
+  hasAgreedToTerms: getHasAgreedToTerms()
 }
 
 export default function counterReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
-
   return handler ? handler(state, action) : state
 }

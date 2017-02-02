@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
 
 const RegionComponent = React.createClass({
   propTypes: {
@@ -29,29 +28,20 @@ const RegionComponent = React.createClass({
 
   },
 
-  shouldComponentUpdate (nextProps) {
-    if (this.props.geoJson !== nextProps.geoJson) {
-      return true
-    }
+  onClick (e) {
+    let json = this.props.geoJson
 
-    if (this.props.stateName !== nextProps.stateName) {
-      return true
-    }
-
-    if (this.props.isLoading !== nextProps.isLoading) {
-      return true
-    }
-
-    return false
+    this.props.selectRegion(e, json)
+    // browserHistory.push(path)
   },
 
   render () {
     let json = this.props.geoJson
     let path = this.props.pathGenerator(json.geometry)
     return (
-      <Link onClick={e => this.props.selectRegion(e, json)} to={`/${this.props.stateName.toLowerCase()}/${json.properties.name.toLowerCase()}`}>
+      <g onClick={this.onClick}>
         <path data-name={json.properties.name} d={path} />
-      </Link>)
+      </g>)
   }
 })
 export default RegionComponent

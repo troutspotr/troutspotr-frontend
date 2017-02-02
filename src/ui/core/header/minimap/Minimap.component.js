@@ -5,6 +5,7 @@ import debounce from 'lodash/debounce'
 import SvgMapComponent from './svgMinimap/SvgMap.component'
 import ActionButtonComponent from '../actionButton/ActionButton.component'
 import { isEmpty } from 'lodash'
+import { browserHistory } from 'react-router'
 const MINIMAP_WIDTH = 50
 
 const MinimapComponent = React.createClass({
@@ -163,6 +164,10 @@ const MinimapComponent = React.createClass({
 
     e.stopPropagation()
     this.props.expand(false)
+
+    let stateName = 'mn' // hail mary
+    let path = `/${stateName}/${region.properties.name.toLowerCase()}`
+    browserHistory.push(path)
   },
 
   backButtonPressed () {

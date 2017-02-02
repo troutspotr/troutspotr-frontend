@@ -15,12 +15,12 @@
 .regions {
   composes: polygon;
 
-  a {
+  g {
     stroke: $off-white;
     fill: transparentize($background, 0.3);
   }
 
-  a:hover {
+  g:hover {
     fill: transparentize($gray, 0.6);
     stroke-width: 0.4px;
   }
@@ -51,9 +51,9 @@
 .selectedRegions {
   pointer-events: none;
 
-  a {
+  g {
     stroke: $blue;
-    stroke-width: 0.4px;
+    stroke-width: 0.8px;
   }
 
   composes: polygon;

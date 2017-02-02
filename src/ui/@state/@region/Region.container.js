@@ -7,7 +7,7 @@ import { visibleTroutStreams,
   streamsSelector } from './Region.selectors'
 import { selectedStateIdSelector,
   selectedRegionIdSelector,
-  viewSelector } from 'ui/core/Core.selectors'
+  viewSelector, hasAgreedToTermsSelector } from 'ui/core/Core.selectors'
 import { updateSearchText } from 'ui/core/Core.state'
 
 const mapDispatchToProps = {
@@ -22,9 +22,9 @@ const mapStateToProps = (state) => {
     selectedState: selectedStateIdSelector(state),
     selectedRegion: selectedRegionIdSelector(state),
     regionLoadingStatus: regionLoadingStatusSelector(state),
-    // searchText: searchTextSelector(state),
     streams: streamsSelector(state),
-    showNoResultsFoundOverlay: showNoResultsFoundSelector(state)
+    showNoResultsFoundOverlay: showNoResultsFoundSelector(state),
+    hasAgreedToTerms: hasAgreedToTermsSelector(state)
   }
 
   return props

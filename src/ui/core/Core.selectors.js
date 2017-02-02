@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
 import { locationSelector, isRootPageSelector } from 'ui/Location.selectors'
 import { LIST } from './Core.state'
-// import { regionsDictionarySelector, statesDictionarySelector } from 'ui/Geo.selectors'
 import { isEmpty, has } from 'lodash'
 
 export const statesGeoJsonSelector = state => state.core.statesGeoJson
@@ -11,7 +10,10 @@ export const regionsGeoJsonSelector = state => state.core.regionsGeoJson
 export const statesDictionarySelector = state => state.core.statesDictionary
 export const countiesDictionarySelector = state => state.core.countyDictionary
 export const regionsDictionarySelector = state => state.core.regionDictionary
-
+export const hasAgreedToTermsSelector = state => state.core.hasAgreedToTerms
+export const hasSeenIntroScreenSelector = state => state.core.hasSeenIntroScreen
+export const hasSeenTermsOfServiceSelector = state => state.core.hasSeenTermsOfService
+export const hasSeenPrivacyPolicySelector = state => state.core.hasSeenPrivacyPolicy
 // export const streamCentroidsGeoJsonSelector = state => state.core.streamCentroidsGeoJson
 export const tableOfContentsLoadingStatusSelector = state => state.core.tableOfContentsLoadingStatus
 export const searchTextSelector = state => state.core.searchText

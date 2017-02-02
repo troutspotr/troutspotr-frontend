@@ -22,6 +22,8 @@ const webpackConfig = {
     extensions : ['', '.js', '.jsx', '.json'],
     // add preact aliasing to reduce build size.
     'alias': {
+      // https://github.com/developit/preact-compat/issues/14
+      // 'react-addons-css-transition-group': 'preact-css-transition-group',
       'react': 'preact-compat',
       'react-dom': 'preact-compat'
     }

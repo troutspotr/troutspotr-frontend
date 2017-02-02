@@ -194,23 +194,23 @@ export const getStreamFilters = createSelector(
       layerId: RESTRICTION_SECTIONS_QUITE_LAYER_ID
     }, streamAccessActiveLabel,
       streamAccessQuietLabel,
-      { // stream access center
-        filterDefinition: accessPointActiveFilter,
-        layerId: STREAM_ACCESS_POINTS_MARKER_BORDER_ACTIVE_LAYER_ID
-      }, {
-        filterDefinition: accessPointQuietFilter,
-        layerId: STREAM_ACCESS_POINTS_MARKER_BORDER_QUITE_LAYER_ID
-      }, { // stream access center border
-        filterDefinition: accessPointActiveFilter,
-        layerId: STREAM_ACCESS_POINTS_MARKER_CENTER_ACTIVE_LAYER_ID
-      }, { // stream access label
-        filterDefinition: accessPointQuietFilter,
-        layerId: STREAM_ACCESS_POINTS_MARKER_CENTER_QUITE_LAYER_ID
-      }, { // stream access active letter
-        filterDefinition: accessPointActiveFilter,
-        layerId: STREAM_ACCESS_POINTS_LETTER_ACTIVE_LAYER_ID
-      }, { // stream access quiet letter
-        filterDefinition: accessPointQuietFilter,
-        layerId: STREAM_ACCESS_POINTS_LETTER_QUITE_LAYER_ID
-      }]
+    { // stream access center
+      filterDefinition: accessPointActiveFilter,
+      layerId: STREAM_ACCESS_POINTS_MARKER_BORDER_ACTIVE_LAYER_ID
+    }, {
+      filterDefinition: accessPointQuietFilter,
+      layerId: STREAM_ACCESS_POINTS_MARKER_BORDER_QUITE_LAYER_ID
+    }, { // stream access center border
+      filterDefinition: accessPointActiveFilter,
+      layerId: STREAM_ACCESS_POINTS_MARKER_CENTER_ACTIVE_LAYER_ID
+    }, { // stream access label
+      filterDefinition: accessPointQuietFilter,
+      layerId: STREAM_ACCESS_POINTS_MARKER_CENTER_QUITE_LAYER_ID
+    }, { // stream access active letter
+      filterDefinition: accessPointActiveFilter,
+      layerId: STREAM_ACCESS_POINTS_LETTER_ACTIVE_LAYER_ID
+    }, { // stream access quiet letter
+      filterDefinition: accessPointQuietFilter,
+      layerId: STREAM_ACCESS_POINTS_LETTER_QUITE_LAYER_ID
+    }]
   })

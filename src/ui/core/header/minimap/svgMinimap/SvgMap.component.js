@@ -119,13 +119,18 @@ const SvgMapComponent = React.createClass({
 
   renderRegions () {
     let { regionsGeoJson } = this.props
+
     let paths = regionsGeoJson.features.map((region, index) => {
+      // SORRY! I have no idea why this is, but preact won't add
+      // sythnthetic events to the first item. we add 1 to it
+      // because it makes it work. SORRY!
+      let preactIndexHack = index + 1
       return (
         <RegionComponent
           geoJson={region}
           isSelected={false}
           isLoading={false}
-          key={index}
+          key={preactIndexHack}
           pathGenerator={this.pathGenerator}
           stateName={FAKE_STATE_NAME}
           selectRegion={this.props.selectRegion} />)
@@ -174,6 +179,7 @@ const SvgMapComponent = React.createClass({
   },
 
   render () {
+    console.log('rendering')
     return (
       <svg
         id='minimap'

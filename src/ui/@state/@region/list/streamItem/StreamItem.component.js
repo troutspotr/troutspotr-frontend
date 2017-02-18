@@ -36,21 +36,19 @@ const StreamItemComponent = React.createClass({
   render () {
     let { title, url, streamObject } = this.props
     return (
-      <div className={classes.container}>
+      <Link to={url} className={classes.container}>
         <div className={classes.media}>
           <MicroMapContainer
             streamObject={streamObject}
             id={streamObject.stream.properties.slug + '-canvas'} />
         </div>
-
         <div className={classes.body}>
-          <Link to={url} className={classes.header}>
-            {title}
-          </Link>
+          <div className={classes.header}>{title}</div>
           {this.renderOpenOrClosed(streamObject)}
           {this.renderOpenBridges(streamObject)}
         </div>
-      </div>)
+      </Link>
+    )
   }
 })
 export default StreamItemComponent

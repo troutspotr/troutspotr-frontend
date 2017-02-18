@@ -1,12 +1,16 @@
 'use strict'
 import { createAction, handleActions } from 'redux-actions'
 import extent from 'turf-extent'
-import circle from 'turf-circle'
+import turfCircle from 'turf-circle'
 // import { getSelectedStateProperties } from '../sidebar/Sidebar.selectors'
 import { mapCameraActions, BOUNDING_BOX_OF_LOWER_48_STATES } from './Map.state.camera'
 // ------------------------------------
 // Constants
 // ------------------------------------
+
+const TURF_CIRCLE_RADIUS_KM = 0.07
+const TURF_CIRCLE_SIDES = 4
+
 export const MAP_INTERACTIVITY_SET_SELECTED_FEATURES = 'MAP_INTERACTIVITY_SET_SELECTED_FEATURES'
 export const MAP_INTERACTIVITY_SET_SELECTED_FEATURE_COLLECTION = 'MAP_INTERACTIVITY_SET_SELECTED_FEATURE_COLLECTION'
 export const MAP_INTERACTIVITY_IS_MAP_INITIALIZED = 'MAP_INTERACTIVITY_IS_MAP_INITIALIZED'
@@ -51,7 +55,7 @@ export const selectFoculPoint = (feature) => {
       throw new Error('feature cannot be null')
     }
 
-    let selectedState = circle(feature, 0.12, 4)
+    let selectedState = turfCircle(feature, TURF_CIRCLE_RADIUS_KM, TURF_CIRCLE_SIDES)
     let boundingBox = extent(selectedState)
     let newCorners = [
         [boundingBox[0], boundingBox[1]],

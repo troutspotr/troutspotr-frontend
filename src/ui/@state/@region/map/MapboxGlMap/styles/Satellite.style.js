@@ -1,11 +1,17 @@
 import { SATELLITE_LAYER_ID } from '../filters/Filters.selectors'
 const SATELLITE_SOURCE_ID = 'mapbox://mapbox.satellite'
+
+// Mapbox satellite gets funky around
+// zoom level 16.5 - that's the highest
+// resolution we can get. switch
+// to 16.5 only.
+const SATELLITE_ZOOM_LEVEL = 16.5
 export const SatelliteStyle = {
   'id': SATELLITE_LAYER_ID,
   'type': 'raster',
   'source': SATELLITE_SOURCE_ID,
   // 'interactive': false,
-  'minzoom': 16.51,
+  'minzoom': SATELLITE_ZOOM_LEVEL + 0.01,
   'layout': {
     'visibility': 'visible'
   },
@@ -14,11 +20,11 @@ export const SatelliteStyle = {
       'base': 1.6,
       'stops': [
         [
-          16.5,
+          SATELLITE_ZOOM_LEVEL,
           0
         ],
         [
-          16.7,
+          SATELLITE_ZOOM_LEVEL + 0.2,
           1
         ]
       ]

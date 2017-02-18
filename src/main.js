@@ -1,5 +1,5 @@
-// let swInstaller = require('offline-plugin/runtime')
-// swInstaller.install()
+let swInstaller = require('offline-plugin/runtime')
+swInstaller.install()
 import 'ui/styles/core.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -45,14 +45,14 @@ let render = () => {
 // ========================================================
 // Developer Tools Setup
 // ========================================================
-if (__DEV__) {
+if (__DEV__ || false) {
   if (window.devToolsExtension) {
     // window.devToolsExtension.open()
   }
 }
 
 // This code is excluded from production bundle
-if (__DEV__) {
+if (__DEV__ || false) {
   if (module.hot) {
     // Development render functions
     const renderApp = render

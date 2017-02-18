@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const config = require('../config')
 const debug = require('debug')('app:webpack:config')
 // var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-// const OfflinePlugin = require('offline-plugin')
+const OfflinePlugin = require('offline-plugin')
 
 const paths = config.utils_paths
 const __DEV__ = config.globals.__DEV__
@@ -67,23 +67,30 @@ webpackConfig.plugins = [
     minify   : {
       collapseWhitespace : true
     }
+  }),
+  new OfflinePlugin({
+    // publicPath: config.compiler_public_path,
+    publicPath: '/',
+    caches: {
+      main: [':rest:'],
+      additional: [':externals:']
+    },
+    externals: ['data/v1/TableOfContents.topo.json', 'data/v1/mn/mn.data.json'],
+    cacheMaps: [{
+      match: function (requestUrl) {
+        return new URL('/', location)
+      },
+      requestTypes: ['navigate']
+    }],
+    updateStrategy: 'all',
+    AppCache: {
+      FALLBACK: { '/': '/' }
+    },
+    ServiceWorker: {
+      navigateFallbackURL: '/'
+    },
+    relativePaths: false
   })
-  // new OfflinePlugin({
-  //   // publicPath: config.compiler_public_path,
-  //   publicPath: '/',
-  //   caches: {
-  //     main: ['data/mn/mn.topo.json', 'favicon.ico', ':rest:']
-  //   },
-  //   externals: ['data/mn/mn.topo.json', 'favicon.ico'],
-  //   updateStrategy: 'all',
-  //   AppCache: {
-  //     FALLBACK: { '/': '/' }
-  //   },
-  //   ServiceWorker: {
-  //     navigateFallbackURL: '/'
-  //   },
-  //   relativePaths: false
-  // }),
   // new BundleAnalyzerPlugin({
   //   // Can be `server`, `static` or `disabled`.
   //   // In `server` mode analyzer will start HTTP server to show bundle report.
@@ -105,7 +112,7 @@ webpackConfig.plugins = [
   // })
 ]
 
-if (__DEV__) {
+if (__DEV__ || false) {
   debug('Enable plugins for live development (HMR, NoErrors).')
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),

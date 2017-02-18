@@ -17,9 +17,9 @@ const RegulationsSummary = React.createClass({
     return (
       <div className={classes.container}>
         <span className={statusClass}>
-          {statusText}
+          {statusText} until {dateText}
         </span>
-        {explainerText}until {dateText}
+        <span> {explainerText}</span>
       </div>)
   },
 
@@ -50,7 +50,7 @@ const RegulationsSummary = React.createClass({
 
     if (isOpenSeason && hasRegulationThatOverridesOpenSeason === false) {
       // it's plain vanilla open. Go nuts.
-      let dateText = openers[0].end_time.toLocaleDateString('en-US')
+      let dateText = openers[0].end_time.toLocaleDateString('en-US') + '.'
       let args = {
         statusClass: classes.open,
         statusText: 'Open',

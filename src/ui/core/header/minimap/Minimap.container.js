@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import MinimapComponent from './Minimap.component'
 import { isExpaned } from './Minimap.state'
-import { isExpandedSelector, getIsOpenSelector } from './Minimap.selectors'
+import { isExpandedSelector, getIsOpenSelector, isStreamCentroidsDisplayedSelector } from './Minimap.selectors'
 import { withRouter } from 'react-router'
 import { isRootPageSelector } from 'ui/Location.selectors'
 import { fetchTableOfContents } from 'ui/core/Core.state'
@@ -24,7 +24,8 @@ const mapStateToProps = (state) => {
     streamCentroidsGeoJson: stateSelectors.displayedCentroids(state),
     selectedStreamCentroid: stateSelectors.displayedStreamCentroidDataSelector(state),
     tableOfContentsLoadingStatus: coreSelectors.tableOfContentsLoadingStatusSelector(state),
-    getIsOpen: getIsOpenSelector(state)
+    getIsOpen: getIsOpenSelector(state),
+    isStreamCentroidsDisplayed: isStreamCentroidsDisplayedSelector(state)
   }
   return props
 }

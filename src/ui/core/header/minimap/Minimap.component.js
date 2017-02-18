@@ -23,6 +23,8 @@ const MinimapComponent = React.createClass({
     selectedRegion: PropTypes.object,
     selectedStreamCentroid: PropTypes.object,
     getIsOpen: PropTypes.func.isRequired,
+    isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
+
     expand: PropTypes.func.isRequired,
     fetchTableOfContents: PropTypes.func.isRequired
   },
@@ -216,6 +218,7 @@ const MinimapComponent = React.createClass({
             selectedStreamCentroid={this.props.selectedStreamCentroid}
             width={MINIMAP_WIDTH}
             height={MINIMAP_WIDTH}
+            isStreamCentroidsDisplayed={this.props.isStreamCentroidsDisplayed}
             selectRegion={this.selectRegion} />}
         </div>
 

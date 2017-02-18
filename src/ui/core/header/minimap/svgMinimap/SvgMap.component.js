@@ -30,6 +30,7 @@ const SvgMapComponent = React.createClass({
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     getIsOpen: PropTypes.func.isRequired,
+    isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
     // location: PropTypes.object.isRequired,
     selectedStreamCentroid: PropTypes.object,
 
@@ -195,7 +196,7 @@ const SvgMapComponent = React.createClass({
         <g className={classes.selectedRegions}>
           {this.renderSelectedRegions()}
         </g>
-        <g className={classes.centroids}>
+        <g className={classes.centroids} style={{ opacity: this.props.isStreamCentroidsDisplayed ? 1 : 0 }}>
           {this.renderStreamCentroids()}
         </g>
         <g className={classes.selectedStreamCentroid}>

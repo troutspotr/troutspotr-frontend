@@ -89,6 +89,17 @@ export const selectedStateSelector = createSelector(
     return state
   })
 
+export const isSearchingSelector = createSelector(
+  [searchTextSelector],
+  (searchText) => {
+    if (searchText == null) {
+      return false
+    }
+
+    let isSearchNonEmpty = isEmpty(searchText) === false
+    return isSearchNonEmpty
+  })
+
 export const selectedRegionSelector = createSelector(
   [selectedRegionIdSelector, regionsDictionarySelector],
   (regionId, regionsDictionary) => {

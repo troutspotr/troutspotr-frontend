@@ -55,6 +55,10 @@ const DetailsOverlayComponent = React.createClass({
   },
 
   render () {
+    if (isEmpty(this.props.visibleTroutStreams)) {
+      return null
+    }
+
     return (
       <MessageOverlay position='top'>
         <div className={classes.container}>

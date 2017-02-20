@@ -64,7 +64,7 @@ const PrivacyPolicy = React.createClass({
     }, 3200)
 
     setTimeout(() => {
-      this.addElement((<div className={classes.preambleItem}>To that end, we track usage, not users, <span className={classes.blue}>and you can opt out</span>.</div>))
+      this.addElement((<div className={classes.preambleItem}>To that end, we track usage, not users, <strong>and you can opt out</strong>.</div>))
     }, 6100)
 
     setTimeout(() => {

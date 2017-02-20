@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import MapboxGlComponentCamera from './MapboxGl.component.camera'
 import classes from '../Map.scss'
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
+import BaseStyle from './styles/Base.style'
 import { isEmpty, debounce, flatten, clamp } from 'lodash'
 const MapboxGlComponent = React.createClass({
   propTypes: {
@@ -32,7 +33,7 @@ const MapboxGlComponent = React.createClass({
       container: this.props.elementId,
       // style: 'mapbox://styles/andest01/ciwfc17nv00582ql7c7tbrk9h', // debug
       // style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
-      style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
+      // style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
       center: [-93.50, 42],
       zoom: 4,
       maxZoom: 18.0,
@@ -40,6 +41,10 @@ const MapboxGlComponent = React.createClass({
       dragRotate: true,
       keyboard: false
     })
+
+    this.map.setStyle(BaseStyle)
+
+    this.map.on('error', this.onError)
 
     // setTimeout(() => { this.map.resize() }, 20)
 
@@ -73,6 +78,12 @@ const MapboxGlComponent = React.createClass({
     this.map.on('click', this.proxyOnClick)
   },
 
+  // handle occasional errors. Some errors are actually normal
+  // so be very careful on _which_ errors you actualy want to handle.
+  onError (e) {
+    console.log(e)
+  },
+
   onLayerMouseOver (e) {
     let features = this.getInteractiveFeaturesOverPoint(e.point)
     if (features == null) {
@@ -90,6 +101,15 @@ const MapboxGlComponent = React.createClass({
   },
 
   getInteractiveFeaturesOverPoint (point) {
+    // sanity check up front - this helps with
+    // offline issues. Maybe the style didn't load, etc.
+    // Don't bother querying if the map isn't loaded properly.
+
+    let { isReadyToInsertLayers } = this.props
+    if (isReadyToInsertLayers === false) {
+      return null
+    }
+
     let BOX_DIMENSION = 20
     let boundingBox = [
       [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
@@ -176,15 +196,20 @@ const MapboxGlComponent = React.createClass({
     }
 
     // add our satellite source first:
-    const satelliteId = 'mapbox://mapbox.satellite'
-    if (this.map.getSource(satelliteId) == null) {
-      this.map.addSource(satelliteId, {
-        url: 'mapbox://mapbox.satellite',
-        type: 'raster',
-        tileSize: 256
-      })
+    try { 
+      const satelliteId = 'mapbox://mapbox.satellite'
+      if (this.map.getSource(satelliteId) == null) {
+        this.map.addSource(satelliteId, {
+          url: 'mapbox://mapbox.satellite',
+          type: 'raster',
+          tileSize: 256
+        })
+      }
+    } catch (e) {
+      console.log('could not load satellite layer.')
+      console.log(e)
     }
-
+    
     this.safelySetSources(this.map, this.props.sources)
     this.props.setIsMapInitialized(true)
   },

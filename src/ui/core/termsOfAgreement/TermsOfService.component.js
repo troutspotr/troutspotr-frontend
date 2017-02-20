@@ -204,7 +204,7 @@ const TermsOfServiceComponent = React.createClass({
     return (
       <div key={index}>
         <div>Contact Us.</div>
-        <p>If you have any questions about these Terms of Service, you may contact us at: troutspotr@gmail.com</p>
+        <p>If you have any questions about these Terms of Service, you may contact us at: <a className={classes.link} href='mailto:troutspotr@gmail.com'>troutspotr@gmail.com</a></p>
       </div>)
   },
 

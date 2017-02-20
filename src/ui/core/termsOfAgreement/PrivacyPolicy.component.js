@@ -223,7 +223,7 @@ const PrivacyPolicy = React.createClass({
     let title = 'Contact'
     let body = (<div key={index}>
       <div />
-      <p>Please contact us at troutspotr@gmail.com if you have any questions, comments or requests regarding this Privacy Policy. </p>
+      <p>Please contact us at <a className={classes.link} href='mailto:troutspotr@gmail.com'>troutspotr@gmail.com</a> if you have any questions, comments or requests regarding this Privacy Policy. </p>
     </div>)
 
     return this.renderTerm({ index, title, body })

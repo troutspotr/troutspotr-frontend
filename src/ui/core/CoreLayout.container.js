@@ -11,6 +11,7 @@ import { REGION_PARAM_NAME, STATE_PARAM_NAME } from 'ui/core/RouteConstants.js'
 import { hasAgreedToTermsSelector } from 'ui/core/Core.selectors.js'
 import { isRootPageSelector, isStatePageSelector } from 'ui/Location.selectors'
 import { withRouter } from 'react-router'
+import NoResultsFoundOverlayContainer from './noResultsFoundOverlay/NoResultsFoundOverlay.container'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 const CoreLayoutContainer = React.createClass({
   propTypes: {
@@ -67,6 +68,7 @@ const CoreLayoutContainer = React.createClass({
         </div>}
         <div id='scrollContainer' className={classes.coreContentLayout}>
           <div className={classes.coreContent}>
+            <NoResultsFoundOverlayContainer />
             { this.props.children }
             {this.props.hasAgreedToTerms && this.props.isMinimapExpanded &&
               <SneezeGuardComponent close={this.props.isRoot || this.props.isState ? null : this.props.closeMinimap} />}
@@ -96,5 +98,3 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CoreLayoutContainer))
-
-// export default CoreLayoutContainer

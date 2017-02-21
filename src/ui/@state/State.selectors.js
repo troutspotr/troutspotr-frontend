@@ -6,7 +6,7 @@ export const regionIndexSelector = state => state.state.regionIndex
 export const regulationsSelector = state => state.state.regulations
 export const roadTypesSelector = state => state.state.roadTypes
 export const palTypesSelector = state => state.state.palTypes
-export const streamCentroidsSelector = state => state.state.streamCentroids
+export const streamCentroidsStateSelector = state => state.state.streamCentroids
 export const stateDataLoadingStatusSelector = state => state.state.stateDataLoadingStatus
 export const slugDictionarySelector = state => state.state.slugDictionary
 export const streamIdDictionarySelector = state => state.state.streamIdDictionary
@@ -47,14 +47,20 @@ export const getWatersObjectSelector = createSelector(
     return (waterId) => { return waterDictionary[waterId] }
   })
 
-const emptyCentroids = []
-export const displayedCentroids = createSelector(
-  [searchTextSelector, stateDataLoadingStatusSelector, streamCentroidsSelector],
-  (searchText, stateDataLoadingStatus, streamCentroids) => {
-    if (stateDataLoadingStatus !== LOADING_CONSTANTS.IS_SUCCESS) {
+export const streamCentroidsSelector = createSelector(
+  [stateDataLoadingStatusSelector, streamCentroidsStateSelector],
+  (isLoading, streamCentroids) => {
+    if (isLoading !== LOADING_CONSTANTS.IS_SUCCESS) {
       return emptyCentroids
     }
 
+    return streamCentroids
+  })
+
+const emptyCentroids = []
+export const displayedCentroids = createSelector(
+  [searchTextSelector, streamCentroidsSelector],
+  (searchText, streamCentroids) => {
     if (isEmpty(searchText)) {
       return streamCentroids
     }

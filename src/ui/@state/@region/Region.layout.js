@@ -5,10 +5,8 @@ import MapContainer from './map/Map.container'
 import CountyListContainer from './list/CountyList.container'
 import LoadingComponent from 'ui/core/loading/Loading.component'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
 import { isEmpty } from 'lodash'
 import SvgSpriteSheet from './svgSpriteSheet/SvgSpriteSheet.component'
-// console.log(MAP, LIST)
 const RegionLayout = React.createClass({
   propTypes: {
     view: PropTypes.string.isRequired,
@@ -17,8 +15,6 @@ const RegionLayout = React.createClass({
     selectedState: PropTypes.string.isRequired,
     selectedRegion: PropTypes.string.isRequired,
     regionLoadingStatus: PropTypes.string.isRequired,
-    troutStreams: PropTypes.array,
-    // searchText: PropTypes.string.isRequired,
     selectedStream: PropTypes.object,
     clearText: PropTypes.func.isRequired,
     streams: PropTypes.object,
@@ -50,25 +46,6 @@ const RegionLayout = React.createClass({
     return null
   },
 
-  renderNoElementsFoundInRegionOverlay () {
-    let { showNoResultsFoundOverlay, streams } = this.props
-    if (showNoResultsFoundOverlay === false) {
-      return null
-    }
-
-    let safeStreamCount = isEmpty(streams) ? 0 : streams.features.length
-    return (
-      <MessageOverlay
-        position='top' >
-        <div>
-          <div className={classes.clearSearchTitle}>No streams matched your search.</div>
-          <div>
-            <button onClick={this.props.clearText} className={classes.actionButton}>Clear your search</button> to see {safeStreamCount} streams.
-          </div>
-        </div>
-      </MessageOverlay>)
-  },
-
   renderMap () {
     let { view } = this.props
     let isVisible = view === MAP
@@ -96,9 +73,7 @@ const RegionLayout = React.createClass({
         {this.renderMap()}
         {view === LIST && this.props.children}
         {this.renderLoading()}
-        {this.renderNoElementsFoundInRegionOverlay()}
       </div>
-
     )
   }
 })

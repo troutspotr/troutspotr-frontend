@@ -134,12 +134,12 @@ const MinimapComponent = React.createClass({
     let width = (window.innerWidth > 0) ? window.innerWidth : screen.width
     let height = (window.innerHeight > 0) ? window.innerHeight : screen.height
 
-    let minimumDimension = Math.min(width, height - 120)
+    let minimumDimension = Math.min(width, height - 170)
     let ratio = minimumDimension / MINIMAP_WIDTH
     let soughtClassRule = `.${classes.minimapContent}.${classes.expand}`
 
     let result = this.getCSSRule(soughtClassRule)
-    let translateY = MINIMAP_WIDTH + 15
+    let translateY = MINIMAP_WIDTH + 45
     let translateX = (width - (ratio * MINIMAP_WIDTH)) / 2
     let newStyle = `translateY(${Math.round(translateY)}px) translateX(${-Math.round(translateX)}px) scale(${ratio})`
 

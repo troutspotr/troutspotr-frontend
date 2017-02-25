@@ -190,6 +190,7 @@ const DetailsComponent = React.createClass({
   },
 
   render () {
+    console.log(this.props.selectedStream)
     return (
       <div className={classes.container}>
         {this.renderSummary()}

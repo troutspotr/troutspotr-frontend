@@ -7,10 +7,10 @@ export const createRoutes = (store) => ({
   onEnter: ({ location }, replace) => {
     let noOtherStatesButMinnesotaSoJustRedirectToMnThanks = true
     let isRoot = isRootPageByUrl(location.pathname)
-    if (isRoot && noOtherStatesButMinnesotaSoJustRedirectToMnThanks) {
-      console.log('forcing redirect to minnesota because why not')
-      return replace(`/mn`)
-    }
+    // if (isRoot && noOtherStatesButMinnesotaSoJustRedirectToMnThanks) {
+    //   console. log('forcing redirect to minnesota because why not')
+    //   return replace(`/wi`)
+    // }
   },
   component: CoreLayoutContainer,
   indexRoute: HomeContainer,

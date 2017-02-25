@@ -207,5 +207,5 @@ const SvgMapComponent = React.createClass({
   }
 })
 
-const FAKE_STATE_NAME = 'mn'
+const FAKE_STATE_NAME = 'wi'
 export default SvgMapComponent

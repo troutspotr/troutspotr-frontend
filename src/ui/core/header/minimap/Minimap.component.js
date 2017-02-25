@@ -167,7 +167,7 @@ const MinimapComponent = React.createClass({
     e.stopPropagation()
     this.props.expand(false)
 
-    let stateName = 'mn' // hail mary
+    let stateName = 'wi' // hail mary
     let path = `/${stateName}/${region.properties.name.toLowerCase()}`
     browserHistory.push(path)
   },

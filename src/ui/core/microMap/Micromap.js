@@ -60,6 +60,9 @@ const renderStreams = (streamObject, canvasContext, dimensions) => {
     .pointRadius(END_POINT_SIZE)
     .context(canvasContext)
 
+  let streamConfluence = streamObject.stream.geometry.coordinates[0]
+  renderPointOnStream(projection, canvasContext, streamConfluence, colors.StreamGray, 2)
+
   // render stream
   renderStream(geoPath, canvasContext, streamObject.stream, colors.StreamGray, STREAM_WIDTH)
 
@@ -90,24 +93,26 @@ const renderStream = (path, context, geoJson, color = 'red', thickness = 1) => {
   context.stroke()
 }
 
-// const renderPointOnStream = (projection, context, { coordinates }, color = 'red', radius = 1) => {
-//   if (projection == null) {
-//     return
-//   }
+export const renderPointOnStream = (projection, context, coordinates, color = 'red', radius = 1) => {
+  if (projection == null) {
+    return
+  }
 
-//   if (context == null) {
-//     return
-//   }
-//   context.save()
-//   context.fillStyle = color
-//   let canvasCoordiantes = projection(coordinates)
-//   context.lineWidth = 1
-//   context.strokeStyle = color
-//   context.globalAlpha = 0.4
-//   context.beginPath()
-//   context.arc(canvasCoordiantes[0], canvasCoordiantes[1], radius, 0, TAU, true)
-//   context.stroke()
-// }
+  if (context == null) {
+    return
+  }
+  context.save()
+  context.beginPath()
+  context.fillStyle = color
+  let canvasCoordiantes = projection(coordinates)
+  context.lineWidth = 1
+  context.strokeStyle = color
+  // context.globalAlpha = 0.4
+  
+  context.arc(canvasCoordiantes[0], canvasCoordiantes[1], radius, 0, TAU, false)
+  context.fill()
+  context.stroke()
+}
 
 export const renderPetriDish = (context, dimensions, color) => {
   let { width, height } = dimensions

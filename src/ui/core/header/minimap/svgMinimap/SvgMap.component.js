@@ -113,7 +113,7 @@ const SvgMapComponent = React.createClass({
         key={index}
         isLoading={false}
         pathGenerator={this.pathGenerator}
-        stateName={FAKE_STATE_NAME}
+        stateName={region.properties.state_gid.toString()}
         selectRegion={() => { }} />)
     })
   },
@@ -133,7 +133,7 @@ const SvgMapComponent = React.createClass({
           isLoading={false}
           key={preactIndexHack}
           pathGenerator={this.pathGenerator}
-          stateName={FAKE_STATE_NAME}
+          stateName={region.properties.state_gid.toString()}
           selectRegion={this.props.selectRegion} />)
     })
     return (<g className={classes.regions}>
@@ -207,5 +207,4 @@ const SvgMapComponent = React.createClass({
   }
 })
 
-const FAKE_STATE_NAME = 'wi'
 export default SvgMapComponent

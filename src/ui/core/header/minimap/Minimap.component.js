@@ -4,7 +4,7 @@ import { isRootPageByUrl, isStatePageByUrl } from 'ui/Location.selectors'
 import debounce from 'lodash/debounce'
 import SvgMapComponent from './svgMinimap/SvgMap.component'
 import ActionButtonComponent from '../actionButton/ActionButton.component'
-import { isEmpty } from 'lodash'
+import { isEmpty, find } from 'lodash'
 import { browserHistory } from 'react-router'
 const MINIMAP_WIDTH = 50
 
@@ -157,7 +157,6 @@ const MinimapComponent = React.createClass({
 
   selectRegion (e, region) {
     let shouldRespond = this.props.isExpanded
-
     // do not respond to clicks when not expanded
     if (shouldRespond === false) {
       e.preventDefault()
@@ -166,9 +165,18 @@ const MinimapComponent = React.createClass({
 
     e.stopPropagation()
     this.props.expand(false)
+    let states = this.props.statesGeoJson.features
+    if (isEmpty(states)) {
+      throw new Error('Could not find state for region ', region)
+    }
 
-    let stateName = 'wi' // hail mary
-    let path = `/${stateName}/${region.properties.name.toLowerCase()}`
+    let soughtState = find(states, inspectedState => inspectedState.properties.gid === region.properties.state_gid)
+    if (soughtState == null) {
+      throw new Error('Could not find state for region ', region)
+    }
+
+    let stateShortName = soughtState.properties.short_name.toLowerCase()
+    let path = `/${stateShortName}/${region.properties.name.toLowerCase()}`
     browserHistory.push(path)
   },
 

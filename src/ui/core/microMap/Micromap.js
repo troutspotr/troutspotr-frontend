@@ -107,8 +107,6 @@ export const renderPointOnStream = (projection, context, coordinates, color = 'r
   let canvasCoordiantes = projection(coordinates)
   context.lineWidth = 1
   context.strokeStyle = color
-  // context.globalAlpha = 0.4
-
   context.arc(canvasCoordiantes[0], canvasCoordiantes[1], radius, 0, TAU, false)
   context.fill()
   context.stroke()

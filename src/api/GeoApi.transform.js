@@ -48,7 +48,6 @@ const createStreamDictionaries = (geoJsonObjects) => {
   var tributaries = groupBy(geoJsonObjects.tributary.features
       .filter(x => x.properties.linear_offset > 0.0001 && x.properties.linear_offset < 0.999),
        'properties.stream_gid')
-
   var tempCircleDictionary = keyBy(geoJsonObjects.boundingCircle.features, 'properties.gid')
 
   return {
@@ -86,7 +85,6 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
       entry.stream = currentItem
 
       entry.sections = sectionsMap[streamId]
-        // .sort((a, b) => b.properties.start - a.properties.start)
 
       entry.restrictions = restrictionsMap[streamId] == null
         ? []
@@ -183,7 +181,6 @@ const decompress = (topojsonObject, stateData) => {
     type: 'FeatureCollection'
   }
 
-  //  topojson.feature(topojsonObject, topojsonObject.objects.accessPoint)
   return dictionary
 }
 

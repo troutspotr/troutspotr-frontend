@@ -35,6 +35,10 @@ export const STREAM_ACCESS_POINTS_MARKER_BORDER_QUITE_LAYER_ID = 'stream-access-
 export const STREAM_ACCESS_POINTS_MARKER_CENTER_ACTIVE_LAYER_ID = 'stream-access-points-marker-center-active-layer'
 export const STREAM_ACCESS_POINTS_MARKER_CENTER_QUITE_LAYER_ID = 'stream-access-points-marker-center-quiet-layer'
 
+export const STREAM_CENTROID_LABEL_ACTIVE_LAYER_ID = 'stream-centroid-label-active-layer'
+export const STREAM_CENTROID_LABEL_QUIET_LAYER_ID = 'stream-centroid-label-quiet-layer'
+export const STREAM_CENTROID_LABEL_HIGHLIGHT_LAYER_ID = 'stream-centroid-label-highlight-layer'
+
 export const PAL_SECTION_LAYER_ID = 'pal-layer'
 export const SATELLITE_LAYER_ID = 'satellite-layer'
 
@@ -62,6 +66,28 @@ export const getStreamsActiveFilter = createSelector(
   })
 
 export const getStreamsQuietFilter = createSelector(
+  [getSelectedStreamFilter],
+  (visibleTroutStreamIds) => {
+    return ['!in', 'gid'].concat(visibleTroutStreamIds)
+  })
+
+export const getStreamCentroidsActiveFilter = createSelector(
+  [getSelectedStreamFilter],
+  (visibleTroutStreamIds) => {
+    return ['in', 'gid'].concat(visibleTroutStreamIds)
+  })
+
+export const getStreamCentroidsHighlightFilter = createSelector(
+  [getSelectedStreamFilter, displayedStreamCentroidDataSelector],
+  (visibleTroutStreamIds, displayedStreamCentroid) => {
+    if (displayedStreamCentroid != null) {
+      return ['in', 'gid'].concat([displayedStreamCentroid.gid])
+    }
+    // return an empty filter
+    return ['in', 'gid'].concat([-1])
+  })
+
+export const getStreamCentroidsQuietFilter = createSelector(
   [getSelectedStreamFilter],
   (visibleTroutStreamIds) => {
     return ['!in', 'gid'].concat(visibleTroutStreamIds)
@@ -150,14 +176,21 @@ export const getStreamFilters = createSelector(
     getDerivedFeatureActiveFilter,
     getDerivedFeatureQuietFilter,
     getAccessPointActiveFilter,
-    getAccessPointQuietFilter
+    getAccessPointQuietFilter,
+    getStreamCentroidsActiveFilter,
+    getStreamCentroidsQuietFilter,
+    getStreamCentroidsHighlightFilter
   ],
   (activeFilter,
     quietFilter,
     derivedFeatureActiveFilter,
     derivedFeatureQuietFilter,
     accessPointActiveFilter,
-    accessPointQuietFilter) => {
+    accessPointQuietFilter,
+    centroidActiveFilter,
+    centroidQuietFilter,
+    centroidHighlightFilter
+    ) => {
     let streamAccessActiveLabel = {
       filterDefinition: accessPointActiveFilter,
       layerId: STREAM_ACCESS_POINTS_ACTIVE_LABEL_LAYER_ID
@@ -166,6 +199,22 @@ export const getStreamFilters = createSelector(
     let streamAccessQuietLabel = {
       filterDefinition: accessPointQuietFilter,
       layerId: STREAM_ACCESS_POINTS_QUITE_LABEL_LAYER_ID
+    }
+// getStreamCentroidsActiveFilter
+// getStreamCentroidsQuietFilter
+    let streamCentroidActiveLabel = {
+      filterDefinition: centroidActiveFilter,
+      layerId: STREAM_CENTROID_LABEL_ACTIVE_LAYER_ID
+    }
+
+    let streamCentroidQuietLabel = {
+      filterDefinition: centroidQuietFilter,
+      layerId: STREAM_CENTROID_LABEL_QUIET_LAYER_ID
+    }
+
+    let streamCentroidHighlightLabel = {
+      filterDefinition: centroidHighlightFilter,
+      layerId: STREAM_CENTROID_LABEL_HIGHLIGHT_LAYER_ID
     }
 
     return [{ // streams
@@ -192,7 +241,12 @@ export const getStreamFilters = createSelector(
     }, {
       filterDefinition: derivedFeatureQuietFilter,
       layerId: RESTRICTION_SECTIONS_QUITE_LAYER_ID
-    }, streamAccessActiveLabel,
+    },
+
+      streamCentroidActiveLabel,
+      streamCentroidQuietLabel,
+      streamCentroidHighlightLabel,
+      streamAccessActiveLabel,
       streamAccessQuietLabel,
     { // stream access center
       filterDefinition: accessPointActiveFilter,

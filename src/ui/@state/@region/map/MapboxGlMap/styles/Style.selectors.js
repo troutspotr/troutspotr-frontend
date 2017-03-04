@@ -19,6 +19,15 @@ export const streamLayersSelector = createSelector(
     return [quietLayer, activeLayer]
   })
 
+export const streamCentroidLayersSelector = createSelector(
+  [],
+  () => {
+    let quietLayer = layerGeneratorBetter(streamStyles.StreamCentroidsQuietStyle, UNDER_LABEL_PLACEHOLDER)
+    let activeLayer = layerGeneratorBetter(streamStyles.StreamCentroidsActiveStyle, UNDER_LABEL_PLACEHOLDER)
+    let highlightLayer = layerGeneratorBetter(streamStyles.StreamCentroidsHighlightStyle, UNDER_LABEL_PLACEHOLDER)
+    return [quietLayer, activeLayer, highlightLayer]
+  })
+
 export const troutSectionsLayersSelector = createSelector(
   [],
   () => {
@@ -105,7 +114,8 @@ export const layersSelector = createSelector(
     palLayersSelector,
     restrictionSectionsLayersSelector,
     palSectionsLayersSelector,
-    accessPointsLayerSelector
+    accessPointsLayerSelector,
+    streamCentroidLayersSelector
   ],
   (
     streamLayers,
@@ -113,7 +123,8 @@ export const layersSelector = createSelector(
     palLayers,
     restrictionSectionsLayers,
     palSectionsLayers,
-    accessPointsLayers
+    accessPointsLayers,
+    streamCentroidLayersSelector
   ) => {
     let layers = [].concat(
       palLayers,
@@ -121,7 +132,8 @@ export const layersSelector = createSelector(
       troutSectionsLayers,
       restrictionSectionsLayers,
       palSectionsLayers,
-      accessPointsLayers
+      accessPointsLayers,
+      streamCentroidLayersSelector
     )
     return layers
   })

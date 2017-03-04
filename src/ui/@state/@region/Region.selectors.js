@@ -20,6 +20,31 @@ export const palsSelector = state => state.region.pals
 export const hoveredStreamSelector = state => state.region.hoveredStream
 export const hoveredRoadSelector = state => state.region.hoveredRoad
 
+const EMPTY_STREAM_CENTROIDS = []
+export const streamCentroidsSelector = createSelector(
+  [streamsSelector],
+  (streams) => {
+    if (isEmpty(streams)) {
+      return EMPTY_STREAM_CENTROIDS
+    }
+
+    // map them into centroids.
+    let centroidFeatures = streams.features.map((feature, id) => {
+      let { properties } = feature
+      let { centroid_longitude, centroid_latitude } = properties
+      /* eslint-disable camelcase */
+      let geometry = { type: 'Point', coordinates: [centroid_longitude, centroid_latitude] }
+      /* eslint-enable camelcase */
+      let type = 'Feature'
+      return { geometry, id, properties, type }
+    })
+
+    return {
+      features: centroidFeatures,
+      type: 'FeatureCollection'
+    }
+  })
+
 export const isFinishedLoadingRegion = createSelector(
   [regionLoadingStatusSelector],
   (regionLoadingStatus) => {

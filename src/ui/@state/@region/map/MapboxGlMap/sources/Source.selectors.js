@@ -5,6 +5,7 @@ import { isEmpty } from 'lodash'
 export const PALS_SOURCE_ID = 'pals-src'
 export const TROUT_STREAM_SECTIONS_SOURCE_ID = 'trout-stream-sections-src'
 export const STREAMS_SOURCE_ID = 'streams-src'
+export const STREAM_CENTROIDS_SOURCE_ID = 'stream-centroids-src'
 export const PAL_SECTIONS_SOURCE_ID = 'pal-sections-src'
 export const STREAM_ACCESS_POINTS_SOURCE_ID = 'stream-access-points-src'
 export const RESTRICTION_SECTIONS_SOURCE_ID = 'restriction-sections-src'
@@ -17,6 +18,17 @@ export const streamSourceSelector = createSelector(
     }
     let streamSourceLayer = sourceGenerator(STREAMS_SOURCE_ID, streams)
     return streamSourceLayer
+  })
+
+export const streamCentroidSourceSelector = createSelector(
+  [regionSelectors.streamCentroidsSelector],
+  (centroids) => {
+    if (isEmpty(centroids)) {
+      return null
+    }
+
+    let centroidsSourceLayer = sourceGenerator(STREAM_CENTROIDS_SOURCE_ID, centroids)
+    return centroidsSourceLayer
   })
 
 export const troutSectionSourceSelector = createSelector(
@@ -72,6 +84,7 @@ export const streamAccessPointsSourceSelector = createSelector(
 export const getMapboxGlSources = createSelector(
   [
     streamSourceSelector,
+    streamCentroidSourceSelector,
     troutSectionSourceSelector,
     palSourceSelector,
     restrictionSectionSourceSelector,
@@ -79,18 +92,22 @@ export const getMapboxGlSources = createSelector(
     streamAccessPointsSourceSelector
   ],
   (streamSource,
+    centroidsSource,
     troutSectionSource,
     palSource,
     restrictionSectionSource,
     palSectionSource,
     streamAccessPointsSource) => {
-    return [
+    let result = [
       streamSource,
+      centroidsSource,
       troutSectionSource,
       palSource,
       restrictionSectionSource,
       palSectionSource,
       streamAccessPointsSource].filter(x => x != null)
+    console.log('sources', result)
+    return result
   })
 
 const sourceGenerator = (sourceId, sourceData) => {

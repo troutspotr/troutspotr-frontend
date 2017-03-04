@@ -13,7 +13,7 @@ export const AccessPointLabelActiveStyle = {
   'type': 'symbol',
   'source': STREAM_ACCESS_POINTS_SOURCE_ID,
   'interactive': true,
-  'minzoom': 10,
+  'minzoom': 13,
   'layout': {
     'text-field': '{street_name}',
     // 'text-allow-overlap': true,
@@ -55,7 +55,7 @@ export const AccessPointLabelQuietStyle = {
   'type': 'symbol',
   'source': STREAM_ACCESS_POINTS_SOURCE_ID,
   'interactive': false,
-  'minzoom': 12,
+  'minzoom': 14,
   'layout': {
     'visibility': 'none',
     'text-field': '{street_name}',

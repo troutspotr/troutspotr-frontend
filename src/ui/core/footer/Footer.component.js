@@ -13,6 +13,26 @@ const FooterComponent = React.createClass({
     selectedStream: PropTypes.object
   },
 
+  copyUrlToClipboard() {
+    let tempUrlTextArea = document.createElement('textarea')
+    tempUrlTextArea.value = window.location.href
+
+    document.body.appendChild(tempUrlTextArea);
+    tempUrlTextArea.select();
+
+    let copyButton = document.getElementById('copyToClipboard')
+
+    try {
+      let success = document.execCommand('copy');
+      copyButton.innerHTML = 'Copied!'
+    } catch (error) {
+      copyButton.innerHTML = '&Oslash;'
+    }
+
+    document.body.removeChild(tempUrlTextArea);
+
+  },
+
   render () {
     let { view, selectedStream } = this.props
     let listText = isEmpty(selectedStream) ? 'List' : 'Details'
@@ -20,7 +40,7 @@ const FooterComponent = React.createClass({
       <div className={classes.menu}>
         <button onClick={this.props.setViewToList} className={view === LIST ? classes.selected : classes.item}>{listText}</button>
         <button onClick={this.props.setViewToMap} className={view === MAP ? classes.selected : classes.item}>Map</button>
-        <Link to={'/'} className={classes.help}>Help</Link>
+        <button onClick={this.copyUrlToClipboard} id="copyToClipboard" className={classes.copy}>Copy</button>
       </div>
     </div>)
   }

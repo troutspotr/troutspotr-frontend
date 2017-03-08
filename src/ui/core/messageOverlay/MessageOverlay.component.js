@@ -5,14 +5,17 @@ import classes from './MessageOverlay.scss'
 const MessageOverlay = React.createClass({
   propTypes: {
     position: PropTypes.string.isRequired,
+    interactive: PropTypes.bool,
     children: PropTypes.element
   },
 
   render () {
     let { position, children } = this.props
     let className = classes[position]
+    let isInteractive = (this.props.interactive || false)
+    let interactiveClass = isInteractive ? classes.interactive : ''
     return (
-      <div className={className}>
+      <div className={`${className} ${interactiveClass}`}>
         {children}
       </div>)
   }

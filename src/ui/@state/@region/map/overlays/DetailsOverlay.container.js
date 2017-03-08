@@ -5,9 +5,11 @@ import { visibleTroutStreams,
   selectedStreamObjectSelector,
   getSelectedRoadSelector,
   troutStreamDictionarySelector } from 'ui/@state/@region/Region.selectors'
+import { isSearchOverlayDisplayedSelector }
+  from './SearchResultsSummaryOverlay.selectors'
 
 const mapDispatchToProps = {
-
+  
 }
 
 const mapStateToProps = (state) => {
@@ -17,7 +19,8 @@ const mapStateToProps = (state) => {
     selectedRegion: selectedRegionIdSelector(state),
     selectedStream: selectedStreamObjectSelector(state),
     selectedAccessPoint: getSelectedRoadSelector(state),
-    streamDictionary: troutStreamDictionarySelector(state)
+    streamDictionary: troutStreamDictionarySelector(state),
+    isSearching: isSearchOverlayDisplayedSelector(state)
   }
 
   return props

@@ -12,6 +12,10 @@ $messageBackground: transparentize($background, 0.6);
   z-index: 10000;
 }
 
+.interactive {
+  pointer-events: all !important; /// HAHA HAHA CANT STOP ME
+}
+
 .top {
   composes: container;
   top: 0;

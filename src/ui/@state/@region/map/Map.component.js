@@ -45,7 +45,7 @@ const MapComponent = React.createClass({
   },
 
   renderDetailsOverlay () {
-    return <DetailsOverlay />
+    return <DetailsOverlay onSelectStream={this.userSelectedStream} />
   },
 
   renderRegulationsOverlay () {

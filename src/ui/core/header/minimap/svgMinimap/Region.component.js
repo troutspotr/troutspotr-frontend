@@ -3,11 +3,7 @@ import React, { PropTypes } from 'react'
 const RegionComponent = React.createClass({
   propTypes: {
     geoJson: PropTypes.object.isRequired,
-    isSelected: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired,
     pathGenerator: PropTypes.func.isRequired,
-    stateName: PropTypes.string.isRequired,
-
     selectRegion: PropTypes.func.isRequired
   },
 

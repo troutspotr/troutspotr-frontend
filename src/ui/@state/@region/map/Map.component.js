@@ -25,7 +25,6 @@ const MapComponent = React.createClass({
     setIsMapInitialized: PropTypes.func.isRequired,
     selectMapFeature: PropTypes.func.isRequired,
     selectFoculPoint: PropTypes.func.isRequired,
-    specialRegulationsCurrentSeason: PropTypes.array.isRequired,
     selectedRoad: PropTypes.object,
     streamDictionary: PropTypes.object.isRequired,
     isRegionFinishedLoading: PropTypes.bool.isRequired

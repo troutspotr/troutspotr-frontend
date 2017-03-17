@@ -17,8 +17,6 @@ const RingComponent = React.createClass({
       tributaries: PropTypes.array.isRequired
     }),
     timing: PropTypes.object.isRequired,
-    pathGenerator: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired,
     layout: PropTypes.shape({
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,

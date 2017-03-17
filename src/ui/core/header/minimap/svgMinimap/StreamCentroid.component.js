@@ -3,9 +3,7 @@ import classes from './SvgMap.scss'
 const StreamCentroidComponent = React.createClass({
   propTypes: {
     geoJson: PropTypes.object.isRequired,
-    isSelected: PropTypes.bool.isRequired,
     pathGenerator: PropTypes.func.isRequired,
-    projection: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired
   },
 

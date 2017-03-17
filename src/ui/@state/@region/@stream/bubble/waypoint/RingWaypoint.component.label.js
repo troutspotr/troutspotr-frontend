@@ -10,7 +10,6 @@ const RingWaypointLabelComponent = React.createClass({
   propTypes: {
     marker: PropTypes.element.isRequired,
     icon: PropTypes.element,
-    labelText: PropTypes.string.isRequired,
     normalizedOffset: PropTypes.number.isRequired,
     layout: PropTypes.shape({
       width: PropTypes.number.isRequired,

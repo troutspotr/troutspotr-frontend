@@ -4,9 +4,7 @@ const SvgAnimatedCircle = React.createClass({
   propTypes: {
     cssName: PropTypes.string.isRequired,
     coordinates: PropTypes.array.isRequired,
-    radius: PropTypes.number.isRequired,
-    length: PropTypes.number.isRequired,
-    offset: PropTypes.number.isRequired
+    radius: PropTypes.number.isRequired
   },
 
   componentWillMount () {

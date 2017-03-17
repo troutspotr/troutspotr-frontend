@@ -9,7 +9,7 @@ export const isTitleVisibleSelector = createSelector([isSearchVisibleSelector], 
 
 const PLACEHOLDER_TITLE = ''
 const EN_DASH = '–'
-const WELCOME_TITLE = 'Welcome'
+const WELCOME_TITLE = 'Welcome to TroutSpotr'
 // const SELECT_REGION = 'Select Region'
 export const subtitleSelector = createSelector(
   [isRootPageSelector, selectedRegionSelector, selectedStateSelector],
@@ -20,14 +20,14 @@ export const subtitleSelector = createSelector(
     let isOnlyStateSelected = selectedState != null && selectedRegion == null
     if (isOnlyStateSelected) {
       let state = selectedState.properties.name
-      return `${state} ${EN_DASH} select your Region.`
+      return `TroutSpotr ${EN_DASH} ${state}.`
     }
 
     let isBothStateAndRegionSelected = !isEmpty(selectedState) && !isEmpty(selectedRegion)
     if (isBothStateAndRegionSelected) {
       let state = toUpper(selectedState.properties.short_name)
       let region = selectedRegion.properties.long_name
-      return `${state}, ${region}`
+      return `TroutSpotr ${state}, ${region}`
     }
 
     return PLACEHOLDER_TITLE

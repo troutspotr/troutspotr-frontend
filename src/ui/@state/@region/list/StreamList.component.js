@@ -5,7 +5,6 @@ import StreamItemContainer from './streamItem/StreamItem.container'
 
 const StreamListComponent = React.createClass({
   propTypes: {
-    isListVisible: React.PropTypes.bool.isRequired,
     visibleTroutStreams: React.PropTypes.array.isRequired,
     selectedState: React.PropTypes.string.isRequired,
     selectedRegion: React.PropTypes.string.isRequired

@@ -16,10 +16,7 @@ const RegionLayout = React.createClass({
     selectedRegion: PropTypes.string.isRequired,
     regionLoadingStatus: PropTypes.string.isRequired,
     selectedStream: PropTypes.object,
-    clearText: PropTypes.func.isRequired,
-    streams: PropTypes.object,
-    hasAgreedToTerms: PropTypes.bool.isRequired,
-    showNoResultsFoundOverlay: PropTypes.bool.isRequired
+    hasAgreedToTerms: PropTypes.bool.isRequired
   },
 
   componentDidMount () {

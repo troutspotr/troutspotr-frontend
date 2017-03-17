@@ -13,12 +13,10 @@ const DEFAULT_ZOOM = 16
 const AccessPointComponent = React.createClass({
   propTypes: {
     accessPoint: PropTypes.object.isRequired,
-    streamObject: PropTypes.object.isRequired,
     selectedClass: PropTypes.string.isRequired,
     defaultClass: PropTypes.string.isRequired,
     isSelected: PropTypes.bool.isRequired,
     isHovered: PropTypes.bool.isRequired,
-    location: PropTypes.object,
 
     onHover: PropTypes.func.isRequired
     // onSelect: PropTypes.func.isRequired

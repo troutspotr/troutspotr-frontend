@@ -3,7 +3,6 @@ import classes from './StreamItem.scss'
 import { round } from 'lodash'
 const LengthRatioComponent = React.createClass({
   propTypes: {
-    streamLength: React.PropTypes.number.isRequired,
     troutLength: React.PropTypes.number.isRequired,
     publicLength: React.PropTypes.number.isRequired
   },

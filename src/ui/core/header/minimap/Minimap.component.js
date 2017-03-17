@@ -13,7 +13,6 @@ const MinimapComponent = React.createClass({
     isExpanded: PropTypes.bool.isRequired,
     router: PropTypes.object.isRequired,
     isRootPage: PropTypes.bool.isRequired,
-    location: PropTypes.object.isRequired,
     statesGeoJson: PropTypes.object.isRequired,
     countiesGeoJson: PropTypes.object.isRequired,
     regionsGeoJson: PropTypes.object.isRequired,

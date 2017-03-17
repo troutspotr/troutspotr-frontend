@@ -8,18 +8,16 @@ const MapboxGlComponent = React.createClass({
     mapbox: PropTypes.object.isRequired,
     elementId: PropTypes.string.isRequired,
     camera: PropTypes.object.isRequired,
-    ground: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired,
-    interactivity: PropTypes.object.isRequired,
     setIsMapInitialized: PropTypes.func.isRequired,
     isReadyToInsertLayers: PropTypes.bool.isRequired,
     sources: PropTypes.array.isRequired,
     layerPackage: PropTypes.array.isRequired,
-    isVisible: PropTypes.bool.isRequired,
     selectedGeometry: PropTypes.object,
     selectedRegionId: PropTypes.string.isRequired,
     onFeatureClick: PropTypes.func.isRequired,
-    onFeatureHover: PropTypes.func.isRequired
+    onFeatureHover: PropTypes.func.isRequired,
+    /* eslint-disable react/no-unused-prop-types */
+    isVisible: PropTypes.bool.isRequired
   },
 
   onClick () {

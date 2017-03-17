@@ -6,7 +6,6 @@ import { isEmpty } from 'lodash'
 
 const FooterComponent = React.createClass({
   propTypes: {
-    params:  PropTypes.object.isRequired,
     view: PropTypes.string.isRequired,
     setViewToMap: PropTypes.func.isRequired,
     setViewToList: PropTypes.func.isRequired,

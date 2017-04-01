@@ -14,14 +14,11 @@ import { crossingTypes } from 'api/GeoApi.transform'
 const RingWaypointAccessPointComponent = React.createClass({
   propTypes: {
     accessPoint: PropTypes.object.isRequired,
-    timing: PropTypes.object.isRequired,
     projection: PropTypes.func.isRequired,
     selectedAccessPoint: PropTypes.object,
     hoveredRoad: PropTypes.object,
     // setSelectedRoad: PropTypes.func.isRequired,
     setHoveredRoad: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
     layout: PropTypes.shape({
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,

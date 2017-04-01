@@ -7,10 +7,7 @@ import { isEmpty } from 'lodash'
 // import { round } from 'lodash'
 const RegulationsOverlayComponent = React.createClass({
   propTypes: {
-    selectedState: React.PropTypes.string.isRequired,
-    selectedRegion: React.PropTypes.string.isRequired,
     selectedStream: PropTypes.object,
-    streamDictionary: PropTypes.object.isRequired,
     specialRegulationsCurrentSeason: PropTypes.array.isRequired
   },
 

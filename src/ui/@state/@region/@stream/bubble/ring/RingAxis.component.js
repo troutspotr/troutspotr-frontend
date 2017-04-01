@@ -8,7 +8,6 @@ const RADIANS_TO_DEGREES = 180 / Math.PI
 const RingAxisComponent = React.createClass({
   propTypes: {
     length: PropTypes.number.isRequired,
-    index: PropTypes.number.isRequired,
     layout: PropTypes.shape({
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,

@@ -20,13 +20,11 @@ const DetailsComponent = React.createClass({
     selectedStream: PropTypes.object,
     specialRegulationsCurrentSeason: PropTypes.array.isRequired,
     selectedAccessPoint: PropTypes.object,
-    hoveredStream: PropTypes.object,
     hoveredRoad: PropTypes.object,
     location: PropTypes.object.isRequired,
 
     setHoveredRoad: PropTypes.func.isRequired,
-    setSelectedRoad: PropTypes.func.isRequired,
-    setHoveredStream: PropTypes.func.isRequired
+    setSelectedRoad: PropTypes.func.isRequired
   },
 
   // renderOpenInGoogleMapsLink (selectedAccessPoint) {

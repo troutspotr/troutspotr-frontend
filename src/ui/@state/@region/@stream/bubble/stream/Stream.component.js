@@ -14,16 +14,7 @@ const StreamComponent = React.createClass({
       tributaries: PropTypes.array.isRequired
     }),
     pathGenerator: PropTypes.func.isRequired,
-    projection: PropTypes.func.isRequired,
-    timing: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired,
-    layout: PropTypes.shape({
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-      radius: PropTypes.number.isRequired,
-      arcCompressionRatio: PropTypes.number.isRequired,
-      rotatePhase: PropTypes.number.isRequired
-    })
+    timing: PropTypes.object.isRequired
   },
 
   // componentWillMount () {

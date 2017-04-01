@@ -4,8 +4,7 @@ import SvgBubbleComponent from './bubble/SvgBubble.component'
 import DetailsContainer from './details/Details.container'
 const StreamItemComponent = React.createClass({
   propTypes: {
-    selectedStream: PropTypes.object,
-    selectedRoad: PropTypes.object
+    selectedStream: PropTypes.object
   },
 
   renderStream () {

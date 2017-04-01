@@ -22,11 +22,9 @@ export const getProjectionFromFeature = (feature, { width, height, radius, buffe
 const SvgMapComponent = React.createClass({
   propTypes: {
     statesGeoJson: PropTypes.object.isRequired,
-    countiesGeoJson: PropTypes.object.isRequired,
     regionsGeoJson: PropTypes.object.isRequired,
     streamCentroidsGeoJson: PropTypes.array,
     selectedRegion: PropTypes.object,
-    selectedState: PropTypes.object,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     getIsOpen: PropTypes.func.isRequired,

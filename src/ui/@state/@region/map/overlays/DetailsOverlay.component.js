@@ -10,10 +10,7 @@ import { isEmpty } from 'lodash'
 const DetailsOverlayComponent = React.createClass({
   propTypes: {
     visibleTroutStreams: PropTypes.array,
-    selectedState: React.PropTypes.string.isRequired,
-    selectedRegion: React.PropTypes.string.isRequired,
     selectedAccessPoint: PropTypes.object,
-    streamDictionary: PropTypes.object,
     selectedStream: PropTypes.object
   },
 

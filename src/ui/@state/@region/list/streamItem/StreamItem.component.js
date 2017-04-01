@@ -8,8 +8,7 @@ const StreamItemComponent = React.createClass({
   propTypes: {
     title: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    streamObject: PropTypes.object.isRequired,
-    getWaters: PropTypes.func.isRequired
+    streamObject: PropTypes.object.isRequired
   },
 
   renderOpenOrClosed (streamObject) {

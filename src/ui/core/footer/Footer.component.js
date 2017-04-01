@@ -6,7 +6,6 @@ import { isEmpty } from 'lodash'
 
 const FooterComponent = React.createClass({
   propTypes: {
-    params:  PropTypes.object.isRequired,
     view: PropTypes.string.isRequired,
     setViewToMap: PropTypes.func.isRequired,
     setViewToList: PropTypes.func.isRequired,
@@ -16,10 +15,13 @@ const FooterComponent = React.createClass({
   render () {
     let { view, selectedStream } = this.props
     let listText = isEmpty(selectedStream) ? 'List' : 'Details'
+
+    let listClass = view === LIST ? classes.selected : classes.item
+    let mapClass = view === MAP ? classes.selected : classes.item
     return (<div className={classes.footer}>
       <div className={classes.menu}>
-        <button onClick={this.props.setViewToList} className={view === LIST ? classes.selected : classes.item}>{listText}</button>
-        <button onClick={this.props.setViewToMap} className={view === MAP ? classes.selected : classes.item}>Map</button>
+        <span onClick={this.props.setViewToList} className={listClass}>{listText}</span>
+        <span onClick={this.props.setViewToMap} className={mapClass}>Map</span>
         <Link to={'/'} className={classes.help}>Help</Link>
       </div>
     </div>)

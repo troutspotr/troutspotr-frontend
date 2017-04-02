@@ -13,6 +13,14 @@ const StateComponent = React.createClass({
     this.props.fetchStateData(this.props.selectedState)
   },
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.selectedState === this.props.selectedState) {
+      return
+    }
+    console.log('fetching new state')
+    this.props.fetchStateData(nextProps.selectedState)
+  },
+
   render () {
     return (this.props.children)
   }

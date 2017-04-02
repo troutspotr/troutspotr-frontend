@@ -150,36 +150,8 @@ const decompress = (topojsonObject, stateData) => {
 
   topojsonObject.objects.accessPoint.geometries = topojsonObject.objects.accessPoint.geometries
     .filter(filterBadAccessPoints)
-  dictionary.stream_access_point = {
-    features: topojsonObject.objects.accessPoint.geometries
-      .map((x, index) => {
-        return {
-          geometry: {
-            type: 'Point',
-            coordinates: x.coordinates
-          },
-          id: x.id,
-          properties: x.properties,
-          type: 'Feature'
-        }
-      }),
-    type: 'FeatureCollection'
-  }
-
-  dictionary.tributary = {
-    features: topojsonObject.objects.tributary.geometries.map(x => {
-      return {
-        geometry: {
-          type: 'Point',
-          coordinates: x.coordinates
-        },
-        id: x.id,
-        properties: x.properties,
-        type: 'Feature'
-      }
-    }),
-    type: 'FeatureCollection'
-  }
+  dictionary.stream_access_point = topojson.feature(topojsonObject, topojsonObject.objects.accessPoint)
+  dictionary.tributary = topojson.feature(topojsonObject, topojsonObject.objects.tributary)
 
   return dictionary
 }

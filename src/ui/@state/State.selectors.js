@@ -5,6 +5,7 @@ import { isEmpty, every, keyBy, has, reduce } from 'lodash'
 export const regionIndexSelector = state => state.state.regionIndex
 export const regulationsSelector = state => state.state.regulations
 export const roadTypesSelector = state => state.state.roadTypes
+export const roadTypeDictionarySelector = state => state.state.roadTypesDictionary
 export const palTypesSelector = state => state.state.palTypes
 export const streamCentroidsStateSelector = state => state.state.streamCentroids
 export const stateDataLoadingStatusSelector = state => state.state.stateDataLoadingStatus

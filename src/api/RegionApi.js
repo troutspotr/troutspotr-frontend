@@ -2,7 +2,7 @@ import BaseApi from './BaseApi'
 import StateApi from './StateApi'
 import { transformGeo } from './GeoApi.transform'
 export const buildRegionEndpoint = (stateName, regionName) => {
-  return `/data/v1/${stateName}/${regionName}.topo.json`
+  return `/data/v2/${stateName}/${regionName}.topo.json`
 }
 export class RegionApi extends BaseApi {
   async getRegionData (stateName, regionName) {

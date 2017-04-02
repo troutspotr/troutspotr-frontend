@@ -18,7 +18,7 @@ const CountyListComponent = React.createClass({
 
   renderCounty (county, index) {
     let { gid, name, streams } = county
-    return (<li key={gid}>
+    return (<li key={gid} className={classes.countyListItem}>
       <div className={classes.listHeaderContainer}>
 
         <div className={classes.listTitle}>{name} Co.</div>
@@ -37,7 +37,7 @@ const CountyListComponent = React.createClass({
       return null
     }
 
-    return (<ul >
+    return (<ul className={classes.countyListContainer}>
       {visibleCounties.map((county, index) => this.renderCounty(county, index))}
     </ul>)
   },

@@ -17,7 +17,7 @@
 
   g {
     stroke: $off-white;
-    fill: transparentize($background, 0.3);
+    fill: messageBackground;
   }
 
   g:hover {

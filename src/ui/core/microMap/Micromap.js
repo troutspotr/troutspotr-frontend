@@ -64,7 +64,7 @@ const renderStreams = (streamObject, canvasContext, dimensions) => {
   renderPointOnStream(projection, canvasContext, streamConfluence, colors.StreamGray, 2)
 
   // render stream
-  renderStream(geoPath, canvasContext, streamObject.stream, colors.StreamGray, STREAM_WIDTH)
+  renderStream(geoPath, canvasContext, streamObject.stream, colors.OffWhite, STREAM_WIDTH)
 
   // // render sections
   streamObject.sections.forEach(section => {

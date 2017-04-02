@@ -8,7 +8,7 @@ import { mapCameraActions, BOUNDING_BOX_OF_LOWER_48_STATES } from './Map.state.c
 // Constants
 // ------------------------------------
 
-const TURF_CIRCLE_RADIUS_KM = 0.07
+const TURF_CIRCLE_RADIUS_KM = 0.05
 const TURF_CIRCLE_SIDES = 4
 
 export const MAP_INTERACTIVITY_SET_SELECTED_FEATURES = 'MAP_INTERACTIVITY_SET_SELECTED_FEATURES'

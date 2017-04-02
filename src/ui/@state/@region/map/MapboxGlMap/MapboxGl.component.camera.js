@@ -13,7 +13,7 @@ const MapboxGlComponentCamera = React.createClass({
   componentDidMount () {
   },
 
-  setBounds ({ bounds, bearing = 0, angle = 0, animationSpeed = 1.4, pixelBuffer = 40 }) {
+  setBounds ({ bounds, bearing = 0, angle = 0, animationSpeed = 1.4, pixelBuffer = 80 }) {
     if (this.props.map == null) {
       /* eslint-disable no-console */
       console.warn('Map was driven prior to being available.')

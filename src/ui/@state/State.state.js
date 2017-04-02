@@ -62,6 +62,7 @@ const ACTION_HANDLERS = {
         roadTypes: payload.roadTypes,
         palTypes: payload.palTypes,
         streamCentroids: payload.streamCentroids,
+        roadTypesDictionary: payload.roadTypesDictionary,
         streamIdDictionary: keyBy(payload.streamCentroids, x => x.gid),
         slugDictionary: keyBy(payload.streamCentroids, x => x.slug),
         stateDataLoadingStatus: LOADING_CONSTANTS.IS_SUCCESS

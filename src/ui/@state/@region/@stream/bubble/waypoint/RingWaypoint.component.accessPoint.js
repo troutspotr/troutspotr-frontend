@@ -17,6 +17,7 @@ const RingWaypointAccessPointComponent = React.createClass({
     projection: PropTypes.func.isRequired,
     selectedAccessPoint: PropTypes.object,
     hoveredRoad: PropTypes.object,
+    roadTypesDictionary: PropTypes.object,
     // setSelectedRoad: PropTypes.func.isRequired,
     setHoveredRoad: PropTypes.func.isRequired,
     layout: PropTypes.shape({
@@ -197,6 +198,7 @@ const RingWaypointAccessPointComponent = React.createClass({
   getLabelText () {
     let roadId = this.props.accessPoint.properties.road_type_id
     let streetName = this.props.accessPoint.properties.street_name
+    let roadTypeDictionary = this.props.roadTypesDictionary
     if (roadTypeDictionary[roadId].prefix != null) {
       if (roadId === 1) {
         return `${roadTypeDictionary[roadId].prefix} ${this.props.accessPoint.properties.road_shield_text}`
@@ -291,79 +293,79 @@ const RingWaypointAccessPointComponent = React.createClass({
 
 export default RingWaypointAccessPointComponent
 
-const roadTypeDictionary = {
-  '1': {
-    shortName: 'Interstate',
-    longName: 'Interstate Highway',
-    prefix: 'Interstate',
-    defaultStart: 'ISTH '
-  },
-  '2': {
-    shortName: 'US Highway',
-    longName: 'US Highway',
-    prefix: 'US Highway'
-  },
-  '3': {
-    shortName: 'US Railroad',
-    longName: 'Railroad',
-    prefix: 'Railroad'
-  },
-  '4': {
-    shortName: 'MN_State_Highway',
-    longName: 'MN Highway',
-    prefix: 'MN Highway'
-  },
-  '5': {
-    shortName: 'MN_County_State_Aid_Highway',
-    longName: 'County State Aid Highway (CSAH)',
-    prefix: 'County Highway',
-    defaultStart: 'CSAH '
-  },
-  '6': {
-    shortName: 'MN_Municipal_State_Aid_Street',
-    longName: 'Municipal State Aid Street (MSAS)',
-    prefix: 'Municipal Street'
-  },
-  '7': {
-    shortName: 'MN_County_Road',
-    longName: 'County Road',
-    prefix: 'County Road',
-    defaultStart: 'CR-'
-  },
-  '8': {
-    shortName: 'MN_Township_Road',
-    longName: 'Township Road'
-  },
-  '9': {
-    shortName: 'MN_Unorganized_Territory_Road',
-    longName: 'Unorganized Territory Road'
-  },
-  '10': {
-    shortName: 'MN_Military_Road',
-    longName: 'Military Road'
-  },
-  '11': {
-    shortName: 'MN_Tribal_Road',
-    longName: 'Tribal Road'
-  },
-  '12': {
-    shortName: 'MN_State_Forest_Road',
-    longName: 'State Forest Road'
-  },
-  '13': {
-    shortName: 'MN_State_Park_Road',
-    longName: 'State Park Road'
-  },
-  '14': {
-    shortName: 'MN_National_Forest_Road',
-    longName: 'National Forest Road'
-  },
-  '15': {
-    shortName: 'MN_National_Park_Road',
-    longName: 'National Park Road'
-  },
-  '16': {
-    shortName: 'MN_Misc_Road',
-    longName: 'Uncategorized MN Road'
-  }
-}
+// const roadTypeDictionary = {
+//   '1': {
+//     shortName: 'Interstate',
+//     longName: 'Interstate Highway',
+//     prefix: 'Interstate',
+//     defaultStart: 'ISTH '
+//   },
+//   '2': {
+//     shortName: 'US Highway',
+//     longName: 'US Highway',
+//     prefix: 'US Highway'
+//   },
+//   '3': {
+//     shortName: 'US Railroad',
+//     longName: 'Railroad',
+//     prefix: 'Railroad'
+//   },
+//   '4': {
+//     shortName: 'MN_State_Highway',
+//     longName: 'MN Highway',
+//     prefix: 'MN Highway'
+//   },
+//   '5': {
+//     shortName: 'MN_County_State_Aid_Highway',
+//     longName: 'County State Aid Highway (CSAH)',
+//     prefix: 'County Highway',
+//     defaultStart: 'CSAH '
+//   },
+//   '6': {
+//     shortName: 'MN_Municipal_State_Aid_Street',
+//     longName: 'Municipal State Aid Street (MSAS)',
+//     prefix: 'Municipal Street'
+//   },
+//   '7': {
+//     shortName: 'MN_County_Road',
+//     longName: 'County Road',
+//     prefix: 'County Road',
+//     defaultStart: 'CR-'
+//   },
+//   '8': {
+//     shortName: 'MN_Township_Road',
+//     longName: 'Township Road'
+//   },
+//   '9': {
+//     shortName: 'MN_Unorganized_Territory_Road',
+//     longName: 'Unorganized Territory Road'
+//   },
+//   '10': {
+//     shortName: 'MN_Military_Road',
+//     longName: 'Military Road'
+//   },
+//   '11': {
+//     shortName: 'MN_Tribal_Road',
+//     longName: 'Tribal Road'
+//   },
+//   '12': {
+//     shortName: 'MN_State_Forest_Road',
+//     longName: 'State Forest Road'
+//   },
+//   '13': {
+//     shortName: 'MN_State_Park_Road',
+//     longName: 'State Park Road'
+//   },
+//   '14': {
+//     shortName: 'MN_National_Forest_Road',
+//     longName: 'National Forest Road'
+//   },
+//   '15': {
+//     shortName: 'MN_National_Park_Road',
+//     longName: 'National Park Road'
+//   },
+//   '16': {
+//     shortName: 'MN_Misc_Road',
+//     longName: 'Uncategorized MN Road'
+//   }
+// }

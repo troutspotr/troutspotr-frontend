@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classes from './Footer.scss'
-import { MAP, LIST } from 'ui/@state/@region/Region.state'
+import { MAP, LIST } from 'ui/core/Core.state'
 import { isEmpty } from 'lodash'
 
 const FooterComponent = React.createClass({

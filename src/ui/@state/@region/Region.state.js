@@ -9,15 +9,15 @@ import { selectMapFeature, selectFoculPoint } from 'ui/@state/@region/map/Map.st
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const MAP = 'map'
-export const LIST = 'list'
+// export const MAP = 'map'
+// export const LIST = 'list'
 export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const setViewToMap = createAction(REGION_SET_VIEW, x => MAP)
-export const setViewToList = createAction(REGION_SET_VIEW, x => LIST)
+// export const setViewToMap = createAction(REGION_SET_VIEW, x => MAP)
+// export const setViewToList = createAction(REGION_SET_VIEW, x => LIST)
 
 export const REGION_SET_REGION_DATA = 'REGION_SET_REGION_DATA'
 export const REGION_SET_REGION_LOADING = 'REGION_SET_REGION_LOADING'
@@ -137,7 +137,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  view: LIST,
+  // view: MAP,
   troutStreamDictionary: {},
   troutStreamSections: null,
   restrictionSections: null,

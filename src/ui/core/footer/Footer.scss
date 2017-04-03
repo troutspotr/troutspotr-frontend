@@ -2,11 +2,12 @@
 @import "src/ui/styles/_variables";
 
 .footer {
-  // background-color: transparentize($blue, 0.8);
+  background-color: $messageBackground;
   height: 100%;
   padding-left: $default-margin;
   padding-right: $default-margin;
   border-top: 1px solid transparentize($off-white, 0.7);
+  backdrop-filter: blur(2px);
 }
 
 .menu {

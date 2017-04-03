@@ -123,7 +123,8 @@ $tributary_pal_width: $tributary_width * 7;
 
 .stream {
   composes: streamComponent;
-  stroke: $gray;
+  stroke-width: $stream_width * 0.3;
+  stroke: $off-white;
 }
 
 .section {

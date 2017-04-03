@@ -24,6 +24,14 @@ $hefty-bottom-margin: 50vh;
   }
 }
 
+.countyListContainer {
+  
+}
+
+.countyListItem {
+  margin-bottom: 40px;
+}
+
 .godAwfulPlaceholder {
   height: $hefty-bottom-margin;
 }
@@ -39,7 +47,7 @@ $hefty-bottom-margin: 50vh;
   top: -2px;
   height: 30px;
   border-top: 1px solid transparentize($off-white, 0.85);
-  background-color: transparentize($background, 0.2);
+  background-color: $messageBackground;
 }
 
 .listTitle {

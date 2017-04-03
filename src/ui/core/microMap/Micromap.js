@@ -6,8 +6,8 @@ import * as d3Geo from 'd3-geo'
 const TAU = Math.PI * 2
 const LINE_WIDTH = 0.5 * 1
 const STREAM_WIDTH = LINE_WIDTH
-const TROUT_SECTION_WIDTH = LINE_WIDTH * 1.5
-const PUBLIC_SECTION = LINE_WIDTH * 2.6
+const TROUT_SECTION_WIDTH = LINE_WIDTH * 2
+const PUBLIC_SECTION = LINE_WIDTH * 2.75
 const END_POINT_SIZE = LINE_WIDTH * 2
 
 const getBackingStoreRatio = (context) => {
@@ -61,10 +61,10 @@ const renderStreams = (streamObject, canvasContext, dimensions) => {
     .context(canvasContext)
 
   let streamConfluence = streamObject.stream.geometry.coordinates[0]
-  renderPointOnStream(projection, canvasContext, streamConfluence, colors.StreamGray, 2)
+  renderPointOnStream(projection, canvasContext, streamConfluence, colors.OffWhite, 2)
 
   // render stream
-  renderStream(geoPath, canvasContext, streamObject.stream, colors.StreamGray, STREAM_WIDTH)
+  renderStream(geoPath, canvasContext, streamObject.stream, colors.OffWhite, STREAM_WIDTH * 0.5)
 
   // // render sections
   streamObject.sections.forEach(section => {

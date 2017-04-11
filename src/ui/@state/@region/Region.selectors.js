@@ -107,7 +107,10 @@ export const selectedStreamObjectSelector = createSelector(
       return null
     }
 
-    return streamDictionary[displayedCentroid.gid]
+    var stream = { ...streamDictionary[displayedCentroid.gid] }
+    var now = new Date()
+    stream.restrictions = stream.restrictions.filter(x => filterRestrictionsByTime(now, x.properties))
+    return stream
   })
 
 export const showNoResultsFoundSelector = createSelector(
@@ -212,25 +215,29 @@ export const getSelectedRoadSelector = createSelector(
     return accessPoint
   })
 
-export const getSpecialRegulationsCurrentSeasonSelector = createSelector(
-  [getSpecialRegulationsSelector],
-  (specialRegulations) => {
-    if (isEmpty(specialRegulations)) {
-      return EMPTY_REGS
-    }
+export const filterRestrictionsByTime = (now, sp) => {
+  let { startTime, stopTime } = sp
+  if (startTime == null || stopTime == null) {
+    return true
+  }
+  let isInBounds = startTime < now && stopTime > now
+  return isInBounds
+}
+
+export const filterRestrictionsByCurrentTime = (specialRegulations) => {
+  if (isEmpty(specialRegulations)) {
+    return EMPTY_REGS
+  }
     // TODO: should I be creating state in selectors?
     // no... but whatever.
-    let now = new Date()
-    let inSeasonRegs = specialRegulations.filter(sp => {
-      let { startTime, stopTime } = sp
-      if (startTime == null || stopTime == null) {
-        return true
-      }
-      let isInBounds = startTime < now && stopTime > now
-      return isInBounds
-    })
-    return inSeasonRegs
-  })
+  let now = new Date()
+  let inSeasonRegs = specialRegulations.filter(x => filterRestrictionsByTime(now, x))
+  return inSeasonRegs
+}
+
+export const getSpecialRegulationsCurrentSeasonSelector = createSelector(
+  [getSpecialRegulationsSelector],
+  filterRestrictionsByCurrentTime)
 
 const EMPTY_COUNTIES_ARRAY = []
 export const getCountyListSelector = createSelector(

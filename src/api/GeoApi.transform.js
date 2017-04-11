@@ -5,6 +5,7 @@ const valuesIn = require('lodash/valuesIn')
 const has = require('lodash/has')
 const kebabCase = require('lodash/kebabCase')
 const topojson = require('topojson-client')
+var now = new Date()
 // import * as topojson from 'topojson-client'
 // import { groupBy, keyBy, valuesIn, has, kebabCase } from 'lodash'
 const MINIMUM_LENGTH_MILES = 0.05
@@ -89,7 +90,6 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
       entry.restrictions = restrictionsMap[streamId] == null
         ? []
         : restrictionsMap[streamId]
-
       entry.palSections = palMap[streamId] == null
         ? []
         : palMap[streamId].sort((a, b) => b.properties.start - a.properties.start)
@@ -135,6 +135,16 @@ const decompress = (topojsonObject, stateData) => {
 
     // add the restriction
     props.restriction = regsDictionary[props.restriction_id]
+  })
+
+  // remove irrelevent restrictions by immediate time.
+  dictionary.restriction_section.features = dictionary.restriction_section.features.filter(sp => {
+    let { start_time, end_time } = sp.properties
+    if (start_time == null || end_time == null) {
+      return true
+    }
+    let isInBounds = start_time < now && end_time > now
+    return isInBounds
   })
 
   // update waters

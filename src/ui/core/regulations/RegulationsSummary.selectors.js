@@ -6,6 +6,7 @@ export const getRegulationsSummarySelector = createSelector(
   (watersObject) => {
     return (streamObject) => {
       let { stream } = streamObject
+      console.log('holy shit')
       let now = new Date()
       let watersId = stream.properties.water_id
       let water = watersObject(watersId)

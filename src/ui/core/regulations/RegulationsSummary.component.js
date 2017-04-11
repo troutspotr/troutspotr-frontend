@@ -35,7 +35,7 @@ const RegulationsSummary = React.createClass({
       // plain vanilla closed. Get lost, bub.
       let openerDate = streamObject.stream.properties.openers.filter(x => x.start_time > now)
       let dateText = openerDate.length >= 1
-        ? openerDate[0].start_time.toLocaleDateString('en-US')
+        ? openerDate[0].start_time.toLocaleDateString('en-US') + '.'
         : 'an unknown date. Call the DNR for more details.'
 
       let args = {
@@ -64,8 +64,8 @@ const RegulationsSummary = React.createClass({
     if (isOpenSeason === false && hasRegulationThatOverridesOpenSeason) {
       // it's closed, but there's an exception. Be careful.
 
-      let explainerText = 'but ' + openSeasonOverrides[0].properties.restriction.shortText
-      let dateText = openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US')
+      let explainerText = openSeasonOverrides[0].properties.restriction.shortText
+      let dateText = openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US') + '.'
 
       let args = {
         statusClass: classes.openCaution,

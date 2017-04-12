@@ -29,7 +29,7 @@ const store = configureStore(initialState)
 // Render Setup
 // ========================================================
 const MOUNT_NODE = document.getElementById('root')
-
+MOUNT_NODE.innerHTML = '';
 let render = () => {
   const routes = require('./ui/routes').default(store)
   ReactDOM.render(

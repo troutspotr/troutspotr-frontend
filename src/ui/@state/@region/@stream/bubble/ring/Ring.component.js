@@ -42,7 +42,7 @@ const RingComponent = React.createClass({
       return (<RingSectionComponent
         timing={{ offset, length: this.props.timing.baseStreamLength }}
         cssName={classes.pal}
-        key={pal.properties.id}
+        key={pal.properties.id + 'pal'}
         layout={this.props.layout}
         length={this.props.streamPackage.stream.properties.length_mi}
         start={pal.properties.start}

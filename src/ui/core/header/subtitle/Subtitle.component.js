@@ -1,19 +1,12 @@
 import React, { PropTypes } from 'react'
-// import classes from './BackButton.scss'
-// import { Link } from 'react-router'
 
-const SubtitleComponent = React.createClass({
-  propTypes: {
-    subtitle:  PropTypes.string.isRequired
-  },
+const SubtitleComponent = (props) => {
+  let { subtitle } = props
+  return (<span>{subtitle}</span>)
+}
 
-  onClick () {
+SubtitleComponent.propTypes = {
+  subtitle:  PropTypes.string.isRequired
+}
 
-  },
-
-  render () {
-    let { subtitle } = this.props
-    return (<span>{subtitle}</span>)
-  }
-})
 export default SubtitleComponent

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classes from './MapOverlay.scss'
 import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 import AccessPointComponent from 'ui/@state/@region/@stream/details/AccessPoint.component'
@@ -11,18 +11,9 @@ import AccessPointClasses from 'ui/@state/@region/@stream/details/Details.scss'
 //   unsafe: {text: 'asdf', className: 'asdf'},
 //   uninteresting: {text: 'asdf', className: 'asdf'}
 // }
-const AccessPointDetails = React.createClass({
-  propTypes: {
-    selectedStream: React.PropTypes.object.isRequired,
-    selectedAccessPoint: React.PropTypes.object.isRequired
-  },
-
-  componentDidMount () {
-    // console.log('LIST VIEW MOUNTED')
-  },
-
+class AccessPointDetails extends Component {
   renderPublicAccess (selectedAccessPoint) {
-    return <AccessPointComponent
+    return (<AccessPointComponent
       accessPoint={selectedAccessPoint}
       streamObject={this.props.selectedStream}
       selectedClass={AccessPointClasses.selectedPublicBridgeTroutStream}
@@ -30,8 +21,9 @@ const AccessPointDetails = React.createClass({
       isSelected
       isHovered={false}
       location={null}
-      onHover={() => {}} />
-  },
+      onHover={() => {}}
+            />)
+  }
 
   renderPrivateAccess (selectedAccessPoint) {
     return (<div>
@@ -44,12 +36,13 @@ const AccessPointDetails = React.createClass({
         isSelected
         isHovered={false}
         location={null}
-        onHover={() => {}} />
+        onHover={() => {}}
+      />
     </div>)
-  },
+  }
 
   renderUnsafeToPark (selectedAccessPoint) {
-    return <AccessPointComponent
+    return (<AccessPointComponent
       accessPoint={selectedAccessPoint}
       streamObject={this.props.selectedStream}
       selectedClass={AccessPointClasses.selectedUnsafeBridgeOverTroutStream}
@@ -57,8 +50,9 @@ const AccessPointDetails = React.createClass({
       isSelected
       isHovered={false}
       location={null}
-      onHover={() => {}} />
-  },
+      onHover={() => {}}
+            />)
+  }
 
   renderAccessPoint () {
     let { selectedAccessPoint } = this.props
@@ -72,7 +66,7 @@ const AccessPointDetails = React.createClass({
     }
 
     return null
-  },
+  }
 
   render () {
     return (<div className={classes.container}>
@@ -80,5 +74,11 @@ const AccessPointDetails = React.createClass({
       {this.renderAccessPoint()}
     </div>)
   }
-})
+}
+
+AccessPointDetails.propTypes = {
+  selectedStream: React.PropTypes.object.isRequired,
+  selectedAccessPoint: React.PropTypes.object.isRequired
+}
+
 export default AccessPointDetails

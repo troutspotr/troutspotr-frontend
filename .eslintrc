@@ -2,7 +2,8 @@
   "parser": "babel-eslint",
   "extends": [
     "standard",
-    "standard-react"
+    "standard-react",
+    "plugin:react/all"
   ],
   "plugins": [
     "babel",
@@ -23,6 +24,12 @@
     "key-spacing"          : 0,
     "jsx-quotes"           : [2, "prefer-single"],
     "max-len"              : 0,
-    "object-curly-spacing" : [2, "always"]
+    "object-curly-spacing" : [2, "always"],
+    "react/jsx-sort-props"     : 0,
+    "react/jsx-no-literals": 0,
+    "react/jsx-filename-extension": 0,
+    "react/sort-prop-types": 0,
+    "react/jsx-max-props-per-line": 0,
+    "react/sort-comp": 0
   }
 }

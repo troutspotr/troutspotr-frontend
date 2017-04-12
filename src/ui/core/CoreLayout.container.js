@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Header from './header/Header.container'
 import classes from './CoreLayout.scss'
@@ -13,19 +13,7 @@ import { isRootPageSelector, isStatePageSelector } from 'ui/Location.selectors'
 import { withRouter } from 'react-router'
 import NoResultsFoundOverlayContainer from './noResultsFoundOverlay/NoResultsFoundOverlay.container'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
-const CoreLayoutContainer = React.createClass({
-  propTypes: {
-    children: React.PropTypes.element.isRequired,
-    params: React.PropTypes.object.isRequired,
-    router: React.PropTypes.object.isRequired,
-    location: React.PropTypes.object.isRequired,
-    isMinimapExpanded: React.PropTypes.bool.isRequired,
-    isRoot: React.PropTypes.bool.isRequired,
-    isState: React.PropTypes.bool.isRequired,
-    hasAgreedToTerms: React.PropTypes.bool.isRequired,
-    closeMinimap: React.PropTypes.func.isRequired
-  },
-
+class CoreLayoutContainer extends Component {
   // only show the footer if they've selected a region.
   isFooterVisible () {
     let { params, hasAgreedToTerms } = this.props
@@ -33,11 +21,11 @@ const CoreLayoutContainer = React.createClass({
     let isStateDefined = params[STATE_PARAM_NAME] != null
 
     return isRegionDefined && isStateDefined && hasAgreedToTerms
-  },
+  }
 
   componentWillMount () {
     this.listenToRoutes()
-  },
+  }
 
   listenToRoutes () {
     let { router } = this.props
@@ -49,7 +37,7 @@ const CoreLayoutContainer = React.createClass({
     router.listen(({ pathname }) => {
       AnonymousAnalyzerApi.recordEvent('page_navigation', {})
     })
-  },
+  }
 
   render () {
     let isFooterVisible = this.isFooterVisible()
@@ -58,13 +46,15 @@ const CoreLayoutContainer = React.createClass({
         {this.props.hasAgreedToTerms && <div className={classes.headerLayout}>
           <Header
             params={this.props.params}
-            location={this.props.location} />
+            location={this.props.location}
+          />
         </div>}
         {this.props.hasAgreedToTerms && <div className={classes.footerLayout}>
           {isFooterVisible &&
             <Footer
               params={this.props.params}
-              location={this.props.location} />}
+              location={this.props.location}
+            />}
         </div>}
         <div id='scrollContainer' className={classes.coreContentLayout}>
           <div className={classes.coreContent}>
@@ -80,7 +70,19 @@ const CoreLayoutContainer = React.createClass({
       </div>
     )
   }
-})
+}
+
+CoreLayoutContainer.propTypes = {
+  children: React.PropTypes.element.isRequired,
+  params: React.PropTypes.object.isRequired,
+  router: React.PropTypes.object.isRequired,
+  location: React.PropTypes.object.isRequired,
+  isMinimapExpanded: React.PropTypes.bool.isRequired,
+  isRoot: React.PropTypes.bool.isRequired,
+  isState: React.PropTypes.bool.isRequired,
+  hasAgreedToTerms: React.PropTypes.bool.isRequired,
+  closeMinimap: React.PropTypes.func.isRequired
+}
 
 const mapDispatchToProps = {
   closeMinimap: () => expandMinimap(false)

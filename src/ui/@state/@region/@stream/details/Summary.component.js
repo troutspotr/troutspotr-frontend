@@ -1,31 +1,28 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './Details.scss'
 import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 // import { Link } from 'react-router'
 /* eslint-disable camelcase */
 
-const SummaryComponent = React.createClass({
-  propTypes: {
-    selectedStream: PropTypes.object.isRequired
-  },
-
+class SummaryComponent extends Component {
   renderSummary ({ miles, textClass, pattern, text, heightMultiplier }) {
     let roundedMiles = parseFloat(Math.round(miles * 10) / 10).toFixed(1)
-    return <RestrictionComponent
+    return (<RestrictionComponent
       color={textClass}
       pattern={pattern}
       text={text}
       hollow={false}
       heightMultiplier={heightMultiplier}
-      length={roundedMiles + ' mi'} />
+      length={roundedMiles + ' mi'}
+            />)
     // if (miles === 0) {
     //   return <div><mark className={markerClass} /> No {text}</div>
     // }
     // return (<div>
     //   <mark className={markerClass} /><emphasis className={textClass}>{roundedMiles} miles</emphasis>of {text}
     // </div>)
-  },
+  }
 
   render () {
     let { selectedStream } = this.props
@@ -66,5 +63,10 @@ const SummaryComponent = React.createClass({
       })}
     </div>)
   }
-})
+}
+
+SummaryComponent.propTypes = {
+  selectedStream: PropTypes.object.isRequired
+}
+
 export default SummaryComponent

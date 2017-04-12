@@ -1,14 +1,5 @@
-import React from 'react'
-
-const HomeContainer = React.createClass({
-  propTypes: {
-  },
-
-  render () {
-    return (
-      null
-    )
-  }
-})
+const HomeContainer = (props) => {
+  return null
+}
 
 export default HomeContainer

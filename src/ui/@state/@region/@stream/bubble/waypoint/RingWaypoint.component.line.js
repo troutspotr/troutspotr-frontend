@@ -1,27 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { flatten, map } from 'lodash'
 // import classes from '../SvgBubble.scss'
 import waypointClasses from './RingWaypoint.scss'
 
 const TAU = Math.PI * 2
-
-const RingWaypointLineComponent = React.createClass({
-  propTypes: {
-    subjectCoordinates: PropTypes.shape({
-      latitude: PropTypes.number.isRequired,
-      longitude: PropTypes.number.isRequired
-    }),
-    normalizedOffset: PropTypes.number.isRequired,
-    projection: PropTypes.func.isRequired,
-    layout: PropTypes.shape({
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-      radius: PropTypes.number.isRequired,
-      arcCompressionRatio: PropTypes.number.isRequired,
-      rotatePhase: PropTypes.number.isRequired
-    })
-  },
-
+class RingWaypointLineComponent extends Component {
   renderLine (screenCoordinates) {
     if (screenCoordinates == null || screenCoordinates.length < 2) {
       return null
@@ -32,22 +15,22 @@ const RingWaypointLineComponent = React.createClass({
 
     let polylinePoints = coordinateArray.join(',')
 
-    return <g id='FeatureLine' className={waypointClasses.accessPointConnector}>
+    return (<g id='FeatureLine' className={waypointClasses.accessPointConnector}>
       {
         <polyline className={waypointClasses.accessPointConnector} points={polylinePoints} />
       }
-    </g>
-  },
+    </g>)
+  }
 
   getXCoordinate (radialPosition, labelOffsetFromRadius, width) {
     let result = labelOffsetFromRadius * Math.cos((-Math.PI * 0.5) + radialPosition) + (width * 0.5)
     return result
-  },
+  }
 
   getYCoordinate (radialPosition, labelOffsetFromRadius, height) {
     let result = labelOffsetFromRadius * Math.sin((-Math.PI * 0.5) + radialPosition) + (height * 0.5)
     return result
-  },
+  }
 
   render () {
     let { width, height, radius, arcCompressionRatio } = this.props.layout
@@ -87,6 +70,22 @@ const RingWaypointLineComponent = React.createClass({
 
     return this.renderLine(lineCoordinates)
   }
-})
+}
+
+RingWaypointLineComponent.propTypes = {
+  subjectCoordinates: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired
+  }),
+  normalizedOffset: PropTypes.number.isRequired,
+  projection: PropTypes.func.isRequired,
+  layout: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    radius: PropTypes.number.isRequired,
+    arcCompressionRatio: PropTypes.number.isRequired,
+    rotatePhase: PropTypes.number.isRequired
+  })
+}
 
 export default RingWaypointLineComponent

@@ -1,17 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import classes from './Footer.scss'
 import { MAP, LIST } from 'ui/core/Core.state'
 import { isEmpty } from 'lodash'
-
-const FooterComponent = React.createClass({
-  propTypes: {
-    view: PropTypes.string.isRequired,
-    setViewToMap: PropTypes.func.isRequired,
-    setViewToList: PropTypes.func.isRequired,
-    selectedStream: PropTypes.object
-  },
-
+class FooterComponent extends Component {
   render () {
     let { view, selectedStream } = this.props
     let listText = isEmpty(selectedStream) ? 'List' : 'Details'
@@ -26,5 +18,13 @@ const FooterComponent = React.createClass({
       </div>
     </div>)
   }
-})
+}
+
+FooterComponent.propTypes = {
+  view: PropTypes.string.isRequired,
+  setViewToMap: PropTypes.func.isRequired,
+  setViewToList: PropTypes.func.isRequired,
+  selectedStream: PropTypes.object
+}
+
 export default FooterComponent

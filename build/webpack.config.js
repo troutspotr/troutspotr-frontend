@@ -26,7 +26,7 @@ const webpackConfig = {
       // 'react-addons-css-transition-group': 'preact-css-transition-group',
       'react': 'preact-compat',
       'react-dom': 'preact-compat',
-      'react-redux': 'preact-redux',
+      'react-redux': 'preact-redux'
     }
   },
   module : {}

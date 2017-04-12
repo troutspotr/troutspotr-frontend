@@ -1,5 +1,5 @@
 /* eslint max-len: 0 */
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './SvgBubble.scss'
 import * as d3 from 'd3-geo'
 import { concat, sortBy } from 'lodash'
@@ -13,20 +13,19 @@ const DIMENSIONS = 300
 const SQUISH_FACTOR = 0.90
 const ROTATE_PHASE = Math.PI / 2
 const RADIUS = (DIMENSIONS / 2) - 50
+class SvgBubbleComponent extends Component {
+  shouldComponentUpdate (nextProps) {
+    return true
+  }
 
-const SvgBubbleComponent = React.createClass({
-  propTypes: {
-    streamPackage: React.PropTypes.shape({
-      stream: PropTypes.object.isRequired,
-      sections: PropTypes.array.isRequired,
-      restrictions: PropTypes.array.isRequired,
-      palSections: PropTypes.array.isRequired,
-      accessPoints: PropTypes.array.isRequired,
-      tributaries: PropTypes.array.isRequired,
-      circle: PropTypes.object.isRequired
-    }).isRequired,
-    index: PropTypes.number.isRequired
-  },
+  componentWillUpdate (nextProps) {
+    this.projection = getProjectionFromFeature(nextProps.streamPackage.circle,
+        { width: DIMENSIONS, height: DIMENSIONS, radius: RADIUS })
+    
+    this.pathGenerator = d3.geoPath()
+      .projection(this.projection)
+      .pointRadius(1)
+  }
 
   componentWillMount () {
     this.width = DIMENSIONS
@@ -48,59 +47,63 @@ const SvgBubbleComponent = React.createClass({
     }
 
     this.timing = getTiming(this.props)
-  },
+  }
 
   componentWillUnmount () {
 
-  },
+  }
 
   renderWaypoints () {
     let { accessPoints, tributaries } = this.props.streamPackage
     let waypoints = sortBy(concat(accessPoints, tributaries), 'properties.linear_offset')
 
     return waypoints.map((waypoint, index) => {
-      let isAccessPoint = waypoint.properties.street_name != null
+      let { gid, street_name } = waypoint.properties
+      let isAccessPoint = street_name != null
       return isAccessPoint
-        ? this.renderAccessPoint(waypoint, index)
-        : this.renderTributary(waypoint, index)
+        ? this.renderAccessPoint(waypoint, gid)
+        : this.renderTributary(waypoint, gid)
     })
-  },
+  }
 
   renderOuterCircleAxis () {
-    return <RingComponent
+    return (<RingComponent
       timing={this.timing}
       streamPackage={this.props.streamPackage}
       pathGenerator={this.pathGenerator}
       index={this.props.index}
-      layout={this.layout} />
-  },
+      layout={this.layout}
+            />)
+  }
 
   renderAccessPoints () {
     return this.props.streamPackage.accessPoints.map((item, index) => this.renderAccessPoint(item, index))
-  },
+  }
 
   renderAccessPoint (accessPoint, accessPointsIndex) {
-    return <RingWaypointAccessPointContainer
+    return (<RingWaypointAccessPointContainer
       accessPoint={accessPoint}
       key={accessPointsIndex}
       timing={this.timing}
       projection={this.projection}
-      layout={this.layout} />
-  },
+      layout={this.layout}
+            />)
+  }
 
   renderTributaries () {
     return this.props.streamPackage.tributaries.map(this.renderTributary)
-  },
+  }
 
   renderTributary (tributary, tributaryIndex) {
-    return <RingWaypointStreamComponent
+    return (<RingWaypointStreamComponent
       stream={tributary}
       key={tributary.properties.gid}
       timing={this.timing}
       projection={this.projection}
       pathGenerator={this.pathGenerator}
-      layout={this.layout} />
-  },
+      layout={this.layout}
+            />)
+  }
 
   render () {
     let name = this.props.streamPackage.stream.properties.name
@@ -113,7 +116,8 @@ const SvgBubbleComponent = React.createClass({
           preserveAspectRatio='xMinYMin meet'
           version='1.1'
           xmlns='http://www.w3.org/2000/svg'
-          id={'trout_stream_' + name + '_' + id} >
+          id={'trout_stream_' + name + '_' + id}
+        >
           <title>{name} {id}</title>
           <defs>
             <clipPath id='circle-stencil'>
@@ -127,17 +131,30 @@ const SvgBubbleComponent = React.createClass({
               projection={this.projection}
               timing={getTiming(this.props)}
               index={this.props.index}
-              layout={this.layout} />
+              layout={this.layout}
+            />
           </g>
           {this.renderOuterCircleAxis()}
           <g id={'waypoints_' + id}>
             {this.renderWaypoints()}
           </g>
-          }
         </svg>
       </div>
     )
   }
-})
+}
+
+SvgBubbleComponent.propTypes = {
+  streamPackage: React.PropTypes.shape({
+    stream: PropTypes.object.isRequired,
+    sections: PropTypes.array.isRequired,
+    restrictions: PropTypes.array.isRequired,
+    palSections: PropTypes.array.isRequired,
+    accessPoints: PropTypes.array.isRequired,
+    tributaries: PropTypes.array.isRequired,
+    circle: PropTypes.object.isRequired
+  }).isRequired,
+  index: PropTypes.number.isRequired
+}
 
 export default SvgBubbleComponent

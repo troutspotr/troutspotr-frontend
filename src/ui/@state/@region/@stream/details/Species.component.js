@@ -1,13 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './Details.scss'
 import { isEmpty } from 'lodash'
 /* eslint-disable camelcase */
 
-const SpeciesComponent = React.createClass({
-  propTypes: {
-    selectedStream: PropTypes.object
-  },
-
+class SpeciesComponent extends Component {
   createSpeciesViewModels (stream) {
     let { has_brook_trout,
       has_brown_trout,
@@ -35,7 +31,7 @@ const SpeciesComponent = React.createClass({
         stocked: is_rainbow_trout_stocked,
         className: 'rainbowTrout'
       }]
-  },
+  }
 
   renderSpeciesElement (viewModel, isFirstThingInSentence = false) {
     let { name, stocked, className } = viewModel
@@ -43,7 +39,7 @@ const SpeciesComponent = React.createClass({
     let text = stocked ? `${stockedPrefix} ${name}` : name
     let cssClass = classes[className]
     return (<mark className={cssClass}>{text}</mark>)
-  },
+  }
 
   renderSpeciesBody (viewModels) {
     if (isEmpty(viewModels)) {
@@ -77,7 +73,7 @@ const SpeciesComponent = React.createClass({
     })
 
     return oxfordCommaList
-  },
+  }
 
   renderSpecies () {
     let { selectedStream } = this.props
@@ -91,10 +87,15 @@ const SpeciesComponent = React.createClass({
         {body}
       </div>
     </div>)
-  },
+  }
 
   render () {
     return this.renderSpecies()
   }
-})
+}
+
+SpeciesComponent.propTypes = {
+  selectedStream: PropTypes.object
+}
+
 export default SpeciesComponent

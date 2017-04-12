@@ -1,11 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 import PublicBridgesComponent from 'ui/core/streamDetails/PublicBridges.component'
-const Region = React.createClass({
-  propTypes: {
-    selectedStream: React.PropTypes.object.isRequired
-  },
 
+class Region extends Component {
   renderStreamDetailsOverlay () {
     let { selectedStream } = this.props
     let number = selectedStream.accessPoints
@@ -15,18 +12,21 @@ const Region = React.createClass({
     return (
       <div>
         <RegulationsSummaryContainer
-          streamObject={selectedStream} />
+          streamObject={selectedStream}
+        />
         <PublicBridgesComponent
-          number={number} />
+          number={number}
+        />
       </div>)
-  },
-
-  componentDidMount () {
-    // console.log('LIST VIEW MOUNTED')
-  },
+  }
 
   render () {
     return this.renderStreamDetailsOverlay()
   }
-})
+}
+
+Region.propTypes = {
+  selectedStream: React.PropTypes.object.isRequired
+}
+
 export default Region

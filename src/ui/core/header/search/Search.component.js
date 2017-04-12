@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classes from './Search.scss'
-const SearchComponent = React.createClass({
-  propTypes: {
-    updateSearchText: React.PropTypes.func.isRequired,
-    searchText: React.PropTypes.string.isRequired
-  },
+class SearchComponent extends Component {
+  constructor () {
+    super()
+    this.onTextChange = this.onTextChange.bind(this)
+  }
 
   onTextChange (e) {
     let text = e.target.value
     this.props.updateSearchText(text)
-  },
+  }
 
   render () {
     return (
@@ -20,9 +20,16 @@ const SearchComponent = React.createClass({
           placeholder='Search Streams'
           value={this.props.searchText}
           onChange={this.onTextChange}
-          role='search' />
+          role='search'
+        />
       </span>
     )
   }
-})
+}
+
+SearchComponent.propTypes = {
+  updateSearchText: React.PropTypes.func.isRequired,
+  searchText: React.PropTypes.string.isRequired
+}
+
 export default SearchComponent

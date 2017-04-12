@@ -1,26 +1,15 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import StreamComponent from '../stream/Stream.component'
 import RingWaypointLineComponent from './RingWaypoint.component.line'
 // import RingWaypointLabelComponent from './RingWaypoint.component.label'
 
 import streamClasses from './RingWaypoint.stream.scss'
 import waypointClasses from './RingWaypoint.scss'
-
-const RingWaypointStreamComponent = React.createClass({
-  propTypes: {
-    stream: PropTypes.object.isRequired,
-    timing: PropTypes.object.isRequired,
-    projection: PropTypes.func.isRequired,
-    pathGenerator: PropTypes.func.isRequired,
-    layout: PropTypes.shape({
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-      radius: PropTypes.number.isRequired,
-      arcCompressionRatio: PropTypes.number.isRequired,
-      rotatePhase: PropTypes.number.isRequired
-    })
-  },
-
+class RingWaypointStreamComponent extends Component {
+  constructor () {
+    super()
+    this.onClick = this.onClick.bind(this)
+  }
   // className={waypointClasses.accessPointDot + ' ' + waypointClasses.subjectAccessPointDot}
   renderStream (dotXScreenCoordinate, dotYScreenCoordinate, stream) {
     return (<g id={'subject'} clipPath='url(#circle-stencil)'>
@@ -31,27 +20,30 @@ const RingWaypointStreamComponent = React.createClass({
           pathGenerator={this.props.pathGenerator}
           projection={this.props.projection}
           index={3}
-          layout={this.props.layout} />
+          layout={this.props.layout}
+        />
       </g>
       <circle
         className={waypointClasses.target}
         cx={dotXScreenCoordinate}
         cy={dotYScreenCoordinate}
-        r='1.5' />
+        r='1.5'
+      />
     </g>)
-  },
+  }
 
   onClick (e) {
     e.preventDefault()
-  },
+  }
 
   renderLabelMarker () {
-    return <circle
+    return (<circle
       className={streamClasses.icon_tributary}
       cx={0}
       cy={0}
-      r='0.001' />
-  },
+      r='0.001'
+            />)
+  }
 
   render () {
     let normalizedOffset = this.props.stream.properties.linear_offset
@@ -82,23 +74,32 @@ const RingWaypointStreamComponent = React.createClass({
       <a
         onClick={this.onClick}
         className={streamClasses.tributaryWaypoint + ' ' + waypointClasses.waypoint}
-        xlinkHref={'#'}>
+        xlinkHref={'#'}
+      >
         <RingWaypointLineComponent
           subjectCoordinates={tributaryConfluenceCoordinates}
           normalizedOffset={normalizedOffset}
           projection={this.props.projection}
-          layout={this.props.layout} />
+          layout={this.props.layout}
+        />
         {this.renderStream(subjectScreenCoordinates[0], subjectScreenCoordinates[1], streamData)}
       </a>
     </g>)
   }
-})
-/*
-<RingWaypointLabelComponent
-          layout={this.props.layout}
-          normalizedOffset={normalizedOffset}
-          marker={marker}
-          icon={icon}
-          labelText={labelText} /> */
+}
+
+RingWaypointStreamComponent.propTypes = {
+  stream: PropTypes.object.isRequired,
+  timing: PropTypes.object.isRequired,
+  projection: PropTypes.func.isRequired,
+  pathGenerator: PropTypes.func.isRequired,
+  layout: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    radius: PropTypes.number.isRequired,
+    arcCompressionRatio: PropTypes.number.isRequired,
+    rotatePhase: PropTypes.number.isRequired
+  })
+}
 
 export default RingWaypointStreamComponent

@@ -1,18 +1,8 @@
 'use strict'
 
-import React, { PropTypes } from 'react'
-// import { isEqual } from 'lodash'
+import React, { PropTypes, Component } from 'react'
 
-const MapboxGlComponentCamera = React.createClass({
-  propTypes: {
-    camera: PropTypes.object.isRequired,
-    map: PropTypes.object.isRequired,
-    mapbox: PropTypes.object.isRequired
-  },
-
-  componentDidMount () {
-  },
-
+class MapboxGlComponentCamera extends Component {
   setBounds ({ bounds, bearing = 0, angle = 0, animationSpeed = 1.4, pixelBuffer = 80 }) {
     if (this.props.map == null) {
       /* eslint-disable no-console */
@@ -27,7 +17,7 @@ const MapboxGlComponentCamera = React.createClass({
       padding: pixelBuffer,
       pitch: bearing
     })
-  },
+  }
 
   // setOrientation ({ bearing, angle }) {
   //   this.props.map.setBearing(angle)
@@ -35,7 +25,7 @@ const MapboxGlComponentCamera = React.createClass({
   // },
 
   componentWillUpdate (nextProps) {
-  },
+  }
 
   // update camera takes priority. If there are two changes at once,
   // only update camera position - not bearing or angle.
@@ -44,7 +34,7 @@ const MapboxGlComponentCamera = React.createClass({
     if (isBoundsChanged) {
       this.setBounds(camera)
     }
-  },
+  }
 
   componentDidUpdate (previousProps) {
     if (this.props.map == null) {
@@ -57,15 +47,21 @@ const MapboxGlComponentCamera = React.createClass({
     // update camera takes priority. If there are two changes at once,
     // only update camera position - not bearing or angle.
     this.updateCamera(this.props.camera, previousProps.camera)
-  },
+  }
 
   componentWillUnmount () {
 
-  },
+  }
 
   render () {
     return null
   }
-})
+}
+
+MapboxGlComponentCamera.propTypes = {
+  camera: PropTypes.object.isRequired,
+  map: PropTypes.object.isRequired,
+  mapbox: PropTypes.object.isRequired
+}
 
 export default MapboxGlComponentCamera

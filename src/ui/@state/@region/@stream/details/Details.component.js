@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 // import { Link } from 'react-router'
 import classes from './Details.scss'
 import { isEmpty } from 'lodash'
@@ -15,24 +15,7 @@ export const crossingTypes = {
 }
 // const DEFAULT_ZOOM = 16
 
-const DetailsComponent = React.createClass({
-  propTypes: {
-    selectedStream: PropTypes.object,
-    specialRegulationsCurrentSeason: PropTypes.array.isRequired,
-    selectedAccessPoint: PropTypes.object,
-    hoveredRoad: PropTypes.object,
-    location: PropTypes.object.isRequired,
-
-    setHoveredRoad: PropTypes.func.isRequired,
-    setSelectedRoad: PropTypes.func.isRequired
-  },
-
-  // renderOpenInGoogleMapsLink (selectedAccessPoint) {
-  //   let { centroid_latitude, centroid_longitude } = selectedAccessPoint.properties
-  //   let url = `https://www.google.com/maps/@${centroid_latitude},${centroid_longitude},${DEFAULT_ZOOM}z`
-  //   return (<a className={classes.googleLink} href={url} target='_blank'>(Google)</a>)
-  // },
-
+class DetailsComponent extends Component {
   renderRestrictions () {
     let { specialRegulationsCurrentSeason } = this.props
     let hasNoRestrictions = specialRegulationsCurrentSeason.length === 0
@@ -46,7 +29,8 @@ const DetailsComponent = React.createClass({
         color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
         pattern={'solid'}
         text={reg.legalText}
-        length={reg.roundedLength + ' mi'} />)
+        length={reg.roundedLength + ' mi'}
+              />)
     })
     return (<div>
       <div className={classes.title}>Special Regulations</div>
@@ -54,7 +38,7 @@ const DetailsComponent = React.createClass({
         {restrictionElements}
       </div>
     </div>)
-  },
+  }
 
   mapAccessPoints (bridge, defaultBridgeClass, selectedBridgeClass, key) {
     let selectedAccessPoint = this.props.selectedAccessPoint
@@ -71,8 +55,9 @@ const DetailsComponent = React.createClass({
       isHovered={isHovered}
       location={this.props.location}
       onHover={this.props.setHoveredRoad}
-      onSelect={this.props.setSelectedRoad} />)
-  },
+      onSelect={this.props.setSelectedRoad}
+            />)
+  }
 
   renderBridgesBody () {
     let { selectedStream } = this.props
@@ -130,7 +115,7 @@ const DetailsComponent = React.createClass({
       {this.createBridgeListSummaryElement('Access requires Landowner permission:', troutStreamBridgeElements)}
       {this.createBridgeListSummaryElement('Unsafe to park:', unsafeTroutStreamBridgeElements)}
     </div>)
-  },
+  }
 
   renderBridges () {
     let bridgesBody = this.renderBridgesBody()
@@ -139,7 +124,7 @@ const DetailsComponent = React.createClass({
       <div className={classes.title}>Bridges</div>
       {bridgesBody}
     </div>)
-  },
+  }
 
   createBridgeListSummaryElement (title, bridgeElements) {
     if (bridgeElements.length === 0) {
@@ -153,7 +138,7 @@ const DetailsComponent = React.createClass({
           {bridgeElements}
         </div>
       </div>)
-  },
+  }
 
   renderTributaries () {
     let { selectedStream } = this.props
@@ -174,18 +159,18 @@ const DetailsComponent = React.createClass({
         {tributaryElements}
       </div>
     </div>)
-  },
+  }
 
   renderSpecies () {
     return <SpeciesComponent selectedStream={this.props.selectedStream} />
-  },
+  }
 
   renderSummary () {
     return (
       <div>
         <SummaryComponent selectedStream={this.props.selectedStream} />
       </div>)
-  },
+  }
 
   render () {
     return (
@@ -197,5 +182,17 @@ const DetailsComponent = React.createClass({
         {this.renderSpecies() }
       </div>)
   }
-})
+}
+
+DetailsComponent.propTypes = {
+  selectedStream: PropTypes.object,
+  specialRegulationsCurrentSeason: PropTypes.array.isRequired,
+  selectedAccessPoint: PropTypes.object,
+  hoveredRoad: PropTypes.object,
+  location: PropTypes.object.isRequired,
+
+  setHoveredRoad: PropTypes.func.isRequired,
+  setSelectedRoad: PropTypes.func.isRequired
+}
+
 export default DetailsComponent

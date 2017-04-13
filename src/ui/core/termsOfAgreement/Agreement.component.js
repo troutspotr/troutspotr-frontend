@@ -36,7 +36,8 @@ class AgreementComponent extends Component {
 
     let meatballs = progress.map((p, i) => {
       let className = p ? classes.selectedMeatball : classes.meatball
-      return (<li className={className}>{i + 1}</li>)
+      let number = i + 1
+      return (<li key={number} className={className}>{number}</li>)
     })
 
     return (<div>

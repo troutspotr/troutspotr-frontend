@@ -75,7 +75,8 @@ class TermsOfServiceComponent extends Component {
   renderPreamble () {
     return (<div className={classes.preamble}>
       {this.state.preambles.map((p, index) => {
-        return (<div key={index} className={classes.preambleContainer}>{p}<div className={classes.shieldRight} /></div>)
+        let key = index + 1
+        return (<div key={key} className={classes.preambleContainer}>{p}<div className={classes.shieldRight} /></div>)
       })}
     </div>)
   }

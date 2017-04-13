@@ -57,7 +57,8 @@ class SummaryComponent extends Component {
       <RegulationsSummaryContainer streamObject={this.props.selectedStream} />
       <br />
       {viewModels.map((viewModel, index) => {
-        return (<div key={index} >
+        let id = `${viewModel.miles}_${viewModel.pattern}_${viewModel.text}`
+        return (<div key={id} >
           {this.renderSummary(viewModel)}
         </div>)
       })}

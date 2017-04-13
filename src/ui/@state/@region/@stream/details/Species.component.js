@@ -62,14 +62,14 @@ class SpeciesComponent extends Component {
       let isLastItem = index === count - 1
       let speciesElement = this.renderSpeciesElement(viewModel, isFirstItem)
       if (isFirstItem) {
-        return <span key={index}>{speciesElement}</span>
+        return <span key={viewModel.name}>{speciesElement}</span>
       }
 
       if (isLastItem === false) {
-        return <span key={index}>, {speciesElement}</span>
+        return <span key={viewModel.name}>, {speciesElement}</span>
       }
 
-      return <span key={index}>, and {speciesElement}.</span>
+      return <span key={viewModel.name}>, and {speciesElement}.</span>
     })
 
     return oxfordCommaList

@@ -76,19 +76,12 @@ class PrivacyPolicy extends Component {
   renderPreamble () {
     return (<div className={classes.preamble}>
       {this.state.preambles.map((p, i) => {
+        let key = i + 1
         let shield = (i === MAGICAL_NUMBER_OF_PREAMBLES - 1 || i === 0) ? classes.shieldRight : classes.shieldDown
-        return (<div key={i} className={classes.preambleContainer}>{p}<div className={shield} /></div>)
+        return (<div key={key} className={classes.preambleContainer}>{p}<div className={shield} /></div>)
       })}
     </div>)
   }
-
-  // renderPreamble () {
-  //   return (<div className={classes.preamble}>
-  //     <div className={classes.preambleItem}>We are not interested in your secret fishing spots.</div>
-  //     <div className={classes.preambleItem}>We are very interested in using the web to help anglers make safe and legal choices.</div>
-  //     <div className={classes.preambleItem}>To that end, we track usage, not users.</div>
-  //   </div>)
-  // },
 
   renderIntro () {
     if (this.state.isAgreementShown === false) {
@@ -234,7 +227,7 @@ class PrivacyPolicy extends Component {
     let url = 'https://keen.io/privacy-policy/'
     return (<div key={index}>
       <p>This app uses Keen.io to track usage - not users.</p>
-      <p>Read their privacy policy here: <a className={classes.link} target='_blank' href={url}>{url}</a></p>
+      <p>Read their privacy policy here: <a className={classes.link} rel='noopener noreferrer' target='_blank' href={url}>{url}</a></p>
     </div>)
   }
 
@@ -242,7 +235,7 @@ class PrivacyPolicy extends Component {
     let url = 'https://allaboutdnt.com/'
     return (<div key={index}>
       <p>Our app honors your browsers’ Do Not Track settings.</p>
-      <p>Read more here: <a className={classes.link} target='_blank' href={url}>{url}</a></p>
+      <p>Read more here: <a className={classes.link} rel='noopener noreferrer' target='_blank' href={url}>{url}</a></p>
     </div>)
   }
 

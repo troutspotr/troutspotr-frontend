@@ -30,6 +30,16 @@
     "react/jsx-filename-extension": 0,
     "react/sort-prop-types": 0,
     "react/jsx-max-props-per-line": 0,
-    "react/sort-comp": 0
+    "react/sort-comp": 0,
+    "react/forbid-prop-types": 0,
+    "react/no-unescaped-entities": 0,
+    "react/require-default-props": 0,
+    "react/jsx-handler-names": 0,
+    "react/require-optimization": 0,
+    "react/prop-types": 0,
+    "react/no-multi-comp": 0,
+    "react/no-direct-mutation-state": 0,
+    "react/no-set-state": 0,
+    "react/forbid-component-props": 0
   }
 }

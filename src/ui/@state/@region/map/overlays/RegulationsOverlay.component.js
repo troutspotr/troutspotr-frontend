@@ -17,8 +17,9 @@ class RegulationsOverlayComponent extends Component {
       <div className={classes.specialRegulationsTitle}>Special Regulations</div>
       {
         specialRegulationsCurrentSeason.map((reg, index) => {
+          let id = `${reg.restrictionId}_${reg.streamId}`
           return (<RestrictionComponent
-            key={index}
+            key={id}
             color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
             pattern={reg.isFishSanctuary ? 'solid' : 'stipple'}
             text={reg.legalText}

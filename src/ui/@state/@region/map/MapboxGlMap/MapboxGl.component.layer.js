@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react'
+import { PropTypes, Component } from 'react'
 import { debounce } from 'lodash'
 
 class MapboxGlLayerComponent extends Component {

@@ -58,7 +58,7 @@ class SvgMapComponent extends Component {
     let paths = statesGeoJson.features.map((state, index) => {
       let path = this.pathGenerator(state.geometry)
       return (<path
-        key={index}
+        key={state.properties.gid}
         d={path}
               />)
     })
@@ -94,7 +94,7 @@ class SvgMapComponent extends Component {
       return (<RegionComponent
         geoJson={region}
         isSelected
-        key={index}
+        key={region.properties.gid}
         isLoading={false}
         pathGenerator={this.pathGenerator}
         stateName={region.properties.state_gid.toString()}
@@ -137,7 +137,7 @@ class SvgMapComponent extends Component {
       return (
         <StreamCentroidComponent
           geoJson={centroid}
-          key={index}
+          key={centroid.gid}
           isSelected={index % 2 === 0}
           isLoading={index < 400}
           isOpen={isOpen}

@@ -185,7 +185,7 @@ class MapboxGlComponent extends Component {
         this.props.layerPackage.map((mapLayer, index) => {
           return (<MapboxGlLayerComponent
             map={this.map}
-            key={index}
+            key={mapLayer.layerId}
             layers={mapLayer.layers}
             filters={mapLayer.filters}
                   />)

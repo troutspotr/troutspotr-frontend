@@ -1,6 +1,6 @@
 'use strict'
 
-import React, { PropTypes, Component } from 'react'
+import { PropTypes, Component } from 'react'
 
 class MapboxGlComponentCamera extends Component {
   setBounds ({ bounds, bearing = 0, angle = 0, animationSpeed = 1.4, pixelBuffer = 80 }) {

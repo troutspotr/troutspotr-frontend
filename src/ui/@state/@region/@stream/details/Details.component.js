@@ -24,8 +24,9 @@ class DetailsComponent extends Component {
     }
 
     let restrictionElements = specialRegulationsCurrentSeason.map((reg, index) => {
+      let id = `${reg.streamId}_${reg.restrictionId}`
       return (<RestrictionComponent
-        key={index}
+        key={id}
         color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
         pattern={'solid'}
         text={reg.legalText}
@@ -149,8 +150,8 @@ class DetailsComponent extends Component {
     }
 
     let tributaryElements = tributaries.map((tributary, index) => {
-      let { name } = tributary.properties.streamData.stream.properties
-      return <div key={index} className={classes.listItem}>{name}</div>
+      let { name, gid } = tributary.properties.streamData.stream.properties
+      return <div key={gid} className={classes.listItem}>{name}</div>
     })
 
     return (<div>

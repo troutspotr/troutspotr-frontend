@@ -21,7 +21,7 @@ class SvgBubbleComponent extends Component {
   componentWillUpdate (nextProps) {
     this.projection = getProjectionFromFeature(nextProps.streamPackage.circle,
         { width: DIMENSIONS, height: DIMENSIONS, radius: RADIUS })
-    
+
     this.pathGenerator = d3.geoPath()
       .projection(this.projection)
       .pointRadius(1)
@@ -59,7 +59,9 @@ class SvgBubbleComponent extends Component {
 
     return waypoints.map((waypoint, index) => {
       let { gid, street_name } = waypoint.properties
+      /* eslint-disable camelcase */
       let isAccessPoint = street_name != null
+      /* eslint-enable camelcase */
       return isAccessPoint
         ? this.renderAccessPoint(waypoint, gid)
         : this.renderTributary(waypoint, gid)

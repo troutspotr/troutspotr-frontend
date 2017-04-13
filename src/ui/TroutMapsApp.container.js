@@ -9,7 +9,9 @@ class TroutMapsAppContainer extends Component {
     return (
       <Provider store={store}>
         <div style={{ height: '100%' }}>
-          <Router history={history} children={routes} onUpdate={this.onRouteUpdate} />
+          <Router history={history} onUpdate={this.onRouteUpdate}>
+            {routes}
+          </Router>
         </div>
       </Provider>
     )

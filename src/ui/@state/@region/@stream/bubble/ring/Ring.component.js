@@ -1,38 +1,18 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import RingAxisComponent from './RingAxis.component'
 import RingSectionComponent from './RingSection.component'
 
 import classes from '../SvgBubble.scss'
 const FISH_SANCTUARY_ID = 7
 // const ANIMATION_SCALE = 2.0
-
-const RingComponent = React.createClass({
-  propTypes: {
-    streamPackage: React.PropTypes.shape({
-      stream: PropTypes.object.isRequired,
-      sections: PropTypes.array.isRequired,
-      restrictions: PropTypes.array.isRequired,
-      palSections: PropTypes.array.isRequired,
-      accessPoints: PropTypes.array.isRequired,
-      tributaries: PropTypes.array.isRequired
-    }),
-    timing: PropTypes.object.isRequired,
-    layout: PropTypes.shape({
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-      radius: PropTypes.number.isRequired,
-      arcCompressionRatio: PropTypes.number.isRequired,
-      rotatePhase: PropTypes.number.isRequired
-    })
-  },
-
+class RingComponent extends Component {
   componentWillUnmount () {
     // console.log('unmounting')
-  },
+  }
 
   shouldComponentUpdate (nextProps) {
-    return false
-  },
+    return true
+  }
 
   renderPalRings () {
     return this.props.streamPackage.palSections.map((pal, palIndex) => {
@@ -42,13 +22,14 @@ const RingComponent = React.createClass({
       return (<RingSectionComponent
         timing={{ offset, length: this.props.timing.baseStreamLength }}
         cssName={classes.pal}
-        key={pal.properties.id}
+        key={pal.properties.id + 'pal'}
         layout={this.props.layout}
         length={this.props.streamPackage.stream.properties.length_mi}
         start={pal.properties.start}
-        stop={pal.properties.stop} />)
+        stop={pal.properties.stop}
+              />)
     })
-  },
+  }
 
   renderSectionRings () {
     return this.props.streamPackage.sections.map((section, sectionIndex) => {
@@ -62,9 +43,10 @@ const RingComponent = React.createClass({
         layout={this.props.layout}
         length={this.props.streamPackage.stream.properties.length_mi}
         start={section.properties.start}
-        stop={section.properties.stop} />)
+        stop={section.properties.stop}
+              />)
     })
-  },
+  }
 
   renderRestrictionRings () {
     return this.props.streamPackage.restrictions.map((restriction, restrictionIndex) => {
@@ -83,18 +65,20 @@ const RingComponent = React.createClass({
             layout={this.props.layout}
             length={this.props.streamPackage.stream.properties.length_mi}
             start={restriction.properties.start}
-            stop={restriction.properties.stop} />)
+            stop={restriction.properties.stop}
+          />)
           <RingSectionComponent
             timing={{ offset, length: this.props.timing.baseStreamLength }}
             cssName={classes.restrictionBackground}
             layout={this.props.layout}
             length={this.props.streamPackage.stream.properties.length_mi}
             start={restriction.properties.start}
-            stop={restriction.properties.stop} />
+            stop={restriction.properties.stop}
+          />
         </g>
       )
     })
-  },
+  }
 
   renderStreamRing () {
     let streamLength = this.props.streamPackage.stream.properties.length_mi
@@ -104,8 +88,9 @@ const RingComponent = React.createClass({
       layout={this.props.layout}
       length={streamLength}
       start={0}
-      stop={streamLength} />)
-  },
+      stop={streamLength}
+            />)
+  }
 
   renderRingAxis () {
     let length = this.props.streamPackage.stream.properties.length_mi
@@ -113,8 +98,9 @@ const RingComponent = React.createClass({
     return (<RingAxisComponent
       length={length}
       index={index}
-      layout={this.props.layout} />)
-  },
+      layout={this.props.layout}
+            />)
+  }
 
   render () {
     return (
@@ -150,6 +136,25 @@ const RingComponent = React.createClass({
       </g>
     )
   }
-})
+}
+
+RingComponent.propTypes = {
+  streamPackage: React.PropTypes.shape({
+    stream: PropTypes.object.isRequired,
+    sections: PropTypes.array.isRequired,
+    restrictions: PropTypes.array.isRequired,
+    palSections: PropTypes.array.isRequired,
+    accessPoints: PropTypes.array.isRequired,
+    tributaries: PropTypes.array.isRequired
+  }),
+  timing: PropTypes.object.isRequired,
+  layout: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    radius: PropTypes.number.isRequired,
+    arcCompressionRatio: PropTypes.number.isRequired,
+    rotatePhase: PropTypes.number.isRequired
+  })
+}
 
 export default RingComponent

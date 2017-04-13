@@ -1,14 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './TermsOfAgreement.scss'
 const MAGICAL_NUMBER_OF_PREAMBLES = 5
-const TermsOfServiceComponent = React.createClass({
-  propTypes: {
-    advance: PropTypes.func.isRequired
-  },
-
+class TermsOfServiceComponent extends Component {
   onShowAgreement () {
     this.setState({ ...this.state, ...{ isAgreementShown: true } })
-  },
+  }
 
   getInitialState () {
     return {
@@ -16,7 +12,7 @@ const TermsOfServiceComponent = React.createClass({
       isAgreementShown: false,
       preambleIsFinished: false
     }
-  },
+  }
 
   addElement (element) {
     if (element == null) {
@@ -32,7 +28,7 @@ const TermsOfServiceComponent = React.createClass({
       }, 1200)
     }
     this.setState({ preambles })
-  },
+  }
 
   componentDidMount () {
     // this.props.advance(0) // DEBUG
@@ -63,7 +59,7 @@ const TermsOfServiceComponent = React.createClass({
     setTimeout(() => {
       this.addElement((<hr />))
     }, 3300 + timelapseLengthMilliseconds)
-  },
+  }
 
    /* <ul className={classes.meatballs}>
         <li className={classes.selectedMeatball}>{1}</li>
@@ -74,15 +70,16 @@ const TermsOfServiceComponent = React.createClass({
     return (<div>
       <span className={classes.jumbo}>Terms of Service</span>
     </div>)
-  },
+  }
 
   renderPreamble () {
     return (<div className={classes.preamble}>
       {this.state.preambles.map((p, index) => {
-        return (<div key={index} className={classes.preambleContainer}>{p}<div className={classes.shieldRight} /></div>)
+        let key = index + 1
+        return (<div key={key} className={classes.preambleContainer}>{p}<div className={classes.shieldRight} /></div>)
       })}
     </div>)
-  },
+  }
 
   renderIntro () {
     if (this.state.isAgreementShown === false) {
@@ -94,7 +91,7 @@ const TermsOfServiceComponent = React.createClass({
       <p>Thanks for using TroutSpotr! We hope you are as excited about fishing as we are.</p>
       <p>TroutSpotr (the “App”) is owned and operated by Stuart Anderson LLC. These Terms of Service ("Terms") govern your use of the App. Please read them carefully.</p>
     </div>)
-  },
+  }
 
   renderTerm ({ index, title, body }) {
     return (
@@ -102,14 +99,14 @@ const TermsOfServiceComponent = React.createClass({
         <div className={classes.term}>{index}. {title}</div>
         <div className={classes.termBody}>{body}</div>
       </li>)
-  },
+  }
 
   renderAccept (index) {
     let title = 'Accepting Our Terms'
     let body = (<div><p>By using the App, you agree to be bound by all of the terms below. If you don't agree to all of the terms below, please discontinue use of the App immediately. </p>
       <p>If a term is unclear, please let us know by contacting us at: <a className={classes.link} href='mailto:troutspotr@gmail.com'>troutspotr@gmail.com</a></p></div>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderDontTresspass (index) {
     let title = 'Don’t Trespass!!!'
@@ -120,27 +117,27 @@ const TermsOfServiceComponent = React.createClass({
         <p>Maintaining positive relationships with the people who live where we want to fish is essential to our continued use. Be respectful and follow the law!</p>
       </div>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderObeyLaw (index) {
     let title = 'Obey the Law!!!'
     let body = (<p>Fishing is a regulated activity that requires a license and is subject to the regulations found here. By using the App you are agreeing to maintain a current Minnesota fishing license and to follow all applicable regulations.
 </p>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderTermsOfServiceUpdates (index) {
     let title = 'Terms of Service Updates.'
     let body = (<p>We may modify these Terms of Service at any time by posting updates here.  Your continued use of the App after any modification constitutes your acceptance of the updated Terms. Please check back often.
 </p>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderDataIsNotGuaranteed (index) {
     let title = 'Data is not Guaranteed.'
     let body = (<p>The App relies on data collected by the Minnesota Department of Natural Resources, the Minnesota Department of Transportation, and other government sources. We cannot guarantee that their data is always accurate. We are also human and cannot guarantee that our work is always perfectly accurate and up to date or that streams will always be navigable. If something looks wrong, it could very well be wrong. Please tell us if you discover a mistake. This is the best way for us to improve the App. Don’t cast your line in the middle of the road and always make safety your top priority. You assume all liability for your use of the App.</p>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderAppropriateUse (index) {
     let title = 'Appropriate Use.'
@@ -164,13 +161,13 @@ const TermsOfServiceComponent = React.createClass({
       <p>You agree to indemnify us against any claims arising out of your inappropriate use of the App.</p>
     </div>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderOwnershipOfTroutspotrMaterials (index) {
     let title = 'Ownership of TroutSpotr Materials.'
     let body = (<p>The name TroutSpotr, our logos, designs, text, graphics and original content on the App (collectively “Content”) is the property of Stuart Anderson LLC. It is protected under U.S. and international copyright and trademark law. We grant you the right, subject to these Terms of Service, to view, use, share and link to the Content. You may not alter or sell Content without our express written permission. </p>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderDisclaimerOfWarranties (index) {
     let title = 'Disclaimer of Warranties.'
@@ -180,25 +177,25 @@ const TermsOfServiceComponent = React.createClass({
       <p className={classes.alert}><emphasis>YOU EXPRESSLY AGREE THAT YOUR USE OF THE APP IS AT YOUR OWN RISK.</emphasis></p>
     </div>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderGoverningLaw (index) {
     let title = 'Governing Law.'
     let body = (<p>These Terms of Service are governed by the laws of the State of Minnesota and the United States of America.</p>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderTermination (index) {
     let title = 'Termination.'
     let body = (<p>If you violate any of the Terms of Service, we have the right to suspend or disable your access to or use of the App.</p>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderEntireAgreement (index) {
     let title = 'Entire Agreement.'
     let body = (<p>These Terms of Service constitute the entire agreement between you and Stuart Anderson, LLC regarding the use of the App and supersede any prior agreements.</p>)
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderContactUs (index) {
     return (
@@ -206,7 +203,7 @@ const TermsOfServiceComponent = React.createClass({
         <div>Contact Us.</div>
         <p>If you have any questions about these Terms of Service, you may contact us at: <a className={classes.link} href='mailto:troutspotr@gmail.com'>troutspotr@gmail.com</a></p>
       </div>)
-  },
+  }
 
   renderButtonText () {
     let { isAgreementShown } = this.state
@@ -215,7 +212,7 @@ const TermsOfServiceComponent = React.createClass({
     }
 
     return 'Agree and Continue'
-  },
+  }
 
   renderButton () {
     let { preambleIsFinished } = this.state
@@ -224,7 +221,7 @@ const TermsOfServiceComponent = React.createClass({
     }
 
     return (<button className={classes.button} onClick={this.onButtonClick}>{this.renderButtonText()}</button>)
-  },
+  }
 
   onButtonClick () {
     let { preambleIsFinished, isAgreementShown } = this.state
@@ -238,7 +235,7 @@ const TermsOfServiceComponent = React.createClass({
       let ellapsed = (new Date()) - this.time
       this.props.advance(ellapsed)
     }
-  },
+  }
 
   generateTerms () {
     let { isAgreementShown } = this.state
@@ -261,11 +258,11 @@ const TermsOfServiceComponent = React.createClass({
       this.renderContactUs,
       this.renderLastUpdate
     ]
-  },
+  }
 
   renderLastUpdate (index) {
     return (<div key={index} className={classes.update}>Last Updated: January 20, 2017</div>)
-  },
+  }
 
   renderBody () {
     let terms = this.generateTerms()
@@ -282,7 +279,7 @@ const TermsOfServiceComponent = React.createClass({
       {this.renderButton()}
       <div className={classes.shieldDown} />
     </div>)
-  },
+  }
 
 // {this.renderTitle()}
 //         {this.renderIntro()}
@@ -295,5 +292,10 @@ const TermsOfServiceComponent = React.createClass({
         {this.renderBody()}
       </div>)
   }
-})
+}
+
+TermsOfServiceComponent.propTypes = {
+  advance: PropTypes.func.isRequired
+}
+
 export default TermsOfServiceComponent

@@ -1,19 +1,13 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import classes from './StreamItem.scss'
 import MicroMapContainer from 'ui/core/microMap/MicroMap.container'
 import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 /* eslint-disable camelcase */
-const StreamItemComponent = React.createClass({
-  propTypes: {
-    title: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    streamObject: PropTypes.object.isRequired
-  },
-
+class StreamItemComponent extends Component {
   renderOpenOrClosed (streamObject) {
     return (<RegulationsSummaryContainer streamObject={streamObject} />)
-  },
+  }
 
   renderOpenBridges (streamObject) {
     let number = streamObject.accessPoints
@@ -30,7 +24,7 @@ const StreamItemComponent = React.createClass({
       <div>
         {countSymbol}{noun} over publically fishable land.
       </div>)
-  },
+  }
 
   render () {
     let { title, url, streamObject } = this.props
@@ -39,7 +33,8 @@ const StreamItemComponent = React.createClass({
         <div className={classes.media}>
           <MicroMapContainer
             streamObject={streamObject}
-            id={streamObject.stream.properties.slug + '-canvas'} />
+            id={streamObject.stream.properties.slug + '-canvas'}
+          />
         </div>
         <div className={classes.body}>
           <div className={classes.header}>{title}</div>
@@ -49,5 +44,12 @@ const StreamItemComponent = React.createClass({
       </Link>
     )
   }
-})
+}
+
+StreamItemComponent.propTypes = {
+  title: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  streamObject: PropTypes.object.isRequired
+}
+
 export default StreamItemComponent

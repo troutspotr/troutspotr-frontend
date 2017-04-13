@@ -1,21 +1,14 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './TermsOfAgreement.scss'
 import TermsOfService from './TermsOfService.component'
 import Intro from './Intro.component'
 import PrivacyPolicy from './PrivacyPolicy.component'
 import ThankYou from './ThankYou.component'
-
-const AgreementComponent = React.createClass({
-  propTypes: {
-    agreeToTerms: PropTypes.func.isRequired,
-    advanceIntro: PropTypes.func.isRequired,
-    advanceTermsOfService: PropTypes.func.isRequired,
-    advanceToApp: PropTypes.func.isRequired,
-    hasAgreedToTerms: PropTypes.bool.isRequired,
-    hasSeenIntroScreen: PropTypes.bool.isRequired,
-    hasSeenTermsOfService: PropTypes.bool.isRequired,
-    hasSeenPrivacyPolicy: PropTypes.bool.isRequired
-  },
+class AgreementComponent extends Component {
+  constructor () {
+    super()
+    this.onAdvanceClick = this.onAdvanceClick.bind(this)
+  }
 
   getProgress () {
     let { hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy } = this.props
@@ -36,14 +29,15 @@ const AgreementComponent = React.createClass({
     }
 
     return progress
-  },
+  }
 
   renderMeatballs () {
     let progress = this.getProgress()
 
     let meatballs = progress.map((p, i) => {
       let className = p ? classes.selectedMeatball : classes.meatball
-      return (<li className={className}>{i + 1}</li>)
+      let number = i + 1
+      return (<li key={number} className={className}>{number}</li>)
     })
 
     return (<div>
@@ -51,7 +45,7 @@ const AgreementComponent = React.createClass({
         {meatballs}
       </ul>
     </div>)
-  },
+  }
 
   renderContent () {
     let { hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy } = this.props
@@ -68,7 +62,7 @@ const AgreementComponent = React.createClass({
     }
 
     return <Intro />
-  },
+  }
 
   renderButtonText () {
     let { hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy } = this.props
@@ -84,7 +78,7 @@ const AgreementComponent = React.createClass({
     if (hasSeenPrivacyPolicy === false) {
       return 'Agree and Continue'
     }
-  },
+  }
 
   onAdvanceClick (time) {
     let container = document.getElementById('scrollContainer')
@@ -102,11 +96,11 @@ const AgreementComponent = React.createClass({
     if (hasSeenPrivacyPolicy === false) {
       return this.props.advanceToApp(time)
     }
-  },
+  }
 
   renderThankYou () {
     return <ThankYou acceptTerms={this.props.agreeToTerms} />
-  },
+  }
 
   render () {
     let { hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy, hasAgreedToTerms } = this.props
@@ -128,5 +122,17 @@ const AgreementComponent = React.createClass({
       </div>
     </div>)
   }
-})
+}
+
+AgreementComponent.propTypes = {
+  agreeToTerms: PropTypes.func.isRequired,
+  advanceIntro: PropTypes.func.isRequired,
+  advanceTermsOfService: PropTypes.func.isRequired,
+  advanceToApp: PropTypes.func.isRequired,
+  hasAgreedToTerms: PropTypes.bool.isRequired,
+  hasSeenIntroScreen: PropTypes.bool.isRequired,
+  hasSeenTermsOfService: PropTypes.bool.isRequired,
+  hasSeenPrivacyPolicy: PropTypes.bool.isRequired
+}
+
 export default AgreementComponent

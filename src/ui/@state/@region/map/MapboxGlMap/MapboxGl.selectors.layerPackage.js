@@ -36,9 +36,13 @@ export const getLayerPackage = createSelector(
       accessPoints,
       streamCentroids
     ].map(style => {
+      let filters = style.map(s => filterLookupTable[s.layerId]).filter(x => x != null && x.filterDefinition != null)
+      let layerId = style.map(x => x.layerDefinition.id).join('_')
+
       return {
         layers: style,
-        filters: style.map(s => filterLookupTable[s.layerId]).filter(x => x != null && x.filterDefinition != null)
+        filters: filters,
+        layerId
       }
     })
 

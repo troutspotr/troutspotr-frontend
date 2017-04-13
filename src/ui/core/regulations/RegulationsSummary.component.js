@@ -1,17 +1,13 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './RegulationsSummary.scss'
 // import { Link } from 'react-router'
 /* eslint no-unneeded-ternary: 0 */
 /* eslint-disable camelcase */
-const RegulationsSummary = React.createClass({
-  propTypes: {
-    streamObject: PropTypes.object.isRequired,
-    getSummary: PropTypes.func.isRequired
-  },
 
+class RegulationsSummary extends Component {
   getIsOpenStatus (streamObject) {
     return this.props.getSummary(streamObject)
-  },
+  }
 
   renderOpenClosedHelper ({ statusClass, statusText, explainerText, dateText }) {
     return (
@@ -21,7 +17,7 @@ const RegulationsSummary = React.createClass({
         </span>
         <span> {explainerText}</span>
       </div>)
-  },
+  }
 
   renderOpenOrClosed (streamObject) {
     let now = new Date()
@@ -96,11 +92,17 @@ const RegulationsSummary = React.createClass({
     }
 
     throw new Error('not covered')
-  },
+  }
 
   render () {
     let { streamObject } = this.props
     return this.renderOpenOrClosed(streamObject)
   }
-})
+}
+
+RegulationsSummary.propTypes = {
+  streamObject: PropTypes.object.isRequired,
+  getSummary: PropTypes.func.isRequired
+}
+
 export default RegulationsSummary

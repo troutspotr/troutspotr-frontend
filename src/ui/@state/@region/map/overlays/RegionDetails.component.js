@@ -1,11 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classes from './RegionDetails.scss'
-const RegionDetails = React.createClass({
-  propTypes: {
-    // selectedStream: React.PropTypes.object.isRequired,
-    // selectedAccessPoint: React.PropTypes.object.isRequired
-  },
 
+class RegionDetails extends Component {
   renderPublic () {
     return (
       <div>
@@ -18,7 +14,7 @@ const RegionDetails = React.createClass({
           <span className={classes.text}>Publicly fishable land</span>
         </div>
       </div>)
-  },
+  }
 
   renderPrivate () {
     return (
@@ -32,11 +28,7 @@ const RegionDetails = React.createClass({
           <span className={classes.text}>Publicly fishable bridge</span>
         </div>
       </div>)
-  },
-
-  componentDidMount () {
-    // console.log('LIST VIEW MOUNTED')
-  },
+  }
 
   render () {
     return (
@@ -49,5 +41,6 @@ const RegionDetails = React.createClass({
         </div>
       </div>)
   }
-})
+}
+
 export default RegionDetails

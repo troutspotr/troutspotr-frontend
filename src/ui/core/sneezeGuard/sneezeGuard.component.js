@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import classes from './SneezeGuard.scss'
 
-class SneezeGuardComponent extends Component {
+class SneezeGuardComponent extends Component { 
   constructor () {
     super()
     this.onClick = this.onClick.bind(this)

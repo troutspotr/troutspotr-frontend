@@ -166,7 +166,7 @@ class MinimapComponent extends Component {
     browserHistory.push(path)
   }
 
-  backButtonPressed () {
+  backButtonPressed = () => {
     if (this.props.isRootPage) {
       return
     }

@@ -5,6 +5,9 @@ import MinimapContainer from './minimap/Minimap.container'
 import HeaderLayout from './Header.layout'
 import TitleComponent from './title/Title.component'
 import SubtitleComponent from './subtitle/Subtitle.component'
+import ClipboardButton from 'react-clipboard.js'
+import ClipboardIconComponent from 'ui/core/clipboard/ClipboardIcon.component'
+
 class HeaderContainer extends Component {
   renderMinimap () {
     return (<MinimapContainer
@@ -31,10 +34,24 @@ class HeaderContainer extends Component {
     if (this.props.isTitleVisible === false) {
       return null
     }
-    return (<TitleComponent
+
+    let body = (<TitleComponent
       title={this.props.title}
+
       isVisible={this.props.isTitleVisible}
-            />)
+                />)
+
+    let symbol = (<ClipboardIconComponent
+      size={14}
+      style={{ fill: 'hsla(199, 69%, 61%, 1)' }}
+                  />)
+    return (<ClipboardButton
+      component='a'
+      data-clipboard-text={window.location.href}
+      button-title='Copy to clipboard'
+            >
+      <span>{body} {symbol}</span>
+    </ClipboardButton>)
   }
 
   renderBackButton () {

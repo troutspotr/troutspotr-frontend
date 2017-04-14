@@ -93,7 +93,7 @@ class TermsOfServiceComponent extends Component {
     </div>)
   }
 
-  renderTerm ({ index, title, body }) {
+  renderTerm = ({ index, title, body }) => {
     return (
       <li key={index}>
         <div className={classes.term}>{index}. {title}</div>
@@ -101,7 +101,7 @@ class TermsOfServiceComponent extends Component {
       </li>)
   }
 
-  renderAccept (index) {
+  renderAccept = (index) => {
     let title = 'Accepting Our Terms'
     let body = (<div><p>By using the App, you agree to be bound by all of the terms below. If you don't agree to all of the terms below, please discontinue use of the App immediately. </p>
       <p>If a term is unclear, please let us know by contacting us at: <a className={classes.link} href='mailto:troutspotr@gmail.com'>troutspotr@gmail.com</a></p></div>)
@@ -223,7 +223,7 @@ class TermsOfServiceComponent extends Component {
     return (<button className={classes.button} onClick={this.onButtonClick}>{this.renderButtonText()}</button>)
   }
 
-  onButtonClick () {
+  onButtonClick = () => {
     let { preambleIsFinished, isAgreementShown } = this.state
     if (preambleIsFinished && isAgreementShown === false) {
       setTimeout(() => {
@@ -237,26 +237,26 @@ class TermsOfServiceComponent extends Component {
     }
   }
 
-  generateTerms () {
+  generateTerms = () => {
     let { isAgreementShown } = this.state
     if (isAgreementShown === false) {
       return []
     }
 
     return [
-      this.renderAccept,
-      this.renderDontTresspass,
-      this.renderObeyLaw,
-      this.renderTermsOfServiceUpdates,
-      this.renderDataIsNotGuaranteed,
-      this.renderAppropriateUse,
-      this.renderOwnershipOfTroutspotrMaterials,
-      this.renderDisclaimerOfWarranties,
-      this.renderGoverningLaw,
-      this.renderTermination,
-      this.renderEntireAgreement,
-      this.renderContactUs,
-      this.renderLastUpdate
+      this.renderAccept.bind(this),
+      this.renderDontTresspass.bind(this),
+      this.renderObeyLaw.bind(this),
+      this.renderTermsOfServiceUpdates.bind(this),
+      this.renderDataIsNotGuaranteed.bind(this),
+      this.renderAppropriateUse.bind(this),
+      this.renderOwnershipOfTroutspotrMaterials.bind(this),
+      this.renderDisclaimerOfWarranties.bind(this),
+      this.renderGoverningLaw.bind(this),
+      this.renderTermination.bind(this),
+      this.renderEntireAgreement.bind(this),
+      this.renderContactUs.bind(this),
+      this.renderLastUpdate.bind(this)
     ]
   }
 

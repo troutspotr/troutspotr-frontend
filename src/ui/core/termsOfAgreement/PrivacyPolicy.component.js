@@ -257,7 +257,7 @@ class PrivacyPolicy extends Component {
     return (<button className={classes.button} onClick={this.onButtonClick}>{this.renderButtonText()}</button>)
   }
 
-  onButtonClick () {
+  onButtonClick = () => {
     let { preambleIsFinished, isAgreementShown } = this.state
     if (preambleIsFinished && isAgreementShown === false) {
       setTimeout(() => {
@@ -277,16 +277,16 @@ class PrivacyPolicy extends Component {
       return []
     }
 
-    return [this.renderCollection,
-      this.renderIpAddress,
-      this.renderCookies,
-      this.renderDataSecurity,
-      this.renderUseOfInformation,
-      this.renderDisclosureOfInformation,
-      this.renderPrivacyPolicyUpdates,
-      this.renderContact,
-      this.renderKeen,
-      this.renderDoNotTrack,
+    return [this.renderCollection.bind(this),
+      this.renderIpAddress.bind(this),
+      this.renderCookies.bind(this),
+      this.renderDataSecurity.bind(this),
+      this.renderUseOfInformation.bind(this),
+      this.renderDisclosureOfInformation.bind(this),
+      this.renderPrivacyPolicyUpdates.bind(this),
+      this.renderContact.bind(this),
+      this.renderKeen.bind(this),
+      this.renderDoNotTrack.bind(this),
       (index) => { return (<p key={index}>Last Updated: January 20, 2017</p>) }]
   }
 

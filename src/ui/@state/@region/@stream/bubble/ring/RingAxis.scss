@@ -3,7 +3,7 @@
 .radialText {
   font: 0.6em sans-serif;
   font-stretch: ultra-condensed;
-  fill: darken($off-white, 20);
+  fill: darken(white, 0);
   stroke: none;
   alignment-baseline: middle;
   font-weight: lighter;
@@ -12,12 +12,12 @@
 .radialTextSmall {
   composes: radialText;
   font: 0.4em sans-serif;
-  fill: darken($off-white, 40);
+  fill: darken(white, 50);
 }
 
 .radialGuide {
   fill: none;
-  stroke: darken($off-white, 20);
+  stroke: darken(white, 0);
 
   // stroke-dasharray: 1,4;
   stroke-width: 0.04em;

@@ -1,21 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classes from './List.scss'
 import { isEmpty } from 'lodash'
-// import BubbleComponent from './Bubble.component'
-// import StreamItemContainer from './streamItem/StreamItem.container'
 import StreamListComponent from './StreamList.component'
-const CountyListComponent = React.createClass({
-  propTypes: {
-    isListVisible: React.PropTypes.bool.isRequired,
-    visibleCounties: React.PropTypes.array.isRequired,
-    selectedState: React.PropTypes.string.isRequired,
-    selectedRegion: React.PropTypes.string.isRequired
-  },
-
-  componentDidMount () {
-    // console.log('LIST VIEW MOUNTED')
-  },
-
+class CountyListComponent extends Component {
   renderCounty (county, index) {
     let { gid, name, streams } = county
     return (<li key={gid} className={classes.countyListItem}>
@@ -27,9 +14,10 @@ const CountyListComponent = React.createClass({
         isListVisible={this.props.isListVisible}
         visibleTroutStreams={streams}
         selectedState={this.props.selectedState}
-        selectedRegion={this.props.selectedRegion} />
+        selectedRegion={this.props.selectedRegion}
+      />
     </li>)
-  },
+  }
 
   renderCounties () {
     let { visibleCounties } = this.props
@@ -40,7 +28,7 @@ const CountyListComponent = React.createClass({
     return (<ul className={classes.countyListContainer}>
       {visibleCounties.map((county, index) => this.renderCounty(county, index))}
     </ul>)
-  },
+  }
 
   render () {
     let { isListVisible } = this.props
@@ -50,5 +38,13 @@ const CountyListComponent = React.createClass({
         <div className={classes.godAwfulPlaceholder} />
       </div>)
   }
-})
+}
+
+CountyListComponent.propTypes = {
+  isListVisible: React.PropTypes.bool.isRequired,
+  visibleCounties: React.PropTypes.array.isRequired,
+  selectedState: React.PropTypes.string.isRequired,
+  selectedRegion: React.PropTypes.string.isRequired
+}
+
 export default CountyListComponent

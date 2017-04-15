@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import * as d3 from 'd3-geo'
 import classes from './SvgMap.scss'
 import RegionComponent from './Region.component'
@@ -19,25 +19,10 @@ export const getProjectionFromFeature = (feature, { width, height, radius, buffe
   return projection
 }
 
-const SvgMapComponent = React.createClass({
-  propTypes: {
-    statesGeoJson: PropTypes.object.isRequired,
-    regionsGeoJson: PropTypes.object.isRequired,
-    streamCentroidsGeoJson: PropTypes.array,
-    selectedRegion: PropTypes.object,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    getIsOpen: PropTypes.func.isRequired,
-    isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
-    // location: PropTypes.object.isRequired,
-    selectedStreamCentroid: PropTypes.object,
-
-    selectRegion: PropTypes.func.isRequired
-  },
-
+class SvgMapComponent extends Component {
   componentWillMount () {
     this.initializeMap()
-  },
+  }
 
   initializeMap () {
     this.projection = getProjectionFromFeature(this.props.statesGeoJson,
@@ -50,40 +35,41 @@ const SvgMapComponent = React.createClass({
     this.selectedCentroidPathGenerator = d3.geoPath()
       .projection(this.projection)
       .pointRadius(1.6)
-  },
+  }
 
   componentDidMount () {
-  },
+  }
 
   componentWillUnmount () {
-  },
+  }
 
   onSelectState (e) {
-  },
+  }
 
   selectRegion (e, region) {
-  },
+  }
 
   zoomToRegion (region) {
 
-  },
+  }
 
   renderStates () {
     let { statesGeoJson } = this.props
     let paths = statesGeoJson.features.map((state, index) => {
       let path = this.pathGenerator(state.geometry)
-      return <path
-        key={index}
-        d={path} />
+      return (<path
+        key={state.properties.gid}
+        d={path}
+              />)
     })
     return (<g className={classes.states}>
       {paths}
     </g>)
-  },
+  }
 
   renderCounties () {
     return null
-  },
+  }
 
   renderSelectedRegions () {
     let { selectedRegion, regionsGeoJson, selectedStreamCentroid } = this.props
@@ -108,13 +94,14 @@ const SvgMapComponent = React.createClass({
       return (<RegionComponent
         geoJson={region}
         isSelected
-        key={index}
+        key={region.properties.gid}
         isLoading={false}
         pathGenerator={this.pathGenerator}
         stateName={region.properties.state_gid.toString()}
-        selectRegion={() => { }} />)
+        selectRegion={() => { }}
+              />)
     })
-  },
+  }
 
   renderRegions () {
     let { regionsGeoJson } = this.props
@@ -132,12 +119,13 @@ const SvgMapComponent = React.createClass({
           key={preactIndexHack}
           pathGenerator={this.pathGenerator}
           stateName={region.properties.state_gid.toString()}
-          selectRegion={this.props.selectRegion} />)
+          selectRegion={this.props.selectRegion}
+        />)
     })
     return (<g className={classes.regions}>
       {paths}
     </g>)
-  },
+  }
 
   renderStreamCentroids () {
     let { streamCentroidsGeoJson } = this.props
@@ -149,17 +137,18 @@ const SvgMapComponent = React.createClass({
       return (
         <StreamCentroidComponent
           geoJson={centroid}
-          key={index}
+          key={centroid.gid}
           isSelected={index % 2 === 0}
           isLoading={index < 400}
           isOpen={isOpen}
           pathGenerator={this.pathGenerator}
-          projection={this.projection} />)
+          projection={this.projection}
+        />)
     })
     return (<g className={classes.centroids}>
       {paths}
     </g>)
-  },
+  }
 
   renderSelectedStreamCentroid () {
     let { selectedStreamCentroid } = this.props
@@ -174,18 +163,19 @@ const SvgMapComponent = React.createClass({
         isOpen={this.props.getIsOpen(selectedStreamCentroid.waterId)}
         isLoading={false}
         pathGenerator={this.selectedCentroidPathGenerator}
-        projection={this.projection} />)
-  },
+        projection={this.projection}
+      />)
+  }
 
   render () {
-    console.log('rendering')
     return (
       <svg
         id='minimap'
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
         height={this.props.height + 'px'}
         width={this.props.width + 'px'}
-        preserveAspectRatio='xMidYMid meet'>
+        preserveAspectRatio='xMidYMid meet'
+      >
         <g className={classes.counties}>
           {this.renderCounties()}
         </g>
@@ -203,6 +193,21 @@ const SvgMapComponent = React.createClass({
       </svg>
     )
   }
-})
+}
+
+SvgMapComponent.propTypes = {
+  statesGeoJson: PropTypes.object.isRequired,
+  regionsGeoJson: PropTypes.object.isRequired,
+  streamCentroidsGeoJson: PropTypes.array,
+  selectedRegion: PropTypes.object,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  getIsOpen: PropTypes.func.isRequired,
+  isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
+  // location: PropTypes.object.isRequired,
+  selectedStreamCentroid: PropTypes.object,
+
+  selectRegion: PropTypes.func.isRequired
+}
 
 export default SvgMapComponent

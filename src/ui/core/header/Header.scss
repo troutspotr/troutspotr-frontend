@@ -1,6 +1,7 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 @import "src/ui/styles/_fonts";
+@import "src/ui/styles/ZeldaText";
 
 $fontSize: 12px;
 $largeFontSize: 1.25em;
@@ -77,6 +78,6 @@ $smallFontSize: 0.85em;
   text-decoration: none;
   font-size: 18px;
   line-height: 1.1;
-
+  cursor: pointer;
   @include medium-font;
 }

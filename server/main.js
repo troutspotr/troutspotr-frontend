@@ -11,7 +11,6 @@ const createSeoInterceptor = require('./Interceptor')
 const GetSiteDictionary = require('./GetSiteDictionary')
 app.use(compress())
 
-
 const createServer = function (dictionary, app) {
   var seoInterceptor = createSeoInterceptor(dictionary)
   app.use(seoInterceptor)

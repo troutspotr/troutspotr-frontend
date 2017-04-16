@@ -10,9 +10,7 @@ var compress = require('compression')
 const createSeoInterceptor = require('./Interceptor')
 const GetSiteDictionary = require('./GetSiteDictionary')
 app.use(compress())
-GetSiteDictionary().then(function (dictionary) {
-  createServer(dictionary, app)
-})
+
 
 const createServer = function (dictionary, app) {
   var seoInterceptor = createSeoInterceptor(dictionary)
@@ -70,5 +68,8 @@ const createServer = function (dictionary, app) {
     app.use(express.static(paths.dist()))
   }
 }
+
+var siteDictionary = GetSiteDictionary()
+createServer(siteDictionary, app)
 
 module.exports = app

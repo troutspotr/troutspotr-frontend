@@ -2,13 +2,15 @@ const getImageUrl = require('./GetImageUrl')
 // const parseUrl = require('./ParseUrl')
 const _ = require('lodash')
 
+const fullPath = 'https://troutspotr2-wisconsin.herokuapp.com'
+
 const getDescriptionFromUrl = function (routeData) {
   var seoDescription = {
     name: 'Trout Spotr',
     description: 'Find safe, legal trout fishing.',
-    imageUrl: 'https://troutspotr2.herokuapp.com/android-chrome-192x192.png',
-    url: 'https://troutspotr2.herokuapp.com',
-    parentSite: 'https://troutspotr2.herokuapp.com'
+    imageUrl: 'https://troutspotr2-wisconsin.herokuapp.com/android-chrome-192x192.png',
+    url: 'https://troutspotr2-wisconsin.herokuapp.com',
+    parentSite: 'https://troutspotr2-wisconsin.herokuapp.com'
   }
 
   if (_.isEmpty(routeData)) {

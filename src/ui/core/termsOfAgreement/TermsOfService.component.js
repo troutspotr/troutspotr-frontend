@@ -2,16 +2,16 @@ import React, { PropTypes, Component } from 'react'
 import classes from './TermsOfAgreement.scss'
 const MAGICAL_NUMBER_OF_PREAMBLES = 5
 class TermsOfServiceComponent extends Component {
-  onShowAgreement () {
-    this.setState({ ...this.state, ...{ isAgreementShown: true } })
-  }
-
-  getInitialState () {
-    return {
+  constructor () {
+    super()
+    this.state = {
       preambles: [],
       isAgreementShown: false,
       preambleIsFinished: false
     }
+  }
+  onShowAgreement () {
+    this.setState({ ...this.state, ...{ isAgreementShown: true } })
   }
 
   addElement (element) {
@@ -61,18 +61,13 @@ class TermsOfServiceComponent extends Component {
     }, 3300 + timelapseLengthMilliseconds)
   }
 
-   /* <ul className={classes.meatballs}>
-        <li className={classes.selectedMeatball}>{1}</li>
-        <li className={classes.meatball}>{2}</li>
-      </ul> */
-
   renderTitle () {
     return (<div>
       <span className={classes.jumbo}>Terms of Service</span>
     </div>)
   }
 
-  renderPreamble () {
+  renderPreamble = () => {
     return (<div className={classes.preamble}>
       {this.state.preambles.map((p, index) => {
         let key = index + 1
@@ -81,7 +76,7 @@ class TermsOfServiceComponent extends Component {
     </div>)
   }
 
-  renderIntro () {
+  renderIntro = () => {
     if (this.state.isAgreementShown === false) {
       return null
     }
@@ -108,7 +103,7 @@ class TermsOfServiceComponent extends Component {
     return this.renderTerm({ index, title, body })
   }
 
-  renderDontTresspass (index) {
+  renderDontTresspass = (index) => {
     let title = 'Don’t Trespass!!!'
     let body = (
       <div>

@@ -5,10 +5,7 @@ class PrivacyPolicy extends Component {
   constructor () {
     super()
     this.onButtonClick = this.onButtonClick.bind(this)
-  }
-
-  getInitialState () {
-    return {
+    this.state = {
       preambles: [],
       isAgreementShown: false,
       preambleIsFinished: false
@@ -73,7 +70,7 @@ class PrivacyPolicy extends Component {
     }, 8100)
   }
 
-  renderPreamble () {
+  renderPreamble = () => {
     return (<div className={classes.preamble}>
       {this.state.preambles.map((p, i) => {
         let key = i + 1
@@ -290,7 +287,7 @@ class PrivacyPolicy extends Component {
       (index) => { return (<p key={index}>Last Updated: January 20, 2017</p>) }]
   }
 
-  renderBody () {
+  renderBody = () => {
     let terms = this.generateTerms()
       .map((termGenerator, index) => {
         return termGenerator(index + 1)

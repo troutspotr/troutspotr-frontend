@@ -132,6 +132,12 @@ class SvgMapComponent extends Component {
     if (isEmpty(streamCentroidsGeoJson)) {
       return null
     }
+
+    let decidedNotToRenderTheseThings = true
+    if (decidedNotToRenderTheseThings) {
+      return null
+    }
+
     let paths = streamCentroidsGeoJson.map((centroid, index) => {
       let isOpen = this.props.getIsOpen(centroid.waterId)
       return (
@@ -155,6 +161,7 @@ class SvgMapComponent extends Component {
     if (selectedStreamCentroid == null) {
       return null
     }
+    console.log(selectedStreamCentroid)
 
     return (
       <StreamCentroidComponent

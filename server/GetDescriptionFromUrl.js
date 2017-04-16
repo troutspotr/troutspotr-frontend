@@ -2,8 +2,6 @@ const getImageUrl = require('./GetImageUrl')
 // const parseUrl = require('./ParseUrl')
 const _ = require('lodash')
 
-const fullPath = 'https://troutspotr2-wisconsin.herokuapp.com'
-
 const getDescriptionFromUrl = function (routeData) {
   var seoDescription = {
     name: 'Trout Spotr',

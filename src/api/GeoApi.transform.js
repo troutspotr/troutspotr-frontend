@@ -178,11 +178,8 @@ const crossingTypes = {
 const addLettersToCrossings = (roadCrossings) => {
   var interestingRoadCrossings = roadCrossings.filter(rc => rc.properties.bridgeType !== crossingTypes.uninteresting)
 
-  if (interestingRoadCrossings.length > 25) {
-    debugger
-  }
   interestingRoadCrossings.forEach((feature, index) => {
-    var quotient = Math.floor(index/alphabetLength)
+    var quotient = Math.floor(index / alphabetLength)
     var remainder = index % alphabetLength
     var needsEmergencyPrefix = quotient >= 1
     if (needsEmergencyPrefix) {
@@ -203,19 +200,19 @@ const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
     // Back end should do this...
     .filter(feature => has(roadTypesDictionary, feature.properties.road_type_id))
     .forEach((feature, index) => {
-    var properties = feature.properties
+      var properties = feature.properties
     // get rid of this 0 vs 1 nonsense
-    properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land === 1
-    properties.is_over_trout_stream = properties.is_over_trout_stream === 1
-    properties.is_previous_neighbor_same_road = properties.is_previous_neighbor_same_road === 1
-    var roadTypeId = properties.road_type_id
-    var roadType = roadTypesDictionary[roadTypeId]
-    var isParkable = roadType.isParkable
-    properties.isParkable = isParkable
-    properties.bridgeType = determineBridgeType(properties, roadTypesDictionary)
-    properties.alphabetLetter = ' '
-    properties.slug = `${kebabCase(properties.street_name)}@${properties.linear_offset}`
-  })
+      properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land === 1
+      properties.is_over_trout_stream = properties.is_over_trout_stream === 1
+      properties.is_previous_neighbor_same_road = properties.is_previous_neighbor_same_road === 1
+      var roadTypeId = properties.road_type_id
+      var roadType = roadTypesDictionary[roadTypeId]
+      var isParkable = roadType.isParkable
+      properties.isParkable = isParkable
+      properties.bridgeType = determineBridgeType(properties, roadTypesDictionary)
+      properties.alphabetLetter = ' '
+      properties.slug = `${kebabCase(properties.street_name)}@${properties.linear_offset}`
+    })
   return apFeatures
 }
 

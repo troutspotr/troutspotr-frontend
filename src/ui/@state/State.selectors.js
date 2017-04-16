@@ -72,6 +72,7 @@ export const displayedCentroids = createSelector(
 
     let filteredCentroids = streamCentroids.filter(centroid => {
       let { name, altName } = centroid
+      altName = altName || ''
       let isMatch = every(tokens, token => {
         return name.toLocaleLowerCase()
           .indexOf(token) >= 0 ||

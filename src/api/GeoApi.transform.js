@@ -178,14 +178,31 @@ const crossingTypes = {
 const addLettersToCrossings = (roadCrossings) => {
   var interestingRoadCrossings = roadCrossings.filter(rc => rc.properties.bridgeType !== crossingTypes.uninteresting)
 
+  if (interestingRoadCrossings.length > 25) {
+    debugger
+  }
   interestingRoadCrossings.forEach((feature, index) => {
-    feature.properties.alphabetLetter = alphabet[index % alphabetLength]
+    var quotient = Math.floor(index/alphabetLength)
+    var remainder = index % alphabetLength
+    var needsEmergencyPrefix = quotient >= 1
+    if (needsEmergencyPrefix) {
+      var safePrefixIndex = Math.min(quotient, alphabetLength) - 1
+      var prefix = alphabet[safePrefixIndex]
+      var suffix = alphabet[remainder]
+      feature.properties.alphabetLetter = prefix + suffix
+    } else {
+      feature.properties.alphabetLetter = alphabet[index % alphabetLength]
+    }
   })
   return roadCrossings
 }
 
 const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
-  apFeatures.forEach((feature, index) => {
+  apFeatures
+    // HACK: get rid of OSM streets that over-extend across states.
+    // Back end should do this...
+    .filter(feature => has(roadTypesDictionary, feature.properties.road_type_id))
+    .forEach((feature, index) => {
     var properties = feature.properties
     // get rid of this 0 vs 1 nonsense
     properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land === 1
@@ -222,8 +239,6 @@ const determineBridgeType = (bridgeProperties, roadTypesDictionary) => {
 }
 
 const filterBadAccessPoints = (ap) => {
-  if (ap.properties.gid === 2678) {
-  }
   var isUninteresting = ap.properties.bridgeType === crossingTypes.uninteresting
   if (isUninteresting) {
     return false

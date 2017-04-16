@@ -22,7 +22,18 @@ const createServer = function (dictionary, app) {
     // disableDotRule: true,
     verbose: true,
     rewrites: [
-      { from: /@/, to: '/index.html' }
+      {
+        from: /@/,
+        to: function (context) {
+          let containsImage = context.parsedUrl.pathname.indexOf('.png') >= 10
+          if (containsImage) {
+            return context.parsedUrl.pathname
+          }
+
+          return '/index.html'
+        }
+        // to: '/index.html'
+      }
     ]
   }))
 

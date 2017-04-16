@@ -53,7 +53,7 @@ export const drawBackground = (canvasContext, dimensions, color) => {
   canvasContext.fillRect(0, 0, width, height)
 }
 
-const renderStreams = (streamObject, canvasContext, dimensions) => {
+const renderStreams = (streamObject, canvasContext, dimensions, scale = 1) => {
   let projection = getProjectionFromFeature(streamObject.circle, dimensions)
   let geoPath = d3Geo.geoPath()
     .projection(projection)
@@ -61,19 +61,19 @@ const renderStreams = (streamObject, canvasContext, dimensions) => {
     .context(canvasContext)
 
   let streamConfluence = streamObject.stream.geometry.coordinates[0]
-  renderPointOnStream(projection, canvasContext, streamConfluence, colors.OffWhite, 2)
+  renderPointOnStream(projection, canvasContext, streamConfluence, colors.OffWhite, 2 * scale)
 
   // render stream
-  renderStream(geoPath, canvasContext, streamObject.stream, colors.OffWhite, STREAM_WIDTH * 0.5)
+  renderStream(geoPath, canvasContext, streamObject.stream, colors.OffWhite, STREAM_WIDTH * 0.5 * scale)
 
   // // render sections
   streamObject.sections.forEach(section => {
-    renderStream(geoPath, canvasContext, section, colors.StreamBlue, TROUT_SECTION_WIDTH)
+    renderStream(geoPath, canvasContext, section, colors.StreamBlue, TROUT_SECTION_WIDTH * scale)
   })
 
   // render public sections
   streamObject.palSections.forEach(section => {
-    renderStream(geoPath, canvasContext, section, colors.PalGreen, PUBLIC_SECTION)
+    renderStream(geoPath, canvasContext, section, colors.PalGreen, PUBLIC_SECTION * scale)
   })
 }
 
@@ -123,32 +123,32 @@ export const renderPetriDish = (context, dimensions, color) => {
   context.stroke()
 }
 
-export const drawStreamToCanvas = (canvasContext, streamObject, dimensions) => {
-  renderStreams(streamObject, canvasContext, dimensions)
+export const drawStreamToCanvas = (canvasContext, streamObject, dimensions, scale = 1) => {
+  renderStreams(streamObject, canvasContext, dimensions, scale)
   // drawRingToCanvas(canvasContext, streamObject, dimensions)
   return canvasContext
 }
 
-export const drawRingToCanvas = (canvasContext, streamObject, dimensions) => {
-  renderRings(streamObject, canvasContext, dimensions)
+export const drawRingToCanvas = (canvasContext, streamObject, dimensions, scale = 1) => {
+  renderRings(streamObject, canvasContext, dimensions, scale)
   return canvasContext
 }
 
-const renderRings = (streamObject, canvasContext, dimensions) => {
-  renderStreamRing(streamObject, canvasContext, dimensions)
-  renderTroutStreamSectionRings(streamObject, canvasContext, dimensions)
-  renderPublicSectionRings(streamObject, canvasContext, dimensions)
+const renderRings = (streamObject, canvasContext, dimensions, scale = 1) => {
+  renderStreamRing(streamObject, canvasContext, dimensions, scale)
+  renderTroutStreamSectionRings(streamObject, canvasContext, dimensions, scale)
+  renderPublicSectionRings(streamObject, canvasContext, dimensions, scale)
 }
 
-export const renderStreamRing = (streamObject, canvasContext, dimensions) => {
+export const renderStreamRing = (streamObject, canvasContext, dimensions, scale = 1) => {
   let length = streamObject.stream.properties.length_mi
   let start = 0
   let stop = length
   let ring = { start, stop, length }
-  renderRing(ring, canvasContext, dimensions, colors.StreamGray, STREAM_WIDTH)
+  renderRing(ring, canvasContext, dimensions, colors.StreamGray, STREAM_WIDTH * scale)
 }
 
-export const renderTroutStreamSectionRings = (streamObject, canvasContext, dimensions) => {
+export const renderTroutStreamSectionRings = (streamObject, canvasContext, dimensions, widthScale = 1) => {
   let streamLength = streamObject.stream.properties.length_mi
   streamObject.sections.forEach((section, index) => {
     let ring = {
@@ -157,11 +157,11 @@ export const renderTroutStreamSectionRings = (streamObject, canvasContext, dimen
       length: streamLength
     }
 
-    renderRing(ring, canvasContext, dimensions, colors.StreamBlue, TROUT_SECTION_WIDTH)
+    renderRing(ring, canvasContext, dimensions, colors.StreamBlue, TROUT_SECTION_WIDTH * widthScale)
   })
 }
 
-export const renderPublicSectionRings = (streamObject, canvasContext, dimensions) => {
+export const renderPublicSectionRings = (streamObject, canvasContext, dimensions, scale = 1) => {
   let streamLength = streamObject.stream.properties.length_mi
   streamObject.palSections.forEach((section, index) => {
     let ring = {
@@ -170,7 +170,7 @@ export const renderPublicSectionRings = (streamObject, canvasContext, dimensions
       length: streamLength
     }
 
-    renderRing(ring, canvasContext, dimensions, colors.PalGreen, PUBLIC_SECTION)
+    renderRing(ring, canvasContext, dimensions, colors.PalGreen, PUBLIC_SECTION * scale)
   })
 }
 

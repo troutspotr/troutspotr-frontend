@@ -2,11 +2,6 @@ import React, { PropTypes, Component } from 'react'
 import classes from './TermsOfAgreement.scss'
 
 class IntroComponent extends Component {
-  constructor () {
-    super()
-    this.onAdvanceClick = this.onAdvanceClick.bind(this)
-  }
-
   componentDidMount () {
     this.time = new Date()
   }
@@ -42,7 +37,7 @@ class IntroComponent extends Component {
     </div>)
   }
 
-  onAdvanceClick () {
+  onAdvanceClick = () => {
     let newTime = new Date()
     let time = newTime - this.time
     this.props.advance(time)

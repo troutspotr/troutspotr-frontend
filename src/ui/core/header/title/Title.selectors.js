@@ -21,3 +21,9 @@ export const titleSelector = createSelector(
 
     return displayedStreamTitle
   })
+
+export const isSearchIconVisibleSelector = createSelector(
+  [isRootPageSelector],
+  (isRootPage) => {
+    return isRootPage === false
+  })

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import HeaderComponent from './Header.component'
-import { titleSelector, isTitleVisibleSelector } from './title/Title.selectors'
+import { titleSelector, isTitleVisibleSelector, isSearchIconVisibleSelector } from './title/Title.selectors'
 import { subtitleSelector } from './subtitle/Subtitle.selectors'
 import { isSearchVisibleSelector } from './search/Search.selectors'
 const mapDispatchToProps = {
@@ -11,7 +11,8 @@ const mapStateToProps = (state) => {
     subtitle: subtitleSelector(state),
     title: titleSelector(state),
     isTitleVisible: isTitleVisibleSelector(state),
-    isSearchVisible: isSearchVisibleSelector(state)
+    isSearchVisible: isSearchVisibleSelector(state),
+    isIconVisible: isSearchIconVisibleSelector(state)
   }
 }
 

@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { isSearchVisibleSelector } from '../search/Search.selectors'
 import { displayedStreamTitleSelector } from 'ui/@state/State.selectors'
 import { isRootPageSelector } from 'ui/Location.selectors'
+import { isEmpty } from 'lodash'
 export const isTitleVisibleSelector = createSelector([isSearchVisibleSelector], (isSearchVisible) => {
   return !isSearchVisible
 })
@@ -23,7 +24,7 @@ export const titleSelector = createSelector(
   })
 
 export const isSearchIconVisibleSelector = createSelector(
-  [isRootPageSelector],
-  (isRootPage) => {
-    return isRootPage === false
+  [isRootPageSelector, titleSelector],
+  (isRootPage, title) => {
+    return isRootPage === false && isEmpty(title) === false
   })

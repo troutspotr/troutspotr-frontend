@@ -50,7 +50,7 @@ class HeaderContainer extends Component {
       data-clipboard-text={window.location.href}
       button-title='Copy to clipboard'
             >
-      <span>{body} {symbol}</span>
+      <span>{body} {this.props.isIconVisible && symbol}</span>
     </ClipboardButton>)
   }
 
@@ -79,6 +79,7 @@ HeaderContainer.propTypes = {
   title: PropTypes.string,
   isTitleVisible: PropTypes.bool.isRequired,
   isSearchVisible: PropTypes.bool.isRequired,
+  isIconVisible: PropTypes.bool.isRequired,
   params: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
 }

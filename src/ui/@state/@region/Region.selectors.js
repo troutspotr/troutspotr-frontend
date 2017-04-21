@@ -106,9 +106,8 @@ export const selectedStreamObjectSelector = createSelector(
     if (has(streamDictionary, displayedCentroid.gid) === false) {
       return null
     }
-
-    var stream = { ...streamDictionary[displayedCentroid.gid] }
     var now = new Date()
+    var stream = { ...streamDictionary[displayedCentroid.gid] }
     stream.restrictions = stream.restrictions.filter(x => filterRestrictionsByTime(now, x.properties))
     return stream
   })
@@ -136,7 +135,6 @@ export const showNoResultsFoundSelector = createSelector(
   })
 
 const EMPTY_REGS = []
-const MAGICAL_FISH_SANCTUARY_ID = 7
 const MAGICAL_OPEN_ID = 18
 export const getSpecialRegulationsSelector = createSelector(
   [selectedStreamObjectSelector, regulationsSelector],
@@ -148,30 +146,33 @@ export const getSpecialRegulationsSelector = createSelector(
     if (isEmpty(regulations)) {
       return EMPTY_REGS
     }
-
     let specialRegulationsDictionary = selectedStream.restrictions.map(r => {
-      let { stream_gid, restriction_id, start, stop, end_time, start_time } = r.properties
+      let { stream_gid, restriction_id, start, stop, end_time, start_time, color } = r.properties
       let regulation = regulations[restriction_id]
       if (regulation == null) {
         // console.warn('found null regulation for id ' + restriction_id)
         return null
       }
-      let isFishSanctuary = regulation.id === MAGICAL_FISH_SANCTUARY_ID
+
+      let isFishSanctuary = regulation.legalText.toLowerCase().indexOf('sanctuary') >= 0
       let isOpenerOverride = regulation.id === MAGICAL_OPEN_ID
       let length = stop - start
       // let roundedLength = round(length, 1)
       let { shortText, legalText } = regulation
-      return {
+      let result = {
         startTime: start_time,
         stopTime: end_time,
         isFishSanctuary,
         isOpenerOverride,
+        color,
         restrictionId: restriction_id,
         streamId: stream_gid,
         shortText,
         legalText,
         length
       }
+
+      return result
     }).reduce((dictionary, item) => {
       if (has(dictionary, item.restrictionId)) {
         dictionary[item.restrictionId].length += item.length
@@ -322,3 +323,4 @@ export const getCountyListSelector = createSelector(
 
     return filteredCountyObjects
   })
+

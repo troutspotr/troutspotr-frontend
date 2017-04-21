@@ -3,7 +3,6 @@ import RingAxisComponent from './RingAxis.component'
 import RingSectionComponent from './RingSection.component'
 
 import classes from '../SvgBubble.scss'
-const FISH_SANCTUARY_ID = 7
 // const ANIMATION_SCALE = 2.0
 class RingComponent extends Component {
   componentWillUnmount () {
@@ -54,9 +53,16 @@ class RingComponent extends Component {
       let positionOffset = ((streamLength - restriction.properties.stop) / streamLength)
       let itemOffset = positionOffset * this.props.timing.troutSectionSpeed
       let offset = this.props.timing.baseTroutSectionOffset + itemOffset
-      let className = restriction.properties.restriction_id === FISH_SANCTUARY_ID
-        ? classes.fishSanctuary
-        : classes.restriction
+      let className
+      if (restriction.properties.color === 'yellow') {
+        className = classes.restriction
+      } else if (restriction.properties.color === 'blue') {
+        className = classes.restrictionAlt
+      } else if (restriction.properties.color === 'white') {
+        className = classes.restrictionAltAlt
+      } else {
+        className = classes.fishSanctuary
+      }
       return (
         <g key={restriction.properties.gid}>
           <RingSectionComponent

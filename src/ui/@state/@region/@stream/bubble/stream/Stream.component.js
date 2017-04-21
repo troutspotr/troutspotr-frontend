@@ -1,8 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import classes from '../SvgBubble.scss'
-
 import SvgAnimatedPathComponent from '../SvgAnimatedPath.component'
-const FISH_SANCTUARY_ID = 7
 
 class StreamComponent extends Component {
   renderPalSections () {
@@ -56,9 +54,16 @@ class StreamComponent extends Component {
     return (<g id='stream-restrictions'>
       {
       this.props.streamPackage.restrictions.map(restriction => {
-        let className = restriction.properties.restriction_id === FISH_SANCTUARY_ID
-          ? classes.fishSanctuary
-          : classes.restriction
+        let className
+        if (restriction.properties.color === 'yellow') {
+          className = classes.restriction
+        } else if (restriction.properties.color === 'blue') {
+          className = classes.restrictionAlt
+        } else if (restriction.properties.color === 'white') {
+          className = classes.restrictionAltAlt
+        } else {
+          className = classes.fishSanctuary
+        }
         let thePath = this.props.pathGenerator(restriction.geometry)
         return (
           <g key={restriction.properties.gid}>

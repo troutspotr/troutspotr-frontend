@@ -87,9 +87,16 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
 
       entry.sections = sectionsMap[streamId]
 
-      entry.restrictions = restrictionsMap[streamId] == null
-        ? []
-        : restrictionsMap[streamId]
+      entry.restrictions = getSanitizedRegulations(restrictionsMap[streamId])
+      // entry.restrictions = restrictionsMap[streamId] == null
+      //   ? []
+      //   : restrictionsMap[streamId].reduce((regDictionary, item) => {
+      //     // we're gonna try to colorize our restrictions.
+      //     // we need to be careful. there could be 16 restriction
+      //     // sections, but only of 3 types. We need to cataloge
+      //     // our progress, so a reduce function seems like a good idea here.
+      //     if (has(regDictionary, item.properties.regulation.id))
+      //   }, {})
       entry.palSections = palMap[streamId] == null
         ? []
         : palMap[streamId].sort((a, b) => b.properties.start - a.properties.start)
@@ -247,6 +254,57 @@ const filterBadAccessPoints = (ap) => {
   }
 
   return true
+}
+
+const naiveRegColorizer = (reg, index = 1) => {
+  let isSanctuary = reg.legalText.toLowerCase().indexOf('sanctuary') >= 0
+  let isClosed = reg.legalText.toLowerCase().indexOf('closed') >= 0
+
+  if (isSanctuary || isClosed) {
+    return 'red'
+  }
+  if (index === 1) {
+    return 'yellow'
+  }
+
+  if (index === 2) {
+    return 'blue'
+  }
+
+  if (index === 3) {
+    return 'white'
+  }
+
+  return 'red'
+}
+
+const getSanitizedRegulations = (restrictionsForGivenStream) => {
+  if (restrictionsForGivenStream == null) {
+    return []
+  }
+  let count = 1
+  restrictionsForGivenStream.reduce((regDictionary, item) => {
+    // we're gonna try to colorize our restrictions.
+    // we need to be careful. there could be 16 restriction
+    // sections, but only of 3 types. We need to cataloge
+    // our progress, so a reduce function seems like a good idea here.
+    if (has(regDictionary, item.properties.restriction.id)) {
+      let color = regDictionary[item.properties.restriction.id].color
+      item.properties.color = color
+      return regDictionary
+    }
+
+    let newColor = naiveRegColorizer(item.properties.restriction, count)
+    item.properties.color = newColor
+    regDictionary[item.properties.restriction.id] = {
+      color: newColor,
+      restriction: item.properties.restriction
+    }
+    count++
+    return regDictionary
+  }, {})
+
+  return restrictionsForGivenStream
 }
 
 module.exports = {

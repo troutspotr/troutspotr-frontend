@@ -27,7 +27,7 @@ class DetailsComponent extends Component {
       let id = `${reg.streamId}_${reg.restrictionId}`
       return (<RestrictionComponent
         key={id}
-        color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
+        color={reg.color}
         pattern={'solid'}
         text={reg.legalText}
         length={reg.roundedLength + ' mi'}

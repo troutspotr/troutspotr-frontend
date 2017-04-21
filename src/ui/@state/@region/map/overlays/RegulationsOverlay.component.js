@@ -20,7 +20,7 @@ class RegulationsOverlayComponent extends Component {
           let id = `${reg.restrictionId}_${reg.streamId}`
           return (<RestrictionComponent
             key={id}
-            color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
+            color={reg.color}
             pattern={reg.isFishSanctuary ? 'solid' : 'stipple'}
             text={reg.legalText}
             length={reg.roundedLength + ' mi'}

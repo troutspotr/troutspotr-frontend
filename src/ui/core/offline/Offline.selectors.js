@@ -11,7 +11,7 @@ export const isOfflineSelector = state => {
     return false
   }
 
-  return state.offline.isOffline === false
+  return state.offline.isOffline
 }
 export const cachedEndpointsSelector = state => state.offline.cachedEndpoints
 

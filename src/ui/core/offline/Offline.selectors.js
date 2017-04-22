@@ -2,12 +2,10 @@ import { createSelector } from 'reselect'
 
 export const isOfflineSelector = state => {
   if (state == null) {
-    debugger
     return false
   }
 
   if (state.offline == null) {
-    debugger
     return false
   }
 

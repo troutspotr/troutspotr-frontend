@@ -1,4 +1,5 @@
 import BaseApi from './BaseApi'
+import localForage from 'localforage'
 import * as topojson from 'topojson-client'
 export const buildTableOfContentsEndpoint = () => {
   return `/data/v2/TableOfContents.topo.json`
@@ -18,4 +19,4 @@ export class TableOfContentsApi extends BaseApi {
   }
 }
 
-export default new TableOfContentsApi()
+export default new TableOfContentsApi(localForage)

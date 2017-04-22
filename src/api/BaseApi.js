@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { config as defaultConfig } from './BaseApi.config'
-// const apiRoot = '/'
+import localForage from 'localforage'
 export default class BaseApi {
-  constructor (cache, config = defaultConfig()) {
+  constructor (cache = localForage, config = defaultConfig()) {
     this.cache = cache
     this.httpClient = axios.create()
   }
@@ -11,11 +11,35 @@ export default class BaseApi {
     return Promise.reject(response)
   }
 
-  get (endpoint, config) {
+  async get (endpoint, config) {
+    if (this.cache != null) {
+      console.log(`attempting to retrieve ${endpoint} from cache`)
+      try {
+        let values = await this.cache.getItem(endpoint)
+        if (values != null) {
+          console.log(`found ${endpoint} in cache - returning cache`)
+          return Promise.resolve(values)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    console.log(`${endpoint} not found in cache, retrieving`)
     return this.httpClient.get(endpoint)
-      .then((response) => {
+      .then(async (response) => {
+        console.log(`${endpoint} found.`)
+        if (this.cache != null) {
+          console.log(`placing ${endpoint} in cache.`)
+          await this.cache.setItem(endpoint, response.data)
+        }
+
         return response.data
-      }).catch((response) => {
+      }).catch(async (response) => {
+        if (this.cache != null) {
+          await this.cache.removeItem(endpoint)
+        }
+
         return this.handleFailure(response)
       })
   }

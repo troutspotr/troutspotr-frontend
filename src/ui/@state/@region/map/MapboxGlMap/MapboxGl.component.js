@@ -3,7 +3,7 @@ import MapboxGlComponentCamera from './MapboxGl.component.camera'
 import classes from '../Map.scss'
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
 import { isEmpty, debounce, flatten, clamp } from 'lodash'
-
+import BaseStyle from './styles/Base.style'
 class MapboxGlComponent extends Component {
   onClick () {
 
@@ -13,9 +13,7 @@ class MapboxGlComponent extends Component {
     this.map = new this.props.mapbox.Map({
       attributionControl: true,
       container: this.props.elementId,
-      // style: 'mapbox://styles/andest01/ciwfc17nv00582ql7c7tbrk9h', // debug
-      // style: 'mapbox://styles/andest01/ciw5ipcp000012koejqu756dc',
-      style: 'mapbox://styles/andest01/civsy0pgb00022kkxcbqtcogh',
+      style: BaseStyle,
       center: [-93.50, 42],
       zoom: 4,
       maxZoom: 18.0,

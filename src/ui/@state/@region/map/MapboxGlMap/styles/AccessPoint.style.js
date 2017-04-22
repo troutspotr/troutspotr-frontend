@@ -8,6 +8,12 @@ import { STREAM_ACCESS_POINTS_ACTIVE_LABEL_LAYER_ID,
   STREAM_ACCESS_POINTS_LETTER_ACTIVE_LAYER_ID,
   STREAM_ACCESS_POINTS_LETTER_QUITE_LAYER_ID } from '../filters/Filters.selectors'
 import { STREAM_ACCESS_POINTS_SOURCE_ID } from '../sources/Source.selectors'
+
+import { FONT_ROBOTO_REGULAR, FONT_ROBOTO_BOLD } from './Base.style'
+
+const ACCESS_POINT_STREET_NAME_TEXT_OFFSET = [1.0, 0.15]
+const ACCESS_POINT_ALPHABET_TEXT_OFFSET = [0.0, 0.15]
+
 export const AccessPointLabelActiveStyle = {
   'id': STREAM_ACCESS_POINTS_ACTIVE_LABEL_LAYER_ID,
   'type': 'symbol',
@@ -20,14 +26,8 @@ export const AccessPointLabelActiveStyle = {
     // 'text-ignore-placement': true,
     'text-anchor': 'left',
     'text-size': 12,
-    'text-offset': [
-      1.0,
-      0
-    ],
-    'text-font': [
-      'DIN Offc Pro Regular',
-      'Arial Unicode MS Regular'
-    ]
+    'text-offset': ACCESS_POINT_STREET_NAME_TEXT_OFFSET,
+    'text-font': FONT_ROBOTO_REGULAR
   },
   'paint': {
     'text-color': colors.White,
@@ -61,14 +61,8 @@ export const AccessPointLabelQuietStyle = {
     'text-field': '{street_name}',
     'text-anchor': 'left',
     'text-size': 12,
-    'text-offset': [
-      1.0,
-      0
-    ],
-    'text-font': [
-      'DIN Offc Pro Regular',
-      'Arial Unicode MS Regular'
-    ]
+    'text-offset': ACCESS_POINT_STREET_NAME_TEXT_OFFSET,
+    'text-font': FONT_ROBOTO_REGULAR
   },
   'paint': {
 
@@ -84,14 +78,12 @@ export const AccessPointLetterLabelActiveStyle = {
   'minzoom': 10,
   'layout': {
     'text-field': '{alphabetLetter}',
+    'text-offset': ACCESS_POINT_ALPHABET_TEXT_OFFSET,
     // 'text-allow-overlap': true,
     // 'text-ignore-placement': true,
     'text-anchor': 'center',
     'text-size': 10,
-    'text-font': [
-      'DIN Offc Pro Bold',
-      'Arial Unicode MS Regular'
-    ]
+    'text-font': FONT_ROBOTO_BOLD
   },
   'paint': {
     'text-color': colors.MoodyGray
@@ -106,14 +98,12 @@ export const AccessPointLabelLetterQuietStyle = {
   'minzoom': 10,
   'layout': {
     'text-field': '{alphabetLetter}',
+    'text-offset': ACCESS_POINT_ALPHABET_TEXT_OFFSET,
     // 'text-allow-overlap': true,
     // 'text-ignore-placement': true,
     'text-anchor': 'center',
     'text-size': 10,
-    'text-font': [
-      'DIN Offc Pro Bold',
-      'Arial Unicode MS Regular'
-    ]
+    'text-font': FONT_ROBOTO_BOLD
   },
   'paint': {
     'text-color': colors.MoodyGray,

@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const config = require('../config')
 const debug = require('debug')('app:webpack:config')
 // var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-// const OfflinePlugin = require('offline-plugin')
+const OfflinePlugin = require('offline-plugin')
 
 const paths = config.utils_paths
 const __DEV__ = config.globals.__DEV__
@@ -68,23 +68,36 @@ webpackConfig.plugins = [
     minify   : {
       collapseWhitespace : true
     }
+  }),
+  new OfflinePlugin({
+    // publicPath: config.compiler_public_path,
+    publicPath: '/',
+    caches: 'all',
+    externals: [
+      'data/v2/TableOfContents.topo.json',
+      'data/v2/mn/mn.data.json',
+      'data/v2/wi/wi.data.json',
+      'map-fonts/roboto-regular/0-255.pbf',
+      'map-fonts/roboto-regular/65024-65279.pbf',
+      'map-fonts/roboto-regular/12288-12543.pbf',
+      'map-fonts/roboto-bold/0-255.pbf',
+      'map-fonts/roboto-bold/12288-12543.pbf'
+    ],
+    cacheMaps: [{
+      match: function (requestUrl) {
+        return new URL('/', location)
+      },
+      requestTypes: ['navigate']
+    }],
+    updateStrategy: 'all',
+    AppCache: {
+      FALLBACK: { '/': '/' }
+    },
+    ServiceWorker: {
+      navigateFallbackURL: '/'
+    },
+    relativePaths: false
   })
-  // new OfflinePlugin({
-  //   // publicPath: config.compiler_public_path,
-  //   publicPath: '/',
-  //   caches: {
-  //     main: ['data/mn/mn.topo.json', 'favicon.ico', ':rest:']
-  //   },
-  //   externals: ['data/mn/mn.topo.json', 'favicon.ico'],
-  //   updateStrategy: 'all',
-  //   AppCache: {
-  //     FALLBACK: { '/': '/' }
-  //   },
-  //   ServiceWorker: {
-  //     navigateFallbackURL: '/'
-  //   },
-  //   relativePaths: false
-  // }),
   // new BundleAnalyzerPlugin({
   //   // Can be `server`, `static` or `disabled`.
   //   // In `server` mode analyzer will start HTTP server to show bundle report.
@@ -106,7 +119,7 @@ webpackConfig.plugins = [
   // })
 ]
 
-if (__DEV__) {
+if (__DEV__ || false) {
   debug('Enable plugins for live development (HMR, NoErrors).')
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),

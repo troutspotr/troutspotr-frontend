@@ -31,7 +31,7 @@ class IntroComponent extends Component {
   }
 
   renderAPP () {
-    return (<div>
+    return (<div className={classes.APP}>
       <p>TroutSpotr is a tool that helps you make <span className={classes.public}>safe and legal choices</span> when fishing for trout.</p>
       <p>However, before you use it, you must <span className={classes.private}>understand and agree</span> to some ground rules first.</p>
     </div>)

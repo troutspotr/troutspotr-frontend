@@ -76,7 +76,11 @@ webpackConfig.plugins = [
       main: [':rest:'],
       additional: [':externals:']
     },
-    externals: ['data/v1/TableOfContents.topo.json', 'data/v1/mn/mn.data.json'],
+    externals: [
+      'data/v2/TableOfContents.topo.json',
+      'data/v2/mn/mn.data.json',
+      'data/v2/wi/wi.data.json'
+    ],
     cacheMaps: [{
       match: function (requestUrl) {
         return new URL('/', location)

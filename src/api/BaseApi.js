@@ -14,11 +14,16 @@ export default class BaseApi {
   async get (endpoint, config) {
     if (this.cache != null) {
       console.log(`attempting to retrieve ${endpoint} from cache`)
-      let values = await this.cache.getItem(endpoint)
-      if (values != null) {
-        console.log(`found ${endpoint} in cache - returning cache`)
-        return Promise.resolve(values)
+      try {
+        let values = await this.cache.getItem(endpoint)
+        if (values != null) {
+          console.log(`found ${endpoint} in cache - returning cache`)
+          return Promise.resolve(values)
+        }
+      } catch (error) {
+        console.log(error)
       }
+      
     }
 
     console.log(`${endpoint} not found in cache, retrieving`)

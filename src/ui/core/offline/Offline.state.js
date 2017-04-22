@@ -20,6 +20,7 @@ export const updateCachedEndpoints = () => {
     try {
       // first off, get our keys.
       let keys = await baseApi.getAllCachedEndpoints()
+      // remap our keys -- this avoids array equality issues.
       dispatch(setCachedEndpoints(keys))
     } catch (error) {
       console.log(error)
@@ -54,6 +55,7 @@ const initialState = {
 const ACTION_HANDLERS = {
   [OFFLINE_UPDATE_CACHED_ENDPOINTS] : (state, { payload }) => {
     let { cachedEndpoints } = payload
+    cachedEndpoints = cachedEndpoints == null ? [] : cachedEndpoints.map(x => x)
     let newState = { ...state, ...{ cachedEndpoints } }
     return newState
   },

@@ -9,7 +9,9 @@ import { STREAM_ACCESS_POINTS_ACTIVE_LABEL_LAYER_ID,
   STREAM_ACCESS_POINTS_LETTER_QUITE_LAYER_ID } from '../filters/Filters.selectors'
 import { STREAM_ACCESS_POINTS_SOURCE_ID } from '../sources/Source.selectors'
 
-const ACCESS_POINT_STREET_NAME_TEXT_OFFSET = [1.0, 0.0]
+import { FONT_ROBOTO_REGULAR, FONT_ROBOTO_BOLD } from './Base.style'
+
+const ACCESS_POINT_STREET_NAME_TEXT_OFFSET = [1.0, 0.15]
 const ACCESS_POINT_ALPHABET_TEXT_OFFSET = [0.0, 0.15]
 
 export const AccessPointLabelActiveStyle = {
@@ -25,10 +27,7 @@ export const AccessPointLabelActiveStyle = {
     'text-anchor': 'left',
     'text-size': 12,
     'text-offset': ACCESS_POINT_STREET_NAME_TEXT_OFFSET,
-    'text-font': [
-      'DIN Offc Pro Regular',
-      'Arial Unicode MS Regular'
-    ]
+    'text-font': FONT_ROBOTO_REGULAR
   },
   'paint': {
     'text-color': colors.White,
@@ -63,10 +62,7 @@ export const AccessPointLabelQuietStyle = {
     'text-anchor': 'left',
     'text-size': 12,
     'text-offset': ACCESS_POINT_STREET_NAME_TEXT_OFFSET,
-    'text-font': [
-      'DIN Offc Pro Regular',
-      'Arial Unicode MS Regular'
-    ]
+    'text-font': FONT_ROBOTO_REGULAR
   },
   'paint': {
 
@@ -87,10 +83,7 @@ export const AccessPointLetterLabelActiveStyle = {
     // 'text-ignore-placement': true,
     'text-anchor': 'center',
     'text-size': 10,
-    'text-font': [
-      'DIN Offc Pro Bold',
-      'Arial Unicode MS Bold'
-    ]
+    'text-font': FONT_ROBOTO_BOLD
   },
   'paint': {
     'text-color': colors.MoodyGray
@@ -110,10 +103,7 @@ export const AccessPointLabelLetterQuietStyle = {
     // 'text-ignore-placement': true,
     'text-anchor': 'center',
     'text-size': 10,
-    'text-font': [
-      'DIN Offc Pro Bold',
-      'Arial Unicode MS Bold'
-    ]
+    'text-font': FONT_ROBOTO_BOLD
   },
   'paint': {
     'text-color': colors.MoodyGray,

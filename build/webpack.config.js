@@ -72,18 +72,16 @@ webpackConfig.plugins = [
   new OfflinePlugin({
     // publicPath: config.compiler_public_path,
     publicPath: '/',
-    caches: {
-      main: [':rest:'],
-      additional: [':externals:']
-    },
+    caches: 'all',
     externals: [
       'data/v2/TableOfContents.topo.json',
       'data/v2/mn/mn.data.json',
       'data/v2/wi/wi.data.json',
-      'map-fonts/DIN Offc Pro Regular,Arial Unicode MS Regular/0-255.pbf',
-      'map-fonts/DIN Offc Pro Regular,Arial Unicode MS Regular/65024-65279.pbf',
-      'map-fonts/DIN Offc Pro Regular,Arial Unicode MS Regular/12288-12543.pbf',
-      'map-fonts/DIN Offc Pro Bold,Arial Unicode MS Bold/0-255.pbf'
+      'map-fonts/roboto-regular/0-255.pbf',
+      'map-fonts/roboto-regular/65024-65279.pbf',
+      'map-fonts/roboto-regular/12288-12543.pbf',
+      'map-fonts/roboto-bold/0-255.pbf',
+      'map-fonts/roboto-bold/12288-12543.pbf'
     ],
     cacheMaps: [{
       match: function (requestUrl) {

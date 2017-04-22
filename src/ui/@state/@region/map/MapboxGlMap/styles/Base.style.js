@@ -1,3 +1,11 @@
+export const FONT_ROBOTO_REGULAR = [
+  'roboto-regular'
+]
+
+export const FONT_ROBOTO_BOLD = [
+  'roboto-bold'
+]
+
 const BaseStyle = {
   'version': 8,
   'name': 'DarkTroutBase',
@@ -5917,10 +5925,7 @@ const BaseStyle = {
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 1,
         'text-offset': [
           0,
@@ -5983,10 +5988,7 @@ const BaseStyle = {
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 2,
         'text-offset': [
           0,
@@ -6065,10 +6067,7 @@ const BaseStyle = {
         },
         'text-max-angle': 30,
         'symbol-spacing': 500,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'symbol-placement': 'line',
         'text-padding': 1,
         'text-rotation-alignment': 'map',
@@ -6124,10 +6123,7 @@ const BaseStyle = {
         },
         'text-max-angle': 30,
         'symbol-spacing': 500,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'symbol-placement': 'line',
         'text-padding': 1,
         'text-rotation-alignment': 'map',
@@ -6175,10 +6171,7 @@ const BaseStyle = {
         },
         'text-max-angle': 30,
         'symbol-spacing': 400,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'symbol-placement': 'line',
         'text-padding': 1,
         'text-rotation-alignment': 'map',
@@ -6238,10 +6231,7 @@ const BaseStyle = {
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 2,
         'text-offset': [
           0,
@@ -6304,10 +6294,7 @@ const BaseStyle = {
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 2,
         'text-offset': [
           0,
@@ -6352,10 +6339,7 @@ const BaseStyle = {
       ],
       'layout': {
         'text-field': '{name_en}',
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-max-width': 7,
         'text-size': {
           'base': 1,
@@ -6423,10 +6407,7 @@ const BaseStyle = {
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 2,
         'text-offset': [
           0,
@@ -6501,10 +6482,7 @@ const BaseStyle = {
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 2,
         'text-offset': [
           0,
@@ -6560,10 +6538,7 @@ const BaseStyle = {
           ]
         },
         'symbol-spacing': 250,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 2,
         'text-offset': [
           0,
@@ -6622,10 +6597,7 @@ const BaseStyle = {
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 2,
         'text-offset': [
           0,
@@ -6659,10 +6631,7 @@ const BaseStyle = {
         'text-transform': 'uppercase',
         'text-letter-spacing': 0.1,
         'text-max-width': 7,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 3,
         'text-size': {
           'base': 1,
@@ -6700,10 +6669,7 @@ const BaseStyle = {
       'layout': {
         'text-field': '{name_en}',
         'text-transform': 'uppercase',
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-letter-spacing': 0.15,
         'text-max-width': 7,
         'text-padding': 3,
@@ -6742,10 +6708,7 @@ const BaseStyle = {
       ],
       'layout': {
         'text-field': '{name_en}',
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-size': {
           'base': 1,
           'stops': [
@@ -6781,10 +6744,7 @@ const BaseStyle = {
       ],
       'layout': {
         'text-field': '{name_en}',
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-max-width': 7,
         'text-size': {
           'base': 1,
@@ -6863,17 +6823,11 @@ const BaseStyle = {
           'stops': [
             [
               11,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ],
             [
               12,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ]
           ]
         },
@@ -6945,10 +6899,7 @@ const BaseStyle = {
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 2,
         'text-offset': [
           0,
@@ -7011,17 +6962,11 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ],
             [
               8,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ]
           ]
         },
@@ -7124,17 +7069,11 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ],
             [
               8,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ]
           ]
         },
@@ -7211,17 +7150,11 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ],
             [
               8,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ]
           ]
         },
@@ -7307,17 +7240,11 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ],
             [
               8,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ]
           ]
         },
@@ -7439,17 +7366,11 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ],
             [
               8,
-              [
-                'DIN Offc Pro Regular',
-                'Arial Unicode MS Regular'
-              ]
+              FONT_ROBOTO_REGULAR
             ]
           ]
         },
@@ -7585,10 +7506,7 @@ const BaseStyle = {
             ]
           ]
         },
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'symbol-placement': 'line',
         'text-field': '{name_en}',
         'text-letter-spacing': 0.1,
@@ -7628,10 +7546,7 @@ const BaseStyle = {
         'text-max-width': 5,
         'text-letter-spacing': 0.1,
         'text-line-height': 1.5,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-size': {
           'base': 1,
           'stops': [
@@ -7692,10 +7607,7 @@ const BaseStyle = {
           ]
         },
         'symbol-spacing': 250,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'symbol-placement': 'line',
         'text-field': '{name_en}',
         'text-letter-spacing': 0.15,
@@ -7736,10 +7648,7 @@ const BaseStyle = {
         'text-max-width': 5,
         'text-letter-spacing': 0.15,
         'text-line-height': 1.5,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-size': {
           'base': 1.1,
           'stops': [
@@ -7789,10 +7698,7 @@ const BaseStyle = {
         'text-letter-spacing': 0.25,
         'text-line-height': 1.1,
         'symbol-placement': 'line',
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-size': {
           'base': 1,
           'stops': [
@@ -7842,10 +7748,7 @@ const BaseStyle = {
         'text-max-width': 4,
         'text-letter-spacing': 0.25,
         'text-line-height': 1.5,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-size': {
           'base': 1,
           'stops': [
@@ -7896,10 +7799,7 @@ const BaseStyle = {
           ]
         },
         'text-transform': 'uppercase',
-        'text-font': [
-          'DIN Offc Pro Bold',
-          'Arial Unicode MS Bold'
-        ],
+        'text-font': FONT_ROBOTO_BOLD,
         'text-field': {
           'base': 1,
           'stops': [
@@ -7962,10 +7862,7 @@ const BaseStyle = {
           ]
         },
         'text-transform': 'uppercase',
-        'text-font': [
-          'DIN Offc Pro Bold',
-          'Arial Unicode MS Bold'
-        ],
+        'text-font': FONT_ROBOTO_BOLD,
         'text-field': {
           'base': 1,
           'stops': [
@@ -8020,10 +7917,7 @@ const BaseStyle = {
           ]
         },
         'text-transform': 'uppercase',
-        'text-font': [
-          'DIN Offc Pro Bold',
-          'Arial Unicode MS Bold'
-        ],
+        'text-font': FONT_ROBOTO_BOLD,
         'text-padding': 1,
         'text-field': {
           'base': 1,
@@ -8111,10 +8005,7 @@ const BaseStyle = {
       'layout': {
         'text-field': '{name_en}',
         'text-max-width': 6,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-size': {
           'base': 0.9,
           'stops': [
@@ -8167,10 +8058,7 @@ const BaseStyle = {
           ]
         },
         'text-max-width': 6,
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-size': {
           'base': 1,
           'stops': [
@@ -8223,10 +8111,7 @@ const BaseStyle = {
             ]
           ]
         },
-        'text-font': [
-          'DIN Offc Pro Regular',
-          'Arial Unicode MS Regular'
-        ],
+        'text-font': FONT_ROBOTO_REGULAR,
         'text-size': {
           'base': 1,
           'stops': [

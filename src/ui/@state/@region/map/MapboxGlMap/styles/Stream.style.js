@@ -11,6 +11,7 @@ const CENTROID_LABEL_MIN_ZOOM = 8
 const CENTROID_LABEL_MAX_ZOOM = 13.3
 const CENTROID_LABEL_TEXT_SIZE = 10
 const CENTROID_LABEL_TEXT_PADDING = 15
+import { FONT_ROBOTO_REGULAR } from './Base.style'
 
 export const StreamActiveStyle = {
   'id': STREAM_ACTIVE_LAYER_ID,
@@ -77,10 +78,7 @@ export const StreamCentroidsActiveStyle = {
       1.0,
       0
     ],
-    'text-font': [
-      'DIN Offc Pro Regular',
-      'Arial Unicode MS Regular'
-    ]
+    'text-font': FONT_ROBOTO_REGULAR
   },
   'paint': {
     'text-opacity': {
@@ -137,10 +135,7 @@ export const StreamCentroidsQuietStyle = {
       1.0,
       0
     ],
-    'text-font': [
-      'DIN Offc Pro Regular',
-      'Arial Unicode MS Regular'
-    ]
+    'text-font': FONT_ROBOTO_REGULAR
   },
   'paint': {
     'text-opacity': 0.1,
@@ -169,10 +164,7 @@ export const StreamCentroidsHighlightStyle = {
       1.0,
       0
     ],
-    'text-font': [
-      'DIN Offc Pro Regular',
-      'Arial Unicode MS Regular'
-    ]
+    'text-font': FONT_ROBOTO_REGULAR
   },
   'paint': {
     'text-opacity': 0.7,

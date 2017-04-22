@@ -157,6 +157,9 @@ const decompress = (topojsonObject, stateData) => {
   // update waters
   dictionary.streamProperties.features.forEach(feature => {
     var props = feature.properties
+    if (has(watersDictionary, props.water_id) === false) {
+      throw new Error('couldnt find water id', props.water_id)
+    }
     props.openers = watersDictionary[props.water_id].openers
     // let openers = watersDictionary[props.water_id]
   })

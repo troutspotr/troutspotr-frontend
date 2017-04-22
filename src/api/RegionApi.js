@@ -33,7 +33,6 @@ export class RegionApi extends BaseApi {
         // Yes, we're going to super-murder their cache.
         this.clearCache()
       }
-      
       return transformedData
     } catch (error) {
       console.log(error)

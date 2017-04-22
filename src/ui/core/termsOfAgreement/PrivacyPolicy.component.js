@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import classes from './TermsOfAgreement.scss'
 const MAGICAL_NUMBER_OF_PREAMBLES = 5
+const scalar = 0.2
 class PrivacyPolicy extends Component {
   constructor () {
     super()
@@ -38,7 +39,7 @@ class PrivacyPolicy extends Component {
         let { preambleIsFinished } = this.state
         preambleIsFinished = true
         this.setState({ preambleIsFinished })
-      }, 1200)
+      }, 600)
     }
     this.setState({ preambles })
   }
@@ -51,23 +52,23 @@ class PrivacyPolicy extends Component {
 
     setTimeout(() => {
       this.addElement(this.renderTitle())
-    }, 200)
+    }, 200 * scalar)
 
     setTimeout(() => {
       this.addElement((<div className={classes.preambleItem}>We are not interested in your secret fishing spots.</div>))
-    }, 1200)
+    }, 1200 * scalar)
 
     setTimeout(() => {
       this.addElement((<div className={classes.preambleItem}>We are very interested in using the web to help anglers make safe and legal choices.</div>))
-    }, 3200)
+    }, 3200 * scalar)
 
     setTimeout(() => {
       this.addElement((<div className={classes.preambleItem}>To that end, we track usage, not users, <strong>and you can opt out</strong>.</div>))
-    }, 6100)
+    }, 6100 * scalar)
 
     setTimeout(() => {
       this.addElement((<hr />))
-    }, 8100)
+    }, 8100 * scalar)
   }
 
   renderPreamble = () => {

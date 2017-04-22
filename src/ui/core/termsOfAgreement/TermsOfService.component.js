@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import classes from './TermsOfAgreement.scss'
 const MAGICAL_NUMBER_OF_PREAMBLES = 5
+const scalar = 0.5
 class TermsOfServiceComponent extends Component {
   constructor () {
     super()
@@ -25,7 +26,7 @@ class TermsOfServiceComponent extends Component {
         let { preambleIsFinished } = this.state
         preambleIsFinished = true
         this.setState({ preambleIsFinished })
-      }, 1200)
+      }, 1200 * scalar)
     }
     this.setState({ preambles })
   }
@@ -33,7 +34,7 @@ class TermsOfServiceComponent extends Component {
   componentDidMount () {
     // this.props.advance(0) // DEBUG
     this.date = new Date()
-    const timelapseLengthMilliseconds = 500
+    const timelapseLengthMilliseconds = 200
 
     let container = document.getElementById('scrollContainer')
     container.scrollTop = 0
@@ -46,19 +47,19 @@ class TermsOfServiceComponent extends Component {
 
     setTimeout(() => {
       this.addElement((<div className={classes.preambleItem}>Do Not Trespass.</div>))
-    }, 800 + timelapseLengthMilliseconds)
+    }, 800 * scalar + timelapseLengthMilliseconds)
 
     setTimeout(() => {
       this.addElement((<div className={classes.preambleItem}>Obey Fishing Regulations.</div>))
-    }, 1700 + timelapseLengthMilliseconds)
+    }, 1700 * scalar + timelapseLengthMilliseconds)
 
     setTimeout(() => {
       this.addElement((<div className={classes.preambleItem}>This App Is Not Legal Advice.</div>))
-    }, 2500 + timelapseLengthMilliseconds)
+    }, 2500 * scalar + timelapseLengthMilliseconds)
 
     setTimeout(() => {
       this.addElement((<hr />))
-    }, 3300 + timelapseLengthMilliseconds)
+    }, 3300 * scalar + timelapseLengthMilliseconds)
   }
 
   renderTitle () {

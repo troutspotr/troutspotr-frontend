@@ -27,7 +27,7 @@ export const subtitleSelector = createSelector(
     if (isBothStateAndRegionSelected) {
       let state = toUpper(selectedState.properties.short_name)
       let region = selectedRegion.properties.long_name
-      return `TroutSpotr ${state}, ${region}`
+      return `${state}, ${region}`
     }
 
     return PLACEHOLDER_TITLE

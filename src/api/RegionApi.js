@@ -25,12 +25,18 @@ export class RegionApi extends BaseApi {
       }
 
       let stateData = await StateApi.getStateData(stateName)
-      let transformedData = transformGeo(regionGeoData, stateData)
+
+      let transformedData = {}
+      try {
+        transformedData = transformGeo(regionGeoData, stateData)
+      } catch (error) {
+        // Yes, we're going to super-murder their cache.
+        this.clearCache()
+      }
+      
       return transformedData
     } catch (error) {
       console.log(error)
-      // Yes, we're going to super-murder their cache.
-      this.clearCache()
       throw new Error('Could not load region.')
     }
   }

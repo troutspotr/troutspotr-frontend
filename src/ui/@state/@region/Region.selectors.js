@@ -20,6 +20,31 @@ export const palsSelector = state => state.region.pals
 export const hoveredStreamSelector = state => state.region.hoveredStream
 export const hoveredRoadSelector = state => state.region.hoveredRoad
 
+const EMPTY_STREAM_CENTROIDS = []
+export const streamCentroidsSelector = createSelector(
+  [streamsSelector],
+  (streams) => {
+    if (isEmpty(streams)) {
+      return EMPTY_STREAM_CENTROIDS
+    }
+
+    // map them into centroids.
+    let centroidFeatures = streams.features.map((feature, id) => {
+      let { properties } = feature
+      let { centroid_longitude, centroid_latitude } = properties
+      /* eslint-disable camelcase */
+      let geometry = { type: 'Point', coordinates: [centroid_longitude, centroid_latitude] }
+      /* eslint-enable camelcase */
+      let type = 'Feature'
+      return { geometry, id, properties, type }
+    })
+
+    return {
+      features: centroidFeatures,
+      type: 'FeatureCollection'
+    }
+  })
+
 export const isFinishedLoadingRegion = createSelector(
   [regionLoadingStatusSelector],
   (regionLoadingStatus) => {
@@ -81,8 +106,10 @@ export const selectedStreamObjectSelector = createSelector(
     if (has(streamDictionary, displayedCentroid.gid) === false) {
       return null
     }
-
-    return streamDictionary[displayedCentroid.gid]
+    var now = new Date()
+    var stream = { ...streamDictionary[displayedCentroid.gid] }
+    stream.restrictions = stream.restrictions.filter(x => filterRestrictionsByTime(now, x.properties))
+    return stream
   })
 
 export const showNoResultsFoundSelector = createSelector(
@@ -108,7 +135,6 @@ export const showNoResultsFoundSelector = createSelector(
   })
 
 const EMPTY_REGS = []
-const MAGICAL_FISH_SANCTUARY_ID = 7
 const MAGICAL_OPEN_ID = 18
 export const getSpecialRegulationsSelector = createSelector(
   [selectedStreamObjectSelector, regulationsSelector],
@@ -120,30 +146,33 @@ export const getSpecialRegulationsSelector = createSelector(
     if (isEmpty(regulations)) {
       return EMPTY_REGS
     }
-
     let specialRegulationsDictionary = selectedStream.restrictions.map(r => {
-      let { stream_gid, restriction_id, start, stop, end_time, start_time } = r.properties
+      let { stream_gid, restriction_id, start, stop, end_time, start_time, color } = r.properties
       let regulation = regulations[restriction_id]
       if (regulation == null) {
         // console.warn('found null regulation for id ' + restriction_id)
         return null
       }
-      let isFishSanctuary = regulation.id === MAGICAL_FISH_SANCTUARY_ID
+
+      let isFishSanctuary = regulation.legalText.toLowerCase().indexOf('sanctuary') >= 0
       let isOpenerOverride = regulation.id === MAGICAL_OPEN_ID
       let length = stop - start
       // let roundedLength = round(length, 1)
       let { shortText, legalText } = regulation
-      return {
+      let result = {
         startTime: start_time,
         stopTime: end_time,
         isFishSanctuary,
         isOpenerOverride,
+        color,
         restrictionId: restriction_id,
         streamId: stream_gid,
         shortText,
         legalText,
         length
       }
+
+      return result
     }).reduce((dictionary, item) => {
       if (has(dictionary, item.restrictionId)) {
         dictionary[item.restrictionId].length += item.length
@@ -187,25 +216,29 @@ export const getSelectedRoadSelector = createSelector(
     return accessPoint
   })
 
-export const getSpecialRegulationsCurrentSeasonSelector = createSelector(
-  [getSpecialRegulationsSelector],
-  (specialRegulations) => {
-    if (isEmpty(specialRegulations)) {
-      return EMPTY_REGS
-    }
+export const filterRestrictionsByTime = (now, sp) => {
+  let { startTime, stopTime } = sp
+  if (startTime == null || stopTime == null) {
+    return true
+  }
+  let isInBounds = startTime < now && stopTime > now
+  return isInBounds
+}
+
+export const filterRestrictionsByCurrentTime = (specialRegulations) => {
+  if (isEmpty(specialRegulations)) {
+    return EMPTY_REGS
+  }
     // TODO: should I be creating state in selectors?
     // no... but whatever.
-    let now = new Date()
-    let inSeasonRegs = specialRegulations.filter(sp => {
-      let { startTime, stopTime } = sp
-      if (startTime == null || stopTime == null) {
-        return true
-      }
-      let isInBounds = startTime < now && stopTime > now
-      return isInBounds
-    })
-    return inSeasonRegs
-  })
+  let now = new Date()
+  let inSeasonRegs = specialRegulations.filter(x => filterRestrictionsByTime(now, x))
+  return inSeasonRegs
+}
+
+export const getSpecialRegulationsCurrentSeasonSelector = createSelector(
+  [getSpecialRegulationsSelector],
+  filterRestrictionsByCurrentTime)
 
 const EMPTY_COUNTIES_ARRAY = []
 export const getCountyListSelector = createSelector(
@@ -290,3 +323,4 @@ export const getCountyListSelector = createSelector(
 
     return filteredCountyObjects
   })
+

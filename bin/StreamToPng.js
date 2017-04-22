@@ -31,8 +31,9 @@ const saveAsPng = (stream, directory, width = WIDTH, height = HEIGHT) => {
   let context = setUpCanvas(canvas)
   drawBackground(context, DIMENSIONS, colors.Background)
   // renderPetriDish(context, DIMENSIONS, colors.MoodyGray)
-  drawStreamToCanvas(context, stream, DIMENSIONS)
-  drawRingToCanvas(context, stream, DIMENSIONS)
+  const scaleWidthThicker = 5
+  drawStreamToCanvas(context, stream, DIMENSIONS, scaleWidthThicker)
+  drawRingToCanvas(context, stream, DIMENSIONS, scaleWidthThicker)
   let buf = canvas.toBuffer()
   let fileName = `${directory}/${stream.stream.properties.slug}.png`
   console.log('saving ' + fileName)

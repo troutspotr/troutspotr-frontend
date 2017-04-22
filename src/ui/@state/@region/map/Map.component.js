@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './Map.scss'
 import MapboxGlContainer from './MapboxGlMap/MapboxGl.container'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
@@ -8,31 +8,9 @@ import RegulationsOverlayContainer from './overlays/RegulationsOverlay.container
 import DetailsOverlay from './overlays/DetailsOverlay.container'
 import { isEmpty, find, has } from 'lodash'
 const MAP_ID = 'primary_map_id'
-const MapComponent = React.createClass({
-  propTypes: {
-    mapboxModule: PropTypes.object,
-    mapboxModuleStatus: PropTypes.string.isRequired,
-    isVisible: PropTypes.bool.isRequired,
-    isReadyToInsertLayers: PropTypes.bool.isRequired,
-    camera: PropTypes.object.isRequired,
-    ground: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired,
-    interactivity: PropTypes.object.isRequired,
-    selectedState: React.PropTypes.string.isRequired,
-    selectedRegion: React.PropTypes.string.isRequired,
-    selectedGeometry: React.PropTypes.object,
-    loadMapModuleAsync: PropTypes.func.isRequired,
-    setIsMapInitialized: PropTypes.func.isRequired,
-    selectMapFeature: PropTypes.func.isRequired,
-    selectFoculPoint: PropTypes.func.isRequired,
-    specialRegulationsCurrentSeason: PropTypes.array.isRequired,
-    selectedRoad: PropTypes.object,
-    streamDictionary: PropTypes.object.isRequired,
-    isRegionFinishedLoading: PropTypes.bool.isRequired
-  },
-
+class MapComponent extends Component {
   componentDidMount () {
-  },
+  }
 
   componentWillUnmount () {
     if (this.state == null) {
@@ -42,15 +20,15 @@ const MapComponent = React.createClass({
     if (this.state.mapboxGl) {
       this.state.mapboxGl = null
     }
-  },
+  }
 
   renderDetailsOverlay () {
     return <DetailsOverlay />
-  },
+  }
 
   renderRegulationsOverlay () {
     return <RegulationsOverlayContainer />
-  },
+  }
 
   performZoomOnFeature (nextProps) {
     if (isEmpty(nextProps.selectedGeometry)) {
@@ -84,7 +62,7 @@ const MapComponent = React.createClass({
         features: nextProps.selectedGeometry.sections
       })
     }
-  },
+  }
 
   componentWillReceiveProps (nextProps) {
     try {
@@ -103,7 +81,7 @@ const MapComponent = React.createClass({
       this.props.loadMapModuleAsync()
       return
     }
-  },
+  }
 
   renderMap () {
     return (<div>
@@ -119,11 +97,12 @@ const MapComponent = React.createClass({
         isReadyToInsertLayers={this.props.isReadyToInsertLayers}
         elementId={MAP_ID}
         isVisible={this.props.isVisible}
-        selectedGeometry={this.props.selectedGeometry} />
+        selectedGeometry={this.props.selectedGeometry}
+      />
       {this.renderDetailsOverlay()}
       {this.renderRegulationsOverlay()}
     </div>)
-  },
+  }
 
   renderLoading () {
     if (this.props.isVisible === false) {
@@ -135,7 +114,7 @@ const MapComponent = React.createClass({
     }
 
     return (<LoadingComponent subTitle={'Loading Map'} />)
-  },
+  }
 
   userSelectedStreamAndAccessPoint (stream, accessPoint) {
     let { selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad } = this.props
@@ -156,7 +135,7 @@ const MapComponent = React.createClass({
 
     // assume the user selected a new stream.
     browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}`)
-  },
+  }
 
   userSelectedStream (stream) {
     let { selectedGeometry, selectedState, selectedRegion } = this.props
@@ -171,9 +150,9 @@ const MapComponent = React.createClass({
       })
     }
     browserHistory.push(`/${selectedState}/${selectedRegion}/${slug}`)
-  },
+  }
 
-  userSelectedAccessPoint (accessPoint) {
+  userSelectedAccessPoint = (accessPoint) => {
     let { selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad } = this.props
     let hasSelectedGeometry = isEmpty(selectedGeometry) === false
     let streamId = accessPoint.properties.stream_gid
@@ -201,9 +180,9 @@ const MapComponent = React.createClass({
     // they clicked on an access point but not a stream.
     // let's just zoom in on what they selected.
     browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
-  },
+  }
 
-  onFeatureClick (features) {
+  onFeatureClick = (features) => {
     if (isEmpty(features)) {
       return
     }
@@ -225,11 +204,11 @@ const MapComponent = React.createClass({
     } else if (isEmpty(stream) === false) {
       this.userSelectedStream(stream)
     }
-  },
+  }
 
-  onFeatureHover (feature) {
+  onFeatureHover = (feature) => {
 
-  },
+  }
 
   render () {
     let isMapLoaded = this.props.mapboxModuleStatus === LOADING_CONSTANTS.IS_SUCCESS
@@ -239,6 +218,27 @@ const MapComponent = React.createClass({
       {isReadyToInsertLayers === false && this.renderLoading()}
     </div>)
   }
-})
+}
+
+MapComponent.propTypes = {
+  mapboxModule: PropTypes.object,
+  mapboxModuleStatus: PropTypes.string.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+  isReadyToInsertLayers: PropTypes.bool.isRequired,
+  camera: PropTypes.object.isRequired,
+  ground: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
+  interactivity: PropTypes.object.isRequired,
+  selectedState: React.PropTypes.string.isRequired,
+  selectedRegion: React.PropTypes.string.isRequired,
+  selectedGeometry: React.PropTypes.object,
+  loadMapModuleAsync: PropTypes.func.isRequired,
+  setIsMapInitialized: PropTypes.func.isRequired,
+  selectMapFeature: PropTypes.func.isRequired,
+  selectFoculPoint: PropTypes.func.isRequired,
+  selectedRoad: PropTypes.object,
+  streamDictionary: PropTypes.object.isRequired,
+  isRegionFinishedLoading: PropTypes.bool.isRequired
+}
 
 export default MapComponent

@@ -1,28 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import * as d3 from 'd3-path'
 import SvgAnimatedPathComponent from '../SvgAnimatedPath.component'
 
 const TAU = Math.PI * 2
-
-const RingSectionComponent = React.createClass({
-  propTypes: {
-    length: PropTypes.number.isRequired,
-    start: PropTypes.number.isRequired,
-    stop: PropTypes.number.isRequired,
-    cssName: PropTypes.string.isRequired,
-    timing: PropTypes.shape({
-      offset: PropTypes.number.isRequired,
-      length: PropTypes.number.isRequired
-    }),
-    layout: PropTypes.shape({
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-      radius: PropTypes.number.isRequired,
-      arcCompressionRatio: PropTypes.number.isRequired,
-      rotatePhase: PropTypes.number.isRequired
-    })
-  },
-
+class RingSectionComponent extends Component {
   createRadialPath () {
     let { start, stop, length } = this.props
     let { width, height, radius, arcCompressionRatio, rotatePhase } = this.props.layout
@@ -37,15 +18,34 @@ const RingSectionComponent = React.createClass({
     pathGenerator.arc(width / 2, height / 2, radius, data[0], data[1])
     let result = pathGenerator.toString()
     return result
-  },
+  }
 
   render () {
-    return <SvgAnimatedPathComponent
+    return (<SvgAnimatedPathComponent
       offset={this.props.timing.offset}
       length={this.props.timing.length}
       cssName={this.props.cssName}
-      path={this.createRadialPath()} />
+      path={this.createRadialPath()}
+            />)
   }
-})
+}
+
+RingSectionComponent.propTypes = {
+  length: PropTypes.number.isRequired,
+  start: PropTypes.number.isRequired,
+  stop: PropTypes.number.isRequired,
+  cssName: PropTypes.string.isRequired,
+  timing: PropTypes.shape({
+    offset: PropTypes.number.isRequired,
+    length: PropTypes.number.isRequired
+  }),
+  layout: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    radius: PropTypes.number.isRequired,
+    arcCompressionRatio: PropTypes.number.isRequired,
+    rotatePhase: PropTypes.number.isRequired
+  })
+}
 
 export default RingSectionComponent

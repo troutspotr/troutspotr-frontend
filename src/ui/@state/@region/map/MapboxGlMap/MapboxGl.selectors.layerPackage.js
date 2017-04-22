@@ -12,6 +12,7 @@ export const getLayerPackage = createSelector(
     styles.palSectionsLayersSelector,
     styles.accessPointsLayerSelector,
     styles.satelliteLayersSelector,
+    styles.streamCentroidLayersSelector,
     filters.getStreamFilters],
   (
     streams,
@@ -21,6 +22,7 @@ export const getLayerPackage = createSelector(
     palSections,
     accessPoints,
     satellite,
+    streamCentroids,
     streamFilters
   ) => {
     let filterLookupTable = keyBy(streamFilters, 'layerId')
@@ -31,12 +33,18 @@ export const getLayerPackage = createSelector(
       troutSections,
       restrictions,
       palSections,
-      accessPoints
+      accessPoints,
+      streamCentroids
     ].map(style => {
+      let filters = style.map(s => filterLookupTable[s.layerId]).filter(x => x != null && x.filterDefinition != null)
+      let layerId = style.map(x => x.layerDefinition.id).join('_')
+
       return {
         layers: style,
-        filters: style.map(s => filterLookupTable[s.layerId]).filter(x => x != null && x.filterDefinition != null)
+        filters: filters,
+        layerId
       }
     })
+
     return result
   })

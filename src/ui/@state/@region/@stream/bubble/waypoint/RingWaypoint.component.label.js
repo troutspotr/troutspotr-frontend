@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 // import classes from '../SvgBubble.scss'
 import waypointClasses from './RingWaypoint.scss'
 // import accessPointClasses from './RingWaypoint.accessPoint.scss'
@@ -6,21 +6,8 @@ import waypointClasses from './RingWaypoint.scss'
 // change to 0.0 for perfect orthoganal labels.
 // const LABEL_ANGULAR_COMPRESSION = 0.0
 // rotates
-const RingWaypointLabelComponent = React.createClass({
-  propTypes: {
-    marker: PropTypes.element.isRequired,
-    icon: PropTypes.element,
-    labelText: PropTypes.string.isRequired,
-    normalizedOffset: PropTypes.number.isRequired,
-    layout: PropTypes.shape({
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-      radius: PropTypes.number.isRequired,
-      arcCompressionRatio: PropTypes.number.isRequired,
-      rotatePhase: PropTypes.number.isRequired
-    })
-  },
 
+class RingWaypointLabelComponent extends Component {
   renderLabelText (text, offset, labelOffsetFromRadius) {
     let labelTextTransform = this.getLabelTextTransform(offset, labelOffsetFromRadius)
 
@@ -33,9 +20,10 @@ const RingWaypointLabelComponent = React.createClass({
     return (<g transform={labelTextTransform} className={waypointClasses.text}>
       <text
         dominantBaseline='central'
-        textAnchor={textAnchor}>{text}</text>
+        textAnchor={textAnchor}
+      >{text}</text>
     </g>)
-  },
+  }
 
   getContainerTransform (rotationDegrees, radialOffset) {
     let { width, height } = this.props.layout
@@ -44,7 +32,7 @@ const RingWaypointLabelComponent = React.createClass({
     let secondTranslate = `translate(${width * 0.5}, ${height * 0.5})`
     let transform = `${secondTranslate} ${postRotate} ${translate}`
     return transform
-  },
+  }
 
   getLabelTextTransform (rotationDegrees, radialOffset) {
     let rotate = rotationDegrees
@@ -54,24 +42,20 @@ const RingWaypointLabelComponent = React.createClass({
     let translate = `translate(${textXPos}, 0)`
     let transform = `${rotate} ${translate}`
     return transform
-  },
+  }
 
   getIconTransform (rotationDegrees, radialOffset) {
     let rotate = rotationDegrees
     let transform = `translate(5,0) rotate(${-rotate + 90})`
     return transform
-  },
+  }
 
   renderInterstateIcon (offset) {
     let transform = this.getIconTransform(offset)
-    return <g transform={transform} className={waypointClasses.icon}>
+    return (<g transform={transform} className={waypointClasses.icon}>
       {this.props.icon}
-    </g>
-  },
-
-  // let asdf = -6
-  // <use className={accessPointClasses.roadSign} xlinkHref='#us-interstate' x={asdf} y={asdf} />
-  // <text textAnchor='middle' fontSize='7px' x={asdf + 6} y={asdf + 5} dominantBaseline='central'>{number}</text>
+    </g>)
+  }
 
   render () {
     let { radius, arcCompressionRatio } = this.props.layout
@@ -84,15 +68,27 @@ const RingWaypointLabelComponent = React.createClass({
     let containerTransform = this.getContainerTransform(offsetLocationDegrees, labelOffsetFromRadius)
     // let debuggerText = this.renderLabelText(this.props.labelText, offsetLocationDegrees)
     let debuggerIcon = this.renderInterstateIcon(offsetLocationDegrees)
-    return <g className={waypointClasses.label} transform={containerTransform}>
+    return (<g className={waypointClasses.label} transform={containerTransform}>
       <g className={waypointClasses.locationMarker}>
         {this.props.marker}
       </g>
       <g transform='translate(5, 0)' >
         {debuggerIcon}
       </g>
-    </g>
+    </g>)
   }
-})
+}
+RingWaypointLabelComponent.propTypes = {
+  marker: PropTypes.element.isRequired,
+  icon: PropTypes.element,
+  normalizedOffset: PropTypes.number.isRequired,
+  layout: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    radius: PropTypes.number.isRequired,
+    arcCompressionRatio: PropTypes.number.isRequired,
+    rotatePhase: PropTypes.number.isRequired
+  })
+}
 
 export default RingWaypointLabelComponent

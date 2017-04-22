@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './MapOverlay.scss'
 import AccessPointDetails from './AccessPointDetails.component'
 import RegionDetails from './RegionDetails.component'
@@ -7,20 +7,7 @@ import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
 
 import { isEmpty } from 'lodash'
 
-const DetailsOverlayComponent = React.createClass({
-  propTypes: {
-    visibleTroutStreams: PropTypes.array,
-    selectedState: React.PropTypes.string.isRequired,
-    selectedRegion: React.PropTypes.string.isRequired,
-    selectedAccessPoint: PropTypes.object,
-    streamDictionary: PropTypes.object,
-    selectedStream: PropTypes.object
-  },
-
-  componentDidMount () {
-    // console.log('LIST VIEW MOUNTED')
-  },
-
+class DetailsOverlayComponent extends Component {
   renderRegionDetails () {
     let { selectedStream, selectedAccessPoint } = this.props
     let isVisible = isEmpty(selectedStream) && isEmpty(selectedAccessPoint)
@@ -29,7 +16,7 @@ const DetailsOverlayComponent = React.createClass({
     }
 
     return (<RegionDetails />)
-  },
+  }
 
   renderStreamDetails () {
     let { selectedStream, selectedAccessPoint } = this.props
@@ -39,8 +26,9 @@ const DetailsOverlayComponent = React.createClass({
     }
 
     return (<StreamDetails
-      selectedStream={selectedStream} />)
-  },
+      selectedStream={selectedStream}
+            />)
+  }
 
   renderAccessPointDetails () {
     let { selectedStream, selectedAccessPoint } = this.props
@@ -51,10 +39,15 @@ const DetailsOverlayComponent = React.createClass({
 
     return (<AccessPointDetails
       selectedStream={selectedStream}
-      selectedAccessPoint={selectedAccessPoint} />)
-  },
+      selectedAccessPoint={selectedAccessPoint}
+            />)
+  }
 
   render () {
+    if (isEmpty(this.props.visibleTroutStreams)) {
+      return null
+    }
+
     return (
       <MessageOverlay position='top'>
         <div className={classes.container}>
@@ -64,5 +57,12 @@ const DetailsOverlayComponent = React.createClass({
         </div>
       </MessageOverlay>)
   }
-})
+}
+
+DetailsOverlayComponent.propTypes = {
+  visibleTroutStreams: PropTypes.array,
+  selectedAccessPoint: PropTypes.object,
+  selectedStream: PropTypes.object
+}
+
 export default DetailsOverlayComponent

@@ -1,35 +1,17 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { startsWith, isEmpty } from 'lodash'
 import RingWaypointLineComponent from './RingWaypoint.component.line'
 import RingWaypointLabelComponent from './RingWaypoint.component.label'
 import accessPointClasses from './RingWaypoint.accessPoint.scss'
 import waypointClasses from './RingWaypoint.scss'
 import { crossingTypes } from 'api/GeoApi.transform'
-// export const crossingTypes = {
-//   publicTrout: 'publicTrout',
-//   permissionRequired: 'permissionRequired',
-//   unsafe: 'unsafe',
-//   uninteresting: 'uninteresting'
-// }
-const RingWaypointAccessPointComponent = React.createClass({
-  propTypes: {
-    accessPoint: PropTypes.object.isRequired,
-    timing: PropTypes.object.isRequired,
-    projection: PropTypes.func.isRequired,
-    selectedAccessPoint: PropTypes.object,
-    hoveredRoad: PropTypes.object,
-    // setSelectedRoad: PropTypes.func.isRequired,
-    setHoveredRoad: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
-    layout: PropTypes.shape({
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-      radius: PropTypes.number.isRequired,
-      arcCompressionRatio: PropTypes.number.isRequired,
-      rotatePhase: PropTypes.number.isRequired
-    })
-  },
+class RingWaypointAccessPointComponent extends Component {
+  constructor () {
+    super()
+    this.onClick = this.onClick.bind(this)
+    this.onMouseEnter = this.onMouseEnter.bind(this)
+    this.onMouseLeave = this.onMouseLeave.bind(this)
+  }
 
   shouldComponentUpdate (nextProps) {
     let gid = this.props.accessPoint.properties.gid
@@ -52,31 +34,34 @@ const RingWaypointAccessPointComponent = React.createClass({
       return true
     }
     return false
-  },
+  }
 
   renderTargetMarker (dotXScreenCoordinate, dotYScreenCoordinate) {
-    return <circle
+    return (<circle
       className={waypointClasses.target}
       cx={dotXScreenCoordinate}
       cy={dotYScreenCoordinate}
-      r='1.5' />
-  },
+      r='1.5'
+            />)
+  }
 
   renderUsHighway (offsetLocationDegrees, radius, width, height, labelOffsetFromRadius) {
     return this.renderLabelMarker(offsetLocationDegrees, labelOffsetFromRadius)
-  },
+  }
 
   renderDefaultMarker (text, className) {
     return (<g className={className}>
       <circle
         cx={0}
         cy={0}
-        r={8} />
+        r={8}
+      />
       <text
         textAnchor='middle' x={0} y={4}
-        dominantBaseline='central'>{text}</text>
+        dominantBaseline='central'
+      >{text}</text>
     </g>)
-  },
+  }
 
   decideRoadShield (roadType, isSelected) {
     let { alphabetLetter, bridgeType } = roadType.properties
@@ -93,12 +78,12 @@ const RingWaypointAccessPointComponent = React.createClass({
       //  alphabetLetter, isSelected ? accessPointClasses.selectedUninterestingBridge : accessPointClasses.uninterestingBridge)
     }
     // return this.renderDefaultMarker
-  },
+  }
 
   getXCoordinate (radialPosition, labelOffsetFromRadius, width) {
     let result = labelOffsetFromRadius * Math.cos((-Math.PI * 0.5) + radialPosition) + (width * 0.5)
     return result
-  },
+  }
 
   onClick (e) {
     // i swear this is the dumbest thing...
@@ -110,30 +95,31 @@ const RingWaypointAccessPointComponent = React.createClass({
     let hash = `#${this.props.accessPoint.properties.slug}`
     location.href = hash
     return false
-  },
+  }
 
   onMouseEnter (e) {
     e.preventDefault()
     this.props.setHoveredRoad(this.props.accessPoint)
-  },
+  }
 
   onMouseLeave (e) {
     e.preventDefault()
     this.props.setHoveredRoad(null)
-  },
+  }
 
   renderInterstateIcon (number) {
     let asdf = -6
-    return <g>
+    return (<g>
       <use className={accessPointClasses.roadSignText} xlinkHref='#us-interstate' x={asdf} y={asdf} />
       <text
         className={accessPointClasses.roadSignText}
         textAnchor='middle'
         x={asdf + 6}
         y={asdf + 6}
-        dominantBaseline='central' >{number}</text>
-    </g>
-  },
+        dominantBaseline='central'
+      >{number}</text>
+    </g>)
+  }
 
   renderUsHighwayIcon (number) {
     let asdf = -6
@@ -141,7 +127,7 @@ const RingWaypointAccessPointComponent = React.createClass({
       <use className={accessPointClasses.roadSign} xlinkHref='#us-highway' x={asdf} y={asdf} />
       <text textAnchor='middle' x={asdf + 6} y={asdf + 6} dominantBaseline='central'>{number}</text>
     </g>)
-  },
+  }
 
   renderMnHighwayIcon (number) {
     let asdf = -6
@@ -150,10 +136,11 @@ const RingWaypointAccessPointComponent = React.createClass({
       <text
         className={accessPointClasses.roadSignText}
         textAnchor='middle' x={asdf + 6} y={asdf + 7}
-        dominantBaseline='central'>{number}</text>
+        dominantBaseline='central'
+      >{number}</text>
     </g>)
     // return null
-  },
+  }
 
   renderRailroadIcon () {
     let asdf = -6
@@ -161,15 +148,15 @@ const RingWaypointAccessPointComponent = React.createClass({
     return (<g>
       <use className={accessPointClasses.roadSign} xlinkHref='#railroad' x={asdf} y={asdf} />
     </g>)
-  },
+  }
 
   renderMnStateAidHighway (number) {
 
-  },
+  }
 
   renderMnTownshipRoad () {
 
-  },
+  }
 
   renderMnCountyRoad (number) {
     let asdf = -6
@@ -180,14 +167,15 @@ const RingWaypointAccessPointComponent = React.createClass({
         textAnchor='middle'
         x={asdf + 6}
         y={asdf + 6}
-        dominantBaseline='central'>{number}</text>
+        dominantBaseline='central'
+      >{number}</text>
     </g>)
-  },
+  }
 
   getYCoordinate (radialPosition, labelOffsetFromRadius, height) {
     let result = labelOffsetFromRadius * Math.sin((-Math.PI * 0.5) + radialPosition) + (height * 0.5)
     return result
-  },
+  }
 
   debuggerInterstate (number) {
     let asdf = -6
@@ -195,11 +183,12 @@ const RingWaypointAccessPointComponent = React.createClass({
       <use className={accessPointClasses.roadSign} xlinkHref='#us-interstate' x={asdf} y={asdf} />
       <text textAnchor='middle' x={asdf + 6} y={asdf + 5} dominantBaseline='central'>{number}</text>
     </g>)
-  },
+  }
 
   getLabelText () {
     let roadId = this.props.accessPoint.properties.road_type_id
     let streetName = this.props.accessPoint.properties.street_name
+    let roadTypeDictionary = this.props.roadTypesDictionary
     if (roadTypeDictionary[roadId].prefix != null) {
       if (roadId === 1) {
         return `${roadTypeDictionary[roadId].prefix} ${this.props.accessPoint.properties.road_shield_text}`
@@ -220,7 +209,7 @@ const RingWaypointAccessPointComponent = React.createClass({
       // return `${roadTypeDictionary[roadId].prefix} ${this.props.accessPoint.properties.road_shield_text}`
     }
     return this.props.accessPoint.properties.street_name
-  },
+  }
 
   getMarkerComponent () {
     // let externalLink = <use xlinkHref='#externalLink' x={asdf - 4} y={asdf} />
@@ -228,7 +217,7 @@ const RingWaypointAccessPointComponent = React.createClass({
     return (<g>
       <rect x='-3' y='-0.5' width='5' height='1' />
     </g>)
-  },
+  }
 
   render () {
     let { accessPoint, projection } = this.props
@@ -272,12 +261,14 @@ const RingWaypointAccessPointComponent = React.createClass({
         className={waypointCssClass}
         onClick={this.onClick}
         onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}>
+        onMouseLeave={this.onMouseLeave}
+      >
         <RingWaypointLineComponent
           subjectCoordinates={accessPointWorldCoodinates}
           normalizedOffset={normalizedOffset}
           projection={this.props.projection}
-          layout={this.props.layout} />
+          layout={this.props.layout}
+        />
         {this.renderTargetMarker(subjectScreenCoordinates[0], subjectScreenCoordinates[1])}
         <RingWaypointLabelComponent
           layout={this.props.layout}
@@ -286,87 +277,27 @@ const RingWaypointAccessPointComponent = React.createClass({
           labelText={labelText}
           icon={iconComponent}
           marker={markerComponent}
-          />
+        />
       </a>
     </g>)
   }
-})
+}
+
+RingWaypointAccessPointComponent.propTypes = {
+  accessPoint: PropTypes.object.isRequired,
+  projection: PropTypes.func.isRequired,
+  selectedAccessPoint: PropTypes.object,
+  hoveredRoad: PropTypes.object,
+  roadTypesDictionary: PropTypes.object,
+  // setSelectedRoad: PropTypes.func.isRequired,
+  setHoveredRoad: PropTypes.func.isRequired,
+  layout: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    radius: PropTypes.number.isRequired,
+    arcCompressionRatio: PropTypes.number.isRequired,
+    rotatePhase: PropTypes.number.isRequired
+  })
+}
 
 export default RingWaypointAccessPointComponent
-
-const roadTypeDictionary = {
-  '1': {
-    shortName: 'Interstate',
-    longName: 'Interstate Highway',
-    prefix: 'Interstate',
-    defaultStart: 'ISTH '
-  },
-  '2': {
-    shortName: 'US Highway',
-    longName: 'US Highway',
-    prefix: 'US Highway'
-  },
-  '3': {
-    shortName: 'US Railroad',
-    longName: 'Railroad',
-    prefix: 'Railroad'
-  },
-  '4': {
-    shortName: 'MN_State_Highway',
-    longName: 'MN Highway',
-    prefix: 'MN Highway'
-  },
-  '5': {
-    shortName: 'MN_County_State_Aid_Highway',
-    longName: 'County State Aid Highway (CSAH)',
-    prefix: 'County Highway',
-    defaultStart: 'CSAH '
-  },
-  '6': {
-    shortName: 'MN_Municipal_State_Aid_Street',
-    longName: 'Municipal State Aid Street (MSAS)',
-    prefix: 'Municipal Street'
-  },
-  '7': {
-    shortName: 'MN_County_Road',
-    longName: 'County Road',
-    prefix: 'County Road',
-    defaultStart: 'CR-'
-  },
-  '8': {
-    shortName: 'MN_Township_Road',
-    longName: 'Township Road'
-  },
-  '9': {
-    shortName: 'MN_Unorganized_Territory_Road',
-    longName: 'Unorganized Territory Road'
-  },
-  '10': {
-    shortName: 'MN_Military_Road',
-    longName: 'Military Road'
-  },
-  '11': {
-    shortName: 'MN_Tribal_Road',
-    longName: 'Tribal Road'
-  },
-  '12': {
-    shortName: 'MN_State_Forest_Road',
-    longName: 'State Forest Road'
-  },
-  '13': {
-    shortName: 'MN_State_Park_Road',
-    longName: 'State Park Road'
-  },
-  '14': {
-    shortName: 'MN_National_Forest_Road',
-    longName: 'National Forest Road'
-  },
-  '15': {
-    shortName: 'MN_National_Park_Road',
-    longName: 'National Park Road'
-  },
-  '16': {
-    shortName: 'MN_Misc_Road',
-    longName: 'Uncategorized MN Road'
-  }
-}

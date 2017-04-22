@@ -5,6 +5,7 @@ const valuesIn = require('lodash/valuesIn')
 const has = require('lodash/has')
 const kebabCase = require('lodash/kebabCase')
 const topojson = require('topojson-client')
+var now = new Date()
 // import * as topojson from 'topojson-client'
 // import { groupBy, keyBy, valuesIn, has, kebabCase } from 'lodash'
 const MINIMUM_LENGTH_MILES = 0.05
@@ -48,7 +49,6 @@ const createStreamDictionaries = (geoJsonObjects) => {
   var tributaries = groupBy(geoJsonObjects.tributary.features
       .filter(x => x.properties.linear_offset > 0.0001 && x.properties.linear_offset < 0.999),
        'properties.stream_gid')
-
   var tempCircleDictionary = keyBy(geoJsonObjects.boundingCircle.features, 'properties.gid')
 
   return {
@@ -86,12 +86,17 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
       entry.stream = currentItem
 
       entry.sections = sectionsMap[streamId]
-        // .sort((a, b) => b.properties.start - a.properties.start)
 
-      entry.restrictions = restrictionsMap[streamId] == null
-        ? []
-        : restrictionsMap[streamId]
-
+      entry.restrictions = getSanitizedRegulations(restrictionsMap[streamId])
+      // entry.restrictions = restrictionsMap[streamId] == null
+      //   ? []
+      //   : restrictionsMap[streamId].reduce((regDictionary, item) => {
+      //     // we're gonna try to colorize our restrictions.
+      //     // we need to be careful. there could be 16 restriction
+      //     // sections, but only of 3 types. We need to cataloge
+      //     // our progress, so a reduce function seems like a good idea here.
+      //     if (has(regDictionary, item.properties.regulation.id))
+      //   }, {})
       entry.palSections = palMap[streamId] == null
         ? []
         : palMap[streamId].sort((a, b) => b.properties.start - a.properties.start)
@@ -139,6 +144,16 @@ const decompress = (topojsonObject, stateData) => {
     props.restriction = regsDictionary[props.restriction_id]
   })
 
+  // remove irrelevent restrictions by immediate time.
+  dictionary.restriction_section.features = dictionary.restriction_section.features.filter(sp => {
+    let { start_time, end_time } = sp.properties
+    if (start_time == null || end_time == null) {
+      return true
+    }
+    let isInBounds = start_time < now && end_time > now
+    return isInBounds
+  })
+
   // update waters
   dictionary.streamProperties.features.forEach(feature => {
     var props = feature.properties
@@ -152,38 +167,9 @@ const decompress = (topojsonObject, stateData) => {
 
   topojsonObject.objects.accessPoint.geometries = topojsonObject.objects.accessPoint.geometries
     .filter(filterBadAccessPoints)
-  dictionary.stream_access_point = {
-    features: topojsonObject.objects.accessPoint.geometries
-      .map((x, index) => {
-        return {
-          geometry: {
-            type: 'Point',
-            coordinates: x.coordinates
-          },
-          id: x.id,
-          properties: x.properties,
-          type: 'Feature'
-        }
-      }),
-    type: 'FeatureCollection'
-  }
+  dictionary.stream_access_point = topojson.feature(topojsonObject, topojsonObject.objects.accessPoint)
+  dictionary.tributary = topojson.feature(topojsonObject, topojsonObject.objects.tributary)
 
-  dictionary.tributary = {
-    features: topojsonObject.objects.tributary.geometries.map(x => {
-      return {
-        geometry: {
-          type: 'Point',
-          coordinates: x.coordinates
-        },
-        id: x.id,
-        properties: x.properties,
-        type: 'Feature'
-      }
-    }),
-    type: 'FeatureCollection'
-  }
-
-  //  topojson.feature(topojsonObject, topojsonObject.objects.accessPoint)
   return dictionary
 }
 
@@ -200,26 +186,40 @@ const addLettersToCrossings = (roadCrossings) => {
   var interestingRoadCrossings = roadCrossings.filter(rc => rc.properties.bridgeType !== crossingTypes.uninteresting)
 
   interestingRoadCrossings.forEach((feature, index) => {
-    feature.properties.alphabetLetter = alphabet[index % alphabetLength]
+    var quotient = Math.floor(index / alphabetLength)
+    var remainder = index % alphabetLength
+    var needsEmergencyPrefix = quotient >= 1
+    if (needsEmergencyPrefix) {
+      var safePrefixIndex = Math.min(quotient, alphabetLength) - 1
+      var prefix = alphabet[safePrefixIndex]
+      var suffix = alphabet[remainder]
+      feature.properties.alphabetLetter = prefix + suffix
+    } else {
+      feature.properties.alphabetLetter = alphabet[index % alphabetLength]
+    }
   })
   return roadCrossings
 }
 
 const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
-  apFeatures.forEach((feature, index) => {
-    var properties = feature.properties
+  apFeatures
+    // HACK: get rid of OSM streets that over-extend across states.
+    // Back end should do this...
+    .filter(feature => has(roadTypesDictionary, feature.properties.road_type_id))
+    .forEach((feature, index) => {
+      var properties = feature.properties
     // get rid of this 0 vs 1 nonsense
-    properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land === 1
-    properties.is_over_trout_stream = properties.is_over_trout_stream === 1
-    properties.is_previous_neighbor_same_road = properties.is_previous_neighbor_same_road === 1
-    var roadTypeId = properties.road_type_id
-    var roadType = roadTypesDictionary[roadTypeId]
-    var isParkable = roadType.isParkable
-    properties.isParkable = isParkable
-    properties.bridgeType = determineBridgeType(properties, roadTypesDictionary)
-    properties.alphabetLetter = ' '
-    properties.slug = `${kebabCase(properties.street_name)}@${properties.linear_offset}`
-  })
+      properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land === 1
+      properties.is_over_trout_stream = properties.is_over_trout_stream === 1
+      properties.is_previous_neighbor_same_road = properties.is_previous_neighbor_same_road === 1
+      var roadTypeId = properties.road_type_id
+      var roadType = roadTypesDictionary[roadTypeId]
+      var isParkable = roadType.isParkable
+      properties.isParkable = isParkable
+      properties.bridgeType = determineBridgeType(properties, roadTypesDictionary)
+      properties.alphabetLetter = ' '
+      properties.slug = `${kebabCase(properties.street_name)}@${properties.linear_offset}`
+    })
   return apFeatures
 }
 
@@ -243,8 +243,6 @@ const determineBridgeType = (bridgeProperties, roadTypesDictionary) => {
 }
 
 const filterBadAccessPoints = (ap) => {
-  if (ap.properties.gid === 2678) {
-  }
   var isUninteresting = ap.properties.bridgeType === crossingTypes.uninteresting
   if (isUninteresting) {
     return false
@@ -256,6 +254,57 @@ const filterBadAccessPoints = (ap) => {
   }
 
   return true
+}
+
+const naiveRegColorizer = (reg, index = 1) => {
+  let isSanctuary = reg.legalText.toLowerCase().indexOf('sanctuary') >= 0
+  let isClosed = reg.legalText.toLowerCase().indexOf('closed') >= 0
+
+  if (isSanctuary || isClosed) {
+    return 'red'
+  }
+  if (index === 1) {
+    return 'yellow'
+  }
+
+  if (index === 2) {
+    return 'blue'
+  }
+
+  if (index === 3) {
+    return 'white'
+  }
+
+  return 'red'
+}
+
+const getSanitizedRegulations = (restrictionsForGivenStream) => {
+  if (restrictionsForGivenStream == null) {
+    return []
+  }
+  let count = 1
+  restrictionsForGivenStream.reduce((regDictionary, item) => {
+    // we're gonna try to colorize our restrictions.
+    // we need to be careful. there could be 16 restriction
+    // sections, but only of 3 types. We need to cataloge
+    // our progress, so a reduce function seems like a good idea here.
+    if (has(regDictionary, item.properties.restriction.id)) {
+      let color = regDictionary[item.properties.restriction.id].color
+      item.properties.color = color
+      return regDictionary
+    }
+
+    let newColor = naiveRegColorizer(item.properties.restriction, count)
+    item.properties.color = newColor
+    regDictionary[item.properties.restriction.id] = {
+      color: newColor,
+      restriction: item.properties.restriction
+    }
+    count++
+    return regDictionary
+  }, {})
+
+  return restrictionsForGivenStream
 }
 
 module.exports = {

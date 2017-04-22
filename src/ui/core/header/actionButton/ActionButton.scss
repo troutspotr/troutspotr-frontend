@@ -6,9 +6,9 @@ $largeFontSize: 1em;
 .backButton {
   width: 40px;
   height: 40px;
-  border: 1px solid $off-white;
+  border: 1.5px solid $white;
   border-radius: 50%;
-  background: transparent;
+  background: $messageBackground;
   margin: 5px;
   display: inline-block;
   cursor: pointer;

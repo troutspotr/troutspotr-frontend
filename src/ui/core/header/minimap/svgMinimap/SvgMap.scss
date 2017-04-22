@@ -17,12 +17,13 @@
 
   g {
     stroke: $off-white;
-    fill: transparentize($background, 0.3);
+    fill: $background;
   }
 
   g:hover {
     fill: transparentize($gray, 0.6);
     stroke-width: 0.4px;
+    cursor: pointer;
   }
 }
 

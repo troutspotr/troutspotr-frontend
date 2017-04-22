@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './MicroMap.scss'
 import * as Micromap from './Micromap'
 
@@ -6,15 +6,16 @@ import * as Micromap from './Micromap'
 // excruciatingly slow. CACHE IT FOR PERFORMANCE!
 let boundingRectangleCache = null
 
-const SneezeGuardComponent = React.createClass({
-  propTypes: {
-    streamObject: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired
-  },
+class SneezeGuardComponent extends Component {
+  constructor () {
+    super()
+    this.onClick = this.onClick.bind(this)
+    this.renderMap = this.renderMap.bind(this)
+  }
 
   componentWillUpdate (nextProps) {
     this.fireRenderToCanvas(nextProps.streamObject)
-  },
+  }
 
   componentDidMount () {
     if (this.canvasElement == null) {
@@ -43,33 +44,33 @@ const SneezeGuardComponent = React.createClass({
     // this.canvasContext.save()
     let offset = (Math.random() * 5) + 20
     setTimeout(() => this.fireRenderToCanvas(this.props.streamObject), offset)
-  },
+  }
 
   fireRenderToCanvas (streamObject) {
     Micromap.drawStreamToCanvas(this.canvasContext, streamObject, this.dimensions)
-  },
+  }
 
   componentWillUnmount () {
     // console.log('unmounted')
-  },
+  }
 
   onClick (e) {
 
-  },
+  }
 
   renderMap (canvasElement) {
     if (canvasElement == null) {
       return
     }
     this.canvasElement = canvasElement
-  },
+  }
 
   shouldComponentUpdate (nextProps) {
     if (nextProps.streamObject.stream.properties.gid !== this.props.streamObject.stream.properties.gid) {
       return true
     }
     return false
-  },
+  }
 
   render () {
     return (
@@ -77,6 +78,11 @@ const SneezeGuardComponent = React.createClass({
         <canvas id={this.props.id} className={classes.microMap} ref={this.renderMap} />
       </div>)
   }
-})
+}
+
+SneezeGuardComponent.propTypes = {
+  streamObject: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired
+}
 
 export default SneezeGuardComponent

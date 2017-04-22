@@ -3,7 +3,7 @@
 @import "src/ui/styles/_fonts";
 $stream_width: 0.05em * 1.5;
 $section_width: $stream_width * 1.2;
-$restriction_width: $section_width * 5;
+$restriction_width: $section_width * 7;
 $pal_width: $stream_width * 1.5;
 
 $MN_HIGHWAY_BLUE: #223A74;
@@ -123,7 +123,8 @@ $tributary_pal_width: $tributary_width * 7;
 
 .stream {
   composes: streamComponent;
-  stroke: $gray;
+  stroke-width: $stream_width * 0.3;
+  stroke: $off-white;
 }
 
 .section {
@@ -142,12 +143,24 @@ $tributary_pal_width: $tributary_width * 7;
   stroke-width: $restriction_width;
 }
 
+.restrictionAlt {
+  composes: restriction;
+  stroke: $blue;
+  stroke-width: $restriction_width;
+}
+
+.restrictionAltAlt {
+  composes: restriction;
+  stroke: $white;
+  stroke-width: $restriction_width;
+}
+
 .restrictionBackground {
   composes: streamComponent;
   stroke: $background;
   stroke-linecap: butt;
   stroke-linejoin: butt;
-  stroke-width: $restriction_width * 0.85;
+  stroke-width: $restriction_width * 0.8;
 }
 
 .fishSanctuary {

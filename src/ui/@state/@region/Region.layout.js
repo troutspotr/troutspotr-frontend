@@ -1,35 +1,17 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './Region.scss'
 import { MAP, LIST } from 'ui/core/Core.state'
 import MapContainer from './map/Map.container'
 import CountyListContainer from './list/CountyList.container'
 import LoadingComponent from 'ui/core/loading/Loading.component'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
 import { isEmpty } from 'lodash'
 import SvgSpriteSheet from './svgSpriteSheet/SvgSpriteSheet.component'
-// console.log(MAP, LIST)
-const RegionLayout = React.createClass({
-  propTypes: {
-    view: PropTypes.string.isRequired,
-    children: PropTypes.element,
-    fetchRegionData: PropTypes.func.isRequired,
-    selectedState: PropTypes.string.isRequired,
-    selectedRegion: PropTypes.string.isRequired,
-    regionLoadingStatus: PropTypes.string.isRequired,
-    troutStreams: PropTypes.array,
-    // searchText: PropTypes.string.isRequired,
-    selectedStream: PropTypes.object,
-    clearText: PropTypes.func.isRequired,
-    streams: PropTypes.object,
-    hasAgreedToTerms: PropTypes.bool.isRequired,
-    showNoResultsFoundOverlay: PropTypes.bool.isRequired
-  },
-
+class RegionLayout extends Component {
   componentDidMount () {
     let { fetchRegionData, selectedState, selectedRegion } = this.props
     fetchRegionData(selectedState, selectedRegion)
-  },
+  }
 
   componentWillReceiveProps (nextProps) {
     let { selectedState, selectedRegion } = nextProps
@@ -40,7 +22,7 @@ const RegionLayout = React.createClass({
       console.log('props changed, loading next region')
       this.props.fetchRegionData(selectedState, selectedRegion)
     }
-  },
+  }
 
   renderLoading () {
     if (this.props.regionLoadingStatus === LOADING_CONSTANTS.IS_PENDING) {
@@ -48,40 +30,23 @@ const RegionLayout = React.createClass({
     }
 
     return null
-  },
-
-  renderNoElementsFoundInRegionOverlay () {
-    let { showNoResultsFoundOverlay, streams } = this.props
-    if (showNoResultsFoundOverlay === false) {
-      return null
-    }
-
-    let safeStreamCount = isEmpty(streams) ? 0 : streams.features.length
-    return (
-      <MessageOverlay
-        position='top' >
-        <div>
-          <div className={classes.clearSearchTitle}>No streams matched your search.</div>
-          <div>
-            <button onClick={this.props.clearText} className={classes.actionButton}>Clear your search</button> to see {safeStreamCount} streams.
-          </div>
-        </div>
-      </MessageOverlay>)
-  },
+  }
 
   renderMap () {
     let { view } = this.props
     let isVisible = view === MAP
-    return <MapContainer
-      isVisible={isVisible} />
-  },
+    return (<MapContainer
+      isVisible={isVisible}
+            />)
+  }
 
   renderList () {
     let { view, selectedStream } = this.props
     let isVisible = view === LIST && isEmpty(selectedStream)
-    return <CountyListContainer
-      isVisible={isVisible} />
-  },
+    return (<CountyListContainer
+      isVisible={isVisible}
+            />)
+  }
 
   render () {
     let { view, hasAgreedToTerms } = this.props
@@ -96,10 +61,20 @@ const RegionLayout = React.createClass({
         {this.renderMap()}
         {view === LIST && this.props.children}
         {this.renderLoading()}
-        {this.renderNoElementsFoundInRegionOverlay()}
       </div>
-
     )
   }
-})
+}
+
+RegionLayout.propTypes = {
+  view: PropTypes.string.isRequired,
+  children: PropTypes.element,
+  fetchRegionData: PropTypes.func.isRequired,
+  selectedState: PropTypes.string.isRequired,
+  selectedRegion: PropTypes.string.isRequired,
+  regionLoadingStatus: PropTypes.string.isRequired,
+  selectedStream: PropTypes.object,
+  hasAgreedToTerms: PropTypes.bool.isRequired
+}
+
 export default RegionLayout

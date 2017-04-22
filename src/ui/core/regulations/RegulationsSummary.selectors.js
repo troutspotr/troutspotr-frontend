@@ -10,6 +10,9 @@ export const getRegulationsSummarySelector = createSelector(
       let watersId = stream.properties.water_id
       let water = watersObject(watersId)
       let openers = water.openSeasons
+      let closestOpener = water.openers == null
+        ? null
+        : water.openers.sort(x => x.start_time)[water.openers.length - 1]
       let isOpenSeason = openers.length >= 1
       let openSeasonOverrides = streamObject.restrictions.filter(restriction => {
         let { end_time, start_time } = restriction.properties
@@ -27,7 +30,8 @@ export const getRegulationsSummarySelector = createSelector(
         hasRegulationThatOverridesOpenSeason,
         isOpenSeason,
         openSeasonOverrides,
-        openers
+        openers,
+        closestOpener
       }
     }
   })

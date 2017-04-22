@@ -1,39 +1,16 @@
-import React, { PropTypes } from 'react'
-
-const RegionComponent = React.createClass({
-  propTypes: {
-    geoJson: PropTypes.object.isRequired,
-    isSelected: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    pathGenerator: PropTypes.func.isRequired,
-    stateName: PropTypes.string.isRequired,
-
-    selectRegion: PropTypes.func.isRequired
-  },
-
-  componentWillMount () {
-    // this.initializeMap()
-  },
-
-  componentDidMount () {
-  },
-
-  componentWillUnmount () {
-  },
-
-  selectRegion (e, region) {
-  },
-
-  zoomToRegion (region) {
-
-  },
+import React, { PropTypes, Component } from 'react'
+class RegionComponent extends Component {
+  constructor () {
+    super()
+    this.onClick = this.onClick.bind(this)
+  }
 
   onClick (e) {
     let json = this.props.geoJson
 
     this.props.selectRegion(e, json)
     // browserHistory.push(path)
-  },
+  }
 
   render () {
     let json = this.props.geoJson
@@ -43,5 +20,12 @@ const RegionComponent = React.createClass({
         <path data-name={json.properties.name} d={path} />
       </g>)
   }
-})
+}
+
+RegionComponent.propTypes = {
+  geoJson: PropTypes.object.isRequired,
+  pathGenerator: PropTypes.func.isRequired,
+  selectRegion: PropTypes.func.isRequired
+}
+
 export default RegionComponent

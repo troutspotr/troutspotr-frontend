@@ -1,22 +1,12 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './MapOverlay.scss'
 import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
 import { isEmpty } from 'lodash'
-
-// import { round } from 'lodash'
-const RegulationsOverlayComponent = React.createClass({
-  propTypes: {
-    selectedState: React.PropTypes.string.isRequired,
-    selectedRegion: React.PropTypes.string.isRequired,
-    selectedStream: PropTypes.object,
-    streamDictionary: PropTypes.object.isRequired,
-    specialRegulationsCurrentSeason: PropTypes.array.isRequired
-  },
-
+class RegulationsOverlayComponent extends Component {
   componentDidMount () {
     // console.log('LIST VIEW MOUNTED')
-  },
+  }
 
   renderSpecialRegulationsOverlay () {
     let { selectedStream, specialRegulationsCurrentSeason } = this.props
@@ -27,12 +17,14 @@ const RegulationsOverlayComponent = React.createClass({
       <div className={classes.specialRegulationsTitle}>Special Regulations</div>
       {
         specialRegulationsCurrentSeason.map((reg, index) => {
+          let id = `${reg.restrictionId}_${reg.streamId}`
           return (<RestrictionComponent
-            key={index}
-            color={reg.isFishSanctuary ? 'red' : reg.isOpenerOverride ? 'blue' : 'yellow'}
+            key={id}
+            color={reg.color}
             pattern={reg.isFishSanctuary ? 'solid' : 'stipple'}
             text={reg.legalText}
-            length={reg.roundedLength + ' mi'} />)
+            length={reg.roundedLength + ' mi'}
+                  />)
         })
       }
     </div>)
@@ -41,10 +33,16 @@ const RegulationsOverlayComponent = React.createClass({
       <MessageOverlay position='bottom'>
         {specialRegulationsElement}
       </MessageOverlay>)
-  },
+  }
 
   render () {
     return this.renderSpecialRegulationsOverlay()
   }
-})
+}
+
+RegulationsOverlayComponent.propTypes = {
+  selectedStream: PropTypes.object,
+  specialRegulationsCurrentSeason: PropTypes.array.isRequired
+}
+
 export default RegulationsOverlayComponent

@@ -1,17 +1,13 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './RegulationsSummary.scss'
 // import { Link } from 'react-router'
 /* eslint no-unneeded-ternary: 0 */
 /* eslint-disable camelcase */
-const RegulationsSummary = React.createClass({
-  propTypes: {
-    streamObject: PropTypes.object.isRequired,
-    getSummary: PropTypes.func.isRequired
-  },
 
+class RegulationsSummary extends Component {
   getIsOpenStatus (streamObject) {
     return this.props.getSummary(streamObject)
-  },
+  }
 
   renderOpenClosedHelper ({ statusClass, statusText, explainerText, dateText }) {
     return (
@@ -21,21 +17,22 @@ const RegulationsSummary = React.createClass({
         </span>
         <span> {explainerText}</span>
       </div>)
-  },
+  }
 
   renderOpenOrClosed (streamObject) {
     let now = new Date()
+
     let {
       hasRegulationThatOverridesOpenSeason,
       isOpenSeason,
       openers,
+      closestOpener,
       openSeasonOverrides } = this.getIsOpenStatus(streamObject)
-    // let { stream, restrictions } = streamObject
     if (isOpenSeason === false && hasRegulationThatOverridesOpenSeason === false) {
       // plain vanilla closed. Get lost, bub.
       let openerDate = streamObject.stream.properties.openers.filter(x => x.start_time > now)
       let dateText = openerDate.length >= 1
-        ? openerDate[0].start_time.toLocaleDateString('en-US')
+        ? openerDate[0].start_time.toLocaleDateString('en-US') + '.'
         : 'an unknown date. Call the DNR for more details.'
 
       let args = {
@@ -63,13 +60,14 @@ const RegulationsSummary = React.createClass({
 
     if (isOpenSeason === false && hasRegulationThatOverridesOpenSeason) {
       // it's closed, but there's an exception. Be careful.
-
-      let explainerText = 'but ' + openSeasonOverrides[0].properties.restriction.shortText
-      let dateText = openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US')
-
+      let explainerText = openSeasonOverrides[0].properties.restriction.shortText
+      let hasCloseOpener = closestOpener != null
+      let dateText = hasCloseOpener
+        ? closestOpener.start_time.toLocaleDateString('en-US') + '.'
+        : openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US') + '.'
       let args = {
         statusClass: classes.openCaution,
-        statusText: 'Closed',
+        statusText: 'Closed with exceptions',
         explainerText,
         dateText
       }
@@ -94,11 +92,17 @@ const RegulationsSummary = React.createClass({
     }
 
     throw new Error('not covered')
-  },
+  }
 
   render () {
     let { streamObject } = this.props
     return this.renderOpenOrClosed(streamObject)
   }
-})
+}
+
+RegulationsSummary.propTypes = {
+  streamObject: PropTypes.object.isRequired,
+  getSummary: PropTypes.func.isRequired
+}
+
 export default RegulationsSummary

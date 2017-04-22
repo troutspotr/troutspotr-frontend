@@ -25,7 +25,7 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  border-color: transparentize($blue, 0.5);
+  border-color: transparentize($off-white, 1.0);
   border-width: 1px;
   border-style: solid;
   position: relative;
@@ -47,6 +47,7 @@
     backface-visibility: hidden;
     transform: translateZ(0);
     border-color: transparent;
+    
   }
 
   .tl {
@@ -71,6 +72,20 @@
     bottom: 0;
     right: 0;
     position: absolute;
+  }
+
+  // if you're hovering but not expanded
+  &:hover {
+    cursor: pointer;
+
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  // if you're hovering and expanded
+  &.expand:hover {
+    background-color: inherit;
+    cursor: inherit;
   }
 }
 

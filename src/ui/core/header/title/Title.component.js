@@ -1,19 +1,12 @@
 import React, { PropTypes } from 'react'
-// import classes from './BackButton.scss'
-// import { Link } from 'react-router'
 
-const TitleComponent = React.createClass({
-  propTypes: {
-    title:  PropTypes.string
-  },
+const TitleComponent = (props) => {
+  let { title } = props
+  return (<span>{title}</span>)
+}
 
-  onClick () {
+TitleComponent.propTypes = {
+  title:  PropTypes.string
+}
 
-  },
-
-  render () {
-    let { title } = this.props
-    return (<span>{title}</span>)
-  }
-})
 export default TitleComponent

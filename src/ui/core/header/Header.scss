@@ -1,6 +1,7 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 @import "src/ui/styles/_fonts";
+@import "src/ui/styles/ZeldaText";
 
 $fontSize: 12px;
 $largeFontSize: 1.25em;
@@ -8,7 +9,7 @@ $smallFontSize: 0.85em;
 
 .headerContainer {
   // height: $header-height;
-  // background-color: transparentize($background, 0.5);
+  background-color: $messageBackground;
 
   // BLURRY KIRBY FIX. I don't know why, but iOS safari
   // gets blurry unless the header is set to fixed position.
@@ -22,6 +23,7 @@ $smallFontSize: 0.85em;
 
   // overflow: hidden;
   font-size: $fontSize;
+  // backdrop-filter: blur(2px);
 }
 
 .header {
@@ -76,6 +78,6 @@ $smallFontSize: 0.85em;
   text-decoration: none;
   font-size: 18px;
   line-height: 1.1;
-
+  cursor: pointer;
   @include medium-font;
 }

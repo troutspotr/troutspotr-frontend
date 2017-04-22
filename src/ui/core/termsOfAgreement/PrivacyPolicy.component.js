@@ -1,18 +1,17 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './TermsOfAgreement.scss'
 const MAGICAL_NUMBER_OF_PREAMBLES = 5
-const PrivacyPolicy = React.createClass({
-  propTypes: {
-    advance: PropTypes.func.isRequired
-  },
-
-  getInitialState () {
-    return {
+const scalar = 0.2
+class PrivacyPolicy extends Component {
+  constructor () {
+    super()
+    this.onButtonClick = this.onButtonClick.bind(this)
+    this.state = {
       preambles: [],
       isAgreementShown: false,
       preambleIsFinished: false
     }
-  },
+  }
 
   renderTerm ({ index, title, body }) {
     return (
@@ -20,14 +19,14 @@ const PrivacyPolicy = React.createClass({
         <div className={classes.term}>{title}</div>
         <div className={classes.termBody}>{body}</div>
       </li>)
-  },
+  }
 
   renderTitle () {
     return (
       <div>
         <div className={classes.jumbo}>Privacy Policy</div>
       </div>)
-  },
+  }
 
   addElement (element) {
     if (element == null) {
@@ -40,10 +39,10 @@ const PrivacyPolicy = React.createClass({
         let { preambleIsFinished } = this.state
         preambleIsFinished = true
         this.setState({ preambleIsFinished })
-      }, 1200)
+      }, 600)
     }
     this.setState({ preambles })
-  },
+  }
 
   componentDidMount () {
     // this.props.advance(0) // DEBUG
@@ -53,41 +52,34 @@ const PrivacyPolicy = React.createClass({
 
     setTimeout(() => {
       this.addElement(this.renderTitle())
-    }, 200)
+    }, 200 * scalar)
 
     setTimeout(() => {
       this.addElement((<div className={classes.preambleItem}>We are not interested in your secret fishing spots.</div>))
-    }, 1200)
+    }, 1200 * scalar)
 
     setTimeout(() => {
       this.addElement((<div className={classes.preambleItem}>We are very interested in using the web to help anglers make safe and legal choices.</div>))
-    }, 3200)
+    }, 3200 * scalar)
 
     setTimeout(() => {
-      this.addElement((<div className={classes.preambleItem}>To that end, we track usage, not users, <span className={classes.blue}>and you can opt out</span>.</div>))
-    }, 6100)
+      this.addElement((<div className={classes.preambleItem}>To that end, we track usage, not users, <strong>and you can opt out</strong>.</div>))
+    }, 6100 * scalar)
 
     setTimeout(() => {
       this.addElement((<hr />))
-    }, 8100)
-  },
+    }, 8100 * scalar)
+  }
 
-  renderPreamble () {
+  renderPreamble = () => {
     return (<div className={classes.preamble}>
       {this.state.preambles.map((p, i) => {
+        let key = i + 1
         let shield = (i === MAGICAL_NUMBER_OF_PREAMBLES - 1 || i === 0) ? classes.shieldRight : classes.shieldDown
-        return (<div key={i} className={classes.preambleContainer}>{p}<div className={shield} /></div>)
+        return (<div key={key} className={classes.preambleContainer}>{p}<div className={shield} /></div>)
       })}
     </div>)
-  },
-
-  // renderPreamble () {
-  //   return (<div className={classes.preamble}>
-  //     <div className={classes.preambleItem}>We are not interested in your secret fishing spots.</div>
-  //     <div className={classes.preambleItem}>We are very interested in using the web to help anglers make safe and legal choices.</div>
-  //     <div className={classes.preambleItem}>To that end, we track usage, not users.</div>
-  //   </div>)
-  // },
+  }
 
   renderIntro () {
     if (this.state.isAgreementShown === false) {
@@ -99,7 +91,7 @@ const PrivacyPolicy = React.createClass({
       <p>TroutSpotr and its parent company, Stuart Anderson, LLC (“TroutSpotr” “we” or “us”) is committed to protecting and respecting your privacy. We are not interested in learning your secret fishing spots. We are very interested in using the web to help anglers make safe and legal choices. To that end, we review usage data in order to improve the app.</p>
       <p>This Privacy Policy and the Terms of Service sets out the manner in which any personal data we collect from you via the TroutSpotr App, or that you provide to us, will be utilized and stored. Please read the following carefully.</p>
     </div>)
-  },
+  }
 
   renderCollection (index) {
     let title = 'We may collect and utilize the following:'
@@ -129,7 +121,7 @@ const PrivacyPolicy = React.createClass({
     </div>)
 
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderIpAddress (index) {
     let title = 'IP addresses'
@@ -138,7 +130,7 @@ const PrivacyPolicy = React.createClass({
     </div>)
 
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderCookies (index) {
     let title = 'Cookies'
@@ -147,7 +139,7 @@ const PrivacyPolicy = React.createClass({
     </div>)
 
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderDataSecurity (index) {
     let title = 'Data Security'
@@ -157,7 +149,7 @@ const PrivacyPolicy = React.createClass({
     </div>)
 
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderUseOfInformation (index) {
     let title = 'Use of Information'
@@ -184,7 +176,7 @@ const PrivacyPolicy = React.createClass({
     </div>)
 
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderDisclosureOfInformation (index) {
     let title = 'Disclosure of your information'
@@ -208,7 +200,7 @@ const PrivacyPolicy = React.createClass({
     </div>)
 
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderPrivacyPolicyUpdates (index) {
     let title = 'Privacy Policy Updates'
@@ -217,33 +209,33 @@ const PrivacyPolicy = React.createClass({
     </div>)
 
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderContact (index) {
     let title = 'Contact'
     let body = (<div key={index}>
       <div />
-      <p>Please contact us at troutspotr@gmail.com if you have any questions, comments or requests regarding this Privacy Policy. </p>
+      <p>Please contact us at <a className={classes.link} href='mailto:troutspotr@gmail.com'>troutspotr@gmail.com</a> if you have any questions, comments or requests regarding this Privacy Policy. </p>
     </div>)
 
     return this.renderTerm({ index, title, body })
-  },
+  }
 
   renderKeen (index) {
     let url = 'https://keen.io/privacy-policy/'
     return (<div key={index}>
       <p>This app uses Keen.io to track usage - not users.</p>
-      <p>Read their privacy policy here: <a className={classes.link} target='_blank' href={url}>{url}</a></p>
+      <p>Read their privacy policy here: <a className={classes.link} rel='noopener noreferrer' target='_blank' href={url}>{url}</a></p>
     </div>)
-  },
+  }
 
   renderDoNotTrack (index) {
     let url = 'https://allaboutdnt.com/'
     return (<div key={index}>
       <p>Our app honors your browsers’ Do Not Track settings.</p>
-      <p>Read more here: <a className={classes.link} target='_blank' href={url}>{url}</a></p>
+      <p>Read more here: <a className={classes.link} rel='noopener noreferrer' target='_blank' href={url}>{url}</a></p>
     </div>)
-  },
+  }
 
   renderButtonText () {
     let { isAgreementShown } = this.state
@@ -252,7 +244,7 @@ const PrivacyPolicy = React.createClass({
     }
 
     return 'Agree and Finish'
-  },
+  }
 
   renderButton () {
     let { preambleIsFinished } = this.state
@@ -261,9 +253,9 @@ const PrivacyPolicy = React.createClass({
     }
 
     return (<button className={classes.button} onClick={this.onButtonClick}>{this.renderButtonText()}</button>)
-  },
+  }
 
-  onButtonClick () {
+  onButtonClick = () => {
     let { preambleIsFinished, isAgreementShown } = this.state
     if (preambleIsFinished && isAgreementShown === false) {
       setTimeout(() => {
@@ -275,7 +267,7 @@ const PrivacyPolicy = React.createClass({
       let ellapsed = (new Date()) - this.time
       this.props.advance(ellapsed)
     }
-  },
+  }
 
   generateTerms () {
     let { isAgreementShown } = this.state
@@ -283,20 +275,20 @@ const PrivacyPolicy = React.createClass({
       return []
     }
 
-    return [this.renderCollection,
-      this.renderIpAddress,
-      this.renderCookies,
-      this.renderDataSecurity,
-      this.renderUseOfInformation,
-      this.renderDisclosureOfInformation,
-      this.renderPrivacyPolicyUpdates,
-      this.renderContact,
-      this.renderKeen,
-      this.renderDoNotTrack,
+    return [this.renderCollection.bind(this),
+      this.renderIpAddress.bind(this),
+      this.renderCookies.bind(this),
+      this.renderDataSecurity.bind(this),
+      this.renderUseOfInformation.bind(this),
+      this.renderDisclosureOfInformation.bind(this),
+      this.renderPrivacyPolicyUpdates.bind(this),
+      this.renderContact.bind(this),
+      this.renderKeen.bind(this),
+      this.renderDoNotTrack.bind(this),
       (index) => { return (<p key={index}>Last Updated: January 20, 2017</p>) }]
-  },
+  }
 
-  renderBody () {
+  renderBody = () => {
     let terms = this.generateTerms()
       .map((termGenerator, index) => {
         return termGenerator(index + 1)
@@ -311,7 +303,7 @@ const PrivacyPolicy = React.createClass({
       {this.renderButton()}
       <div className={classes.shieldDown}>hello lol</div>
     </div>)
-  },
+  }
 
   render () {
     return (
@@ -320,5 +312,10 @@ const PrivacyPolicy = React.createClass({
         {this.renderBody()}
       </div>)
   }
-})
+}
+
+PrivacyPolicy.propTypes = {
+  advance: PropTypes.func.isRequired
+}
+
 export default PrivacyPolicy

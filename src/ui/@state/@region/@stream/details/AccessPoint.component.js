@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classes from './Details.scss'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 /* eslint-disable camelcase */
@@ -10,29 +10,22 @@ export const crossingTypes = {
 }
 const DEFAULT_ZOOM = 16
 
-const AccessPointComponent = React.createClass({
-  propTypes: {
-    accessPoint: PropTypes.object.isRequired,
-    streamObject: PropTypes.object.isRequired,
-    selectedClass: PropTypes.string.isRequired,
-    defaultClass: PropTypes.string.isRequired,
-    isSelected: PropTypes.bool.isRequired,
-    isHovered: PropTypes.bool.isRequired,
-    location: PropTypes.object,
-
-    onHover: PropTypes.func.isRequired
-    // onSelect: PropTypes.func.isRequired
-  },
-
+class AccessPointComponent extends Component {
+  constructor () {
+    super()
+    this.onMouseLeave = this.onMouseLeave.bind(this)
+    this.onMouseEnter = this.onMouseEnter.bind(this)
+    this.onClick = this.onClick.bind(this)
+  }
   onMouseLeave (e) {
     e.stopPropagation()
     this.props.onHover(null)
-  },
+  }
 
   onMouseEnter (e) {
     e.stopPropagation()
     this.props.onHover(this.props.accessPoint)
-  },
+  }
 
   onClick (e) {
     e.preventDefault()
@@ -44,7 +37,7 @@ const AccessPointComponent = React.createClass({
     let hash = `#${this.props.accessPoint.properties.slug}`
     location.href = hash
     // return false
-  },
+  }
 
   openGoogleMaps (e) {
     // when it rains it pours. Because of the iOS add to start menu
@@ -54,13 +47,13 @@ const AccessPointComponent = React.createClass({
     window.open(address, '_blank')
     AnonymousAnalyzerApi.recordEvent('open_in_google_maps', { address })
     return false
-  },
+  }
 
   renderOpenInGoogleMapsLink (selectedAccessPoint) {
     let { centroid_latitude, centroid_longitude } = selectedAccessPoint.properties
     let url = `https://www.google.com/maps/@${centroid_latitude},${centroid_longitude},${DEFAULT_ZOOM}z`
     return (<span onClick={this.openGoogleMaps} className={classes.googleLink} href={url} target='_blank'>Google Maps</span>)
-  },
+  }
 
   mapAccessPoints (bridge, defaultBridgeClass, selectedBridgeClass, isSelected, isHovered) {
     // let selectedAccessPoint = this.props.selectedAccessPoint
@@ -77,15 +70,28 @@ const AccessPointComponent = React.createClass({
       className={listItemClass}
       onClick={this.onClick}
       onMouseEnter={this.onMouseEnter}
-      onMouseLeave={this.onMouseLeave} >
+      onMouseLeave={this.onMouseLeave}
+            >
       <span>{badgeElement}</span>
       <span className={textClass}>{street_name} {isSelected && this.renderOpenInGoogleMapsLink(bridge)}</span>
     </a>)
-  },
+  }
 
   render () {
     let { accessPoint, selectedClass, defaultClass, isSelected, isHovered } = this.props
     return this.mapAccessPoints(accessPoint, defaultClass, selectedClass, isSelected, isHovered)
   }
-})
+}
+
+AccessPointComponent.propTypes = {
+  accessPoint: PropTypes.object.isRequired,
+  selectedClass: PropTypes.string.isRequired,
+  defaultClass: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  isHovered: PropTypes.bool.isRequired,
+
+  onHover: PropTypes.func.isRequired
+  // onSelect: PropTypes.func.isRequired
+}
+
 export default AccessPointComponent

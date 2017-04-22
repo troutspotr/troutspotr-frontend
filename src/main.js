@@ -29,7 +29,7 @@ const store = configureStore(initialState)
 // Render Setup
 // ========================================================
 const MOUNT_NODE = document.getElementById('root')
-
+MOUNT_NODE.innerHTML = ''
 let render = () => {
   const routes = require('./ui/routes').default(store)
   ReactDOM.render(
@@ -57,8 +57,9 @@ if (__DEV__ || false) {
     // Development render functions
     const renderApp = render
     const renderError = (error) => {
-      const RedBox = require('redbox-react').default
-      ReactDOM.render(<RedBox error={error} />, MOUNT_NODE)
+      // const RedBox = require('redbox-react').default
+      // ReactDOM.render(<RedBox error={error} />, MOUNT_NODE)
+      console.log(error)
     }
 
     // Wrap render in try/catch

@@ -2,11 +2,12 @@
 @import "src/ui/styles/_variables";
 
 .footer {
-  // background-color: transparentize($blue, 0.8);
-
+  background-color: $messageBackground;
+  height: 100%;
   padding-left: $default-margin;
   padding-right: $default-margin;
   border-top: 1px solid transparentize($off-white, 0.7);
+  // backdrop-filter: blur(2px);
 }
 
 .menu {
@@ -14,31 +15,26 @@
   justify-content: space-between;
   touch-action: manipulation;
   max-width: 400px;
+  text-align: center;
+  height: 100%;
 }
 
 .item {
   align-self: center;
   width: 100px;
   text-align: center;
-  background: none !important;
   border: none;
-  padding: 0 !important;
-  font: inherit;
   font-size: 1.2em;
   color: $off-white;
-  height: 35px;
   transition: all 0.1s;
-  border-bottom: 0px solid #444;
   text-decoration: none;
-
-  /*border is optional*/
-
+  vertical-align: middle;
+  line-height: normal;
   cursor: pointer;
 }
 
 .help {
   composes: item;
-  padding-top: 7px !important;
 }
 
 .selected {

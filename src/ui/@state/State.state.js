@@ -5,15 +5,15 @@ import { keyBy } from 'lodash'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const MAP = 'map'
-export const LIST = 'list'
+// export const MAP = 'map'
+// export const LIST = 'list'
 export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const setViewToMap = createAction(REGION_SET_VIEW, x => MAP)
-export const setViewToList = createAction(REGION_SET_VIEW, x => LIST)
+// export const setViewToMap = createAction(REGION_SET_VIEW, x => MAP)
+// export const setViewToList = createAction(REGION_SET_VIEW, x => LIST)
 
 export const STATE_SET_STATE_DATA = 'STATE_SET_STATE_DATA'
 export const STATE_SET_STATE_LOADING = 'STATE_SET_STATE_LOADING'
@@ -62,6 +62,7 @@ const ACTION_HANDLERS = {
         roadTypes: payload.roadTypes,
         palTypes: payload.palTypes,
         streamCentroids: payload.streamCentroids,
+        roadTypesDictionary: payload.roadTypesDictionary,
         streamIdDictionary: keyBy(payload.streamCentroids, x => x.gid),
         slugDictionary: keyBy(payload.streamCentroids, x => x.slug),
         stateDataLoadingStatus: LOADING_CONSTANTS.IS_SUCCESS

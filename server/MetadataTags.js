@@ -3,7 +3,7 @@ const TWITTER = {
   twitter_seo_site: '@troutspotr',
   twitter_seo_title: 'Trout Spotr',
   twitter_seo_description: 'Find trout fishing spots!',
-  twitter_seo_image: 'https://troutspotr2.herokuapp.com/android-chrome-192x192.png',
+  twitter_seo_image: 'https://troutspotr2-wisconsin.herokuapp.com/android-chrome-192x192.png',
   twitter_seo_image_alt: 'Icon of Trout Spotr'
 }
 

@@ -23,7 +23,6 @@ export default class BaseApi {
       } catch (error) {
         console.log(error)
       }
-      
     }
 
     console.log(`${endpoint} not found in cache, retrieving`)

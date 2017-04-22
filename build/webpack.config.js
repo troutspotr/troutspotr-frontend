@@ -79,7 +79,11 @@ webpackConfig.plugins = [
     externals: [
       'data/v2/TableOfContents.topo.json',
       'data/v2/mn/mn.data.json',
-      'data/v2/wi/wi.data.json'
+      'data/v2/wi/wi.data.json',
+      'map-fonts/DIN Offc Pro Regular,Arial Unicode MS Regular/0-255.pbf',
+      'map-fonts/DIN Offc Pro Regular,Arial Unicode MS Regular/65024-65279.pbf',
+      'map-fonts/DIN Offc Pro Regular,Arial Unicode MS Regular/12288-12543.pbf',
+      'map-fonts/DIN Offc Pro Bold,Arial Unicode MS Bold/0-255.pbf'
     ],
     cacheMaps: [{
       match: function (requestUrl) {

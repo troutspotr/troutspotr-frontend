@@ -8,6 +8,10 @@ import { STREAM_ACCESS_POINTS_ACTIVE_LABEL_LAYER_ID,
   STREAM_ACCESS_POINTS_LETTER_ACTIVE_LAYER_ID,
   STREAM_ACCESS_POINTS_LETTER_QUITE_LAYER_ID } from '../filters/Filters.selectors'
 import { STREAM_ACCESS_POINTS_SOURCE_ID } from '../sources/Source.selectors'
+
+const ACCESS_POINT_STREET_NAME_TEXT_OFFSET = [1.0, 0.0]
+const ACCESS_POINT_ALPHABET_TEXT_OFFSET = [0.0, 0.15]
+
 export const AccessPointLabelActiveStyle = {
   'id': STREAM_ACCESS_POINTS_ACTIVE_LABEL_LAYER_ID,
   'type': 'symbol',
@@ -20,10 +24,7 @@ export const AccessPointLabelActiveStyle = {
     // 'text-ignore-placement': true,
     'text-anchor': 'left',
     'text-size': 12,
-    'text-offset': [
-      1.0,
-      0
-    ],
+    'text-offset': ACCESS_POINT_STREET_NAME_TEXT_OFFSET,
     'text-font': [
       'DIN Offc Pro Regular',
       'Arial Unicode MS Regular'
@@ -61,10 +62,7 @@ export const AccessPointLabelQuietStyle = {
     'text-field': '{street_name}',
     'text-anchor': 'left',
     'text-size': 12,
-    'text-offset': [
-      1.0,
-      0
-    ],
+    'text-offset': ACCESS_POINT_STREET_NAME_TEXT_OFFSET,
     'text-font': [
       'DIN Offc Pro Regular',
       'Arial Unicode MS Regular'
@@ -84,6 +82,7 @@ export const AccessPointLetterLabelActiveStyle = {
   'minzoom': 10,
   'layout': {
     'text-field': '{alphabetLetter}',
+    'text-offset': ACCESS_POINT_ALPHABET_TEXT_OFFSET,
     // 'text-allow-overlap': true,
     // 'text-ignore-placement': true,
     'text-anchor': 'center',
@@ -106,6 +105,7 @@ export const AccessPointLabelLetterQuietStyle = {
   'minzoom': 10,
   'layout': {
     'text-field': '{alphabetLetter}',
+    'text-offset': ACCESS_POINT_ALPHABET_TEXT_OFFSET,
     // 'text-allow-overlap': true,
     // 'text-ignore-placement': true,
     'text-anchor': 'center',

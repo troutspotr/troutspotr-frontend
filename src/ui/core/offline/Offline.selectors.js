@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-
+import { regionsDictionarySelector } from 'ui/core/Core.selectors'
 export const isOfflineSelector = state => {
   if (state == null) {
     return false
@@ -25,4 +25,38 @@ export const cachedEndpointsDictionarySelector = createSelector(
     }
 
     return keyBy(cachedEndpoints, x => x)
+  })
+
+export const cachedRegionsDictionary = createSelector(
+  [cachedEndpointsSelector, regionsDictionarySelector],
+  (endpoints, regionDictionary) => {
+    if (isEmpty(endpoints)) {
+      return EMPTY_DICTIONARY
+    }
+
+    if (isEmpty(regionDictionary)) {
+      return EMPTY_DICTIONARY
+    }
+
+    let cachedRegionDictionary = endpoints.reduce((dictionary, endpoint) => {
+      let tokens = endpoint.split('/')
+        .filter(x => x.length > 0)
+      if (tokens.length <= 3) {
+        return dictionary
+      }
+
+      let regionFileName = tokens[3]
+      let isTopojsonFile = regionFileName.indexOf('.topo.json') >= 0
+      if (isTopojsonFile === false) {
+        return dictionary
+      }
+      let regionName = regionFileName.split('.')[0]
+      // I believe we index by name.
+      let region = regionDictionary[regionName]
+      let regionId = region.properties.gid
+      dictionary[regionId] = region
+      return dictionary
+    }, {})
+
+    return cachedRegionDictionary
   })

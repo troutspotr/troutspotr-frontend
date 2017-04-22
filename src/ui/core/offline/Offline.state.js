@@ -53,7 +53,7 @@ const initialState = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [OFFLINE_UPDATE_CACHED_ENDPOINTS] : (state, { payload }) => {
-    let cachedEndpoints = payload
+    let { cachedEndpoints } = payload
     let newState = { ...state, ...{ cachedEndpoints } }
     return newState
   },

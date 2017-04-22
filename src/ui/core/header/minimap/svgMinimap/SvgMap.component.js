@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import * as d3 from 'd3-geo'
 import classes from './SvgMap.scss'
 import RegionComponent from './Region.component'
-import { isEmpty } from 'lodash'
+import { isEmpty, has } from 'lodash'
 import StreamCentroidComponent from './StreamCentroid.component'
 
 export const getProjectionFromFeature = (feature, { width, height, radius, buffer = 2 }) => {
@@ -91,9 +91,14 @@ class SvgMapComponent extends Component {
     }
 
     return selectedRegions.map((region, index) => {
+      let { isOffline, cachedRegions } = this.props
+      let isCached = isOffline && has(cachedRegions, region.properties.gid)
+      let isActive = isOffline === false || isCached
       return (<RegionComponent
         geoJson={region}
         isSelected
+        isCached={isCached}
+        isActive={isActive}
         key={region.properties.gid}
         isLoading={false}
         pathGenerator={this.pathGenerator}
@@ -103,28 +108,47 @@ class SvgMapComponent extends Component {
     })
   }
 
+  createRegionComponent (region, index, isCached, isActive, isSelected, isLoading) {
+    return (<RegionComponent
+      geoJson={region}
+      isSelected={isSelected}
+      isLoading={isLoading}
+      isCached={isCached}
+      isActive={isActive}
+      key={index}
+      pathGenerator={this.pathGenerator}
+      stateName={region.properties.state_gid.toString()}
+      selectRegion={this.props.selectRegion}
+            />)
+  }
+
   renderRegions () {
     let { regionsGeoJson } = this.props
+    let { isOffline, cachedRegions } = this.props
+    let orderDictionary = {
+      top: [],
+      bottom: []
+    }
 
-    let paths = regionsGeoJson.features.map((region, index) => {
-      // SORRY! I have no idea why this is, but preact won't add
-      // sythnthetic events to the first item. we add 1 to it
-      // because it makes it work. SORRY!
+    let twoPaths = regionsGeoJson.features.reduce((dictionary, region, index) => {
       let preactIndexHack = index + 1
-      return (
-        <RegionComponent
-          geoJson={region}
-          isSelected={false}
-          isLoading={false}
-          key={preactIndexHack}
-          pathGenerator={this.pathGenerator}
-          stateName={region.properties.state_gid.toString()}
-          selectRegion={this.props.selectRegion}
-        />)
-    })
-    return (<g className={classes.regions}>
-      {paths}
-    </g>)
+      let isCached = isOffline && has(cachedRegions, region.properties.gid)
+      let isActive = isOffline === false || isCached
+      let component = this.createRegionComponent(region, preactIndexHack, isCached, isActive, false, false)
+      if (isCached && isActive) {
+        dictionary.top.push(component)
+      } else {
+        dictionary.bottom.push(component)
+      }
+
+      return dictionary
+    }, orderDictionary)
+
+    return (
+      <g className={classes.regions}>
+        {twoPaths.bottom}
+        {twoPaths.top}
+      </g>)
   }
 
   renderStreamCentroids () {
@@ -213,8 +237,9 @@ SvgMapComponent.propTypes = {
   isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
   // location: PropTypes.object.isRequired,
   selectedStreamCentroid: PropTypes.object,
-
-  selectRegion: PropTypes.func.isRequired
+  cachedRegions: PropTypes.object.isRequired,
+  selectRegion: PropTypes.func.isRequired,
+  isOffline: PropTypes.bool.isRequired
 }
 
 export default SvgMapComponent

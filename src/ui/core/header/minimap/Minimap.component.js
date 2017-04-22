@@ -68,6 +68,10 @@ class MinimapComponent extends Component {
       return true
     }
 
+    if (nextProps.isOffline !== this.props.isOffline) {
+      return true
+    }
+
     return false
   }
 
@@ -215,6 +219,8 @@ class MinimapComponent extends Component {
             height={MINIMAP_WIDTH}
             isStreamCentroidsDisplayed={this.props.isStreamCentroidsDisplayed}
             selectRegion={this.selectRegion}
+            cachedRegions={this.props.cachedRegions}
+            isOffline={this.props.isOffline}
                                  />}
         </div>
 
@@ -237,7 +243,8 @@ MinimapComponent.propTypes = {
   selectedStreamCentroid: PropTypes.object,
   getIsOpen: PropTypes.func.isRequired,
   isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
-
+  cachedRegions: PropTypes.object.isRequired,
+  isOffline: PropTypes.bool.isRequired,
   expand: PropTypes.func.isRequired,
   fetchTableOfContents: PropTypes.func.isRequired
 }

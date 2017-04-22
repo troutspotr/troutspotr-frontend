@@ -7,6 +7,7 @@ import { isRootPageSelector } from 'ui/Location.selectors'
 import { fetchTableOfContents } from 'ui/core/Core.state'
 import * as coreSelectors from 'ui/core/Core.selectors'
 import * as stateSelectors from 'ui/@state/State.selectors'
+import * as offlineSelectors from 'ui/core/offline/Offline.selectors'
 const mapDispatchToProps = {
   expand: (expanded) => isExpaned(expanded),
   fetchTableOfContents: () => fetchTableOfContents()
@@ -25,7 +26,9 @@ const mapStateToProps = (state) => {
     selectedStreamCentroid: stateSelectors.displayedStreamCentroidDataSelector(state),
     tableOfContentsLoadingStatus: coreSelectors.tableOfContentsLoadingStatusSelector(state),
     getIsOpen: getIsOpenSelector(state),
-    isStreamCentroidsDisplayed: isStreamCentroidsDisplayedSelector(state)
+    isStreamCentroidsDisplayed: isStreamCentroidsDisplayedSelector(state),
+    isOffline: offlineSelectors.isOfflineSelector(state),
+    cachedRegions: offlineSelectors.cachedRegionsDictionary(state)
   }
   return props
 }

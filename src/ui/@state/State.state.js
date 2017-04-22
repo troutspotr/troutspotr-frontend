@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import StateApi from 'api/StateApi'
+import { updateCachedEndpoints } from 'ui/core/offline/Offline.state'
 import { keyBy } from 'lodash'
 // ------------------------------------
 // Constants
@@ -30,10 +31,10 @@ export const fetchStateData = (stateName) => {
       if (stateName == null) {
         throw new Error('stateName cannot be null')
       }
-
       let gettingStateData = StateApi.getStateData(stateName)
       let [stateData] = await Promise.all([gettingStateData])
       dispatch(setStateData(stateData))
+      dispatch(updateCachedEndpoints())
     } catch (error) {
       console.log(error)
       dispatch(setStateDataFailed())

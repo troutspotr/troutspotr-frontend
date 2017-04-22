@@ -20,6 +20,15 @@ export default class BaseApi {
     }
   }
 
+  async getAllCachedEndpoints () {
+    if (this.cache == null) {
+      return []
+    }
+
+    let keys = await this.cache.keys()
+    return keys
+  }
+
   tryGetFromCache (endpoint) {
     console.log(`trying to get ${endpoint} from the cache...`)
     if (this.cache == null) {

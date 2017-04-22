@@ -1,8 +1,13 @@
 import React, { PropTypes } from 'react'
 import classes from './Header.scss'
 const HeaderLayout = (props) => {
+  let headerContainerClass = props.isOffline
+    ? classes.isOffline
+    : classes.headerContainer
+
   return (
-    <div className={classes.headerContainer} role='navigation'>
+    <div className={headerContainerClass} role='navigation'>
+      <div className={classes.offlineIndicator} />
       <div className={classes.header}>
         <div className={classes.backButtonContainer}>{props.backButton}</div>
         <div className={classes.details}>
@@ -25,7 +30,8 @@ HeaderLayout.propTypes = {
   locationSubtitle: PropTypes.element,
   title: PropTypes.element,
   minimap: PropTypes.element,
-  search: PropTypes.element
+  search: PropTypes.element,
+  isOffline: PropTypes.bool.isRequired
 }
 
 export default HeaderLayout

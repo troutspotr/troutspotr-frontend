@@ -67,6 +67,7 @@ class HeaderContainer extends Component {
         backButton={this.renderBackButton()}
         locationSubtitle={this.renderLocationSubtitle()}
         title={this.renderTitle()}
+        isOffline={this.props.isOffline}
         minimap={this.renderMinimap()}
         search={this.renderSearch()}
       />
@@ -81,7 +82,8 @@ HeaderContainer.propTypes = {
   isSearchVisible: PropTypes.bool.isRequired,
   isIconVisible: PropTypes.bool.isRequired,
   params: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  isOffline: PropTypes.bool.isRequired
 }
 
 export default HeaderContainer

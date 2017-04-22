@@ -81,8 +81,8 @@ const BaseStyle = {
     'delay': 0
   },
   'sprite': 'mapbox://sprites/andest01/civsy0pgb00022kkxcbqtcogh',
-  // 'glyphs': '/map-fonts/{fontstack}/{range}.pbf',
-  'glyphs': 'mapbox://fonts/andest01/{fontstack}/{range}.pbf',
+  'glyphs': '/map-fonts/{fontstack}/{range}.pbf',
+  // 'glyphs': 'mapbox://fonts/andest01/{fontstack}/{range}.pbf',
   'layers': [
     {
       'id': 'background',
@@ -5918,7 +5918,7 @@ const BaseStyle = {
         'text-max-angle': 38,
         'symbol-spacing': 250,
         'text-font': [
-          'DIN Offc Pro Medium',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-padding': 1,
@@ -5984,7 +5984,7 @@ const BaseStyle = {
         'text-max-angle': 38,
         'symbol-spacing': 250,
         'text-font': [
-          'DIN Offc Pro Medium',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-padding': 2,
@@ -6239,7 +6239,7 @@ const BaseStyle = {
         'text-max-angle': 38,
         'symbol-spacing': 250,
         'text-font': [
-          'DIN Offc Pro Medium',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-padding': 2,
@@ -6305,7 +6305,7 @@ const BaseStyle = {
         'text-max-angle': 38,
         'symbol-spacing': 250,
         'text-font': [
-          'DIN Offc Pro Medium',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-padding': 2,
@@ -6353,7 +6353,7 @@ const BaseStyle = {
       'layout': {
         'text-field': '{name_en}',
         'text-font': [
-          'DIN Offc Pro Italic',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-max-width': 7,
@@ -6424,7 +6424,7 @@ const BaseStyle = {
         'text-max-angle': 38,
         'symbol-spacing': 250,
         'text-font': [
-          'DIN Offc Pro Medium',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-padding': 2,
@@ -6502,7 +6502,7 @@ const BaseStyle = {
         'text-max-angle': 38,
         'symbol-spacing': 250,
         'text-font': [
-          'DIN Offc Pro Medium',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-padding': 2,
@@ -6561,7 +6561,7 @@ const BaseStyle = {
         },
         'symbol-spacing': 250,
         'text-font': [
-          'DIN Offc Pro Medium',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-padding': 2,
@@ -6871,7 +6871,7 @@ const BaseStyle = {
             [
               12,
               [
-                'DIN Offc Pro Medium',
+                'DIN Offc Pro Regular',
                 'Arial Unicode MS Regular'
               ]
             ]
@@ -7019,7 +7019,7 @@ const BaseStyle = {
             [
               8,
               [
-                'DIN Offc Pro Medium',
+                'DIN Offc Pro Regular',
                 'Arial Unicode MS Regular'
               ]
             ]
@@ -7132,7 +7132,7 @@ const BaseStyle = {
             [
               8,
               [
-                'DIN Offc Pro Medium',
+                'DIN Offc Pro Regular',
                 'Arial Unicode MS Regular'
               ]
             ]
@@ -7219,7 +7219,7 @@ const BaseStyle = {
             [
               8,
               [
-                'DIN Offc Pro Medium',
+                'DIN Offc Pro Regular',
                 'Arial Unicode MS Regular'
               ]
             ]
@@ -7315,7 +7315,7 @@ const BaseStyle = {
             [
               8,
               [
-                'DIN Offc Pro Medium',
+                'DIN Offc Pro Regular',
                 'Arial Unicode MS Regular'
               ]
             ]
@@ -7447,7 +7447,7 @@ const BaseStyle = {
             [
               8,
               [
-                'DIN Offc Pro Medium',
+                'DIN Offc Pro Regular',
                 'Arial Unicode MS Regular'
               ]
             ]
@@ -7586,7 +7586,7 @@ const BaseStyle = {
           ]
         },
         'text-font': [
-          'DIN Offc Pro Italic',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'symbol-placement': 'line',
@@ -7629,7 +7629,7 @@ const BaseStyle = {
         'text-letter-spacing': 0.1,
         'text-line-height': 1.5,
         'text-font': [
-          'DIN Offc Pro Italic',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-size': {
@@ -7693,7 +7693,7 @@ const BaseStyle = {
         },
         'symbol-spacing': 250,
         'text-font': [
-          'DIN Offc Pro Italic',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'symbol-placement': 'line',
@@ -7737,7 +7737,7 @@ const BaseStyle = {
         'text-letter-spacing': 0.15,
         'text-line-height': 1.5,
         'text-font': [
-          'DIN Offc Pro Italic',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-size': {
@@ -7790,7 +7790,7 @@ const BaseStyle = {
         'text-line-height': 1.1,
         'symbol-placement': 'line',
         'text-font': [
-          'DIN Offc Pro Italic',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-size': {
@@ -7843,7 +7843,7 @@ const BaseStyle = {
         'text-letter-spacing': 0.25,
         'text-line-height': 1.5,
         'text-font': [
-          'DIN Offc Pro Italic',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-size': {
@@ -8112,7 +8112,7 @@ const BaseStyle = {
         'text-field': '{name_en}',
         'text-max-width': 6,
         'text-font': [
-          'DIN Offc Pro Medium',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-size': {
@@ -8168,7 +8168,7 @@ const BaseStyle = {
         },
         'text-max-width': 6,
         'text-font': [
-          'DIN Offc Pro Medium',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-size': {
@@ -8224,7 +8224,7 @@ const BaseStyle = {
           ]
         },
         'text-font': [
-          'DIN Offc Pro Medium',
+          'DIN Offc Pro Regular',
           'Arial Unicode MS Regular'
         ],
         'text-size': {

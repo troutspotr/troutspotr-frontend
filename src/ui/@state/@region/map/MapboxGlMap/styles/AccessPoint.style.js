@@ -90,7 +90,7 @@ export const AccessPointLetterLabelActiveStyle = {
     'text-size': 10,
     'text-font': [
       'DIN Offc Pro Bold',
-      'Arial Unicode MS Regular'
+      'Arial Unicode MS Bold'
     ]
   },
   'paint': {
@@ -112,7 +112,7 @@ export const AccessPointLabelLetterQuietStyle = {
     'text-size': 10,
     'text-font': [
       'DIN Offc Pro Bold',
-      'Arial Unicode MS Regular'
+      'Arial Unicode MS Bold'
     ]
   },
   'paint': {

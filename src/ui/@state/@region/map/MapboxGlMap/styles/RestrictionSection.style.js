@@ -41,16 +41,13 @@ export const RestrictionSectionActiveStyle = {
       ]
     }, // colors.RestrictionYellow
     'line-color': {
-      property: 'restriction_id',
+      property: 'color',
       type: 'categorical',
       stops: [
-        [0, colors.RestrictionYellow],
-        [7, '#FF4E10'],
-        [8, colors.RestrictionYellow],
-        [17, colors.RestrictionYellow],
-        [18, colors.StreamBlue],
-        [19, colors.RestrictionYellow],
-        [100, colors.RestrictionYellow]
+        ['red', colors.Red],
+        ['yellow', colors.RestrictionYellow],
+        ['white', colors.White],
+        ['blue', colors.StreamBlue]
       ]
 
     },

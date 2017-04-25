@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import classes from './TermsOfAgreement.scss'
+import classes from './Agreement.scss'
 
 class IntroComponent extends Component {
   componentDidMount () {

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import classes from './TermsOfAgreement.scss'
+import classes from './Agreement.scss'
 import TermsOfService from './TermsOfService.component'
 import Intro from './Intro.component'
 import PrivacyPolicy from './PrivacyPolicy.component'

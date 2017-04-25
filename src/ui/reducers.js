@@ -7,6 +7,8 @@ import mapboxModuleReducer from './core/MapboxModule.state'
 import mapReducer from './@state/@region/map/Map.state'
 import stateReducer from './@state/State.state'
 import regionReducer from './@state/@region/Region.state'
+import offlineReducer from './core/offline/Offline.state'
+console.log('offline', offlineReducer)
 // console.log(locationReducer, minimapReducer)
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -18,6 +20,7 @@ export const makeRootReducer = (asyncReducers) => {
     map: mapReducer,
     state: stateReducer,
     region: regionReducer,
+    offline: offlineReducer,
     ...asyncReducers
   })
 }

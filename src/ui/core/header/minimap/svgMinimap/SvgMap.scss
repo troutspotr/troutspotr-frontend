@@ -21,7 +21,7 @@
   }
 
   g:hover {
-    fill: transparentize($gray, 0.6);
+    fill: transparentize($gray, 0);
     stroke-width: 0.4px;
     cursor: pointer;
   }
@@ -58,6 +58,22 @@
   }
 
   composes: polygon;
+}
+
+.cachedRegion {
+  // fill: transparentize($green, 0.8)
+  fill: transparentize($gray, 0.1);
+}
+
+.inactiveRegion {
+  stroke: $gray;
+  fill: transparentize($gray, 0.9);
+  cursor: default;
+  g:hover {
+    fill: inherit;
+    stroke-width: inherit;
+    cursor: inherit;
+  }
 }
 
 .expand from '../Minimap.scss' {

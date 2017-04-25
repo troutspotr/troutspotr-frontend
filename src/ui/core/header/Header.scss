@@ -6,11 +6,12 @@
 $fontSize: 12px;
 $largeFontSize: 1.25em;
 $smallFontSize: 0.85em;
+$cautionaryYellow: transparentize($yellow, 0.8);
 
 .headerContainer {
   // height: $header-height;
   background-color: $messageBackground;
-
+  transition: background-color 0.3s ease;
   // BLURRY KIRBY FIX. I don't know why, but iOS safari
   // gets blurry unless the header is set to fixed position.
   height: $header-height;
@@ -19,11 +20,66 @@ $smallFontSize: 0.85em;
 
   // top: 0px;
   z-index: 100;
-  border-bottom: 1px solid transparentize($off-white, 0.7);
+  border-bottom: 1px solid transparentize($off-white, 0.4);
 
   // overflow: hidden;
   font-size: $fontSize;
   // backdrop-filter: blur(2px);
+}
+
+.isOffline {
+  composes: headerContainer;
+  transition: background-color 0.3s ease;
+  animation: highlight 12s linear infinite;
+  .offlineIndicator {
+    z-index: -100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+    background-size: 30px 30px;
+    background-image: linear-gradient(
+      45deg, 
+      $cautionaryYellow  25%, 
+      transparent       25%, 
+      transparent       50%, 
+      $cautionaryYellow  50%, 
+      $cautionaryYellow  75%, 
+      transparent       75%, 
+      transparent
+    );  
+    animation: barberpole 2s linear infinite;
+  }
+}
+
+@keyframes barberpole {
+  from {
+    background-position: 0 0;
+
+  }
+  to   {
+    background-position: 60px 30px;
+  }
+}
+
+@keyframes highlight {
+  0% {
+    background-color: $messageBackground;
+  }
+
+  40% {
+    background-color: $messageBackground;
+  }
+
+  45%   {
+    background-color: $cautionaryYellow;
+  }
+  50% {
+    background-color: $messageBackground;
+  }
 }
 
 .header {

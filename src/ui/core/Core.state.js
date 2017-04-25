@@ -3,6 +3,7 @@ import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import TableOfContentsApi from 'api/TableOfContentsApi.js'
 import { keyBy } from 'lodash'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
+import { updateCachedEndpoints } from 'ui/core/offline/Offline.state'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -50,8 +51,8 @@ export const fetchTableOfContents = () => {
     try {
       let gettingTableOfContents = TableOfContentsApi.getTableOfContents()
       let [tableOfContents] = await Promise.all([gettingTableOfContents])
-      // console.log(tableOfContents)
       dispatch(setTableOfContents(tableOfContents))
+      dispatch(updateCachedEndpoints())
     } catch (error) {
       console.log(error)
       dispatch(setTableOfContentsFailed())

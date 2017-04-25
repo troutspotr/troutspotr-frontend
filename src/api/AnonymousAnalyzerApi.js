@@ -71,5 +71,5 @@ class AnonymouseAnalyzerApi {
   }
 }
 
-export default new AnonymouseAnalyzerApi()
+export default new AnonymouseAnalyzerApi(null)
 

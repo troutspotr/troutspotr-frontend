@@ -13,6 +13,7 @@ import { isRootPageSelector, isStatePageSelector } from 'ui/Location.selectors'
 import { withRouter } from 'react-router'
 import NoResultsFoundOverlayContainer from './noResultsFoundOverlay/NoResultsFoundOverlay.container'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
+import OfflineContainer from 'ui/core/offline/Offline.container'
 class CoreLayoutContainer extends Component {
   // only show the footer if they've selected a region.
   isFooterVisible () {
@@ -43,6 +44,7 @@ class CoreLayoutContainer extends Component {
     let isFooterVisible = this.isFooterVisible()
     return (
       <div className={classes.coreLayout}>
+        <OfflineContainer />
         {this.props.hasAgreedToTerms && <div className={classes.headerLayout}>
           <Header
             params={this.props.params}

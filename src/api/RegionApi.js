@@ -13,11 +13,31 @@ export class RegionApi extends BaseApi {
     if (regionName == null) {
       return Promise.reject('region name was not specificed')
     }
-    let endpoint = buildRegionEndpoint(stateName, regionName)
-    let regionGeoData = await this.get(endpoint)
-    let stateData = await StateApi.getStateData(stateName)
-    let transformedData = transformGeo(regionGeoData, stateData)
-    return transformedData
+    try {
+      let regionGeoData = {}
+      let endpoint = buildRegionEndpoint(stateName, regionName)
+      try {
+        regionGeoData = await this.get(endpoint)
+        // sometimes the cache may send us bad data.
+        // see if it's valid.
+      } catch (exception) {
+        throw new Error('Could not retrieve region ', regionName)
+      }
+
+      let stateData = await StateApi.getStateData(stateName)
+
+      let transformedData = {}
+      try {
+        transformedData = transformGeo(regionGeoData, stateData)
+      } catch (error) {
+        // Yes, we're going to super-murder their cache.
+        this.clearCache()
+      }
+      return transformedData
+    } catch (error) {
+      console.log(error)
+      throw new Error('Could not load region.')
+    }
   }
 }
 

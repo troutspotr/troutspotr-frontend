@@ -26,7 +26,7 @@ const createServer = function (dictionary, app) {
       {
         from: /@/,
         to: function (context) {
-          let containsImage = context.parsedUrl.pathname.indexOf('.png') >= 10
+          let containsImage = context.parsedUrl.pathname.indexOf('.jpg') >= 10
           if (containsImage) {
             return context.parsedUrl.pathname
           }

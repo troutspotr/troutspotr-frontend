@@ -2,6 +2,7 @@ import { drawStreamToCanvas, setUpCanvas, drawBackground, drawRingToCanvas } fro
 import * as colors from '../src/ui/core/Colors'
 var Promise = require('bluebird')
 var fs = Promise.promisifyAll(require('fs'))
+var sharp = require('sharp')
 
 import Canvas from 'canvas'
 const WIDTH = 300
@@ -35,9 +36,11 @@ const saveAsPng = (stream, directory, width = WIDTH, height = HEIGHT) => {
   drawStreamToCanvas(context, stream, DIMENSIONS, scaleWidthThicker)
   drawRingToCanvas(context, stream, DIMENSIONS, scaleWidthThicker)
   let buf = canvas.toBuffer()
-  let fileName = `${directory}/${stream.stream.properties.slug}.png`
+  let fileName = `${directory}/${stream.stream.properties.slug}.jpg`
   console.log('saving ' + fileName)
-  return fs.writeFile(fileName, buf)
+  sharp(buf)
+    .toFile(fileName)
+  // return fs.writeFile(fileName, buf)
 }
 
 export default saveAsPng

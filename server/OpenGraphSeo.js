@@ -10,7 +10,7 @@ const getItems = function (url) {
   }
   var description = getDescriptionFromUrl(url)
   target.og_title = description.name
-  target.og_url = 'https://troutspotr2-wisconsin.herokuapp.com' + url.path
+  target.og_url = 'https://2017.troutspotr.com' + url.path
   target.og_description = description.description
   target.og_image = description.imageUrl
   return target

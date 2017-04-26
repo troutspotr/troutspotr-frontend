@@ -37,17 +37,29 @@ class SneezeGuardComponent extends Component {
       arcCompressionRatio: 0.90,
       rotatePhase: Math.PI / 2
     }
+    this.fireRenderToCanvas(this.props.streamObject)
+  }
+
+  renderToCanvas (streamObject) {
+    if (window.requestIdleCallback != null) {
+      window.requestIdleCallback(() => {
+        Micromap.drawStreamToCanvas(this.canvasContext, streamObject, this.dimensions)
+      })
+      return
+    }
 
     // it's polite to save our canvas style here.
     // draw a big rectangle to clear our canvas.
     // this.canvasContext.fillStyle = colors.MoodyGray
     // this.canvasContext.save()
-    let offset = (Math.random() * 5) + 20
-    setTimeout(() => this.fireRenderToCanvas(this.props.streamObject), offset)
+    let offset = (Math.random() * 200) + 80
+    setTimeout(() => {
+      Micromap.drawStreamToCanvas(this.canvasContext, streamObject, this.dimensions)
+    }, offset)
   }
 
   fireRenderToCanvas (streamObject) {
-    Micromap.drawStreamToCanvas(this.canvasContext, streamObject, this.dimensions)
+    this.renderToCanvas(streamObject)
   }
 
   componentWillUnmount () {

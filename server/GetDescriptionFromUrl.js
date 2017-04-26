@@ -6,11 +6,10 @@ const getDescriptionFromUrl = function (routeData) {
   var seoDescription = {
     name: 'Trout Spotr',
     description: 'Find safe, legal trout fishing.',
-    imageUrl: 'https://troutspotr2-wisconsin.herokuapp.com/android-chrome-192x192.png',
-    url: 'https://troutspotr2-wisconsin.herokuapp.com',
-    parentSite: 'https://troutspotr2-wisconsin.herokuapp.com'
+    imageUrl: 'https://2017.troutspotr.com/android-chrome-192x192.png',
+    url: 'https://2017.troutspotr.com',
+    parentSite: 'https://2017.troutspotr.com'
   }
-
   if (_.isEmpty(routeData)) {
     return seoDescription
   }
@@ -56,8 +55,10 @@ const getStreamDescription = function (route, tags) {
 
   var publicLengthSentence = Math.round(publicLength) + ' miles of publicly fishable land.'
   tags.name = `${route.streamData.stream.properties.name}` // 'Winnebago Creek, Driftless region, Minnesota'
+  console.log(_.keys(route), (route.state))
+  let stateAbbreviation = _.toUpper(route.state)
   tags.description =
-  `${route.streamData.stream.properties.name} has ${bridgeSentence} ${publicLengthSentence} ${_.capitalize(route.region)} region, Minnesota.`
+  `${route.streamData.stream.properties.name} has ${bridgeSentence} ${publicLengthSentence} ${_.capitalize(route.region)} region, ${stateAbbreviation}.`
   tags.imageUrl = getImageUrl(route, tags.parentSite)
   return tags
 }

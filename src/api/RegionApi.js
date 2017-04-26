@@ -28,7 +28,7 @@ export class RegionApi extends BaseApi {
 
       let transformedData = {}
       try {
-        transformedData = transformGeo(regionGeoData, stateData)
+        transformedData = await transformGeo(regionGeoData, stateData)
       } catch (error) {
         // Yes, we're going to super-murder their cache.
         this.clearCache()

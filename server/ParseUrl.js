@@ -52,6 +52,7 @@ const getRoute = function (path) {
   if (items.length >= 1) {
     result.state = items[0]
   }
+
   return result
 }
 

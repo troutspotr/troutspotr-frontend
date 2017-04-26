@@ -10,9 +10,9 @@ export default function () {
 
     console.log('calling endpoing')
     GeoApi.getStateStreamData(ev.data)
-      .then(topojsonObject => {
+      .then(async topojsonObject => {
         console.log('got results')
-        let results = transformGeo(topojsonObject)
+        let results = await transformGeo(topojsonObject)
         console.log('got even more results results')
         let string = JSON.stringify(results)
         self.postMessage(string)

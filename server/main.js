@@ -9,6 +9,7 @@ const paths = config.utils_paths
 var compress = require('compression')
 const createSeoInterceptor = require('./Interceptor')
 const GetSiteDictionary = require('./GetSiteDictionary')
+const _ = require('lodash')
 app.use(compress())
 
 const createServer = function (dictionary, app) {
@@ -79,7 +80,19 @@ const createServer = function (dictionary, app) {
   }
 }
 
-var siteDictionary = GetSiteDictionary()
-createServer(siteDictionary, app)
+var startTheMusic = async () => {
+  var siteDictionary = await GetSiteDictionary()
+  console.log('starting this dance')
+  console.log(siteDictionary)
+  let states = _.keys(siteDictionary)
+  if (states.length !== 2) {
+    return Promise.reject('something bad happened - not enough states. Found ' + states.length)
+  }
+
+  console.log('states: ', _.keys(siteDictionary))
+  createServer(siteDictionary, app)
+}
+
+startTheMusic()
 
 module.exports = app

@@ -19,11 +19,11 @@ function getDirectories (srcpath) {
     .filter(file => fs.statSync(path.join(srcpath, file)).isDirectory())
 }
 
-const makeRegionDictionary = (stateName, regionName, formattedStateData) => {
+const makeRegionDictionary = async (stateName, regionName, formattedStateData) => {
   var endpoint = buildRegionEndpoint(stateName, regionName)
   var bin = fs.readFileSync(endpoint)
   var json = JSON.parse(bin)
-  var regionDictionary = transformGeo(json, formattedStateData)
+  var regionDictionary = await transformGeo(json, formattedStateData)
   var streamObjects = _.values(regionDictionary.streamDictionary)
   var slugDictionary = _.keyBy(streamObjects, 'stream.properties.slug')
   return {
@@ -32,37 +32,39 @@ const makeRegionDictionary = (stateName, regionName, formattedStateData) => {
   }
 }
 
-console.log('getting directories of all states')
 const stateNames = getDirectories('src/static/data/v2/')
-console.log('state names: ', stateNames)
+var dictionary = {}
+var putStuffIntoTheDictionary = async () => {
+  for (var i = 0; i < stateNames.length; i++) {
+    let stateName = stateNames[i]
+    console.log(`CONSTRUCTING DATA FOR STATE NAMED ${stateName}`)
+    var stateEndpoint = buildStateEndpoint(stateName)
+    var stateJson = JSON.parse(fs.readFileSync(stateEndpoint, 'utf8'))
+    var formattedData = formatStateData(stateJson)
 
-var dictionary = stateNames.reduce((dictionary, stateName) => {
-  console.log('doin thangs', stateName)
-  var stateEndpoint = buildStateEndpoint(stateName)
-  var stateJson = JSON.parse(fs.readFileSync(stateEndpoint, 'utf8'))
-  console.log('did some more thangs', stateJson == null)
-  var formattedData = formatStateData(stateJson)
+    var regionNames = _.keys(stateJson.regionIndex)
 
-  var regionNames = _.keys(stateJson.regionIndex)
-  console.log('got yo regions ', regionNames)
+    var regions = await Promise.all(regionNames.map(regionName => {
+      return makeRegionDictionary(stateName, regionName, formattedData)
+    }))
 
-  var regions = regionNames.map(regionName => {
-    return makeRegionDictionary(stateName, regionName, formattedData)
-  })
+    console.log('done.')
 
-  console.log('almost done')
-  var keyedRegions = _.keyBy(regions, 'id')
-  dictionary[stateName] = {
-    data: formattedData,
-    regions: keyedRegions
+    var keyedRegions = _.keyBy(regions, 'id')
+    dictionary[stateName] = {
+      data: formattedData,
+      regions: keyedRegions
+    }
   }
 
   return dictionary
-}, {})
+}
 
-const getSiteDictionary = () => {
-  console.log('getting site dictionary')
-  return dictionary
+const getSiteDictionary = async () => {
+  return await putStuffIntoTheDictionary()
+  // return new Promise((resolve, reject) => {
+  //   resolve(dictionary)
+  // })
 }
 
 module.exports = getSiteDictionary

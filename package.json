@@ -4,8 +4,8 @@
   "description": "Trout Maps",
   "main": "index.js",
   "engines": {
-    "node": ">=5.0.0",
-    "npm": "^3.10.0"
+    "node": "^7.9.0",
+    "npm": "^4.2.0"
   },
   "scripts": {
     "clean": "rimraf dist",

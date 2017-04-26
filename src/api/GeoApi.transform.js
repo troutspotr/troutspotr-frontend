@@ -1,3 +1,4 @@
+'use strict'
 /* eslint-disable camelcase */
 const groupBy = require('lodash/groupBy')
 const keyBy = require('lodash/keyBy')
@@ -5,12 +6,14 @@ const valuesIn = require('lodash/valuesIn')
 const has = require('lodash/has')
 const kebabCase = require('lodash/kebabCase')
 const topojson = require('topojson-client')
+const { throttleReduce } = require('./Throttle')
+
 var now = new Date()
 // import * as topojson from 'topojson-client'
 // import { groupBy, keyBy, valuesIn, has, kebabCase } from 'lodash'
 const MINIMUM_LENGTH_MILES = 0.05
-const transformGeo = (topojsonObject, stateData) => {
-  var geoJsonObjects = decompress(topojsonObject, stateData)
+const transformGeo = async (topojsonObject, stateData) => {
+  var geoJsonObjects = await decompress(topojsonObject, stateData)
   var dictionaries = createStreamDictionaries(geoJsonObjects)
   var streamDictionary = createStreamDictionary(geoJsonObjects, dictionaries)
     // update with tributaries.
@@ -38,7 +41,9 @@ const transformGeo = (topojsonObject, stateData) => {
     { streamDictionary: streamDictionary },
     geoJsonObjects
   )
-  return t
+  return new Promise((resolve) => {
+    resolve(t)
+  })
 }
 
 const createStreamDictionaries = (geoJsonObjects) => {
@@ -115,17 +120,36 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
   return streamDictionary
 }
 
-const decompress = (topojsonObject, stateData) => {
-  var bounds = topojson.feature(topojsonObject, topojsonObject.objects.boundingCircle)
-  var dictionary = {
-    trout_stream_section: topojson.feature(topojsonObject, topojsonObject.objects.troutSection),
-    restriction_section: topojson.feature(topojsonObject, topojsonObject.objects.restrictionSection),
-    streamProperties: topojson.feature(topojsonObject, topojsonObject.objects.stream),
-    pal_routes: topojson.feature(topojsonObject, topojsonObject.objects.palSection),
-    pal: topojson.feature(topojsonObject, topojsonObject.objects.pal),
-    boundingCircle: bounds
-  }
+const decompressTopojson = async (topojson, topojsonObject) => {
+  var ops = [
+    topojson.feature.bind(null, topojsonObject, topojsonObject.objects.troutSection),
+    topojson.feature.bind(null, topojsonObject, topojsonObject.objects.restrictionSection),
+    topojson.feature.bind(null, topojsonObject, topojsonObject.objects.stream),
+    topojson.feature.bind(null, topojsonObject, topojsonObject.objects.palSection),
+    topojson.feature.bind(null, topojsonObject, topojsonObject.objects.pal),
+    topojson.feature.bind(null, topojsonObject, topojsonObject.objects.boundingCircle)
+  ]
+  let [trout_stream_section,
+    restriction_section,
+    streamProperties,
+    pal_routes,
+    pal,
+    boundingCircle
+  ] = await throttleReduce(ops)
 
+  let dictionary = {
+    trout_stream_section,
+    restriction_section,
+    streamProperties,
+    pal_routes,
+    pal,
+    boundingCircle
+  }
+  return dictionary
+}
+
+const decompress = async (topojsonObject, stateData) => {
+  var dictionary = await decompressTopojson(topojson, topojsonObject)
   // time to update our objects to be more useful upstream!
   var regsDictionary = stateData.regulationsDictionary
   var watersDictionary = stateData.waterOpeners

@@ -4,7 +4,6 @@
 @import "src/ui/styles/NumberCircle";
 
 .container {
-  background-color: transparentize($background, 0);
   z-index: 1000;
   position: static;
   top: 0;
@@ -13,7 +12,7 @@
   right: 0;
   padding: 20px;
   font-size: 5vmin;
-  margin-bottom: 40vmin;
+  margin-bottom: 20vmin;
   // overflow-y: scroll;
   // p {
   //   color: $white;
@@ -25,7 +24,11 @@
   display: table;
   position: relative;
   top: 50%;
-  margin-top: 30vmin;
+  margin-top: 40vmin;
+}
+
+.APP {
+  font-size: 4vmin;
 }
 
 .thanks {

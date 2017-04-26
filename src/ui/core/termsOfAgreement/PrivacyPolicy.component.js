@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import classes from './TermsOfAgreement.scss'
+import classes from './Agreement.scss'
 const MAGICAL_NUMBER_OF_PREAMBLES = 5
 const scalar = 0.2
 class PrivacyPolicy extends Component {

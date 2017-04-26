@@ -1,7 +1,6 @@
 import { drawStreamToCanvas, setUpCanvas, drawBackground, drawRingToCanvas } from '../src/ui/core/micromap/Micromap'
 import * as colors from '../src/ui/core/Colors'
 var Promise = require('bluebird')
-var fs = Promise.promisifyAll(require('fs'))
 var sharp = require('sharp')
 
 import Canvas from 'canvas'

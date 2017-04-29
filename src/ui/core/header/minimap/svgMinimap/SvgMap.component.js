@@ -5,6 +5,10 @@ import RegionComponent from './Region.component'
 import { isEmpty, has } from 'lodash'
 import StreamCentroidComponent from './StreamCentroid.component'
 
+import AdministrativeLayer from './AdministrativeLayer.component'
+import CentroidsLayer from './CentroidsLayer.component'
+import GpsLocationLayer from './GpsLocationLayer.component'
+
 export const getProjectionFromFeature = (feature, { width, height, radius, buffer = 2 }) => {
   let streamGeometry = feature
   let diameter = radius * 2
@@ -180,6 +184,20 @@ class SvgMapComponent extends Component {
     </g>)
   }
 
+  renderGpsCoorinates = () => {
+    let { currentGpsCoordinatesFeature } = this.props
+    if (currentGpsCoordinatesFeature == null) {
+      return null
+    }
+    let path = this.selectedCentroidPathGenerator(currentGpsCoordinatesFeature)
+    
+    let pathElement = (<path
+      className={classes.gpsCoordinates}
+      data-name='gps-location'
+      d={path} />)
+    return pathElement
+  }
+
   renderSelectedStreamCentroid () {
     let { selectedStreamCentroid } = this.props
     if (selectedStreamCentroid == null) {
@@ -207,25 +225,41 @@ class SvgMapComponent extends Component {
         width={this.props.width + 'px'}
         preserveAspectRatio='xMidYMid meet'
       >
-        <g className={classes.counties}>
-          {this.renderCounties()}
-        </g>
-        {this.renderStates()}
-        {this.renderRegions()}
-        <g className={classes.selectedRegions}>
-          {this.renderSelectedRegions()}
-        </g>
-        <g className={classes.centroids} style={{ opacity: this.props.isStreamCentroidsDisplayed ? 1 : 0 }}>
-          {this.renderStreamCentroids()}
-        </g>
-        <g className={classes.selectedStreamCentroid}>
-          {this.renderSelectedStreamCentroid()}
-        </g>
+      <AdministrativeLayer {...this.props} projection={this.projection} pathGenerator={this.pathGenerator} />
+      <CentroidsLayer {...this.props}
+        projection={this.projection}
+        pathGenerator={this.pathGenerator}
+        selectedCentroidPathGenerator={this.selectedCentroidPathGenerator} />
+      <GpsLocationLayer {...this.props}
+        projection={this.projection}
+        pathGenerator={this.pathGenerator}
+        selectedCentroidPathGenerator={this.selectedCentroidPathGenerator} />
       </svg>
     )
   }
 }
 
+
+/*
+<g className={classes.counties}>
+        //   {this.renderCounties()}
+        // </g>
+        // {this.renderStates()}
+        // {this.renderRegions()}
+        // <g className={classes.selectedRegions}>
+        //   {this.renderSelectedRegions()}
+        // </g>
+        // <g className={classes.centroids} style={{ opacity: this.props.isStreamCentroidsDisplayed ? 1 : 0 }}>
+        //   {this.renderStreamCentroids()}
+        // </g>
+        // <g className={classes.selectedStreamCentroid}>
+        //   {this.renderSelectedStreamCentroid()}
+        // </g>
+        // <g className={classes.gpsCoordinates}>
+        //   {this.renderGpsCoorinates()}
+        // </g>
+
+*/
 SvgMapComponent.propTypes = {
   statesGeoJson: PropTypes.object.isRequired,
   regionsGeoJson: PropTypes.object.isRequired,
@@ -239,7 +273,8 @@ SvgMapComponent.propTypes = {
   selectedStreamCentroid: PropTypes.object,
   cachedRegions: PropTypes.object.isRequired,
   selectRegion: PropTypes.func.isRequired,
-  isOffline: PropTypes.bool.isRequired
+  isOffline: PropTypes.bool.isRequired,
+  currentGpsCoordinatesFeature: PropTypes.object
 }
 
 export default SvgMapComponent

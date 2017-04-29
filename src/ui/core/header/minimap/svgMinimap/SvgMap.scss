@@ -76,6 +76,11 @@
   }
 }
 
+.gpsCoordinates {
+  composes: centroids;
+   fill: transparentize($red, 0.3);
+}
+
 .expand from '../Minimap.scss' {
   .regions {
     stroke-width: 0.1px;

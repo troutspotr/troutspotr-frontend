@@ -33,6 +33,11 @@
   cursor: pointer;
 }
 
+.gps {
+  composes: item;
+  width: 150px;
+}
+
 .help {
   composes: item;
 }

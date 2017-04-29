@@ -101,6 +101,7 @@
   "author": "Stuart Anderson",
   "license": "MIT",
   "dependencies": {
+    "@turf/helpers": "^4.1.0",
     "axios": "^0.14.0",
     "babel-core": "^6.16.0",
     "babel-eslint": "^6.0.0-beta.6",

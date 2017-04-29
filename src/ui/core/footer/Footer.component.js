@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import classes from './Footer.scss'
 import { MAP, LIST } from 'ui/core/Core.state'
 import { isEmpty } from 'lodash'
+import FooterGpsContainer from './Footer.gps.container'
 /* eslint-disable react/prefer-stateless-function */
 class FooterComponent extends Component {
   render () {
@@ -14,6 +15,7 @@ class FooterComponent extends Component {
       <div className={classes.menu}>
         <span onClick={this.props.setViewToList} className={listClass}>{listText}</span>
         <span onClick={this.props.setViewToMap} className={mapClass}>Map</span>
+        <FooterGpsContainer />
       </div>
     </div>)
   }

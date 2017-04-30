@@ -11,8 +11,21 @@ const createSeoInterceptor = require('./Interceptor')
 const GetSiteDictionary = require('./GetSiteDictionary')
 const _ = require('lodash')
 app.use(compress())
+var env = process.env.NODE_ENV || 'development'
+var forceSsl = function (req, res, next) {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect(['https://', req.get('Host'), req.url].join(''))
+  }
+  return next()
+}
 
 const createServer = function (dictionary, app) {
+  app.use(function () {
+    if (env === 'production') {
+      app.use(forceSsl)
+    }
+  })
+
   var seoInterceptor = createSeoInterceptor(dictionary)
   app.use(seoInterceptor)
 

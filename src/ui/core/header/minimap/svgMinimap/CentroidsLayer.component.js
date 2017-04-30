@@ -1,8 +1,6 @@
 import React, { PropTypes, Component } from 'react'
-import * as d3 from 'd3-geo'
 import classes from './SvgMap.scss'
-import RegionComponent from './Region.component'
-import { isEmpty, has } from 'lodash'
+import { isEmpty } from 'lodash'
 import StreamCentroidComponent from './StreamCentroid.component'
 
 class CentroidsLayerComponent extends Component {
@@ -70,8 +68,7 @@ CentroidsLayerComponent.propTypes = {
   streamCentroidsGeoJson: PropTypes.array,
   getIsOpen: PropTypes.func.isRequired,
   isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
-  selectedStreamCentroid: PropTypes.object,
-  isOffline: PropTypes.bool.isRequired
+  selectedStreamCentroid: PropTypes.object
 }
 
 export default CentroidsLayerComponent

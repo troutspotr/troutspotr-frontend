@@ -270,7 +270,6 @@ SvgMapComponent.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   getIsOpen: PropTypes.func.isRequired,
-  isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
   // location: PropTypes.object.isRequired,
   selectedStreamCentroid: PropTypes.object,
   cachedRegions: PropTypes.object.isRequired,

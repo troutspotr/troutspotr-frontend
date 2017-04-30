@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
 import { isGpsTrackingActiveStateSelector,
-	isGpsTrackingSupportedStateSelector,
-	gpsCoordinatesLoadingStatusStateSelector,
-	getGpsCoordinateFeatureSelector,
-	getIsGpsActiveButLoading,
-	getIsActiveAndSuccessful } from 'ui/core/gps/Gps.selectors'
+  isGpsTrackingSupportedStateSelector,
+  gpsCoordinatesLoadingStatusStateSelector,
+  getGpsCoordinateFeatureSelector,
+  getIsGpsActiveButLoading,
+  getIsActiveAndSuccessful } from 'ui/core/gps/Gps.selectors'
 import { startGpsTracking, stopGpsTracking } from 'ui/core/gps/Gps.state'
 import FooterGpsComponent from './Footer.gps.component'
 const mapDispatchToProps = {

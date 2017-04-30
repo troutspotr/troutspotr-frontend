@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react'
-import { debounce } from 'lodash'
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
 import { GpsLayers } from './styles/Gps.style'
 import { GPS_LOCATION_SOURCE_ID } from './sources/Source.selectors'
@@ -12,18 +11,19 @@ class MapboxGlGpsLayer extends Component {
       isSourceLoaded: false
     }
   }
-  componentDidMount () {
-  	// add our source
-  	this.updateSource(this.props.map, this.props.source)
-  	this.setState({ isSourceLoaded: true })
+
+  componentWillMount () {
+    // add our source
+    this.updateSource(this.props.map, this.props.source)
+    this.setState({ isSourceLoaded: true })
   }
 
   componentWillUpdate (nextProps) {
-  	if (this.props === nextProps) {
-  		return
-  	}
+    if (this.props === nextProps) {
+      return
+    }
 
-  	this.updateSource(nextProps.map, nextProps.source)
+    this.updateSource(nextProps.map, nextProps.source)
   }
 
   componentWillUnmount () {
@@ -43,16 +43,15 @@ class MapboxGlGpsLayer extends Component {
   }
 
   render () {
-  	if (this.state.isSourceLoaded === false) {
-  		return null
-  	}
+    if (this.state.isSourceLoaded === false) {
+      return null
+    }
 
     return (<MapboxGlLayerComponent
       layers={GpsLayers}
       filters={EMPTY_FILTERS}
       map={this.props.map}
-            />
-    	)
+            />)
   }
 }
 

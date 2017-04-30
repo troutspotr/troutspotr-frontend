@@ -1,13 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import classes from './Footer.scss'
-import { MAP, LIST } from 'ui/core/Core.state'
-import { isEmpty } from 'lodash'
 /* eslint-disable react/prefer-stateless-function */
 
 class FooterGpsComponent extends Component {
-  constructor () {
-    super()
-  }
 
   handleActivateGpsClick = e => {
     this.props.startGpsTracking()
@@ -18,7 +13,7 @@ class FooterGpsComponent extends Component {
   }
 
   renderButton = (props) => {
-    let { isGpsTrackingActive, isGpsActiveButLoading, isGpsActiveAndSuccessful } = props
+    let { isGpsActiveButLoading, isGpsActiveAndSuccessful } = props
     if (isGpsActiveButLoading) {
       return <span className={classes.gps}>Activating…</span>
     }
@@ -42,9 +37,9 @@ class FooterGpsComponent extends Component {
 
 FooterGpsComponent.propTypes = {
   isGpsTrackingSupported: PropTypes.bool.isRequired,
-  status: PropTypes.string.isRequired,
-  isGpsTrackingActive: PropTypes.bool.isRequired,
-  gpsCoordinateFeature: PropTypes.object,
+  // status: PropTypes.string.isRequired,
+  // isGpsTrackingActive: PropTypes.bool.isRequired,
+  // gpsCoordinateFeature: PropTypes.object,
   isGpsActiveButLoading: PropTypes.bool.isRequired,
   isGpsActiveAndSuccessful: PropTypes.bool.isRequired,
   startGpsTracking: PropTypes.func.isRequired,

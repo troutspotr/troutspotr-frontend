@@ -4,9 +4,6 @@ export const GPS_UPDATE_GPS_POSITION = 'GPS_UPDATE_GPS_POSITION'
 export const GPS_ACTIVATE_GPS_TRACKING = 'GPS_ACTIVATE_GPS_TRACKING'
 import { isGpsTrackingActiveStateSelector, isGpsTrackingSupportedStateSelector } from './Gps.selectors'
 
-const MPLS_COORDINATES = [-91.59273, 43.69093]
-const STUTTER_RANGE = 0.0002
-const CENTER = STUTTER_RANGE * -0.5
 let GPS_WATCH_CALLBACK_ID = null
 const MAX_TIMEOUT_LENGTH_MILLISECONDS = 20 * 1000
 

@@ -243,7 +243,7 @@ MinimapComponent.propTypes = {
   countiesGeoJson: PropTypes.object.isRequired,
   regionsGeoJson: PropTypes.object.isRequired,
   streamCentroidsGeoJson: PropTypes.array,
-  tableOfContentsLoadingStatus: PropTypes.string.isRequired,
+  // tableOfContentsLoadingStatus: PropTypes.string.isRequired,
   selectedState: PropTypes.object,
   selectedRegion: PropTypes.object,
   selectedStreamCentroid: PropTypes.object,

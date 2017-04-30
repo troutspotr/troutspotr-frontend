@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react'
-import * as d3 from 'd3-geo'
 import classes from './SvgMap.scss'
 import RegionComponent from './Region.component'
 import { isEmpty, has } from 'lodash'
@@ -113,7 +112,6 @@ AdministrativeLayerComponent.propTypes = {
   statesGeoJson: PropTypes.object.isRequired,
   regionsGeoJson: PropTypes.object.isRequired,
   selectedRegion: PropTypes.object,
-  getIsOpen: PropTypes.func.isRequired,
   cachedRegions: PropTypes.object.isRequired,
   selectRegion: PropTypes.func.isRequired,
   isOffline: PropTypes.bool.isRequired

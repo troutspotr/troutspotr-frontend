@@ -2,12 +2,9 @@ import React, { PropTypes, Component } from 'react'
 import MapboxGlComponentCamera from './MapboxGl.component.camera'
 import classes from '../Map.scss'
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
-import { isEmpty, debounce, flatten, clamp, find } from 'lodash'
+import { isEmpty, debounce, flatten, clamp } from 'lodash'
 import BaseStyle from './styles/Base.style'
-import { GpsLayers } from './styles/Gps.style'
-import { gpsLocationSourceSelector } from './sources/Source.selectors'
 import MapboxGlGpsLayer from './MapboxGl.gps.layer'
-const emptyGpsFilters = []
 class MapboxGlComponent extends Component {
   onClick () {
 

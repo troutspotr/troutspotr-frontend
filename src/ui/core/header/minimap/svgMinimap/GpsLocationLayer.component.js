@@ -1,9 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import * as d3 from 'd3-geo'
 import classes from './SvgMap.scss'
-import RegionComponent from './Region.component'
-import { isEmpty, has } from 'lodash'
-import StreamCentroidComponent from './StreamCentroid.component'
 
 class GpsLocationLayer extends Component {
   renderGpsCoorinates = () => {

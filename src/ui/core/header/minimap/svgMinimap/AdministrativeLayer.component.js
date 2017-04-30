@@ -116,7 +116,7 @@ AdministrativeLayerComponent.propTypes = {
   getIsOpen: PropTypes.func.isRequired,
   cachedRegions: PropTypes.object.isRequired,
   selectRegion: PropTypes.func.isRequired,
-  isOffline: PropTypes.bool.isRequired,
+  isOffline: PropTypes.bool.isRequired
 }
 
 export default AdministrativeLayerComponent

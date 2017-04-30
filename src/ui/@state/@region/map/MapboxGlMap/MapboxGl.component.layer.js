@@ -22,6 +22,7 @@ class MapboxGlLayerComponent extends Component {
     let { layers, filters } = this.props
     let isLayersUnchanged = layers === nextProps.layers
     if (isLayersUnchanged === false) {
+      console.log('layers were changed')
       layers.forEach(layer => {
         this.proxyOnUpdateLayerFilter(layer)
       })
@@ -29,6 +30,7 @@ class MapboxGlLayerComponent extends Component {
 
     let isFiltersUnchanged = filters === nextProps.filters
     if (isFiltersUnchanged === false) {
+      console.log('filter was changed')
       this.addFilters(this.props.map, nextProps.filters)
     }
   }

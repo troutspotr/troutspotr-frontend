@@ -12,11 +12,12 @@ class GpsLocationLayer extends Component {
       return null
     }
     let path = this.props.selectedCentroidPathGenerator(currentGpsCoordinatesFeature)
-    
+
     let pathElement = (<path
       className={classes.gpsCoordinates}
       data-name='gps-location'
-      d={path} />)
+      d={path}
+                       />)
     return pathElement
   }
 

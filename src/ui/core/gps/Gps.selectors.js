@@ -40,7 +40,7 @@ export const getGpsCoordinateFeatureSelector = createSelector(
     let props = {
       message,
       loadingStatus
-    } 
+    }
 
     let feature = point(gpsCoordinates, props)
     return feature

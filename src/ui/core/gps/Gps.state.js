@@ -1,23 +1,25 @@
 import { createAction } from 'redux-actions'
-import BaseApi from 'api/BaseApi'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 export const GPS_UPDATE_GPS_POSITION = 'GPS_UPDATE_GPS_POSITION'
 export const GPS_ACTIVATE_GPS_TRACKING = 'GPS_ACTIVATE_GPS_TRACKING'
 import { isGpsTrackingActiveStateSelector, isGpsTrackingSupportedStateSelector } from './Gps.selectors'
 
-const MPLS_COORDINATES = [-93.268284, 44.963323]
-const STUTTER_RANGE = 1
+const MPLS_COORDINATES = [-91.59273, 43.69093]
+const STUTTER_RANGE = 0.0002
 const CENTER = STUTTER_RANGE * -0.5
-let FAKE_INTERVAL = null
+let GPS_WATCH_CALLBACK_ID = null
+const MAX_TIMEOUT_LENGTH_MILLISECONDS = 20 * 1000
 
 export const updateGpsPosition = createAction(GPS_UPDATE_GPS_POSITION, (
   longitude,
   latitude,
-  status = LOADING_CONSTANTS.IS_SUCCESS) => {
+  status = LOADING_CONSTANTS.IS_SUCCESS,
+  accuracy = 1) => {
   return {
     gpsCoordinates: [longitude, latitude],
     gpsCoordinatesLoadingStatus: status,
-    isGpsTrackingActive: true
+    isGpsTrackingActive: true,
+    gpsAccuracyMeters: accuracy
   }
 })
 
@@ -32,19 +34,33 @@ export const startGpsTracking = () => {
       }
       dispatch(activateGpsTracking())
 
-      setTimeout(() => {
-        FAKE_INTERVAL = setInterval(() => {
-          let randomXCoordinate = Math.random() * STUTTER_RANGE - CENTER
-          let randomYCoordinate = Math.random() * STUTTER_RANGE - CENTER
-          let newCoordiantes = [
-            MPLS_COORDINATES[0] + randomXCoordinate,
-            MPLS_COORDINATES[1] + randomYCoordinate
-          ].map(x => x)
+      GPS_WATCH_CALLBACK_ID = navigator.geolocation.watchPosition((position) => {
+        console.log(position)
+        let { latitude, longitude, accuracy } = position.coords
+        dispatch(updateGpsPosition(longitude, latitude, LOADING_CONSTANTS.IS_SUCCESS, accuracy))
+      }, (error) => {
+        console.log('gps error', error)
+        alert(error.code)
+        alert(error.message)
+        dispatch(stopGpsTracking())
+      }, {
+        enableHighAccuracy: true,
+        timeout: MAX_TIMEOUT_LENGTH_MILLISECONDS
+      })
+      // setTimeout(() => {
+      //   GPS_WATCH_CALLBACK_ID = setInterval(() => {
+      //     let randomXCoordinate = Math.random() * STUTTER_RANGE + CENTER
+      //     let randomYCoordinate = Math.random() * STUTTER_RANGE + CENTER
+      //     let newCoordiantes = [
+      //       MPLS_COORDINATES[0] + randomXCoordinate,
+      //       MPLS_COORDINATES[1] + randomYCoordinate
+      //     ].map(x => x)
 
-          dispatch(updateGpsPosition(newCoordiantes[0], newCoordiantes[1]))
-        }, 20)
-      }, 2000)
+      //     dispatch(updateGpsPosition(newCoordiantes[0], newCoordiantes[1]))
+      //   }, 20)
+      // }, 300)
     } catch (error) {
+      alert(error)
       console.log(error)
     }
   }
@@ -52,8 +68,8 @@ export const startGpsTracking = () => {
 
 export const stopGpsTracking = () => {
   return async (dispatch) => {
-      clearInterval(FAKE_INTERVAL)
-      dispatch(deactivateGpsTracking())
+    navigator.geolocation.clearWatch(GPS_WATCH_CALLBACK_ID)
+    dispatch(deactivateGpsTracking())
   }
 }
 
@@ -85,7 +101,8 @@ const initialState = {
   isGpsTrackingActive: false,
   gpsCoordinatesLoadingStatus: LOADING_CONSTANTS.IS_NOT_STARTED,
   gpsCoordinates: null,
-  isGpsTrackingSupported: ('geolocation' in navigator) ? true : false
+  isGpsTrackingSupported: ('geolocation' in navigator),
+  gpsAccuracyMeters: 1
 }
 
 // ------------------------------------
@@ -95,7 +112,7 @@ const ACTION_HANDLERS = {
   [GPS_UPDATE_GPS_POSITION] : (state, { payload }) => {
     let newState = { ...state, ...payload }
     return newState
-  },
+  }
 }
 
 export default function counterReducer (state = initialState, action) {

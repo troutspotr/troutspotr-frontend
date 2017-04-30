@@ -5,7 +5,6 @@ import RegionComponent from './Region.component'
 import { isEmpty, has } from 'lodash'
 import StreamCentroidComponent from './StreamCentroid.component'
 
-
 class CentroidsLayerComponent extends Component {
   renderStreamCentroids () {
     let { streamCentroidsGeoJson } = this.props

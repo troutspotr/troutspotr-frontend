@@ -190,11 +190,12 @@ class SvgMapComponent extends Component {
       return null
     }
     let path = this.selectedCentroidPathGenerator(currentGpsCoordinatesFeature)
-    
+
     let pathElement = (<path
       className={classes.gpsCoordinates}
       data-name='gps-location'
-      d={path} />)
+      d={path}
+                       />)
     return pathElement
   }
 
@@ -225,20 +226,21 @@ class SvgMapComponent extends Component {
         width={this.props.width + 'px'}
         preserveAspectRatio='xMidYMid meet'
       >
-      <AdministrativeLayer {...this.props} projection={this.projection} pathGenerator={this.pathGenerator} />
-      <CentroidsLayer {...this.props}
-        projection={this.projection}
-        pathGenerator={this.pathGenerator}
-        selectedCentroidPathGenerator={this.selectedCentroidPathGenerator} />
-      <GpsLocationLayer {...this.props}
-        projection={this.projection}
-        pathGenerator={this.pathGenerator}
-        selectedCentroidPathGenerator={this.selectedCentroidPathGenerator} />
+        <AdministrativeLayer {...this.props} projection={this.projection} pathGenerator={this.pathGenerator} />
+        <CentroidsLayer {...this.props}
+          projection={this.projection}
+          pathGenerator={this.pathGenerator}
+          selectedCentroidPathGenerator={this.selectedCentroidPathGenerator}
+        />
+        <GpsLocationLayer {...this.props}
+          projection={this.projection}
+          pathGenerator={this.pathGenerator}
+          selectedCentroidPathGenerator={this.selectedCentroidPathGenerator}
+        />
       </svg>
     )
   }
 }
-
 
 /*
 <g className={classes.counties}>

@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash'
 /* eslint-disable react/prefer-stateless-function */
 
 class FooterGpsComponent extends Component {
-  constructor() {
+  constructor () {
     super()
   }
 

@@ -4,6 +4,30 @@ import { GPS_LOCATION_OUTLINE_LAYER_ID,
 
 import { GPS_LOCATION_SOURCE_ID } from '../sources/Source.selectors'
 
+const createCircleStyle = x => {
+  return {
+    'base': 1.6,
+    'stops': [
+      [
+        7,
+        2 + x
+      ],
+      [
+        10,
+        4 + x
+      ],
+      [
+        14,
+        6 + x
+      ]
+    ]
+  }
+}
+
+const DEFAULT_RADIUS = createCircleStyle(0)
+
+const OUTER_RADIUS = createCircleStyle(1.5)
+
 export const AccessPointMarkerBorderActiveStyle = {
   'id': GPS_LOCATION_OUTLINE_LAYER_ID,
   'type': 'circle',
@@ -14,7 +38,7 @@ export const AccessPointMarkerBorderActiveStyle = {
   },
   'paint': {
     'circle-color': colors.MoodyGray,
-    'circle-radius': 8
+    'circle-radius': OUTER_RADIUS
   }
 }
 
@@ -29,7 +53,7 @@ export const AccessPointMarkerCenterActiveStyle =
       'circle-color': colors.Red,
       'circle-opacity': 1,
       'circle-blur': 0,
-      'circle-radius': 8
+      'circle-radius': DEFAULT_RADIUS
     }
   }
 

@@ -14,7 +14,7 @@ app.use(compress())
 var env = process.env.NODE_ENV || 'development'
 var forceSsl = function (req, res, next) {
   if (env !== 'production') {
-    return
+    return next()
   }
 
   if (req.headers['x-forwarded-proto'] !== 'https') {

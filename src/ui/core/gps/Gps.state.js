@@ -30,20 +30,20 @@ export const startGpsTracking = () => {
         return
       }
       dispatch(activateGpsTracking())
-
-      GPS_WATCH_CALLBACK_ID = navigator.geolocation.watchPosition((position) => {
-        console.log(position)
-        let { latitude, longitude, accuracy } = position.coords
-        dispatch(updateGpsPosition(longitude, latitude, LOADING_CONSTANTS.IS_SUCCESS, accuracy))
-      }, (error) => {
-        console.log('gps error', error)
-        alert(error.code)
-        alert(error.message)
-        dispatch(stopGpsTracking())
-      }, {
-        enableHighAccuracy: true,
-        timeout: MAX_TIMEOUT_LENGTH_MILLISECONDS
-      })
+      setTimeout(() => {
+        GPS_WATCH_CALLBACK_ID = navigator.geolocation.watchPosition((position) => {
+          console.log(position)
+          let { latitude, longitude, accuracy } = position.coords
+          dispatch(updateGpsPosition(longitude, latitude, LOADING_CONSTANTS.IS_SUCCESS, accuracy))
+        }, (error) => {
+          console.log('gps error', error)
+          dispatch(stopGpsTracking())
+          dispatch(setGpsTrackingFailure())
+        }, {
+          enableHighAccuracy: true,
+          timeout: MAX_TIMEOUT_LENGTH_MILLISECONDS
+        })
+      }, 1000)
       // setTimeout(() => {
       //   GPS_WATCH_CALLBACK_ID = setInterval(() => {
       //     let randomXCoordinate = Math.random() * STUTTER_RANGE + CENTER
@@ -57,8 +57,8 @@ export const startGpsTracking = () => {
       //   }, 20)
       // }, 300)
     } catch (error) {
-      alert(error)
-      console.log(error)
+      dispatch(stopGpsTracking())
+      dispatch(setGpsTrackingFailure())
     }
   }
 }

@@ -4,7 +4,8 @@ import { isGpsTrackingActiveStateSelector,
   gpsCoordinatesLoadingStatusStateSelector,
   getGpsCoordinateFeatureSelector,
   getIsGpsActiveButLoading,
-  getIsActiveAndSuccessful } from 'ui/core/gps/Gps.selectors'
+  getIsActiveAndSuccessful,
+  isGpsFailedSelector } from 'ui/core/gps/Gps.selectors'
 import { startGpsTracking, stopGpsTracking } from 'ui/core/gps/Gps.state'
 import FooterGpsComponent from './Footer.gps.component'
 const mapDispatchToProps = {
@@ -19,7 +20,8 @@ const mapStateToProps = (state) => {
     isGpsTrackingActive: isGpsTrackingActiveStateSelector(state),
     gpsCoordinateFeature: getGpsCoordinateFeatureSelector(state),
     isGpsActiveButLoading: getIsGpsActiveButLoading(state),
-    isGpsActiveAndSuccessful: getIsActiveAndSuccessful(state)
+    isGpsActiveAndSuccessful: getIsActiveAndSuccessful(state),
+    isGpsFailed: isGpsFailedSelector(state)
   }
   return props
 }

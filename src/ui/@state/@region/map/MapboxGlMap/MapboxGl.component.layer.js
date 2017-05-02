@@ -63,7 +63,14 @@ class MapboxGlLayerComponent extends Component {
     })
   }
 
+  removeLayers (map, layers) {
+    layers.forEach(layer => {
+      map.removeLayer(layer.layerDefinition.id)
+    })
+  }
+
   componentWillUnmount () {
+    this.removeLayers(this.props.map, this.props.layers)
   }
 
   render () {

@@ -196,7 +196,7 @@ class TermsOfServiceComponent extends Component {
   renderContactUs (index) {
     return (
       <div key={index}>
-        <div>Contact Us.</div>
+        <div className={classes.term}>Contact Us.</div>
         <p>If you have any questions about these Terms of Service, you may contact us at: <a className={classes.link} href='mailto:troutspotr@gmail.com'>troutspotr@gmail.com</a></p>
       </div>)
   }

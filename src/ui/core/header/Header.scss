@@ -11,7 +11,7 @@ $cautionaryYellow: transparentize($yellow, 0.8);
 .headerContainer {
   // fixes animation issue on header in offline mode
   // in (of course) safari iOS.
-  transform: translateZ(0);
+  
   // height: $header-height;
   background-color: $messageBackground;
   transition: background-color 0.3s ease;
@@ -38,33 +38,34 @@ $cautionaryYellow: transparentize($yellow, 0.8);
     z-index: -100;
     position: absolute;
     top: 0;
-    left: 0;
+    left: -60px;
     right: 0;
     bottom: 0;
     opacity: 0.3;
     transition: opacity 0.3s ease;
     background-size: 30px 30px;
-    background-image: linear-gradient(
-      45deg, 
-      $cautionaryYellow  25%, 
-      transparent       25%, 
-      transparent       50%, 
-      $cautionaryYellow  50%, 
-      $cautionaryYellow  75%, 
-      transparent       75%, 
-      transparent
-    );  
-    animation: barberpole 2s linear infinite;
+    // background-image: linear-gradient(
+    //   45deg, 
+    //   $cautionaryYellow  25%, 
+    //   transparent       25%, 
+    //   transparent       50%, 
+    //   $cautionaryYellow  50%, 
+    //   $cautionaryYellow  75%, 
+    //   transparent       75%, 
+    //   transparent
+    // );  
+    // animation: barberpole 2s linear infinite;
   }
 }
 
 @keyframes barberpole {
   from {
-    background-position: 0 0;
+    transform: translate3d(0,0,0);
 
   }
   to   {
-    background-position: 60px 30px;
+    // background-position: 60px 30px;
+    transform: translate3d(60px,0px,0);
   }
 }
 

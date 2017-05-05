@@ -87,6 +87,7 @@ class SvgMapComponent extends Component {
           regionsGeoJson={this.props.regionsGeoJson}
           selectedStreamCentroid={this.props.selectedStreamCentroid}
           isOffline={this.props.isOffline}
+          cachedRegions={this.props.cachedRegions}
         />
         <GpsLocationLayer
           currentGpsCoordinatesFeature={this.props.currentGpsCoordinatesFeature}

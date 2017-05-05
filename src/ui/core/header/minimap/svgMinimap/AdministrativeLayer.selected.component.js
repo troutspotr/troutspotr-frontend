@@ -60,7 +60,8 @@ AdministrativeLayerSelectedComponent.propTypes = {
   selectedRegion: PropTypes.object,
   regionsGeoJson: PropTypes.object.isRequired,
   selectedStreamCentroid: PropTypes.object,
-  isOffline: PropTypes.bool.isRequired
+  isOffline: PropTypes.bool.isRequired,
+  cachedRegions: PropTypes.object.isRequired
 }
 
 export default AdministrativeLayerSelectedComponent

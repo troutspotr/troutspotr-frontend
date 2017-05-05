@@ -108,7 +108,7 @@ class TermsOfServiceComponent extends Component {
     let title = 'Don’t Trespass!!!'
     let body = (
       <div>
-        <p>We designed the App to help anglers safely access Minnesota’s public streams. There are times when access to streams involves walking across someone’s private property, which, if you do not have their permission, is <span className={classes.alert}>trespassing</span>. That is a crime. Look here for more details.</p>
+        <p>We designed the App to help anglers safely access Minnesota’s public streams. There are times when access to streams involves walking across someone’s private property, which, if you do not have their permission, is <span className={classes.alert}>trespassing</span>. That is a crime. Look <a className={classes.link} rel='noopener noreferrer' target='_blank' href='https://www.revisor.mn.gov/statutes/?id=92.70'>here</a> for more details.</p>
         <p>If you are, or even if you think you might need to walk across private property to access a stream, you have two choices: ask permission or find somewhere else to fish.</p>
         <p>Maintaining positive relationships with the people who live where we want to fish is essential to our continued use. Be respectful and follow the law!</p>
       </div>)

@@ -9,6 +9,9 @@ $smallFontSize: 0.85em;
 $cautionaryYellow: transparentize($yellow, 0.8);
 
 .headerContainer {
+  // fixes animation issue on header in offline mode
+  // in (of course) safari iOS.
+  transform: translateZ(0);
   // height: $header-height;
   background-color: $messageBackground;
   transition: background-color 0.3s ease;

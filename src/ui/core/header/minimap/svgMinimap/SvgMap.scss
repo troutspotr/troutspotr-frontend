@@ -67,7 +67,7 @@
 
 .inactiveRegion {
   stroke: $gray;
-  fill: transparentize($gray, 0.9);
+  fill: transparentize($background, 0.1);
   cursor: default;
   g:hover {
     fill: inherit;

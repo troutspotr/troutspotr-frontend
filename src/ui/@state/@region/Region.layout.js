@@ -19,7 +19,6 @@ class RegionLayout extends Component {
     let currentCombo = (this.props.selectedState + this.props.selectedRegion).toLowerCase()
 
     if (nextCombo !== currentCombo) {
-      console.log('props changed, loading next region')
       this.props.fetchRegionData(selectedState, selectedRegion)
     }
   }

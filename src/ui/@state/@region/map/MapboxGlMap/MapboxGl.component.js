@@ -72,7 +72,7 @@ class MapboxGlComponent extends Component {
   }
 
   getInteractiveFeaturesOverPoint = (point) => {
-    let BOX_DIMENSION = 20
+    let BOX_DIMENSION = 10
     let boundingBox = [
       [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
       [point.x + BOX_DIMENSION / 2, point.y + BOX_DIMENSION / 2]
@@ -133,7 +133,6 @@ class MapboxGlComponent extends Component {
   }
 
   safelySetSources (map, sources) {
-    console.log('source changed')
     sources.forEach(source => {
       let { sourceId, sourceData } = source
       let jsonSource = {

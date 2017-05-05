@@ -17,10 +17,6 @@ class RingAxisComponent extends Component {
 
     return times(ticks + 1).map(index => {
       let rotationDegrees = tickDegrees * index - rotatePhaseDegrees
-      if (rotationDegrees > 90) {
-        // console.log(index)
-      }
-
       let textAnchor = rotationDegrees > 90
         ? 'middle'
         : 'middle'

@@ -4,6 +4,7 @@ import AccessPointDetails from './AccessPointDetails.component'
 import RegionDetails from './RegionDetails.component'
 import StreamDetails from './StreamDetails.component'
 import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
+import shallowCompare from 'shallow-compare'
 
 import { isEmpty } from 'lodash'
 
@@ -28,6 +29,11 @@ class DetailsOverlayComponent extends Component {
     return (<StreamDetails
       selectedStream={selectedStream}
             />)
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    let shouldUpdate = shallowCompare(this, nextProps, nextState)
+    return shouldUpdate
   }
 
   renderAccessPointDetails () {

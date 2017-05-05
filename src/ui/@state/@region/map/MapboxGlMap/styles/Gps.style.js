@@ -26,7 +26,7 @@ const createCircleStyle = x => {
 
 const DEFAULT_RADIUS = createCircleStyle(0)
 
-const OUTER_RADIUS = createCircleStyle(1.5)
+const OUTER_RADIUS = createCircleStyle(4)
 
 export const AccessPointMarkerBorderActiveStyle = {
   'id': GPS_LOCATION_OUTLINE_LAYER_ID,
@@ -37,8 +37,11 @@ export const AccessPointMarkerBorderActiveStyle = {
     'visibility': 'visible'
   },
   'paint': {
-    'circle-color': colors.MoodyGray,
-    'circle-radius': OUTER_RADIUS
+    'circle-color': 'hsla(0, 100%, 50%, 0)',
+    'circle-stroke-color': colors.White,
+    'circle-stroke-width': 2,
+    'circle-radius': OUTER_RADIUS,
+    'circle-pitch-scale': 'map'
   }
 }
 
@@ -53,7 +56,8 @@ export const AccessPointMarkerCenterActiveStyle =
       'circle-color': colors.Red,
       'circle-opacity': 1,
       'circle-blur': 0,
-      'circle-radius': DEFAULT_RADIUS
+      'circle-radius': DEFAULT_RADIUS,
+      'circle-pitch-scale': 'map'
     }
   }
 

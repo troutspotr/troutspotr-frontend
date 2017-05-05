@@ -6,6 +6,9 @@ import { isGpsTrackingActiveStateSelector, isGpsTrackingSupportedStateSelector }
 
 let GPS_WATCH_CALLBACK_ID = null
 const MAX_TIMEOUT_LENGTH_MILLISECONDS = 20 * 1000
+// const MPLS_COORDINATES = [-91.81467, 43.87948]
+// const STUTTER_RANGE = 0.002
+// const CENTER = -0.001
 
 export const updateGpsPosition = createAction(GPS_UPDATE_GPS_POSITION, (
   longitude,
@@ -19,6 +22,24 @@ export const updateGpsPosition = createAction(GPS_UPDATE_GPS_POSITION, (
     gpsAccuracyMeters: accuracy
   }
 })
+
+const throttleGpsUpdate = (dispatch, coordinates, accuracy = 1) => {
+  let action = updateGpsPosition(coordinates[0], coordinates[1], LOADING_CONSTANTS.IS_SUCCESS, accuracy)
+  // if (window.requestIdleCallback != null) {
+  //   window.requestIdleCallback(() => {
+  //     dispatch(action)
+  //   })
+  //   return
+  // }
+
+  if (window.requestAnimationFrame != null) {
+    window.requestAnimationFrame(() => {
+      dispatch(action)
+    })
+    return
+  }
+  dispatch(action)
+}
 
 export const startGpsTracking = () => {
   return async (dispatch, getState) => {
@@ -34,7 +55,8 @@ export const startGpsTracking = () => {
         GPS_WATCH_CALLBACK_ID = navigator.geolocation.watchPosition((position) => {
           console.log(position)
           let { latitude, longitude, accuracy } = position.coords
-          dispatch(updateGpsPosition(longitude, latitude, LOADING_CONSTANTS.IS_SUCCESS, accuracy))
+          throttleGpsUpdate(dispatch, [longitude, latitude], accuracy)
+          // dispatch(updateGpsPosition(longitude, latitude, LOADING_CONSTANTS.IS_SUCCESS, accuracy))
         }, (error) => {
           console.log('gps error', error)
           dispatch(stopGpsTracking())
@@ -48,14 +70,13 @@ export const startGpsTracking = () => {
       //   GPS_WATCH_CALLBACK_ID = setInterval(() => {
       //     let randomXCoordinate = Math.random() * STUTTER_RANGE + CENTER
       //     let randomYCoordinate = Math.random() * STUTTER_RANGE + CENTER
-      //     let newCoordiantes = [
+      //     let newCoordinates = [
       //       MPLS_COORDINATES[0] + randomXCoordinate,
       //       MPLS_COORDINATES[1] + randomYCoordinate
       //     ].map(x => x)
-
-      //     dispatch(updateGpsPosition(newCoordiantes[0], newCoordiantes[1]))
-      //   }, 20)
-      // }, 300)
+      //     throttleGpsUpdate(dispatch, newCoordinates, 1)
+      //   }, 1000)
+      // }, 1000)
     } catch (error) {
       dispatch(stopGpsTracking())
       dispatch(setGpsTrackingFailure())
@@ -66,6 +87,7 @@ export const startGpsTracking = () => {
 export const stopGpsTracking = () => {
   return async (dispatch) => {
     navigator.geolocation.clearWatch(GPS_WATCH_CALLBACK_ID)
+    clearInterval(GPS_WATCH_CALLBACK_ID)
     dispatch(deactivateGpsTracking())
   }
 }

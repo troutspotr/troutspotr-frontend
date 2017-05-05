@@ -8,6 +8,7 @@
   padding-right: $default-margin;
   font-size: 18px;
   border-top: 1px solid transparentize($off-white, 0.7);
+  
   // backdrop-filter: blur(2px);
 }
 
@@ -74,6 +75,7 @@ $slider_height: $switch_height - (2.0 * $slider_margin);
 
 
 .switch {
+  transform: translateZ(0);
   position: relative;
   display: inline-block;
   top: 2px;
@@ -110,13 +112,15 @@ $slider_height: $switch_height - (2.0 * $slider_margin);
 }
 
 .sliderText {
+  pointer-events: none;
   position: absolute;
   color: black;
   transition-timing-function: linear;
-  transition: 0.3s;
+  transition: 0.4s;
   left: -28px;
-  bottom: 3px;
+  bottom: 2.5px;
   text-transform: uppercase;
+  font-weight: 800;
   overflow:hidden;
   display: flex;
   flex-direction: row;
@@ -150,6 +154,7 @@ $slider_height: $switch_height - (2.0 * $slider_margin);
 
 /* The slider */
 .slider {
+
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -157,7 +162,7 @@ $slider_height: $switch_height - (2.0 * $slider_margin);
   right: 0;
   bottom: 0;
   background-color: $off-white;
-  transition: 0.3s;
+  transition: 0.4s;
 }
 
 .fail {
@@ -175,7 +180,7 @@ $slider_height: $switch_height - (2.0 * $slider_margin);
   left: $slider_margin;
   bottom: ($switch_height - $slider_height) * 0.5;
   background-color: $white;
-  transition: 0.3s;
+  transition: 0.4s;
 }
 
 

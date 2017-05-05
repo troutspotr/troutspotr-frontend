@@ -4,10 +4,6 @@ import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
 import { isEmpty } from 'lodash'
 class RegulationsOverlayComponent extends Component {
-  componentDidMount () {
-    // console.log('LIST VIEW MOUNTED')
-  }
-
   renderSpecialRegulationsOverlay () {
     let { selectedStream, specialRegulationsCurrentSeason } = this.props
     if (isEmpty(selectedStream) || specialRegulationsCurrentSeason.length === 0) {

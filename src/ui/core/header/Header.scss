@@ -19,7 +19,7 @@ $cautionaryYellow: transparentize($yellow, 0.8);
   width: 100%;
 
   // top: 0px;
-  z-index: 100;
+  z-index: 10000;
   border-bottom: 1px solid transparentize($off-white, 0.4);
 
   // overflow: hidden;

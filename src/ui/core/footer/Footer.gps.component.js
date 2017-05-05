@@ -14,7 +14,6 @@ class FooterGpsComponent extends Component {
   handleChange = e => {
     e.preventDefault()
     let { checked } = e.target
-    console.log(checked)
     if (checked) {
       return this.handleActivateGpsClick()
     } else {
@@ -50,7 +49,7 @@ class FooterGpsComponent extends Component {
       <div className={classes.gpsContainer} >
         <div className={classes.gpsContent}>
           <label htmlFor={GPS_ELEMENT_ID}>GPS</label>
-          <label htmlFor={GPS_ELEMENT_ID} className={`${switchClassName} + ${isGpsFailed ? classes.fail : ''}`}>
+          <label htmlFor={GPS_ELEMENT_ID} className={`${switchClassName} ${isGpsFailed ? classes.fail : ''}`}>
             <input
               id={GPS_ELEMENT_ID}
               disabled={isInactive}

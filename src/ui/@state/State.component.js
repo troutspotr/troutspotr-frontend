@@ -9,7 +9,6 @@ class StateComponent extends Component {
     if (nextProps.selectedState === this.props.selectedState) {
       return
     }
-    console.log('fetching new state')
     this.props.fetchStateData(nextProps.selectedState)
   }
 

@@ -44,7 +44,6 @@ class IntroComponent extends Component {
   }
 
   render () {
-    console.log('oops')
     return (<div>
       {this.renderTitle()}
       {this.renderPreamble()}

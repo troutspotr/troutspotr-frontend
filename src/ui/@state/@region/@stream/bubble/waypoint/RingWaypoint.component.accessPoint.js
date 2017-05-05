@@ -204,9 +204,6 @@ class RingWaypointAccessPointComponent extends Component {
       if (roadId === 7 && startsWith(streetName, roadTypeDictionary[roadId].defaultStart)) {
         return `${roadTypeDictionary[roadId].prefix} ${this.props.accessPoint.properties.road_shield_text}`
       }
-
-      // console.log(this.props.accessPoint.properties.street_name, this.props.accessPoint.properties.road_type_id)
-      // return `${roadTypeDictionary[roadId].prefix} ${this.props.accessPoint.properties.road_shield_text}`
     }
     return this.props.accessPoint.properties.street_name
   }

@@ -51,7 +51,6 @@ export const selectMapFeature = (feature) => {
 export const selectFoculPoint = (feature) => {
   return (dispatch, getState) => {
     if (feature == null) {
-      console.log('null feature')
       throw new Error('feature cannot be null')
     }
 

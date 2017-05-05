@@ -10,7 +10,6 @@ import { selectedStreamObjectSelector,
   troutStreamDictionarySelector,
   isFinishedLoadingRegion } from 'ui/@state/@region/Region.selectors'
 
-import { getGpsCoordinateFeatureSelector } from 'ui/core/gps/Gps.selectors'
 import { withRouter } from 'react-router'
 
 import {
@@ -42,9 +41,9 @@ const mapStateToProps = (state) => {
     specialRegulationsCurrentSeason: getSpecialRegulationsCurrentSeasonSelector(state),
     selectedRoad: getSelectedRoadSelector(state),
     streamDictionary: troutStreamDictionarySelector(state),
-    isRegionFinishedLoading: isFinishedLoadingRegion(state),
-    gpsLocation: getGpsCoordinateFeatureSelector(state)
+    isRegionFinishedLoading: isFinishedLoadingRegion(state)
   }
+
   return props
 }
 

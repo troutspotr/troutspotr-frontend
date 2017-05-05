@@ -15,7 +15,7 @@
 .headerLayout {
   order: 1;
   height: $header-height;
-  z-index: 100;
+  z-index: 10000;
 
   // background-color: transparentize($red, 0.8);
   flex-shrink: 0;
@@ -24,7 +24,7 @@
 .footerLayout {
   order: 3;
   height: $footer-height;
-  z-index: 100;
+  z-index: 10000;
 
   // background-color: transparentize($blue, 0.8);
   flex-shrink: 0;

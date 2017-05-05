@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import classes from './SvgMap.scss'
 import { isEmpty } from 'lodash'
 import StreamCentroidComponent from './StreamCentroid.component'
+import shallowCompare from 'shallow-compare'
 
 class CentroidsLayerComponent extends Component {
   renderStreamCentroids () {
@@ -31,6 +32,11 @@ class CentroidsLayerComponent extends Component {
     return (<g className={classes.centroids}>
       {paths}
     </g>)
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    let shouldUpdate = shallowCompare(this, nextProps, nextState)
+    return shouldUpdate
   }
 
   renderSelectedStreamCentroid () {

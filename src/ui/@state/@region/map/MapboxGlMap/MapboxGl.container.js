@@ -15,7 +15,6 @@ const mapStateToProps = (state) => {
     selectedRegionId: selectedRegionIdSelector(state),
     gpsLocation: getGpsCoordinateFeatureSelector(state)
   }
-
   return props
 }
 

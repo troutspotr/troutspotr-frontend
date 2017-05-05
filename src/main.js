@@ -8,8 +8,6 @@ import configureStore from 'ui/configureStore'
 import TroutMapsAppContainer from 'ui/TroutMapsApp.container'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 // import 'babel-polyfill'
-// import Perf from 'react-addons-perf'
-// window.Perf = Perf
 // import FastClick from 'fastclick'
 // import routes from 'ui/routes'
 

@@ -1,9 +1,9 @@
 import React, { PropTypes, Component } from 'react'
 import * as d3 from 'd3-geo'
-import classes from './SvgMap.scss'
-import RegionComponent from './Region.component'
-import { isEmpty, has } from 'lodash'
-import StreamCentroidComponent from './StreamCentroid.component'
+import AdministrativeLayer from './AdministrativeLayer.component'
+import AdministrativeLayerSelectedComponent from './AdministrativeLayer.selected.component'
+import CentroidsLayer from './CentroidsLayer.component'
+import GpsLocationLayer from './GpsLocationLayer.component'
 
 export const getProjectionFromFeature = (feature, { width, height, radius, buffer = 2 }) => {
   let streamGeometry = feature
@@ -53,151 +53,6 @@ class SvgMapComponent extends Component {
 
   }
 
-  renderStates () {
-    let { statesGeoJson } = this.props
-    let paths = statesGeoJson.features.map((state, index) => {
-      let path = this.pathGenerator(state.geometry)
-      return (<path
-        key={state.properties.gid}
-        d={path}
-              />)
-    })
-    return (<g className={classes.states}>
-      {paths}
-    </g>)
-  }
-
-  renderCounties () {
-    return null
-  }
-
-  renderSelectedRegions () {
-    let { selectedRegion, regionsGeoJson, selectedStreamCentroid } = this.props
-    let isStreamSelected = isEmpty(selectedStreamCentroid) === false
-    if (isStreamSelected) {
-      // if thre's a selected stream, we don't have to display the selected region.
-      // it's pretty obvious.
-      return null
-    }
-    let selectedRegionId = isEmpty(selectedRegion) === false
-      ? selectedRegion.properties.name.toLowerCase()
-      : null
-    if (selectedRegionId == null) {
-      return null
-    }
-
-    let selectedRegions = regionsGeoJson.features.filter(f => f.properties.name.toLowerCase() === selectedRegionId)
-    if (selectedRegions.length === 0) {
-    }
-
-    return selectedRegions.map((region, index) => {
-      let { isOffline, cachedRegions } = this.props
-      let isCached = isOffline && has(cachedRegions, region.properties.gid)
-      let isActive = isOffline === false || isCached
-      return (<RegionComponent
-        geoJson={region}
-        isSelected
-        isCached={isCached}
-        isActive={isActive}
-        key={region.properties.gid}
-        isLoading={false}
-        pathGenerator={this.pathGenerator}
-        stateName={region.properties.state_gid.toString()}
-        selectRegion={() => { }}
-              />)
-    })
-  }
-
-  createRegionComponent (region, index, isCached, isActive, isSelected, isLoading) {
-    return (<RegionComponent
-      geoJson={region}
-      isSelected={isSelected}
-      isLoading={isLoading}
-      isCached={isCached}
-      isActive={isActive}
-      key={index}
-      pathGenerator={this.pathGenerator}
-      stateName={region.properties.state_gid.toString()}
-      selectRegion={this.props.selectRegion}
-            />)
-  }
-
-  renderRegions () {
-    let { regionsGeoJson } = this.props
-    let { isOffline, cachedRegions } = this.props
-    let orderDictionary = {
-      top: [],
-      bottom: []
-    }
-
-    let twoPaths = regionsGeoJson.features.reduce((dictionary, region, index) => {
-      let preactIndexHack = index + 1
-      let isCached = isOffline && has(cachedRegions, region.properties.gid)
-      let isActive = isOffline === false || isCached
-      let component = this.createRegionComponent(region, preactIndexHack, isCached, isActive, false, false)
-      if (isCached && isActive) {
-        dictionary.top.push(component)
-      } else {
-        dictionary.bottom.push(component)
-      }
-
-      return dictionary
-    }, orderDictionary)
-
-    return (
-      <g className={classes.regions}>
-        {twoPaths.bottom}
-        {twoPaths.top}
-      </g>)
-  }
-
-  renderStreamCentroids () {
-    let { streamCentroidsGeoJson } = this.props
-    if (isEmpty(streamCentroidsGeoJson)) {
-      return null
-    }
-
-    let decidedNotToRenderTheseThings = true
-    if (decidedNotToRenderTheseThings) {
-      return null
-    }
-
-    let paths = streamCentroidsGeoJson.map((centroid, index) => {
-      let isOpen = this.props.getIsOpen(centroid.waterId)
-      return (
-        <StreamCentroidComponent
-          geoJson={centroid}
-          key={centroid.gid}
-          isSelected={index % 2 === 0}
-          isLoading={index < 400}
-          isOpen={isOpen}
-          pathGenerator={this.pathGenerator}
-          projection={this.projection}
-        />)
-    })
-    return (<g className={classes.centroids}>
-      {paths}
-    </g>)
-  }
-
-  renderSelectedStreamCentroid () {
-    let { selectedStreamCentroid } = this.props
-    if (selectedStreamCentroid == null) {
-      return null
-    }
-    console.log(selectedStreamCentroid)
-
-    return (
-      <StreamCentroidComponent
-        geoJson={selectedStreamCentroid}
-        isSelected
-        isOpen={this.props.getIsOpen(selectedStreamCentroid.waterId)}
-        isLoading={false}
-        pathGenerator={this.selectedCentroidPathGenerator}
-        projection={this.projection}
-      />)
-  }
-
   render () {
     return (
       <svg
@@ -207,20 +62,39 @@ class SvgMapComponent extends Component {
         width={this.props.width + 'px'}
         preserveAspectRatio='xMidYMid meet'
       >
-        <g className={classes.counties}>
-          {this.renderCounties()}
-        </g>
-        {this.renderStates()}
-        {this.renderRegions()}
-        <g className={classes.selectedRegions}>
-          {this.renderSelectedRegions()}
-        </g>
-        <g className={classes.centroids} style={{ opacity: this.props.isStreamCentroidsDisplayed ? 1 : 0 }}>
-          {this.renderStreamCentroids()}
-        </g>
-        <g className={classes.selectedStreamCentroid}>
-          {this.renderSelectedStreamCentroid()}
-        </g>
+        <AdministrativeLayer
+          statesGeoJson={this.props.statesGeoJson}
+          regionsGeoJson={this.props.regionsGeoJson}
+          cachedRegions={this.props.cachedRegions}
+          isOffline={this.props.isOffline}
+          projection={this.projection}
+          pathGenerator={this.pathGenerator}
+          selectRegion={this.props.selectRegion}
+        />
+        <CentroidsLayer
+          streamCentroidsGeoJson={this.props.streamCentroidsGeoJson}
+          getIsOpen={this.props.getIsOpen}
+          isStreamCentroidsDisplayed={this.props.isStreamCentroidsDisplayed}
+          selectedStreamCentroid={this.props.selectedStreamCentroid}
+          projection={this.projection}
+          pathGenerator={this.pathGenerator}
+          selectedCentroidPathGenerator={this.selectedCentroidPathGenerator}
+        />
+        <AdministrativeLayerSelectedComponent
+          selectedRegion={this.props.selectedRegion}
+          projection={this.projection}
+          pathGenerator={this.pathGenerator}
+          regionsGeoJson={this.props.regionsGeoJson}
+          selectedStreamCentroid={this.props.selectedStreamCentroid}
+          isOffline={this.props.isOffline}
+          cachedRegions={this.props.cachedRegions}
+        />
+        <GpsLocationLayer
+          currentGpsCoordinatesFeature={this.props.currentGpsCoordinatesFeature}
+          projection={this.projection}
+          pathGenerator={this.pathGenerator}
+          selectedCentroidPathGenerator={this.selectedCentroidPathGenerator}
+        />
       </svg>
     )
   }
@@ -234,12 +108,12 @@ SvgMapComponent.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   getIsOpen: PropTypes.func.isRequired,
-  isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
   // location: PropTypes.object.isRequired,
   selectedStreamCentroid: PropTypes.object,
   cachedRegions: PropTypes.object.isRequired,
   selectRegion: PropTypes.func.isRequired,
-  isOffline: PropTypes.bool.isRequired
+  isOffline: PropTypes.bool.isRequired,
+  currentGpsCoordinatesFeature: PropTypes.object
 }
 
 export default SvgMapComponent

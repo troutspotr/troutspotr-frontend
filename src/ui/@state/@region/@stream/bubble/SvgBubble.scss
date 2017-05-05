@@ -139,7 +139,7 @@ $tributary_pal_width: $tributary_width * 7;
   composes: streamComponent;
   stroke: $yellow;
   stroke-linecap: butt;
-  stroke-linejoin: butt;
+  stroke-linejoin: round;
   stroke-width: $restriction_width;
 }
 
@@ -159,7 +159,7 @@ $tributary_pal_width: $tributary_width * 7;
   composes: streamComponent;
   stroke: $background;
   stroke-linecap: butt;
-  stroke-linejoin: butt;
+  stroke-linejoin: round;
   stroke-width: $restriction_width * 0.8;
 }
 
@@ -173,7 +173,7 @@ $tributary_pal_width: $tributary_width * 7;
   composes: streamComponent;
   stroke: $green;
   stroke-linecap: butt;
-  stroke-linejoin: butt;
+  stroke-linejoin: round;
   // stroke-linecap: butt;
   stroke-width: $pal_width;
   animation: pal-fade 1000ms;

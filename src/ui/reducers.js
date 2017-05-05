@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import locationReducer from './location'
-// import geoReducer from './Geo.state'
 import coreReducer from './core/Core.state'
 import minimapReducer from './core/header/minimap/Minimap.state'
 import mapboxModuleReducer from './core/MapboxModule.state'
@@ -8,8 +7,7 @@ import mapReducer from './@state/@region/map/Map.state'
 import stateReducer from './@state/State.state'
 import regionReducer from './@state/@region/Region.state'
 import offlineReducer from './core/offline/Offline.state'
-console.log('offline', offlineReducer)
-// console.log(locationReducer, minimapReducer)
+import gpsReducer from './core/gps/Gps.state'
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     // geo: geoReducer,
@@ -21,6 +19,7 @@ export const makeRootReducer = (asyncReducers) => {
     state: stateReducer,
     region: regionReducer,
     offline: offlineReducer,
+    gps: gpsReducer,
     ...asyncReducers
   })
 }

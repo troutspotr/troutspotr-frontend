@@ -19,7 +19,6 @@ const mapStateToProps = (state) => {
     selectedAccessPoint: getSelectedRoadSelector(state),
     streamDictionary: troutStreamDictionarySelector(state)
   }
-
   return props
 }
 

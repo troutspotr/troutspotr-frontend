@@ -6,8 +6,10 @@ $padding: 7px;
 .streamSearch {
   input[type="search"] {
     max-width: 170px;
+    -webkit-appearance: textfield;
     width: calc(100% - 10px);
     background-color: $messageBackground;
+    background: $messageBackground;
     border: 2px solid $off-white;
     height: 30px;
     border-radius: 15px;

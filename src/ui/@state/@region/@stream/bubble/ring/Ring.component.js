@@ -5,10 +5,6 @@ import RingSectionComponent from './RingSection.component'
 import classes from '../SvgBubble.scss'
 // const ANIMATION_SCALE = 2.0
 class RingComponent extends Component {
-  componentWillUnmount () {
-    // console.log('unmounting')
-  }
-
   shouldComponentUpdate (nextProps) {
     return true
   }

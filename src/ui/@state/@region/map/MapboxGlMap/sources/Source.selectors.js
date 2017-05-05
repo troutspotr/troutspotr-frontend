@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import * as regionSelectors from 'ui/@state/@region/Region.selectors'
+import { getGpsCoordinateFeatureSelector } from 'ui/core/gps/Gps.selectors'
 import { isEmpty } from 'lodash'
 
 export const PALS_SOURCE_ID = 'pals-src'
@@ -9,6 +10,7 @@ export const STREAM_CENTROIDS_SOURCE_ID = 'stream-centroids-src'
 export const PAL_SECTIONS_SOURCE_ID = 'pal-sections-src'
 export const STREAM_ACCESS_POINTS_SOURCE_ID = 'stream-access-points-src'
 export const RESTRICTION_SECTIONS_SOURCE_ID = 'restriction-sections-src'
+export const GPS_LOCATION_SOURCE_ID = 'gps-location-src'
 
 export const streamSourceSelector = createSelector(
   [regionSelectors.streamsSelector],
@@ -71,6 +73,16 @@ export const palSectionSourceSelector = createSelector(
     return palSectionsSource
   })
 
+export const gpsLocationSourceSelector = createSelector(
+  [getGpsCoordinateFeatureSelector],
+  (gpsLocation) => {
+    if (isEmpty(gpsLocation)) {
+      return null
+    }
+    let gpsLocationSource = sourceGenerator(GPS_LOCATION_SOURCE_ID, gpsLocation)
+    return gpsLocationSource
+  })
+
 export const streamAccessPointsSourceSelector = createSelector(
   [regionSelectors.streamAccessPointSelector],
   (streamAccessPoints) => {
@@ -106,7 +118,6 @@ export const getMapboxGlSources = createSelector(
       restrictionSectionSource,
       palSectionSource,
       streamAccessPointsSource].filter(x => x != null)
-    console.log('sources', result)
     return result
   })
 

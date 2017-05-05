@@ -1,7 +1,7 @@
 'use strict'
 import { createAction, handleActions } from 'redux-actions'
-import extent from 'turf-extent'
-import turfCircle from 'turf-circle'
+import extent from '@turf/bbox'
+import turfCircle from '@turf/circle'
 // import { getSelectedStateProperties } from '../sidebar/Sidebar.selectors'
 import { mapCameraActions, BOUNDING_BOX_OF_LOWER_48_STATES } from './Map.state.camera'
 // ------------------------------------
@@ -51,7 +51,6 @@ export const selectMapFeature = (feature) => {
 export const selectFoculPoint = (feature) => {
   return (dispatch, getState) => {
     if (feature == null) {
-      console.log('null feature')
       throw new Error('feature cannot be null')
     }
 

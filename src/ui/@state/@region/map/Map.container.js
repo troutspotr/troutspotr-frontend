@@ -9,6 +9,7 @@ import { selectedStreamObjectSelector,
   getSelectedRoadSelector,
   troutStreamDictionarySelector,
   isFinishedLoadingRegion } from 'ui/@state/@region/Region.selectors'
+
 import { withRouter } from 'react-router'
 
 import {
@@ -42,6 +43,7 @@ const mapStateToProps = (state) => {
     streamDictionary: troutStreamDictionarySelector(state),
     isRegionFinishedLoading: isFinishedLoadingRegion(state)
   }
+
   return props
 }
 

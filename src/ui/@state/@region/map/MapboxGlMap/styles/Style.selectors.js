@@ -8,8 +8,8 @@ import * as restrictionSectionStyles from './RestrictionSection.style'
 import * as palSectionStyles from './PalSection.style'
 import * as accessPointStyles from './AccessPoint.style'
 
-const UNDER_ROAD_PLACEHOLDER = 'UNDER-ROAD-PLACEHOLDER'
-const UNDER_LABEL_PLACEHOLDER = 'UNDER-LABEL-PLACEHOLDER'
+export const UNDER_ROAD_PLACEHOLDER = 'UNDER-ROAD-PLACEHOLDER'
+export const UNDER_LABEL_PLACEHOLDER = 'UNDER-LABEL-PLACEHOLDER'
 
 export const streamLayersSelector = createSelector(
   [],
@@ -66,6 +66,12 @@ export const palSectionsLayersSelector = createSelector(
     return [activeLayer, quietLayer]
   })
 
+export const gpsLayerSelector = createSelector(
+  [],
+  () => {
+
+  })
+
 export const accessPointsLayerSelector = createSelector(
   [],
   () => {
@@ -91,7 +97,7 @@ export const accessPointsLayerSelector = createSelector(
     ]
   })
 
-const layerGeneratorBetter = (layerDefinition, insertBefore, isInteractive = true) => {
+export const layerGeneratorBetter = (layerDefinition, insertBefore, isInteractive = true) => {
   let { source, id } = layerDefinition
   let layer = layerGenerator(id, source, insertBefore, layerDefinition, isInteractive)
   return layer

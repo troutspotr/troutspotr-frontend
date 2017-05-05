@@ -7,7 +7,6 @@ export const getSelectedStreamGid = state => state.bubbles.streamDictioanry
 export const getProjectionFromFeature = (feature, { width, height, radius }) => {
   let streamGeometry = feature
   let diameter = radius * 2
-  // console.log(d3.geoCentroid)
   let centroid = d3.geoCentroid(streamGeometry)
 
   let lower = [(width - diameter) / 2 + 20, (height - diameter) / 2 + 20]

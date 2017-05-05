@@ -1,5 +1,6 @@
 import { PropTypes, Component } from 'react'
 import { debounce } from 'lodash'
+import shallowCompare from 'shallow-compare'
 
 class MapboxGlLayerComponent extends Component {
   componentDidMount () {
@@ -13,7 +14,11 @@ class MapboxGlLayerComponent extends Component {
     this.proxyOnUpdateLayerFilter = debounce(this.updateLayerFilter, 20, { maxWait: 20 })
   }
 
-  componentWillUpdate (nextProps) {
+  shouldComponentUpdate (nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState)
+  }
+
+  componentWillReceiveProps (nextProps) {
     let isDuplicate = nextProps === this.props
     if (isDuplicate) {
       return
@@ -61,7 +66,14 @@ class MapboxGlLayerComponent extends Component {
     })
   }
 
+  removeLayers (map, layers) {
+    layers.forEach(layer => {
+      map.removeLayer(layer.layerDefinition.id)
+    })
+  }
+
   componentWillUnmount () {
+    this.removeLayers(this.props.map, this.props.layers)
   }
 
   render () {

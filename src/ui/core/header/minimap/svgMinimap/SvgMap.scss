@@ -67,13 +67,18 @@
 
 .inactiveRegion {
   stroke: $gray;
-  fill: transparentize($gray, 0.9);
+  fill: transparentize($background, 0.1);
   cursor: default;
   g:hover {
     fill: inherit;
     stroke-width: inherit;
     cursor: inherit;
   }
+}
+
+.gpsCoordinates {
+  composes: centroids;
+   fill: transparentize($red, 0.3);
 }
 
 .expand from '../Minimap.scss' {

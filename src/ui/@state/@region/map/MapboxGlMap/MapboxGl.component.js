@@ -4,6 +4,7 @@ import classes from '../Map.scss'
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
 import { isEmpty, debounce, flatten, clamp } from 'lodash'
 import BaseStyle from './styles/Base.style'
+import MapboxGlGpsLayer from './MapboxGl.gps.layer'
 class MapboxGlComponent extends Component {
   onClick () {
 
@@ -71,7 +72,7 @@ class MapboxGlComponent extends Component {
   }
 
   getInteractiveFeaturesOverPoint = (point) => {
-    let BOX_DIMENSION = 20
+    let BOX_DIMENSION = 10
     let boundingBox = [
       [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
       [point.x + BOX_DIMENSION / 2, point.y + BOX_DIMENSION / 2]
@@ -176,6 +177,23 @@ class MapboxGlComponent extends Component {
     }
   }
 
+  renderGpsLocationLayer () {
+    if (this.props.isReadyToInsertLayers === false) {
+      return null
+    }
+
+    let { gpsLocation } = this.props
+    if (gpsLocation == null) {
+      return null
+    }
+    return (<MapboxGlGpsLayer
+      map={this.map}
+      source={gpsLocation}
+            />)
+  }
+/*
+
+*/
   render () {
     // return null
     return (<div id={this.props.elementId} className={classes.map}>
@@ -188,6 +206,7 @@ class MapboxGlComponent extends Component {
             filters={mapLayer.filters}
                   />)
         })}
+      {this.renderGpsLocationLayer()}
       {this.props.isReadyToInsertLayers && <MapboxGlComponentCamera
         camera={this.props.camera}
         map={this.map}
@@ -210,7 +229,9 @@ MapboxGlComponent.propTypes = {
   onFeatureClick: PropTypes.func.isRequired,
   onFeatureHover: PropTypes.func.isRequired,
   /* eslint-disable react/no-unused-prop-types */
-  isVisible: PropTypes.bool.isRequired
+  isVisible: PropTypes.bool.isRequired,
+  gpsLocation: PropTypes.object
+
 }
 
 export default MapboxGlComponent

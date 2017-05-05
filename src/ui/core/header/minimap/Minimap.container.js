@@ -9,6 +9,7 @@ import { updateCachedEndpoints } from 'ui/core/offline/Offline.state'
 import * as coreSelectors from 'ui/core/Core.selectors'
 import * as stateSelectors from 'ui/@state/State.selectors'
 import * as offlineSelectors from 'ui/core/offline/Offline.selectors'
+import { getGpsCoordinateFeatureSelector } from 'ui/core/gps/Gps.selectors'
 const mapDispatchToProps = {
   expand: (expanded) => isExpaned(expanded),
   fetchTableOfContents: () => fetchTableOfContents(),
@@ -30,7 +31,8 @@ const mapStateToProps = (state) => {
     getIsOpen: getIsOpenSelector(state),
     isStreamCentroidsDisplayed: isStreamCentroidsDisplayedSelector(state),
     isOffline: offlineSelectors.isOfflineSelector(state),
-    cachedRegions: offlineSelectors.cachedRegionsDictionary(state)
+    cachedRegions: offlineSelectors.cachedRegionsDictionary(state),
+    currentGpsCoordinatesFeature: getGpsCoordinateFeatureSelector(state)
   }
   return props
 }

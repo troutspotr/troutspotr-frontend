@@ -22,7 +22,6 @@ function waitForNext (op) {
     requestAnimationFrame(() => {
       try {
         let result = op()
-        console.log(result)
         resolve(result)
       } catch (error) {
         reject(error)

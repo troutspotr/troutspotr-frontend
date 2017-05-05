@@ -101,6 +101,8 @@
   "author": "Stuart Anderson",
   "license": "MIT",
   "dependencies": {
+    "@turf/bbox": "^4.2.0",
+    "@turf/bearing": "^4.2.0",
     "@turf/circle": "^3.0.12",
     "@turf/helpers": "^4.1.0",
     "@turf/simplify": "^3.0.12",

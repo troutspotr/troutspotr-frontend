@@ -14,7 +14,7 @@
 	],
 	"theme_color": "#ffffff",
 	"background_color": "#111111",
-	"start_url": "http:\/\/www.troutspotr.com",
+	"start_url": "https:\/\/2017.troutspotr.com",
 	"display": "standalone",
 	"orientation": "portrait"
 }

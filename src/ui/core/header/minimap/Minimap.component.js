@@ -45,39 +45,7 @@ class MinimapComponent extends Component {
 
   shouldComponentUpdate (nextProps) {
     return true
-    // if (nextProps.isExpanded !== this.props.isExpanded) {
-    //   return true
-    // }
 
-    // if (nextProps.selectedState !== this.props.selectedState) {
-    //   return true
-    // }
-
-    // if (nextProps.selectedRegion !== this.props.selectedRegion) {
-    //   return true
-    // }
-
-    // if (nextProps.tableOfContentsLoadingStatus !== this.props.tableOfContentsLoadingStatus) {
-    //   return true
-    // }
-
-    // if (nextProps.isExpanded && nextProps.streamCentroidsGeoJson !== this.props.streamCentroidsGeoJson) {
-    //   return true
-    // }
-
-    // if (nextProps.selectedStreamCentroid !== this.props.selectedStreamCentroid) {
-    //   return true
-    // }
-
-    // if (nextProps.isOffline !== this.props.isOffline) {
-    //   return true
-    // }
-
-    // if (nextProps.cachedRegions !== this.props.cachedRegions) {
-    //   return true
-    // }
-
-    // return false
   }
 
   componentDidMount () {

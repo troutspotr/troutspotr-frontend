@@ -1,8 +1,15 @@
 # troutspotr-frontend
 Help anglers make safe and legal choices when fishing for trout.
 
+![screen shot 2017-07-13 at 2 06 09 pm copy](https://user-images.githubusercontent.com/1424223/28183333-b5a00d9a-67d4-11e7-8932-93420c714ddc.jpg)
 
-Yu need `npm` installed to run this puppy.
+
+
+
+You need `npm` installed to run this puppy.
+https://nodejs.org/
+
+Once you download node, ensure that it's properly installed on your system by opening a terminal and typing this:
 ```
 $ npm --version
 5.2.0

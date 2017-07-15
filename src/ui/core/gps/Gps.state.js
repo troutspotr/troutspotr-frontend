@@ -3,6 +3,7 @@ import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 export const GPS_UPDATE_GPS_POSITION = 'GPS_UPDATE_GPS_POSITION'
 export const GPS_ACTIVATE_GPS_TRACKING = 'GPS_ACTIVATE_GPS_TRACKING'
 import { isGpsTrackingActiveStateSelector, isGpsTrackingSupportedStateSelector } from './Gps.selectors'
+import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 
 let GPS_WATCH_CALLBACK_ID = null
 const MAX_TIMEOUT_LENGTH_MILLISECONDS = 20 * 1000
@@ -43,6 +44,7 @@ const throttleGpsUpdate = (dispatch, coordinates, accuracy = 1) => {
 
 export const startGpsTracking = () => {
   return async (dispatch, getState) => {
+    AnonymousAnalyzerApi.recordEvent('start_gps', {})
     try {
       let state = getState()
       let isActive = isGpsTrackingActiveStateSelector(state)
@@ -86,6 +88,7 @@ export const startGpsTracking = () => {
 
 export const stopGpsTracking = () => {
   return async (dispatch) => {
+    AnonymousAnalyzerApi.recordEvent('stop_gps', {})
     navigator.geolocation.clearWatch(GPS_WATCH_CALLBACK_ID)
     clearInterval(GPS_WATCH_CALLBACK_ID)
     dispatch(deactivateGpsTracking())

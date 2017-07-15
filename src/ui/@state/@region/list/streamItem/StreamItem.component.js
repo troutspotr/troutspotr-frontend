@@ -19,19 +19,11 @@ class StreamItemBodyComponent extends Component {
   }
 
   renderOpenBridges (streamObject) {
-    let number = streamObject.accessPoints
-      .filter(x => x.properties.bridgeType === 'publicTrout')
-      .length
-
-    let bridgeClass = classes.publicBridgesBadge
-
-    let noun = number === 1 ? ' bridge' : ' bridges'
-    let countSymbol = number === 0
-      ? 'No'
-      : (<span className={bridgeClass}>{number}</span>)
+    const { publicTroutBridgeCount, bridgeText } = streamObject.stream.properties
     return (
       <div>
-        {countSymbol}{noun} over publically fishable land.
+        {publicTroutBridgeCount > 0 && <span className={classes.publicBridgesBadge}>{publicTroutBridgeCount}</span>}
+        {bridgeText}
       </div>)
   }
 
@@ -52,21 +44,8 @@ StreamItemBodyComponent.propTypes = {
 }
 
 class StreamItemComponent extends Component {
-  renderOpenBridges (streamObject) {
-    let number = streamObject.accessPoints
-      .filter(x => x.properties.bridgeType === 'publicTrout')
-      .length
-
-    let bridgeClass = classes.publicBridgesBadge
-
-    let noun = number === 1 ? ' bridge' : ' bridges'
-    let countSymbol = number === 0
-      ? 'No'
-      : (<span className={bridgeClass}>{number}</span>)
-    return (
-      <div>
-        {countSymbol}{noun} over publically fishable land.
-      </div>)
+  shouldComponentUpdate (nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState)
   }
 
   render () {

@@ -74,8 +74,10 @@
   animation-delay: 0.2;
   transform: translateZ(0);
   transform: scale(1);
-  z-index: 999;
-
+  z-index: 99999;
+  position: fixed;
+  overflow: hidden;
+  left: 25%;
   .title {
     font-size: 0.5em;
     margin-bottom: 0.2em;

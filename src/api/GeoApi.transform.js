@@ -9,8 +9,6 @@ const topojson = require('topojson-client')
 const { throttleReduce } = require('./Throttle')
 
 var now = new Date()
-// import * as topojson from 'topojson-client'
-// import { groupBy, keyBy, valuesIn, has, kebabCase } from 'lodash'
 const MINIMUM_LENGTH_MILES = 0.05
 const transformGeo = async (topojsonObject, stateData) => {
   var geoJsonObjects = await decompress(topojsonObject, stateData)
@@ -75,13 +73,6 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
   var palMap = dictionaries.palMap
   var accessMap = dictionaries.accessMap
   var tempCircleDictionary = dictionaries.tempCircleDictionary
-  // var {
-  //   sectionsMap,
-  //   restrictionsMap,
-  //   palMap,
-  //   accessMap,
-  //   tempCircleDictionary
-  // } = dictionaries
 
   var streamDictionary = geoJsonObjects.streamProperties.features
     .reduce((dictionary, currentItem, index) => {
@@ -93,15 +84,6 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
       entry.sections = sectionsMap[streamId]
 
       entry.restrictions = getSanitizedRegulations(restrictionsMap[streamId])
-      // entry.restrictions = restrictionsMap[streamId] == null
-      //   ? []
-      //   : restrictionsMap[streamId].reduce((regDictionary, item) => {
-      //     // we're gonna try to colorize our restrictions.
-      //     // we need to be careful. there could be 16 restriction
-      //     // sections, but only of 3 types. We need to cataloge
-      //     // our progress, so a reduce function seems like a good idea here.
-      //     if (has(regDictionary, item.properties.regulation.id))
-      //   }, {})
       entry.palSections = palMap[streamId] == null
         ? []
         : palMap[streamId].sort((a, b) => b.properties.start - a.properties.start)
@@ -113,6 +95,12 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
 
       entry.accessPoints = addLettersToCrossings(entry.accessPoints)
       entry.circle = tempCircleDictionary[streamId]
+      const bridgeProperties = provideRoadCrossingText(entry.stream, entry.accessPoints)
+      entry.stream.properties.publicTroutBridgeCount = bridgeProperties.publicTroutBridgeCount
+      entry.stream.properties.permissionRequiredBridgeCount = bridgeProperties.permissionRequiredBridgeCount
+      entry.stream.properties.unsafeBridgeCount = bridgeProperties.unsafeBridgeCount
+      entry.stream.properties.uninterestingBridgeCount = bridgeProperties.uninterestingBridgeCount
+      entry.stream.properties.bridgeText = bridgeProperties.bridgeText
 
       return dictionary
     }, {})
@@ -198,6 +186,32 @@ const decompress = async (topojsonObject, stateData) => {
   dictionary.tributary = topojson.feature(topojsonObject, topojsonObject.objects.tributary)
 
   return dictionary
+}
+
+const NONE_TEXT = 'No bridges over publically fishable land.'
+const SINGLE_TEXT = ' bridge over publically fishable land.'
+const MANY_TEXT = ' bridges over publically fishable land.'
+
+const provideRoadCrossingText = (stream, roads) => {
+  const props = roads.reduce((dictionary, roadCrossing) => {
+    const key = `${roadCrossing.properties.bridgeType}BridgeCount`
+    dictionary[key]++
+    return dictionary
+  }, {
+    publicTroutBridgeCount: 0,
+    permissionRequiredBridgeCount: 0,
+    unsafeBridgeCount: 0,
+    uninterestingBridgeCount: 0,
+    bridgeText: null
+  })
+
+  // i expect that stream and roads are not null,
+  // and that stream is geojson and that roads is an array of geojson
+  const number = props.publicTroutBridgeCount
+  props.bridgeText = number === 0 ? NONE_TEXT
+    : number === 1 ? SINGLE_TEXT
+    : MANY_TEXT
+  return props
 }
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
@@ -338,5 +352,10 @@ module.exports = {
   transformGeo: transformGeo,
   crossingTypes: crossingTypes,
   decompress: decompress,
-  createStreamDictionaries: createStreamDictionaries
+  createStreamDictionaries: createStreamDictionaries,
+  provideRoadCrossingText: provideRoadCrossingText,
+  createStreamDictionary: createStreamDictionary,
+  NONE_TEXT,
+  SINGLE_TEXT,
+  MANY_TEXT
 }

@@ -56,10 +56,10 @@ class RegionLayout extends Component {
     return (
       <div className={classes.regionContainer}>
         <SvgSpriteSheet />
+        {this.renderLoading()}
         {this.renderList()}
         {this.renderMap()}
         {view === LIST && this.props.children}
-        {this.renderLoading()}
       </div>
     )
   }

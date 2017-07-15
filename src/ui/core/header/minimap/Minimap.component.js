@@ -45,7 +45,6 @@ class MinimapComponent extends Component {
 
   shouldComponentUpdate (nextProps) {
     return true
-
   }
 
   componentDidMount () {

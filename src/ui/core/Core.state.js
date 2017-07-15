@@ -152,7 +152,7 @@ const getHasAgreedToTerms = () => {
 // Reducer
 // ------------------------------------
 const initialState = {
-  view: LIST,
+  view: MAP,
   isMapModuleLoaded: false,
   isMapReadyToDisplay: false,
   searchText: '',

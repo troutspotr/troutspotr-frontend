@@ -43,9 +43,10 @@ class HeaderContainer extends Component {
 
     let symbol = (<ClipboardIconComponent
       size={14}
-      style={{ fill: 'hsla(199, 69%, 61%, 1)' }}
+      style={{ fill: 'hsla(199, 69%, 61%, 1)', color: 'hsla(199, 69%, 61%, 1)' }}
                   />)
     return (<ClipboardButton
+      onClick={this.props.onCopyToClipboard}
       component='a'
       data-clipboard-text={window.location.href}
       button-title='Copy to clipboard'
@@ -83,7 +84,8 @@ HeaderContainer.propTypes = {
   isIconVisible: PropTypes.bool.isRequired,
   params: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  isOffline: PropTypes.bool.isRequired
+  isOffline: PropTypes.bool.isRequired,
+  onCopyToClipboard: PropTypes.func.isRequired
 }
 
 export default HeaderContainer

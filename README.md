@@ -1,8 +1,6 @@
 # troutspotr-frontend
+<img height="350px" align="right" src="https://user-images.githubusercontent.com/1424223/28183333-b5a00d9a-67d4-11e7-8932-93420c714ddc.jpg">
 Help anglers make safe and legal choices when fishing for trout.
-
-![screen shot 2017-07-13 at 2 06 09 pm copy](https://user-images.githubusercontent.com/1424223/28183333-b5a00d9a-67d4-11e7-8932-93420c714ddc.jpg)
-
 
 
 

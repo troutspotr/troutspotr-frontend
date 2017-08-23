@@ -68,7 +68,13 @@ class MapboxGlLayerComponent extends Component {
 
   removeLayers (map, layers) {
     layers.forEach(layer => {
-      map.removeLayer(layer.layerDefinition.id)
+      try {
+        map.removeLayer(layer.layerDefinition.id)
+      } catch (error) {
+        if (__DEV__ === false) {
+          console.error(`There was an error removing the layer ${layer.id}`)
+        }
+      }
     })
   }
 

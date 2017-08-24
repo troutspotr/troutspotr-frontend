@@ -11,7 +11,7 @@
   width: 100%;
   color: inherit;
   text-decoration: inherit;
-
+  color: $white;
   .media {
     order: 1;
   }
@@ -38,7 +38,7 @@
 
 .open {
   composes: zeldaText;
-  color: $off-white;
+  color: $white;
 }
 
 // .openEmphasis {
@@ -70,6 +70,7 @@
   composes: numberCircle;
   color: $green;
   font-size: 0.8em;
+  font-weight: 500;
 }
 
 .publicBridgesBadgeDull {

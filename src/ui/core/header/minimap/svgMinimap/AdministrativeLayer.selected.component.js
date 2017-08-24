@@ -1,33 +1,32 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import RegionComponent from './Region.component'
-import { isEmpty, has } from 'lodash'
+import {has, isEmpty} from 'lodash'
 import shallowCompare from 'shallow-compare'
 import classes from './SvgMap.scss'
 
 class AdministrativeLayerSelectedComponent extends Component {
   renderSelectedRegions () {
-    let { selectedRegion, regionsGeoJson, selectedStreamCentroid } = this.props
-    let isStreamSelected = isEmpty(selectedStreamCentroid) === false
+    const {selectedRegion, regionsGeoJson, selectedStreamCentroid} = this.props
+    const isStreamSelected = isEmpty(selectedStreamCentroid) === false
     if (isStreamSelected) {
-      // if thre's a selected stream, we don't have to display the selected region.
-      // it's pretty obvious.
+      // If thre's a selected stream, we don't have to display the selected region.
+      // It's pretty obvious.
       return null
     }
-    let selectedRegionId = isEmpty(selectedRegion) === false
+    const selectedRegionId = isEmpty(selectedRegion) === false
       ? selectedRegion.properties.name.toLowerCase()
       : null
     if (selectedRegionId == null) {
       return null
     }
 
-    let selectedRegions = regionsGeoJson.features.filter(f => f.properties.name.toLowerCase() === selectedRegionId)
-    if (selectedRegions.length === 0) {
-    }
+    const selectedRegions = regionsGeoJson.features.filter((f) => f.properties.name.toLowerCase() === selectedRegionId)
 
     return selectedRegions.map((region, index) => {
-      let { isOffline, cachedRegions } = this.props
-      let isCached = isOffline && has(cachedRegions, region.properties.gid)
-      let isActive = isOffline === false || isCached
+      const {isOffline, cachedRegions} = this.props
+      const isCached = isOffline && has(cachedRegions, region.properties.gid)
+      const isActive = isOffline === false || isCached
       return (<RegionComponent
         geoJson={region}
         isSelected
@@ -38,12 +37,12 @@ class AdministrativeLayerSelectedComponent extends Component {
         pathGenerator={this.props.pathGenerator}
         stateName={region.properties.state_gid.toString()}
         selectRegion={() => { }}
-              />)
+      />)
     })
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    let shouldUpdate = shallowCompare(this, nextProps, nextState)
+    const shouldUpdate = shallowCompare(this, nextProps, nextState)
     return shouldUpdate
   }
 
@@ -57,11 +56,12 @@ class AdministrativeLayerSelectedComponent extends Component {
 }
 
 AdministrativeLayerSelectedComponent.propTypes = {
-  selectedRegion: PropTypes.object,
-  regionsGeoJson: PropTypes.object.isRequired,
-  selectedStreamCentroid: PropTypes.object,
-  isOffline: PropTypes.bool.isRequired,
-  cachedRegions: PropTypes.object.isRequired
+  'selectedRegion': PropTypes.object,
+  'regionsGeoJson': PropTypes.object.isRequired,
+  'selectedStreamCentroid': PropTypes.object,
+  'isOffline': PropTypes.bool.isRequired,
+  'cachedRegions': PropTypes.object.isRequired,
+  pathGenerator: PropTypes.func.isRequired,
 }
 
 export default AdministrativeLayerSelectedComponent

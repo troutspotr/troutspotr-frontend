@@ -1,9 +1,13 @@
-import { createSelector } from 'reselect'
-import { isListVisible, selectedStreamIdSelector, selectedRegionIdSelector } from 'ui/core/Core.selectors'
+import {createSelector} from 'reselect'
+import {isListVisible, selectedRegionIdSelector, selectedStreamIdSelector} from 'ui/core/Core.selectors'
 
 export const isListViewed = createSelector(
-  [ isListVisible, selectedStreamIdSelector, selectedRegionIdSelector ],
+  [
+    isListVisible,
+    selectedStreamIdSelector,
+    selectedRegionIdSelector,
+  ],
   (isListSelected, streamId, regionId) => {
-    let isListWithSelectedRegionButNoSpecificStream = isListSelected && streamId == null && regionId != null
+    const isListWithSelectedRegionButNoSpecificStream = isListSelected && streamId == null && regionId != null
     return isListWithSelectedRegionButNoSpecificStream
   })

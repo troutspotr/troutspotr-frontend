@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from 'react'
-import { Link } from 'react-router'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import {Link} from 'react-router'
 import classes from './StreamItem.scss'
 import MicroMapContainer from 'ui/core/microMap/MicroMap.container'
 import RegulationsSummaryComponent from 'ui/core/regulations/RegulationsSummary.component'
@@ -19,7 +20,7 @@ class StreamItemBodyComponent extends Component {
   }
 
   renderOpenBridges (streamObject) {
-    const { publicTroutBridgeCount, bridgeText } = streamObject.stream.properties
+    const {publicTroutBridgeCount, bridgeText} = streamObject.stream.properties
     return (
       <div>
         {publicTroutBridgeCount > 0 && <span className={classes.publicBridgesBadge}>{publicTroutBridgeCount}</span>}
@@ -28,7 +29,7 @@ class StreamItemBodyComponent extends Component {
   }
 
   render () {
-    let { title, streamObject } = this.props
+    const {title, streamObject} = this.props
     return (
       <div className={classes.body}>
         <div className={classes.header}>{title}</div>
@@ -40,7 +41,8 @@ class StreamItemBodyComponent extends Component {
 
 StreamItemBodyComponent.propTypes = {
   title: PropTypes.string.isRequired,
-  streamObject: PropTypes.object.isRequired
+  streamObject: PropTypes.object.isRequired,
+  getSummary: PropTypes.func.isRequired,
 }
 
 class StreamItemComponent extends Component {
@@ -49,12 +51,12 @@ class StreamItemComponent extends Component {
   }
 
   render () {
-    let { title, url, streamObject, getSummary } = this.props
+    const {title, url, streamObject, getSummary} = this.props
     return (
       <Link to={url} className={classes.container}>
         <div className={classes.media}>
           <MicroMapContainer
-            id={streamObject.stream.properties.slug + '-canvas'}
+            id={`${streamObject.stream.properties.slug}-canvas`}
             isVisible={this.props.isVisible}
             streamObject={streamObject}
           />
@@ -73,7 +75,8 @@ StreamItemComponent.propTypes = {
   title: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   streamObject: PropTypes.object.isRequired,
-  isVisible: PropTypes.bool.isRequired
+  isVisible: PropTypes.bool.isRequired,
+  getSummary: PropTypes.func.isRequired,
 }
 
 export default StreamItemComponent

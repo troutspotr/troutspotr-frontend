@@ -1,8 +1,6 @@
-import { PropTypes, Component } from 'react'
-
-const getIsOnlineStatusFromNavigator = () => {
-  return window.navigator.onLine
-}
+import {Component} from 'react'
+import PropTypes from 'prop-types'
+const getIsOnlineStatusFromNavigator = () => window.navigator.onLine
 
 class OfflineListenerComponent extends Component {
   constructor () {
@@ -11,7 +9,7 @@ class OfflineListenerComponent extends Component {
   }
 
   getOnlineStatus () {
-    let isOffline = getIsOnlineStatusFromNavigator() === false
+    const isOffline = getIsOnlineStatusFromNavigator() === false
     this.props.setIsOffline(isOffline)
   }
 
@@ -30,8 +28,6 @@ class OfflineListenerComponent extends Component {
   }
 }
 
-OfflineListenerComponent.propTypes = {
-  setIsOffline: PropTypes.func.isRequired
-}
+OfflineListenerComponent.propTypes = {'setIsOffline': PropTypes.func.isRequired}
 
 export default OfflineListenerComponent

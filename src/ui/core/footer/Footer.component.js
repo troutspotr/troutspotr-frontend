@@ -1,16 +1,17 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Footer.scss'
-import { MAP, LIST } from 'ui/core/Core.state'
-import { isEmpty } from 'lodash'
+import {LIST, MAP} from 'ui/core/Core.state'
+import {isEmpty} from 'lodash'
 import FooterGpsContainer from './Footer.gps.container'
 /* eslint-disable react/prefer-stateless-function */
 class FooterComponent extends Component {
   render () {
-    let { view, selectedStream } = this.props
-    let listText = isEmpty(selectedStream) ? 'List' : 'Details'
+    const {view, selectedStream} = this.props
+    const listText = isEmpty(selectedStream) ? 'List' : 'Details'
 
-    let listClass = view === LIST ? classes.selected : classes.item
-    let mapClass = view === MAP ? classes.selected : classes.item
+    const listClass = view === LIST ? classes.selected : classes.item
+    const mapClass = view === MAP ? classes.selected : classes.item
     return (<div className={classes.footer}>
       <div className={classes.menu}>
         <button onClick={this.props.setViewToList} className={listClass}>{listText}</button>
@@ -22,10 +23,10 @@ class FooterComponent extends Component {
 }
 
 FooterComponent.propTypes = {
-  view: PropTypes.string.isRequired,
-  setViewToMap: PropTypes.func.isRequired,
-  setViewToList: PropTypes.func.isRequired,
-  selectedStream: PropTypes.object
+  'view': PropTypes.string.isRequired,
+  'setViewToMap': PropTypes.func.isRequired,
+  'setViewToList': PropTypes.func.isRequired,
+  'selectedStream': PropTypes.object,
 }
 
 export default FooterComponent

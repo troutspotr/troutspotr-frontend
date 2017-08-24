@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Agreement.scss'
 import TermsOfService from './TermsOfService.component'
 import Intro from './Intro.component'
@@ -11,8 +12,12 @@ class AgreementComponent extends Component {
   }
 
   getProgress () {
-    let { hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy } = this.props
-    let progress = [false, false, false]
+    const {hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy} = this.props
+    const progress = [
+      false,
+      false,
+      false,
+    ]
     if (hasSeenIntroScreen === false) {
       progress[0] = true
       return progress
@@ -32,11 +37,11 @@ class AgreementComponent extends Component {
   }
 
   renderMeatballs () {
-    let progress = this.getProgress()
+    const progress = this.getProgress()
 
-    let meatballs = progress.map((p, i) => {
-      let className = p ? classes.selectedMeatball : classes.meatball
-      let number = i + 1
+    const meatballs = progress.map((p, i) => {
+      const className = p ? classes.selectedMeatball : classes.meatball
+      const number = i + 1
       return (<li key={number} className={className}>{number}</li>)
     })
 
@@ -48,7 +53,7 @@ class AgreementComponent extends Component {
   }
 
   renderContent () {
-    let { hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy } = this.props
+    const {hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy} = this.props
     if (hasSeenIntroScreen === false) {
       return <Intro advance={this.onAdvanceClick} />
     }
@@ -65,7 +70,7 @@ class AgreementComponent extends Component {
   }
 
   renderButtonText () {
-    let { hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy } = this.props
+    const {hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy} = this.props
 
     if (hasSeenIntroScreen === false) {
       return 'Review Terms of Service'
@@ -81,9 +86,9 @@ class AgreementComponent extends Component {
   }
 
   onAdvanceClick (time) {
-    let container = document.getElementById('scrollContainer')
+    const container = document.getElementById('scrollContainer')
     container.scrollTop = 0
-    let { hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy } = this.props
+    const {hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy} = this.props
 
     if (hasSeenIntroScreen === false) {
       return this.props.advanceIntro(time)
@@ -103,7 +108,7 @@ class AgreementComponent extends Component {
   }
 
   render () {
-    let { hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy, hasAgreedToTerms } = this.props
+    const {hasSeenIntroScreen, hasSeenTermsOfService, hasSeenPrivacyPolicy, hasAgreedToTerms} = this.props
     if (hasAgreedToTerms) {
       return null
     }
@@ -125,14 +130,14 @@ class AgreementComponent extends Component {
 }
 
 AgreementComponent.propTypes = {
-  agreeToTerms: PropTypes.func.isRequired,
-  advanceIntro: PropTypes.func.isRequired,
-  advanceTermsOfService: PropTypes.func.isRequired,
-  advanceToApp: PropTypes.func.isRequired,
-  hasAgreedToTerms: PropTypes.bool.isRequired,
-  hasSeenIntroScreen: PropTypes.bool.isRequired,
-  hasSeenTermsOfService: PropTypes.bool.isRequired,
-  hasSeenPrivacyPolicy: PropTypes.bool.isRequired
+  'agreeToTerms': PropTypes.func.isRequired,
+  'advanceIntro': PropTypes.func.isRequired,
+  'advanceTermsOfService': PropTypes.func.isRequired,
+  'advanceToApp': PropTypes.func.isRequired,
+  'hasAgreedToTerms': PropTypes.bool.isRequired,
+  'hasSeenIntroScreen': PropTypes.bool.isRequired,
+  'hasSeenTermsOfService': PropTypes.bool.isRequired,
+  'hasSeenPrivacyPolicy': PropTypes.bool.isRequired,
 }
 
 export default AgreementComponent

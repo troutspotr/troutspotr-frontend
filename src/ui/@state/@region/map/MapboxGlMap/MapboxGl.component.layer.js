@@ -1,17 +1,18 @@
-import { PropTypes, Component } from 'react'
-import { debounce } from 'lodash'
+import {Component} from 'react'
+import PropTypes from 'prop-types'
+import {debounce} from 'lodash'
 import shallowCompare from 'shallow-compare'
 
 class MapboxGlLayerComponent extends Component {
   componentDidMount () {
-    // load the layers.
+    // Load the layers.
     this.addLayers(this.props.map, this.props.layers)
 
-    // load our filters
+    // Load our filters
     this.addFilters(this.props.map, this.props.filters)
-    // load interactivity.
+    // Load interactivity.
     // We should debounce our events to reduce load on CPU.
-    this.proxyOnUpdateLayerFilter = debounce(this.updateLayerFilter, 20, { maxWait: 20 })
+    this.proxyOnUpdateLayerFilter = debounce(this.updateLayerFilter, 20, {'maxWait': 20})
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -19,20 +20,20 @@ class MapboxGlLayerComponent extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    let isDuplicate = nextProps === this.props
+    const isDuplicate = nextProps === this.props
     if (isDuplicate) {
       return
     }
 
-    let { layers, filters } = this.props
-    let isLayersUnchanged = layers === nextProps.layers
+    const {layers, filters} = this.props
+    const isLayersUnchanged = layers === nextProps.layers
     if (isLayersUnchanged === false) {
-      layers.forEach(layer => {
+      layers.forEach((layer) => {
         this.proxyOnUpdateLayerFilter(layer)
       })
     }
 
-    let isFiltersUnchanged = filters === nextProps.filters
+    const isFiltersUnchanged = filters === nextProps.filters
     if (isFiltersUnchanged === false) {
       this.addFilters(this.props.map, nextProps.filters)
     }
@@ -46,33 +47,26 @@ class MapboxGlLayerComponent extends Component {
     this.props.map.setFilter(layer.layerDefinition.id, layer.layerDefinition.filter)
   }
 
-  onLayerClick (e) {
-    let features = this.getInteractiveFeaturesOverPoint(e.point)
-    if (features == null || features.length === 0) {
-      return
-    }
-  }
-
   addFilters (map, filters) {
-    filters.forEach(filter => {
-      // check to see if we already have it.
+    filters.forEach((filter) => {
+      // Check to see if we already have it.
       map.setFilter(filter.layerId, filter.filterDefinition)
     })
   }
 
   addLayers (map, layers) {
-    layers.forEach(layer => {
+    layers.forEach((layer) => {
       map.addLayer(layer.layerDefinition, layer.insertBefore)
     })
   }
 
   removeLayers (map, layers) {
-    layers.forEach(layer => {
+    layers.forEach((layer) => {
       try {
         map.removeLayer(layer.layerDefinition.id)
       } catch (error) {
         if (__DEV__ === false) {
-          console.error(`There was an error removing the layer ${layer.id}`)
+          console.error(`There was an error removing the layer ${layer.id}`) // eslint-disable-line
         }
       }
     })
@@ -88,9 +82,9 @@ class MapboxGlLayerComponent extends Component {
 }
 
 MapboxGlLayerComponent.propTypes = {
-  layers: PropTypes.array.isRequired,
-  filters: PropTypes.array.isRequired,
-  map: PropTypes.object.isRequired
+  'layers': PropTypes.array.isRequired,
+  'filters': PropTypes.array.isRequired,
+  'map': PropTypes.object.isRequired,
 }
 
 export default MapboxGlLayerComponent

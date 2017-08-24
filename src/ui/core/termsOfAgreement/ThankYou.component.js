@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Agreement.scss'
 class ThankYouComponent extends Component {
   renderTitle () {
@@ -20,8 +21,6 @@ class ThankYouComponent extends Component {
   }
 }
 
-ThankYouComponent.propTypes = {
-  acceptTerms: PropTypes.func.isRequired
-}
+ThankYouComponent.propTypes = {'acceptTerms': PropTypes.func.isRequired}
 
 export default ThankYouComponent

@@ -1,9 +1,10 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './MicroMap.scss'
 import * as Micromap from './Micromap'
 
-// calling getBoundingClientRect in WebKit is
-// excruciatingly slow. CACHE IT FOR PERFORMANCE!
+// Calling getBoundingClientRect in WebKit is
+// Excruciatingly slow. CACHE IT FOR PERFORMANCE!
 let boundingRectangleCache = null
 
 class MicroMapComponent extends Component {
@@ -25,18 +26,18 @@ class MicroMapComponent extends Component {
     if (boundingRectangleCache == null) {
       boundingRectangleCache = this.canvasElement.parentElement.getBoundingClientRect()
     }
-    let { height, width } = boundingRectangleCache
+    const {height, width} = boundingRectangleCache
     this.width = width
     this.height = height
-    let devicePixelRatio = window.devicePixelRatio || 1
+    const devicePixelRatio = window.devicePixelRatio || 1
     this.canvasContext = Micromap.setUpCanvas(this.canvasElement, this.width, this.height, devicePixelRatio)
     this.dimensions = {
       width,
       height,
-      radius: (Math.min(width, height) - 11) * 0.5,
-      buffer: 3,
-      arcCompressionRatio: 0.90,
-      rotatePhase: Math.PI / 2
+      'radius': (Math.min(width, height) - 11) * 0.5,
+      'buffer': 3,
+      'arcCompressionRatio': 0.90,
+      'rotatePhase': Math.PI / 2,
     }
 
     this.isInitialized = true
@@ -54,11 +55,9 @@ class MicroMapComponent extends Component {
       return
     }
 
-    // it's polite to save our canvas style here.
-    // draw a big rectangle to clear our canvas.
-    // this.canvasContext.fillStyle = colors.MoodyGray
-    // this.canvasContext.save()
-    let offset = (Math.random() * 200) + 80
+    // It's polite to save our canvas style here.
+    // Draw a big rectangle to clear our canvas.
+    const offset = (Math.random() * 200) + 80
     setTimeout(() => {
       operation()
     }, offset)
@@ -81,8 +80,7 @@ class MicroMapComponent extends Component {
 }
 
 MicroMapComponent.propTypes = {
-  id: PropTypes.string.isRequired
-  // isVisible: PropTypes.bool.isRequired
+  'id': PropTypes.string.isRequired,
 }
 
 export default MicroMapComponent

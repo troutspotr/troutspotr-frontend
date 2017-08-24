@@ -10,7 +10,7 @@ const compile = () => {
   debug('Starting compiler.')
   return Promise.resolve()
     .then(() => webpackCompiler(webpackConfig))
-    .then(stats => {
+    .then((stats) => {
       if (stats.warnings.length && config.compiler_fail_on_warning) {
         throw new Error('Config set to fail on warning, exiting with status code "1".')
       }

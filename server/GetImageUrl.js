@@ -1,5 +1,5 @@
 const getImage = function (route, root) {
-  var path = route.path
+  const path = route.path
   if (route.streamData != null) {
     return `${root}/images${path}.jpg`
   }

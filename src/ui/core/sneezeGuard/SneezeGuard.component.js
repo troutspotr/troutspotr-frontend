@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './SneezeGuard.scss'
 class SneezeGuardComponent extends Component {
   onClick = () => {
@@ -12,8 +13,6 @@ class SneezeGuardComponent extends Component {
   }
 }
 
-SneezeGuardComponent.propTypes = {
-  close: PropTypes.func
-}
+SneezeGuardComponent.propTypes = {'close': PropTypes.func}
 
 export default SneezeGuardComponent

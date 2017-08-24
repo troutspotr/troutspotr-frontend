@@ -1,4 +1,4 @@
-import { PropTypes } from 'react'
+import PropTypes from 'prop-types'
 import MicroMapBaseComponent from './MicroMap.base.component'
 import * as Micromap from './Micromap'
 import shallowCompare from 'shallow-compare'
@@ -14,7 +14,7 @@ class MicroMapStreamComponent extends MicroMapBaseComponent {
   }
 
   renderToCanvas (streamObject) {
-    let operation = Micromap.drawStreamToCanvas.bind(null, this.canvasContext, streamObject, this.dimensions)
+    const operation = Micromap.drawStreamToCanvas.bind(null, this.canvasContext, streamObject, this.dimensions)
     this.deferredRenderToCanvas(operation)
   }
 
@@ -23,7 +23,7 @@ class MicroMapStreamComponent extends MicroMapBaseComponent {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    let isChanged = shallowCompare(this, nextProps, this.state)
+    const isChanged = shallowCompare(this, nextProps, this.state)
     if (isChanged === false) {
       return false
     }
@@ -41,9 +41,9 @@ class MicroMapStreamComponent extends MicroMapBaseComponent {
 }
 
 MicroMapStreamComponent.propTypes = {
-  streamObject: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
-  isVisible: PropTypes.bool.isRequired
+  'streamObject': PropTypes.object.isRequired,
+  'id': PropTypes.string.isRequired,
+  'isVisible': PropTypes.bool.isRequired,
 }
 
 export default MicroMapStreamComponent

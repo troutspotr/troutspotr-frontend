@@ -1,16 +1,10 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './MapOverlay.scss'
 import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 import AccessPointComponent from 'ui/@state/@region/@stream/details/AccessPoint.component'
 import AccessPointClasses from 'ui/@state/@region/@stream/details/Details.scss'
 
-// import { round } from 'lodash'
-// const BRIDGE_TYPES = {
-//   publicTrout: {text: 'asdf', className: 'asdf'},
-//   permissionRequired: {text: 'asdf', className: 'asdf'},
-//   unsafe: {text: 'asdf', className: 'asdf'},
-//   uninteresting: {text: 'asdf', className: 'asdf'}
-// }
 class AccessPointDetails extends Component {
   renderPublicAccess (selectedAccessPoint) {
     return (<AccessPointComponent
@@ -22,7 +16,7 @@ class AccessPointDetails extends Component {
       isHovered={false}
       location={null}
       onHover={() => {}}
-            />)
+    />)
   }
 
   renderPrivateAccess (selectedAccessPoint) {
@@ -51,12 +45,12 @@ class AccessPointDetails extends Component {
       isHovered={false}
       location={null}
       onHover={() => {}}
-            />)
+    />)
   }
 
   renderAccessPoint () {
-    let { selectedAccessPoint } = this.props
-    let { bridgeType } = selectedAccessPoint.properties
+    const {selectedAccessPoint} = this.props
+    const {bridgeType} = selectedAccessPoint.properties
     if (bridgeType === 'publicTrout') {
       return this.renderPublicAccess(selectedAccessPoint)
     } else if (bridgeType === 'permissionRequired') {
@@ -77,8 +71,8 @@ class AccessPointDetails extends Component {
 }
 
 AccessPointDetails.propTypes = {
-  selectedStream: React.PropTypes.object.isRequired,
-  selectedAccessPoint: React.PropTypes.object.isRequired
+  'selectedStream': PropTypes.object.isRequired,
+  'selectedAccessPoint': PropTypes.object.isRequired,
 }
 
 export default AccessPointDetails

@@ -1,23 +1,24 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './SvgMap.scss'
-import { isEmpty } from 'lodash'
+import {isEmpty} from 'lodash'
 import StreamCentroidComponent from './StreamCentroid.component'
 import shallowCompare from 'shallow-compare'
 
 class CentroidsLayerComponent extends Component {
   renderStreamCentroids () {
-    let { streamCentroidsGeoJson } = this.props
+    const {streamCentroidsGeoJson} = this.props
     if (isEmpty(streamCentroidsGeoJson)) {
       return null
     }
 
-    let decidedNotToRenderTheseThings = true
+    const decidedNotToRenderTheseThings = true
     if (decidedNotToRenderTheseThings) {
       return null
     }
 
-    let paths = streamCentroidsGeoJson.map((centroid, index) => {
-      let isOpen = this.props.getIsOpen(centroid.waterId)
+    const paths = streamCentroidsGeoJson.map((centroid, index) => {
+      const isOpen = this.props.getIsOpen(centroid.waterId)
       return (
         <StreamCentroidComponent
           geoJson={centroid}
@@ -35,12 +36,12 @@ class CentroidsLayerComponent extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    let shouldUpdate = shallowCompare(this, nextProps, nextState)
+    const shouldUpdate = shallowCompare(this, nextProps, nextState)
     return shouldUpdate
   }
 
   renderSelectedStreamCentroid () {
-    let { selectedStreamCentroid } = this.props
+    const {selectedStreamCentroid} = this.props
     if (selectedStreamCentroid == null) {
       return null
     }
@@ -59,7 +60,7 @@ class CentroidsLayerComponent extends Component {
   render () {
     return (
       <g>
-        <g className={classes.centroids} style={{ opacity: this.props.isStreamCentroidsDisplayed ? 1 : 0 }}>
+        <g className={classes.centroids} style={{'opacity': this.props.isStreamCentroidsDisplayed ? 1 : 0}}>
           {this.renderStreamCentroids()}
         </g>
         <g className={classes.selectedStreamCentroid}>
@@ -71,10 +72,13 @@ class CentroidsLayerComponent extends Component {
 }
 
 CentroidsLayerComponent.propTypes = {
-  streamCentroidsGeoJson: PropTypes.array,
-  getIsOpen: PropTypes.func.isRequired,
-  isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
-  selectedStreamCentroid: PropTypes.object
+  'streamCentroidsGeoJson': PropTypes.array,
+  'getIsOpen': PropTypes.func.isRequired,
+  'isStreamCentroidsDisplayed': PropTypes.bool.isRequired,
+  'selectedStreamCentroid': PropTypes.object,
+  pathGenerator: PropTypes.func.isRequired,
+  projection: PropTypes.func.isRequired,
+  selectedCentroidPathGenerator: PropTypes.func.isRequired,
 }
 
 export default CentroidsLayerComponent

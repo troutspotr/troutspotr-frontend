@@ -1,12 +1,13 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Map.scss'
 import MapboxGlContainer from './MapboxGlMap/MapboxGl.container'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
+import {LOADING_CONSTANTS} from 'ui/core/LoadingConstants'
 import LoadingComponent from 'ui/core/loading/Loading.component'
-import { browserHistory } from 'react-router'
+import {browserHistory} from 'react-router'
 import RegulationsOverlayContainer from './overlays/RegulationsOverlay.container'
 import DetailsOverlay from './overlays/DetailsOverlay.container'
-import { isEmpty, find, has } from 'lodash'
+import {find, has, isEmpty} from 'lodash'
 const MAP_ID = 'primary_map_id'
 class MapComponent extends Component {
   componentDidMount () {
@@ -18,7 +19,7 @@ class MapComponent extends Component {
     }
 
     if (this.state.mapboxGl) {
-      this.state.mapboxGl = null
+      this.state.mapboxGl = null // eslint-disable-line
     }
   }
 
@@ -35,8 +36,8 @@ class MapComponent extends Component {
       return
     }
 
-    let isNewStreamSelection = nextProps.selectedGeometry !== this.props.selectedGeometry
-    let isSelectedNewRoad = nextProps.selectedRoad !== this.props.selectedRoad && isEmpty(nextProps.selectedRoad) === false
+    const isNewStreamSelection = nextProps.selectedGeometry !== this.props.selectedGeometry
+    const isSelectedNewRoad = nextProps.selectedRoad !== this.props.selectedRoad && isEmpty(nextProps.selectedRoad) === false
     if (isNewStreamSelection) {
       if (isSelectedNewRoad) {
         this.props.selectFoculPoint(nextProps.selectedRoad)
@@ -44,8 +45,8 @@ class MapComponent extends Component {
       }
       if (nextProps.selectedGeometry != null) {
         this.props.selectMapFeature({
-          type: 'FeatureCollection',
-          features: nextProps.selectedGeometry.sections
+          'type': 'FeatureCollection',
+          'features': nextProps.selectedGeometry.sections,
         })
         return
       }
@@ -58,8 +59,8 @@ class MapComponent extends Component {
 
     if (nextProps.selectedRoad == null && this.props.selectedRoad != null) {
       this.props.selectMapFeature({
-        type: 'FeatureCollection',
-        features: nextProps.selectedGeometry.sections
+        'type': 'FeatureCollection',
+        'features': nextProps.selectedGeometry.sections,
       })
     }
   }
@@ -68,18 +69,17 @@ class MapComponent extends Component {
     try {
       this.performZoomOnFeature(nextProps)
     } catch (e) {
-      console.log(e)
+      console.log(e) // eslint-disable-line
     }
 
-    let previousModuleLoadStatus = this.props.mapboxModuleStatus
-    let currentlyVisible = nextProps.isVisible
+    const previousModuleLoadStatus = this.props.mapboxModuleStatus
+    const currentlyVisible = nextProps.isVisible
 
-    let isVisibleAndNeedsLoad = currentlyVisible &&
+    const isVisibleAndNeedsLoad = currentlyVisible &&
       previousModuleLoadStatus === LOADING_CONSTANTS.IS_NOT_STARTED
 
     if (isVisibleAndNeedsLoad) {
       this.props.loadMapModuleAsync()
-      return
     }
   }
 
@@ -117,68 +117,68 @@ class MapComponent extends Component {
   }
 
   userSelectedStreamAndAccessPoint (stream, accessPoint) {
-    let { selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad } = this.props
-    let hasSelectedGeometry = isEmpty(selectedGeometry) === false
-    let roadSlug = accessPoint.properties.slug
-    let streamId = accessPoint.properties.stream_gid
-    let streamSlug = streamDictionary[streamId].stream.properties.slug
-    let isSelectedStreamAlreadySelected = hasSelectedGeometry && selectedGeometry.stream.properties.gid === stream.properties.gid
-    let isAccessPointAlreadySelected = selectedRoad != null && selectedRoad.properties.slug === roadSlug
+    const {selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad} = this.props
+    const hasSelectedGeometry = isEmpty(selectedGeometry) === false
+    const roadSlug = accessPoint.properties.slug
+    const streamId = accessPoint.properties.stream_gid
+    const streamSlug = streamDictionary[streamId].stream.properties.slug
+    const isSelectedStreamAlreadySelected = hasSelectedGeometry && selectedGeometry.stream.properties.gid === stream.properties.gid
+    const isAccessPointAlreadySelected = selectedRoad != null && selectedRoad.properties.slug === roadSlug
     if (isSelectedStreamAlreadySelected) {
       if (isAccessPointAlreadySelected) {
-        // just zoom in on the road.
+        // Just zoom in on the road.
         this.props.selectFoculPoint(selectedRoad)
       }
       browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
       return
     }
 
-    // assume the user selected a new stream.
+    // Assume the user selected a new stream.
     browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}`)
   }
 
   userSelectedStream (stream) {
-    let { selectedGeometry, selectedState, selectedRegion } = this.props
-    let hasSelectedGeometry = isEmpty(selectedGeometry) === false
-    let slug = stream.properties.slug
-    let isAlreadySelected = hasSelectedGeometry && selectedGeometry.stream.properties.gid === stream.properties.gid
+    const {selectedGeometry, selectedState, selectedRegion} = this.props
+    const hasSelectedGeometry = isEmpty(selectedGeometry) === false
+    const slug = stream.properties.slug
+    const isAlreadySelected = hasSelectedGeometry && selectedGeometry.stream.properties.gid === stream.properties.gid
     if (isAlreadySelected) {
-      // zoom in anyways - they selected the stream. jsut recenter, would ya?
+      // Zoom in anyways - they selected the stream. jsut recenter, would ya?
       this.props.selectMapFeature({
-        type: 'FeatureCollection',
-        features: selectedGeometry.sections
+        'type': 'FeatureCollection',
+        'features': selectedGeometry.sections,
       })
     }
     browserHistory.push(`/${selectedState}/${selectedRegion}/${slug}`)
   }
 
   userSelectedAccessPoint = (accessPoint) => {
-    let { selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad } = this.props
-    let hasSelectedGeometry = isEmpty(selectedGeometry) === false
-    let streamId = accessPoint.properties.stream_gid
-    let streamSlug = streamDictionary[streamId].stream.properties.slug
-    let roadSlug = accessPoint.properties.slug
+    const {selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad} = this.props
+    const hasSelectedGeometry = isEmpty(selectedGeometry) === false
+    const streamId = accessPoint.properties.stream_gid
+    const streamSlug = streamDictionary[streamId].stream.properties.slug
+    const roadSlug = accessPoint.properties.slug
 
     if (hasSelectedGeometry) {
-      let soughtRoad = find(selectedGeometry.accessPoints, ap => ap.properties.slug === accessPoint.properties.slug)
-      let isSelectedRoadOnSelectedGeometry = isEmpty(soughtRoad) === false
+      const soughtRoad = find(selectedGeometry.accessPoints, (ap) => ap.properties.slug === accessPoint.properties.slug)
+      const isSelectedRoadOnSelectedGeometry = isEmpty(soughtRoad) === false
       if (isSelectedRoadOnSelectedGeometry) {
-        // check to see that it's already selected.
-        let isAlreadySelected = selectedRoad != null && selectedRoad.properties.slug === roadSlug
+        // Check to see that it's already selected.
+        const isAlreadySelected = selectedRoad != null && selectedRoad.properties.slug === roadSlug
         if (isAlreadySelected) {
-          // zoom in anyways - they selected the stream. jsut recenter, would ya?
+          // Zoom in anyways - they selected the stream. jsut recenter, would ya?
           this.props.selectFoculPoint(selectedRoad)
         }
         browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
       } else {
-        console.log('i believe the road was different than the stream - do you want to jump anyways?')
+        console.log('i believe the road was different than the stream - do you want to jump anyways?') // eslint-disable-line
       }
 
       return
     }
 
-    // they clicked on an access point but not a stream.
-    // let's just zoom in on what they selected.
+    // They clicked on an access point but not a stream.
+    // Let's just zoom in on what they selected.
     browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
   }
 
@@ -187,8 +187,8 @@ class MapComponent extends Component {
       return
     }
 
-    let stream = find(features, x => has(x.properties, 'water_id'))
-    let accessPoint = find(features, x => has(x.properties, 'alphabetLetter'))
+    const stream = find(features, (x) => has(x.properties, 'water_id'))
+    const accessPoint = find(features, (x) => has(x.properties, 'alphabetLetter'))
 
     if (isEmpty(stream) && isEmpty(accessPoint)) {
       return
@@ -211,8 +211,8 @@ class MapComponent extends Component {
   }
 
   render () {
-    let isMapLoaded = this.props.mapboxModuleStatus === LOADING_CONSTANTS.IS_SUCCESS
-    let { isReadyToInsertLayers } = this.props
+    const isMapLoaded = this.props.mapboxModuleStatus === LOADING_CONSTANTS.IS_SUCCESS
+    const {isReadyToInsertLayers} = this.props
     return (<div className={this.props.isVisible ? classes.mapContainer : classes.invisible}>
       {isMapLoaded && this.renderMap()}
       {isReadyToInsertLayers === false && this.renderLoading()}
@@ -221,24 +221,24 @@ class MapComponent extends Component {
 }
 
 MapComponent.propTypes = {
-  mapboxModule: PropTypes.object,
-  mapboxModuleStatus: PropTypes.string.isRequired,
-  isVisible: PropTypes.bool.isRequired,
-  isReadyToInsertLayers: PropTypes.bool.isRequired,
-  camera: PropTypes.object.isRequired,
-  ground: PropTypes.object.isRequired,
-  settings: PropTypes.object.isRequired,
-  interactivity: PropTypes.object.isRequired,
-  selectedState: React.PropTypes.string.isRequired,
-  selectedRegion: React.PropTypes.string.isRequired,
-  selectedGeometry: React.PropTypes.object,
-  loadMapModuleAsync: PropTypes.func.isRequired,
-  setIsMapInitialized: PropTypes.func.isRequired,
-  selectMapFeature: PropTypes.func.isRequired,
-  selectFoculPoint: PropTypes.func.isRequired,
-  selectedRoad: PropTypes.object,
-  streamDictionary: PropTypes.object.isRequired,
-  isRegionFinishedLoading: PropTypes.bool.isRequired
+  'mapboxModule': PropTypes.object,
+  'mapboxModuleStatus': PropTypes.string.isRequired,
+  'isVisible': PropTypes.bool.isRequired,
+  'isReadyToInsertLayers': PropTypes.bool.isRequired,
+  'camera': PropTypes.object.isRequired,
+  'ground': PropTypes.object.isRequired,
+  'settings': PropTypes.object.isRequired,
+  'interactivity': PropTypes.object.isRequired,
+  'selectedState': PropTypes.string.isRequired,
+  'selectedRegion': PropTypes.string.isRequired,
+  'selectedGeometry': PropTypes.object,
+  'loadMapModuleAsync': PropTypes.func.isRequired,
+  'setIsMapInitialized': PropTypes.func.isRequired,
+  'selectMapFeature': PropTypes.func.isRequired,
+  'selectFoculPoint': PropTypes.func.isRequired,
+  'selectedRoad': PropTypes.object,
+  'streamDictionary': PropTypes.object.isRequired,
+  'isRegionFinishedLoading': PropTypes.bool.isRequired,
 }
 
 export default MapComponent

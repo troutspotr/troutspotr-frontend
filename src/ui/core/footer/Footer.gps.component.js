@@ -1,33 +1,33 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Footer.scss'
 /* eslint-disable react/prefer-stateless-function */
-let GPS_ELEMENT_ID = 'js-footer-gps-id'
+const GPS_ELEMENT_ID = 'js-footer-gps-id'
 class FooterGpsComponent extends Component {
-  handleActivateGpsClick = e => {
+  handleActivateGpsClick = (e) => {
     this.props.startGpsTracking()
   }
 
-  handleDeactivateGpsClick = e => {
+  handleDeactivateGpsClick = (e) => {
     this.props.stopGpsTracking()
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     e.preventDefault()
-    let { checked } = e.target
+    const {checked} = e.target
     if (checked) {
       return this.handleActivateGpsClick()
-    } else {
-      return this.handleDeactivateGpsClick()
     }
+    return this.handleDeactivateGpsClick()
   }
 
   renderSliderText () {
-    let { isGpsActiveButLoading, isGpsActiveAndSuccessful, isGpsFailed } = this.props
-    let isChecked = isGpsActiveButLoading || isGpsActiveAndSuccessful
-    let leftText = isGpsActiveAndSuccessful ? 'On'
+    const {isGpsActiveButLoading, isGpsActiveAndSuccessful, isGpsFailed} = this.props
+    const isChecked = isGpsActiveButLoading || isGpsActiveAndSuccessful
+    const leftText = isGpsActiveAndSuccessful ? 'On'
       : isGpsActiveButLoading ? 'Wait' : 'On'
-    let rightText = isGpsFailed ? 'Fail' : 'Off'
-    let className = isChecked ? classes.sliderTextMove : classes.sliderText
+    const rightText = isGpsFailed ? 'Fail' : 'Off'
+    const className = isChecked ? classes.sliderTextMove : classes.sliderText
     return (
       <span className={className}>
         <span className={classes.left}>{leftText}</span>
@@ -38,13 +38,13 @@ class FooterGpsComponent extends Component {
   }
 
   render () {
-    let { isGpsTrackingSupported, isGpsActiveButLoading, isGpsActiveAndSuccessful, isGpsFailed } = this.props
+    const {isGpsTrackingSupported, isGpsActiveButLoading, isGpsActiveAndSuccessful, isGpsFailed} = this.props
     if (isGpsTrackingSupported === false) {
       return null
     }
-    let isInactive = isGpsActiveButLoading
-    let isChecked = isGpsActiveButLoading || isGpsActiveAndSuccessful
-    let switchClassName = classes.switch
+    const isInactive = isGpsActiveButLoading
+    const isChecked = isGpsActiveButLoading || isGpsActiveAndSuccessful
+    const switchClassName = classes.switch
     return (
       <div className={classes.gpsContainer} >
         <div className={classes.gpsContent}>
@@ -53,7 +53,7 @@ class FooterGpsComponent extends Component {
             <input
               id={GPS_ELEMENT_ID}
               disabled={isInactive}
-              type='checkbox'
+              type="checkbox"
               checked={isChecked}
               onChange={this.handleChange}
             />
@@ -68,15 +68,15 @@ class FooterGpsComponent extends Component {
 }
 
 FooterGpsComponent.propTypes = {
-  isGpsTrackingSupported: PropTypes.bool.isRequired,
-  // status: PropTypes.string.isRequired,
-  // isGpsTrackingActive: PropTypes.bool.isRequired,
-  // gpsCoordinateFeature: PropTypes.object,
-  isGpsActiveButLoading: PropTypes.bool.isRequired,
-  isGpsActiveAndSuccessful: PropTypes.bool.isRequired,
-  startGpsTracking: PropTypes.func.isRequired,
-  stopGpsTracking: PropTypes.func.isRequired,
-  isGpsFailed: PropTypes.bool.isRequired
+  'isGpsTrackingSupported': PropTypes.bool.isRequired,
+  // Status: PropTypes.string.isRequired,
+  // IsGpsTrackingActive: PropTypes.bool.isRequired,
+  // GpsCoordinateFeature: PropTypes.object,
+  'isGpsActiveButLoading': PropTypes.bool.isRequired,
+  'isGpsActiveAndSuccessful': PropTypes.bool.isRequired,
+  'startGpsTracking': PropTypes.func.isRequired,
+  'stopGpsTracking': PropTypes.func.isRequired,
+  'isGpsFailed': PropTypes.bool.isRequired,
 }
 
 export default FooterGpsComponent

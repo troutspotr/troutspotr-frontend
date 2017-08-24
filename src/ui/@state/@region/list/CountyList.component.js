@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './List.scss'
-import { isEmpty } from 'lodash'
+import {isEmpty} from 'lodash'
 import StreamListComponent from './StreamList.component'
 import shallowCompare from 'shallow-compare'
 class CountyListComponent extends Component {
   renderCounty (county, index) {
-    let { gid, name, streams } = county
+    const {gid, name, streams} = county
     return (<li key={gid} className={classes.countyListItem}>
       <div className={classes.listHeaderContainer}>
 
@@ -22,12 +23,12 @@ class CountyListComponent extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    let shouldUpdate = shallowCompare(this, nextProps, nextState)
+    const shouldUpdate = shallowCompare(this, nextProps, nextState)
     return shouldUpdate
   }
 
   renderCounties () {
-    let { visibleCounties } = this.props
+    const {visibleCounties} = this.props
     if (isEmpty(visibleCounties)) {
       return null
     }
@@ -47,11 +48,11 @@ class CountyListComponent extends Component {
 }
 
 CountyListComponent.propTypes = {
-  isListVisible: React.PropTypes.bool.isRequired,
-  visibleCounties: React.PropTypes.array.isRequired,
-  selectedState: React.PropTypes.string.isRequired,
-  selectedRegion: React.PropTypes.string.isRequired,
-  getSummary: React.PropTypes.func.isRequired
+  'isListVisible': PropTypes.bool.isRequired,
+  'visibleCounties': PropTypes.array.isRequired,
+  'selectedState': PropTypes.string.isRequired,
+  'selectedRegion': PropTypes.string.isRequired,
+  'getSummary': PropTypes.func.isRequired,
 }
 
 export default CountyListComponent

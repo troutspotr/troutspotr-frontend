@@ -1,11 +1,12 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Minimap.scss'
-import { isRootPageByUrl, isStatePageByUrl } from 'ui/Location.selectors'
+import {isRootPageByUrl, isStatePageByUrl} from 'ui/Location.selectors'
 import debounce from 'lodash/debounce'
 import SvgMapComponent from './svgMinimap/SvgMap.component'
 import ActionButtonComponent from '../actionButton/ActionButton.component'
-import { isEmpty, find } from 'lodash'
-import { browserHistory } from 'react-router'
+import {find, isEmpty} from 'lodash'
+import {browserHistory} from 'react-router'
 const MINIMAP_WIDTH = 50
 class MinimapComponent extends Component {
   constructor () {
@@ -27,13 +28,13 @@ class MinimapComponent extends Component {
   }
 
   listenToRoutes () {
-    let { router } = this.props
+    const {router} = this.props
     if (router == null) {
       console.log('No router found. Check Minimap component')
       return
     }
 
-    router.listen(({ pathname }) => {
+    router.listen(({pathname}) => {
       if (isRootPageByUrl(pathname) || isStatePageByUrl(pathname)) {
         this.props.expand(true)
         return
@@ -58,13 +59,15 @@ class MinimapComponent extends Component {
     }
   }
 
+  /* eslint-disable complexity */
+  /* eslint-disable max-depth */
   getCSSRule (ruleName, deleteFlag) {
     ruleName = ruleName.toLowerCase()
     if (document.styleSheets) {
-      for (var i = 0; i < document.styleSheets.length; i++) {
-        var styleSheet = document.styleSheets[i]
-        var ii = 0
-        var cssRule = false
+      for (let i = 0; i < document.styleSheets.length; i++) {
+        const styleSheet = document.styleSheets[i]
+        let ii = 0
+        let cssRule = false
         do {
           if (styleSheet.cssRules) {
             cssRule = styleSheet.cssRules[ii]
@@ -80,9 +83,8 @@ class MinimapComponent extends Component {
                   styleSheet.removeRule(ii)
                 }
                 return true
-              } else {
-                return cssRule
               }
+              return cssRule
             }
           }
           ii++
@@ -91,25 +93,27 @@ class MinimapComponent extends Component {
     }
     return false
   }
+  /* eslint-enable complexity */
+  /* eslint-enable max-depth */
 
   resizeEvent () {
-    let width = (window.innerWidth > 0) ? window.innerWidth : screen.width
-    let height = (window.innerHeight > 0) ? window.innerHeight : screen.height
+    const width = (window.innerWidth > 0) ? window.innerWidth : screen.width
+    const height = (window.innerHeight > 0) ? window.innerHeight : screen.height
 
-    let minimumDimension = Math.min(width, height - 170)
-    let ratio = minimumDimension / MINIMAP_WIDTH
-    let soughtClassRule = `.${classes.minimapContent}.${classes.expand}`
+    const minimumDimension = Math.min(width, height - 170)
+    const ratio = minimumDimension / MINIMAP_WIDTH
+    const soughtClassRule = `.${classes.minimapContent}.${classes.expand}`
 
-    let result = this.getCSSRule(soughtClassRule)
-    let translateY = MINIMAP_WIDTH + 45
-    let translateX = (width - (ratio * MINIMAP_WIDTH)) / 2
-    let newStyle = `translateY(${Math.round(translateY)}px) translateX(${-Math.round(translateX)}px) scale(${ratio})`
+    const result = this.getCSSRule(soughtClassRule)
+    const translateY = MINIMAP_WIDTH + 45
+    const translateX = (width - (ratio * MINIMAP_WIDTH)) / 2
+    const newStyle = `translateY(${Math.round(translateY)}px) translateX(${-Math.round(translateX)}px) scale(${ratio})`
 
     result.style.transform = newStyle
   }
 
   onSelectState (e) {
-    let isNoRegionSelected = isEmpty(this.props.selectedRegion)
+    const isNoRegionSelected = isEmpty(this.props.selectedRegion)
     if (this.props.isRootPage || isNoRegionSelected) {
       return
     }
@@ -118,8 +122,8 @@ class MinimapComponent extends Component {
   }
 
   selectRegion (e, region) {
-    let shouldRespond = this.props.isExpanded
-    // do not respond to clicks when not expanded
+    const shouldRespond = this.props.isExpanded
+    // Do not respond to clicks when not expanded
     if (shouldRespond === false) {
       e.preventDefault()
       return false
@@ -127,18 +131,18 @@ class MinimapComponent extends Component {
 
     e.stopPropagation()
     this.props.expand(false)
-    let states = this.props.statesGeoJson.features
+    const states = this.props.statesGeoJson.features
     if (isEmpty(states)) {
       throw new Error('Could not find state for region ', region)
     }
 
-    let soughtState = find(states, inspectedState => inspectedState.properties.gid === region.properties.state_gid)
+    const soughtState = find(states, (inspectedState) => inspectedState.properties.gid === region.properties.state_gid)
     if (soughtState == null) {
       throw new Error('Could not find state for region ', region)
     }
 
-    let stateShortName = soughtState.properties.short_name.toLowerCase()
-    let path = `/${stateShortName}/${region.properties.name.toLowerCase()}`
+    const stateShortName = soughtState.properties.short_name.toLowerCase()
+    const path = `/${stateShortName}/${region.properties.name.toLowerCase()}`
     browserHistory.push(path)
   }
 
@@ -158,15 +162,15 @@ class MinimapComponent extends Component {
   }
 
   render () {
-    let { isExpanded } = this.props
-    let expandClass = isExpanded ? classes.expand : null
-    let isMapMinimapLoaded = this.props.statesGeoJson != null && this.props.statesGeoJson.features != null
-    let isViewingStreamDetailsAndNotExpanded = isExpanded === false
+    const {isExpanded} = this.props
+    const expandClass = isExpanded ? classes.expand : null
+    const isMapMinimapLoaded = this.props.statesGeoJson != null && this.props.statesGeoJson.features != null
+    const isViewingStreamDetailsAndNotExpanded = isExpanded === false
 
-    let streamCentroidsGeoJson = isViewingStreamDetailsAndNotExpanded
+    const streamCentroidsGeoJson = isViewingStreamDetailsAndNotExpanded
       ? emptyArray
       : this.props.streamCentroidsGeoJson
-    let isCloseButtonActive = this.props.isRootPage === false && this.props.isExpanded && isEmpty(this.props.selectedRegion) === false
+    const isCloseButtonActive = this.props.isRootPage === false && this.props.isExpanded && isEmpty(this.props.selectedRegion) === false
     return (
       <div className={classes.container}>
         <div className={classes.backButtonContainer}>
@@ -174,10 +178,10 @@ class MinimapComponent extends Component {
             click={this.backButtonPressed}
             isActive={isCloseButtonActive}
           >
-            <span className={classes.close + ' ' + classes.black} />
+            <span className={`${classes.close} ${classes.black}`} />
           </ActionButtonComponent>
         </div>
-        <div className={classes.minimapContent + ' ' + expandClass} onClick={this.onSelectState}>
+        <div className={`${classes.minimapContent} ${expandClass}`} onClick={this.onSelectState}>
           {isMapMinimapLoaded && <SvgMapComponent
             statesGeoJson={this.props.statesGeoJson}
             countiesGeoJson={this.props.countiesGeoJson}
@@ -194,7 +198,7 @@ class MinimapComponent extends Component {
             cachedRegions={this.props.cachedRegions}
             isOffline={this.props.isOffline}
             currentGpsCoordinatesFeature={this.props.currentGpsCoordinatesFeature}
-                                 />}
+          />}
         </div>
 
       </div>
@@ -203,24 +207,24 @@ class MinimapComponent extends Component {
 }
 
 MinimapComponent.propTypes = {
-  isExpanded: PropTypes.bool.isRequired,
-  router: PropTypes.object.isRequired,
-  isRootPage: PropTypes.bool.isRequired,
-  statesGeoJson: PropTypes.object.isRequired,
-  countiesGeoJson: PropTypes.object.isRequired,
-  regionsGeoJson: PropTypes.object.isRequired,
-  streamCentroidsGeoJson: PropTypes.array,
-  // tableOfContentsLoadingStatus: PropTypes.string.isRequired,
-  selectedState: PropTypes.object,
-  selectedRegion: PropTypes.object,
-  selectedStreamCentroid: PropTypes.object,
-  getIsOpen: PropTypes.func.isRequired,
-  isStreamCentroidsDisplayed: PropTypes.bool.isRequired,
-  cachedRegions: PropTypes.object.isRequired,
-  isOffline: PropTypes.bool.isRequired,
-  expand: PropTypes.func.isRequired,
-  fetchTableOfContents: PropTypes.func.isRequired,
-  currentGpsCoordinatesFeature: PropTypes.object
+  'isExpanded': PropTypes.bool.isRequired,
+  'router': PropTypes.object.isRequired,
+  'isRootPage': PropTypes.bool.isRequired,
+  'statesGeoJson': PropTypes.object.isRequired,
+  'countiesGeoJson': PropTypes.object.isRequired,
+  'regionsGeoJson': PropTypes.object.isRequired,
+  'streamCentroidsGeoJson': PropTypes.array,
+  // TableOfContentsLoadingStatus: PropTypes.string.isRequired,
+  'selectedState': PropTypes.object,
+  'selectedRegion': PropTypes.object,
+  'selectedStreamCentroid': PropTypes.object,
+  'getIsOpen': PropTypes.func.isRequired,
+  'isStreamCentroidsDisplayed': PropTypes.bool.isRequired,
+  'cachedRegions': PropTypes.object.isRequired,
+  'isOffline': PropTypes.bool.isRequired,
+  'expand': PropTypes.func.isRequired,
+  'fetchTableOfContents': PropTypes.func.isRequired,
+  'currentGpsCoordinatesFeature': PropTypes.object,
 }
 
 const emptyArray = []

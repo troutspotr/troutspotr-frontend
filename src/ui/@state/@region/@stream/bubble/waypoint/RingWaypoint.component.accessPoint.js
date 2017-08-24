@@ -1,10 +1,11 @@
-import React, { PropTypes, Component } from 'react'
-import { startsWith, isEmpty } from 'lodash'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import {isEmpty, startsWith} from 'lodash'
 import RingWaypointLineComponent from './RingWaypoint.component.line'
 import RingWaypointLabelComponent from './RingWaypoint.component.label'
 import accessPointClasses from './RingWaypoint.accessPoint.scss'
 import waypointClasses from './RingWaypoint.scss'
-import { crossingTypes } from 'api/GeoApi.transform'
+import {crossingTypes} from 'api/GeoApi.transform'
 class RingWaypointAccessPointComponent extends Component {
   constructor () {
     super()
@@ -14,17 +15,17 @@ class RingWaypointAccessPointComponent extends Component {
   }
 
   shouldComponentUpdate (nextProps) {
-    let gid = this.props.accessPoint.properties.gid
-    let { selectedAccessPoint, hoveredRoad } = this.props
+    const gid = this.props.accessPoint.properties.gid
+    const {selectedAccessPoint, hoveredRoad} = this.props
 
-    let isSelected = isEmpty(selectedAccessPoint) === false && gid === selectedAccessPoint.properties.gid
-    let isHovered = isEmpty(hoveredRoad) === false && gid === hoveredRoad.properties.gid
+    const isSelected = isEmpty(selectedAccessPoint) === false && gid === selectedAccessPoint.properties.gid
+    const isHovered = isEmpty(hoveredRoad) === false && gid === hoveredRoad.properties.gid
 
-    let nextSelectedAccessPoint = nextProps.selectedAccessPoint
-    let nextHoveredRoad = nextProps.hoveredRoad
+    const nextSelectedAccessPoint = nextProps.selectedAccessPoint
+    const nextHoveredRoad = nextProps.hoveredRoad
 
-    let wasSelected = isEmpty(nextSelectedAccessPoint) === false && gid === nextSelectedAccessPoint.properties.gid
-    let wasHovered = isEmpty(nextHoveredRoad) === false && gid === nextHoveredRoad.properties.gid
+    const wasSelected = isEmpty(nextSelectedAccessPoint) === false && gid === nextSelectedAccessPoint.properties.gid
+    const wasHovered = isEmpty(nextHoveredRoad) === false && gid === nextHoveredRoad.properties.gid
 
     if (isSelected || wasSelected) {
       return true
@@ -41,8 +42,8 @@ class RingWaypointAccessPointComponent extends Component {
       className={waypointClasses.target}
       cx={dotXScreenCoordinate}
       cy={dotYScreenCoordinate}
-      r='1.5'
-            />)
+      r="1.5"
+    />)
   }
 
   renderUsHighway (offsetLocationDegrees, radius, width, height, labelOffsetFromRadius) {
@@ -57,14 +58,14 @@ class RingWaypointAccessPointComponent extends Component {
         r={8}
       />
       <text
-        textAnchor='middle' x={0} y={4}
-        dominantBaseline='central'
+        textAnchor="middle" x={0} y={4}
+        dominantBaseline="central"
       >{text}</text>
     </g>)
   }
 
   decideRoadShield (roadType, isSelected) {
-    let { alphabetLetter, bridgeType } = roadType.properties
+    const {alphabetLetter, bridgeType} = roadType.properties
     if (bridgeType === crossingTypes.publicTrout) {
       return this.renderDefaultMarker(
         alphabetLetter, isSelected ? accessPointClasses.selectedPublicTroutBridge : accessPointClasses.publicTroutBridge)
@@ -74,25 +75,24 @@ class RingWaypointAccessPointComponent extends Component {
       return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedUnsafeBridge : accessPointClasses.unsafeBridge)
     } else if (bridgeType === crossingTypes.uninteresting) {
       return null
-      // this.renderDefaultMarker(
-      //  alphabetLetter, isSelected ? accessPointClasses.selectedUninterestingBridge : accessPointClasses.uninterestingBridge)
+      // This.renderDefaultMarker(
+      //  AlphabetLetter, isSelected ? accessPointClasses.selectedUninterestingBridge : accessPointClasses.uninterestingBridge)
     }
-    // return this.renderDefaultMarker
+    // Return this.renderDefaultMarker
   }
 
   getXCoordinate (radialPosition, labelOffsetFromRadius, width) {
-    let result = labelOffsetFromRadius * Math.cos((-Math.PI * 0.5) + radialPosition) + (width * 0.5)
+    const result = labelOffsetFromRadius * Math.cos((-Math.PI * 0.5) + radialPosition) + (width * 0.5)
     return result
   }
 
   onClick (e) {
-    // i swear this is the dumbest thing...
-    // but clicking on links in mobile safari added to homescreen
-    // causes it to try to bug out and open a new tab in ios safari.
+    // I swear this is the dumbest thing...
+    // But clicking on links in mobile safari added to homescreen
+    // Causes it to try to bug out and open a new tab in ios safari.
     // https://www.bennadel.com/blog/2302-preventing-links-in-standalone-iphone-applications-from-opening-in-mobile-safari.htm
-
     e.preventDefault()
-    let hash = `#${this.props.accessPoint.properties.slug}`
+    const hash = `#${this.props.accessPoint.properties.slug}`
     location.href = hash
     return false
   }
@@ -108,45 +108,45 @@ class RingWaypointAccessPointComponent extends Component {
   }
 
   renderInterstateIcon (number) {
-    let asdf = -6
+    const asdf = -6
     return (<g>
-      <use className={accessPointClasses.roadSignText} xlinkHref='#us-interstate' x={asdf} y={asdf} />
+      <use className={accessPointClasses.roadSignText} xlinkHref="#us-interstate" x={asdf} y={asdf} />
       <text
         className={accessPointClasses.roadSignText}
-        textAnchor='middle'
+        textAnchor="middle"
         x={asdf + 6}
         y={asdf + 6}
-        dominantBaseline='central'
+        dominantBaseline="central"
       >{number}</text>
     </g>)
   }
 
   renderUsHighwayIcon (number) {
-    let asdf = -6
+    const asdf = -6
     return (<g>
-      <use className={accessPointClasses.roadSign} xlinkHref='#us-highway' x={asdf} y={asdf} />
-      <text textAnchor='middle' x={asdf + 6} y={asdf + 6} dominantBaseline='central'>{number}</text>
+      <use className={accessPointClasses.roadSign} xlinkHref="#us-highway" x={asdf} y={asdf} />
+      <text textAnchor="middle" x={asdf + 6} y={asdf + 6} dominantBaseline="central">{number}</text>
     </g>)
   }
 
   renderMnHighwayIcon (number) {
-    let asdf = -6
+    const asdf = -6
     return (<g>
-      <use className={accessPointClasses.roadSign} xlinkHref='#mn-highway' x={asdf} y={asdf} />
+      <use className={accessPointClasses.roadSign} xlinkHref="#mn-highway" x={asdf} y={asdf} />
       <text
         className={accessPointClasses.roadSignText}
-        textAnchor='middle' x={asdf + 6} y={asdf + 7}
-        dominantBaseline='central'
+        textAnchor="middle" x={asdf + 6} y={asdf + 7}
+        dominantBaseline="central"
       >{number}</text>
     </g>)
-    // return null
+    // Return null
   }
 
   renderRailroadIcon () {
-    let asdf = -6
-    // railroad
+    const asdf = -6
+    // Railroad
     return (<g>
-      <use className={accessPointClasses.roadSign} xlinkHref='#railroad' x={asdf} y={asdf} />
+      <use className={accessPointClasses.roadSign} xlinkHref="#railroad" x={asdf} y={asdf} />
     </g>)
   }
 
@@ -159,36 +159,36 @@ class RingWaypointAccessPointComponent extends Component {
   }
 
   renderMnCountyRoad (number) {
-    let asdf = -6
+    const asdf = -6
     return (<g>
-      <use className={accessPointClasses.roadSign} xlinkHref='#mn-county' x={asdf} y={asdf} />
+      <use className={accessPointClasses.roadSign} xlinkHref="#mn-county" x={asdf} y={asdf} />
       <text
         className={accessPointClasses.roadSignTextDark}
-        textAnchor='middle'
+        textAnchor="middle"
         x={asdf + 6}
         y={asdf + 6}
-        dominantBaseline='central'
+        dominantBaseline="central"
       >{number}</text>
     </g>)
   }
 
   getYCoordinate (radialPosition, labelOffsetFromRadius, height) {
-    let result = labelOffsetFromRadius * Math.sin((-Math.PI * 0.5) + radialPosition) + (height * 0.5)
+    const result = labelOffsetFromRadius * Math.sin((-Math.PI * 0.5) + radialPosition) + (height * 0.5)
     return result
   }
 
   debuggerInterstate (number) {
-    let asdf = -6
+    const asdf = -6
     return (<g>
-      <use className={accessPointClasses.roadSign} xlinkHref='#us-interstate' x={asdf} y={asdf} />
-      <text textAnchor='middle' x={asdf + 6} y={asdf + 5} dominantBaseline='central'>{number}</text>
+      <use className={accessPointClasses.roadSign} xlinkHref="#us-interstate" x={asdf} y={asdf} />
+      <text textAnchor="middle" x={asdf + 6} y={asdf + 5} dominantBaseline="central">{number}</text>
     </g>)
   }
 
   getLabelText () {
-    let roadId = this.props.accessPoint.properties.road_type_id
-    let streetName = this.props.accessPoint.properties.street_name
-    let roadTypeDictionary = this.props.roadTypesDictionary
+    const roadId = this.props.accessPoint.properties.road_type_id
+    const streetName = this.props.accessPoint.properties.street_name
+    const roadTypeDictionary = this.props.roadTypesDictionary
     if (roadTypeDictionary[roadId].prefix != null) {
       if (roadId === 1) {
         return `${roadTypeDictionary[roadId].prefix} ${this.props.accessPoint.properties.road_shield_text}`
@@ -209,48 +209,51 @@ class RingWaypointAccessPointComponent extends Component {
   }
 
   getMarkerComponent () {
-    // let externalLink = <use xlinkHref='#externalLink' x={asdf - 4} y={asdf} />
-    // let asdf = -6
+    // Let externalLink = <use xlinkHref='#externalLink' x={asdf - 4} y={asdf} />
+    // Let asdf = -6
     return (<g>
-      <rect x='-3' y='-0.5' width='5' height='1' />
+      <rect x="-3" y="-0.5" width="5" height="1" />
     </g>)
   }
 
   render () {
-    let { accessPoint, projection } = this.props
-    let isUninteresting = accessPoint.properties.bridgeType === crossingTypes.uninteresting
+    const {accessPoint, projection} = this.props
+    const isUninteresting = accessPoint.properties.bridgeType === crossingTypes.uninteresting
     if (isUninteresting) {
       return null
     }
-    let normalizedOffset = accessPoint.properties.linear_offset
-    let accessPointWorldCoodinates = {
-      latitude: accessPoint.properties.centroid_latitude,
-      longitude: accessPoint.properties.centroid_longitude
+    const normalizedOffset = accessPoint.properties.linear_offset
+    const accessPointWorldCoodinates = {
+      'latitude': accessPoint.properties.centroid_latitude,
+      'longitude': accessPoint.properties.centroid_longitude,
     }
 
-    // this is the coordinate of the dot inside the Ring
-    let subjectLatitude = accessPointWorldCoodinates.latitude
-    let subjectLongitude = accessPointWorldCoodinates.longitude
+    // This is the coordinate of the dot inside the Ring
+    const subjectLatitude = accessPointWorldCoodinates.latitude
+    const subjectLongitude = accessPointWorldCoodinates.longitude
 
-    let subjectScreenCoordinates = projection([subjectLongitude, subjectLatitude])
-    let labelText = this.getLabelText()
+    const subjectScreenCoordinates = projection([
+      subjectLongitude,
+      subjectLatitude,
+    ])
+    const labelText = this.getLabelText()
 
-    let markerComponent = this.getMarkerComponent()
-    // let roadType = this.props.accessPoint.properties.road_type_id
-    // let roadNumber = this.props.accessPoint.properties.road_shield_text
-    // let isBoring = this.props.accessPoint.properties.is_over_trout_stream !== 1
-    let selectedAccessPoint = this.props.selectedAccessPoint
-    let hoveredRoad = this.props.hoveredRoad
-    let isSelected = isEmpty(selectedAccessPoint) === false && accessPoint.properties.gid === selectedAccessPoint.properties.gid
-    let isHovered = isEmpty(hoveredRoad) === false && accessPoint.properties.gid === hoveredRoad.properties.gid
-    // let isHovered = false
-    // let isSelected = true
+    const markerComponent = this.getMarkerComponent()
+    // Let roadType = this.props.accessPoint.properties.road_type_id
+    // Let roadNumber = this.props.accessPoint.properties.road_shield_text
+    // Let isBoring = this.props.accessPoint.properties.is_over_trout_stream !== 1
+    const selectedAccessPoint = this.props.selectedAccessPoint
+    const hoveredRoad = this.props.hoveredRoad
+    const isSelected = isEmpty(selectedAccessPoint) === false && accessPoint.properties.gid === selectedAccessPoint.properties.gid
+    const isHovered = isEmpty(hoveredRoad) === false && accessPoint.properties.gid === hoveredRoad.properties.gid
+    // Let isHovered = false
+    // Let isSelected = true
 
-    // let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
-    let waypointCssClass = isSelected ? waypointClasses.selectedWaypoint : isHovered ? waypointClasses.hoveredWaypoint : waypointClasses.waypoint
-    let iconComponent = this.decideRoadShield(accessPoint, isSelected)
-    let hash = `#${accessPoint.properties.slug}`
-    // return null
+    // Let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
+    const waypointCssClass = isSelected ? waypointClasses.selectedWaypoint : isHovered ? waypointClasses.hoveredWaypoint : waypointClasses.waypoint
+    const iconComponent = this.decideRoadShield(accessPoint, isSelected)
+    const hash = `#${accessPoint.properties.slug}`
+    // Return null
     return (<g>
       <a
         xlinkHref={hash}
@@ -281,20 +284,20 @@ class RingWaypointAccessPointComponent extends Component {
 }
 
 RingWaypointAccessPointComponent.propTypes = {
-  accessPoint: PropTypes.object.isRequired,
-  projection: PropTypes.func.isRequired,
-  selectedAccessPoint: PropTypes.object,
-  hoveredRoad: PropTypes.object,
-  roadTypesDictionary: PropTypes.object,
-  // setSelectedRoad: PropTypes.func.isRequired,
-  setHoveredRoad: PropTypes.func.isRequired,
-  layout: PropTypes.shape({
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    radius: PropTypes.number.isRequired,
-    arcCompressionRatio: PropTypes.number.isRequired,
-    rotatePhase: PropTypes.number.isRequired
-  })
+  'accessPoint': PropTypes.object.isRequired,
+  'projection': PropTypes.func.isRequired,
+  'selectedAccessPoint': PropTypes.object,
+  'hoveredRoad': PropTypes.object,
+  'roadTypesDictionary': PropTypes.object,
+  // SetSelectedRoad: PropTypes.func.isRequired,
+  'setHoveredRoad': PropTypes.func.isRequired,
+  'layout': PropTypes.shape({
+    'width': PropTypes.number.isRequired,
+    'height': PropTypes.number.isRequired,
+    'radius': PropTypes.number.isRequired,
+    'arcCompressionRatio': PropTypes.number.isRequired,
+    'rotatePhase': PropTypes.number.isRequired,
+  }),
 }
 
 export default RingWaypointAccessPointComponent

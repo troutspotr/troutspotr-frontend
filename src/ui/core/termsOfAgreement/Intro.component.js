@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Agreement.scss'
 
 class IntroComponent extends Component {
@@ -38,8 +39,8 @@ class IntroComponent extends Component {
   }
 
   onAdvanceClick = () => {
-    let newTime = new Date()
-    let time = newTime - this.time
+    const newTime = new Date()
+    const time = newTime - this.time
     this.props.advance(time)
   }
 
@@ -53,8 +54,6 @@ class IntroComponent extends Component {
   }
 }
 
-IntroComponent.propTypes = {
-  advance: PropTypes.func.isRequired
-}
+IntroComponent.propTypes = {'advance': PropTypes.func.isRequired}
 
 export default IntroComponent

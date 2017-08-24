@@ -1,12 +1,11 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const TitleComponent = (props) => {
-  let { title } = props
+  const {title} = props
   return (<span>{title}</span>)
 }
 
-TitleComponent.propTypes = {
-  title:  PropTypes.string
-}
+TitleComponent.propTypes = {'title': PropTypes.string}
 
 export default TitleComponent

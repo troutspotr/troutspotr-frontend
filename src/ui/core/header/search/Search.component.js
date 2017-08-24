@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Search.scss'
 class SearchComponent extends Component {
   constructor () {
@@ -7,7 +8,7 @@ class SearchComponent extends Component {
   }
 
   onTextChange (e) {
-    let text = e.target.value
+    const text = e.target.value
     this.props.updateSearchText(text)
   }
 
@@ -15,12 +16,12 @@ class SearchComponent extends Component {
     return (
       <span className={classes.streamSearch}>
         <input
-          id='streamSearch'
-          type='search'
-          placeholder='Search Streams'
+          id="streamSearch"
+          type="search"
+          placeholder="Search Streams"
           value={this.props.searchText}
           onChange={this.onTextChange}
-          role='search'
+          role="search"
         />
       </span>
     )
@@ -28,8 +29,8 @@ class SearchComponent extends Component {
 }
 
 SearchComponent.propTypes = {
-  updateSearchText: React.PropTypes.func.isRequired,
-  searchText: React.PropTypes.string.isRequired
+  'updateSearchText': PropTypes.func.isRequired,
+  'searchText': PropTypes.string.isRequired,
 }
 
 export default SearchComponent

@@ -1,4 +1,4 @@
-import { PropTypes } from 'react'
+import PropTypes from 'prop-types'
 import MicroMapBaseComponent from './MicroMap.base.component'
 import * as Micromap from './Micromap'
 import shallowCompare from 'shallow-compare'
@@ -10,12 +10,12 @@ class MicroMapGpsComponent extends MicroMapBaseComponent {
   }
 
   renderToCanvas (gpsLocation, streamObject) {
-    let operation = Micromap.drawGpsLocationToCanvas.bind(null, this.canvasContext, streamObject, this.dimensions, 1, gpsLocation)
+    const operation = Micromap.drawGpsLocationToCanvas.bind(null, this.canvasContext, streamObject, this.dimensions, 1, gpsLocation)
     this.deferredRenderToCanvas(operation)
   }
 
   componentWillReceiveProps (nextProps) {
-    let isChanged = shallowCompare(this, nextProps, this.state)
+    const isChanged = shallowCompare(this, nextProps, this.state)
     if (isChanged === false) {
       return
     }
@@ -33,10 +33,10 @@ class MicroMapGpsComponent extends MicroMapBaseComponent {
 }
 
 MicroMapGpsComponent.propTypes = {
-  streamObject: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
-  isVisible: PropTypes.bool.isRequired,
-  gpsCoordinates: PropTypes.object
+  'streamObject': PropTypes.object.isRequired,
+  'id': PropTypes.string.isRequired,
+  'isVisible': PropTypes.bool.isRequired,
+  'gpsCoordinates': PropTypes.object,
 }
 
 export default MicroMapGpsComponent

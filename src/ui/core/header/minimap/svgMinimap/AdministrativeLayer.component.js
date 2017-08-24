@@ -1,18 +1,19 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './SvgMap.scss'
 import RegionComponent from './Region.component'
-import { has } from 'lodash'
+import {has} from 'lodash'
 import shallowCompare from 'shallow-compare'
 
 class AdministrativeLayerComponent extends Component {
   renderStates () {
-    let { statesGeoJson } = this.props
-    let paths = statesGeoJson.features.map((state, index) => {
-      let path = this.props.pathGenerator(state.geometry)
+    const {statesGeoJson} = this.props
+    const paths = statesGeoJson.features.map((state, index) => {
+      const path = this.props.pathGenerator(state.geometry)
       return (<path
         key={state.properties.gid}
         d={path}
-              />)
+      />)
     })
     return (<g className={classes.states}>
       {paths}
@@ -30,22 +31,22 @@ class AdministrativeLayerComponent extends Component {
       pathGenerator={this.props.pathGenerator}
       stateName={region.properties.state_gid.toString()}
       selectRegion={this.props.selectRegion}
-            />)
+    />)
   }
 
   renderRegions () {
-    let { regionsGeoJson } = this.props
-    let { isOffline, cachedRegions } = this.props
-    let orderDictionary = {
-      top: [],
-      bottom: []
+    const {regionsGeoJson} = this.props
+    const {isOffline, cachedRegions} = this.props
+    const orderDictionary = {
+      'top': [],
+      'bottom': [],
     }
 
-    let twoPaths = regionsGeoJson.features.reduce((dictionary, region, index) => {
-      let preactIndexHack = index + 1
-      let isCached = isOffline && has(cachedRegions, region.properties.gid)
-      let isActive = isOffline === false || isCached
-      let component = this.createRegionComponent(region, preactIndexHack, isCached, isActive, false, false)
+    const twoPaths = regionsGeoJson.features.reduce((dictionary, region, index) => {
+      const preactIndexHack = index + 1
+      const isCached = isOffline && has(cachedRegions, region.properties.gid)
+      const isActive = isOffline === false || isCached
+      const component = this.createRegionComponent(region, preactIndexHack, isCached, isActive, false, false)
       if (isCached && isActive) {
         dictionary.top.push(component)
       } else {
@@ -63,13 +64,13 @@ class AdministrativeLayerComponent extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    let shouldUpdate = shallowCompare(this, nextProps, nextState)
+    const shouldUpdate = shallowCompare(this, nextProps, nextState)
     return shouldUpdate
   }
 
   render () {
     return (
-      <g className='administrative'>
+      <g className="administrative">
         {this.renderStates()}
         {this.renderRegions()}
       </g>
@@ -78,10 +79,12 @@ class AdministrativeLayerComponent extends Component {
 }
 
 AdministrativeLayerComponent.propTypes = {
-  statesGeoJson: PropTypes.object.isRequired,
-  regionsGeoJson: PropTypes.object.isRequired,
-  cachedRegions: PropTypes.object.isRequired,
-  isOffline: PropTypes.bool.isRequired
+  'statesGeoJson': PropTypes.object.isRequired,
+  'regionsGeoJson': PropTypes.object.isRequired,
+  'cachedRegions': PropTypes.object.isRequired,
+  'isOffline': PropTypes.bool.isRequired,
+  pathGenerator: PropTypes.func.isRequired,
+  selectRegion: PropTypes.object.isRequired,
 }
 
 export default AdministrativeLayerComponent

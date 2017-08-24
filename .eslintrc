@@ -2,13 +2,16 @@
   "parser": "babel-eslint",
   "extends": [
     "standard",
-    "standard-react",
-    "plugin:react/all"
+    "eslint:recommended", 
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended"
   ],
   "plugins": [
     "babel",
     "react",
-    "promise"
+    "promise",
+    "jsx-a11y",
+    "extra-rules"
   ],
   "env": {
     "browser" : true
@@ -21,25 +24,43 @@
     "__DEBUG__"    : false,
   },
   "rules": {
-    "key-spacing"          : 0,
-    "jsx-quotes"           : [2, "prefer-single"],
-    "max-len"              : 0,
-    "object-curly-spacing" : [2, "always"],
-    "react/jsx-sort-props"     : 0,
-    "react/jsx-no-literals": 0,
-    "react/jsx-filename-extension": 0,
-    "react/sort-prop-types": 0,
-    "react/jsx-max-props-per-line": 0,
-    "react/sort-comp": 0,
-    "react/forbid-prop-types": 0,
-    "react/no-unescaped-entities": 0,
-    "react/require-default-props": 0,
-    "react/jsx-handler-names": 0,
-    "react/require-optimization": 0,
-    "react/prop-types": 0,
-    "react/no-multi-comp": 0,
-    "react/no-direct-mutation-state": 0,
-    "react/no-set-state": 0,
-    "react/forbid-component-props": 0
+    "prefer-const": 2,
+    "max-depth": ["error", 3],
+    "max-lines": ["error", 250],
+    "complexity": ["error", 7],
+    "max-statements": ["error", 25],
+    "semi": [2, "never"],
+    "eol-last": 2,
+    "indent": ["error", 2],
+    "keyword-spacing": 2,
+    "no-alert": 2,
+    "no-cond-assign": 2,
+    "no-confusing-arrow": 2,
+    "no-console": 2,
+    "no-debugger": 2,
+    "no-dupe-args": 2,
+    "no-empty": 2,
+    "no-mixed-spaces-and-tabs": 2,
+    "no-spaced-func": 2,
+    "no-trailing-spaces": 2,
+    "no-unreachable": 2,
+    "no-unused-vars": 2,
+    "no-useless-constructor": 2,
+    "no-var": 2,
+    "no-undef": 2,
+    "one-var": [2, "never"],
+    "arrow-spacing": 2,
+    "block-spacing": 2,
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "camelcase": 2,
+    "extra-rules/no-commented-out-code": 2,
+    "comma-style": 2,
+    "comma-dangle": ["error", "always-multiline"],
+    "curly": 2,
+    "eqeqeq": 0,
+    "key-spacing": [2, {
+      "beforeColon": false,
+      "afterColon": true
+    }],
   }
 }

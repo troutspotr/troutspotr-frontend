@@ -48,7 +48,9 @@ class PrivacyPolicy extends Component {
   componentDidMount () {
     this.time = new Date()
     const container = document.getElementById('scrollContainer')
-    container.scrollTop = 0
+    if (container != null) {
+      container.scrollTop = 0
+    }
 
     setTimeout(() => {
       this.addElement(this.renderTitle())

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classes from './Agreement.scss'
+import Button from './Button.component.js'
 
 class IntroComponent extends Component {
   componentDidMount () {
@@ -49,7 +50,7 @@ class IntroComponent extends Component {
       {this.renderTitle()}
       {this.renderPreamble()}
       {this.renderAPP()}
-      <button className={classes.button} onClick={this.onAdvanceClick}>Continue to Terms of Service</button>
+      <Button onClick={this.onAdvanceClick}>Continue to Terms of Service</Button>
     </div>)
   }
 }

@@ -35,6 +35,7 @@ class MinimapComponent extends Component {
     }
 
     router.listen(({pathname}) => {
+      debugger
       if (isRootPageByUrl(pathname) || isStatePageByUrl(pathname)) {
         this.props.expand(true)
         return

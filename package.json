@@ -23,7 +23,9 @@
     "deploy:prod": "better-npm-run deploy:prod",
     "codecov": "cat coverage/*/lcov.info | codecov",
     "prodStart": "better-npm-run prodStart",
-    "generateImages": "better-npm-run generateImages:debug"
+    "generateImages": "better-npm-run generateImages:debug",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "betterScripts": {
     "compile": {
@@ -47,7 +49,7 @@
       }
     },
     "deploy": {
-      "command": "npm run lint && npm run clean && npm run compile",
+      "command": "npm run clean && npm run compile",
       "env": {
         "DEBUG": "app:*"
       }
@@ -109,8 +111,8 @@
     "axios": "^0.14.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
-    "babel-loader": "^6.2.5",
-    "babel-plugin-istanbul": "^2.0.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-istanbul": "^2.0.3",
     "babel-plugin-lodash": "^3.2.9",
     "babel-plugin-transform-async-to-generator": "^6.8.0",
     "babel-plugin-transform-runtime": "^6.15.0",
@@ -147,7 +149,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "express": "^4.15.4",
     "express-interceptor": "^1.2.0",
-    "extract-text-webpack-plugin": "^1.0.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "fastclick": "^1.0.6",
     "file-loader": "^0.9.0",
     "fs-extra": "^0.30.0",
@@ -168,7 +170,7 @@
     "mapbox-gl": "^0.39.1",
     "mocha": "^3.5.0",
     "moment": "^2.15.1",
-    "node-sass": "^3.7.0",
+    "node-sass": "^3.13.1",
     "nodemon": "^1.10.2",
     "normalize.css": "^5.0.0",
     "offline-plugin": "^4.8.3",
@@ -195,21 +197,23 @@
     "redux-thunk": "^2.0.0",
     "reselect": "^2.5.4",
     "rimraf": "^2.5.4",
-    "sass-loader": "^4.0.0",
+    "sass-loader": "^4.1.1",
     "shallow-compare": "^1.2.1",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.13.0",
-    "style-loader": "^0.13.1",
+    "style-loader": "^0.13.2",
     "text-encoding": "^0.6.1",
     "topojson-client": "^2.1.0",
     "turf-extent": "^1.0.4",
     "url-loader": "^0.5.9",
-    "webpack": "^1.12.14",
-    "webpack-bundle-analyzer": "^1.4.1",
+    "webpack": "^1.15.0",
+    "webpack-bundle-analyzer": "^1.5.4",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.18.2",
-    "webworkify-webpack": "^1.1.7",
+    "webworkify-webpack": "^1.1.8",
     "yargs": "^5.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@kadira/storybook": "^2.21.0"
+  }
 }

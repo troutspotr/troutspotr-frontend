@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const config = require('../config')
 const debug = require('debug')('app:webpack:config')
-// var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // eslint-disable-line
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // eslint-disable-line
 const OfflinePlugin = require('offline-plugin')
 
 const paths = config.utils_paths
@@ -106,7 +106,7 @@ webpackConfig.plugins = [
   //   // In `disabled` mode you can use this plugin to just generate Webpack Stats JSON file by setting `generateStatsFile` to `true`.
   //   analyzerMode: 'server',
   //   // Port that will be used by in `server` mode to start HTTP server.
-  //   analyzerPort: 6565,
+  //   analyzerPort: 8888,
   //   // Path to bundle report file that will be generated in `static` mode.
   //   // If relative path is provided, it will be relative to bundles output directory
   //   reportFilename: 'report.html',

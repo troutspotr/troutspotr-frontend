@@ -37,7 +37,9 @@ class TermsOfServiceComponent extends Component {
     const timelapseLengthMilliseconds = 200
 
     const container = document.getElementById('scrollContainer')
-    container.scrollTop = 0
+    if (container != null) {
+      container.scrollTop = 0
+    }
 
     setTimeout(() => {
       this.addElement((<div>

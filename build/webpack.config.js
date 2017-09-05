@@ -15,6 +15,13 @@ const __PROD__ = config.globals.__PROD__
 const __TEST__ = config.globals.__TEST__
 
 debug('Creating configuration.')
+const PREACT_ALIASES = {
+  // https://github.com/developit/preact-compat/issues/14
+  // 'react-addons-css-transition-group': 'preact-css-transition-group',
+  'react': 'preact-compat',
+  'react-dom': 'preact-compat',
+  'react-redux': 'preact-redux',
+}
 const webpackConfig = {
   name: 'client',
   target: 'web',
@@ -23,13 +30,7 @@ const webpackConfig = {
     root: paths.client(),
     extensions: ['', '.js', '.jsx', '.json'],
     // add preact aliasing to reduce build size.
-    'alias': {
-      // https://github.com/developit/preact-compat/issues/14
-      // 'react-addons-css-transition-group': 'preact-css-transition-group',
-      'react': 'preact-compat',
-      'react-dom': 'preact-compat',
-      'react-redux': 'preact-redux',
-    },
+    'alias': __TEST__ ? {} : PREACT_ALIASES,
   },
   module: {},
 }

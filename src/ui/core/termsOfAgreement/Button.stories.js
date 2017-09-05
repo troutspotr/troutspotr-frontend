@@ -1,6 +1,6 @@
-import React from 'react';
-import { storiesOf, action, linkTo } from '@kadira/storybook';
-import ButtonComponent from './Button.component';
+import React from 'react'
+import { storiesOf, action, linkTo } from '@kadira/storybook'
+import ButtonComponent from './Button.component'
 
 storiesOf('core/termsOfAgreement', module)
   .add('button with some text', () => (

@@ -25,14 +25,6 @@ describe('api/GeoApi.transform', () => {
 
   })
 
-  describe('transformGeo', () => {
-    it('works', async () => {
-      const results = await GeoApiTransform.transformGeo(regionData, stateData)
-      expect(results).to.be.an('object').that.has.all.keys('streamDictionary',
-        'geoJsonObjects')
-    })
-  })
-
   describe('decompress', () => {
     it('works', async () => {
       const results = await GeoApiTransform.decompress(regionData, stateData)

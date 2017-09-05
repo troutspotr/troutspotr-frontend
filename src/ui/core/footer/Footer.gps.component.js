@@ -69,9 +69,6 @@ class FooterGpsComponent extends Component {
 
 FooterGpsComponent.propTypes = {
   'isGpsTrackingSupported': PropTypes.bool.isRequired,
-  // Status: PropTypes.string.isRequired,
-  // IsGpsTrackingActive: PropTypes.bool.isRequired,
-  // GpsCoordinateFeature: PropTypes.object,
   'isGpsActiveButLoading': PropTypes.bool.isRequired,
   'isGpsActiveAndSuccessful': PropTypes.bool.isRequired,
   'startGpsTracking': PropTypes.func.isRequired,

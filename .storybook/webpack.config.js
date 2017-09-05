@@ -153,7 +153,5 @@ webpackConfig.module.loaders.push(
   { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
   { test: /\.(png|jpg|gif)$/,    loader: 'url?limit=8192' }
 )
-/* eslint-enable */
-
 
 module.exports = webpackConfig

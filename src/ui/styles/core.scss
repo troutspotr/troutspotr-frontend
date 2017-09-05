@@ -24,6 +24,10 @@
     @include book-font;
   }
 
+  #root {
+    height: 100%;
+  }
+
   li,
   ul {
     margin: 0;

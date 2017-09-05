@@ -10,28 +10,11 @@ const {throttleReduce} = require('./Throttle')
 const now = new Date()
 const MINIMUM_LENGTH_MILES = 0.05
 const transformGeo = async (topojsonObject, stateData) => {
-  const geoJsonObjects = await decompress(topojsonObject, stateData)
+  const geoJsonObjects = await decompressAsync(topojsonObject, stateData)
   const dictionaries = createStreamDictionaries(geoJsonObjects)
   const streamDictionary = createStreamDictionary(geoJsonObjects, dictionaries)
   // Update with tributaries.
-  valuesIn(streamDictionary).forEach((stream) => {
-    const streamId = stream.stream.properties.gid
-    const tribs = dictionaries.tributaries[streamId]
-    stream.tributaries = tribs == null
-      ? []
-      : dictionaries.tributaries[streamId].filter((t) => has(streamDictionary, t.properties.tributary_gid)).map((t) => {
-        const tributaryId = t.properties.tributary_gid
-        return Object.assign(
-          t,
-          {
-            'properties': Object.assign(
-              t.properties,
-              {'streamData': streamDictionary[tributaryId]}
-            ),
-          }
-        )
-      })
-  })
+  
   const t = Object.assign(
     {streamDictionary},
     geoJsonObjects
@@ -102,10 +85,29 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
       return dictionary
     }, {})
 
+  valuesIn(streamDictionary).forEach((stream) => {
+    const streamId = stream.stream.properties.gid
+    const tribs = dictionaries.tributaries[streamId]
+    stream.tributaries = tribs == null
+      ? []
+      : dictionaries.tributaries[streamId].filter((t) => has(streamDictionary, t.properties.tributary_gid)).map((t) => {
+        const tributaryId = t.properties.tributary_gid
+        return Object.assign(
+          t,
+          {
+            'properties': Object.assign(
+              t.properties,
+              {'streamData': streamDictionary[tributaryId]}
+            ),
+          }
+        )
+      })
+  })
+
   return streamDictionary
 }
 
-const decompressTopojson = async (topojson, topojsonObject) => {
+const decompressTopojsonAsync = async (topojson, topojsonObject) => {
   const ops = [
     topojson.feature.bind(null, topojsonObject, topojsonObject.objects.troutSection),
     topojson.feature.bind(null, topojsonObject, topojsonObject.objects.restrictionSection),
@@ -134,8 +136,16 @@ const decompressTopojson = async (topojson, topojsonObject) => {
   return dictionary
 }
 
-const decompress = async (topojsonObject, stateData) => {
-  const dictionary = await decompressTopojson(topojson, topojsonObject)
+const decompressAsync = async (topojsonObject, stateData) => {
+  const dictionary = await decompressTopojsonAsync(topojson, topojsonObject)
+  return updateStreamDictionary({
+    dictionary,
+    topojsonObject,
+    stateData,
+  })
+}
+
+const updateStreamDictionary = ({ topojsonObject, dictionary, stateData }) => {
   // Time to update our objects to be more useful upstream!
   const regsDictionary = stateData.regulationsDictionary
   const watersDictionary = stateData.waterOpeners
@@ -349,10 +359,11 @@ const getSanitizedRegulations = (restrictionsForGivenStream) => {
 module.exports = {
   transformGeo,
   crossingTypes,
-  decompress,
+  decompress: decompressAsync,
   createStreamDictionaries,
   provideRoadCrossingText,
   createStreamDictionary,
+  updateStreamDictionary,
   NONE_TEXT,
   SINGLE_TEXT,
   MANY_TEXT,

@@ -1,6 +1,9 @@
 const swInstaller = require('offline-plugin/runtime')
 /* eslint-disable import/first */
-swInstaller.install()
+if (!__TEST__) {
+  swInstaller.install()
+}
+
 import 'ui/styles/core.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'

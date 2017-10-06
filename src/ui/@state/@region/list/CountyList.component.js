@@ -9,7 +9,7 @@ class CountyListComponent extends Component {
     return (<li key={gid} className={classes.countyListItem}>
       <div className={classes.listHeaderContainer}>
 
-        <div className={classes.listTitle}>{name} Co.</div>
+        <h2 className={classes.listTitle}>{name} Co.</h2>
       </div>
       <StreamListComponent
         getSummary={this.props.getSummary}

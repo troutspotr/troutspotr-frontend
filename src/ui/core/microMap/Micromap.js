@@ -3,16 +3,27 @@ import {getProjectionFromFeature} from '../header/minimap/svgMinimap/GetProjecti
 import * as colors from '../../core/Colors'
 import * as d3Geo from 'd3-geo'
 import bearing from '@turf/bearing'
+import { groupBy, has } from 'lodash'
+
 // Import distance from '@turf/distance'
-import {groupBy, has} from 'lodash'
 // Import * as d3Path from 'd3-path'
 // Let window = window || null
 const TAU = Math.PI * 2
-const LINE_WIDTH = 0.5 * 1
-const STREAM_WIDTH = LINE_WIDTH
-const TROUT_SECTION_WIDTH = LINE_WIDTH * 2
-const PUBLIC_SECTION = LINE_WIDTH * 2.75
-const END_POINT_SIZE = LINE_WIDTH * 2
+// const LINE_WIDTH = 1
+
+// export const DEFAULT_SETTINGS = {
+//   LINE_WIDTH,
+//   STREAM_WIDTH: LINE_WIDTH,
+//   TROUT_SECTION_WIDTH: LINE_WIDTH * 2,
+//   PUBLIC_SECTION: LINE_WIDTH * 2.75,
+//   END_POINT_SIZE: LINE_WIDTH * 2,
+// }
+
+// const LINE_WIDTH = 0.5
+// const STREAM_WIDTH = LINE_WIDTH
+// const TROUT_SECTION_WIDTH = LINE_WIDTH * 2
+// const PUBLIC_SECTION = LINE_WIDTH * 2.75
+// const END_POINT_SIZE = LINE_WIDTH * 2
 const DEGREES_TO_RADIANS = 0.0174533
 const getBackingStoreRatio = (context) => context.webkitBackingStorePixelRatio ||
     context.mozBackingStorePixelRatio ||
@@ -54,28 +65,30 @@ export const drawBackground = (canvasContext, dimensions, color) => {
   canvasContext.fillRect(0, 0, width, height)
 }
 
-const renderStreams = (streamObject, canvasContext, dimensions, scale = 1) => {
-  const projection = getProjectionFromFeature(streamObject.circle, dimensions)
+const renderStreams = (streamObject, canvasContext, settings) => {
+  const { dimensions } = settings
+  const streamSettings = settings.settings.stream
+  const projection = getProjectionFromFeature(streamObject.circle, { ...dimensions, radius: settings.settings.stream.radius })
   const geoPath = d3Geo.geoPath()
     .projection(projection)
-    .pointRadius(END_POINT_SIZE)
+    .pointRadius(streamSettings.terminusDiameter)
     .context(canvasContext)
 
   // Render stream
-  renderStream(geoPath, canvasContext, streamObject.stream, colors.OffWhite, STREAM_WIDTH * 0.5 * scale)
+  renderStream(geoPath, canvasContext, streamObject.stream, colors.StreamGray, streamSettings.streamWidth)
 
-  // // render sections
+  // render sections
   streamObject.sections.forEach((section) => {
-    renderStream(geoPath, canvasContext, section, colors.StreamBlue, TROUT_SECTION_WIDTH * scale)
+    renderStream(geoPath, canvasContext, section, colors.StreamBlue, streamSettings.troutSectionWidth)
   })
 
   // Render public sections
   streamObject.palSections.forEach((section) => {
-    renderStream(geoPath, canvasContext, section, colors.PalGreen, PUBLIC_SECTION * scale)
+    renderStream(geoPath, canvasContext, section, colors.PalGreen, streamSettings.publicSectionWidth)
   })
 
   const streamConfluence = streamObject.stream.geometry.coordinates[0]
-  renderPointOnStream(projection, canvasContext, streamConfluence, colors.OffWhite, Number(scale))
+  renderPointOnStream(projection, canvasContext, streamConfluence, colors.OffWhite, streamSettings.terminusDiameter * 0.5)
 }
 
 const renderStream = (path, context, geoJson, color = 'red', thickness = 1) => {
@@ -123,9 +136,20 @@ export const renderPetriDish = (context, dimensions, color) => {
   context.stroke()
 }
 
-export const drawStreamToCanvas = (canvasContext, streamObject, dimensions, scale = 1) => {
-  renderStreams(streamObject, canvasContext, dimensions, scale)
-  drawRingToCanvas(canvasContext, streamObject, dimensions, scale)
+export const drawStreamToCanvas = (canvasContext, streamObject, settings) => {
+  const { dimensions } = settings
+  canvasContext.clearRect(0, 0, dimensions.width, dimensions.height)
+  // const streamDimensions = {
+  //   ...dimensions,
+  //   radius: dimensions.radius * 0.72,
+  // }
+  renderStreams(streamObject, canvasContext, settings)
+
+  // const ringDimensions = {
+  //   ...dimensions,
+  //   radius: dimensions.radius * 0.78,
+  // }
+  drawRingToCanvas(canvasContext, streamObject, settings)
   return canvasContext
 }
 
@@ -165,57 +189,63 @@ export const drawGpsLocationToCanvas = (canvasContext, streamObject, dimensions,
   return canvasContext
 }
 
-export const drawRingToCanvas = (canvasContext, streamObject, dimensions, scale = 1) => {
-  renderRings(streamObject, canvasContext, dimensions, scale)
+export const drawRingToCanvas = (canvasContext, streamObject, settings) => {
+  renderRings(streamObject, canvasContext, settings)
   return canvasContext
 }
 
-const renderRings = (streamObject, canvasContext, dimensions, scale = 1) => {
-  renderTerminusStreamRing(streamObject, canvasContext, dimensions, scale)
-  renderStreamRing(streamObject, canvasContext, dimensions, scale)
-  renderTroutStreamSectionRings(streamObject, canvasContext, dimensions, scale)
-  renderPublicSectionRings(streamObject, canvasContext, dimensions, scale)
-  // Let privateAccessPoints = streamObject.accessPoints.filter(x => x.properties.bridgeType === 'permissionRequired')
-  // Let publicAccessPoints = streamObject.accessPoints.filter(x => x.properties.bridgeType)
+const renderRings = (streamObject, canvasContext, settings) => {
+  const accessPointSetttings = settings.settings.accessPoints
+  renderStreamRing(streamObject, canvasContext, settings)
+  renderTroutStreamSectionRings(streamObject, canvasContext, settings)
+  renderPublicSectionRings(streamObject, canvasContext, settings)
   const accessPointTypes = groupBy(streamObject.accessPoints, (ap) => ap.properties.bridgeType)
-  const tweakedDimensions = {...dimensions, 'radius': dimensions.radius + 4}
+  const accessPointsDimensions = {
+    ...settings.dimensions,
+    arcCompressionRatio: settings.settings.arcCompressionRatio,
+    rotationPhase: settings.settings.rotationPhase,
+    radius: accessPointSetttings.radius,
+  }
+  // const tweakedDimensions = {...accessPointsDimensions, 'radius': dimensions.radius + (2.5 * scale)}
   if (has(accessPointTypes, 'permissionRequired')) {
     accessPointTypes.permissionRequired.forEach((ap) => {
       const normalizedOffset = ap.properties.linear_offset
-      renderPointAlongRing(normalizedOffset, canvasContext, tweakedDimensions, colors.StreamBlue, 0.5)
+      renderPointAlongRing(normalizedOffset, canvasContext, accessPointsDimensions, colors.StreamBlue, settings.settings.accessPoints.permissionRequiredDiameter * 0.5)
     })
   }
-
   if (has(accessPointTypes, 'publicTrout')) {
     accessPointTypes.publicTrout.forEach((ap) => {
       const normalizedOffset = ap.properties.linear_offset
-      renderPointAlongRing(normalizedOffset, canvasContext, tweakedDimensions, colors.PalGreen, 1.2)
+      renderPointAlongRing(normalizedOffset, canvasContext, accessPointsDimensions, colors.PalGreen, settings.settings.accessPoints.publiclyFishableDiameter * 0.5)
     })
   }
+
+  renderTerminusStreamRing(streamObject, canvasContext, settings)
 }
 
-const renderPointAlongRing = (normalizedOffset, context, dimensions, color, thickness = STREAM_WIDTH) => {
-  const {width, height, radius, arcCompressionRatio, rotatePhase} = dimensions
+const renderPointAlongRing = (normalizedOffset, context, dimensions, color, thickness) => {
+  const {width, height, radius, arcCompressionRatio, rotationPhase} = dimensions
   // Let normalizedOffset = mileOffset / length
   const normalizedArcLength = TAU * arcCompressionRatio
-  const arcOffset = (normalizedOffset * normalizedArcLength) - rotatePhase
+  const arcOffset = (normalizedOffset * normalizedArcLength) - rotationPhase
   const xCoordinate = Math.cos(arcOffset) * radius + (width * 0.5)
   const yCoordinate = Math.sin(arcOffset) * radius + (height * 0.5)
   context.beginPath()
   context.fillStyle = color
-  context.lineWidth = thickness
+  // context.lineWidth = thickness * 10
   context.strokeStyle = color
   context.arc(xCoordinate, yCoordinate, thickness, 0, TAU, false)
   context.fill()
-  context.stroke()
+  // context.stroke()
 }
 
-export const renderTerminusStreamRing = (streamObject, canvasContext, dimensions, scale = 1, color = colors.OffWhite) => {
-  const canvasCoordiantes = [
+export const renderTerminusStreamRing = (streamObject, canvasContext, settings, color = colors.OffWhite) => {
+  const { dimensions } = settings
+  const canvasCoordinates = [
     dimensions.width * 0.5,
-    dimensions.height * 0.5 - dimensions.radius,
+    dimensions.height * 0.5 - settings.settings.circle.radius,
   ]
-  drawPointAlongRing(streamObject, canvasContext, dimensions, scale, color, canvasCoordiantes)
+  drawPointAlongRing(streamObject, canvasContext, dimensions, settings.settings.circle.terminusDiameter * 0.5, color, canvasCoordinates)
 }
 
 export const drawPointAlongRing = (streamObject, canvasContext, dimensions, scale = 1, color = colors.OffWhite, canvasCoordiantes) => {
@@ -223,21 +253,34 @@ export const drawPointAlongRing = (streamObject, canvasContext, dimensions, scal
   canvasContext.fillStyle = color
   canvasContext.lineWidth = 1
   canvasContext.strokeStyle = color
-  canvasContext.arc(canvasCoordiantes[0], canvasCoordiantes[1], 1, 0, TAU, false)
+  canvasContext.arc(canvasCoordiantes[0], canvasCoordiantes[1], scale, 0, TAU, false)
   canvasContext.fill()
   canvasContext.stroke()
 }
 
-export const renderStreamRing = (streamObject, canvasContext, dimensions, scale = 1) => {
+export const renderStreamRing = (streamObject, canvasContext, settings) => {
   const length = streamObject.stream.properties.length_mi
   const start = 0
   const stop = length
   const ring = {start, stop, length}
-  renderRing(ring, canvasContext, dimensions, colors.StreamGray, STREAM_WIDTH * scale * 0.5)
+  const dimensions = {
+    ...settings.dimensions,
+    arcCompressionRatio: settings.settings.arcCompressionRatio,
+    rotationPhase: settings.settings.rotationPhase,
+    radius: settings.settings.circle.radius,
+  }
+
+  renderRing(ring, canvasContext, dimensions, colors.StreamGray, settings.settings.stream.streamWidth)
 }
 
-export const renderTroutStreamSectionRings = (streamObject, canvasContext, dimensions, widthScale = 1) => {
+export const renderTroutStreamSectionRings = (streamObject, canvasContext, settings) => {
   const streamLength = streamObject.stream.properties.length_mi
+  const dimensions = {
+    ...settings.dimensions,
+    arcCompressionRatio: settings.settings.arcCompressionRatio,
+    rotationPhase: settings.settings.rotationPhase,
+    radius: settings.settings.circle.radius,
+  }
   streamObject.sections.forEach((section, index) => {
     const ring = {
       'start': section.properties.start,
@@ -245,7 +288,7 @@ export const renderTroutStreamSectionRings = (streamObject, canvasContext, dimen
       'length': streamLength,
     }
 
-    renderRing(ring, canvasContext, dimensions, colors.StreamBlue, TROUT_SECTION_WIDTH * widthScale * 0.5)
+    renderRing(ring, canvasContext, dimensions, colors.StreamBlue, settings.settings.circle.troutSectionWidth)
   })
 }
 
@@ -257,7 +300,13 @@ export const bearingToAngle = (alpha) => {
   return beta
 }
 
-export const renderPublicSectionRings = (streamObject, canvasContext, dimensions, scale = 1) => {
+export const renderPublicSectionRings = (streamObject, canvasContext, settings) => {
+  const dimensions = {
+    ...settings.dimensions,
+    arcCompressionRatio: settings.settings.arcCompressionRatio,
+    rotationPhase: settings.settings.rotationPhase,
+    radius: settings.settings.circle.radius,
+  }
   const streamLength = streamObject.stream.properties.length_mi
   streamObject.palSections.forEach((section, index) => {
     const ring = {
@@ -266,19 +315,19 @@ export const renderPublicSectionRings = (streamObject, canvasContext, dimensions
       'length': streamLength,
     }
 
-    renderRing(ring, canvasContext, dimensions, colors.PalGreen, PUBLIC_SECTION * scale * 0.5)
+    renderRing(ring, canvasContext, dimensions, colors.PalGreen, settings.settings.circle.publicSectionWidth)
   })
 }
 
-const renderRing = ({start, stop, length}, context, dimensions, color, thickness = STREAM_WIDTH) => {
-  const {width, height, radius, arcCompressionRatio, rotatePhase} = dimensions
+const renderRing = ({start, stop, length}, context, dimensions, color, thickness) => {
+  const {width, height, radius, arcCompressionRatio, rotationPhase} = dimensions
   const data = [
     start,
     stop,
   ].map((mileOffset) => {
     const normalizedOffset = mileOffset / length
     const normalizedArcLength = TAU * arcCompressionRatio
-    const arcOffset = (normalizedOffset * normalizedArcLength) - rotatePhase
+    const arcOffset = (normalizedOffset * normalizedArcLength) - rotationPhase
     return arcOffset
   })
   context.beginPath()

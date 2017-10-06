@@ -98,7 +98,7 @@ export const AccessPointLabelLetterQuietStyle = {
   'id': STREAM_ACCESS_POINTS_LETTER_QUITE_LAYER_ID,
   'type': 'symbol',
   'source': STREAM_ACCESS_POINTS_SOURCE_ID,
-  'interactive': false,
+  'interactive': true,
   'minzoom': 10,
   'layout': {
     'text-field': '{alphabetLetter}',

@@ -151,6 +151,11 @@ const STREAM_ACCESS_POINT_QUIET_FILTER_BASE = [
       'bridgeType',
       'publicTrout',
     ],
+    [
+      '==',
+      'bridgeType',
+      'permissionRequired',
+    ],
   ],
 ]
 

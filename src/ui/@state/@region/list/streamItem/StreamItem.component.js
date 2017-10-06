@@ -53,7 +53,7 @@ class StreamItemComponent extends Component {
   render () {
     const {title, url, streamObject, getSummary} = this.props
     return (
-      <Link to={url} className={classes.container}>
+      <Link to={url} className={classes.container} data-stream-gid={streamObject.stream.properties.gid}>
         <div className={classes.media}>
           <MicroMapContainer
             id={`${streamObject.stream.properties.slug}-canvas`}

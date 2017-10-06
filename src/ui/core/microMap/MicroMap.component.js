@@ -6,11 +6,12 @@ import MicroMapStreamComponent from './MicroMap.stream.component'
 import MicroMapGpsContainer from './MicroMap.gps.container'
 const IS_GPS_VISIBLE = false
 const MicroMapComponent = (props) => (
-  <div className={classes.container}>
+  <div className={props.className != null ? props.className : classes.container}>
     <MicroMapStreamComponent
       id={`${props.id}_stream`}
       isVisible={props.isVisible}
       streamObject={props.streamObject}
+      scale={props.scale}
     />
     {IS_GPS_VISIBLE && props.isGpsActive &&
       <MicroMapGpsContainer
@@ -25,6 +26,12 @@ MicroMapComponent.propTypes = {
   'id': PropTypes.string.isRequired,
   'isGpsActive': PropTypes.bool.isRequired,
   'isVisible': PropTypes.bool.isRequired,
+  'className': PropTypes.string,
+  scale: PropTypes.number.isRequired,
+}
+
+MicroMapComponent.defaultProps = {
+  scale: 0.2,
 }
 
 export default MicroMapComponent

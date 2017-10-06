@@ -13,7 +13,6 @@ const transformGeo = async (topojsonObject, stateData) => {
   const geoJsonObjects = await decompressAsync(topojsonObject, stateData)
   const dictionaries = createStreamDictionaries(geoJsonObjects)
   const streamDictionary = createStreamDictionary(geoJsonObjects, dictionaries)
-  // Update with tributaries.
   
   const t = Object.assign(
     {streamDictionary},
@@ -187,7 +186,6 @@ const updateStreamDictionary = ({ topojsonObject, dictionary, stateData }) => {
   // TODO: HACK. for some reason mapshaper and topojson aren't working for me.
   // MANUALLY turn this into a geojson point feature collection.
   updateRoadCrossingProperties(topojsonObject.objects.accessPoint.geometries, stateData.roadTypesDictionary)
-
   topojsonObject.objects.accessPoint.geometries = topojsonObject.objects.accessPoint.geometries
     .filter(filterBadAccessPoints)
   dictionary.stream_access_point = topojson.feature(topojsonObject, topojsonObject.objects.accessPoint)
@@ -258,9 +256,11 @@ const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
     .forEach((feature, index) => {
       const properties = feature.properties
       // Get rid of this 0 vs 1 nonsense
-      properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land === 1
-      properties.is_over_trout_stream = properties.is_over_trout_stream === 1
-      properties.is_previous_neighbor_same_road = properties.is_previous_neighbor_same_road === 1
+      // allow truthy values.
+      // remember, 1 == true, amirite?
+      properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land == 1
+      properties.is_over_trout_stream = properties.is_over_trout_stream == 1
+      properties.is_previous_neighbor_same_road = properties.is_previous_neighbor_same_road == 1
       const roadTypeId = properties.road_type_id
       const roadType = roadTypesDictionary[roadTypeId]
       const isParkable = roadType.isParkable
@@ -301,7 +301,6 @@ const filterBadAccessPoints = (ap) => {
   if (isTooClose) {
     return false
   }
-
   return true
 }
 

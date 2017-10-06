@@ -74,7 +74,7 @@ class MapboxGlComponent extends Component {
   }
 
   getInteractiveFeaturesOverPoint = (point) => {
-    const BOX_DIMENSION = 10
+    const BOX_DIMENSION = 20
     const boundingBox = [
       [
         point.x - BOX_DIMENSION / 2,

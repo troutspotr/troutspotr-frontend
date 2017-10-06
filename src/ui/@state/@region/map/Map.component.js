@@ -116,25 +116,35 @@ class MapComponent extends Component {
     return (<LoadingComponent subTitle={'Loading Map'} />)
   }
 
-  userSelectedStreamAndAccessPoint (stream, accessPoint) {
+  userSelectedStreamAndAccessPoint (streams, accessPoints) {
     const {selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad} = this.props
     const hasSelectedGeometry = isEmpty(selectedGeometry) === false
-    const roadSlug = accessPoint.properties.slug
-    const streamId = accessPoint.properties.stream_gid
-    const streamSlug = streamDictionary[streamId].stream.properties.slug
-    const isSelectedStreamAlreadySelected = hasSelectedGeometry && selectedGeometry.stream.properties.gid === stream.properties.gid
-    const isAccessPointAlreadySelected = selectedRoad != null && selectedRoad.properties.slug === roadSlug
-    if (isSelectedStreamAlreadySelected) {
-      if (isAccessPointAlreadySelected) {
-        // Just zoom in on the road.
-        this.props.selectFoculPoint(selectedRoad)
-      }
-      browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
+    if (accessPoints.length > 1 && streams.length > 1) {
+      // too many candidates. Bail!
       return
     }
 
+    if (accessPoints.length > 1) {
+      // select the stream instead.
+      this.userSelectedStream(streams[0])
+    }
+
+    // if (accessPoints.length === 1 && streams.length === 1) {
+    //   // take the more specific one.
+    //   browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
+    // }
+
+    const accessPoint = accessPoints[0]
+    const roadSlug = accessPoint.properties.slug
+    const streamId = accessPoint.properties.stream_gid
+    const streamSlug = streamDictionary[streamId].stream.properties.slug
+    const isAccessPointAlreadySelected = selectedRoad != null && selectedRoad.properties.slug === roadSlug
+
     // Assume the user selected a new stream.
-    browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}`)
+    this.props.selectFoculPoint(accessPoint)
+    if (isAccessPointAlreadySelected === false) {
+      browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
+    }
   }
 
   userSelectedStream (stream) {
@@ -187,22 +197,35 @@ class MapComponent extends Component {
       return
     }
 
-    const stream = find(features, (x) => has(x.properties, 'water_id'))
-    const accessPoint = find(features, (x) => has(x.properties, 'alphabetLetter'))
+    const featureDictionary = features.reduce((dictionary, item) => {
+      if (has(item.properties, 'water_id')) {
+        dictionary.streams.push(item)
+      }
 
-    if (isEmpty(stream) && isEmpty(accessPoint)) {
+      if (has(item.properties, 'alphabetLetter')) {
+        dictionary.accessPoints.push(item)
+      }
+
+      return dictionary
+    }, {streams: [], accessPoints: []})
+    console.log(featureDictionary)
+    const { streams, accessPoints } = featureDictionary
+    // const stream = find(features, (x) => has(x.properties, 'water_id'))
+    // const accessPoint = find(features, (x) => has(x.properties, 'alphabetLetter'))
+
+    if (isEmpty(streams) && isEmpty(accessPoints)) {
       return
     }
 
-    if (isEmpty(stream) && isEmpty(accessPoint) === false) {
-      this.userSelectedAccessPoint(accessPoint)
+    if (isEmpty(streams) && isEmpty(accessPoints) === false) {
+      this.userSelectedAccessPoint(accessPoints[0])
       return
     }
 
-    if (isEmpty(stream) === false && isEmpty(accessPoint) === false) {
-      this.userSelectedStreamAndAccessPoint(stream, accessPoint)
-    } else if (isEmpty(stream) === false) {
-      this.userSelectedStream(stream)
+    if (isEmpty(streams) === false && isEmpty(accessPoints) === false) {
+      this.userSelectedStreamAndAccessPoint(streams, accessPoints)
+    } else if (isEmpty(streams) === false) {
+      this.userSelectedStream(streams[0])
     }
   }
 

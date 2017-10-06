@@ -6,8 +6,7 @@ const transformGeo = (topojsonObject, stateData) => {
   const geoJsonObjects = decompressSync(topojsonObject, stateData)
   const dictionaries = transform.createStreamDictionaries(geoJsonObjects)
   const streamDictionary = transform.createStreamDictionary(geoJsonObjects, dictionaries)
-  // Update with tributaries.
-  
+  console.log('inside transform sync', streamDictionary['86189'].accessPoints)
   const t = Object.assign(
     {streamDictionary},
     geoJsonObjects

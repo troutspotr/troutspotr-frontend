@@ -9,12 +9,15 @@ class MicroMapStreamComponent extends MicroMapBaseComponent {
   }
 
   componentDidMount () {
-    this.setUpCanvas()
-    this.fireRenderToCanvas(this.props.streamObject)
+    setTimeout(() => {
+      this.setUpCanvas()
+      this.fireRenderToCanvas(this.props.streamObject)
+    }, 2)
   }
 
   renderToCanvas (streamObject) {
-    const operation = Micromap.drawStreamToCanvas.bind(null, this.canvasContext, streamObject, this.dimensions)
+    // const scale = Math.min(this.dimensions.height, this.dimensions.width) / 40.0
+    const operation = Micromap.drawStreamToCanvas.bind(null, this.canvasContext, streamObject, this.microMapSettings)
     this.deferredRenderToCanvas(operation)
   }
 
@@ -44,6 +47,7 @@ MicroMapStreamComponent.propTypes = {
   'streamObject': PropTypes.object.isRequired,
   'id': PropTypes.string.isRequired,
   'isVisible': PropTypes.bool.isRequired,
+  scale: PropTypes.number.isRequired,
 }
 
 export default MicroMapStreamComponent

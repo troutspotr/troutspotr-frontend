@@ -4,7 +4,6 @@ export const getProjectionFromFeature = (feature, {width, height, radius, buffer
   const streamGeometry = feature
   const diameter = radius * 2
   const centroid = d3.geoCentroid(streamGeometry)
-
   const lower = [
     (width - diameter) / 2 + buffer,
     (height - diameter) / 2 + buffer,

@@ -1,6 +1,6 @@
 import BaseApi from './BaseApi'
 export const buildGeoEndpoint = (stateName) => {
-  return `data/${stateName}/${stateName}.topo.json`
+  return `data/v3/${stateName}/${stateName}.topo.json`
 }
 export class GeoApi extends BaseApi {
   getStateStreamData (stateName) {

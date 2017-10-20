@@ -2,7 +2,7 @@ import BaseApi from './BaseApi'
 import { has, keyBy } from 'lodash'
 
 export const buildStateEndpoint = (stateName) => {
-  return `/data/v2/${stateName}/${stateName}.data.json`
+  return `/data/v3/${stateName}/${stateName}.data.json`
 }
 
 let stateCache = {}

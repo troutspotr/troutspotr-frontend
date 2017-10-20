@@ -6,7 +6,6 @@ export const buildTableOfContentsEndpoint = () => {
 }
 export class TableOfContentsApi extends BaseApi {
   async getTableOfContents () {
-
     let endpoint = buildTableOfContentsEndpoint()
     console.log(endpoint)
     let tocTopojson = await this.get(endpoint)

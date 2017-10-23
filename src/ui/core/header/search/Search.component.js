@@ -15,6 +15,9 @@ class SearchComponent extends Component {
   render () {
     return (
       <span className={classes.streamSearch}>
+        <label htmlFor="streamSearch" className={classes.hidden}>
+          Search Streams
+        </label>
         <input
           id="streamSearch"
           type="search"

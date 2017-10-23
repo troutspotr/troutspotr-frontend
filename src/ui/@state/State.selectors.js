@@ -1,43 +1,41 @@
-import { createSelector } from 'reselect'
-import { searchTextSelector, selectedStreamIdSelector } from 'ui/core/Core.selectors'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-import { isEmpty, every, keyBy, has, reduce } from 'lodash'
-export const regionIndexSelector = state => state.state.regionIndex
-export const regulationsSelector = state => state.state.regulations
-export const roadTypesSelector = state => state.state.roadTypes
-export const roadTypeDictionarySelector = state => state.state.roadTypesDictionary
-export const palTypesSelector = state => state.state.palTypes
-export const streamCentroidsStateSelector = state => state.state.streamCentroids
-export const stateDataLoadingStatusSelector = state => state.state.stateDataLoadingStatus
-export const slugDictionarySelector = state => state.state.slugDictionary
-export const streamIdDictionarySelector = state => state.state.streamIdDictionary
-export const waterOpenersDictionaryStateSelector = state => state.state.waterOpeners
+import {createSelector} from 'reselect'
+import {searchTextSelector, selectedStreamIdSelector} from 'ui/core/Core.selectors'
+import {LOADING_CONSTANTS} from 'ui/core/LoadingConstants'
+import {every, has, isEmpty, keyBy, reduce} from 'lodash'
+export const regionIndexSelector = (state) => state.state.regionIndex
+export const regulationsSelector = (state) => state.state.regulations
+export const roadTypesSelector = (state) => state.state.roadTypes
+export const roadTypeDictionarySelector = (state) => state.state.roadTypesDictionary
+export const palTypesSelector = (state) => state.state.palTypes
+export const streamCentroidsStateSelector = (state) => state.state.streamCentroids
+export const stateDataLoadingStatusSelector = (state) => state.state.stateDataLoadingStatus
+export const slugDictionarySelector = (state) => state.state.slugDictionary
+export const streamIdDictionarySelector = (state) => state.state.streamIdDictionary
+export const waterOpenersDictionaryStateSelector = (state) => state.state.waterOpeners
 /* eslint-disable camelcase */
 export const waterOpenersDictionarySelector = createSelector(
   [waterOpenersDictionaryStateSelector],
   (waterDictionary) => {
-    let now = new Date()
-
-    let watersLookup = reduce(waterDictionary, (dictionary, water, index) => {
-      let key = water.id
-      let openSeasons = water.openers.filter(opener => {
-        let { end_time, start_time } = opener
-        let isWithinBounds = now < end_time && now >= start_time
+    const now = new Date()
+    const watersLookup = reduce(waterDictionary, (dictionary, water, index) => {
+      const key = water.id
+      const openSeasons = water.openers.filter((opener) => {
+        const {end_time, start_time} = opener
+        const isWithinBounds = now < end_time && now >= start_time
         return isWithinBounds
       })
 
-      let isOpenSeason = openSeasons.length >= 1
+      const isOpenSeason = openSeasons.length >= 1
 
-      let newObject = { ...water, isOpenSeason, openSeasons }
+      const newObject = {...water, isOpenSeason, openSeasons}
       dictionary[key] = newObject
       return dictionary
-      // dictionary['id']
     }, {})
 
     return watersLookup
   })
 
-const EMPTY_FUNCTION = () => { return null }
+const EMPTY_FUNCTION = () => null
 export const getWatersObjectSelector = createSelector(
   [waterOpenersDictionarySelector],
   (waterDictionary) => {
@@ -45,11 +43,14 @@ export const getWatersObjectSelector = createSelector(
       return EMPTY_FUNCTION
     }
 
-    return (waterId) => { return waterDictionary[waterId] }
+    return (waterId) => waterDictionary[waterId]
   })
 
 export const streamCentroidsSelector = createSelector(
-  [stateDataLoadingStatusSelector, streamCentroidsStateSelector],
+  [
+    stateDataLoadingStatusSelector,
+    streamCentroidsStateSelector,
+  ],
   (isLoading, streamCentroids) => {
     if (isLoading !== LOADING_CONSTANTS.IS_SUCCESS) {
       return emptyCentroids
@@ -60,25 +61,27 @@ export const streamCentroidsSelector = createSelector(
 
 const emptyCentroids = []
 export const displayedCentroids = createSelector(
-  [searchTextSelector, streamCentroidsSelector],
+  [
+    searchTextSelector,
+    streamCentroidsSelector,
+  ],
   (searchText, streamCentroids) => {
     if (isEmpty(searchText)) {
       return streamCentroids
     }
 
-    let tokens = searchText.toLocaleLowerCase()
+    const tokens = searchText.toLocaleLowerCase()
       .split(' ')
-      .filter(x => x.length > 0)
+      .filter((x) => x.length > 0)
 
-    let filteredCentroids = streamCentroids.filter(centroid => {
-      let { name, altName } = centroid
+    const filteredCentroids = streamCentroids.filter((centroid) => {
+      let {altName} = centroid
+      const {name} = centroid
       altName = altName || ''
-      let isMatch = every(tokens, token => {
-        return name.toLocaleLowerCase()
-          .indexOf(token) >= 0 ||
+      const isMatch = every(tokens, (token) => name.toLocaleLowerCase()
+        .indexOf(token) >= 0 ||
           altName.toLocaleLowerCase()
-          .indexOf(token) >= 0
-      })
+            .indexOf(token) >= 0)
       return isMatch
     })
 
@@ -88,12 +91,16 @@ export const displayedCentroids = createSelector(
 export const displayedCentroidDictionarySelector = createSelector(
   [displayedCentroids],
   (displayedCentroids) => {
-    let dictionary = keyBy(displayedCentroids, x => x.gid)
+    const dictionary = keyBy(displayedCentroids, (x) => x.gid)
     return dictionary
   })
 
 export const displayedStreamCentroidDataSelector = createSelector(
-  [selectedStreamIdSelector, slugDictionarySelector, stateDataLoadingStatusSelector],
+  [
+    selectedStreamIdSelector,
+    slugDictionarySelector,
+    stateDataLoadingStatusSelector,
+  ],
   (selectedStreamId, slugDictionary, stateDataLoadingStatus) => {
     if (stateDataLoadingStatus !== LOADING_CONSTANTS.IS_SUCCESS) {
       return null
@@ -107,7 +114,10 @@ export const displayedStreamCentroidDataSelector = createSelector(
   })
 
 export const displayedStreamTitleSelector = createSelector(
-  [displayedStreamCentroidDataSelector, stateDataLoadingStatusSelector],
+  [
+    displayedStreamCentroidDataSelector,
+    stateDataLoadingStatusSelector,
+  ],
   (displayedStreamCentroid, stateDataLoadingStatus) => {
     if (stateDataLoadingStatus !== LOADING_CONSTANTS.IS_SUCCESS) {
       return null
@@ -121,7 +131,10 @@ export const displayedStreamTitleSelector = createSelector(
   })
 
 export const displayedStreamCentroidSelector = createSelector(
-  [displayedStreamCentroidDataSelector, stateDataLoadingStatusSelector],
+  [
+    displayedStreamCentroidDataSelector,
+    stateDataLoadingStatusSelector,
+  ],
   (displayedStreamCentroid, stateDataLoadingStatus) => {
     if (stateDataLoadingStatus !== LOADING_CONSTANTS.IS_SUCCESS) {
       return null

@@ -1,15 +1,16 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classes from './List.scss'
 import StreamItemComponent from './streamItem/StreamItem.component'
 
 const StreamListComponent = (props) => {
-  let { selectedRegion, selectedState, visibleTroutStreams, getSummary } = props
+  const {selectedRegion, selectedState, visibleTroutStreams, getSummary} = props
   return (
     <div className={classes.streamList}>
       {visibleTroutStreams.map((stream, index) => {
-        let realStream = stream.stream
-        let fakeName = realStream.properties.name
-        let url = realStream.properties.slug
+        const realStream = stream.stream
+        const fakeName = realStream.properties.name
+        const url = realStream.properties.slug
         return (
           <div key={realStream.properties.slug}>
             <StreamItemComponent
@@ -26,11 +27,11 @@ const StreamListComponent = (props) => {
 }
 
 StreamListComponent.propTypes = {
-  visibleTroutStreams: React.PropTypes.array.isRequired,
-  selectedState: React.PropTypes.string.isRequired,
-  selectedRegion: React.PropTypes.string.isRequired,
-  isListVisible: React.PropTypes.bool.isRequired,
-  getSummary: React.PropTypes.func.isRequired
+  'visibleTroutStreams': PropTypes.array.isRequired,
+  'selectedState': PropTypes.string.isRequired,
+  'selectedRegion': PropTypes.string.isRequired,
+  'isListVisible': PropTypes.bool.isRequired,
+  'getSummary': PropTypes.func.isRequired,
 }
 
 export default StreamListComponent

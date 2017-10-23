@@ -1,25 +1,26 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 import Header from './header/Header.container'
 import classes from './CoreLayout.scss'
 import Footer from './footer/Footer.container'
 import SneezeGuardComponent from './sneezeGuard/SneezeGuard.component'
 import AgreementComponent from './termsOfAgreement/Agreement.container'
-import { isExpandedSelector } from './header/minimap/Minimap.selectors'
-import { isExpaned as expandMinimap } from './header/minimap/Minimap.state'
-import { REGION_PARAM_NAME, STATE_PARAM_NAME } from 'ui/core/RouteConstants.js'
-import { hasAgreedToTermsSelector } from 'ui/core/Core.selectors.js'
-import { isRootPageSelector, isStatePageSelector } from 'ui/Location.selectors'
-import { withRouter } from 'react-router'
+import {isExpandedSelector} from './header/minimap/Minimap.selectors'
+import {isExpaned as expandMinimap} from './header/minimap/Minimap.state'
+import {REGION_PARAM_NAME, STATE_PARAM_NAME} from 'ui/core/RouteConstants.js'
+import {hasAgreedToTermsSelector} from 'ui/core/Core.selectors.js'
+import {isRootPageSelector, isStatePageSelector} from 'ui/Location.selectors'
+import {withRouter} from 'react-router'
 import NoResultsFoundOverlayContainer from './noResultsFoundOverlay/NoResultsFoundOverlay.container'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 import OfflineContainer from 'ui/core/offline/Offline.container'
 class CoreLayoutContainer extends Component {
-  // only show the footer if they've selected a region.
+  // Only show the footer if they've selected a region.
   isFooterVisible () {
-    let { params, hasAgreedToTerms } = this.props
-    let isRegionDefined = params[REGION_PARAM_NAME] != null
-    let isStateDefined = params[STATE_PARAM_NAME] != null
+    const {params, hasAgreedToTerms} = this.props
+    const isRegionDefined = params[REGION_PARAM_NAME] != null
+    const isStateDefined = params[STATE_PARAM_NAME] != null
 
     return isRegionDefined && isStateDefined && hasAgreedToTerms
   }
@@ -29,19 +30,19 @@ class CoreLayoutContainer extends Component {
   }
 
   listenToRoutes () {
-    let { router } = this.props
+    const {router} = this.props
     if (router == null) {
       console.log('No router found. Check Minimap component')
       return
     }
 
-    router.listen(({ pathname }) => {
+    router.listen(({pathname}) => {
       AnonymousAnalyzerApi.recordEvent('page_navigation', {})
     })
   }
 
   render () {
-    let isFooterVisible = this.isFooterVisible()
+    const isFooterVisible = this.isFooterVisible()
     return (
       <div className={classes.coreLayout}>
         <OfflineContainer />
@@ -58,7 +59,7 @@ class CoreLayoutContainer extends Component {
               location={this.props.location}
             />}
         </div>}
-        <div id='scrollContainer' className={classes.coreContentLayout}>
+        <div id="scrollContainer" className={classes.coreContentLayout}>
           <div className={classes.coreContent}>
             <NoResultsFoundOverlayContainer />
             { this.props.children }
@@ -75,27 +76,25 @@ class CoreLayoutContainer extends Component {
 }
 
 CoreLayoutContainer.propTypes = {
-  children: React.PropTypes.element.isRequired,
-  params: React.PropTypes.object.isRequired,
-  router: React.PropTypes.object.isRequired,
-  location: React.PropTypes.object.isRequired,
-  isMinimapExpanded: React.PropTypes.bool.isRequired,
-  isRoot: React.PropTypes.bool.isRequired,
-  isState: React.PropTypes.bool.isRequired,
-  hasAgreedToTerms: React.PropTypes.bool.isRequired,
-  closeMinimap: React.PropTypes.func.isRequired
+  'children': PropTypes.element.isRequired,
+  'params': PropTypes.object.isRequired,
+  'router': PropTypes.object.isRequired,
+  'location': PropTypes.object.isRequired,
+  'isMinimapExpanded': PropTypes.bool.isRequired,
+  'isRoot': PropTypes.bool.isRequired,
+  'isState': PropTypes.bool.isRequired,
+  'hasAgreedToTerms': PropTypes.bool.isRequired,
+  'closeMinimap': PropTypes.func.isRequired,
 }
 
-const mapDispatchToProps = {
-  closeMinimap: () => expandMinimap(false)
-}
+const mapDispatchToProps = {'closeMinimap': () => expandMinimap(false)}
 
 const mapStateToProps = (state) => {
-  let props = {
-    isMinimapExpanded: isExpandedSelector(state),
-    isRoot: isRootPageSelector(state),
-    isState: isStatePageSelector(state),
-    hasAgreedToTerms: hasAgreedToTermsSelector(state)
+  const props = {
+    'isMinimapExpanded': isExpandedSelector(state),
+    'isRoot': isRootPageSelector(state),
+    'isState': isStatePageSelector(state),
+    'hasAgreedToTerms': hasAgreedToTermsSelector(state),
   }
 
   return props

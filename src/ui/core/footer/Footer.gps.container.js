@@ -1,27 +1,27 @@
-import { connect } from 'react-redux'
-import { isGpsTrackingActiveStateSelector,
-  isGpsTrackingSupportedStateSelector,
-  gpsCoordinatesLoadingStatusStateSelector,
-  getGpsCoordinateFeatureSelector,
-  getIsGpsActiveButLoading,
+import {connect} from 'react-redux'
+import {getGpsCoordinateFeatureSelector,
   getIsActiveAndSuccessful,
-  isGpsFailedSelector } from 'ui/core/gps/Gps.selectors'
-import { startGpsTracking, stopGpsTracking } from 'ui/core/gps/Gps.state'
+  getIsGpsActiveButLoading,
+  gpsCoordinatesLoadingStatusStateSelector,
+  isGpsFailedSelector,
+  isGpsTrackingActiveStateSelector,
+  isGpsTrackingSupportedStateSelector} from 'ui/core/gps/Gps.selectors'
+import {startGpsTracking, stopGpsTracking} from 'ui/core/gps/Gps.state'
 import FooterGpsComponent from './Footer.gps.component'
 const mapDispatchToProps = {
-  startGpsTracking: () => startGpsTracking(),
-  stopGpsTracking: () => stopGpsTracking()
+  'startGpsTracking': () => startGpsTracking(),
+  'stopGpsTracking': () => stopGpsTracking(),
 }
 
 const mapStateToProps = (state) => {
-  let props = {
-    isGpsTrackingSupported: isGpsTrackingSupportedStateSelector(state),
-    status: gpsCoordinatesLoadingStatusStateSelector(state),
-    isGpsTrackingActive: isGpsTrackingActiveStateSelector(state),
-    gpsCoordinateFeature: getGpsCoordinateFeatureSelector(state),
-    isGpsActiveButLoading: getIsGpsActiveButLoading(state),
-    isGpsActiveAndSuccessful: getIsActiveAndSuccessful(state),
-    isGpsFailed: isGpsFailedSelector(state)
+  const props = {
+    'isGpsTrackingSupported': isGpsTrackingSupportedStateSelector(state),
+    'status': gpsCoordinatesLoadingStatusStateSelector(state),
+    'isGpsTrackingActive': isGpsTrackingActiveStateSelector(state),
+    'gpsCoordinateFeature': getGpsCoordinateFeatureSelector(state),
+    'isGpsActiveButLoading': getIsGpsActiveButLoading(state),
+    'isGpsActiveAndSuccessful': getIsActiveAndSuccessful(state),
+    'isGpsFailed': isGpsFailedSelector(state),
   }
   return props
 }

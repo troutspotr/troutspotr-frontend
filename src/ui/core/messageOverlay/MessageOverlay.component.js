@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import classes from './MessageOverlay.scss'
 
 const MessageOverlay = (props) => {
-  let { position, children } = props
-  let className = classes[position]
+  const {position, children} = props
+  const className = classes[position]
   return (
     <div className={className}>
       {children}
@@ -11,8 +12,8 @@ const MessageOverlay = (props) => {
 }
 
 MessageOverlay.propTypes = {
-  position: PropTypes.string.isRequired,
-  children: PropTypes.element
+  'position': PropTypes.string.isRequired,
+  'children': PropTypes.element,
 }
 
 export default MessageOverlay

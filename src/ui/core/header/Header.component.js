@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import BackButtonContainer from './backButton/BackButton.container'
 import SearchContainer from './search/Search.container'
 import MinimapContainer from './minimap/Minimap.container'
@@ -13,7 +14,7 @@ class HeaderContainer extends Component {
     return (<MinimapContainer
       params={this.props.params}
       location={this.props.location}
-            />)
+    />)
   }
 
   renderSearch () {
@@ -27,7 +28,7 @@ class HeaderContainer extends Component {
   renderLocationSubtitle () {
     return (<SubtitleComponent
       subtitle={this.props.subtitle}
-            />)
+    />)
   }
 
   renderTitle () {
@@ -35,22 +36,22 @@ class HeaderContainer extends Component {
       return null
     }
 
-    let body = (<TitleComponent
+    const body = (<TitleComponent
       title={this.props.title}
 
       isVisible={this.props.isTitleVisible}
-                />)
+    />)
 
-    let symbol = (<ClipboardIconComponent
+    const symbol = (<ClipboardIconComponent
       size={14}
-      style={{ fill: 'hsla(199, 69%, 61%, 1)', color: 'hsla(199, 69%, 61%, 1)' }}
-                  />)
+      style={{'fill': 'hsla(199, 69%, 61%, 1)', 'color': 'hsla(199, 69%, 61%, 1)'}}
+    />)
     return (<ClipboardButton
       onClick={this.props.onCopyToClipboard}
-      component='a'
+      component="a"
       data-clipboard-text={window.location.href}
-      button-title='Copy to clipboard'
-            >
+      button-title="Copy to clipboard"
+    >
       <span>{body} {this.props.isIconVisible && symbol}</span>
     </ClipboardButton>)
   }
@@ -59,7 +60,7 @@ class HeaderContainer extends Component {
     return (<BackButtonContainer
       previous={'/'}
       isEnabled={false}
-            />)
+    />)
   }
 
   render () {
@@ -77,15 +78,15 @@ class HeaderContainer extends Component {
 }
 
 HeaderContainer.propTypes = {
-  subtitle: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  isTitleVisible: PropTypes.bool.isRequired,
-  isSearchVisible: PropTypes.bool.isRequired,
-  isIconVisible: PropTypes.bool.isRequired,
-  params: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  isOffline: PropTypes.bool.isRequired,
-  onCopyToClipboard: PropTypes.func.isRequired
+  'subtitle': PropTypes.string.isRequired,
+  'title': PropTypes.string,
+  'isTitleVisible': PropTypes.bool.isRequired,
+  'isSearchVisible': PropTypes.bool.isRequired,
+  'isIconVisible': PropTypes.bool.isRequired,
+  'params': PropTypes.object.isRequired,
+  'location': PropTypes.object.isRequired,
+  'isOffline': PropTypes.bool.isRequired,
+  'onCopyToClipboard': PropTypes.func.isRequired,
 }
 
 export default HeaderContainer

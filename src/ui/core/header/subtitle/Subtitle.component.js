@@ -1,12 +1,11 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const SubtitleComponent = (props) => {
-  let { subtitle } = props
+  const {subtitle} = props
   return (<span>{subtitle}</span>)
 }
 
-SubtitleComponent.propTypes = {
-  subtitle:  PropTypes.string.isRequired
-}
+SubtitleComponent.propTypes = {'subtitle': PropTypes.string.isRequired}
 
 export default SubtitleComponent

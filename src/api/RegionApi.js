@@ -1,9 +1,7 @@
 import BaseApi from './BaseApi'
 import StateApi from './StateApi'
-import { transformGeo } from './GeoApi.transform'
-export const buildRegionEndpoint = (stateName, regionName) => {
-  return `/data/v2/${stateName}/${regionName}.topo.json`
-}
+import {transformGeo} from './GeoApi.transform'
+export const buildRegionEndpoint = (stateName, regionName) => `/data/v2/${stateName}/${regionName}.topo.json`
 export class RegionApi extends BaseApi {
   async getRegionData (stateName, regionName) {
     if (stateName == null) {
@@ -15,16 +13,16 @@ export class RegionApi extends BaseApi {
     }
     try {
       let regionGeoData = {}
-      let endpoint = buildRegionEndpoint(stateName, regionName)
+      const endpoint = buildRegionEndpoint(stateName, regionName)
       try {
         regionGeoData = await this.get(endpoint)
-        // sometimes the cache may send us bad data.
-        // see if it's valid.
+        // Sometimes the cache may send us bad data.
+        // See if it's valid.
       } catch (exception) {
         throw new Error('Could not retrieve region ', regionName)
       }
 
-      let stateData = await StateApi.getStateData(stateName)
+      const stateData = await StateApi.getStateData(stateName)
 
       let transformedData = {}
       try {
@@ -35,7 +33,7 @@ export class RegionApi extends BaseApi {
       }
       return transformedData
     } catch (error) {
-      console.log(error)
+      console.log(error) // eslint-disable-line
       throw new Error('Could not load region.')
     }
   }

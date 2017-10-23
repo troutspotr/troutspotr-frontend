@@ -1,94 +1,95 @@
-import React, { PropTypes, Component } from 'react'
-// import classes from '../SvgBubble.scss'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+// Import classes from '../SvgBubble.scss'
 import waypointClasses from './RingWaypoint.scss'
-// import accessPointClasses from './RingWaypoint.accessPoint.scss'
-// change to 1.0 for perfect left-right labels.
-// change to 0.0 for perfect orthoganal labels.
-// const LABEL_ANGULAR_COMPRESSION = 0.0
-// rotates
+// Import accessPointClasses from './RingWaypoint.accessPoint.scss'
+// Change to 1.0 for perfect left-right labels.
+// Change to 0.0 for perfect orthoganal labels.
+// Const LABEL_ANGULAR_COMPRESSION = 0.0
+// Rotates
 
 class RingWaypointLabelComponent extends Component {
   renderLabelText (text, offset, labelOffsetFromRadius) {
-    let labelTextTransform = this.getLabelTextTransform(offset, labelOffsetFromRadius)
+    const labelTextTransform = this.getLabelTextTransform(offset, labelOffsetFromRadius)
 
     if (text == null || offset == null) {
       throw new Error('argumetns cannot be null')
     }
 
-    let textAnchor = 'center'
+    const textAnchor = 'center'
 
     return (<g transform={labelTextTransform} className={waypointClasses.text}>
       <text
-        dominantBaseline='central'
+        dominantBaseline="central"
         textAnchor={textAnchor}
       >{text}</text>
     </g>)
   }
 
   getContainerTransform (rotationDegrees, radialOffset) {
-    let { width, height } = this.props.layout
-    let translate = `translate(${radialOffset}, ${0})`
-    let postRotate = `rotate(${rotationDegrees - 90})`
-    let secondTranslate = `translate(${width * 0.5}, ${height * 0.5})`
-    let transform = `${secondTranslate} ${postRotate} ${translate}`
+    const {width, height} = this.props.layout
+    const translate = `translate(${radialOffset}, ${0})`
+    const postRotate = `rotate(${rotationDegrees - 90})`
+    const secondTranslate = `translate(${width * 0.5}, ${height * 0.5})`
+    const transform = `${secondTranslate} ${postRotate} ${translate}`
     return transform
   }
 
   getLabelTextTransform (rotationDegrees, radialOffset) {
-    let rotate = rotationDegrees
+    const rotate = rotationDegrees
 
-    let textXPos = 0
+    const textXPos = 0
 
-    let translate = `translate(${textXPos}, 0)`
-    let transform = `${rotate} ${translate}`
+    const translate = `translate(${textXPos}, 0)`
+    const transform = `${rotate} ${translate}`
     return transform
   }
 
   getIconTransform (rotationDegrees, radialOffset) {
-    let rotate = rotationDegrees
-    let transform = `translate(5,0) rotate(${-rotate + 90})`
+    const rotate = rotationDegrees
+    const transform = `translate(5,0) rotate(${-rotate + 90})`
     return transform
   }
 
   renderInterstateIcon (offset) {
-    let transform = this.getIconTransform(offset)
+    const transform = this.getIconTransform(offset)
     return (<g transform={transform} className={waypointClasses.icon}>
       {this.props.icon}
     </g>)
   }
 
   render () {
-    let { radius, arcCompressionRatio } = this.props.layout
-    let { normalizedOffset } = this.props
+    const {radius, arcCompressionRatio} = this.props.layout
+    const {normalizedOffset} = this.props
 
-    // class this to be the label class that can
+    // Class this to be the label class that can
     // :hover and :active and fade and be slightly transparent
-    let labelOffsetFromRadius = radius + 28
-    let offsetLocationDegrees = 360 * arcCompressionRatio * normalizedOffset
-    let containerTransform = this.getContainerTransform(offsetLocationDegrees, labelOffsetFromRadius)
-    // let debuggerText = this.renderLabelText(this.props.labelText, offsetLocationDegrees)
-    let debuggerIcon = this.renderInterstateIcon(offsetLocationDegrees)
+    const labelOffsetFromRadius = radius + 28
+    const offsetLocationDegrees = 360 * arcCompressionRatio * normalizedOffset
+    const containerTransform = this.getContainerTransform(offsetLocationDegrees, labelOffsetFromRadius)
+    // Let debuggerText = this.renderLabelText(this.props.labelText, offsetLocationDegrees)
+    const debuggerIcon = this.renderInterstateIcon(offsetLocationDegrees)
     return (<g className={waypointClasses.label} transform={containerTransform}>
       <g className={waypointClasses.locationMarker}>
         {this.props.marker}
       </g>
-      <g transform='translate(5, 0)' >
+      <g transform="translate(5, 0)" >
         {debuggerIcon}
       </g>
     </g>)
   }
 }
 RingWaypointLabelComponent.propTypes = {
-  marker: PropTypes.element.isRequired,
-  icon: PropTypes.element,
-  normalizedOffset: PropTypes.number.isRequired,
-  layout: PropTypes.shape({
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    radius: PropTypes.number.isRequired,
-    arcCompressionRatio: PropTypes.number.isRequired,
-    rotatePhase: PropTypes.number.isRequired
-  })
+  'marker': PropTypes.element.isRequired,
+  'icon': PropTypes.element,
+  'normalizedOffset': PropTypes.number.isRequired,
+  'layout': PropTypes.shape({
+    'width': PropTypes.number.isRequired,
+    'height': PropTypes.number.isRequired,
+    'radius': PropTypes.number.isRequired,
+    'arcCompressionRatio': PropTypes.number.isRequired,
+    'rotatePhase': PropTypes.number.isRequired,
+  }),
 }
 
 export default RingWaypointLabelComponent

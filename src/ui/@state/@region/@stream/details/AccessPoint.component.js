@@ -1,12 +1,13 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Details.scss'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 /* eslint-disable camelcase */
 export const crossingTypes = {
-  publicTrout: 'publicTrout',
-  permissionRequired: 'permissionRequired',
-  unsafe: 'unsafe',
-  uninteresting: 'uninteresting'
+  'publicTrout': 'publicTrout',
+  'permissionRequired': 'permissionRequired',
+  'unsafe': 'unsafe',
+  'uninteresting': 'uninteresting',
 }
 const DEFAULT_ZOOM = 16
 
@@ -29,69 +30,68 @@ class AccessPointComponent extends Component {
 
   onClick (e) {
     e.preventDefault()
-    // other folks use this component and don't need
-    // so much fancy stuff.
+    // Other folks use this component and don't need
+    // So much fancy stuff.
     if (location == null) {
       return
     }
-    let hash = `#${this.props.accessPoint.properties.slug}`
+    const hash = `#${this.props.accessPoint.properties.slug}`
     location.href = hash
-    // return false
+    // Return false
   }
 
   openGoogleMaps (e) {
-    // when it rains it pours. Because of the iOS add to start menu
-    // bug, we have to manually do this. yuck. whatever.
+    // When it rains it pours. Because of the iOS add to start menu
+    // Bug, we have to manually do this. yuck. whatever.
     e.preventDefault()
-    let address = e.target.getAttribute('href')
+    const address = e.target.getAttribute('href')
     window.open(address, '_blank')
-    AnonymousAnalyzerApi.recordEvent('open_in_google_maps', { address })
+    AnonymousAnalyzerApi.recordEvent('open_in_google_maps', {address})
     return false
   }
 
   renderOpenInGoogleMapsLink (selectedAccessPoint) {
-    let { centroid_latitude, centroid_longitude } = selectedAccessPoint.properties
-    let url = `https://www.google.com/maps/@${centroid_latitude},${centroid_longitude},${DEFAULT_ZOOM}z`
-    return (<span onClick={this.openGoogleMaps} className={classes.googleLink} href={url} target='_blank'>Google Maps</span>)
+    const {centroid_latitude, centroid_longitude} = selectedAccessPoint.properties
+    const url = `https://www.google.com/maps/@${centroid_latitude},${centroid_longitude},${DEFAULT_ZOOM}z`
+    return (<span onClick={this.openGoogleMaps} className={classes.googleLink} href={url} target="_blank">Google Maps</span>)
   }
 
   mapAccessPoints (bridge, defaultBridgeClass, selectedBridgeClass, isSelected, isHovered) {
-    // let selectedAccessPoint = this.props.selectedAccessPoint
-    // let isSelected = isEmpty(selectedAccessPoint) === false && bridge.properties.gid === selectedAccessPoint.properties.gid
-    let { street_name } = bridge.properties
-    let letter = bridge.properties.alphabetLetter
-    let bridgeClass = isSelected ? selectedBridgeClass : defaultBridgeClass
-    let badgeElement = (<span className={bridgeClass}>{letter}</span>)
-    let textClass = isSelected ? classes.selectedItem : classes.listText
-    let listItemClass = isHovered ? classes.hoveredItem : classes.listItem
-    let hash = `#${this.props.accessPoint.properties.slug}`
+    // Let selectedAccessPoint = this.props.selectedAccessPoint
+    // Let isSelected = isEmpty(selectedAccessPoint) === false && bridge.properties.gid === selectedAccessPoint.properties.gid
+    const {street_name} = bridge.properties
+    const letter = bridge.properties.alphabetLetter
+    const bridgeClass = isSelected ? selectedBridgeClass : defaultBridgeClass
+    const badgeElement = (<span className={bridgeClass}>{letter}</span>)
+    const textClass = isSelected ? classes.selectedItem : classes.listText
+    const listItemClass = isHovered ? classes.hoveredItem : classes.listItem
+    const hash = `#${this.props.accessPoint.properties.slug}`
     return (<a
       href={hash}
       className={listItemClass}
       onClick={this.onClick}
       onMouseEnter={this.onMouseEnter}
       onMouseLeave={this.onMouseLeave}
-            >
+    >
       <span>{badgeElement}</span>
       <span className={textClass}>{street_name} {isSelected && this.renderOpenInGoogleMapsLink(bridge)}</span>
     </a>)
   }
 
   render () {
-    let { accessPoint, selectedClass, defaultClass, isSelected, isHovered } = this.props
+    const {accessPoint, selectedClass, defaultClass, isSelected, isHovered} = this.props
     return this.mapAccessPoints(accessPoint, defaultClass, selectedClass, isSelected, isHovered)
   }
 }
 
 AccessPointComponent.propTypes = {
-  accessPoint: PropTypes.object.isRequired,
-  selectedClass: PropTypes.string.isRequired,
-  defaultClass: PropTypes.string.isRequired,
-  isSelected: PropTypes.bool.isRequired,
-  isHovered: PropTypes.bool.isRequired,
+  'accessPoint': PropTypes.object.isRequired,
+  'selectedClass': PropTypes.string.isRequired,
+  'defaultClass': PropTypes.string.isRequired,
+  'isSelected': PropTypes.bool.isRequired,
+  'isHovered': PropTypes.bool.isRequired,
 
-  onHover: PropTypes.func.isRequired
-  // onSelect: PropTypes.func.isRequired
+  'onHover': PropTypes.func.isRequired,
 }
 
 export default AccessPointComponent

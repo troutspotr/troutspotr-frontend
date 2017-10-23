@@ -1,5 +1,7 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Agreement.scss'
+import Button from './Button.component.js'
 
 class IntroComponent extends Component {
   componentDidMount () {
@@ -38,8 +40,9 @@ class IntroComponent extends Component {
   }
 
   onAdvanceClick = () => {
-    let newTime = new Date()
-    let time = newTime - this.time
+    console.log('go away')
+    const newTime = new Date()
+    const time = newTime - this.time
     this.props.advance(time)
   }
 
@@ -48,13 +51,11 @@ class IntroComponent extends Component {
       {this.renderTitle()}
       {this.renderPreamble()}
       {this.renderAPP()}
-      <button className={classes.button} onClick={this.onAdvanceClick}>Continue to Terms of Service</button>
+      <Button onClick={this.onAdvanceClick}>Continue to Terms of Service</Button>
     </div>)
   }
 }
 
-IntroComponent.propTypes = {
-  advance: PropTypes.func.isRequired
-}
+IntroComponent.propTypes = {'advance': PropTypes.func.isRequired}
 
 export default IntroComponent

@@ -1,10 +1,12 @@
+/* eslint-disable max-lines */
+/* eslint-disable extra-rules/no-commented-out-code */
 const webpack = require('webpack')
 const cssnano = require('cssnano')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const config = require('../config')
 const debug = require('debug')('app:webpack:config')
-// var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // eslint-disable-line
 const OfflinePlugin = require('offline-plugin')
 
 const paths = config.utils_paths
@@ -13,23 +15,24 @@ const __PROD__ = config.globals.__PROD__
 const __TEST__ = config.globals.__TEST__
 
 debug('Creating configuration.')
+const PREACT_ALIASES = {
+  // https://github.com/developit/preact-compat/issues/14
+  // 'react-addons-css-transition-group': 'preact-css-transition-group',
+  'react': 'preact-compat',
+  'react-dom': 'preact-compat',
+  'react-redux': 'preact-redux',
+}
 const webpackConfig = {
-  name    : 'client',
-  target  : 'web',
-  devtool : config.compiler_devtool,
-  resolve : {
-    root       : paths.client(),
-    extensions : ['', '.js', '.jsx', '.json'],
+  name: 'client',
+  target: 'web',
+  devtool: config.compiler_devtool,
+  resolve: {
+    root: paths.client(),
+    extensions: ['', '.js', '.jsx', '.json'],
     // add preact aliasing to reduce build size.
-    'alias': {
-      // https://github.com/developit/preact-compat/issues/14
-      // 'react-addons-css-transition-group': 'preact-css-transition-group',
-      'react': 'preact-compat',
-      'react-dom': 'preact-compat',
-      'react-redux': 'preact-redux'
-    }
+    'alias': __TEST__ ? {} : PREACT_ALIASES,
   },
-  module : {}
+  module: {},
 }
 // ------------------------------------
 // Entry Points
@@ -37,22 +40,20 @@ const webpackConfig = {
 const APP_ENTRY = paths.client('main.js')
 
 webpackConfig.entry = {
-  app : __DEV__
+  app: __DEV__
     ? [APP_ENTRY].concat(`webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`)
     : [APP_ENTRY],
-  vendor : config.compiler_vendors
+  vendor: config.compiler_vendors,
 }
 
 // ------------------------------------
 // Bundle Output
 // ------------------------------------
 webpackConfig.output = {
-  filename   : `[name].[${config.compiler_hash_type}].js`,
-  path       : paths.dist(),
-  publicPath : '/' // config.compiler_public_path
+  filename: `[name].[${config.compiler_hash_type}].js`,
+  path: paths.dist(),
+  publicPath: '/',
 }
-
-console.log(config.compiler_public_path)
 
 // ------------------------------------
 // Plugins
@@ -60,14 +61,14 @@ console.log(config.compiler_public_path)
 webpackConfig.plugins = [
   new webpack.DefinePlugin(config.globals),
   new HtmlWebpackPlugin({
-    template : paths.client('index.html'),
-    hash     : false,
-    favicon  : paths.client('static/favicon.ico'),
-    filename : 'index.html',
-    inject   : 'body',
-    minify   : {
-      collapseWhitespace : true
-    }
+    template: paths.client('index.html'),
+    hash: false,
+    favicon: paths.client('static/favicon.ico'),
+    filename: 'index.html',
+    inject: 'body',
+    minify: {
+      collapseWhitespace: true,
+    },
   }),
   new OfflinePlugin({
     // publicPath: config.compiler_public_path,
@@ -81,23 +82,24 @@ webpackConfig.plugins = [
       'map-fonts/roboto-regular/65024-65279.pbf',
       'map-fonts/roboto-regular/12288-12543.pbf',
       'map-fonts/roboto-bold/0-255.pbf',
-      'map-fonts/roboto-bold/12288-12543.pbf'
+      'map-fonts/roboto-bold/12288-12543.pbf',
     ],
     cacheMaps: [{
       match: function (requestUrl) {
         return new URL('/', location)
       },
-      requestTypes: ['navigate']
+      requestTypes: ['navigate'],
     }],
     updateStrategy: 'all',
     AppCache: {
-      FALLBACK: { '/': '/' }
+      FALLBACK: { '/': '/' },
     },
     ServiceWorker: {
-      navigateFallbackURL: '/'
+      navigateFallbackURL: '/',
     },
-    relativePaths: false
-  })
+    relativePaths: false,
+  }),
+  /* eslint-disable extra-rules/no-commented-out-code */
   // new BundleAnalyzerPlugin({
   //   // Can be `server`, `static` or `disabled`.
   //   // In `server` mode analyzer will start HTTP server to show bundle report.
@@ -105,7 +107,7 @@ webpackConfig.plugins = [
   //   // In `disabled` mode you can use this plugin to just generate Webpack Stats JSON file by setting `generateStatsFile` to `true`.
   //   analyzerMode: 'server',
   //   // Port that will be used by in `server` mode to start HTTP server.
-  //   analyzerPort: 6565,
+  //   analyzerPort: 8888,
   //   // Path to bundle report file that will be generated in `static` mode.
   //   // If relative path is provided, it will be relative to bundles output directory
   //   reportFilename: 'report.html',
@@ -117,6 +119,7 @@ webpackConfig.plugins = [
   //   // Relative to bundles output directory.
   //   statsFilename: 'stats.json'
   // })
+  /* eslint-enable extra-rules/no-commented-out-code */
 ]
 
 if (__DEV__ || false) {
@@ -131,11 +134,11 @@ if (__DEV__ || false) {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      compress : {
-        unused    : true,
-        dead_code : true,
-        warnings  : false
-      }
+      compress: {
+        unused: true,
+        dead_code: true,
+        warnings: false,
+      },
     })
   )
 }
@@ -144,7 +147,7 @@ if (__DEV__ || false) {
 if (!__TEST__) {
   webpackConfig.plugins.push(
     new webpack.optimize.CommonsChunkPlugin({
-      names : ['vendor']
+      names: ['vendor'],
     })
   )
 }
@@ -152,15 +155,15 @@ if (!__TEST__) {
 // ------------------------------------
 // Loaders
 // ------------------------------------
-// JavaScript / JSON
+// JavaScript and JSON
 webpackConfig.module.loaders = [{
-  test    : /\.(js|jsx)$/,
-  exclude : /node_modules/,
-  loader  : 'babel',
-  query   : config.compiler_babel
+  test: /\.(js|jsx)$/,
+  exclude: /node_modules/,
+  loader: 'babel',
+  query: config.compiler_babel,
 }, {
-  test   : /\.json$/,
-  loader : 'json'
+  test: /\.json$/,
+  loader: 'json',
 }]
 
 // ------------------------------------
@@ -173,7 +176,7 @@ const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
 // Add any packge names here whose styles need to be treated as CSS modules.
 // These paths will be combined into a single regex.
 const PATHS_TO_TREAT_AS_CSS_MODULES = [
-  // 'react-toolbox', (example)
+
 ]
 
 // If config has CSS modules enabled, treat this project's styles as CSS modules.
@@ -192,7 +195,7 @@ if (isUsingCSSModules) {
     BASE_CSS_LOADER,
     'modules',
     'importLoaders=1',
-    'localIdentName=[name]__[local]___[hash:base64:5]'
+    'localIdentName=[name]__[local]___[hash:base64:5]',
   ].join('&')
 
   webpackConfig.module.loaders.push({
@@ -202,8 +205,8 @@ if (isUsingCSSModules) {
       'style',
       cssModulesLoader,
       'postcss',
-      'sass?sourceMap'
-    ]
+      'sass?sourceMap',
+    ],
   })
 
   webpackConfig.module.loaders.push({
@@ -212,8 +215,8 @@ if (isUsingCSSModules) {
     loaders: [
       'style',
       cssModulesLoader,
-      'postcss'
-    ]
+      'postcss',
+    ],
   })
 }
 
@@ -226,8 +229,8 @@ webpackConfig.module.loaders.push({
     'style',
     BASE_CSS_LOADER,
     'postcss',
-    'sass?sourceMap'
-  ]
+    'sass?sourceMap',
+  ],
 })
 webpackConfig.module.loaders.push({
   test: /\.css$/,
@@ -235,15 +238,15 @@ webpackConfig.module.loaders.push({
   loaders: [
     'style',
     BASE_CSS_LOADER,
-    'postcss'
-  ]
+    'postcss',
+  ],
 })
 
 // ------------------------------------
 // Style Configuration
 // ------------------------------------
 webpackConfig.sassLoader = {
-  includePaths: paths.client('styles')
+  includePaths: paths.client('styles'),
 }
 
 webpackConfig.postcss = [
@@ -251,17 +254,17 @@ webpackConfig.postcss = [
     autoprefixer: {
       add: true,
       remove: true,
-      browsers: ['last 2 versions']
+      browsers: ['last 2 versions'],
     },
     discardComments: {
-      removeAll: true
+      removeAll: true,
     },
     discardUnused: false,
     mergeIdents: false,
     reduceIdents: false,
     safe: true,
-    sourcemap: true
-  })
+    sourcemap: true,
+  }),
 ]
 
 // File loaders
@@ -296,7 +299,7 @@ if (!__DEV__) {
 
   webpackConfig.plugins.push(
     new ExtractTextPlugin('[name].[contenthash].css', {
-      allChunks : true
+      allChunks: true,
     })
   )
 }

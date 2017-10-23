@@ -1,22 +1,26 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import * as d3 from 'd3-path'
 import SvgAnimatedPathComponent from '../SvgAnimatedPath.component'
 
 const TAU = Math.PI * 2
 class RingSectionComponent extends Component {
   createRadialPath () {
-    let { start, stop, length } = this.props
-    let { width, height, radius, arcCompressionRatio, rotatePhase } = this.props.layout
-    let data = [start, stop].map(mileOffset => {
-      let normalizedOffset = mileOffset / length
-      let normalizedArcLength = TAU * arcCompressionRatio
-      let arcOffset = (normalizedOffset * normalizedArcLength) - rotatePhase
+    const {start, stop, length} = this.props
+    const {width, height, radius, arcCompressionRatio, rotatePhase} = this.props.layout
+    const data = [
+      start,
+      stop,
+    ].map((mileOffset) => {
+      const normalizedOffset = mileOffset / length
+      const normalizedArcLength = TAU * arcCompressionRatio
+      const arcOffset = (normalizedOffset * normalizedArcLength) - rotatePhase
       return arcOffset
     })
 
-    let pathGenerator = d3.path()
+    const pathGenerator = d3.path()
     pathGenerator.arc(width / 2, height / 2, radius, data[0], data[1])
-    let result = pathGenerator.toString()
+    const result = pathGenerator.toString()
     return result
   }
 
@@ -26,26 +30,26 @@ class RingSectionComponent extends Component {
       length={this.props.timing.length}
       cssName={this.props.cssName}
       path={this.createRadialPath()}
-            />)
+    />)
   }
 }
 
 RingSectionComponent.propTypes = {
-  length: PropTypes.number.isRequired,
-  start: PropTypes.number.isRequired,
-  stop: PropTypes.number.isRequired,
-  cssName: PropTypes.string.isRequired,
-  timing: PropTypes.shape({
-    offset: PropTypes.number.isRequired,
-    length: PropTypes.number.isRequired
+  'length': PropTypes.number.isRequired,
+  'start': PropTypes.number.isRequired,
+  'stop': PropTypes.number.isRequired,
+  'cssName': PropTypes.string.isRequired,
+  'timing': PropTypes.shape({
+    'offset': PropTypes.number.isRequired,
+    'length': PropTypes.number.isRequired,
   }),
-  layout: PropTypes.shape({
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    radius: PropTypes.number.isRequired,
-    arcCompressionRatio: PropTypes.number.isRequired,
-    rotatePhase: PropTypes.number.isRequired
-  })
+  'layout': PropTypes.shape({
+    'width': PropTypes.number.isRequired,
+    'height': PropTypes.number.isRequired,
+    'radius': PropTypes.number.isRequired,
+    'arcCompressionRatio': PropTypes.number.isRequired,
+    'rotatePhase': PropTypes.number.isRequired,
+  }),
 }
 
 export default RingSectionComponent

@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './MapOverlay.scss'
 import AccessPointDetails from './AccessPointDetails.component'
 import RegionDetails from './RegionDetails.component'
@@ -6,12 +7,12 @@ import StreamDetails from './StreamDetails.component'
 import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
 import shallowCompare from 'shallow-compare'
 
-import { isEmpty } from 'lodash'
+import {isEmpty} from 'lodash'
 
 class DetailsOverlayComponent extends Component {
   renderRegionDetails () {
-    let { selectedStream, selectedAccessPoint } = this.props
-    let isVisible = isEmpty(selectedStream) && isEmpty(selectedAccessPoint)
+    const {selectedStream, selectedAccessPoint} = this.props
+    const isVisible = isEmpty(selectedStream) && isEmpty(selectedAccessPoint)
     if (isVisible === false) {
       return null
     }
@@ -20,25 +21,25 @@ class DetailsOverlayComponent extends Component {
   }
 
   renderStreamDetails () {
-    let { selectedStream, selectedAccessPoint } = this.props
-    let isVisible = isEmpty(selectedStream) === false && isEmpty(selectedAccessPoint)
+    const {selectedStream, selectedAccessPoint} = this.props
+    const isVisible = isEmpty(selectedStream) === false && isEmpty(selectedAccessPoint)
     if (isVisible === false) {
       return null
     }
 
     return (<StreamDetails
       selectedStream={selectedStream}
-            />)
+    />)
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    let shouldUpdate = shallowCompare(this, nextProps, nextState)
+    const shouldUpdate = shallowCompare(this, nextProps, nextState)
     return shouldUpdate
   }
 
   renderAccessPointDetails () {
-    let { selectedStream, selectedAccessPoint } = this.props
-    let isVisible = isEmpty(selectedStream) === false && isEmpty(selectedAccessPoint) === false
+    const {selectedStream, selectedAccessPoint} = this.props
+    const isVisible = isEmpty(selectedStream) === false && isEmpty(selectedAccessPoint) === false
     if (isVisible === false) {
       return null
     }
@@ -46,7 +47,7 @@ class DetailsOverlayComponent extends Component {
     return (<AccessPointDetails
       selectedStream={selectedStream}
       selectedAccessPoint={selectedAccessPoint}
-            />)
+    />)
   }
 
   render () {
@@ -55,7 +56,7 @@ class DetailsOverlayComponent extends Component {
     }
 
     return (
-      <MessageOverlay position='top'>
+      <MessageOverlay position="top">
         <div className={classes.container}>
           {this.renderRegionDetails()}
           {this.renderStreamDetails()}
@@ -66,9 +67,9 @@ class DetailsOverlayComponent extends Component {
 }
 
 DetailsOverlayComponent.propTypes = {
-  visibleTroutStreams: PropTypes.array,
-  selectedAccessPoint: PropTypes.object,
-  selectedStream: PropTypes.object
+  'visibleTroutStreams': PropTypes.array,
+  'selectedAccessPoint': PropTypes.object,
+  'selectedStream': PropTypes.object,
 }
 
 export default DetailsOverlayComponent

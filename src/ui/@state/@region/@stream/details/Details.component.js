@@ -1,37 +1,38 @@
-import React, { PropTypes, Component } from 'react'
-// import { Link } from 'react-router'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+// Import { Link } from 'react-router'
 import classes from './Details.scss'
-import { isEmpty } from 'lodash'
+import {isEmpty} from 'lodash'
 import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import AccessPointComponent from './AccessPoint.component'
 import SpeciesComponent from './Species.component'
 import SummaryComponent from './Summary.component'
 /* eslint-disable camelcase */
 export const crossingTypes = {
-  publicTrout: 'publicTrout',
-  permissionRequired: 'permissionRequired',
-  unsafe: 'unsafe',
-  uninteresting: 'uninteresting'
+  'publicTrout': 'publicTrout',
+  'permissionRequired': 'permissionRequired',
+  'unsafe': 'unsafe',
+  'uninteresting': 'uninteresting',
 }
-// const DEFAULT_ZOOM = 16
+// Const DEFAULT_ZOOM = 16
 
 class DetailsComponent extends Component {
   renderRestrictions () {
-    let { specialRegulationsCurrentSeason } = this.props
-    let hasNoRestrictions = specialRegulationsCurrentSeason.length === 0
+    const {specialRegulationsCurrentSeason} = this.props
+    const hasNoRestrictions = specialRegulationsCurrentSeason.length === 0
     if (hasNoRestrictions) {
       return null
     }
 
-    let restrictionElements = specialRegulationsCurrentSeason.map((reg, index) => {
-      let id = `${reg.streamId}_${reg.restrictionId}`
+    const restrictionElements = specialRegulationsCurrentSeason.map((reg, index) => {
+      const id = `${reg.streamId}_${reg.restrictionId}`
       return (<RestrictionComponent
         key={id}
         color={reg.color}
         pattern={'solid'}
         text={reg.legalText}
-        length={reg.roundedLength + ' mi'}
-              />)
+        length={`${reg.roundedLength} mi`}
+      />)
     })
     return (<div>
       <div className={classes.title}>Special Regulations</div>
@@ -42,10 +43,10 @@ class DetailsComponent extends Component {
   }
 
   mapAccessPoints (bridge, defaultBridgeClass, selectedBridgeClass, key) {
-    let selectedAccessPoint = this.props.selectedAccessPoint
-    let hoveredRoad = this.props.hoveredRoad
-    let isSelected = isEmpty(selectedAccessPoint) === false && bridge.properties.gid === selectedAccessPoint.properties.gid
-    let isHovered = isEmpty(hoveredRoad) === false && bridge.properties.gid === hoveredRoad.properties.gid
+    const selectedAccessPoint = this.props.selectedAccessPoint
+    const hoveredRoad = this.props.hoveredRoad
+    const isSelected = isEmpty(selectedAccessPoint) === false && bridge.properties.gid === selectedAccessPoint.properties.gid
+    const isHovered = isEmpty(hoveredRoad) === false && bridge.properties.gid === hoveredRoad.properties.gid
     return (<AccessPointComponent
       key={key}
       accessPoint={bridge}
@@ -57,29 +58,29 @@ class DetailsComponent extends Component {
       location={this.props.location}
       onHover={this.props.setHoveredRoad}
       onSelect={this.props.setSelectedRoad}
-            />)
+    />)
   }
 
   renderBridgesBody () {
-    let { selectedStream } = this.props
-    let { accessPoints } = selectedStream
-    let hasNoBridges = accessPoints.length === 0
+    const {selectedStream} = this.props
+    const {accessPoints} = selectedStream
+    const hasNoBridges = accessPoints.length === 0
 
     if (hasNoBridges) {
       return <div className={classes.listItemBasis}>None.</div>
     }
 
-    let dictionary = {
-      publicLandAndTroutStream: [],
-      troutStreamOnly: [],
-      uninteresting: [],
-      unsafe: []
+    const dictionary = {
+      'publicLandAndTroutStream': [],
+      'troutStreamOnly': [],
+      'uninteresting': [],
+      'unsafe': [],
     }
 
-    let bridgeGroups = accessPoints.reduce((current, element) => {
-      let props = element.properties
-      // let { is_over_publicly_accessible_land, is_over_trout_stream, isParkable, bridgeType } = props
-      let { bridgeType } = props
+    const bridgeGroups = accessPoints.reduce((current, element) => {
+      const props = element.properties
+      // Let { is_over_publicly_accessible_land, is_over_trout_stream, isParkable, bridgeType } = props
+      const {bridgeType} = props
       if (bridgeType === crossingTypes.uninteresting) {
         current.uninteresting.push(element)
         return current
@@ -99,17 +100,11 @@ class DetailsComponent extends Component {
       return current
     }, dictionary)
 
-    let publicTroutStreamBridgeElements = bridgeGroups.publicLandAndTroutStream.map((bridge, index) => {
-      return this.mapAccessPoints(bridge, classes.publicBridgeTroutStream, classes.selectedPublicBridgeTroutStream, index)
-    })
+    const publicTroutStreamBridgeElements = bridgeGroups.publicLandAndTroutStream.map((bridge, index) => this.mapAccessPoints(bridge, classes.publicBridgeTroutStream, classes.selectedPublicBridgeTroutStream, index))
 
-    let troutStreamBridgeElements = bridgeGroups.troutStreamOnly.map((bridge, index) => {
-      return this.mapAccessPoints(bridge, classes.bridgeOverTroutStream, classes.selectedBridgeOverTroutStream, index)
-    })
+    const troutStreamBridgeElements = bridgeGroups.troutStreamOnly.map((bridge, index) => this.mapAccessPoints(bridge, classes.bridgeOverTroutStream, classes.selectedBridgeOverTroutStream, index))
 
-    let unsafeTroutStreamBridgeElements = bridgeGroups.unsafe.map((bridge, index) => {
-      return this.mapAccessPoints(bridge, classes.unsafeBridgeOverTroutStream, classes.selectedUnsafeBridgeOverTroutStream, index)
-    })
+    const unsafeTroutStreamBridgeElements = bridgeGroups.unsafe.map((bridge, index) => this.mapAccessPoints(bridge, classes.unsafeBridgeOverTroutStream, classes.selectedUnsafeBridgeOverTroutStream, index))
 
     return (<div>
       {this.createBridgeListSummaryElement('With access to publicly fishable land:', publicTroutStreamBridgeElements)}
@@ -119,7 +114,7 @@ class DetailsComponent extends Component {
   }
 
   renderBridges () {
-    let bridgesBody = this.renderBridgesBody()
+    const bridgesBody = this.renderBridgesBody()
 
     return (<div>
       <div className={classes.title}>Bridges</div>
@@ -142,15 +137,15 @@ class DetailsComponent extends Component {
   }
 
   renderTributaries () {
-    let { selectedStream } = this.props
-    let { tributaries } = selectedStream
-    let hasNoTributaries = tributaries.length === 0
+    const {selectedStream} = this.props
+    const {tributaries} = selectedStream
+    const hasNoTributaries = tributaries.length === 0
     if (hasNoTributaries) {
       return null
     }
 
-    let tributaryElements = tributaries.map((tributary, index) => {
-      let { name, gid } = tributary.properties.streamData.stream.properties
+    const tributaryElements = tributaries.map((tributary, index) => {
+      const {name, gid} = tributary.properties.streamData.stream.properties
       return <div key={gid} className={classes.listItem}>{name}</div>
     })
 
@@ -186,14 +181,14 @@ class DetailsComponent extends Component {
 }
 
 DetailsComponent.propTypes = {
-  selectedStream: PropTypes.object,
-  specialRegulationsCurrentSeason: PropTypes.array.isRequired,
-  selectedAccessPoint: PropTypes.object,
-  hoveredRoad: PropTypes.object,
-  location: PropTypes.object.isRequired,
+  'selectedStream': PropTypes.object,
+  'specialRegulationsCurrentSeason': PropTypes.array.isRequired,
+  'selectedAccessPoint': PropTypes.object,
+  'hoveredRoad': PropTypes.object,
+  'location': PropTypes.object.isRequired,
 
-  setHoveredRoad: PropTypes.func.isRequired,
-  setSelectedRoad: PropTypes.func.isRequired
+  'setHoveredRoad': PropTypes.func.isRequired,
+  'setSelectedRoad': PropTypes.func.isRequired,
 }
 
 export default DetailsComponent

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-
+import {Component} from 'react'
+import PropTypes from 'prop-types'
 class StateComponent extends Component {
   componentDidMount () {
     this.props.fetchStateData(this.props.selectedState)
@@ -18,9 +18,9 @@ class StateComponent extends Component {
 }
 
 StateComponent.propTypes = {
-  selectedState: React.PropTypes.string.isRequired,
-  fetchStateData: React.PropTypes.func.isRequired,
-  children: React.PropTypes.element
+  'selectedState': PropTypes.string.isRequired,
+  'fetchStateData': PropTypes.func.isRequired,
+  'children': PropTypes.element,
 }
 
 export default StateComponent

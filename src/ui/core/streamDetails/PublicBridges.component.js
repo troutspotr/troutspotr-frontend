@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import classes from './PublicBridges.scss'
-// import { Link } from 'react-router'
+// Import { Link } from 'react-router'
 
 const PublicBridgesComponent = (props) => {
-  let { number } = props
-  let noun = number === 1 ? ' bridge' : ' bridges'
-  let countSymbol = number === 0
+  const {number} = props
+  const noun = number === 1 ? ' bridge' : ' bridges'
+  const countSymbol = number === 0
     ? 'No'
     : (<span className={classes.publicBridgesBadge}>{number}</span>)
   return (
@@ -14,8 +15,6 @@ const PublicBridgesComponent = (props) => {
     </div>)
 }
 
-PublicBridgesComponent.propTypes = {
-  number: PropTypes.number.isRequired
-}
+PublicBridgesComponent.propTypes = {'number': PropTypes.number.isRequired}
 
 export default PublicBridgesComponent

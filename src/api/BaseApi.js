@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { config as defaultConfig } from './BaseApi.config'
+import {config as defaultConfig} from './BaseApi.config'
 import localForage from 'localforage'
-import { isEmpty, isString } from 'lodash'
+import {isEmpty, isString} from 'lodash'
 
 export default class BaseApi {
   constructor (cache = localForage, config = defaultConfig()) {
@@ -25,36 +25,31 @@ export default class BaseApi {
       return []
     }
 
-    let keys = await this.cache.keys()
+    const keys = await this.cache.keys()
     return keys
   }
 
   tryGetFromCache (endpoint) {
-    console.log(`trying to get ${endpoint} from the cache...`)
     if (this.cache == null) {
       return Promise.reject('Caching not available')
     }
-    return this.cache.getItem(endpoint).then(values => {
+    return this.cache.getItem(endpoint).then((values) => {
       if (values != null &&
           isEmpty(values) === false &&
           isString(values) === false) {
-        console.log(`found ${endpoint} in cache - returning it`)
         return values
       }
       return Promise.reject('No values found in cache!')
-    }).catch(async x => {
+    }).catch(async (x) => {
       await this.cache.removeItem(endpoint)
       return Promise.reject('stuff')
     })
   }
 
   tryGetFromInternet (endpoint) {
-    console.log(`trying to get ${endpoint} from the internet...`)
     return this.httpClient.get(endpoint)
       .then(async (response) => {
-        console.log(`${endpoint} found!`)
         if (this.cache != null) {
-          console.log(`placing ${endpoint} in cache.`)
           await this.cache.setItem(endpoint, response.data)
         }
 
@@ -71,36 +66,27 @@ export default class BaseApi {
   async get (endpoint, config) {
     return this.tryGetFromCache(endpoint)
       .catch(() => {
-        console.log(`${endpoint} not found in cache, moving to internet...`)
         return this.tryGetFromInternet(endpoint)
       })
   }
 
   put (endpoint, data) {
     return this.httpClient.put(endpoint, data)
-      .catch((response) => {
-        return this.handleFailure(response)
-      })
+      .catch((response) => this.handleFailure(response))
   }
 
   delete (endpoint) {
-    return this.httpClient['delete'](endpoint)
-      .catch((response) => {
-        return this.handleFailure(response)
-      })
+    return this.httpClient.delete(endpoint)
+      .catch((response) => this.handleFailure(response))
   }
 
   patch (endpoint, data) {
     return this.httpClient.patch(endpoint, data)
-      .catch((response) => {
-        return this.handleFailure(response)
-      })
+      .catch((response) => this.handleFailure(response))
   }
 
   post (endpoint, data) {
     return this.httpClient.post(endpoint, data)
-      .catch((response) => {
-        return this.handleFailure(response)
-      })
+      .catch((response) => this.handleFailure(response))
   }
 }

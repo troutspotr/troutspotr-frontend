@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect'
-// import * as regionSelectors from 'ui/@state/@region/Region.selectors'
+import {createSelector} from 'reselect'
+// Import * as regionSelectors from 'ui/@state/@region/Region.selectors'
 import * as streamStyles from './Stream.style'
 import * as troutSectionStyles from './TroutSection.style'
 import * as palStyles from './Pal.style'
@@ -14,56 +14,72 @@ export const UNDER_LABEL_PLACEHOLDER = 'UNDER-LABEL-PLACEHOLDER'
 export const streamLayersSelector = createSelector(
   [],
   () => {
-    let quietLayer = layerGeneratorBetter(streamStyles.StreamQuietStyle, UNDER_ROAD_PLACEHOLDER)
-    let activeLayer = layerGeneratorBetter(streamStyles.StreamActiveStyle, UNDER_ROAD_PLACEHOLDER)
-    return [quietLayer, activeLayer]
+    const quietLayer = layerGeneratorBetter(streamStyles.StreamQuietStyle, UNDER_ROAD_PLACEHOLDER)
+    const activeLayer = layerGeneratorBetter(streamStyles.StreamActiveStyle, UNDER_ROAD_PLACEHOLDER)
+    return [
+      quietLayer,
+      activeLayer,
+    ]
   })
 
 export const streamCentroidLayersSelector = createSelector(
   [],
   () => {
-    let quietLayer = layerGeneratorBetter(streamStyles.StreamCentroidsQuietStyle, UNDER_LABEL_PLACEHOLDER)
-    let activeLayer = layerGeneratorBetter(streamStyles.StreamCentroidsActiveStyle, UNDER_LABEL_PLACEHOLDER)
-    let highlightLayer = layerGeneratorBetter(streamStyles.StreamCentroidsHighlightStyle, UNDER_LABEL_PLACEHOLDER)
-    return [quietLayer, activeLayer, highlightLayer]
+    const quietLayer = layerGeneratorBetter(streamStyles.StreamCentroidsQuietStyle, UNDER_LABEL_PLACEHOLDER)
+    const activeLayer = layerGeneratorBetter(streamStyles.StreamCentroidsActiveStyle, UNDER_LABEL_PLACEHOLDER)
+    const highlightLayer = layerGeneratorBetter(streamStyles.StreamCentroidsHighlightStyle, UNDER_LABEL_PLACEHOLDER)
+    return [
+      quietLayer,
+      activeLayer,
+      highlightLayer,
+    ]
   })
 
 export const troutSectionsLayersSelector = createSelector(
   [],
   () => {
-    let quietLayer = layerGeneratorBetter(troutSectionStyles.TroutSectionActiveStyle, UNDER_ROAD_PLACEHOLDER)
-    let activeLayer = layerGeneratorBetter(troutSectionStyles.TroutSectionQuietStyle, UNDER_ROAD_PLACEHOLDER)
-    return [quietLayer, activeLayer]
+    const quietLayer = layerGeneratorBetter(troutSectionStyles.TroutSectionActiveStyle, UNDER_ROAD_PLACEHOLDER)
+    const activeLayer = layerGeneratorBetter(troutSectionStyles.TroutSectionQuietStyle, UNDER_ROAD_PLACEHOLDER)
+    return [
+      quietLayer,
+      activeLayer,
+    ]
   })
 
 export const palLayersSelector = createSelector(
   [],
   () => {
-    let activeLayer = layerGeneratorBetter(palStyles.PalStyle, UNDER_ROAD_PLACEHOLDER)
+    const activeLayer = layerGeneratorBetter(palStyles.PalStyle, UNDER_ROAD_PLACEHOLDER)
     return [activeLayer]
   })
 
 export const satelliteLayersSelector = createSelector(
   [],
   () => {
-    let activeLayer = layerGeneratorBetter(satelliteStyles.SatelliteStyle, UNDER_ROAD_PLACEHOLDER)
+    const activeLayer = layerGeneratorBetter(satelliteStyles.SatelliteStyle, UNDER_ROAD_PLACEHOLDER)
     return [activeLayer]
   })
 
 export const restrictionSectionsLayersSelector = createSelector(
   [],
   () => {
-    let activeLayer = layerGeneratorBetter(restrictionSectionStyles.RestrictionSectionActiveStyle, UNDER_ROAD_PLACEHOLDER)
-    let quietLayer = layerGeneratorBetter(restrictionSectionStyles.RestrictionSectionQuietStyle, UNDER_ROAD_PLACEHOLDER)
-    return [activeLayer, quietLayer]
+    const activeLayer = layerGeneratorBetter(restrictionSectionStyles.RestrictionSectionActiveStyle, UNDER_ROAD_PLACEHOLDER)
+    const quietLayer = layerGeneratorBetter(restrictionSectionStyles.RestrictionSectionQuietStyle, UNDER_ROAD_PLACEHOLDER)
+    return [
+      activeLayer,
+      quietLayer,
+    ]
   })
 
 export const palSectionsLayersSelector = createSelector(
   [],
   () => {
-    let activeLayer = layerGeneratorBetter(palSectionStyles.PalSectionActiveStyle, UNDER_ROAD_PLACEHOLDER)
-    let quietLayer = layerGeneratorBetter(palSectionStyles.PalSectionQuietStyle, UNDER_ROAD_PLACEHOLDER)
-    return [activeLayer, quietLayer]
+    const activeLayer = layerGeneratorBetter(palSectionStyles.PalSectionActiveStyle, UNDER_ROAD_PLACEHOLDER)
+    const quietLayer = layerGeneratorBetter(palSectionStyles.PalSectionQuietStyle, UNDER_ROAD_PLACEHOLDER)
+    return [
+      activeLayer,
+      quietLayer,
+    ]
   })
 
 export const gpsLayerSelector = createSelector(
@@ -75,14 +91,14 @@ export const gpsLayerSelector = createSelector(
 export const accessPointsLayerSelector = createSelector(
   [],
   () => {
-    let labelActiveLayer = layerGeneratorBetter(accessPointStyles.AccessPointLabelActiveStyle, UNDER_LABEL_PLACEHOLDER)
-    let labelQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointLabelQuietStyle, UNDER_LABEL_PLACEHOLDER)
-    let borderActiveLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerBorderActiveStyle, UNDER_LABEL_PLACEHOLDER)
-    let borderQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerBorderQuietStyle, UNDER_LABEL_PLACEHOLDER)
-    let centerActiveLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerCenterActiveStyle, UNDER_LABEL_PLACEHOLDER)
-    let centerQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerCenterQuietStyle, UNDER_LABEL_PLACEHOLDER)
-    let labelLetterActiveLayer = layerGeneratorBetter(accessPointStyles.AccessPointLetterLabelActiveStyle, UNDER_LABEL_PLACEHOLDER)
-    let labelletterQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointLabelLetterQuietStyle, UNDER_LABEL_PLACEHOLDER)
+    const labelActiveLayer = layerGeneratorBetter(accessPointStyles.AccessPointLabelActiveStyle, UNDER_LABEL_PLACEHOLDER)
+    const labelQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointLabelQuietStyle, UNDER_LABEL_PLACEHOLDER)
+    const borderActiveLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerBorderActiveStyle, UNDER_LABEL_PLACEHOLDER)
+    const borderQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerBorderQuietStyle, UNDER_LABEL_PLACEHOLDER)
+    const centerActiveLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerCenterActiveStyle, UNDER_LABEL_PLACEHOLDER)
+    const centerQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointMarkerCenterQuietStyle, UNDER_LABEL_PLACEHOLDER)
+    const labelLetterActiveLayer = layerGeneratorBetter(accessPointStyles.AccessPointLetterLabelActiveStyle, UNDER_LABEL_PLACEHOLDER)
+    const labelletterQuietLayer = layerGeneratorBetter(accessPointStyles.AccessPointLabelLetterQuietStyle, UNDER_LABEL_PLACEHOLDER)
 
     return [
       borderActiveLayer,
@@ -92,26 +108,24 @@ export const accessPointsLayerSelector = createSelector(
       labelActiveLayer,
       labelQuietLayer,
       labelLetterActiveLayer,
-      labelletterQuietLayer
+      labelletterQuietLayer,
 
     ]
   })
 
 export const layerGeneratorBetter = (layerDefinition, insertBefore, isInteractive = true) => {
-  let { source, id } = layerDefinition
-  let layer = layerGenerator(id, source, insertBefore, layerDefinition, isInteractive)
+  const {source, id} = layerDefinition
+  const layer = layerGenerator(id, source, insertBefore, layerDefinition, isInteractive)
   return layer
 }
 
-const layerGenerator = (layerId, sourceId, insertBefore, layerDefinition, isInteractive = true) => {
-  return {
-    layerId,
-    sourceId,
-    insertBefore,
-    layerDefinition,
-    isInteractive
-  }
-}
+const layerGenerator = (layerId, sourceId, insertBefore, layerDefinition, isInteractive = true) => ({
+  layerId,
+  sourceId,
+  insertBefore,
+  layerDefinition,
+  isInteractive,
+})
 
 export const layersSelector = createSelector(
   [
@@ -121,7 +135,7 @@ export const layersSelector = createSelector(
     restrictionSectionsLayersSelector,
     palSectionsLayersSelector,
     accessPointsLayerSelector,
-    streamCentroidLayersSelector
+    streamCentroidLayersSelector,
   ],
   (
     streamLayers,
@@ -132,7 +146,7 @@ export const layersSelector = createSelector(
     accessPointsLayers,
     streamCentroidLayersSelector
   ) => {
-    let layers = [].concat(
+    const layers = [].concat(
       palLayers,
       streamLayers,
       troutSectionsLayers,

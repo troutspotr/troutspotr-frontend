@@ -1,14 +1,13 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
-const SvgAnimatedPathComponent = (props) => {
-  return (
-    <path className={props.cssName} d={props.path} />
-  )
-}
+const SvgAnimatedPathComponent = (props) => (
+  <path className={props.cssName} d={props.path} />
+)
 
 SvgAnimatedPathComponent.propTypes = {
-  cssName: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired
+  'cssName': PropTypes.string.isRequired,
+  'path': PropTypes.string.isRequired,
 }
 
 export default SvgAnimatedPathComponent

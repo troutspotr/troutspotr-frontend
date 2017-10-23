@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classes from './StreamItem.scss'
-import { round } from 'lodash'
+import {round} from 'lodash'
 
 const LengthRatioComponent = (props) => {
-  let { troutLength, publicLength } = props
+  const {troutLength, publicLength} = props
 
   return (
     <ul className={classes.microLength}>
@@ -14,8 +15,8 @@ const LengthRatioComponent = (props) => {
 }
 
 LengthRatioComponent.propTypes = {
-  troutLength: React.PropTypes.number.isRequired,
-  publicLength: React.PropTypes.number.isRequired
+  'troutLength': PropTypes.number.isRequired,
+  'publicLength': PropTypes.number.isRequired,
 }
 
 export default LengthRatioComponent

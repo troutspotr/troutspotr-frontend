@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './SvgMap.scss'
 class RegionComponent extends Component {
   constructor () {
@@ -7,20 +8,19 @@ class RegionComponent extends Component {
   }
 
   onClick (e) {
-    let json = this.props.geoJson
+    const json = this.props.geoJson
     if (this.props.isActive === false) {
       e.preventDefault()
       return
     }
 
     this.props.selectRegion(e, json)
-    // browserHistory.push(path)
   }
 
   render () {
-    let json = this.props.geoJson
-    let path = this.props.pathGenerator(json.geometry)
-    let className = this.props.isActive === false
+    const json = this.props.geoJson
+    const path = this.props.pathGenerator(json.geometry)
+    const className = this.props.isActive === false
       ? classes.inactiveRegion
       : this.props.isCached
         ? classes.cachedRegion
@@ -34,11 +34,11 @@ class RegionComponent extends Component {
 }
 
 RegionComponent.propTypes = {
-  geoJson: PropTypes.object.isRequired,
-  pathGenerator: PropTypes.func.isRequired,
-  selectRegion: PropTypes.func.isRequired,
-  isCached: PropTypes.bool.isRequired,
-  isActive: PropTypes.bool.isRequired
+  'geoJson': PropTypes.object.isRequired,
+  'pathGenerator': PropTypes.func.isRequired,
+  'selectRegion': PropTypes.func.isRequired,
+  'isCached': PropTypes.bool.isRequired,
+  'isActive': PropTypes.bool.isRequired,
 }
 
 export default RegionComponent

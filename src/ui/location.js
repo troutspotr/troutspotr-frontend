@@ -8,17 +8,15 @@ export const LOCATION_CHANGE = 'LOCATION_CHANGE'
 // ------------------------------------
 export function locationChange (location = '/') {
   return {
-    type    : LOCATION_CHANGE,
-    payload : location
+    'type': LOCATION_CHANGE,
+    'payload': location,
   }
 }
 
 // ------------------------------------
 // Specialized Action Creator
 // ------------------------------------
-export const updateLocation = ({ dispatch }) => {
-  return (nextLocation) => dispatch(locationChange(nextLocation))
-}
+export const updateLocation = ({dispatch}) => (nextLocation) => dispatch(locationChange(nextLocation))
 
 // ------------------------------------
 // Reducer

@@ -1,12 +1,13 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './NoResultsFoundOverlay.scss'
 import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
-import { isEmpty } from 'lodash'
+import {isEmpty} from 'lodash'
 
 class RegionLayout extends Component {
   renderNoStreamsFound () {
-    let { totalStreams, clearText } = this.props
-    let safeStreamCount = isEmpty(totalStreams) ? 0 : totalStreams.length
+    const {totalStreams, clearText} = this.props
+    const safeStreamCount = isEmpty(totalStreams) ? 0 : totalStreams.length
     return (
       <div>
         <div className={classes.clearSearchTitle}>No streams matched your search.</div>
@@ -23,7 +24,7 @@ class RegionLayout extends Component {
 
     return (
       <MessageOverlay
-        position='top'
+        position="top"
       >
         {this.renderNoStreamsFound()}
       </MessageOverlay>)
@@ -31,9 +32,9 @@ class RegionLayout extends Component {
 }
 
 RegionLayout.propTypes = {
-  clearText: PropTypes.func.isRequired,
-  totalStreams: PropTypes.array.isRequired,
-  isDisplayed: PropTypes.bool.isRequired
+  'clearText': PropTypes.func.isRequired,
+  'totalStreams': PropTypes.array.isRequired,
+  'isDisplayed': PropTypes.bool.isRequired,
 }
 
 export default RegionLayout

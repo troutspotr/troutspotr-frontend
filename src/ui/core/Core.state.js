@@ -1,9 +1,9 @@
-import { createAction } from 'redux-actions'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
+import {createAction} from 'redux-actions'
+import {LOADING_CONSTANTS} from 'ui/core/LoadingConstants'
 import TableOfContentsApi from 'api/TableOfContentsApi.js'
-import { keyBy } from 'lodash'
+import {keyBy} from 'lodash'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
-import { updateCachedEndpoints } from 'ui/core/offline/Offline.state'
+import {updateCachedEndpoints} from 'ui/core/offline/Offline.state'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -15,8 +15,8 @@ export const SET_AGREEMENT_STATE = 'SET_AGREEMENT_STATE'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const setViewToMap = createAction(REGION_SET_VIEW, x => MAP)
-export const setViewToList = createAction(REGION_SET_VIEW, x => LIST)
+export const setViewToMap = createAction(REGION_SET_VIEW, (x) => MAP)
+export const setViewToList = createAction(REGION_SET_VIEW, (x) => LIST)
 
 export const GEO_SET_TABLE_OF_CONTENTS = 'GEO_SET_TABLE_OF_CONTENTS'
 export const GEO_TABLE_OF_CONTENTS_LOADING = 'GEO_TABLE_OF_CONTENTS_LOADING'
@@ -30,33 +30,27 @@ export const setAgreeToTerms = createAction(HAS_AGREED_TO_TERMS)
 export const setAgreementState = createAction(SET_AGREEMENT_STATE)
 
 const updateSearchTextAction = createAction(GEO_UPDATE_SEARCH_TEXT)
-export const updateSearchText = (searchText) => {
-  return async (dispatch) => {
-    // TODO: debounce this and check for 3 character limit
-    let sanitizedString = searchText == null ? '' : searchText.trim()
-    dispatch(updateSearchTextAction(sanitizedString))
-  }
+export const updateSearchText = (searchText) => async (dispatch) => {
+  // TODO: debounce this and check for 3 character limit
+  const sanitizedString = searchText == null ? '' : searchText.trim()
+  dispatch(updateSearchTextAction(sanitizedString))
 }
 
-export const agreeToTerms = (isAgreed) => {
-  return (dispatch) => {
-    let agreement = isAgreed ? 'true' : 'false'
-    dispatch(setAgreeToTerms(agreement))
-  }
+export const agreeToTerms = (isAgreed) => (dispatch) => {
+  const agreement = isAgreed ? 'true' : 'false'
+  dispatch(setAgreeToTerms(agreement))
 }
 
-export const fetchTableOfContents = () => {
-  return async (dispatch) => {
-    dispatch(setTableOfContentsLoading())
-    try {
-      let gettingTableOfContents = TableOfContentsApi.getTableOfContents()
-      let [tableOfContents] = await Promise.all([gettingTableOfContents])
-      dispatch(setTableOfContents(tableOfContents))
-      dispatch(updateCachedEndpoints())
-    } catch (error) {
-      console.log(error)
-      dispatch(setTableOfContentsFailed())
-    }
+export const fetchTableOfContents = () => async (dispatch) => {
+  dispatch(setTableOfContentsLoading())
+  try {
+    const gettingTableOfContents = TableOfContentsApi.getTableOfContents()
+    const [tableOfContents] = await Promise.all([gettingTableOfContents])
+    dispatch(setTableOfContents(tableOfContents))
+    dispatch(updateCachedEndpoints())
+  } catch (error) {
+    console.log(error)
+    dispatch(setTableOfContentsFailed()) // eslint-disable-line
   }
 }
 
@@ -64,80 +58,78 @@ export const fetchTableOfContents = () => {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [REGION_SET_VIEW] : (state, { payload }) => {
-    AnonymousAnalyzerApi.recordEvent('view_change', { view: payload })
-    let view = payload || initialState.view
-    let newState = { ...state, ...{ view } }
+  [REGION_SET_VIEW]: (state, {payload}) => {
+    AnonymousAnalyzerApi.recordEvent('view_change', {'view': payload})
+    const view = payload || initialState.view
+    const newState = {...state, ...{view}}
     return newState
   },
 
-  [GEO_SET_TABLE_OF_CONTENTS]: (state, { payload }) => {
-    let newState = {
+  [GEO_SET_TABLE_OF_CONTENTS]: (state, {payload}) => {
+    const newState = {
       ...state,
 
       ...{
-        statesGeoJson: payload.states,
-        statesDictionary: keyBy(payload.states.features, s => s.properties.short_name.toLowerCase()),
+        'statesGeoJson': payload.states,
+        'statesDictionary': keyBy(payload.states.features, (s) => s.properties.short_name.toLowerCase()),
 
-        countiesGeoJson: payload.counties,
-        countyDictionary: keyBy(payload.counties.features, c => c.properties.gid),
+        'countiesGeoJson': payload.counties,
+        'countyDictionary': keyBy(payload.counties.features, (c) => c.properties.gid),
 
-        regionsGeoJson: payload.regions,
-        regionDictionary: keyBy(payload.regions.features, r => r.properties.name.toLowerCase()),
+        'regionsGeoJson': payload.regions,
+        'regionDictionary': keyBy(payload.regions.features, (r) => r.properties.name.toLowerCase()),
 
-        streamCentroidsGeoJson: payload.streamCentroids,
-        tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_SUCCESS
-      }
+        'streamCentroidsGeoJson': payload.streamCentroids,
+        'tableOfContentsLoadingStatus': LOADING_CONSTANTS.IS_SUCCESS,
+      },
     }
     return newState
   },
-  [GEO_TABLE_OF_CONTENTS_LOADING]: (state, { payload }) => {
-    let newState = { ...state, ...{ tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_PENDING } }
+  [GEO_TABLE_OF_CONTENTS_LOADING]: (state, {payload}) => {
+    const newState = {...state, ...{'tableOfContentsLoadingStatus': LOADING_CONSTANTS.IS_PENDING}}
     return newState
   },
-  [GEO_TABLE_OF_CONTENTS_LOADING_FAILED]: (state, { payload }) => {
-    let newState = { ...state, ...{ tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_FAILED } }
+  [GEO_TABLE_OF_CONTENTS_LOADING_FAILED]: (state, {payload}) => {
+    const newState = {...state, ...{'tableOfContentsLoadingStatus': LOADING_CONSTANTS.IS_FAILED}}
     return newState
   },
-  [GEO_UPDATE_SEARCH_TEXT]: (state, { payload }) => {
-    let newState = { ...state, ...{ searchText: payload } }
+  [GEO_UPDATE_SEARCH_TEXT]: (state, {payload}) => {
+    const newState = {...state, ...{'searchText': payload}}
     return newState
   },
-  [HAS_AGREED_TO_TERMS]: (state, { payload }) => {
+  [HAS_AGREED_TO_TERMS]: (state, {payload}) => {
     if (localStorage != null && localStorage.setItem != null) {
       try {
         localStorage.setItem(HAS_AGREED_TO_TERMS, payload)
       } catch (e) {
-        console.log('could not store token; perhaps private mode?')
+        console.log('could not store token; perhaps private mode?') // eslint-disable-line
       }
     }
 
-    let newState = { ...state, ...{ hasAgreedToTerms: payload === 'true' } }
+    const newState = {...state, ...{'hasAgreedToTerms': payload === 'true'}}
     return newState
   },
-  [SET_AGREEMENT_STATE]: (state, { payload }) => {
-    // localStorage.setItem(HAS_AGREED_TO_TERMS, payload)
-
-    let { view, time } = payload
+  [SET_AGREEMENT_STATE]: (state, {payload}) => {
+    const {view, time} = payload
     if (view == null || time == null) {
       throw new Error('view and time cannot be null')
     }
 
     if (view === 'intro') {
-      let newState = { ...state, ...{ hasSeenIntroScreen: true } }
-      AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+      const newState = {...state, ...{'hasSeenIntroScreen': true}}
+      AnonymousAnalyzerApi.recordEvent('agreement_update', {view, 'timeEllapsed': time})
       return newState
     } else if (view === 'termsOfService') {
-      let newState = { ...state, ...{ hasSeenTermsOfService: true } }
-      AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+      const newState = {...state, ...{'hasSeenTermsOfService': true}}
+      AnonymousAnalyzerApi.recordEvent('agreement_update', {view, 'timeEllapsed': time})
       return newState
     } else if (view === 'privacyPolicy') {
-      let newState = { ...state, ...{ hasSeenPrivacyPolicy: true } }
-      AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+      const newState = {...state, ...{'hasSeenPrivacyPolicy': true}}
+      AnonymousAnalyzerApi.recordEvent('agreement_update', {view, 'timeEllapsed': time})
       return newState
     }
-    return { ...state }
-  }
+    return {...state}
+  },
 }
 
 export const isBot = () => {
@@ -151,8 +143,9 @@ export const isBot = () => {
 const getHasAgreedToTerms = () => {
   if (isBot()) {
     try {
-      AnonymousAnalyzerApi.recordEvent('bot_detected', { bot: navigator.userAgent })
+      AnonymousAnalyzerApi.recordEvent('bot_detected', {'bot': navigator.userAgent})
     } catch (error) {
+      // do nothing
     }
 
     return true
@@ -168,19 +161,19 @@ const getHasAgreedToTerms = () => {
 // Reducer
 // ------------------------------------
 const initialState = {
-  view: isBot() ? LIST : MAP,
-  isMapModuleLoaded: false,
-  isMapReadyToDisplay: false,
-  searchText: '',
-  statesGeoJson: {},
-  statesDictionary: {},
-  countiesGeoJson: {},
-  regionsGeoJson: {},
-  tableOfContentsLoadingStatus: LOADING_CONSTANTS.IS_NOT_STARTED,
-  hasSeenIntroScreen: false,
-  hasSeenTermsOfService: false,
-  hasSeenPrivacyPolicy: false,
-  hasAgreedToTerms: getHasAgreedToTerms()
+  'view': isBot() ? LIST : MAP,
+  'isMapModuleLoaded': false,
+  'isMapReadyToDisplay': false,
+  'searchText': '',
+  'statesGeoJson': {},
+  'statesDictionary': {},
+  'countiesGeoJson': {},
+  'regionsGeoJson': {},
+  'tableOfContentsLoadingStatus': LOADING_CONSTANTS.IS_NOT_STARTED,
+  'hasSeenIntroScreen': false,
+  'hasSeenTermsOfService': false,
+  'hasSeenPrivacyPolicy': false,
+  'hasAgreedToTerms': getHasAgreedToTerms(),
 }
 
 export default function counterReducer (state = initialState, action) {

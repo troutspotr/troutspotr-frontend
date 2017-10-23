@@ -7,7 +7,7 @@ import { times } from 'lodash'
 import RegionApiSync from 'api/RegionApi.sync'
 import classes from './MicroMap.scss'
 const data = RegionApiSync.getRegionData('wi', 'driftless-central')
-const id = '86799'
+const id = '102103'
 
 const stories = storiesOf('core/micromap', module)
 stories.addDecorator(withKnobs)

@@ -1,5 +1,5 @@
-import StateData from 'static/data/v2/wi/wi.data.json'
-import RegionData from 'static/data/v2/wi/highland-headwaters.topo.json'
+import StateData from 'static/data/v3/wi/wi.data.json'
+import RegionData from 'static/data/v3/wi/highland-headwaters.topo.json'
 import * as GeoApiTransform from 'api/GeoApi.transform'
 import {updateStateObject} from 'api/StateApi'
 import _ from 'lodash'

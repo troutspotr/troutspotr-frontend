@@ -1,4 +1,4 @@
-import StateData from 'static/data/v2/wi/wi.data.json'
+import StateData from 'static/data/v3/wi/wi.data.json'
 import stateApi, {buildStateEndpoint} from 'api/StateApi'
 import stateApiSync from 'api/StateApi.sync'
 

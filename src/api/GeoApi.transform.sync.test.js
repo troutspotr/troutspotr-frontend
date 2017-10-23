@@ -1,5 +1,5 @@
-import StateData from 'static/data/v2/wi/wi.data.json'
-import wiHighlandFreestone from 'static/data/v2/wi/highland-freestone.topo.json'
+import StateData from 'static/data/v3/wi/wi.data.json'
+import wiHighlandFreestone from 'static/data/v3/wi/highland-freestone.topo.json'
 import {buildStateEndpoint} from 'api/StateApi'
 
 import regionApi, {buildRegionEndpoint} from './RegionApi'
@@ -41,6 +41,7 @@ describe('api/RegionApi.sync', () => {
     const asyncResults = await regionApi.getRegionData(WISCONSIN_STATE_ID, REGION_ID)
     const asyncResultsKeys = Object.keys(asyncResults)
     const syncResults = regionApiSync.getRegionData(WISCONSIN_STATE_ID, REGION_ID)
+    debugger
     expect(syncResults).to.be.an('object').that.has.keys(asyncResultsKeys)
   })
 })

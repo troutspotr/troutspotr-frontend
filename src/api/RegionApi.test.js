@@ -1,5 +1,5 @@
-import StateData from 'static/data/v2/wi/wi.data.json'
-import RegionData from 'static/data/v2/wi/highland-headwaters.topo.json'
+import StateData from 'static/data/v3/wi/wi.data.json'
+import RegionData from 'static/data/v3/wi/highland-headwaters.topo.json'
 import { transformGeo } from './GeoApi.transform'
 import regionApi, {buildRegionEndpoint, updateStateObject} from './RegionApi'
 import {buildStateEndpoint} from './StateApi'

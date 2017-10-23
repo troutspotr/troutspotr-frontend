@@ -17,7 +17,7 @@ class PrivacyPolicy extends Component {
   renderTerm ({index, title, body}) {
     return (
       <li key={index}>
-        <div className={classes.term}>{title}</div>
+        <h2 className={classes.term}>{title}</h2>
         <div className={classes.termBody}>{body}</div>
       </li>)
   }
@@ -25,7 +25,7 @@ class PrivacyPolicy extends Component {
   renderTitle () {
     return (
       <div>
-        <div className={classes.jumbo}>Privacy Policy</div>
+        <h1 className={classes.jumbo}>Privacy Policy</h1>
       </div>)
   }
 

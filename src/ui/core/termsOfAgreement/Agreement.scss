@@ -103,6 +103,7 @@
   font-size: 6vmin;
   font-weight: bold;
   color: $blue;
+  margin-bottom: 1vmin;
 }
 
 .termBody {
@@ -255,6 +256,7 @@
   cursor: pointer;
   font-size: 5vmin;
   animation: buttonAnimation 500ms ease-out;
+  margin-bottom: 4vmin;
 }
 
 @keyframes buttonAnimation {

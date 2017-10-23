@@ -9,7 +9,7 @@ class IntroComponent extends Component {
   }
 
   renderTitle () {
-    return (<div className={classes.jumbo}>TroutSpotr</div>)
+    return (<h1 className={classes.jumbo}>TroutSpotr</h1>)
   }
 
   renderPreamble () {

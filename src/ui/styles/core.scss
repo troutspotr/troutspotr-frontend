@@ -19,9 +19,13 @@
     padding: 0;
     height: 100%;
     color: $white;
-    // background-color: $green;
+    background-color: $background;
 
     @include book-font;
+  }
+
+  #root {
+    height: 100%;
   }
 
   li,

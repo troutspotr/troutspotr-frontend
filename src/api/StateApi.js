@@ -1,27 +1,25 @@
 import BaseApi from './BaseApi'
-import { has, keyBy } from 'lodash'
+import {has, keyBy} from 'lodash'
 
-export const buildStateEndpoint = (stateName) => {
-  return `/data/v3/${stateName}/${stateName}.data.json`
-}
+export const buildStateEndpoint = (stateName) => `/data/v2/${stateName}/${stateName}.data.json`
 
-let stateCache = {}
+const stateCache = {}
 
 export const updateStateObject = (stateMetadata) => {
-  let regsDictionary = keyBy(stateMetadata.regulations, 'id')
-  for (var prop in stateMetadata.waterOpeners) {
-    stateMetadata.waterOpeners[prop].openers.forEach(opener => {
+  const regsDictionary = keyBy(stateMetadata.regulations, 'id')
+  for (const prop in stateMetadata.waterOpeners) {
+    stateMetadata.waterOpeners[prop].openers.forEach((opener) => {
       opener.end_time = new Date(opener.end_time)
       opener.start_time = new Date(opener.start_time)
       opener.restriction = regsDictionary[opener.restriction_id]
     })
   }
 
-  var result = {
+  const result = {
     ...stateMetadata,
-    regulationsDictionary: regsDictionary,
-    roadTypesDictionary: keyBy(stateMetadata.roadTypes, 'id'),
-    palTypesDictionary: keyBy(stateMetadata.palTypes, 'id')
+    'regulationsDictionary': regsDictionary,
+    'roadTypesDictionary': keyBy(stateMetadata.roadTypes, 'id'),
+    'palTypesDictionary': keyBy(stateMetadata.palTypes, 'id'),
   }
   return result
 }
@@ -32,12 +30,12 @@ export class StateApi extends BaseApi {
       return Promise.reject('state name was not specificed')
     }
 
-    let endpoint = buildStateEndpoint(stateName)
+    const endpoint = buildStateEndpoint(stateName)
     if (has(stateCache, endpoint)) {
       return stateCache[endpoint]
     }
 
-    let gettingState = this.get(endpoint)
+    const gettingState = this.get(endpoint)
       .then(updateStateObject)
 
     stateCache[endpoint] = gettingState

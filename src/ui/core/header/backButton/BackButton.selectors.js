@@ -1,8 +1,11 @@
-import { createSelector } from 'reselect'
-import { locationSelector, isRootPageSelector, getHashSelector } from 'ui/Location.selectors'
-import { isEmpty } from 'lodash'
+import {createSelector} from 'reselect'
+import {getHashSelector, isRootPageSelector, locationSelector} from 'ui/Location.selectors'
+import {isEmpty} from 'lodash'
 export const isEnabledSelector = createSelector(
-  [locationSelector, isRootPageSelector],
+  [
+    locationSelector,
+    isRootPageSelector,
+  ],
   (location, isRootPage) => {
     if (location == null) {
       throw new Error('location cannot be null')
@@ -13,40 +16,44 @@ export const isEnabledSelector = createSelector(
     }
 
     // I don't really know how to do this part yet..
-    // i would like to have more sophisticated access
-    // to the params in state.
+    // I would like to have more sophisticated access
+    // To the params in state.
 
-    // guess for now.
-    let params = location.pathname.split('/')
-      .filter(x => x.length > 0)
+    // Guess for now.
+    const params = location.pathname.split('/')
+      .filter((x) => x.length > 0)
 
-    let isOnStreamDetails = params.length > 2
-    // console.log(isOnStreamDetails)
+    const isOnStreamDetails = params.length > 2
+    // Console.log(isOnStreamDetails)
     return isOnStreamDetails
   }
 )
 
 export const previousSelector = createSelector(
-  [isEnabledSelector, locationSelector, getHashSelector],
+  [
+    isEnabledSelector,
+    locationSelector,
+    getHashSelector,
+  ],
   (isEnabled, location, hash) => {
     if (isEnabled === false) {
       return null
     }
 
-    let params = location.pathname.split('/')
-      .filter(x => x.length > 0)
+    const params = location.pathname.split('/')
+      .filter((x) => x.length > 0)
 
-    // chop off the last part.
-    let isStreamSelected = params.length === 3
+    // Chop off the last part.
+    const isStreamSelected = params.length === 3
 
-    let isAccessPointSelected = isStreamSelected && isEmpty(hash) === false
+    const isAccessPointSelected = isStreamSelected && isEmpty(hash) === false
     if (isAccessPointSelected) {
-      // just remove the hash
-      let routeWithoutHash = `/${params.join('/')}`
+      // Just remove the hash
+      const routeWithoutHash = `/${params.join('/')}`
       return routeWithoutHash
     }
 
     params.pop()
-    let previous = `/${params.join('/')}`
+    const previous = `/${params.join('/')}`
     return previous
   })

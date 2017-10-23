@@ -1,5 +1,3 @@
-const saveAsSvg = (stream) => {
-  return '<svg></svg>'
-}
+const saveAsSvg = (stream) => '<svg></svg>'
 
 export default saveAsSvg

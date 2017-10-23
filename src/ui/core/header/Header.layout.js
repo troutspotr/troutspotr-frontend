@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import classes from './Header.scss'
 const HeaderLayout = (props) => {
-  let headerContainerClass = props.isOffline
+  const headerContainerClass = props.isOffline
     ? classes.isOffline
     : classes.headerContainer
 
   return (
-    <div className={headerContainerClass} role='navigation'>
+    <div className={headerContainerClass} role="navigation">
       <div className={classes.offlineIndicator} />
       <div className={classes.header}>
         <div className={classes.backButtonContainer}>{props.backButton}</div>
@@ -26,12 +27,12 @@ const HeaderLayout = (props) => {
   )
 }
 HeaderLayout.propTypes = {
-  backButton:  PropTypes.element,
-  locationSubtitle: PropTypes.element,
-  title: PropTypes.element,
-  minimap: PropTypes.element,
-  search: PropTypes.element,
-  isOffline: PropTypes.bool.isRequired
+  'backButton': PropTypes.element,
+  'locationSubtitle': PropTypes.element,
+  'title': PropTypes.element,
+  'minimap': PropTypes.element,
+  'search': PropTypes.element,
+  'isOffline': PropTypes.bool.isRequired,
 }
 
 export default HeaderLayout

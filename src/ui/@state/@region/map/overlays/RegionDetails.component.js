@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import classes from './RegionDetails.scss'
 
 class RegionDetails extends Component {

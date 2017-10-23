@@ -2,7 +2,7 @@ const _ = require('lodash')
 const url = require('url')
 
 const parseUrl = function (path, dictionary) {
-  var route = getRoute(path)
+  const route = getRoute(path)
   if (_.isEmpty(route.state) === false && _.has(dictionary, route.state)) {
     route.stateData = dictionary[route.state].data
   } else {
@@ -28,18 +28,18 @@ const parseUrl = function (path, dictionary) {
 }
 
 const getRoute = function (path) {
-  var result = {
-    state: '',
-    region: '',
-    stream: '',
-    path: path
+  const result = {
+    'state': '',
+    'region': '',
+    'stream': '',
+    path,
   }
 
-  var parsedUrl = url.parse(path)
-  var pathname = parsedUrl.pathname
+  const parsedUrl = url.parse(path)
+  const pathname = parsedUrl.pathname
 
-  var items = pathname.split('/')
-    .filter(x => x.length > 0)
+  const items = pathname.split('/')
+    .filter((x) => x.length > 0)
 
   if (items.length >= 3) {
     result.stream = items[2]

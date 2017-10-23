@@ -1,6 +1,7 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './RegulationsSummary.scss'
-// import { Link } from 'react-router'
+// Import { Link } from 'react-router'
 /* eslint no-unneeded-ternary: 0 */
 /* eslint-disable camelcase */
 
@@ -9,7 +10,7 @@ class RegulationsSummary extends Component {
     return this.props.getSummary(streamObject)
   }
 
-  renderOpenClosedHelper ({ statusClass, statusText, explainerText, dateText }) {
+  renderOpenClosedHelper ({statusClass, statusText, explainerText, dateText}) {
     return (
       <div className={classes.container}>
         <span className={statusClass}>
@@ -20,72 +21,73 @@ class RegulationsSummary extends Component {
   }
 
   renderOpenOrClosed (streamObject) {
-    let now = new Date()
+    const now = new Date()
 
-    let {
+    const {
       hasRegulationThatOverridesOpenSeason,
       isOpenSeason,
       openers,
       closestOpener,
-      openSeasonOverrides } = this.getIsOpenStatus(streamObject)
+      openSeasonOverrides,
+    } = this.getIsOpenStatus(streamObject)
     if (isOpenSeason === false && hasRegulationThatOverridesOpenSeason === false) {
-      // plain vanilla closed. Get lost, bub.
-      let openerDate = streamObject.stream.properties.openers.filter(x => x.start_time > now)
-      let dateText = openerDate.length >= 1
-        ? openerDate[0].start_time.toLocaleDateString('en-US') + '.'
+      // Plain vanilla closed. Get lost, bub.
+      const openerDate = streamObject.stream.properties.openers.filter((x) => x.start_time > now)
+      const dateText = openerDate.length >= 1
+        ? `${openerDate[0].start_time.toLocaleDateString('en-US')}.`
         : 'an unknown date. Call the DNR for more details.'
 
-      let args = {
-        statusClass: classes.closed,
-        statusText: 'Closed',
-        explainerText: '',
-        dateText
+      const args = {
+        'statusClass': classes.closed,
+        'statusText': 'Closed',
+        'explainerText': '',
+        dateText,
       }
 
       return this.renderOpenClosedHelper(args)
     }
 
     if (isOpenSeason && hasRegulationThatOverridesOpenSeason === false) {
-      // it's plain vanilla open. Go nuts.
-      let dateText = openers[0].end_time.toLocaleDateString('en-US') + '.'
-      let args = {
-        statusClass: classes.open,
-        statusText: 'Open',
-        explainerText: openers[0].restriction.shortText,
-        dateText
+      // It's plain vanilla open. Go nuts.
+      const dateText = `${openers[0].end_time.toLocaleDateString('en-US')}.`
+      const args = {
+        'statusClass': classes.open,
+        'statusText': 'Open',
+        'explainerText': openers[0].restriction.shortText,
+        dateText,
       }
 
       return this.renderOpenClosedHelper(args)
     }
 
     if (isOpenSeason === false && hasRegulationThatOverridesOpenSeason) {
-      // it's closed, but there's an exception. Be careful.
-      let explainerText = openSeasonOverrides[0].properties.restriction.shortText
-      let hasCloseOpener = closestOpener != null
-      let dateText = hasCloseOpener
-        ? closestOpener.start_time.toLocaleDateString('en-US') + '.'
-        : openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US') + '.'
-      let args = {
-        statusClass: classes.openCaution,
-        statusText: 'Closed with exceptions',
+      // It's closed, but there's an exception. Be careful.
+      const explainerText = openSeasonOverrides[0].properties.restriction.shortText
+      const hasCloseOpener = closestOpener != null
+      const dateText = hasCloseOpener
+        ? `${closestOpener.start_time.toLocaleDateString('en-US')}.`
+        : `${openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US')}.`
+      const args = {
+        'statusClass': classes.openCaution,
+        'statusText': 'Closed with exceptions',
         explainerText,
-        dateText
+        dateText,
       }
 
       return this.renderOpenClosedHelper(args)
     }
 
     if (isOpenSeason && hasRegulationThatOverridesOpenSeason) {
-      // it's open, but there's exceptions.
-      let explainerText = 'but with exceptions'
+      // It's open, but there's exceptions.
+      const explainerText = 'but with exceptions'
 
-      let dateText = openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US')
+      const dateText = openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US')
 
-      let args = {
-        statusClass: classes.openCaution,
-        statusText: 'Open',
+      const args = {
+        'statusClass': classes.openCaution,
+        'statusText': 'Open',
         explainerText,
-        dateText
+        dateText,
       }
 
       return this.renderOpenClosedHelper(args)
@@ -95,14 +97,14 @@ class RegulationsSummary extends Component {
   }
 
   render () {
-    let { streamObject } = this.props
+    const {streamObject} = this.props
     return this.renderOpenOrClosed(streamObject)
   }
 }
 
 RegulationsSummary.propTypes = {
-  streamObject: PropTypes.object.isRequired,
-  getSummary: PropTypes.func.isRequired
+  'streamObject': PropTypes.object.isRequired,
+  'getSummary': PropTypes.func.isRequired,
 }
 
 export default RegulationsSummary

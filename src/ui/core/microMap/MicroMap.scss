@@ -1,12 +1,27 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 
+$microMap-sm: 45px;
+$microMap-md: $microMap-sm * 4;
+$microMap-lg: $microMap-sm * 8;
+
 .container {
-  width: 40px;
-  height: 40px;
+  width: $microMap-sm;
+  height: $microMap-sm;
   position: relative;
   transform: translateZ(0);
-  // padding-top: 5px;
+}
+
+.containerMd {
+  composes: container;
+  width: $microMap-md;
+  height: $microMap-md;
+}
+
+.containerLg {
+  composes: container;
+  width: $microMap-lg;
+  height: $microMap-lg;
 }
 
 .microMap {

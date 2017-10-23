@@ -1,21 +1,17 @@
-// import { createSelector } from 'reselect'
-export const mapboxModuleSelector = state => {
-  return state.mapModule.mapModule
-}
+// Import { createSelector } from 'reselect'
+export const mapboxModuleSelector = (state) => state.mapModule.mapModule
 
-export const isMapboxModuleLoadedSelector = state => {
-  return state.mapModule.mapModuleStatus
-}
+export const isMapboxModuleLoadedSelector = (state) => state.mapModule.mapModuleStatus
 
-// const ROOT = '/'
-// export const isRootPageSelector = createSelector(
+// Const ROOT = '/'
+// Export const isRootPageSelector = createSelector(
 //   [locationSelector], (location) => {
-//     let isRoot = isRootPageByUrl(location.pathname)
-//     return isRoot
+//     Let isRoot = isRootPageByUrl(location.pathname)
+//     Return isRoot
 //   }
 // )
 
-// export const isRootPageByUrl = url => {
-//   let isRoot = url === ROOT
-//   return isRoot
+// Export const isRootPageByUrl = url => {
+//   Let isRoot = url === ROOT
+//   Return isRoot
 // }

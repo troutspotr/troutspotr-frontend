@@ -1,22 +1,23 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Region.scss'
-import { MAP, LIST } from 'ui/core/Core.state'
+import {LIST, MAP} from 'ui/core/Core.state'
 import MapContainer from './map/Map.container'
 import CountyListContainer from './list/CountyList.container'
 import LoadingComponent from 'ui/core/loading/Loading.component'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-import { isEmpty } from 'lodash'
+import {LOADING_CONSTANTS} from 'ui/core/LoadingConstants'
+import {isEmpty} from 'lodash'
 import SvgSpriteSheet from './svgSpriteSheet/SvgSpriteSheet.component'
 class RegionLayout extends Component {
   componentDidMount () {
-    let { fetchRegionData, selectedState, selectedRegion } = this.props
+    const {fetchRegionData, selectedState, selectedRegion} = this.props
     fetchRegionData(selectedState, selectedRegion)
   }
 
   componentWillReceiveProps (nextProps) {
-    let { selectedState, selectedRegion } = nextProps
-    let nextCombo = (selectedState + selectedRegion).toLowerCase()
-    let currentCombo = (this.props.selectedState + this.props.selectedRegion).toLowerCase()
+    const {selectedState, selectedRegion} = nextProps
+    const nextCombo = (selectedState + selectedRegion).toLowerCase()
+    const currentCombo = (this.props.selectedState + this.props.selectedRegion).toLowerCase()
 
     if (nextCombo !== currentCombo) {
       this.props.fetchRegionData(selectedState, selectedRegion)
@@ -32,23 +33,23 @@ class RegionLayout extends Component {
   }
 
   renderMap () {
-    let { view } = this.props
-    let isVisible = view === MAP
+    const {view} = this.props
+    const isVisible = view === MAP
     return (<MapContainer
       isVisible={isVisible}
-            />)
+    />)
   }
 
   renderList () {
-    let { view, selectedStream } = this.props
-    let isVisible = view === LIST && isEmpty(selectedStream)
+    const {view, selectedStream} = this.props
+    const isVisible = view === LIST && isEmpty(selectedStream)
     return (<CountyListContainer
       isVisible={isVisible}
-            />)
+    />)
   }
 
   render () {
-    let { view, hasAgreedToTerms } = this.props
+    const {view, hasAgreedToTerms} = this.props
     if (hasAgreedToTerms === false) {
       return null
     }
@@ -66,14 +67,14 @@ class RegionLayout extends Component {
 }
 
 RegionLayout.propTypes = {
-  view: PropTypes.string.isRequired,
-  children: PropTypes.element,
-  fetchRegionData: PropTypes.func.isRequired,
-  selectedState: PropTypes.string.isRequired,
-  selectedRegion: PropTypes.string.isRequired,
-  regionLoadingStatus: PropTypes.string.isRequired,
-  selectedStream: PropTypes.object,
-  hasAgreedToTerms: PropTypes.bool.isRequired
+  'view': PropTypes.string.isRequired,
+  'children': PropTypes.element,
+  'fetchRegionData': PropTypes.func.isRequired,
+  'selectedState': PropTypes.string.isRequired,
+  'selectedRegion': PropTypes.string.isRequired,
+  'regionLoadingStatus': PropTypes.string.isRequired,
+  'selectedStream': PropTypes.object,
+  'hasAgreedToTerms': PropTypes.bool.isRequired,
 }
 
 export default RegionLayout

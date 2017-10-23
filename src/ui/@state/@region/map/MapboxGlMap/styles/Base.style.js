@@ -1,10 +1,6 @@
-export const FONT_ROBOTO_REGULAR = [
-  'roboto-regular'
-]
-
-export const FONT_ROBOTO_BOLD = [
-  'roboto-bold'
-]
+/* eslint-disable max-lines */
+export const FONT_ROBOTO_REGULAR = ['roboto-regular']
+export const FONT_ROBOTO_BOLD = ['roboto-bold']
 
 const BaseStyle = {
   'version': 8,
@@ -15,65 +11,65 @@ const BaseStyle = {
     'mapbox:groups': {
       '1444934828655.3389': {
         'name': 'Aeroways',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444933322393.2852': {
         'name': 'POI labels  (scalerank 1)',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444855786460.0557': {
         'name': 'Roads',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444934295202.7542': {
         'name': 'Admin boundaries',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444856151690.9143': {
         'name': 'State labels',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444933721429.3076': {
         'name': 'Road labels',
-        'collapsed': false
+        'collapsed': false,
       },
       '1444933358918.2366': {
         'name': 'POI labels (scalerank 2)',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444933808272.805': {
         'name': 'Water labels',
-        'collapsed': false
+        'collapsed': false,
       },
       '1444933372896.5967': {
         'name': 'POI labels (scalerank 3)',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444855799204.86': {
         'name': 'Bridges',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444856087950.3635': {
         'name': 'Marine labels',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444862510685.128': {
         'name': 'City labels',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444855769305.6016': {
         'name': 'Tunnels',
-        'collapsed': true
+        'collapsed': true,
       },
       '1444856144497.7825': {
         'name': 'Country labels',
-        'collapsed': true
-      }
-    }
+        'collapsed': true,
+      },
+    },
   },
   'center': [
     -91.86636953883972,
-    43.68162187731622
+    43.68162187731622,
   ],
   'zoom': 16.67091316232325,
   'bearing': -0.33453331132216135,
@@ -81,12 +77,12 @@ const BaseStyle = {
   'sources': {
     'composite': {
       'url': 'mapbox://mapbox.mapbox-streets-v7',
-      'type': 'vector'
-    }
+      'type': 'vector',
+    },
   },
   'transition': {
     'duration': 300,
-    'delay': 0
+    'delay': 0,
   },
   'sprite': 'mapbox://sprites/andest01/civsy0pgb00022kkxcbqtcogh',
   'glyphs': '/map-fonts/{fontstack}/{range}.pbf',
@@ -96,9 +92,7 @@ const BaseStyle = {
       'id': 'background',
       'type': 'background',
       'layout': {},
-      'paint': {
-        'background-color': 'hsl(0, 0%, 13%)'
-      }
+      'paint': {'background-color': 'hsl(0, 0%, 13%)'},
     },
     {
       'id': 'industrial',
@@ -108,12 +102,10 @@ const BaseStyle = {
       'filter': [
         '==',
         'class',
-        'industrial'
+        'industrial',
       ],
       'layout': {},
-      'paint': {
-        'fill-color': 'hsl(0, 0%, 15%)'
-      }
+      'paint': {'fill-color': 'hsl(0, 0%, 15%)'},
     },
     {
       'id': 'waterway-river-canal',
@@ -126,13 +118,13 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'canal'
+          'canal',
         ],
         [
           '==',
           'class',
-          'river'
-        ]
+          'river',
+        ],
       ],
       'layout': {
         'line-cap': {
@@ -140,15 +132,15 @@ const BaseStyle = {
           'stops': [
             [
               0,
-              'butt'
+              'butt',
             ],
             [
               11,
-              'round'
-            ]
-          ]
+              'round',
+            ],
+          ],
         },
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-color': 'hsl(185, 2%, 10%)',
@@ -157,28 +149,28 @@ const BaseStyle = {
           'stops': [
             [
               8.5,
-              0.1
+              0.1,
             ],
             [
               20,
-              8
-            ]
-          ]
+              8,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               8,
-              0
+              0,
             ],
             [
               8.5,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'water',
@@ -186,9 +178,7 @@ const BaseStyle = {
       'source': 'composite',
       'source-layer': 'water',
       'layout': {},
-      'paint': {
-        'fill-color': 'hsl(185, 2%, 10%)'
-      }
+      'paint': {'fill-color': 'hsl(185, 2%, 10%)'},
     },
     {
       'id': 'UNDER-ROAD-PLACEHOLDER',
@@ -201,17 +191,17 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'street'
+          'street',
         ],
         [
           '==',
           'structure',
-          'none'
-        ]
+          'none',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -219,40 +209,40 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
           'stops': [
             [
               11,
-              0
+              0,
             ],
             [
               11.25,
-              1
+              1,
             ],
             [
               14,
-              1
+              1,
             ],
             [
               14.01,
-              0
-            ]
-          ]
-        }
-      }
+              0,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-main-case',
@@ -265,18 +255,18 @@ const BaseStyle = {
           '!in',
           'structure',
           'bridge',
-          'tunnel'
+          'tunnel',
         ],
         [
           'in',
           'class',
           'secondary',
-          'tertiary'
-        ]
+          'tertiary',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -284,13 +274,13 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              0.75
+              0.75,
             ],
             [
               18,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -298,40 +288,40 @@ const BaseStyle = {
           'stops': [
             [
               8.5,
-              0.5
+              0.5,
             ],
             [
               10,
-              0.75
+              0.75,
             ],
             [
               18,
-              26
-            ]
-          ]
+              26,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               6,
-              0
+              0,
             ],
             [
               7,
-              0.4
+              0.4,
             ],
             [
               9,
-              0.5
+              0.5,
             ],
             [
               10,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'barrier_line-land-polygon',
@@ -343,19 +333,19 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'Polygon'
+          'Polygon',
         ],
         [
           '==',
           'class',
-          'land'
-        ]
+          'land',
+        ],
       ],
       'layout': {},
       'paint': {
         'fill-color': 'hsl(55, 1%, 20%)',
-        'fill-outline-color': 'hsl(55, 1%, 20%)'
-      }
+        'fill-outline-color': 'hsl(55, 1%, 20%)',
+      },
     },
     {
       'id': 'barrier_line-land-line',
@@ -367,40 +357,36 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           '==',
           'class',
-          'land'
-        ]
+          'land',
+        ],
       ],
-      'layout': {
-        'line-cap': 'round'
-      },
+      'layout': {'line-cap': 'round'},
       'paint': {
         'line-width': {
           'base': 1.99,
           'stops': [
             [
               14,
-              0.75
+              0.75,
             ],
             [
               20,
-              40
-            ]
-          ]
+              40,
+            ],
+          ],
         },
-        'line-color': 'hsl(55, 1%, 20%)'
-      }
+        'line-color': 'hsl(55, 1%, 20%)',
+      },
     },
     {
       'id': 'aeroway-polygon',
       'type': 'fill',
-      'metadata': {
-        'mapbox:group': '1444934828655.3389'
-      },
+      'metadata': {'mapbox:group': '1444934828655.3389'},
       'source': 'composite',
       'source-layer': 'aeroway',
       'minzoom': 11,
@@ -409,13 +395,13 @@ const BaseStyle = {
         [
           '!=',
           'type',
-          'apron'
+          'apron',
         ],
         [
           '==',
           '$type',
-          'Polygon'
-        ]
+          'Polygon',
+        ],
       ],
       'layout': {},
       'paint': {
@@ -425,22 +411,20 @@ const BaseStyle = {
           'stops': [
             [
               11,
-              0
+              0,
             ],
             [
               11.5,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'aeroway-runway',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444934828655.3389'
-      },
+      'metadata': {'mapbox:group': '1444934828655.3389'},
       'source': 'composite',
       'source-layer': 'aeroway',
       'minzoom': 9,
@@ -449,13 +433,13 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           '==',
           'type',
-          'runway'
-        ]
+          'runway',
+        ],
       ],
       'layout': {},
       'paint': {
@@ -465,22 +449,20 @@ const BaseStyle = {
           'stops': [
             [
               9,
-              1
+              1,
             ],
             [
               18,
-              80
-            ]
-          ]
-        }
-      }
+              80,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'aeroway-taxiway',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444934828655.3389'
-      },
+      'metadata': {'mapbox:group': '1444934828655.3389'},
       'source': 'composite',
       'source-layer': 'aeroway',
       'minzoom': 9,
@@ -489,13 +471,13 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           '==',
           'type',
-          'taxiway'
-        ]
+          'taxiway',
+        ],
       ],
       'layout': {},
       'paint': {
@@ -505,15 +487,15 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              0.5
+              0.5,
             ],
             [
               18,
-              20
-            ]
-          ]
-        }
-      }
+              20,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'building',
@@ -524,7 +506,7 @@ const BaseStyle = {
       'filter': [
         '==',
         'underground',
-        'false'
+        'false',
       ],
       'layout': {},
       'paint': {
@@ -534,24 +516,22 @@ const BaseStyle = {
           'stops': [
             [
               15.5,
-              0
+              0,
             ],
             [
               16,
-              1
-            ]
-          ]
+              1,
+            ],
+          ],
         },
         'fill-outline-color': 'hsl(55, 1%, 15%)',
-        'fill-antialias': true
-      }
+        'fill-antialias': true,
+      },
     },
     {
       'id': 'tunnel-street-low',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 11,
@@ -560,17 +540,17 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'street'
+          'street',
         ],
         [
           '==',
           'structure',
-          'tunnel'
-        ]
+          'tunnel',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -578,47 +558,45 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': {
           'stops': [
             [
               11.5,
-              0
+              0,
             ],
             [
               12,
-              1
+              1,
             ],
             [
               14,
-              1
+              1,
             ],
             [
               14.01,
-              0
-            ]
-          ]
-        }
-      }
+              0,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'tunnel-street_limited-low',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 11,
@@ -627,17 +605,17 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'street_limited'
+          'street_limited',
         ],
         [
           '==',
           'structure',
-          'tunnel'
-        ]
+          'tunnel',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -645,47 +623,45 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': {
           'stops': [
             [
               11.5,
-              0
+              0,
             ],
             [
               12,
-              1
+              1,
             ],
             [
               14,
-              1
+              1,
             ],
             [
               14.01,
-              0
-            ]
-          ]
-        }
-      }
+              0,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'tunnel-service-link-track-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 14,
@@ -694,24 +670,24 @@ const BaseStyle = {
         [
           '!=',
           'type',
-          'trunk_link'
+          'trunk_link',
         ],
         [
           '==',
           'structure',
-          'tunnel'
+          'tunnel',
         ],
         [
           'in',
           'class',
           'link',
           'service',
-          'track'
-        ]
+          'track',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -719,13 +695,13 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 29%)',
         'line-gap-width': {
@@ -733,25 +709,23 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0.5
+              0.5,
             ],
             [
               18,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'line-dasharray': [
           3,
-          3
-        ]
-      }
+          3,
+        ],
+      },
     },
     {
       'id': 'tunnel-street_limited-case',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'ref': 'tunnel-street_limited-low',
       'paint': {
         'line-width': {
@@ -759,13 +733,13 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 29%)',
         'line-gap-width': {
@@ -773,42 +747,40 @@ const BaseStyle = {
           'stops': [
             [
               13,
-              0
+              0,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-dasharray': [
           3,
-          3
+          3,
         ],
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'tunnel-street-case',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'ref': 'tunnel-street-low',
       'paint': {
         'line-width': {
@@ -816,13 +788,13 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 29%)',
         'line-gap-width': {
@@ -830,43 +802,41 @@ const BaseStyle = {
           'stops': [
             [
               13,
-              0
+              0,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-dasharray': [
           3,
-          3
+          3,
         ],
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'tunnel-secondary-tertiary-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -874,18 +844,18 @@ const BaseStyle = {
         [
           '==',
           'structure',
-          'tunnel'
+          'tunnel',
         ],
         [
           'in',
           'class',
           'secondary',
-          'tertiary'
-        ]
+          'tertiary',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -893,44 +863,42 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              0.75
+              0.75,
             ],
             [
               18,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-dasharray': [
           3,
-          3
+          3,
         ],
         'line-gap-width': {
           'base': 1.5,
           'stops': [
             [
               8.5,
-              0.5
+              0.5,
             ],
             [
               10,
-              0.75
+              0.75,
             ],
             [
               18,
-              26
-            ]
-          ]
+              26,
+            ],
+          ],
         },
-        'line-color': 'hsl(185, 2%, 29%)'
-      }
+        'line-color': 'hsl(185, 2%, 29%)',
+      },
     },
     {
       'id': 'tunnel-primary-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -938,17 +906,17 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'primary'
+          'primary',
         ],
         [
           '==',
           'structure',
-          'tunnel'
-        ]
+          'tunnel',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -956,40 +924,38 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-dasharray': [
           3,
-          3
+          3,
         ],
         'line-gap-width': {
           'base': 1.5,
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
-        'line-color': 'hsl(185, 2%, 29%)'
-      }
+        'line-color': 'hsl(185, 2%, 29%)',
+      },
     },
     {
       'id': 'tunnel-trunk_link-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -998,17 +964,17 @@ const BaseStyle = {
         [
           '==',
           'structure',
-          'tunnel'
+          'tunnel',
         ],
         [
           '==',
           'type',
-          'trunk_link'
-        ]
+          'trunk_link',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -1016,13 +982,13 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 29%)',
         'line-gap-width': {
@@ -1030,30 +996,28 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-dasharray': [
           3,
-          3
-        ]
-      }
+          3,
+        ],
+      },
     },
     {
       'id': 'tunnel-motorway_link-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -1062,17 +1026,17 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'motorway_link'
+          'motorway_link',
         ],
         [
           '==',
           'structure',
-          'tunnel'
-        ]
+          'tunnel',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -1080,13 +1044,13 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 29%)',
         'line-gap-width': {
@@ -1094,30 +1058,28 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-dasharray': [
           3,
-          3
-        ]
-      }
+          3,
+        ],
+      },
     },
     {
       'id': 'tunnel-trunk-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -1125,17 +1087,17 @@ const BaseStyle = {
         [
           '==',
           'structure',
-          'tunnel'
+          'tunnel',
         ],
         [
           '==',
           'type',
-          'trunk'
-        ]
+          'trunk',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -1143,13 +1105,13 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 29%)',
         'line-gap-width': {
@@ -1157,27 +1119,25 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-opacity': 1,
         'line-dasharray': [
           3,
-          3
-        ]
-      }
+          3,
+        ],
+      },
     },
     {
       'id': 'tunnel-motorway-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -1185,17 +1145,17 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'motorway'
+          'motorway',
         ],
         [
           '==',
           'structure',
-          'tunnel'
-        ]
+          'tunnel',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -1203,13 +1163,13 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 29%)',
         'line-gap-width': {
@@ -1217,27 +1177,25 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-opacity': 1,
         'line-dasharray': [
           3,
-          3
-        ]
-      }
+          3,
+        ],
+      },
     },
     {
       'id': 'tunnel-construction',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 14,
@@ -1246,34 +1204,32 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'construction'
+          'construction',
         ],
         [
           '==',
           'structure',
-          'tunnel'
-        ]
+          'tunnel',
+        ],
       ],
-      'layout': {
-        'line-join': 'miter'
-      },
+      'layout': {'line-join': 'miter'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': {
@@ -1281,13 +1237,13 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
+              1,
+            ],
+          ],
         },
         'line-dasharray': {
           'base': 1,
@@ -1296,47 +1252,45 @@ const BaseStyle = {
               14,
               [
                 0.4,
-                0.8
-              ]
+                0.8,
+              ],
             ],
             [
               15,
               [
                 0.3,
-                0.6
-              ]
+                0.6,
+              ],
             ],
             [
               16,
               [
                 0.2,
-                0.3
-              ]
+                0.3,
+              ],
             ],
             [
               17,
               [
                 0.2,
-                0.25
-              ]
+                0.25,
+              ],
             ],
             [
               18,
               [
                 0.15,
-                0.15
-              ]
-            ]
-          ]
-        }
-      }
+                0.15,
+              ],
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'tunnel-path',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -1344,35 +1298,33 @@ const BaseStyle = {
         [
           '!=',
           'type',
-          'steps'
+          'steps',
         ],
         [
           '==',
           'class',
-          'path'
+          'path',
         ],
         [
           '==',
           'structure',
-          'tunnel'
-        ]
+          'tunnel',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               15,
-              1
+              1,
             ],
             [
               18,
-              4
-            ]
-          ]
+              4,
+            ],
+          ],
         },
         'line-dasharray': {
           'base': 1,
@@ -1381,31 +1333,31 @@ const BaseStyle = {
               14,
               [
                 1,
-                0
-              ]
+                0,
+              ],
             ],
             [
               15,
               [
                 1.75,
-                1
-              ]
+                1,
+              ],
             ],
             [
               16,
               [
                 1,
-                0.75
-              ]
+                0.75,
+              ],
             ],
             [
               17,
               [
                 1,
-                0.5
-              ]
-            ]
-          ]
+                0.5,
+              ],
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': {
@@ -1413,22 +1365,20 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0
+              0,
             ],
             [
               14.25,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'tunnel-steps',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -1436,38 +1386,36 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
           [
             '==',
             'structure',
-            'tunnel'
+            'tunnel',
           ],
           [
             '==',
             'type',
-            'steps'
-          ]
-        ]
+            'steps',
+          ],
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               15,
-              1
+              1,
             ],
             [
               18,
-              4
-            ]
-          ]
+              4,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-dasharray': {
@@ -1477,52 +1425,50 @@ const BaseStyle = {
               14,
               [
                 1,
-                0
-              ]
+                0,
+              ],
             ],
             [
               15,
               [
                 1.75,
-                1
-              ]
+                1,
+              ],
             ],
             [
               16,
               [
                 1,
-                0.75
-              ]
+                0.75,
+              ],
             ],
             [
               17,
               [
                 0.3,
-                0.3
-              ]
-            ]
-          ]
+                0.3,
+              ],
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               14,
-              0
+              0,
             ],
             [
               14.25,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'tunnel-trunk_link',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'ref': 'tunnel-trunk_link-case',
       'paint': {
         'line-width': {
@@ -1530,31 +1476,29 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': 1,
         'line-dasharray': [
           1,
-          0
-        ]
-      }
+          0,
+        ],
+      },
     },
     {
       'id': 'tunnel-motorway_link',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'ref': 'tunnel-motorway_link-case',
       'paint': {
         'line-width': {
@@ -1562,32 +1506,30 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': 1,
         'line-dasharray': [
           1,
-          0
-        ]
-      }
+          0,
+        ],
+      },
     },
     {
       'id': 'tunnel-pedestrian',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -1596,38 +1538,36 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
           [
             '==',
             'class',
-            'pedestrian'
+            'pedestrian',
           ],
           [
             '==',
             'structure',
-            'tunnel'
-          ]
-        ]
+            'tunnel',
+          ],
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               14,
-              0.5
+              0.5,
             ],
             [
               18,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': 1,
@@ -1638,32 +1578,30 @@ const BaseStyle = {
               14,
               [
                 1,
-                0
-              ]
+                0,
+              ],
             ],
             [
               15,
               [
                 1.5,
-                0.4
-              ]
+                0.4,
+              ],
             ],
             [
               16,
               [
                 1,
-                0.2
-              ]
-            ]
-          ]
-        }
-      }
+                0.2,
+              ],
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'tunnel-service-link-track',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'ref': 'tunnel-service-link-track-case',
       'paint': {
         'line-width': {
@@ -1671,26 +1609,24 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0.5
+              0.5,
             ],
             [
               18,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-dasharray': [
           1,
-          0
-        ]
-      }
+          0,
+        ],
+      },
     },
     {
       'id': 'tunnel-street_limited',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'ref': 'tunnel-street_limited-low',
       'paint': {
         'line-width': {
@@ -1698,17 +1634,17 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': {
@@ -1716,21 +1652,19 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'tunnel-street',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'ref': 'tunnel-street-low',
       'paint': {
         'line-width': {
@@ -1738,17 +1672,17 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': {
@@ -1756,21 +1690,19 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'tunnel-secondary-tertiary',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'ref': 'tunnel-secondary-tertiary-case',
       'paint': {
         'line-width': {
@@ -1778,32 +1710,30 @@ const BaseStyle = {
           'stops': [
             [
               8.5,
-              0.5
+              0.5,
             ],
             [
               10,
-              0.75
+              0.75,
             ],
             [
               18,
-              26
-            ]
-          ]
+              26,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': 1,
         'line-dasharray': [
           1,
-          0
+          0,
         ],
-        'line-blur': 0
-      }
+        'line-blur': 0,
+      },
     },
     {
       'id': 'tunnel-primary',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'ref': 'tunnel-primary-case',
       'paint': {
         'line-width': {
@@ -1811,29 +1741,27 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-color': 'hsl(185, 2%, 15%)',
         'line-opacity': 1,
         'line-dasharray': [
           1,
-          0
+          0,
         ],
-        'line-blur': 0
-      }
+        'line-blur': 0,
+      },
     },
     {
       'id': 'tunnel-trunk',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -1841,17 +1769,17 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'trunk'
+          'trunk',
         ],
         [
           '==',
           'structure',
-          'tunnel'
-        ]
+          'tunnel',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -1859,22 +1787,20 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
-        'line-color': 'hsl(185, 2%, 15%)'
-      }
+        'line-color': 'hsl(185, 2%, 15%)',
+      },
     },
     {
       'id': 'tunnel-motorway',
-      'metadata': {
-        'mapbox:group': '1444855769305.6016'
-      },
+      'metadata': {'mapbox:group': '1444855769305.6016'},
       'ref': 'tunnel-motorway-case',
       'paint': {
         'line-width': {
@@ -1882,29 +1808,27 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-dasharray': [
           1,
-          0
+          0,
         ],
         'line-opacity': 1,
         'line-color': 'hsl(185, 2%, 15%)',
-        'line-blur': 0
-      }
+        'line-blur': 0,
+      },
     },
     {
       'id': 'road-pedestrian-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 12,
@@ -1913,38 +1837,36 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
           [
             '==',
             'class',
-            'pedestrian'
+            'pedestrian',
           ],
           [
             '==',
             'structure',
-            'none'
-          ]
-        ]
+            'none',
+          ],
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              14.5
-            ]
-          ]
+              14.5,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': 0,
@@ -1953,22 +1875,20 @@ const BaseStyle = {
           'stops': [
             [
               13.9,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-street-low',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 11,
@@ -1977,25 +1897,25 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
           [
             '==',
             'class',
-            'street'
+            'street',
           ],
           [
             '==',
             'structure',
-            'none'
-          ]
-        ]
+            'none',
+          ],
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -2003,47 +1923,45 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
           'stops': [
             [
               11,
-              0
+              0,
             ],
             [
               11.25,
-              1
+              1,
             ],
             [
               14,
-              1
+              1,
             ],
             [
               14.01,
-              0
-            ]
-          ]
-        }
-      }
+              0,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-street_limited-low',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 11,
@@ -2052,25 +1970,25 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
           [
             '==',
             'class',
-            'street_limited'
+            'street_limited',
           ],
           [
             '==',
             'structure',
-            'none'
-          ]
-        ]
+            'none',
+          ],
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -2078,47 +1996,45 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
           'stops': [
             [
               11,
-              0
+              0,
             ],
             [
               11.25,
-              1
+              1,
             ],
             [
               14,
-              1
+              1,
             ],
             [
               14.01,
-              0
-            ]
-          ]
-        }
-      }
+              0,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-service-link-track-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 14,
@@ -2127,38 +2043,61 @@ const BaseStyle = {
         [
           '!=',
           'type',
-          'trunk_link'
+          'trunk_link',
         ],
         [
           '!in',
           'structure',
           'bridge',
-          'tunnel'
+          'tunnel',
         ],
         [
           'in',
           'class',
           'link',
           'service',
-          'track'
-        ]
+          'track',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
+        'line-opacity': {
+          'base': 1.2,
+          'stops': [
+            [
+              5,
+              0,
+            ],
+            [
+              5.5,
+              1,
+            ],
+            [
+              16.0,
+              1,
+            ],
+            [
+              16.5,
+              0.6,
+            ],
+            [
+              17,
+              0.3,
+            ],
+          ],
+        },
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -2166,34 +2105,32 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0.5
+              0.5,
             ],
             [
               18,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               13.9,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-street_limited-case',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-street_limited-low',
       'paint': {
         'line-width': {
@@ -2201,13 +2138,13 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -2215,38 +2152,36 @@ const BaseStyle = {
           'stops': [
             [
               13,
-              0
+              0,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               13.9,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-street-case',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-street-low',
       'paint': {
         'line-width': {
@@ -2254,13 +2189,13 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -2268,39 +2203,37 @@ const BaseStyle = {
           'stops': [
             [
               13,
-              0
+              0,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               13.9,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-primary-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -2309,17 +2242,17 @@ const BaseStyle = {
           '!in',
           'structure',
           'bridge',
-          'tunnel'
+          'tunnel',
         ],
         [
           '==',
           'class',
-          'primary'
-        ]
+          'primary',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -2327,13 +2260,13 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 13%)',
         'line-gap-width': {
@@ -2341,43 +2274,41 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               6,
-              0
+              0,
             ],
             [
               7,
-              0.4
+              0.4,
             ],
             [
               9,
-              0.5
+              0.5,
             ],
             [
               10,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-motorway_link-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 10,
@@ -2387,17 +2318,17 @@ const BaseStyle = {
           '!in',
           'structure',
           'bridge',
-          'tunnel'
+          'tunnel',
         ],
         [
           '==',
           'class',
-          'motorway_link'
-        ]
+          'motorway_link',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -2405,13 +2336,13 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -2419,47 +2350,45 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               6,
-              0
+              0,
             ],
             [
               7,
-              0.4
+              0.4,
             ],
             [
               9,
-              0.5
+              0.5,
             ],
             [
               10,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-trunk_link-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 11,
@@ -2469,17 +2398,17 @@ const BaseStyle = {
           '!in',
           'structure',
           'bridge',
-          'tunnel'
+          'tunnel',
         ],
         [
           '==',
           'type',
-          'trunk_link'
-        ]
+          'trunk_link',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -2487,13 +2416,13 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -2501,47 +2430,45 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               6,
-              0
+              0,
             ],
             [
               7,
-              0.4
+              0.4,
             ],
             [
               9,
-              0.5
+              0.5,
             ],
             [
               10,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-trunk-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 5,
@@ -2551,17 +2478,17 @@ const BaseStyle = {
           '!in',
           'structure',
           'bridge',
-          'tunnel'
+          'tunnel',
         ],
         [
           '==',
           'class',
-          'trunk'
-        ]
+          'trunk',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -2569,17 +2496,17 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              0.5
+              0.5,
             ],
             [
               10,
-              1
+              1,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -2587,39 +2514,37 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.5
+              0.5,
             ],
             [
               9,
-              1.4
+              1.4,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               6,
-              0
+              0,
             ],
             [
               6.1,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-motorway-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -2628,17 +2553,17 @@ const BaseStyle = {
           '!in',
           'structure',
           'bridge',
-          'tunnel'
+          'tunnel',
         ],
         [
           '==',
           'class',
-          'motorway'
-        ]
+          'motorway',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -2646,17 +2571,17 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              0.5
+              0.5,
             ],
             [
               10,
-              1
+              1,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -2664,23 +2589,21 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
-        'line-opacity': 1
-      }
+        'line-opacity': 1,
+      },
     },
     {
       'id': 'road-construction',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 14,
@@ -2689,42 +2612,40 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
           [
             '==',
             'class',
-            'construction'
+            'construction',
           ],
           [
             '==',
             'structure',
-            'none'
-          ]
-        ]
+            'none',
+          ],
+        ],
       ],
-      'layout': {
-        'line-join': 'miter'
-      },
+      'layout': {'line-join': 'miter'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
@@ -2732,13 +2653,13 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
+              1,
+            ],
+          ],
         },
         'line-dasharray': {
           'base': 1,
@@ -2747,47 +2668,45 @@ const BaseStyle = {
               14,
               [
                 0.4,
-                0.8
-              ]
+                0.8,
+              ],
             ],
             [
               15,
               [
                 0.3,
-                0.6
-              ]
+                0.6,
+              ],
             ],
             [
               16,
               [
                 0.2,
-                0.3
-              ]
+                0.3,
+              ],
             ],
             [
               17,
               [
                 0.2,
-                0.25
-              ]
+                0.25,
+              ],
             ],
             [
               18,
               [
                 0.15,
-                0.15
-              ]
-            ]
-          ]
-        }
-      }
+                0.15,
+              ],
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-sidewalks',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 16,
@@ -2796,7 +2715,7 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
@@ -2804,32 +2723,30 @@ const BaseStyle = {
             '!in',
             'structure',
             'bridge',
-            'tunnel'
+            'tunnel',
           ],
           [
             'in',
             'type',
             'crossing',
-            'sidewalk'
-          ]
-        ]
+            'sidewalk',
+          ],
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               15,
-              1
+              1,
             ],
             [
               18,
-              4
-            ]
-          ]
+              4,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-dasharray': {
@@ -2839,53 +2756,51 @@ const BaseStyle = {
               14,
               [
                 1,
-                0
-              ]
+                0,
+              ],
             ],
             [
               15,
               [
                 1.75,
-                1
-              ]
+                1,
+              ],
             ],
             [
               16,
               [
                 1,
-                0.75
-              ]
+                0.75,
+              ],
             ],
             [
               17,
               [
                 1,
-                0.5
-              ]
-            ]
-          ]
+                0.5,
+              ],
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               16,
-              0
+              0,
             ],
             [
               16.25,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-path',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -2893,7 +2808,7 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
@@ -2901,38 +2816,36 @@ const BaseStyle = {
             '!in',
             'structure',
             'bridge',
-            'tunnel'
+            'tunnel',
           ],
           [
             '!in',
             'type',
             'crossing',
             'sidewalk',
-            'steps'
+            'steps',
           ],
           [
             '==',
             'class',
-            'path'
-          ]
-        ]
+            'path',
+          ],
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               15,
-              1
+              1,
             ],
             [
               18,
-              4
-            ]
-          ]
+              4,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-dasharray': {
@@ -2942,53 +2855,51 @@ const BaseStyle = {
               14,
               [
                 1,
-                0
-              ]
+                0,
+              ],
             ],
             [
               15,
               [
                 1.75,
-                1
-              ]
+                1,
+              ],
             ],
             [
               16,
               [
                 1,
-                0.75
-              ]
+                0.75,
+              ],
             ],
             [
               17,
               [
                 1,
-                0.5
-              ]
-            ]
-          ]
+                0.5,
+              ],
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               14,
-              0
+              0,
             ],
             [
               14.25,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-steps',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -2996,7 +2907,7 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
@@ -3004,31 +2915,29 @@ const BaseStyle = {
             '!in',
             'structure',
             'bridge',
-            'tunnel'
+            'tunnel',
           ],
           [
             '==',
             'type',
-            'steps'
-          ]
-        ]
+            'steps',
+          ],
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               15,
-              1
+              1,
             ],
             [
               18,
-              4
-            ]
-          ]
+              4,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-dasharray': {
@@ -3038,52 +2947,50 @@ const BaseStyle = {
               14,
               [
                 1,
-                0
-              ]
+                0,
+              ],
             ],
             [
               15,
               [
                 1.75,
-                1
-              ]
+                1,
+              ],
             ],
             [
               16,
               [
                 1,
-                0.75
-              ]
+                0.75,
+              ],
             ],
             [
               17,
               [
                 0.3,
-                0.3
-              ]
-            ]
-          ]
+                0.3,
+              ],
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               14,
-              0
+              0,
             ],
             [
               14.25,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-trunk_link',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-trunk_link-case',
       'paint': {
         'line-width': {
@@ -3091,27 +2998,25 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
-        'line-opacity': 1
-      }
+        'line-opacity': 1,
+      },
     },
     {
       'id': 'road-motorway_link',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-motorway_link-case',
       'paint': {
         'line-width': {
@@ -3119,27 +3024,25 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
-        'line-opacity': 1
-      }
+        'line-opacity': 1,
+      },
     },
     {
       'id': 'road-pedestrian',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-pedestrian-case',
       'paint': {
         'line-width': {
@@ -3147,13 +3050,13 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0.5
+              0.5,
             ],
             [
               18,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': 1,
@@ -3164,33 +3067,31 @@ const BaseStyle = {
               14,
               [
                 1,
-                0
-              ]
+                0,
+              ],
             ],
             [
               15,
               [
                 1.5,
-                0.4
-              ]
+                0.4,
+              ],
             ],
             [
               16,
               [
                 1,
-                0.2
-              ]
-            ]
-          ]
-        }
-      }
+                0.2,
+              ],
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-service-link-track',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 14,
@@ -3199,25 +3100,25 @@ const BaseStyle = {
         [
           '!=',
           'type',
-          'trunk_link'
+          'trunk_link',
         ],
         [
           '!in',
           'structure',
           'bridge',
-          'tunnel'
+          'tunnel',
         ],
         [
           'in',
           'class',
           'link',
           'service',
-          'track'
-        ]
+          'track',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -3225,22 +3126,20 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0.5
+              0.5,
             ],
             [
               18,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
-        'line-color': 'hsl(0, 0%, 27%)'
-      }
+        'line-color': 'hsl(0, 0%, 27%)',
+      },
     },
     {
       'id': 'road-street_limited',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-street_limited-low',
       'paint': {
         'line-width': {
@@ -3248,17 +3147,17 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
@@ -3266,21 +3165,19 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-street',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-street-low',
       'paint': {
         'line-width': {
@@ -3288,17 +3185,17 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
@@ -3306,21 +3203,31 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+            [
+              16.0,
+              1,
+            ],
+            [
+              16.5,
+              0.6,
+            ],
+            [
+              17,
+              0.3,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-secondary-tertiary',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-main-case',
       'paint': {
         'line-width': {
@@ -3328,17 +3235,17 @@ const BaseStyle = {
           'stops': [
             [
               8.5,
-              0.5
+              0.5,
             ],
             [
               10,
-              0.75
+              0.75,
             ],
             [
               18,
-              26
-            ]
-          ]
+              26,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
@@ -3346,21 +3253,31 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0
+              0,
             ],
             [
               5.5,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+            [
+              16.0,
+              1,
+            ],
+            [
+              16.5,
+              0.6,
+            ],
+            [
+              17,
+              0.3,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-primary',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-primary-case',
       'paint': {
         'line-width': {
@@ -3368,13 +3285,13 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 20%)',
         'line-opacity': {
@@ -3382,21 +3299,31 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0
+              0,
             ],
             [
               5.5,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+            [
+              16.0,
+              1,
+            ],
+            [
+              16.5,
+              0.6,
+            ],
+            [
+              17,
+              0.3,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-trunk',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-trunk-case',
       'paint': {
         'line-width': {
@@ -3404,27 +3331,25 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.5
+              0.5,
             ],
             [
               9,
-              1.4
+              1.4,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
-        'line-opacity': 1
-      }
+        'line-opacity': 1,
+      },
     },
     {
       'id': 'road-motorway',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'ref': 'road-motorway-case',
       'paint': {
         'line-width': {
@@ -3432,24 +3357,22 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
-        'line-opacity': 1
-      }
+        'line-opacity': 1,
+      },
     },
     {
       'id': 'road-rail',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855786460.0557'
-      },
+      'metadata': {'mapbox:group': '1444855786460.0557'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -3459,18 +3382,16 @@ const BaseStyle = {
           '!in',
           'structure',
           'bridge',
-          'tunnel'
+          'tunnel',
         ],
         [
           'in',
           'class',
           'major_rail',
-          'minor_rail'
-        ]
+          'minor_rail',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-color': 'hsl(0, 0%, 17%)',
         'line-width': {
@@ -3478,22 +3399,20 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0.75
+              0.75,
             ],
             [
               20,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-pedestrian-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -3502,38 +3421,36 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
           [
             '==',
             'class',
-            'pedestrian'
+            'pedestrian',
           ],
           [
             '==',
             'structure',
-            'bridge'
-          ]
-        ]
+            'bridge',
+          ],
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              14.5
-            ]
-          ]
+              14.5,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': 0,
@@ -3542,22 +3459,20 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-street-low',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 11,
@@ -3566,17 +3481,17 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'street'
+          'street',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -3584,47 +3499,45 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
           'stops': [
             [
               11.5,
-              0
+              0,
             ],
             [
               12,
-              1
+              1,
             ],
             [
               14,
-              1
+              1,
             ],
             [
               14.01,
-              0
-            ]
-          ]
-        }
-      }
+              0,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-street_limited-low',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 11,
@@ -3633,17 +3546,17 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'street_limited'
+          'street_limited',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -3651,47 +3564,45 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
           'stops': [
             [
               11.5,
-              0
+              0,
             ],
             [
               12,
-              1
+              1,
             ],
             [
               14,
-              1
+              1,
             ],
             [
               14.01,
-              0
-            ]
-          ]
-        }
-      }
+              0,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-service-link-track-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 14,
@@ -3700,37 +3611,35 @@ const BaseStyle = {
         [
           '!=',
           'type',
-          'trunk_link'
+          'trunk_link',
         ],
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           'in',
           'class',
           'link',
           'service',
-          'track'
-        ]
+          'track',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -3738,22 +3647,20 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0.5
+              0.5,
             ],
             [
               18,
-              12
-            ]
-          ]
-        }
-      }
+              12,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-street_limited-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 11,
@@ -3762,30 +3669,28 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'street_limited'
+          'street_limited',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -3793,26 +3698,24 @@ const BaseStyle = {
           'stops': [
             [
               13,
-              0
+              0,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
-        }
-      }
+              18,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-street-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 11,
@@ -3821,30 +3724,28 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'street'
+          'street',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-opacity': {
@@ -3852,39 +3753,37 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
+              1,
+            ],
+          ],
         },
         'line-gap-width': {
           'base': 1.5,
           'stops': [
             [
               13,
-              0
+              0,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
-        }
-      }
+              18,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-secondary-tertiary-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -3892,31 +3791,29 @@ const BaseStyle = {
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           'in',
           'class',
           'secondary',
-          'tertiary'
-        ]
+          'tertiary',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.2,
           'stops': [
             [
               10,
-              0.75
+              0.75,
             ],
             [
               18,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -3924,30 +3821,28 @@ const BaseStyle = {
           'stops': [
             [
               8.5,
-              0.5
+              0.5,
             ],
             [
               10,
-              0.75
+              0.75,
             ],
             [
               18,
-              26
-            ]
-          ]
+              26,
+            ],
+          ],
         },
         'line-translate': [
           0,
-          0
-        ]
-      }
+          0,
+        ],
+      },
     },
     {
       'id': 'bridge-primary-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -3955,30 +3850,28 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'primary'
+          'primary',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -3986,26 +3879,24 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-translate': [
           0,
-          0
-        ]
-      }
+          0,
+        ],
+      },
     },
     {
       'id': 'bridge-trunk_link-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -4014,30 +3905,28 @@ const BaseStyle = {
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '==',
           'type',
-          'trunk_link'
-        ]
+          'trunk_link',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -4045,39 +3934,37 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               10.99,
-              0
+              0,
             ],
             [
               11,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-motorway_link-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -4086,35 +3973,33 @@ const BaseStyle = {
         [
           '<=',
           'layer',
-          1
+          1,
         ],
         [
           '==',
           'class',
-          'motorway_link'
+          'motorway_link',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -4122,27 +4007,25 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
-        'line-opacity': 1
-      }
+        'line-opacity': 1,
+      },
     },
     {
       'id': 'bridge-trunk-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -4150,30 +4033,28 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'trunk'
+          'trunk',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               10,
-              1
+              1,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -4181,22 +4062,20 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
-        }
-      }
+              32,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-motorway-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -4204,34 +4083,32 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'motorway'
+          'motorway',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               7,
-              0.5
+              0.5,
             ],
             [
               10,
-              1
+              1,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -4239,22 +4116,20 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
-        }
-      }
+              32,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-construction',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 14,
@@ -4263,34 +4138,32 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'construction'
+          'construction',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
-      'layout': {
-        'line-join': 'miter'
-      },
+      'layout': {'line-join': 'miter'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
@@ -4298,13 +4171,13 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
+              1,
+            ],
+          ],
         },
         'line-dasharray': {
           'base': 1,
@@ -4313,47 +4186,45 @@ const BaseStyle = {
               14,
               [
                 0.4,
-                0.8
-              ]
+                0.8,
+              ],
             ],
             [
               15,
               [
                 0.3,
-                0.6
-              ]
+                0.6,
+              ],
             ],
             [
               16,
               [
                 0.2,
-                0.3
-              ]
+                0.3,
+              ],
             ],
             [
               17,
               [
                 0.2,
-                0.25
-              ]
+                0.25,
+              ],
             ],
             [
               18,
               [
                 0.15,
-                0.15
-              ]
-            ]
-          ]
-        }
-      }
+                0.15,
+              ],
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-path',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -4361,35 +4232,33 @@ const BaseStyle = {
         [
           '!=',
           'type',
-          'steps'
+          'steps',
         ],
         [
           '==',
           'class',
-          'path'
+          'path',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               15,
-              1
+              1,
             ],
             [
               18,
-              4
-            ]
-          ]
+              4,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-dasharray': {
@@ -4399,53 +4268,51 @@ const BaseStyle = {
               14,
               [
                 1,
-                0
-              ]
+                0,
+              ],
             ],
             [
               15,
               [
                 1.75,
-                1
-              ]
+                1,
+              ],
             ],
             [
               16,
               [
                 1,
-                0.75
-              ]
+                0.75,
+              ],
             ],
             [
               17,
               [
                 1,
-                0.5
-              ]
-            ]
-          ]
+                0.5,
+              ],
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               14,
-              0
+              0,
             ],
             [
               14.25,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-steps',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -4453,38 +4320,36 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'all',
           [
             '==',
             'structure',
-            'bridge'
+            'bridge',
           ],
           [
             '==',
             'type',
-            'steps'
-          ]
-        ]
+            'steps',
+          ],
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               15,
-              1
+              1,
             ],
             [
               18,
-              4
-            ]
-          ]
+              4,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-dasharray': {
@@ -4494,53 +4359,51 @@ const BaseStyle = {
               14,
               [
                 1,
-                0
-              ]
+                0,
+              ],
             ],
             [
               15,
               [
                 1.75,
-                1
-              ]
+                1,
+              ],
             ],
             [
               16,
               [
                 1,
-                0.75
-              ]
+                0.75,
+              ],
             ],
             [
               17,
               [
                 0.3,
-                0.3
-              ]
-            ]
-          ]
+                0.3,
+              ],
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               14,
-              0
+              0,
             ],
             [
               14.25,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-trunk_link',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -4552,22 +4415,22 @@ const BaseStyle = {
           2,
           3,
           4,
-          5
+          5,
         ],
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '==',
           'type',
-          'trunk_link'
-        ]
+          'trunk_link',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -4575,27 +4438,25 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
-        'line-color': 'hsl(0, 0%, 27%)'
-      }
+        'line-color': 'hsl(0, 0%, 27%)',
+      },
     },
     {
       'id': 'bridge-motorway_link',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -4607,22 +4468,22 @@ const BaseStyle = {
           2,
           3,
           4,
-          5
+          5,
         ],
         [
           '==',
           'class',
-          'motorway_link'
+          'motorway_link',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -4630,26 +4491,24 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
-        'line-color': 'hsl(0, 0%, 27%)'
-      }
+        'line-color': 'hsl(0, 0%, 27%)',
+      },
     },
     {
       'id': 'bridge-pedestrian',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'ref': 'bridge-pedestrian-case',
       'paint': {
         'line-width': {
@@ -4657,13 +4516,13 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0.5
+              0.5,
             ],
             [
               18,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': 1,
@@ -4674,33 +4533,31 @@ const BaseStyle = {
               14,
               [
                 1,
-                0
-              ]
+                0,
+              ],
             ],
             [
               15,
               [
                 1.5,
-                0.4
-              ]
+                0.4,
+              ],
             ],
             [
               16,
               [
                 1,
-                0.2
-              ]
-            ]
-          ]
-        }
-      }
+                0.2,
+              ],
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-service-link-track',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 14,
@@ -4709,24 +4566,24 @@ const BaseStyle = {
         [
           '!=',
           'type',
-          'trunk_link'
+          'trunk_link',
         ],
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           'in',
           'class',
           'link',
           'service',
-          'track'
-        ]
+          'track',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -4734,22 +4591,20 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0.5
+              0.5,
             ],
             [
               18,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
-        'line-color': 'hsl(0, 0%, 27%)'
-      }
+        'line-color': 'hsl(0, 0%, 27%)',
+      },
     },
     {
       'id': 'bridge-street_limited',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'ref': 'bridge-street_limited-low',
       'paint': {
         'line-width': {
@@ -4757,17 +4612,17 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
@@ -4775,21 +4630,19 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-street',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'ref': 'bridge-street-low',
       'paint': {
         'line-width': {
@@ -4797,17 +4650,17 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
@@ -4815,22 +4668,20 @@ const BaseStyle = {
           'stops': [
             [
               13.99,
-              0
+              0,
             ],
             [
               14,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-secondary-tertiary',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -4838,18 +4689,18 @@ const BaseStyle = {
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           'in',
           'type',
           'secondary',
-          'tertiary'
-        ]
+          'tertiary',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -4857,17 +4708,17 @@ const BaseStyle = {
           'stops': [
             [
               8.5,
-              0.5
+              0.5,
             ],
             [
               10,
-              0.75
+              0.75,
             ],
             [
               18,
-              26
-            ]
-          ]
+              26,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
@@ -4875,22 +4726,32 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0
+              0,
             ],
             [
               5.5,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+            [
+              16.0,
+              1,
+            ],
+            [
+              16.5,
+              0.6,
+            ],
+            [
+              17,
+              0.3,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-primary',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -4898,17 +4759,17 @@ const BaseStyle = {
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '==',
           'type',
-          'primary'
-        ]
+          'primary',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -4916,13 +4777,13 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
@@ -4930,22 +4791,20 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0
+              0,
             ],
             [
               5.5,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-trunk',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -4956,22 +4815,22 @@ const BaseStyle = {
           2,
           3,
           4,
-          5
+          5,
         ],
         [
           '==',
           'class',
-          'trunk'
+          'trunk',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -4979,23 +4838,21 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
-        'line-color': 'hsl(0, 0%, 27%)'
-      }
+        'line-color': 'hsl(0, 0%, 27%)',
+      },
     },
     {
       'id': 'bridge-motorway',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -5006,22 +4863,22 @@ const BaseStyle = {
           2,
           3,
           4,
-          5
+          5,
         ],
         [
           '==',
           'class',
-          'motorway'
+          'motorway',
         ],
         [
           '==',
           'structure',
-          'bridge'
-        ]
+          'bridge',
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -5029,23 +4886,21 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
-        'line-color': 'hsl(0, 0%, 27%)'
-      }
+        'line-color': 'hsl(0, 0%, 27%)',
+      },
     },
     {
       'id': 'bridge-rail',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -5054,18 +4909,16 @@ const BaseStyle = {
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           'in',
           'class',
           'major_rail',
-          'minor_rail'
-        ]
+          'minor_rail',
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-color': 'hsl(0, 0%, 17%)',
         'line-width': {
@@ -5073,22 +4926,20 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              0.75
+              0.75,
             ],
             [
               20,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-trunk_link-2-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -5097,35 +4948,33 @@ const BaseStyle = {
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '==',
           'type',
-          'trunk_link'
+          'trunk_link',
         ],
         [
           '>=',
           'layer',
-          2
-        ]
+          2,
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-gap-width': {
@@ -5133,39 +4982,37 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               10.99,
-              0
+              0,
             ],
             [
               11,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-motorway_link-2-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -5174,35 +5021,33 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'motorway_link'
+          'motorway_link',
         ],
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '>=',
           'layer',
-          2
-        ]
+          2,
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               12,
-              0.75
+              0.75,
             ],
             [
               20,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -5210,27 +5055,25 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
-        'line-opacity': 1
-      }
+        'line-opacity': 1,
+      },
     },
     {
       'id': 'bridge-trunk-2-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -5238,35 +5081,33 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'trunk'
+          'trunk',
         ],
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '>=',
           'layer',
-          2
-        ]
+          2,
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               10,
-              1
+              1,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-gap-width': {
@@ -5274,22 +5115,20 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
-        }
-      }
+              32,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-motorway-2-case',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -5297,39 +5136,37 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'motorway'
+          'motorway',
         ],
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '>=',
           'layer',
-          2
-        ]
+          2,
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-width': {
           'base': 1.5,
           'stops': [
             [
               7,
-              0.5
+              0.5,
             ],
             [
               10,
-              1
+              1,
             ],
             [
               16,
-              2
-            ]
-          ]
+              2,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 17%)',
         'line-gap-width': {
@@ -5337,22 +5174,20 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
-        }
-      }
+              32,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'bridge-trunk_link-2',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -5361,22 +5196,22 @@ const BaseStyle = {
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '==',
           'type',
-          'trunk_link'
+          'trunk_link',
         ],
         [
           '>=',
           'layer',
-          2
-        ]
+          2,
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -5384,27 +5219,25 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
-        'line-color': 'hsl(0, 0%, 27%)'
-      }
+        'line-color': 'hsl(0, 0%, 27%)',
+      },
     },
     {
       'id': 'bridge-motorway_link-2',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'minzoom': 13,
@@ -5413,22 +5246,22 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'motorway_link'
+          'motorway_link',
         ],
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '>=',
           'layer',
-          2
-        ]
+          2,
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -5436,27 +5269,25 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
-        'line-color': 'hsl(0, 0%, 27%)'
-      }
+        'line-color': 'hsl(0, 0%, 27%)',
+      },
     },
     {
       'id': 'bridge-trunk-2',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -5464,22 +5295,22 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'trunk'
+          'trunk',
         ],
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '>=',
           'layer',
-          2
-        ]
+          2,
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -5487,23 +5318,21 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
-        'line-color': 'hsl(0, 0%, 27%)'
-      }
+        'line-color': 'hsl(0, 0%, 27%)',
+      },
     },
     {
       'id': 'bridge-motorway-2',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444855799204.86'
-      },
+      'metadata': {'mapbox:group': '1444855799204.86'},
       'source': 'composite',
       'source-layer': 'road',
       'filter': [
@@ -5511,22 +5340,22 @@ const BaseStyle = {
         [
           '==',
           'class',
-          'motorway'
+          'motorway',
         ],
         [
           '==',
           'structure',
-          'bridge'
+          'bridge',
         ],
         [
           '>=',
           'layer',
-          2
-        ]
+          2,
+        ],
       ],
       'layout': {
         'line-cap': 'round',
-        'line-join': 'round'
+        'line-join': 'round',
       },
       'paint': {
         'line-width': {
@@ -5534,23 +5363,21 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              0.75
+              0.75,
             ],
             [
               18,
-              32
-            ]
-          ]
+              32,
+            ],
+          ],
         },
-        'line-color': 'hsl(0, 0%, 27%)'
-      }
+        'line-color': 'hsl(0, 0%, 27%)',
+      },
     },
     {
       'id': 'admin-3-4-boundaries-bg',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444934295202.7542'
-      },
+      'metadata': {'mapbox:group': '1444934295202.7542'},
       'source': 'composite',
       'source-layer': 'admin',
       'filter': [
@@ -5558,17 +5385,15 @@ const BaseStyle = {
         [
           '==',
           'maritime',
-          0
+          0,
         ],
         [
           '>=',
           'admin_level',
-          3
-        ]
+          3,
+        ],
       ],
-      'layout': {
-        'line-join': 'bevel'
-      },
+      'layout': {'line-join': 'bevel'},
       'paint': {
         'line-color': 'hsl(0, 0%, 10%)',
         'line-width': {
@@ -5576,56 +5401,54 @@ const BaseStyle = {
           'stops': [
             [
               3,
-              3.5
+              3.5,
             ],
             [
               10,
-              8
-            ]
-          ]
+              8,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               4,
-              0
+              0,
             ],
             [
               6,
-              0.75
-            ]
-          ]
+              0.75,
+            ],
+          ],
         },
         'line-dasharray': [
           1,
-          0
+          0,
         ],
         'line-translate': [
           0,
-          0
+          0,
         ],
         'line-blur': {
           'base': 1,
           'stops': [
             [
               3,
-              0
+              0,
             ],
             [
               8,
-              3
-            ]
-          ]
-        }
-      }
+              3,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'admin-2-boundaries-bg',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444934295202.7542'
-      },
+      'metadata': {'mapbox:group': '1444934295202.7542'},
       'source': 'composite',
       'source-layer': 'admin',
       'minzoom': 1,
@@ -5634,30 +5457,28 @@ const BaseStyle = {
         [
           '==',
           'admin_level',
-          2
+          2,
         ],
         [
           '==',
           'maritime',
-          0
-        ]
+          0,
+        ],
       ],
-      'layout': {
-        'line-join': 'miter'
-      },
+      'layout': {'line-join': 'miter'},
       'paint': {
         'line-width': {
           'base': 1,
           'stops': [
             [
               3,
-              3.5
+              3.5,
             ],
             [
               10,
-              10
-            ]
-          ]
+              10,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 10%)',
         'line-opacity': {
@@ -5665,39 +5486,37 @@ const BaseStyle = {
           'stops': [
             [
               3,
-              0
+              0,
             ],
             [
               4,
-              0.5
-            ]
-          ]
+              0.5,
+            ],
+          ],
         },
         'line-translate': [
           0,
-          0
+          0,
         ],
         'line-blur': {
           'base': 1,
           'stops': [
             [
               3,
-              0
+              0,
             ],
             [
               10,
-              2
-            ]
-          ]
-        }
-      }
+              2,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'admin-3-4-boundaries',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444934295202.7542'
-      },
+      'metadata': {'mapbox:group': '1444934295202.7542'},
       'source': 'composite',
       'source-layer': 'admin',
       'filter': [
@@ -5705,17 +5524,17 @@ const BaseStyle = {
         [
           '==',
           'maritime',
-          0
+          0,
         ],
         [
           '>=',
           'admin_level',
-          3
-        ]
+          3,
+        ],
       ],
       'layout': {
         'line-join': 'round',
-        'line-cap': 'round'
+        'line-cap': 'round',
       },
       'paint': {
         'line-dasharray': {
@@ -5725,8 +5544,8 @@ const BaseStyle = {
               6,
               [
                 2,
-                0
-              ]
+                0,
+              ],
             ],
             [
               7,
@@ -5734,58 +5553,56 @@ const BaseStyle = {
                 2,
                 2,
                 6,
-                2
-              ]
-            ]
-          ]
+                2,
+              ],
+            ],
+          ],
         },
         'line-width': {
           'base': 1,
           'stops': [
             [
               7,
-              0.75
+              0.75,
             ],
             [
               12,
-              1.5
-            ]
-          ]
+              1.5,
+            ],
+          ],
         },
         'line-opacity': {
           'base': 1,
           'stops': [
             [
               2,
-              0
+              0,
             ],
             [
               3,
-              1
-            ]
-          ]
+              1,
+            ],
+          ],
         },
         'line-color': {
           'base': 1,
           'stops': [
             [
               4,
-              'hsl(0, 0%, 27%)'
+              'hsl(0, 0%, 27%)',
             ],
             [
               5,
-              'hsl(0, 0%, 35%)'
-            ]
-          ]
-        }
-      }
+              'hsl(0, 0%, 35%)',
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'admin-2-boundaries',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444934295202.7542'
-      },
+      'metadata': {'mapbox:group': '1444934295202.7542'},
       'source': 'composite',
       'source-layer': 'admin',
       'minzoom': 1,
@@ -5794,22 +5611,22 @@ const BaseStyle = {
         [
           '==',
           'admin_level',
-          2
+          2,
         ],
         [
           '==',
           'disputed',
-          0
+          0,
         ],
         [
           '==',
           'maritime',
-          0
-        ]
+          0,
+        ],
       ],
       'layout': {
         'line-join': 'round',
-        'line-cap': 'round'
+        'line-cap': 'round',
       },
       'paint': {
         'line-color': 'hsl(0, 0%, 43%)',
@@ -5818,22 +5635,20 @@ const BaseStyle = {
           'stops': [
             [
               3,
-              0.5
+              0.5,
             ],
             [
               10,
-              2
-            ]
-          ]
-        }
-      }
+              2,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'admin-2-boundaries-dispute',
       'type': 'line',
-      'metadata': {
-        'mapbox:group': '1444934295202.7542'
-      },
+      'metadata': {'mapbox:group': '1444934295202.7542'},
       'source': 'composite',
       'source-layer': 'admin',
       'minzoom': 1,
@@ -5842,26 +5657,24 @@ const BaseStyle = {
         [
           '==',
           'admin_level',
-          2
+          2,
         ],
         [
           '==',
           'disputed',
-          1
+          1,
         ],
         [
           '==',
           'maritime',
-          0
-        ]
+          0,
+        ],
       ],
-      'layout': {
-        'line-join': 'round'
-      },
+      'layout': {'line-join': 'round'},
       'paint': {
         'line-dasharray': [
           1.5,
-          1.5
+          1.5,
         ],
         'line-color': 'hsl(0, 0%, 14%)',
         'line-width': {
@@ -5869,22 +5682,20 @@ const BaseStyle = {
           'stops': [
             [
               3,
-              0.5
+              0.5,
             ],
             [
               10,
-              2
-            ]
-          ]
-        }
-      }
+              2,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'poi-scalerank3',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444933372896.5967'
-      },
+      'metadata': {'mapbox:group': '1444933372896.5967'},
       'source': 'composite',
       'source-layer': 'poi_label',
       'filter': [
@@ -5900,13 +5711,13 @@ const BaseStyle = {
           'park',
           'picnic-site',
           'playground',
-          'zoo'
+          'zoo',
         ],
         [
           '==',
           'scalerank',
-          3
-        ]
+          3,
+        ],
       ],
       'layout': {
         'text-line-height': 1.1,
@@ -5915,13 +5726,13 @@ const BaseStyle = {
           'stops': [
             [
               16,
-              11
+              11,
             ],
             [
               20,
-              13
-            ]
-          ]
+              13,
+            ],
+          ],
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
@@ -5929,25 +5740,23 @@ const BaseStyle = {
         'text-padding': 1,
         'text-offset': [
           0,
-          0
+          0,
         ],
         'text-field': '{name_en}',
         'text-letter-spacing': 0.01,
-        'text-max-width': 8
+        'text-max-width': 8,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 60%)',
         'text-halo-color': '#212121',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'poi-parks-scalerank3',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444933372896.5967'
-      },
+      'metadata': {'mapbox:group': '1444933372896.5967'},
       'source': 'composite',
       'source-layer': 'poi_label',
       'filter': [
@@ -5955,7 +5764,7 @@ const BaseStyle = {
         [
           '==',
           'scalerank',
-          3
+          3,
         ],
         [
           'in',
@@ -5968,8 +5777,8 @@ const BaseStyle = {
           'park',
           'picnic-site',
           'playground',
-          'zoo'
-        ]
+          'zoo',
+        ],
       ],
       'layout': {
         'text-line-height': 1.1,
@@ -5978,13 +5787,13 @@ const BaseStyle = {
           'stops': [
             [
               16,
-              11
+              11,
             ],
             [
               20,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
@@ -5992,11 +5801,11 @@ const BaseStyle = {
         'text-padding': 2,
         'text-offset': [
           0,
-          0
+          0,
         ],
         'text-field': '{name_en}',
         'text-letter-spacing': 0.01,
-        'text-max-width': 8
+        'text-max-width': 8,
       },
       'paint': {
         'text-halo-blur': 0,
@@ -6007,22 +5816,20 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              'hsl(0, 0%, 47%)'
+              'hsl(0, 0%, 47%)',
             ],
             [
               9,
-              'hsl(0, 0%, 73%)'
-            ]
-          ]
-        }
-      }
+              'hsl(0, 0%, 73%)',
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'road-label-small',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444933721429.3076'
-      },
+      'metadata': {'mapbox:group': '1444933721429.3076'},
       'source': 'composite',
       'source-layer': 'road_label',
       'minzoom': 15,
@@ -6043,13 +5850,13 @@ const BaseStyle = {
           'street_limited',
           'tertiary',
           'track',
-          'trunk'
+          'trunk',
         ],
         [
           '==',
           '$type',
-          'LineString'
-        ]
+          'LineString',
+        ],
       ],
       'layout': {
         'text-size': {
@@ -6057,13 +5864,13 @@ const BaseStyle = {
           'stops': [
             [
               15,
-              10
+              10,
             ],
             [
               20,
-              13
-            ]
-          ]
+              13,
+            ],
+          ],
         },
         'text-max-angle': 30,
         'symbol-spacing': 500,
@@ -6072,21 +5879,19 @@ const BaseStyle = {
         'text-padding': 1,
         'text-rotation-alignment': 'map',
         'text-field': '{name_en}',
-        'text-letter-spacing': 0.01
+        'text-letter-spacing': 0.01,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 78%)',
         'text-halo-color': '#212121',
         'text-halo-width': 1.25,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'road-label-medium',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444933721429.3076'
-      },
+      'metadata': {'mapbox:group': '1444933721429.3076'},
       'source': 'composite',
       'source-layer': 'road_label',
       'minzoom': 13,
@@ -6095,7 +5900,7 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'in',
@@ -6104,8 +5909,8 @@ const BaseStyle = {
           'link',
           'pedestrian',
           'street',
-          'street_limited'
-        ]
+          'street_limited',
+        ],
       ],
       'layout': {
         'text-size': {
@@ -6113,13 +5918,13 @@ const BaseStyle = {
           'stops': [
             [
               11,
-              10
+              10,
             ],
             [
               20,
-              14
-            ]
-          ]
+              14,
+            ],
+          ],
         },
         'text-max-angle': 30,
         'symbol-spacing': 500,
@@ -6128,21 +5933,19 @@ const BaseStyle = {
         'text-padding': 1,
         'text-rotation-alignment': 'map',
         'text-field': '{name_en}',
-        'text-letter-spacing': 0.01
+        'text-letter-spacing': 0.01,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 78%)',
         'text-halo-color': '#212121',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'road-label-large',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444933721429.3076'
-      },
+      'metadata': {'mapbox:group': '1444933721429.3076'},
       'source': 'composite',
       'source-layer': 'road_label',
       'minzoom': 9,
@@ -6153,7 +5956,7 @@ const BaseStyle = {
         'primary',
         'secondary',
         'tertiary',
-        'trunk'
+        'trunk',
       ],
       'layout': {
         'text-size': {
@@ -6161,13 +5964,13 @@ const BaseStyle = {
           'stops': [
             [
               9,
-              10
+              10,
             ],
             [
               20,
-              16
-            ]
-          ]
+              16,
+            ],
+          ],
         },
         'text-max-angle': 30,
         'symbol-spacing': 400,
@@ -6176,21 +5979,19 @@ const BaseStyle = {
         'text-padding': 1,
         'text-rotation-alignment': 'map',
         'text-field': '{name_en}',
-        'text-letter-spacing': 0.01
+        'text-letter-spacing': 0.01,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 78%)',
         'text-halo-color': '#212121',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'poi-scalerank2',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444933358918.2366'
-      },
+      'metadata': {'mapbox:group': '1444933358918.2366'},
       'source': 'composite',
       'source-layer': 'poi_label',
       'filter': [
@@ -6206,13 +6007,13 @@ const BaseStyle = {
           'park',
           'picnic-site',
           'playground',
-          'zoo'
+          'zoo',
         ],
         [
           '==',
           'scalerank',
-          2
-        ]
+          2,
+        ],
       ],
       'layout': {
         'text-line-height': 1.1,
@@ -6221,13 +6022,13 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              11
+              11,
             ],
             [
               20,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
@@ -6235,25 +6036,23 @@ const BaseStyle = {
         'text-padding': 2,
         'text-offset': [
           0,
-          0.65
+          0.65,
         ],
         'text-field': '{name_en}',
         'text-letter-spacing': 0.01,
-        'text-max-width': 8
+        'text-max-width': 8,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 60%)',
         'text-halo-color': '#212121',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'poi-parks-scalerank2',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444933358918.2366'
-      },
+      'metadata': {'mapbox:group': '1444933358918.2366'},
       'source': 'composite',
       'source-layer': 'poi_label',
       'filter': [
@@ -6261,7 +6060,7 @@ const BaseStyle = {
         [
           '==',
           'scalerank',
-          2
+          2,
         ],
         [
           'in',
@@ -6274,8 +6073,8 @@ const BaseStyle = {
           'park',
           'picnic-site',
           'playground',
-          'zoo'
-        ]
+          'zoo',
+        ],
       ],
       'layout': {
         'text-line-height': 1.1,
@@ -6284,13 +6083,13 @@ const BaseStyle = {
           'stops': [
             [
               14,
-              11
+              11,
             ],
             [
               20,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
@@ -6298,11 +6097,11 @@ const BaseStyle = {
         'text-padding': 2,
         'text-offset': [
           0,
-          0
+          0,
         ],
         'text-field': '{name_en}',
         'text-letter-spacing': 0.01,
-        'text-max-width': 8
+        'text-max-width': 8,
       },
       'paint': {
         'text-color': {
@@ -6310,32 +6109,30 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              'hsl(0, 0%, 47%)'
+              'hsl(0, 0%, 47%)',
             ],
             [
               9,
-              'hsl(0, 0%, 73%)'
-            ]
-          ]
+              'hsl(0, 0%, 73%)',
+            ],
+          ],
         },
         'text-halo-color': '#212121',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'water-label',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444933808272.805'
-      },
+      'metadata': {'mapbox:group': '1444933808272.805'},
       'source': 'composite',
       'source-layer': 'water_label',
       'minzoom': 5,
       'filter': [
         '>',
         'area',
-        10000
+        10000,
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -6346,26 +6143,24 @@ const BaseStyle = {
           'stops': [
             [
               13,
-              13
+              13,
             ],
             [
               18,
-              18
-            ]
-          ]
-        }
+              18,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 32%)',
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'poi-parks-scalerank1',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444933322393.2852'
-      },
+      'metadata': {'mapbox:group': '1444933322393.2852'},
       'source': 'composite',
       'source-layer': 'poi_label',
       'minzoom': 12,
@@ -6374,7 +6169,7 @@ const BaseStyle = {
         [
           '<=',
           'scalerank',
-          1
+          1,
         ],
         [
           'in',
@@ -6387,8 +6182,8 @@ const BaseStyle = {
           'park',
           'picnic-site',
           'playground',
-          'zoo'
-        ]
+          'zoo',
+        ],
       ],
       'layout': {
         'text-line-height': 1.1,
@@ -6397,13 +6192,13 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              11
+              11,
             ],
             [
               18,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
@@ -6411,11 +6206,11 @@ const BaseStyle = {
         'text-padding': 2,
         'text-offset': [
           0,
-          0
+          0,
         ],
         'text-field': '{name_en}',
         'text-letter-spacing': 0.01,
-        'text-max-width': 8
+        'text-max-width': 8,
       },
       'paint': {
         'text-color': {
@@ -6423,25 +6218,23 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              'hsl(0, 0%, 47%)'
+              'hsl(0, 0%, 47%)',
             ],
             [
               9,
-              'hsl(0, 0%, 73%)'
-            ]
-          ]
+              'hsl(0, 0%, 73%)',
+            ],
+          ],
         },
         'text-halo-color': '#212121',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'poi-scalerank1',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444933322393.2852'
-      },
+      'metadata': {'mapbox:group': '1444933322393.2852'},
       'source': 'composite',
       'source-layer': 'poi_label',
       'filter': [
@@ -6457,13 +6250,13 @@ const BaseStyle = {
           'park',
           'picnic-site',
           'playground',
-          'zoo'
+          'zoo',
         ],
         [
           '<=',
           'scalerank',
-          1
-        ]
+          1,
+        ],
       ],
       'layout': {
         'text-line-height': 1.1,
@@ -6472,13 +6265,13 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              11
+              11,
             ],
             [
               18,
-              12
-            ]
-          ]
+              12,
+            ],
+          ],
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
@@ -6486,18 +6279,18 @@ const BaseStyle = {
         'text-padding': 2,
         'text-offset': [
           0,
-          0
+          0,
         ],
         'text-field': '{name_en}',
         'text-letter-spacing': 0.01,
-        'text-max-width': 8
+        'text-max-width': 8,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 60%)',
         'text-halo-color': '#212121',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'airport-label',
@@ -6508,7 +6301,7 @@ const BaseStyle = {
       'filter': [
         '<=',
         'scalerank',
-        2
+        2,
       ],
       'layout': {
         'text-line-height': 1.1,
@@ -6517,55 +6310,55 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              12
+              12,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'icon-image': {
           'stops': [
             [
               12,
-              '{maki}-11'
+              '{maki}-11',
             ],
             [
               13,
-              '{maki}-15'
-            ]
-          ]
+              '{maki}-15',
+            ],
+          ],
         },
         'symbol-spacing': 250,
         'text-font': FONT_ROBOTO_REGULAR,
         'text-padding': 2,
         'text-offset': [
           0,
-          0.75
+          0.75,
         ],
         'text-anchor': 'top',
         'text-field': {
           'stops': [
             [
               11,
-              '{ref}'
+              '{ref}',
             ],
             [
               14,
-              '{name_en}'
-            ]
-          ]
+              '{name_en}',
+            ],
+          ],
         },
         'text-letter-spacing': 0.01,
-        'text-max-width': 9
+        'text-max-width': 9,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 85%)',
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 0.5,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'place-islets-archipelago-aboriginal',
@@ -6578,7 +6371,7 @@ const BaseStyle = {
         'type',
         'aboriginal_lands',
         'archipelago',
-        'islet'
+        'islet',
       ],
       'layout': {
         'text-line-height': 1.2,
@@ -6587,13 +6380,13 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              11
+              11,
             ],
             [
               18,
-              16
-            ]
-          ]
+              16,
+            ],
+          ],
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
@@ -6601,18 +6394,18 @@ const BaseStyle = {
         'text-padding': 2,
         'text-offset': [
           0,
-          0
+          0,
         ],
         'text-field': '{name_en}',
         'text-letter-spacing': 0.01,
-        'text-max-width': 8
+        'text-max-width': 8,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 85%)',
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'place-neighbourhood',
@@ -6624,7 +6417,7 @@ const BaseStyle = {
       'filter': [
         '==',
         'type',
-        'neighbourhood'
+        'neighbourhood',
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -6638,21 +6431,21 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              11
+              11,
             ],
             [
               16,
-              16
-            ]
-          ]
-        }
+              16,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 1,
         'text-color': 'hsl(0, 0%, 70%)',
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'place-suburb',
@@ -6664,7 +6457,7 @@ const BaseStyle = {
       'filter': [
         '==',
         'type',
-        'suburb'
+        'suburb',
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -6678,21 +6471,21 @@ const BaseStyle = {
           'stops': [
             [
               11,
-              11
+              11,
             ],
             [
               15,
-              18
-            ]
-          ]
-        }
+              18,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 1,
         'text-color': 'hsl(0, 0%, 70%)',
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'place-hamlet',
@@ -6704,7 +6497,7 @@ const BaseStyle = {
       'filter': [
         '==',
         'type',
-        'hamlet'
+        'hamlet',
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -6714,21 +6507,21 @@ const BaseStyle = {
           'stops': [
             [
               12,
-              11.5
+              11.5,
             ],
             [
               15,
-              16
-            ]
-          ]
-        }
+              16,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 1.25,
         'text-color': 'hsl(0, 0%, 85%)',
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'place-village',
@@ -6740,7 +6533,7 @@ const BaseStyle = {
       'filter': [
         '==',
         'type',
-        'village'
+        'village',
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -6751,14 +6544,14 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              11.5
+              11.5,
             ],
             [
               16,
-              18
-            ]
-          ]
-        }
+              18,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
@@ -6768,13 +6561,13 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              'hsl(0, 0%, 75%)'
+              'hsl(0, 0%, 75%)',
             ],
             [
               11,
-              'hsl(0, 0%, 85%)'
-            ]
-          ]
+              'hsl(0, 0%, 85%)',
+            ],
+          ],
         },
         'text-halo-blur': 0,
         'text-opacity': {
@@ -6782,15 +6575,15 @@ const BaseStyle = {
           'stops': [
             [
               9,
-              0
+              0,
             ],
             [
               10,
-              1
-            ]
-          ]
-        }
-      }
+              1,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'place-town',
@@ -6802,7 +6595,7 @@ const BaseStyle = {
       'filter': [
         '==',
         'type',
-        'town'
+        'town',
       ],
       'layout': {
         'text-size': {
@@ -6810,34 +6603,34 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              11.5
+              11.5,
             ],
             [
               15,
-              20
-            ]
-          ]
+              20,
+            ],
+          ],
         },
         'text-font': {
           'base': 1,
           'stops': [
             [
               11,
-              FONT_ROBOTO_REGULAR
+              FONT_ROBOTO_REGULAR,
             ],
             [
               12,
-              FONT_ROBOTO_REGULAR
-            ]
-          ]
+              FONT_ROBOTO_REGULAR,
+            ],
+          ],
         },
         'text-padding': 2,
         'text-offset': [
           0,
-          0
+          0,
         ],
         'text-field': '{name_en}',
-        'text-max-width': 7
+        'text-max-width': 7,
       },
       'paint': {
         'text-color': {
@@ -6845,13 +6638,13 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              'hsl(0, 0%, 75%)'
+              'hsl(0, 0%, 75%)',
             ],
             [
               11,
-              'hsl(0, 0%, 85%)'
-            ]
-          ]
+              'hsl(0, 0%, 85%)',
+            ],
+          ],
         },
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 1.25,
@@ -6860,16 +6653,16 @@ const BaseStyle = {
           'stops': [
             [
               7.99,
-              1
+              1,
             ],
             [
               8,
-              0
-            ]
-          ]
+              0,
+            ],
+          ],
         },
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'place-islands',
@@ -6880,7 +6673,7 @@ const BaseStyle = {
       'filter': [
         '==',
         'type',
-        'island'
+        'island',
       ],
       'layout': {
         'text-line-height': 1.2,
@@ -6889,13 +6682,13 @@ const BaseStyle = {
           'stops': [
             [
               10,
-              11
+              11,
             ],
             [
               18,
-              16
-            ]
-          ]
+              16,
+            ],
+          ],
         },
         'text-max-angle': 38,
         'symbol-spacing': 250,
@@ -6903,25 +6696,23 @@ const BaseStyle = {
         'text-padding': 2,
         'text-offset': [
           0,
-          0
+          0,
         ],
         'text-field': '{name_en}',
         'text-letter-spacing': 0.01,
-        'text-max-width': 7
+        'text-max-width': 7,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 85%)',
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'place-city-sm',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444862510685.128'
-      },
+      'metadata': {'mapbox:group': '1444862510685.128'},
       'source': 'composite',
       'source-layer': 'place_label',
       'maxzoom': 14,
@@ -6935,13 +6726,13 @@ const BaseStyle = {
           2,
           3,
           4,
-          5
+          5,
         ],
         [
           '==',
           'type',
-          'city'
-        ]
+          'city',
+        ],
       ],
       'layout': {
         'text-size': {
@@ -6949,33 +6740,33 @@ const BaseStyle = {
           'stops': [
             [
               6,
-              12
+              12,
             ],
             [
               14,
-              22
-            ]
-          ]
+              22,
+            ],
+          ],
         },
         'text-font': {
           'base': 1,
           'stops': [
             [
               7,
-              FONT_ROBOTO_REGULAR
+              FONT_ROBOTO_REGULAR,
             ],
             [
               8,
-              FONT_ROBOTO_REGULAR
-            ]
-          ]
+              FONT_ROBOTO_REGULAR,
+            ],
+          ],
         },
         'text-offset': [
           0,
-          0
+          0,
         ],
         'text-field': '{name_en}',
-        'text-max-width': 7
+        'text-max-width': 7,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 90%)',
@@ -6986,23 +6777,21 @@ const BaseStyle = {
           'stops': [
             [
               7.99,
-              1
+              1,
             ],
             [
               8,
-              0
-            ]
-          ]
+              0,
+            ],
+          ],
         },
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'place-city-md-s',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444862510685.128'
-      },
+      'metadata': {'mapbox:group': '1444862510685.128'},
       'source': 'composite',
       'source-layer': 'place_label',
       'maxzoom': 14,
@@ -7011,7 +6800,7 @@ const BaseStyle = {
         [
           '==',
           'type',
-          'city'
+          'city',
         ],
         [
           'in',
@@ -7019,15 +6808,15 @@ const BaseStyle = {
           'E',
           'S',
           'SE',
-          'SW'
+          'SW',
         ],
         [
           'in',
           'scalerank',
           3,
           4,
-          5
-        ]
+          5,
+        ],
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -7036,13 +6825,13 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              12
+              12,
             ],
             [
               12,
-              22
-            ]
-          ]
+              22,
+            ],
+          ],
         },
         'text-anchor': 'top',
         'text-offset': {
@@ -7052,32 +6841,32 @@ const BaseStyle = {
               7.99,
               [
                 0,
-                0.1
-              ]
+                0.1,
+              ],
             ],
             [
               8,
               [
                 0,
-                0
-              ]
-            ]
-          ]
+                0,
+              ],
+            ],
+          ],
         },
         'text-font': {
           'base': 1,
           'stops': [
             [
               7,
-              FONT_ROBOTO_REGULAR
+              FONT_ROBOTO_REGULAR,
             ],
             [
               8,
-              FONT_ROBOTO_REGULAR
-            ]
-          ]
+              FONT_ROBOTO_REGULAR,
+            ],
+          ],
         },
-        'icon-image': 'dot-10'
+        'icon-image': 'dot-10',
       },
       'paint': {
         'text-halo-width': 1,
@@ -7089,22 +6878,20 @@ const BaseStyle = {
           'stops': [
             [
               7.99,
-              1
+              1,
             ],
             [
               8,
-              0
-            ]
-          ]
-        }
-      }
+              0,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'place-city-md-n',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444862510685.128'
-      },
+      'metadata': {'mapbox:group': '1444862510685.128'},
       'source': 'composite',
       'source-layer': 'place_label',
       'maxzoom': 14,
@@ -7113,7 +6900,7 @@ const BaseStyle = {
         [
           '==',
           'type',
-          'city'
+          'city',
         ],
         [
           'in',
@@ -7121,15 +6908,15 @@ const BaseStyle = {
           'N',
           'NE',
           'NW',
-          'W'
+          'W',
         ],
         [
           'in',
           'scalerank',
           3,
           4,
-          5
-        ]
+          5,
+        ],
       ],
       'layout': {
         'text-size': {
@@ -7137,26 +6924,26 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              12
+              12,
             ],
             [
               12,
-              22
-            ]
-          ]
+              22,
+            ],
+          ],
         },
         'text-font': {
           'base': 1,
           'stops': [
             [
               7,
-              FONT_ROBOTO_REGULAR
+              FONT_ROBOTO_REGULAR,
             ],
             [
               8,
-              FONT_ROBOTO_REGULAR
-            ]
-          ]
+              FONT_ROBOTO_REGULAR,
+            ],
+          ],
         },
         'text-offset': {
           'base': 1,
@@ -7165,22 +6952,22 @@ const BaseStyle = {
               7.99,
               [
                 0,
-                -0.25
-              ]
+                -0.25,
+              ],
             ],
             [
               8,
               [
                 0,
-                0
-              ]
-            ]
-          ]
+                0,
+              ],
+            ],
+          ],
         },
         'text-anchor': 'bottom',
         'text-field': '{name_en}',
         'text-max-width': 7,
-        'icon-image': 'dot-10'
+        'icon-image': 'dot-10',
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 90%)',
@@ -7191,23 +6978,21 @@ const BaseStyle = {
           'stops': [
             [
               7.99,
-              1
+              1,
             ],
             [
               8,
-              0
-            ]
-          ]
+              0,
+            ],
+          ],
         },
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'place-city-lg-s',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444862510685.128'
-      },
+      'metadata': {'mapbox:group': '1444862510685.128'},
       'source': 'composite',
       'source-layer': 'place_label',
       'minzoom': 1,
@@ -7217,12 +7002,12 @@ const BaseStyle = {
         [
           '<=',
           'scalerank',
-          2
+          2,
         ],
         [
           '==',
           'type',
-          'city'
+          'city',
         ],
         [
           'in',
@@ -7230,8 +7015,8 @@ const BaseStyle = {
           'E',
           'S',
           'SE',
-          'SW'
-        ]
+          'SW',
+        ],
       ],
       'layout': {
         'icon-image': 'dot-11',
@@ -7240,13 +7025,13 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              FONT_ROBOTO_REGULAR
+              FONT_ROBOTO_REGULAR,
             ],
             [
               8,
-              FONT_ROBOTO_REGULAR
-            ]
-          ]
+              FONT_ROBOTO_REGULAR,
+            ],
+          ],
         },
         'text-offset': {
           'base': 1,
@@ -7255,30 +7040,30 @@ const BaseStyle = {
               7.99,
               [
                 0,
-                0.15
-              ]
+                0.15,
+              ],
             ],
             [
               8,
               [
                 0,
-                0
-              ]
-            ]
-          ]
+                0,
+              ],
+            ],
+          ],
         },
         'text-anchor': {
           'base': 1,
           'stops': [
             [
               7,
-              'top'
+              'top',
             ],
             [
               8,
-              'center'
-            ]
-          ]
+              'center',
+            ],
+          ],
         },
         'text-field': '{name_en}',
         'text-max-width': 7,
@@ -7287,14 +7072,14 @@ const BaseStyle = {
           'stops': [
             [
               4,
-              12
+              12,
             ],
             [
               10,
-              22
-            ]
-          ]
-        }
+              22,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-color': {
@@ -7302,13 +7087,13 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              'hsl(0, 0%, 95%)'
+              'hsl(0, 0%, 95%)',
             ],
             [
               9,
-              'hsl(0, 0%, 90%)'
-            ]
-          ]
+              'hsl(0, 0%, 90%)',
+            ],
+          ],
         },
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 1,
@@ -7317,23 +7102,21 @@ const BaseStyle = {
           'stops': [
             [
               7.99,
-              1
+              1,
             ],
             [
               8,
-              0
-            ]
-          ]
+              0,
+            ],
+          ],
         },
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'place-city-lg-n',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444862510685.128'
-      },
+      'metadata': {'mapbox:group': '1444862510685.128'},
       'source': 'composite',
       'source-layer': 'place_label',
       'minzoom': 1,
@@ -7343,12 +7126,12 @@ const BaseStyle = {
         [
           '<=',
           'scalerank',
-          2
+          2,
         ],
         [
           '==',
           'type',
-          'city'
+          'city',
         ],
         [
           'in',
@@ -7356,8 +7139,8 @@ const BaseStyle = {
           'N',
           'NE',
           'NW',
-          'W'
-        ]
+          'W',
+        ],
       ],
       'layout': {
         'icon-image': 'dot-11',
@@ -7366,13 +7149,13 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              FONT_ROBOTO_REGULAR
+              FONT_ROBOTO_REGULAR,
             ],
             [
               8,
-              FONT_ROBOTO_REGULAR
-            ]
-          ]
+              FONT_ROBOTO_REGULAR,
+            ],
+          ],
         },
         'text-offset': {
           'base': 1,
@@ -7381,30 +7164,30 @@ const BaseStyle = {
               7.99,
               [
                 0,
-                -0.25
-              ]
+                -0.25,
+              ],
             ],
             [
               8,
               [
                 0,
-                0
-              ]
-            ]
-          ]
+                0,
+              ],
+            ],
+          ],
         },
         'text-anchor': {
           'base': 1,
           'stops': [
             [
               7,
-              'bottom'
+              'bottom',
             ],
             [
               8,
-              'center'
-            ]
-          ]
+              'center',
+            ],
+          ],
         },
         'text-field': '{name_en}',
         'text-max-width': 7,
@@ -7413,14 +7196,14 @@ const BaseStyle = {
           'stops': [
             [
               4,
-              12
+              12,
             ],
             [
               10,
-              22
-            ]
-          ]
-        }
+              22,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-color': {
@@ -7428,13 +7211,13 @@ const BaseStyle = {
           'stops': [
             [
               7,
-              'hsl(0, 0%, 95%)'
+              'hsl(0, 0%, 95%)',
             ],
             [
               9,
-              'hsl(0, 0%, 90%)'
-            ]
-          ]
+              'hsl(0, 0%, 90%)',
+            ],
+          ],
         },
         'text-opacity': 1,
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
@@ -7444,23 +7227,21 @@ const BaseStyle = {
           'stops': [
             [
               7.99,
-              1
+              1,
             ],
             [
               8,
-              0
-            ]
-          ]
+              0,
+            ],
+          ],
         },
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'marine-label-sm-ln',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856087950.3635'
-      },
+      'metadata': {'mapbox:group': '1444856087950.3635'},
       'source': 'composite',
       'source-layer': 'marine_label',
       'minzoom': 3,
@@ -7470,13 +7251,13 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           '>=',
           'labelrank',
-          4
-        ]
+          4,
+        ],
       ],
       'layout': {
         'text-line-height': 1.1,
@@ -7485,45 +7266,43 @@ const BaseStyle = {
           'stops': [
             [
               3,
-              12
+              12,
             ],
             [
               6,
-              16
-            ]
-          ]
+              16,
+            ],
+          ],
         },
         'symbol-spacing': {
           'base': 1,
           'stops': [
             [
               4,
-              100
+              100,
             ],
             [
               6,
-              400
-            ]
-          ]
+              400,
+            ],
+          ],
         },
         'text-font': FONT_ROBOTO_REGULAR,
         'symbol-placement': 'line',
         'text-field': '{name_en}',
         'text-letter-spacing': 0.1,
-        'text-max-width': 5
+        'text-max-width': 5,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 32%)',
         'text-halo-blur': 0,
-        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)'
-      }
+        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
+      },
     },
     {
       'id': 'marine-label-sm-pt',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856087950.3635'
-      },
+      'metadata': {'mapbox:group': '1444856087950.3635'},
       'source': 'composite',
       'source-layer': 'marine_label',
       'minzoom': 3,
@@ -7533,13 +7312,13 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'Point'
+          'Point',
         ],
         [
           '>=',
           'labelrank',
-          4
-        ]
+          4,
+        ],
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -7552,27 +7331,25 @@ const BaseStyle = {
           'stops': [
             [
               3,
-              12
+              12,
             ],
             [
               6,
-              16
-            ]
-          ]
-        }
+              16,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 32%)',
         'text-halo-blur': 0,
-        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)'
-      }
+        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
+      },
     },
     {
       'id': 'marine-label-md-ln',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856087950.3635'
-      },
+      'metadata': {'mapbox:group': '1444856087950.3635'},
       'source': 'composite',
       'source-layer': 'marine_label',
       'minzoom': 2,
@@ -7582,14 +7359,14 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           'in',
           'labelrank',
           2,
-          3
-        ]
+          3,
+        ],
       ],
       'layout': {
         'text-line-height': 1.1,
@@ -7598,33 +7375,31 @@ const BaseStyle = {
           'stops': [
             [
               2,
-              12
+              12,
             ],
             [
               5,
-              20
-            ]
-          ]
+              20,
+            ],
+          ],
         },
         'symbol-spacing': 250,
         'text-font': FONT_ROBOTO_REGULAR,
         'symbol-placement': 'line',
         'text-field': '{name_en}',
         'text-letter-spacing': 0.15,
-        'text-max-width': 5
+        'text-max-width': 5,
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 32%)',
         'text-halo-blur': 0,
-        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)'
-      }
+        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
+      },
     },
     {
       'id': 'marine-label-md-pt',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856087950.3635'
-      },
+      'metadata': {'mapbox:group': '1444856087950.3635'},
       'source': 'composite',
       'source-layer': 'marine_label',
       'minzoom': 2,
@@ -7634,14 +7409,14 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'Point'
+          'Point',
         ],
         [
           'in',
           'labelrank',
           2,
-          3
-        ]
+          3,
+        ],
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -7654,27 +7429,25 @@ const BaseStyle = {
           'stops': [
             [
               2,
-              14
+              14,
             ],
             [
               5,
-              20
-            ]
-          ]
-        }
+              20,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 32%)',
         'text-halo-blur': 0,
-        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)'
-      }
+        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
+      },
     },
     {
       'id': 'marine-label-lg-ln',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856087950.3635'
-      },
+      'metadata': {'mapbox:group': '1444856087950.3635'},
       'source': 'composite',
       'source-layer': 'marine_label',
       'minzoom': 1,
@@ -7684,13 +7457,13 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'LineString'
+          'LineString',
         ],
         [
           '==',
           'labelrank',
-          1
-        ]
+          1,
+        ],
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -7704,28 +7477,26 @@ const BaseStyle = {
           'stops': [
             [
               1,
-              14
+              14,
             ],
             [
               4,
-              30
-            ]
-          ]
+              30,
+            ],
+          ],
         },
-        'text-pitch-alignment': 'map'
+        'text-pitch-alignment': 'map',
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 32%)',
         'text-halo-blur': 0,
-        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)'
-      }
+        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
+      },
     },
     {
       'id': 'marine-label-lg-pt',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856087950.3635'
-      },
+      'metadata': {'mapbox:group': '1444856087950.3635'},
       'source': 'composite',
       'source-layer': 'marine_label',
       'minzoom': 1,
@@ -7735,13 +7506,13 @@ const BaseStyle = {
         [
           '==',
           '$type',
-          'Point'
+          'Point',
         ],
         [
           '==',
           'labelrank',
-          1
-        ]
+          1,
+        ],
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -7754,27 +7525,25 @@ const BaseStyle = {
           'stops': [
             [
               1,
-              14
+              14,
             ],
             [
               4,
-              30
-            ]
-          ]
-        }
+              30,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-color': 'hsl(0, 0%, 32%)',
         'text-halo-blur': 0,
-        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)'
-      }
+        'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
+      },
     },
     {
       'id': 'state-label-sm',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856151690.9143'
-      },
+      'metadata': {'mapbox:group': '1444856151690.9143'},
       'source': 'composite',
       'source-layer': 'state_label',
       'minzoom': 3,
@@ -7782,7 +7551,7 @@ const BaseStyle = {
       'filter': [
         '<',
         'area',
-        20000
+        20000,
       ],
       'layout': {
         'text-size': {
@@ -7790,13 +7559,13 @@ const BaseStyle = {
           'stops': [
             [
               6,
-              10
+              10,
             ],
             [
               9,
-              14
-            ]
-          ]
+              14,
+            ],
+          ],
         },
         'text-transform': 'uppercase',
         'text-font': FONT_ROBOTO_BOLD,
@@ -7805,31 +7574,29 @@ const BaseStyle = {
           'stops': [
             [
               0,
-              '{abbr}'
+              '{abbr}',
             ],
             [
               6,
-              '{name_en}'
-            ]
-          ]
+              '{name_en}',
+            ],
+          ],
         },
         'text-letter-spacing': 0.15,
-        'text-max-width': 5
+        'text-max-width': 5,
       },
       'paint': {
         'text-opacity': 1,
         'text-color': 'hsl(0, 0%, 50%)',
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'state-label-md',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856151690.9143'
-      },
+      'metadata': {'mapbox:group': '1444856151690.9143'},
       'source': 'composite',
       'source-layer': 'state_label',
       'minzoom': 3,
@@ -7839,13 +7606,13 @@ const BaseStyle = {
         [
           '<',
           'area',
-          80000
+          80000,
         ],
         [
           '>=',
           'area',
-          20000
-        ]
+          20000,
+        ],
       ],
       'layout': {
         'text-size': {
@@ -7853,13 +7620,13 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              10
+              10,
             ],
             [
               8,
-              16
-            ]
-          ]
+              16,
+            ],
+          ],
         },
         'text-transform': 'uppercase',
         'text-font': FONT_ROBOTO_BOLD,
@@ -7868,31 +7635,29 @@ const BaseStyle = {
           'stops': [
             [
               0,
-              '{abbr}'
+              '{abbr}',
             ],
             [
               5,
-              '{name_en}'
-            ]
-          ]
+              '{name_en}',
+            ],
+          ],
         },
         'text-letter-spacing': 0.15,
-        'text-max-width': 6
+        'text-max-width': 6,
       },
       'paint': {
         'text-opacity': 1,
         'text-color': 'hsl(0, 0%, 50%)',
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'state-label-lg',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856151690.9143'
-      },
+      'metadata': {'mapbox:group': '1444856151690.9143'},
       'source': 'composite',
       'source-layer': 'state_label',
       'minzoom': 3,
@@ -7900,7 +7665,7 @@ const BaseStyle = {
       'filter': [
         '>=',
         'area',
-        80000
+        80000,
       ],
       'layout': {
         'text-size': {
@@ -7908,13 +7673,13 @@ const BaseStyle = {
           'stops': [
             [
               4,
-              10
+              10,
             ],
             [
               7,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'text-transform': 'uppercase',
         'text-font': FONT_ROBOTO_BOLD,
@@ -7924,24 +7689,24 @@ const BaseStyle = {
           'stops': [
             [
               0,
-              '{abbr}'
+              '{abbr}',
             ],
             [
               4,
-              '{name_en}'
-            ]
-          ]
+              '{name_en}',
+            ],
+          ],
         },
         'text-letter-spacing': 0.15,
-        'text-max-width': 6
+        'text-max-width': 6,
       },
       'paint': {
         'text-opacity': 1,
         'text-color': 'hsl(0, 0%, 50%)',
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-halo-width': 1,
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'UNDER-LABEL-PLACEHOLDER',
@@ -7952,47 +7717,45 @@ const BaseStyle = {
           'stops': [
             [
               12.5,
-              0.5
+              0.5,
             ],
             [
               14,
-              2
+              2,
             ],
             [
               18,
-              18
-            ]
-          ]
+              18,
+            ],
+          ],
         },
         'line-color': 'hsl(0, 0%, 27%)',
         'line-opacity': {
           'stops': [
             [
               11,
-              0
+              0,
             ],
             [
               11.25,
-              1
+              1,
             ],
             [
               14,
-              1
+              1,
             ],
             [
               14.01,
-              0
-            ]
-          ]
-        }
-      }
+              0,
+            ],
+          ],
+        },
+      },
     },
     {
       'id': 'country-label-sm',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856144497.7825'
-      },
+      'metadata': {'mapbox:group': '1444856144497.7825'},
       'source': 'composite',
       'source-layer': 'country_label',
       'minzoom': 1,
@@ -8000,7 +7763,7 @@ const BaseStyle = {
       'filter': [
         '>=',
         'scalerank',
-        5
+        5,
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -8011,28 +7774,26 @@ const BaseStyle = {
           'stops': [
             [
               5,
-              14
+              14,
             ],
             [
               9,
-              22
-            ]
-          ]
-        }
+              22,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-halo-width': 1.25,
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-color': 'hsl(0, 0%, 45%)',
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'country-label-md',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856144497.7825'
-      },
+      'metadata': {'mapbox:group': '1444856144497.7825'},
       'source': 'composite',
       'source-layer': 'country_label',
       'minzoom': 1,
@@ -8041,7 +7802,7 @@ const BaseStyle = {
         'in',
         'scalerank',
         3,
-        4
+        4,
       ],
       'layout': {
         'text-field': {
@@ -8049,13 +7810,13 @@ const BaseStyle = {
           'stops': [
             [
               0,
-              '{code}'
+              '{code}',
             ],
             [
               2,
-              '{name_en}'
-            ]
-          ]
+              '{name_en}',
+            ],
+          ],
         },
         'text-max-width': 6,
         'text-font': FONT_ROBOTO_REGULAR,
@@ -8064,28 +7825,26 @@ const BaseStyle = {
           'stops': [
             [
               3,
-              10
+              10,
             ],
             [
               8,
-              24
-            ]
-          ]
-        }
+              24,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-halo-width': 1.25,
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-color': 'hsl(0, 0%, 45%)',
-        'text-halo-blur': 0
-      }
+        'text-halo-blur': 0,
+      },
     },
     {
       'id': 'country-label-lg',
       'type': 'symbol',
-      'metadata': {
-        'mapbox:group': '1444856144497.7825'
-      },
+      'metadata': {'mapbox:group': '1444856144497.7825'},
       'source': 'composite',
       'source-layer': 'country_label',
       'minzoom': 1,
@@ -8094,7 +7853,7 @@ const BaseStyle = {
         'in',
         'scalerank',
         1,
-        2
+        2,
       ],
       'layout': {
         'text-field': '{name_en}',
@@ -8103,13 +7862,13 @@ const BaseStyle = {
           'stops': [
             [
               0,
-              5
+              5,
             ],
             [
               3,
-              6
-            ]
-          ]
+              6,
+            ],
+          ],
         },
         'text-font': FONT_ROBOTO_REGULAR,
         'text-size': {
@@ -8117,29 +7876,29 @@ const BaseStyle = {
           'stops': [
             [
               1,
-              10
+              10,
             ],
             [
               6,
-              24
-            ]
-          ]
-        }
+              24,
+            ],
+          ],
+        },
       },
       'paint': {
         'text-halo-width': 1.25,
         'text-halo-color': 'hsla(0, 0%, 10%, 0.75)',
         'text-color': 'hsl(0, 0%, 45%)',
-        'text-halo-blur': 0
-      }
-    }
+        'text-halo-blur': 0,
+      },
+    },
   ],
   'created': '2016-11-22T03:29:59.085Z',
   'id': 'civsy0pgb00022kkxcbqtcogh',
   'modified': '2016-12-21T20:18:51.177Z',
   'owner': 'andest01',
   'visibility': 'private',
-  'draft': false
+  'draft': false,
 }
 
 export default BaseStyle

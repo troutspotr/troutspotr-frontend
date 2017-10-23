@@ -1,5 +1,3 @@
-const HomeContainer = (props) => {
-  return null
-}
+const HomeContainer = (props) => null
 
 export default HomeContainer

@@ -1,8 +1,9 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import MapboxGlComponentCamera from './MapboxGl.component.camera'
 import classes from '../Map.scss'
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
-import { isEmpty, debounce, flatten, clamp } from 'lodash'
+import {clamp, debounce, flatten, isEmpty} from 'lodash'
 import BaseStyle from './styles/Base.style'
 import MapboxGlGpsLayer from './MapboxGl.gps.layer'
 class MapboxGlComponent extends Component {
@@ -12,26 +13,29 @@ class MapboxGlComponent extends Component {
 
   componentDidMount () {
     this.map = new this.props.mapbox.Map({
-      attributionControl: true,
-      container: this.props.elementId,
-      style: BaseStyle,
-      center: [-93.50, 42],
-      zoom: 4,
-      maxZoom: 18.0,
-      boxZoom: false,
-      dragRotate: true,
-      keyboard: false
+      'attributionControl': true,
+      'container': this.props.elementId,
+      'style': BaseStyle,
+      'center': [
+        -93.50,
+        42,
+      ],
+      'zoom': 4,
+      'maxZoom': 18.0,
+      'boxZoom': false,
+      'dragRotate': true,
+      'keyboard': false,
     })
 
-    // setTimeout(() => { this.map.resize() }, 20)
+    // SetTimeout(() => { this.map.resize() }, 20)
 
     if (this.props.camera.bounds != null) {
-      // overpad the map just a bit, and an instant later, zoom out, set max bounds, and zoom back in.
-      this.map.fitBounds(this.props.camera.bounds, { linear: false, padding: 20, speed: 1000 })
+      // Overpad the map just a bit, and an instant later, zoom out, set max bounds, and zoom back in.
+      this.map.fitBounds(this.props.camera.bounds, {'linear': false, 'padding': 20, 'speed': 1000})
       setTimeout(() => {
-        let zoomedOut = this.map.getZoom() * 0.80
+        const zoomedOut = this.map.getZoom() * 0.80
         this.map.setZoom(zoomedOut)
-        this.map.fitBounds(this.props.camera.bounds, { linear: false, padding: 80, speed: 100 })
+        this.map.fitBounds(this.props.camera.bounds, {'linear': false, 'padding': 80, 'speed': 100})
       }, 100)
     }
 
@@ -40,23 +44,21 @@ class MapboxGlComponent extends Component {
     this.props.setIsMapInitialized(false)
     this.map.once('load', this.onMapLoad)
     this.map.once('data', this.onDataLoad)
-    this.map.on('layer.add', e => { console.log(e) })
 
-    // load interactivity.
+    // Load interactivity.
     const DEBOUNCE_DELAY_MS = 80
-    let debounceOptions = { maxWait: 20 }
+    const debounceOptions = {'maxWait': 20}
 
     // We should debounce our events to reduce load on CPU.
     this.proxyOnLayerMouseOver = debounce(this.onLayerMouseOver, DEBOUNCE_DELAY_MS, debounceOptions)
-    // this.proxyOnUpdateLayerFilter = debounce(this.updateLayerFilter, 20, { maxWait: 20 })
-    this.proxyOnClick = debounce(this.onLayerClick, 20, { maxWait: 20 })
+    this.proxyOnClick = debounce(this.onLayerClick, 20, {'maxWait': 20})
 
     this.map.on('mousemove', this.proxyOnLayerMouseOver)
     this.map.on('click', this.proxyOnClick)
   }
 
   onLayerMouseOver = (e) => {
-    let features = this.getInteractiveFeaturesOverPoint(e.point)
+    const features = this.getInteractiveFeaturesOverPoint(e.point)
     if (features == null) {
       return
     }
@@ -72,21 +74,27 @@ class MapboxGlComponent extends Component {
   }
 
   getInteractiveFeaturesOverPoint = (point) => {
-    let BOX_DIMENSION = 10
-    let boundingBox = [
-      [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
-      [point.x + BOX_DIMENSION / 2, point.y + BOX_DIMENSION / 2]
+    const BOX_DIMENSION = 20
+    const boundingBox = [
+      [
+        point.x - BOX_DIMENSION / 2,
+        point.y - BOX_DIMENSION / 2,
+      ],
+      [
+        point.x + BOX_DIMENSION / 2,
+        point.y + BOX_DIMENSION / 2,
+      ],
     ]
 
-    let interactiveLayers = flatten(this.props.layerPackage.map(x => x.layers))
-      .filter(layer => layer.layerDefinition.interactive)
-      .map(layer => layer.layerDefinition.id)
-    var features = this.map.queryRenderedFeatures(boundingBox, { layers: interactiveLayers })
+    const interactiveLayers = flatten(this.props.layerPackage.map((x) => x.layers))
+      .filter((layer) => layer.layerDefinition.interactive)
+      .map((layer) => layer.layerDefinition.id)
+    const features = this.map.queryRenderedFeatures(boundingBox, {'layers': interactiveLayers})
     return features
   }
 
   onLayerClick = (e) => {
-    let features = this.getInteractiveFeaturesOverPoint(e.point)
+    const features = this.getInteractiveFeaturesOverPoint(e.point)
     if (features == null || features.length === 0) {
       return
     }
@@ -94,33 +102,33 @@ class MapboxGlComponent extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    let { isReadyToInsertLayers } = nextProps
+    const {isReadyToInsertLayers} = nextProps
 
-    // did our geoJson change?
+    // Did our geoJson change?
     if (isReadyToInsertLayers === false) {
       return
     }
-    let { sources } = this.props
-    let isSourceChanged = sources !== nextProps.sources
+    const {sources} = this.props
+    const isSourceChanged = sources !== nextProps.sources
     if (isSourceChanged) {
       this.safelySetSources(this.map, nextProps.sources)
     }
 
-    let isUserLookingAtMap = isEmpty(nextProps.isVisible)
-    let isUserHitBackButton = isEmpty(this.props.selectedGeometry) === false && isEmpty(nextProps.selectedGeometry)
-    let userChangedRegions = this.props.selectedRegionId !== nextProps.selectedRegionId
-    let shouldBounceOutALittle = isUserLookingAtMap && isUserHitBackButton
+    const isUserLookingAtMap = isEmpty(nextProps.isVisible)
+    const isUserHitBackButton = isEmpty(this.props.selectedGeometry) === false && isEmpty(nextProps.selectedGeometry)
+    const userChangedRegions = this.props.selectedRegionId !== nextProps.selectedRegionId
+    const shouldBounceOutALittle = isUserLookingAtMap && isUserHitBackButton
     if (userChangedRegions === false && shouldBounceOutALittle) {
-      let currentZoom = this.map.getZoom()
-      let newZoom = this.getZoomBackbounce(currentZoom)
-      setTimeout(() => this.map.easeTo({ bearing: 0, pitch: 0, zoom: newZoom }), 30)
+      const currentZoom = this.map.getZoom()
+      const newZoom = this.getZoomBackbounce(currentZoom)
+      setTimeout(() => this.map.easeTo({'bearing': 0, 'pitch': 0, 'zoom': newZoom}), 30)
     }
   }
 
   getZoomBackbounce (currentZoom, minZoom = 10, maxZoom = 15, boostMultiplier = 3.5) {
-    let clampedZoom = clamp(currentZoom, minZoom, maxZoom)
-    let normalizedBoost = (clampedZoom - minZoom) / (maxZoom - minZoom)
-    let boostBack = (normalizedBoost * boostMultiplier) + 0.2
+    const clampedZoom = clamp(currentZoom, minZoom, maxZoom)
+    const normalizedBoost = (clampedZoom - minZoom) / (maxZoom - minZoom)
+    const boostBack = (normalizedBoost * boostMultiplier) + 0.2
     return currentZoom - boostBack
   }
 
@@ -133,13 +141,13 @@ class MapboxGlComponent extends Component {
   }
 
   safelySetSources (map, sources) {
-    sources.forEach(source => {
-      let { sourceId, sourceData } = source
-      let jsonSource = {
-        type: 'geojson',
-        data: sourceData
+    sources.forEach((source) => {
+      const {sourceId, sourceData} = source
+      const jsonSource = {
+        'type': 'geojson',
+        'data': sourceData,
       }
-      let mapSource = map.getSource(sourceId)
+      const mapSource = map.getSource(sourceId)
       if (mapSource == null) {
         map.addSource(sourceId, jsonSource)
       } else {
@@ -156,13 +164,13 @@ class MapboxGlComponent extends Component {
       return
     }
 
-    // add our satellite source first:
+    // Add our satellite source first:
     const satelliteId = 'mapbox://mapbox.satellite'
     if (this.map.getSource(satelliteId) == null) {
       this.map.addSource(satelliteId, {
-        url: 'mapbox://mapbox.satellite',
-        type: 'raster',
-        tileSize: 256
+        'url': 'mapbox://mapbox.satellite',
+        'type': 'raster',
+        'tileSize': 256,
       })
     }
 
@@ -182,55 +190,54 @@ class MapboxGlComponent extends Component {
       return null
     }
 
-    let { gpsLocation } = this.props
+    const {gpsLocation} = this.props
     if (gpsLocation == null) {
       return null
     }
     return (<MapboxGlGpsLayer
       map={this.map}
       source={gpsLocation}
-            />)
+    />)
   }
-/*
+
+  /*
 
 */
   render () {
-    // return null
+    // Return null
     return (<div id={this.props.elementId} className={classes.map}>
       {this.props.isReadyToInsertLayers &&
-        this.props.layerPackage.map((mapLayer, index) => {
-          return (<MapboxGlLayerComponent
-            map={this.map}
-            key={mapLayer.layerId}
-            layers={mapLayer.layers}
-            filters={mapLayer.filters}
-                  />)
-        })}
+        this.props.layerPackage.map((mapLayer, index) => (<MapboxGlLayerComponent
+          map={this.map}
+          key={mapLayer.layerId}
+          layers={mapLayer.layers}
+          filters={mapLayer.filters}
+        />))}
       {this.renderGpsLocationLayer()}
       {this.props.isReadyToInsertLayers && <MapboxGlComponentCamera
         camera={this.props.camera}
         map={this.map}
         mapbox={this.props.mapbox}
-                                           /> }
+      /> }
     </div>)
   }
 }
 
 MapboxGlComponent.propTypes = {
-  mapbox: PropTypes.object.isRequired,
-  elementId: PropTypes.string.isRequired,
-  camera: PropTypes.object.isRequired,
-  setIsMapInitialized: PropTypes.func.isRequired,
-  isReadyToInsertLayers: PropTypes.bool.isRequired,
-  sources: PropTypes.array.isRequired,
-  layerPackage: PropTypes.array.isRequired,
-  selectedGeometry: PropTypes.object,
-  selectedRegionId: PropTypes.string.isRequired,
-  onFeatureClick: PropTypes.func.isRequired,
-  onFeatureHover: PropTypes.func.isRequired,
+  'mapbox': PropTypes.object.isRequired,
+  'elementId': PropTypes.string.isRequired,
+  'camera': PropTypes.object.isRequired,
+  'setIsMapInitialized': PropTypes.func.isRequired,
+  'isReadyToInsertLayers': PropTypes.bool.isRequired,
+  'sources': PropTypes.array.isRequired,
+  'layerPackage': PropTypes.array.isRequired,
+  'selectedGeometry': PropTypes.object,
+  'selectedRegionId': PropTypes.string.isRequired,
+  'onFeatureClick': PropTypes.func.isRequired,
+  'onFeatureHover': PropTypes.func.isRequired,
   /* eslint-disable react/no-unused-prop-types */
-  isVisible: PropTypes.bool.isRequired,
-  gpsLocation: PropTypes.object
+  'isVisible': PropTypes.bool.isRequired,
+  'gpsLocation': PropTypes.object,
 
 }
 

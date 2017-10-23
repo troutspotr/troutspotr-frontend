@@ -1,11 +1,12 @@
-import { createSelector } from 'reselect'
-import { keyBy } from 'lodash'
+import {createSelector} from 'reselect'
+import {keyBy} from 'lodash'
 
 import * as filters from './filters/Filters.selectors'
 import * as styles from './styles/Style.selectors'
 
 export const getLayerPackage = createSelector(
-  [ styles.streamLayersSelector,
+  [
+    styles.streamLayersSelector,
     styles.troutSectionsLayersSelector,
     styles.palLayersSelector,
     styles.restrictionSectionsLayersSelector,
@@ -13,7 +14,8 @@ export const getLayerPackage = createSelector(
     styles.accessPointsLayerSelector,
     styles.satelliteLayersSelector,
     styles.streamCentroidLayersSelector,
-    filters.getStreamFilters],
+    filters.getStreamFilters,
+  ],
   (
     streams,
     troutSections,
@@ -25,8 +27,8 @@ export const getLayerPackage = createSelector(
     streamCentroids,
     streamFilters
   ) => {
-    let filterLookupTable = keyBy(streamFilters, 'layerId')
-    let result = [
+    const filterLookupTable = keyBy(streamFilters, 'layerId')
+    const result = [
       satellite,
       palLayers,
       streams,
@@ -34,15 +36,15 @@ export const getLayerPackage = createSelector(
       restrictions,
       palSections,
       accessPoints,
-      streamCentroids
-    ].map(style => {
-      let filters = style.map(s => filterLookupTable[s.layerId]).filter(x => x != null && x.filterDefinition != null)
-      let layerId = style.map(x => x.layerDefinition.id).join('_')
+      streamCentroids,
+    ].map((style) => {
+      const filters = style.map((s) => filterLookupTable[s.layerId]).filter((x) => x != null && x.filterDefinition != null)
+      const layerId = style.map((x) => x.layerDefinition.id).join('_')
 
       return {
-        layers: style,
-        filters: filters,
-        layerId
+        'layers': style,
+        filters,
+        layerId,
       }
     })
 

@@ -1,15 +1,12 @@
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import RegulationsSummaryComponent from './RegulationsSummary.component'
-// import { isListVisible } from 'ui/core/Core.selectors'
-import { getRegulationsSummarySelector } from './RegulationsSummary.selectors'
-const mapDispatchToProps = {
-}
+// Import { isListVisible } from 'ui/core/Core.selectors'
+import {getRegulationsSummarySelector} from './RegulationsSummary.selectors'
+const mapDispatchToProps = {}
 
 const mapStateToProps = (state) => {
-  let getSummary = getRegulationsSummarySelector(state)
-  let props = {
-    getSummary
-  }
+  const getSummary = getRegulationsSummarySelector(state)
+  const props = {getSummary}
   return props
 }
 

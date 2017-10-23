@@ -1,42 +1,41 @@
-import { createSelector } from 'reselect'
-import { locationSelector, isRootPageSelector } from 'ui/Location.selectors'
-import { LIST } from './Core.state'
-import { isEmpty, has } from 'lodash'
+import {createSelector} from 'reselect'
+import {isRootPageSelector, locationSelector} from 'ui/Location.selectors'
+import {LIST} from './Core.state'
+import {has, isEmpty} from 'lodash'
 
-export const statesGeoJsonSelector = state => state.core.statesGeoJson
-export const countiesGeoJsonSelector = state => state.core.countiesGeoJson
-export const regionsGeoJsonSelector = state => state.core.regionsGeoJson
+export const statesGeoJsonSelector = (state) => state.core.statesGeoJson
+export const countiesGeoJsonSelector = (state) => state.core.countiesGeoJson
+export const regionsGeoJsonSelector = (state) => state.core.regionsGeoJson
 
-export const statesDictionarySelector = state => state.core.statesDictionary
-export const countiesDictionarySelector = state => state.core.countyDictionary
-export const regionsDictionarySelector = state => state.core.regionDictionary
-export const hasAgreedToTermsSelector = state => state.core.hasAgreedToTerms
-export const hasSeenIntroScreenSelector = state => state.core.hasSeenIntroScreen
-export const hasSeenTermsOfServiceSelector = state => state.core.hasSeenTermsOfService
-export const hasSeenPrivacyPolicySelector = state => state.core.hasSeenPrivacyPolicy
-// export const streamCentroidsGeoJsonSelector = state => state.core.streamCentroidsGeoJson
-export const tableOfContentsLoadingStatusSelector = state => state.core.tableOfContentsLoadingStatus
-export const searchTextSelector = state => state.core.searchText
+export const statesDictionarySelector = (state) => state.core.statesDictionary
+export const countiesDictionarySelector = (state) => state.core.countyDictionary
+export const regionsDictionarySelector = (state) => state.core.regionDictionary
+export const hasAgreedToTermsSelector = (state) => state.core.hasAgreedToTerms
+export const hasSeenIntroScreenSelector = (state) => state.core.hasSeenIntroScreen
+export const hasSeenTermsOfServiceSelector = (state) => state.core.hasSeenTermsOfService
+export const hasSeenPrivacyPolicySelector = (state) => state.core.hasSeenPrivacyPolicy
+// Export const streamCentroidsGeoJsonSelector = state => state.core.streamCentroidsGeoJson
+export const tableOfContentsLoadingStatusSelector = (state) => state.core.tableOfContentsLoadingStatus
+export const searchTextSelector = (state) => state.core.searchText
 
-export const viewSelector = state => {
-  return state.core.view
-}
+export const viewSelector = (state) => state.core.view
 
 export const isListVisible = createSelector(
   [viewSelector],
-  (view) => {
-    return view === LIST
-  })
+  (view) => view === LIST)
 
 export const selectedStateIdSelector = createSelector(
-  [isRootPageSelector, locationSelector],
+  [
+    isRootPageSelector,
+    locationSelector,
+  ],
   (isRoot, location) => {
     if (isRoot) {
       return null
     }
 
-    let params = location.pathname.split('/')
-    let stateParam = params.length >= 2
+    const params = location.pathname.split('/')
+    const stateParam = params.length >= 2
       ? (params[1]).toLowerCase()
       : null
 
@@ -44,14 +43,17 @@ export const selectedStateIdSelector = createSelector(
   })
 
 export const selectedRegionIdSelector = createSelector(
-  [isRootPageSelector, locationSelector],
+  [
+    isRootPageSelector,
+    locationSelector,
+  ],
   (isRoot, location) => {
     if (isRoot) {
       return null
     }
 
-    let params = location.pathname.split('/')
-    let regionParam = params.length >= 3
+    const params = location.pathname.split('/')
+    const regionParam = params.length >= 3
       ? (params[2]).toLowerCase()
       : null
 
@@ -59,14 +61,17 @@ export const selectedRegionIdSelector = createSelector(
   })
 
 export const selectedStreamIdSelector = createSelector(
-  [isRootPageSelector, locationSelector],
+  [
+    isRootPageSelector,
+    locationSelector,
+  ],
   (isRoot, location) => {
     if (isRoot) {
       return null
     }
 
-    let params = location.pathname.split('/')
-    let streamSlugParam = params.length >= 4
+    const params = location.pathname.split('/')
+    const streamSlugParam = params.length >= 4
       ? (params[3]).toLowerCase()
       : null
 
@@ -74,18 +79,21 @@ export const selectedStreamIdSelector = createSelector(
   })
 
 export const selectedStateSelector = createSelector(
-  [selectedStateIdSelector, statesDictionarySelector],
+  [
+    selectedStateIdSelector,
+    statesDictionarySelector,
+  ],
   (stateId, statesDictionary) => {
     if (isEmpty(statesDictionary)) {
       return null
     }
 
-    let isStateFound = has(statesDictionary, stateId)
+    const isStateFound = has(statesDictionary, stateId)
     if (isStateFound === false) {
       return null
     }
 
-    let state = statesDictionary[stateId]
+    const state = statesDictionary[stateId]
     return state
   })
 
@@ -96,22 +104,25 @@ export const isSearchingSelector = createSelector(
       return false
     }
 
-    let isSearchNonEmpty = isEmpty(searchText) === false
+    const isSearchNonEmpty = isEmpty(searchText) === false
     return isSearchNonEmpty
   })
 
 export const selectedRegionSelector = createSelector(
-  [selectedRegionIdSelector, regionsDictionarySelector],
+  [
+    selectedRegionIdSelector,
+    regionsDictionarySelector,
+  ],
   (regionId, regionsDictionary) => {
     if (isEmpty(regionsDictionary)) {
       return null
     }
 
-    let isRegionFound = has(regionsDictionary, regionId)
+    const isRegionFound = has(regionsDictionary, regionId)
     if (isRegionFound === false) {
       return null
     }
 
-    let region = regionsDictionary[regionId]
+    const region = regionsDictionary[regionId]
     return region
   })

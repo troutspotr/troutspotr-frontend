@@ -1,19 +1,20 @@
-import React, { PropTypes, Component } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './SvgMap.scss'
 
 class GpsLocationLayer extends Component {
   renderGpsCoorinates = () => {
-    let { currentGpsCoordinatesFeature } = this.props
+    const {currentGpsCoordinatesFeature} = this.props
     if (currentGpsCoordinatesFeature == null) {
       return null
     }
-    let path = this.props.selectedCentroidPathGenerator(currentGpsCoordinatesFeature)
+    const path = this.props.selectedCentroidPathGenerator(currentGpsCoordinatesFeature)
 
-    let pathElement = (<path
+    const pathElement = (<path
       className={classes.gpsCoordinates}
-      data-name='gps-location'
+      data-name="gps-location"
       d={path}
-                       />)
+    />)
     return pathElement
   }
 
@@ -29,7 +30,8 @@ class GpsLocationLayer extends Component {
 }
 
 GpsLocationLayer.propTypes = {
-  currentGpsCoordinatesFeature: PropTypes.object
+  'currentGpsCoordinatesFeature': PropTypes.object,
+  selectedCentroidPathGenerator: PropTypes.func.isRequired,
 }
 
 export default GpsLocationLayer

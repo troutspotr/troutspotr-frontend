@@ -1,6 +1,7 @@
-import { createSelector } from 'reselect'
-import { regionsDictionarySelector } from 'ui/core/Core.selectors'
-export const isOfflineSelector = state => {
+import {isEmpty, keyBy} from 'lodash'
+import {createSelector} from 'reselect'
+import {regionsDictionarySelector} from 'ui/core/Core.selectors'
+export const isOfflineSelector = (state) => {
   if (state == null) {
     return false
   }
@@ -11,9 +12,8 @@ export const isOfflineSelector = state => {
 
   return state.offline.isOffline
 }
-export const cachedEndpointsSelector = state => state.offline.cachedEndpoints
 
-import { isEmpty, keyBy } from 'lodash'
+export const cachedEndpointsSelector = (state) => state.offline.cachedEndpoints
 
 const EMPTY_DICTIONARY = {}
 
@@ -24,11 +24,14 @@ export const cachedEndpointsDictionarySelector = createSelector(
       return EMPTY_DICTIONARY
     }
 
-    return keyBy(cachedEndpoints, x => x)
+    return keyBy(cachedEndpoints, (x) => x)
   })
 
 export const cachedRegionsDictionary = createSelector(
-  [cachedEndpointsSelector, regionsDictionarySelector],
+  [
+    cachedEndpointsSelector,
+    regionsDictionarySelector,
+  ],
   (endpoints, regionDictionary) => {
     if (isEmpty(endpoints)) {
       return EMPTY_DICTIONARY
@@ -38,22 +41,22 @@ export const cachedRegionsDictionary = createSelector(
       return EMPTY_DICTIONARY
     }
 
-    let cachedRegionDictionary = endpoints.reduce((dictionary, endpoint) => {
-      let tokens = endpoint.split('/')
-        .filter(x => x.length > 0)
+    const cachedRegionDictionary = endpoints.reduce((dictionary, endpoint) => {
+      const tokens = endpoint.split('/')
+        .filter((x) => x.length > 0)
       if (tokens.length <= 3) {
         return dictionary
       }
 
-      let regionFileName = tokens[3]
-      let isTopojsonFile = regionFileName.indexOf('.topo.json') >= 0
+      const regionFileName = tokens[3]
+      const isTopojsonFile = regionFileName.indexOf('.topo.json') >= 0
       if (isTopojsonFile === false) {
         return dictionary
       }
-      let regionName = regionFileName.split('.')[0]
+      const regionName = regionFileName.split('.')[0]
       // I believe we index by name.
-      let region = regionDictionary[regionName]
-      let regionId = region.properties.gid
+      const region = regionDictionary[regionName]
+      const regionId = region.properties.gid
       dictionary[regionId] = region
       return dictionary
     }, {})

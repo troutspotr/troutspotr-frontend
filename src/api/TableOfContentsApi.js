@@ -1,7 +1,7 @@
 import BaseApi from './BaseApi'
 import localForage from 'localforage'
 import * as topojson from 'topojson-client'
-export const buildTableOfContentsEndpoint = () => `/data/v2/TableOfContents.topo.json`
+export const buildTableOfContentsEndpoint = () => `/data/v3/TableOfContents.topo.json`
 export const decompress = (tocTopojson) => {
   const states = topojson.feature(tocTopojson, tocTopojson.objects.minnesota)
   const counties = topojson.feature(tocTopojson, tocTopojson.objects.minnesota_county)

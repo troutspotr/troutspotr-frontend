@@ -259,6 +259,10 @@
   margin-bottom: 4vmin;
 }
 
+.button:hover {
+  box-shadow: inset 0px 0px 0px 0.5vmin $blue;
+}
+
 @keyframes buttonAnimation {
   0% {
     transform: scale(0.7);

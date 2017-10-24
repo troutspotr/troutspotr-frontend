@@ -293,7 +293,9 @@ export const getCountyListSelector = createSelector(
     }
 
     const countiesInSelectedRegionDictionary = regionIndex[regionName]
+    console.log(countiesInSelectedRegionDictionary)
     const countyIdsInSelectedRegion = keys(countiesInSelectedRegionDictionary)
+    console.log(countyIdsInSelectedRegion)
     const countyObjects = countyIdsInSelectedRegion.map((id) => {
       const streamIdsInRegion = countiesInSelectedRegionDictionary[id]
       const county = countiesDictionary[id]
@@ -330,8 +332,10 @@ export const getCountyListSelector = createSelector(
         console.log(visibleStreamsInCounty) // eslint-disable-line
       }
     })
-
-    const filteredCountyObjects = countyObjects.filter((x) => x.streams.length > 0)
+    console.log(countyObjects)
+    const filteredCountyObjects = countyObjects
+      .sort((a,b) => a.name.localeCompare(b.name))
+      .filter((x) => x.streams.length > 0)
     if (filteredCountyObjects.length === 0) {
       // Prevent further calculations by other selectors
       return EMPTY_COUNTIES_ARRAY

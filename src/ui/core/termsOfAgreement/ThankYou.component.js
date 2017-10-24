@@ -5,7 +5,7 @@ class ThankYouComponent extends Component {
   renderTitle () {
     return (
       <div className={classes.thanksContainer}>
-        <div className={classes.thanks}>Smoke Weed.</div>
+        <div className={classes.thanks}>Thanks!</div>
         <div className={classes.fishing}>{"Let's go fishing!"}</div>
       </div>)
   }

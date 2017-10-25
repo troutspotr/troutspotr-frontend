@@ -108,21 +108,43 @@ export const isSearchingSelector = createSelector(
     return isSearchNonEmpty
   })
 
+export const selectedRegionPathKeySelector = createSelector(
+  [
+    selectedStateIdSelector,
+    selectedRegionIdSelector,
+    ],
+    (selectedStateId, selectedRegionId) => {
+      if (isEmpty(selectedStateId)) {
+        return null
+      }
+
+      if (isEmpty(selectedRegionId)) {
+        return null
+      }
+
+      const regionPathKey = `${selectedStateId}/${selectedRegionId}`
+      return regionPathKey
+    })
+
 export const selectedRegionSelector = createSelector(
   [
-    selectedRegionIdSelector,
+    selectedRegionPathKeySelector,
     regionsDictionarySelector,
   ],
-  (regionId, regionsDictionary) => {
+  (regionPathKey, regionsDictionary) => {
     if (isEmpty(regionsDictionary)) {
       return null
     }
 
-    const isRegionFound = has(regionsDictionary, regionId)
+    if (isEmpty(selectedRegionPathKeySelector)) {
+      return null
+    }
+    debugger
+    const isRegionFound = has(regionsDictionary, regionPathKey)
     if (isRegionFound === false) {
       return null
     }
 
-    const region = regionsDictionary[regionId]
+    const region = regionsDictionary[regionPathKey]
     return region
   })

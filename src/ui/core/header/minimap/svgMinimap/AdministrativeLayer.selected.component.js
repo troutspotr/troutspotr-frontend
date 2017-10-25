@@ -15,13 +15,13 @@ class AdministrativeLayerSelectedComponent extends Component {
       return null
     }
     const selectedRegionId = isEmpty(selectedRegion) === false
-      ? selectedRegion.properties.name.toLowerCase()
+      ? selectedRegion.properties.path.toLowerCase()
       : null
     if (selectedRegionId == null) {
       return null
     }
 
-    const selectedRegions = regionsGeoJson.features.filter((f) => f.properties.name.toLowerCase() === selectedRegionId)
+    const selectedRegions = regionsGeoJson.features.filter((f) => f.properties.path.toLowerCase() === selectedRegionId)
 
     return selectedRegions.map((region, index) => {
       const {isOffline, cachedRegions} = this.props

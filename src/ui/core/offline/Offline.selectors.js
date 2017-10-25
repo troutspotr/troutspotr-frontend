@@ -1,6 +1,6 @@
 import {isEmpty, keyBy} from 'lodash'
 import {createSelector} from 'reselect'
-import {regionsDictionarySelector} from 'ui/core/Core.selectors'
+import {regionsDictionarySelector, selectedRegionPathKeySelector} from 'ui/core/Core.selectors'
 export const isOfflineSelector = (state) => {
   if (state == null) {
     return false
@@ -41,21 +41,26 @@ export const cachedRegionsDictionary = createSelector(
       return EMPTY_DICTIONARY
     }
 
-    const cachedRegionDictionary = endpoints.reduce((dictionary, endpoint) => {
+    const cachedRegionDictionary = endpoints
+      .filter(x => x.indexOf('v3') >= 0)
+      .reduce((dictionary, endpoint) => {
       const tokens = endpoint.split('/')
         .filter((x) => x.length > 0)
-      if (tokens.length <= 3) {
+      const isNotStateRegion = tokens.length <= 3
+      if (isNotStateRegion) {
         return dictionary
       }
 
       const regionFileName = tokens[3]
+      const stateName = tokens[2]
       const isTopojsonFile = regionFileName.indexOf('.topo.json') >= 0
       if (isTopojsonFile === false) {
         return dictionary
       }
       const regionName = regionFileName.split('.')[0]
       // I believe we index by name.
-      const region = regionDictionary[regionName]
+      const regionKey = `${stateName}/${regionName}`
+      const region = regionDictionary[regionKey]
       const regionId = region.properties.gid
       dictionary[regionId] = region
       return dictionary

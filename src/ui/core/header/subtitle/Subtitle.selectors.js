@@ -19,6 +19,8 @@ export const subtitleSelector = createSelector(
     if (isRootPage) {
       return WELCOME_TITLE
     }
+
+    console.log('hello', selectedRegion)
     const isOnlyStateSelected = selectedState != null && selectedRegion == null
     if (isOnlyStateSelected) {
       const state = selectedState.properties.name

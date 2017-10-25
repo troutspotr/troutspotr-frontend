@@ -77,7 +77,7 @@ const ACTION_HANDLERS = {
         'countyDictionary': keyBy(payload.counties.features, (c) => c.properties.gid),
 
         'regionsGeoJson': payload.regions,
-        'regionDictionary': keyBy(payload.regions.features, (r) => r.properties.name.toLowerCase()),
+        'regionDictionary': keyBy(payload.regions.features, (r) => r.properties.path.toLowerCase()),
 
         'streamCentroidsGeoJson': payload.streamCentroids,
         'tableOfContentsLoadingStatus': LOADING_CONSTANTS.IS_SUCCESS,

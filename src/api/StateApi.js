@@ -8,12 +8,19 @@ const stateCache = {}
 export const updateStateObject = (stateMetadata) => {
   const regsDictionary = keyBy(stateMetadata.regulations, 'id')
   for (const prop in stateMetadata.waterOpeners) {
-    stateMetadata.waterOpeners[prop].openers.forEach((opener) => {
+    const stateOpeners = stateMetadata.waterOpeners[prop].openers
+    stateOpeners.forEach((opener) => {
       opener.end_time = new Date(opener.end_time)
       opener.start_time = new Date(opener.start_time)
       opener.restriction = regsDictionary[opener.restriction_id]
     })
+    stateOpeners.sort((a,b) => {
+      return a.start_time - b.start_time
+    })
   }
+
+  // sort the waters.
+  
 
   const result = {
     ...stateMetadata,

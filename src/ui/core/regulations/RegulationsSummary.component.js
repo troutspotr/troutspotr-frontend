@@ -67,6 +67,8 @@ class RegulationsSummary extends Component {
       const dateText = hasCloseOpener
         ? `${closestOpener.start_time.toLocaleDateString('en-US')}.`
         : `${openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US')}.`
+        console.log(dateText, explainerText)
+
       const args = {
         'statusClass': classes.openCaution,
         'statusText': 'Closed with exceptions',

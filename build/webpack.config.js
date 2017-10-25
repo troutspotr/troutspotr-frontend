@@ -75,9 +75,9 @@ webpackConfig.plugins = [
     publicPath: '/',
     caches: 'all',
     externals: [
-      'data/v2/TableOfContents.topo.json',
-      'data/v2/mn/mn.data.json',
-      'data/v2/wi/wi.data.json',
+      'data/v3/TableOfContents.topo.json',
+      'data/v3/mn/mn.data.json',
+      'data/v3/wi/wi.data.json',
       'map-fonts/roboto-regular/0-255.pbf',
       'map-fonts/roboto-regular/65024-65279.pbf',
       'map-fonts/roboto-regular/12288-12543.pbf',

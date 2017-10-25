@@ -5,7 +5,7 @@ export const buildTableOfContentsEndpoint = () => `/data/v3/TableOfContents.topo
 export const decompress = (tocTopojson) => {
   const states = topojson.feature(tocTopojson, tocTopojson.objects.minnesota)
   const counties = topojson.feature(tocTopojson, tocTopojson.objects.minnesota_county)
-  const regions = topojson.feature(tocTopojson, tocTopojson.objects.region)
+  const regions = topojson.feature(tocTopojson, tocTopojson.objects.region_stats)
   return {
     states,
     counties,

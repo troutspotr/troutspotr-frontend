@@ -139,7 +139,6 @@ export const selectedRegionSelector = createSelector(
     if (isEmpty(selectedRegionPathKeySelector)) {
       return null
     }
-    debugger
     const isRegionFound = has(regionsDictionary, regionPathKey)
     if (isRegionFound === false) {
       return null

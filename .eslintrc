@@ -34,8 +34,8 @@
   "rules": {
     "prefer-const": 2,
     "max-depth": ["error", 3],
-    "max-lines": ["error", 250],
-    "complexity": ["error", 7],
+    "max-lines": ["error", 500],
+    "complexity": ["error", 10],
     "max-statements": ["error", 25],
     "semi": [2, "never"],
     "eol-last": 2,
@@ -66,6 +66,11 @@
     "comma-dangle": ["error", "always-multiline"],
     "curly": 2,
     "eqeqeq": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/no-interactive-element-to-noninteractive-role": 0,
+    "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/anchor-is-valid": 0,
     "key-spacing": [2, {
       "beforeColon": false,
       "afterColon": true

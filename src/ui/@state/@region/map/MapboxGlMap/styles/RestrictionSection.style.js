@@ -63,21 +63,47 @@ export const RestrictionSectionActiveStyle = {
       ],
 
     },
+    // 'line-gap-width': {
+    //   'base': 1.4,
+    //   'stops': [
+    //     [
+    //       10,
+    //       5,
+    //     ],
+    //     [
+    //       13,
+    //       10,
+    //     ],
+    //     [
+    //       18,
+    //       120,
+    //     ],
+    //   ],
+    // },
     'line-gap-width': {
-      'base': 1.4,
+      property: 'colorOffset',
       'stops': [
-        [
-          10,
-          5,
-        ],
-        [
-          13,
-          10,
-        ],
-        [
-          18,
-          120,
-        ],
+        // at zoom 10
+        [{zoom: 10, value: 1}, 4,],
+        [{zoom: 10, value: 2}, 5,],
+        [{zoom: 10, value: 3}, 6,],
+        [{zoom: 10, value: 4}, 7,],
+        
+        // at zoom 13
+        [{zoom: 13, value: 1}, 9,],
+        [{zoom: 13, value: 2}, 13,],
+        [{zoom: 13, value: 3}, 16,],
+        [{zoom: 13, value: 4}, 20,],
+
+        // at zoom 18
+        [{zoom: 18, value: 1}, 80,],
+        [{zoom: 18, value: 2}, 120,],
+        [{zoom: 18, value: 3}, 150,],
+        [{zoom: 18, value: 4}, 180,],
+        // [
+        //   18,
+        //   120,
+        // ],
       ],
     },
     'line-width': {

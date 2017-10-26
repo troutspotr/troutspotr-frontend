@@ -331,19 +331,22 @@ const getSanitizedRegulations = (restrictionsForGivenStream) => {
     return []
   }
   let count = 1
-  restrictionsForGivenStream.reduce((regDictionary, item) => {
+  restrictionsForGivenStream.reduce((regDictionary, item, index) => {
     // We're gonna try to colorize our restrictions.
     // We need to be careful. there could be 16 restriction
     // Sections, but only of 3 types. We need to cataloge
     // Our progress, so a reduce function seems like a good idea here.
+    console.log('hello lol', count, index)
     if (has(regDictionary, item.properties.restriction.id)) {
       const color = regDictionary[item.properties.restriction.id].color
       item.properties.color = color
+      item.properties.colorOffset = count
       return regDictionary
     }
 
     const newColor = naiveRegColorizer(item.properties.restriction, count)
     item.properties.color = newColor
+    item.properties.colorOffset = count
     regDictionary[item.properties.restriction.id] = {
       'color': newColor,
       'restriction': item.properties.restriction,

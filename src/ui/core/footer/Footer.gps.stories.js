@@ -1,18 +1,11 @@
+/* eslint-disable no-console */
 import React from 'react'
-import { storiesOf, action, linkTo } from '@kadira/storybook'
+import { storiesOf } from '@kadira/storybook'
 import GpsComponent from './Footer.gps.component'
-import { withKnobs, text, boolean, number } from '@kadira/storybook-addon-knobs'
+import { withKnobs, boolean } from '@kadira/storybook-addon-knobs'
 
 const stories = storiesOf('core/footer/footer.gps', module)
 stories.addDecorator(withKnobs)
-
-
-const label = 'Status';
-const options = {
-  loading: 'Loading',
-  success: 'Success',
-  failure: 'Failure',
-}
 
 const defaultProps = {
   isGpsTrackingSupported: true,
@@ -24,14 +17,14 @@ const defaultProps = {
 }
 
 stories.add('GPS control', () => {
-    return (<GpsComponent
-      {...defaultProps}
-      isGpsActiveButLoading={boolean('Loading', false)}
-      isGpsActiveAndSuccessful={boolean('Success', false)}
-      isGpsFailed={boolean('Failed', false)}
-    />
-    )
-  })
+  return (<GpsComponent
+    {...defaultProps}
+    isGpsActiveButLoading={boolean('Loading', false)}
+    isGpsActiveAndSuccessful={boolean('Success', false)}
+    isGpsFailed={boolean('Failed', false)}
+  />
+  )
+})
   .add('GPS not supported', () => {
     const props = {
       ...defaultProps,
@@ -88,12 +81,3 @@ stories.add('GPS control', () => {
     />
     )
   })
-
-
-
-// isGpsTrackingSupported
-// isGpsActiveButLoading
-// isGpsActiveAndSuccessful
-// startGpsTracking
-// stopGpsTracking
-// isGpsFailed

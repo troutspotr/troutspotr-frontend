@@ -57,8 +57,6 @@ class AccessPointComponent extends Component {
   }
 
   mapAccessPoints (bridge, defaultBridgeClass, selectedBridgeClass, isSelected, isHovered) {
-    // Let selectedAccessPoint = this.props.selectedAccessPoint
-    // Let isSelected = isEmpty(selectedAccessPoint) === false && bridge.properties.gid === selectedAccessPoint.properties.gid
     const {street_name} = bridge.properties
     const letter = bridge.properties.alphabetLetter
     const bridgeClass = isSelected ? selectedBridgeClass : defaultBridgeClass

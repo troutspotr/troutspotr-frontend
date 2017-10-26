@@ -9,21 +9,7 @@ import { groupBy, has } from 'lodash'
 // Import * as d3Path from 'd3-path'
 // Let window = window || null
 const TAU = Math.PI * 2
-// const LINE_WIDTH = 1
 
-// export const DEFAULT_SETTINGS = {
-//   LINE_WIDTH,
-//   STREAM_WIDTH: LINE_WIDTH,
-//   TROUT_SECTION_WIDTH: LINE_WIDTH * 2,
-//   PUBLIC_SECTION: LINE_WIDTH * 2.75,
-//   END_POINT_SIZE: LINE_WIDTH * 2,
-// }
-
-// const LINE_WIDTH = 0.5
-// const STREAM_WIDTH = LINE_WIDTH
-// const TROUT_SECTION_WIDTH = LINE_WIDTH * 2
-// const PUBLIC_SECTION = LINE_WIDTH * 2.75
-// const END_POINT_SIZE = LINE_WIDTH * 2
 const DEGREES_TO_RADIANS = 0.0174533
 const getBackingStoreRatio = (context) => context.webkitBackingStorePixelRatio ||
     context.mozBackingStorePixelRatio ||
@@ -232,11 +218,9 @@ const renderPointAlongRing = (normalizedOffset, context, dimensions, color, thic
   const yCoordinate = Math.sin(arcOffset) * radius + (height * 0.5)
   context.beginPath()
   context.fillStyle = color
-  // context.lineWidth = thickness * 10
   context.strokeStyle = color
   context.arc(xCoordinate, yCoordinate, thickness, 0, TAU, false)
   context.fill()
-  // context.stroke()
 }
 
 export const renderTerminusStreamRing = (streamObject, canvasContext, settings, color = colors.OffWhite) => {

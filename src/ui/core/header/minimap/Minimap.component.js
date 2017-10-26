@@ -29,11 +29,6 @@ class MinimapComponent extends Component {
 
   listenToRoutes () {
     const {router} = this.props
-    if (router == null) {
-      console.log('No router found. Check Minimap component')
-      return
-    }
-
     router.listen(({pathname}) => {
 
       if (isRootPageByUrl(pathname) || isStatePageByUrl(pathname)) {

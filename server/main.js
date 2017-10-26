@@ -48,7 +48,7 @@ const createServer = function (dictionary, app) {
             return context.parsedUrl.pathname
           }
 
-          let containsSitemap = context.parsedUrl.pathname.indexOf('sitemap.xml') >= 0
+          const containsSitemap = context.parsedUrl.pathname.indexOf('sitemap.xml') >= 0
           if (containsSitemap) {
             return context.parsedUrl.pathname
           }

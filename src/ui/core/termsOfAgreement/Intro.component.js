@@ -40,7 +40,6 @@ class IntroComponent extends Component {
   }
 
   onAdvanceClick = () => {
-    console.log('go away')
     const newTime = new Date()
     const time = newTime - this.time
     this.props.advance(time)

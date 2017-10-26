@@ -75,10 +75,7 @@ class RingWaypointAccessPointComponent extends Component {
       return this.renderDefaultMarker(alphabetLetter, isSelected ? accessPointClasses.selectedUnsafeBridge : accessPointClasses.unsafeBridge)
     } else if (bridgeType === crossingTypes.uninteresting) {
       return null
-      // This.renderDefaultMarker(
-      //  AlphabetLetter, isSelected ? accessPointClasses.selectedUninterestingBridge : accessPointClasses.uninterestingBridge)
     }
-    // Return this.renderDefaultMarker
   }
 
   getXCoordinate (radialPosition, labelOffsetFromRadius, width) {

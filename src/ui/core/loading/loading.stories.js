@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf, action, linkTo } from '@kadira/storybook'
+import { storiesOf } from '@kadira/storybook'
 import LoadingComponent from 'ui/core/loading/Loading.component'
 
 storiesOf('core/loading', module)

@@ -1,3 +1,6 @@
+/* eslint-disable max-lines */
+// TODO: break this out into another module so users don't have to
+// download a huge terms of service every time they use the app.
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classes from './Agreement.scss'
@@ -81,11 +84,10 @@ class TermsOfServiceComponent extends Component {
     if (this.state.isAgreementShown === false) {
       return null
     }
-
+    const ownershipText = 'TroutSpotr (the “App”) is owned and operated by Stuart Anderson LLC. These Terms of Service ("Terms") govern your use of the App. Please read them carefully.'
     return (<div className={classes.summary}>
-
       <p>Thanks for using TroutSpotr! We hope you are as excited about fishing as we are.</p>
-      <p>TroutSpotr (the “App”) is owned and operated by Stuart Anderson LLC. These Terms of Service ("Terms") govern your use of the App. Please read them carefully.</p>
+      <p>{ownershipText}</p>
     </div>)
   }
 
@@ -97,7 +99,8 @@ class TermsOfServiceComponent extends Component {
 
   renderAccept = (index) => {
     const title = 'Accepting Our Terms'
-    const body = (<div><p>By using the App, you agree to be bound by all of the terms below. If you don't agree to all of the terms below, please discontinue use of the App immediately. </p>
+    const discontinueUseText = 'By using the App, you agree to be bound by all of the terms below. If you don\'t agree to all of the terms below, please discontinue use of the App immediately. '
+    const body = (<div><p>{discontinueUseText}</p>
       <p>If a term is unclear, please let us know by contacting us at: <a className={classes.link} href="mailto:troutspotr@gmail.com">troutspotr@gmail.com</a></p></div>)
     return this.renderTerm({index, title, body})
   }

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import {createSelector} from 'reselect'
 import {getWatersObjectSelector} from 'ui/@state/State.selectors'
 import {find} from 'lodash'
@@ -11,11 +12,11 @@ export const getRegulationsSummarySelector = createSelector(
   [getWatersObjectSelector],
   (watersObject) => (streamObject) => {
     const {stream} = streamObject
-    
+
     const watersId = stream.properties.water_id
     const water = watersObject(watersId)
     const openers = water.openSeasons
-    var closestOpener = null
+    let closestOpener = null
     if (water.openers != null) {
       closestOpener = find(water.openers, (x) => x.start_time > now )
     }

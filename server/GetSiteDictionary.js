@@ -6,9 +6,9 @@ const fs = Promise.promisifyAll(require('fs'))
 const _ = require('lodash')
 const path = require('path')
 
-const buildRegionEndpoint = (stateName, regionName) => `src/static/data/v2/${stateName}/${regionName}.topo.json`
+const buildRegionEndpoint = (stateName, regionName) => `src/static/data/v3/${stateName}/${regionName}.topo.json`
 
-const buildStateEndpoint = (stateName) => `src/static/data/v2/${stateName}/${stateName}.data.json`
+const buildStateEndpoint = (stateName) => `src/static/data/v3/${stateName}/${stateName}.data.json`
 
 function getDirectories (srcpath) {
   return fs.readdirSync(srcpath)
@@ -28,7 +28,7 @@ const makeRegionDictionary = async (stateName, regionName, formattedStateData) =
   }
 }
 
-const stateNames = getDirectories('src/static/data/v2/')
+const stateNames = getDirectories('src/static/data/v3/')
 const dictionary = {}
 const putStuffIntoTheDictionary = async () => {
   for (let i = 0; i < stateNames.length; i++) {

@@ -1,6 +1,6 @@
 import {
-  drawBackground, drawRingToCanvas, drawStreamToCanvas,
-  setUpCanvas
+  drawBackground, drawStreamToCanvas,
+  setUpCanvas,
 } from '../src/ui/core/micromap/Micromap'
 import { scaleDefaultSettingsBy, DEFAULT_SETTINGS } from '../src/ui/core/micromap/Micromap.settings'
 import * as colors from '../src/ui/core/Colors'
@@ -27,7 +27,6 @@ largerImageSettings.settings.circle.troutSectionWidth *= 0.85
 largerImageSettings.settings.accessPoints.radius = DEFAULT_CIRCLE_RADIUS + 20
 
 const microMapSettings = scaleDefaultSettingsBy(0.6, largerImageSettings)
-console.log(microMapSettings)
 const saveAsPng = (stream, directory) => {
   if (stream.stream.properties.slug == null || stream.stream.properties.slug.length === 0) {
     console.log('stream properties are wrong. bailing.') // eslint-disable-line

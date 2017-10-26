@@ -3,13 +3,10 @@
 
 .sneezeGuard {
   background-color: transparentize($background, 0.3);
-  z-index: 50;
+  z-index: 1000;
   position: fixed;
   top: $header-height;
   bottom: $footer-height;
   left: 0;
   right: 0;
-
-  // pointer-events: none;
-  // overflow: hidden;
 }

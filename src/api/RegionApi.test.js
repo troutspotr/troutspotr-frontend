@@ -1,7 +1,6 @@
 import StateData from 'static/data/v3/wi/wi.data.json'
 import RegionData from 'static/data/v3/wi/highland-headwaters.topo.json'
-import { transformGeo } from './GeoApi.transform'
-import regionApi, {buildRegionEndpoint, updateStateObject} from './RegionApi'
+import regionApi, {buildRegionEndpoint} from './RegionApi'
 import {buildStateEndpoint} from './StateApi'
 const WISCONSIN_STATE_ID = 'wi'
 const HIGHLAND_REGION = 'highland-headwaters'

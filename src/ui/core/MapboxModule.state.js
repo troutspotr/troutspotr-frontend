@@ -28,6 +28,9 @@ export const loadMapModuleAsync = () => (dispatch, getState) => {
     try {
       require.ensure([], (require) => {
         const mapboxGl = require('mapbox-gl/dist/mapbox-gl')
+        /* eslint-disable no-console */
+        console.log('Mapbox GL JS loaded.')
+        console.log(`Mapbox Gl JS version: ${mapboxGl.version}`)
         setTimeout(() => dispatch(setMapModuleSuccess(mapboxGl)), 0)
       }, 'mapLibrary')
     } catch (e) {

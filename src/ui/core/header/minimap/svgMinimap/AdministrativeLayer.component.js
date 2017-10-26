@@ -84,7 +84,7 @@ AdministrativeLayerComponent.propTypes = {
   'cachedRegions': PropTypes.object.isRequired,
   'isOffline': PropTypes.bool.isRequired,
   pathGenerator: PropTypes.func.isRequired,
-  selectRegion: PropTypes.object.isRequired,
+  selectRegion: PropTypes.func.isRequired,
 }
 
 export default AdministrativeLayerComponent

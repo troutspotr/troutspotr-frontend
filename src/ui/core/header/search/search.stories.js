@@ -1,7 +1,7 @@
 import React from 'react'
-import { storiesOf, action, linkTo } from '@kadira/storybook'
+import { storiesOf } from '@kadira/storybook'
 import SearchComponent from 'ui/core/header/search/Search.component'
-import { withKnobs, text, boolean, number } from '@kadira/storybook-addon-knobs'
+import { withKnobs, text } from '@kadira/storybook-addon-knobs'
 
 const stories = storiesOf('core/header/search', module)
 stories.addDecorator(withKnobs)

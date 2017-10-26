@@ -3,17 +3,24 @@ const groupBy = require('lodash/groupBy')
 const keyBy = require('lodash/keyBy')
 const valuesIn = require('lodash/valuesIn')
 const has = require('lodash/has')
-const kebabCase = require('lodash/kebabCase')
 const topojson = require('topojson-client')
 const {throttleReduce} = require('./Throttle')
+const { getSanitizedRegulations } = require('./GeoApi.regulations')
+
+const {
+  filterBadAccessPoints,
+  addLettersToCrossings,
+  provideRoadCrossingText,
+  updateRoadCrossingProperties,
+} = require('./GeoApi.accessPoints')
 
 const now = new Date()
-const MINIMUM_LENGTH_MILES = 0.05
+// const MINIMUM_LENGTH_MILES = 0.05
 const transformGeo = async (topojsonObject, stateData) => {
   const geoJsonObjects = await decompressAsync(topojsonObject, stateData)
   const dictionaries = createStreamDictionaries(geoJsonObjects)
   const streamDictionary = createStreamDictionary(geoJsonObjects, dictionaries)
-  
+
   const t = Object.assign(
     {streamDictionary},
     geoJsonObjects
@@ -194,179 +201,11 @@ const updateStreamDictionary = ({ topojsonObject, dictionary, stateData }) => {
   return dictionary
 }
 
-const NONE_TEXT = 'No bridges over publically fishable land.'
-const SINGLE_TEXT = ' bridge over publically fishable land.'
-const MANY_TEXT = ' bridges over publically fishable land.'
-
-const provideRoadCrossingText = (stream, roads) => {
-  const props = roads.reduce((dictionary, roadCrossing) => {
-    const key = `${roadCrossing.properties.bridgeType}BridgeCount`
-    dictionary[key]++
-    return dictionary
-  }, {
-    'publicTroutBridgeCount': 0,
-    'permissionRequiredBridgeCount': 0,
-    'unsafeBridgeCount': 0,
-    'uninterestingBridgeCount': 0,
-    'bridgeText': null,
-  })
-
-  // I expect that stream and roads are not null,
-  // And that stream is geojson and that roads is an array of geojson
-  const number = props.publicTroutBridgeCount
-  props.bridgeText = number === 0 ? NONE_TEXT
-    : number === 1 ? SINGLE_TEXT
-      : MANY_TEXT
-  return props
-}
-
-const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
-const alphabetLength = alphabet.length
-const crossingTypes = {
-  'publicTrout': 'publicTrout',
-  'permissionRequired': 'permissionRequired',
-  'unsafe': 'unsafe',
-  'uninteresting': 'uninteresting',
-}
-
-const addLettersToCrossings = (roadCrossings) => {
-  const interestingRoadCrossings = roadCrossings.filter((rc) => rc.properties.bridgeType !== crossingTypes.uninteresting)
-
-  interestingRoadCrossings.forEach((feature, index) => {
-    const quotient = Math.floor(index / alphabetLength)
-    const remainder = index % alphabetLength
-    const needsEmergencyPrefix = quotient >= 1
-    if (needsEmergencyPrefix) {
-      const safePrefixIndex = Math.min(quotient, alphabetLength) - 1
-      const prefix = alphabet[safePrefixIndex]
-      const suffix = alphabet[remainder]
-      feature.properties.alphabetLetter = prefix + suffix
-    } else {
-      feature.properties.alphabetLetter = alphabet[index % alphabetLength]
-    }
-  })
-  return roadCrossings
-}
-
-const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
-  apFeatures
-    // HACK: get rid of OSM streets that over-extend across states.
-    // Back end should do this...
-    .filter((feature) => has(roadTypesDictionary, feature.properties.road_type_id))
-    .forEach((feature, index) => {
-      const properties = feature.properties
-      // Get rid of this 0 vs 1 nonsense
-      // allow truthy values.
-      // remember, 1 == true, amirite?
-      properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land == 1
-      properties.is_over_trout_stream = properties.is_over_trout_stream == 1
-      properties.is_previous_neighbor_same_road = properties.is_previous_neighbor_same_road == 1
-      const roadTypeId = properties.road_type_id
-      const roadType = roadTypesDictionary[roadTypeId]
-      const isParkable = roadType.isParkable
-      properties.isParkable = isParkable
-      properties.bridgeType = determineBridgeType(properties, roadTypesDictionary)
-      properties.alphabetLetter = ' '
-      properties.slug = `${kebabCase(properties.street_name)}@${properties.linear_offset}`
-    })
-  return apFeatures
-}
-
-const determineBridgeType = (bridgeProperties, roadTypesDictionary) => {
-  const is_over_publicly_accessible_land = bridgeProperties.is_over_publicly_accessible_land
-  const is_over_trout_stream = bridgeProperties.is_over_trout_stream
-  const isParkable = bridgeProperties.isParkable
-  if (is_over_trout_stream === false) {
-    return crossingTypes.uninteresting
-  }
-
-  if (isParkable === false) {
-    return crossingTypes.unsafe
-  }
-
-  if (is_over_publicly_accessible_land === false) {
-    return crossingTypes.permissionRequired
-  }
-
-  return crossingTypes.publicTrout
-}
-
-const filterBadAccessPoints = (ap) => {
-  const isUninteresting = ap.properties.bridgeType === crossingTypes.uninteresting
-  if (isUninteresting) {
-    return false
-  }
-
-  const isTooClose = ap.properties.is_previous_neighbor_same_road && ap.properties.distance_to_previous_neighbor < MINIMUM_LENGTH_MILES
-  if (isTooClose) {
-    return false
-  }
-  return true
-}
-
-const naiveRegColorizer = (reg, index = 1) => {
-  const isSanctuary = reg.legalText.toLowerCase().indexOf('sanctuary') >= 0
-  const isClosed = reg.legalText.toLowerCase().indexOf('closed') >= 0
-
-  if (isSanctuary || isClosed) {
-    return 'red'
-  }
-  if (index === 1) {
-    return 'yellow'
-  }
-
-  if (index === 2) {
-    return 'blue'
-  }
-
-  if (index === 3) {
-    return 'white'
-  }
-
-  return 'red'
-}
-
-const getSanitizedRegulations = (restrictionsForGivenStream) => {
-  if (restrictionsForGivenStream == null) {
-    return []
-  }
-  let count = 1
-  restrictionsForGivenStream.reduce((regDictionary, item, index) => {
-    // We're gonna try to colorize our restrictions.
-    // We need to be careful. there could be 16 restriction
-    // Sections, but only of 3 types. We need to cataloge
-    // Our progress, so a reduce function seems like a good idea here.
-    console.log('hello lol', count, index)
-    if (has(regDictionary, item.properties.restriction.id)) {
-      const color = regDictionary[item.properties.restriction.id].color
-      item.properties.color = color
-      item.properties.colorOffset = count
-      return regDictionary
-    }
-
-    const newColor = naiveRegColorizer(item.properties.restriction, count)
-    item.properties.color = newColor
-    item.properties.colorOffset = count
-    regDictionary[item.properties.restriction.id] = {
-      'color': newColor,
-      'restriction': item.properties.restriction,
-    }
-    count++
-    return regDictionary
-  }, {})
-
-  return restrictionsForGivenStream
-}
-
 module.exports = {
   transformGeo,
-  crossingTypes,
   decompress: decompressAsync,
   createStreamDictionaries,
   provideRoadCrossingText,
   createStreamDictionary,
   updateStreamDictionary,
-  NONE_TEXT,
-  SINGLE_TEXT,
-  MANY_TEXT,
 }

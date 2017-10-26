@@ -20,9 +20,6 @@ export const updateStateObject = (stateMetadata) => {
   }
 
   // sort the waters.
-  
-  console.log('hello')
-  console.log(stateMetadata)
   const result = {
     ...stateMetadata,
     'regulationsDictionary': regsDictionary,

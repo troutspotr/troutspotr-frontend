@@ -49,7 +49,6 @@ export const fetchTableOfContents = () => async (dispatch) => {
     dispatch(setTableOfContents(tableOfContents))
     dispatch(updateCachedEndpoints())
   } catch (error) {
-    console.log(error)
     dispatch(setTableOfContentsFailed()) // eslint-disable-line
   }
 }
@@ -173,7 +172,7 @@ const initialState = {
   'hasSeenIntroScreen': false,
   'hasSeenTermsOfService': false,
   'hasSeenPrivacyPolicy': false,
-  'hasAgreedToTerms': true //getHasAgreedToTerms(),
+  'hasAgreedToTerms': getHasAgreedToTerms(),
 }
 
 export default function counterReducer (state = initialState, action) {

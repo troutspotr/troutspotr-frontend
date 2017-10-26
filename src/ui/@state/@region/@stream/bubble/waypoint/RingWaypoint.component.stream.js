@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import StreamComponent from '../stream/Stream.component'
 import RingWaypointLineComponent from './RingWaypoint.component.line'
-// Import RingWaypointLabelComponent from './RingWaypoint.component.label'
 
 import streamClasses from './RingWaypoint.stream.scss'
 import waypointClasses from './RingWaypoint.scss'
@@ -11,7 +10,7 @@ class RingWaypointStreamComponent extends Component {
     super()
     this.onClick = this.onClick.bind(this)
   }
-  // ClassName={waypointClasses.accessPointDot + ' ' + waypointClasses.subjectAccessPointDot}
+
   renderStream (dotXScreenCoordinate, dotYScreenCoordinate, stream) {
     return (<g id={'subject'} clipPath="url(#circle-stencil)">
       <g className={streamClasses.tributary} >
@@ -54,8 +53,6 @@ class RingWaypointStreamComponent extends Component {
     }
 
     const streamData = this.props.stream.properties.streamData
-    // Let labelText = streamData.stream.properties.name
-
     const {projection} = this.props
 
     // This is the coordinate of the dot inside the Ring
@@ -67,13 +64,6 @@ class RingWaypointStreamComponent extends Component {
       subjectLatitude,
     ])
 
-    // Let cssName = svgBubbleClasses.accessPoint
-    // Return the root object that allows hovering, highlighting, etc.
-    // Let icon = this.renderLabelMarker()
-    // Let marker = <rect x='-3' y='-0.5' width='5' height='1' />
-    // Let icon = null
-    // Let marker = null
-    // Return null
     return (<g>
       <a
         onClick={this.onClick}

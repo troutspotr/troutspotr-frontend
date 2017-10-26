@@ -65,10 +65,7 @@ class MicroMapComponent extends Component {
 
     // It's polite to save our canvas style here.
     // Draw a big rectangle to clear our canvas.
-    const offset = (Math.random() * 200) + 80
-    // setTimeout(() => {
-      operation()
-    // }, offset)
+    operation()
   }
 
   componentDidMount () {
@@ -89,6 +86,7 @@ class MicroMapComponent extends Component {
 
 MicroMapComponent.propTypes = {
   'id': PropTypes.string.isRequired,
+  'scale': PropTypes.number.isRequired,
 }
 
 export default MicroMapComponent

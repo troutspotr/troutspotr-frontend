@@ -1,7 +1,7 @@
 import React from 'react'
-import { storiesOf, action, linkTo } from '@kadira/storybook'
+import { storiesOf } from '@kadira/storybook'
 import MicroMapComponent from './MicroMap.component'
-import { withKnobs, text, boolean, number } from '@kadira/storybook-addon-knobs'
+import { withKnobs } from '@kadira/storybook-addon-knobs'
 import { times } from 'lodash'
 
 import RegionApiSync from 'api/RegionApi.sync'
@@ -14,7 +14,6 @@ stories.addDecorator(withKnobs)
 
 stories.add('MicroMap default', () => {
   const stream = data.streamDictionary[id]
-  // console.log('sup')
   const tenSmallOnes = 10
   const firstStep = 0.1
   const maxSize = 0.20
@@ -22,6 +21,7 @@ stories.add('MicroMap default', () => {
   const tenSmallMaps = times(10).map(i => {
     const scale = firstStep + (i * stepSize)
     return <MicroMapComponent
+      key={i}
       streamObject={stream}
       id={id}
       isGpsActive={false}

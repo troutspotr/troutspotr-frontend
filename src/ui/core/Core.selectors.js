@@ -112,19 +112,19 @@ export const selectedRegionPathKeySelector = createSelector(
   [
     selectedStateIdSelector,
     selectedRegionIdSelector,
-    ],
-    (selectedStateId, selectedRegionId) => {
-      if (isEmpty(selectedStateId)) {
-        return null
-      }
+  ],
+  (selectedStateId, selectedRegionId) => {
+    if (isEmpty(selectedStateId)) {
+      return null
+    }
 
-      if (isEmpty(selectedRegionId)) {
-        return null
-      }
+    if (isEmpty(selectedRegionId)) {
+      return null
+    }
 
-      const regionPathKey = `${selectedStateId}/${selectedRegionId}`
-      return regionPathKey
-    })
+    const regionPathKey = `${selectedStateId}/${selectedRegionId}`
+    return regionPathKey
+  })
 
 export const selectedRegionSelector = createSelector(
   [

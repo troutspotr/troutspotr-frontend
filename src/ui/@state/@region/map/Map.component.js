@@ -117,8 +117,7 @@ class MapComponent extends Component {
   }
 
   userSelectedStreamAndAccessPoint (streams, accessPoints) {
-    const {selectedGeometry, selectedState, selectedRegion, streamDictionary, selectedRoad} = this.props
-    const hasSelectedGeometry = isEmpty(selectedGeometry) === false
+    const {selectedState, selectedRegion, streamDictionary, selectedRoad} = this.props
     if (accessPoints.length > 1 && streams.length > 1) {
       // too many candidates. Bail!
       return
@@ -128,11 +127,6 @@ class MapComponent extends Component {
       // select the stream instead.
       this.userSelectedStream(streams[0])
     }
-
-    // if (accessPoints.length === 1 && streams.length === 1) {
-    //   // take the more specific one.
-    //   browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
-    // }
 
     const accessPoint = accessPoints[0]
     const roadSlug = accessPoint.properties.slug
@@ -208,10 +202,7 @@ class MapComponent extends Component {
 
       return dictionary
     }, {streams: [], accessPoints: []})
-    console.log(featureDictionary)
     const { streams, accessPoints } = featureDictionary
-    // const stream = find(features, (x) => has(x.properties, 'water_id'))
-    // const accessPoint = find(features, (x) => has(x.properties, 'alphabetLetter'))
 
     if (isEmpty(streams) && isEmpty(accessPoints)) {
       return

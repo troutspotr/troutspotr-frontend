@@ -3,12 +3,6 @@ import PropTypes from 'prop-types'
 import classes from './Details.scss'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 /* eslint-disable camelcase */
-export const crossingTypes = {
-  'publicTrout': 'publicTrout',
-  'permissionRequired': 'permissionRequired',
-  'unsafe': 'unsafe',
-  'uninteresting': 'uninteresting',
-}
 const DEFAULT_ZOOM = 16
 
 class AccessPointComponent extends Component {

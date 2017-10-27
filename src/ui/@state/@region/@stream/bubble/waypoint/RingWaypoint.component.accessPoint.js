@@ -5,7 +5,8 @@ import RingWaypointLineComponent from './RingWaypoint.component.line'
 import RingWaypointLabelComponent from './RingWaypoint.component.label'
 import accessPointClasses from './RingWaypoint.accessPoint.scss'
 import waypointClasses from './RingWaypoint.scss'
-import {crossingTypes} from 'api/GeoApi.transform'
+import {crossingTypes} from 'api/GeoApi.accessPoints'
+
 class RingWaypointAccessPointComponent extends Component {
   constructor () {
     super()

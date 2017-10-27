@@ -8,12 +8,7 @@ import AccessPointComponent from './AccessPoint.component'
 import SpeciesComponent from './Species.component'
 import SummaryComponent from './Summary.component'
 /* eslint-disable camelcase */
-export const crossingTypes = {
-  'publicTrout': 'publicTrout',
-  'permissionRequired': 'permissionRequired',
-  'unsafe': 'unsafe',
-  'uninteresting': 'uninteresting',
-}
+import {crossingTypes} from 'api/GeoApi.accessPoints'
 // Const DEFAULT_ZOOM = 16
 
 class DetailsComponent extends Component {

@@ -1,10 +1,17 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classes from './SvgMap.scss'
+import AnimatedPathComponent from './AnimatedPath.component'
+const lengthInMilliseconds = 1100
+const offsetInMilliseconds = 400
+
 class RegionComponent extends Component {
   constructor () {
     super()
     this.onClick = this.onClick.bind(this)
+    this.state = {
+      offset: offsetInMilliseconds + (Math.random() * 500),
+    }
   }
 
   onClick (e) {
@@ -24,11 +31,14 @@ class RegionComponent extends Component {
       ? classes.inactiveRegion
       : this.props.isCached
         ? classes.cachedRegion
-        : null
-
+        : classes.cachedRegion
     return (
-      <g onClick={this.onClick}>
-        <path className={className} data-name={json.properties.name} d={path} />
+      <g onClick={this.onClick} data-name={json.properties.name}>
+        <AnimatedPathComponent
+          cssName={className}
+          path={path}
+          length={lengthInMilliseconds}
+          offset={this.state.offset}/>
       </g>)
   }
 }
@@ -39,6 +49,14 @@ RegionComponent.propTypes = {
   'selectRegion': PropTypes.func.isRequired,
   'isCached': PropTypes.bool.isRequired,
   'isActive': PropTypes.bool.isRequired,
+  index: PropTypes.number.isRequired,
 }
+
+/*
+    return (
+      <g onClick={this.onClick}>
+        <path className={className} data-name={json.properties.name} d={path} />
+      </g>)
+*/
 
 export default RegionComponent

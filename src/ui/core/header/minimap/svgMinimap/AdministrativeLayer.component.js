@@ -28,6 +28,7 @@ class AdministrativeLayerComponent extends Component {
       isCached={isCached}
       isActive={isActive}
       key={index}
+      index={index}
       pathGenerator={this.props.pathGenerator}
       stateName={region.properties.state_gid.toString()}
       selectRegion={this.props.selectRegion}
@@ -71,8 +72,8 @@ class AdministrativeLayerComponent extends Component {
   render () {
     return (
       <g className="administrative">
-        {this.renderStates()}
         {this.renderRegions()}
+        {this.renderStates()}
       </g>
     )
   }

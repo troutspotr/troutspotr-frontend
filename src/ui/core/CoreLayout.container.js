@@ -15,18 +15,36 @@ import {withRouter} from 'react-router'
 import NoResultsFoundOverlayContainer from './noResultsFoundOverlay/NoResultsFoundOverlay.container'
 import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 import OfflineContainer from 'ui/core/offline/Offline.container'
+import PageTitleContainer from 'ui/core/pageTitle/PageTitle.container'
 class CoreLayoutContainer extends Component {
   // Only show the footer if they've selected a region.
   isFooterVisible () {
     const {params, hasAgreedToTerms} = this.props
     const isRegionDefined = params[REGION_PARAM_NAME] != null
     const isStateDefined = params[STATE_PARAM_NAME] != null
-
     return isRegionDefined && isStateDefined && hasAgreedToTerms
   }
 
   componentWillMount () {
     this.listenToRoutes()
+  }
+
+  renderSelectRegionText () {
+    if (this.props.hasAgreedToTerms === false) {
+      return null
+    }
+
+    if (this.props.isMinimapExpanded === false) {
+      return null
+    }
+
+    if (this.props.isRoot === false) {
+      return null
+    }
+
+    return (<div className={classes.enticeContainer}>
+      <h2 className={classes.enticeText}>Select your Region</h2>
+    </div>)
   }
 
   listenToRoutes () {
@@ -40,8 +58,10 @@ class CoreLayoutContainer extends Component {
     const isFooterVisible = this.isFooterVisible()
     return (
       <div className={classes.coreLayout}>
+        <PageTitleContainer />
         <OfflineContainer />
         {this.props.hasAgreedToTerms && <div className={classes.headerLayout}>
+          {this.renderSelectRegionText()}
           <Header
             params={this.props.params}
             location={this.props.location}
@@ -64,7 +84,6 @@ class CoreLayoutContainer extends Component {
               <AgreementComponent />}
           </div>
         </div>
-
       </div>
     )
   }

@@ -10,6 +10,8 @@
 .states {
   composes: polygon;
   stroke: $off-white;
+  stroke-width: 0.1px;
+  pointer-events: none;
 }
 
 .regions {

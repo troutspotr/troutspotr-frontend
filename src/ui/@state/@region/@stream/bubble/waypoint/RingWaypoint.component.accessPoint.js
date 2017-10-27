@@ -187,7 +187,13 @@ class RingWaypointAccessPointComponent extends Component {
     const roadId = this.props.accessPoint.properties.road_type_id
     const streetName = this.props.accessPoint.properties.street_name
     const roadTypeDictionary = this.props.roadTypesDictionary
-    if (roadTypeDictionary[roadId].prefix != null) {
+    const hasRoadType = roadTypeDictionary[roadId] != null
+    if (hasRoadType === false) {
+      console.warn(`ROAD TYPE NOT FOUND: ${roadId}`) // eslint-disable-line
+      console.warn(`roadTypeDictionary: ${roadTypeDictionary}`) // eslint-disable-line
+    }
+
+    if (hasRoadType && roadTypeDictionary[roadId].prefix != null) {
       if (roadId === 1) {
         return `${roadTypeDictionary[roadId].prefix} ${this.props.accessPoint.properties.road_shield_text}`
       }
@@ -237,21 +243,18 @@ class RingWaypointAccessPointComponent extends Component {
     const labelText = this.getLabelText()
 
     const markerComponent = this.getMarkerComponent()
-    // Let roadType = this.props.accessPoint.properties.road_type_id
-    // Let roadNumber = this.props.accessPoint.properties.road_shield_text
-    // Let isBoring = this.props.accessPoint.properties.is_over_trout_stream !== 1
     const selectedAccessPoint = this.props.selectedAccessPoint
     const hoveredRoad = this.props.hoveredRoad
     const isSelected = isEmpty(selectedAccessPoint) === false && accessPoint.properties.gid === selectedAccessPoint.properties.gid
     const isHovered = isEmpty(hoveredRoad) === false && accessPoint.properties.gid === hoveredRoad.properties.gid
-    // Let isHovered = false
-    // Let isSelected = true
-
-    // Let waypointCssClass = isBoring ? waypointClasses.waypointBoring : waypointClasses.waypoint
-    const waypointCssClass = isSelected ? waypointClasses.selectedWaypoint : isHovered ? waypointClasses.hoveredWaypoint : waypointClasses.waypoint
+    const waypointCssClass =
+      isSelected
+        ? waypointClasses.selectedWaypoint
+        : isHovered
+          ? waypointClasses.hoveredWaypoint
+          : waypointClasses.waypoint
     const iconComponent = this.decideRoadShield(accessPoint, isSelected)
     const hash = `#${accessPoint.properties.slug}`
-    // Return null
     return (<g>
       <a
         xlinkHref={hash}
@@ -287,7 +290,6 @@ RingWaypointAccessPointComponent.propTypes = {
   'selectedAccessPoint': PropTypes.object,
   'hoveredRoad': PropTypes.object,
   'roadTypesDictionary': PropTypes.object,
-  // SetSelectedRoad: PropTypes.func.isRequired,
   'setHoveredRoad': PropTypes.func.isRequired,
   'layout': PropTypes.shape({
     'width': PropTypes.number.isRequired,

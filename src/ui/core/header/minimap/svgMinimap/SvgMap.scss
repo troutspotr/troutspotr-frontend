@@ -67,14 +67,20 @@
   fill: transparentize($gray, 0.1);
 }
 
+.notChachedRegion {
+  fill: transparentize($blue, 0.1);
+}
+
+.regions
 .inactiveRegion {
   stroke: $gray;
+  stroke-width: 0.2px;
   fill: transparentize($background, 0.1);
   cursor: default;
-  g:hover {
-    fill: inherit;
-    stroke-width: inherit;
-    cursor: inherit;
+  :hover {
+    fill: none !important;
+    cursor: default;
+    pointer-events: none;
   }
 }
 

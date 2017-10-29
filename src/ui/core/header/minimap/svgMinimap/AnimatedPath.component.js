@@ -68,7 +68,6 @@ class AnimatedPathComponent extends Component {
 }
 
 AnimatedPathComponent.propTypes = {
-  cssName: PropTypes.string,
   path: PropTypes.string.isRequired,
   length: PropTypes.number.isRequired,
   offset: PropTypes.number.isRequired,

@@ -66,8 +66,11 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
       dictionary[streamId] = {}
       const entry = dictionary[streamId]
       entry.stream = currentItem
-
-      entry.sections = sectionsMap[streamId]
+      if (sectionsMap[streamId] == null) {
+        console.warn('Could not find section.') // eslint-disable-line
+        console.warn(currentItem.properties) // eslint-disable-line
+      }
+      entry.sections = sectionsMap[streamId] || []
 
       entry.restrictions = getSanitizedRegulations(restrictionsMap[streamId])
       entry.palSections = palMap[streamId] == null

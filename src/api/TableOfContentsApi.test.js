@@ -1,4 +1,4 @@
-import TableOfContents from 'static/data/v3/TableOfContents.topo.json'
+import TableOfContents from 'static/data/v4/TableOfContents.topo.json'
 import tableOfContentsApi, {buildTableOfContentsEndpoint, decompress} from './TableOfContentsApi'
 
 describe('api/TableOfContentsApi', () => {

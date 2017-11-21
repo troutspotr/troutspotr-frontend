@@ -1,16 +1,16 @@
 import StateApi from './StateApi.sync'
 import {transformGeo} from './GeoApi.transform.sync'
 
-import mnBwca from 'static/data/v3/mn/upper-superior.topo.json'
-import mnDriftless from 'static/data/v3/mn/driftless.topo.json'
-import mnLowerSuperior from 'static/data/v3/mn/lower-superior.topo.json'
-import mnMetro from 'static/data/v3/mn/metro.topo.json'
+import mnBwca from 'static/data/v4/mn/upper-superior.topo.json'
+import mnDriftless from 'static/data/v4/mn/driftless.topo.json'
+import mnLowerSuperior from 'static/data/v4/mn/lower-superior.topo.json'
+import mnMetro from 'static/data/v4/mn/metro.topo.json'
 
-import wiDriftlessCentral from 'static/data/v3/wi/driftless-central.topo.json'
-import wiDriftlessLower from 'static/data/v3/wi/driftless-lower.topo.json'
-import wiDriftlessUpper from 'static/data/v3/wi/driftless-upper.topo.json'
-import wiHighlandHeadwaters from 'static/data/v3/wi/highland-headwaters.topo.json'
-import wiHighlandFreestone from 'static/data/v3/wi/highland-freestone.topo.json'
+import wiDriftlessCentral from 'static/data/v4/wi/driftless-central.topo.json'
+import wiDriftlessLower from 'static/data/v4/wi/driftless-lower.topo.json'
+import wiDriftlessUpper from 'static/data/v4/wi/driftless-upper.topo.json'
+import wiHighlandHeadwaters from 'static/data/v4/wi/highland-headwaters.topo.json'
+import wiHighlandFreestone from 'static/data/v4/wi/highland-freestone.topo.json'
 
 const dictionary = {
   mn: {

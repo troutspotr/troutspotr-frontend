@@ -1,5 +1,5 @@
-import StateData from 'static/data/v3/wi/wi.data.json'
-import wiHighlandFreestone from 'static/data/v3/wi/highland-freestone.topo.json'
+import StateData from 'static/data/v4/wi/wi.data.json'
+import wiHighlandFreestone from 'static/data/v4/wi/highland-freestone.topo.json'
 import {buildStateEndpoint} from 'api/StateApi'
 
 import regionApi, {buildRegionEndpoint} from './RegionApi'

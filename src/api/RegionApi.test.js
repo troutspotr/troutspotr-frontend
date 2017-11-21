@@ -1,5 +1,5 @@
-import StateData from 'static/data/v3/wi/wi.data.json'
-import RegionData from 'static/data/v3/wi/highland-headwaters.topo.json'
+import StateData from 'static/data/v4/wi/wi.data.json'
+import RegionData from 'static/data/v4/wi/highland-headwaters.topo.json'
 import regionApi, {buildRegionEndpoint} from './RegionApi'
 import {buildStateEndpoint} from './StateApi'
 const WISCONSIN_STATE_ID = 'wi'

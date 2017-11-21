@@ -1,5 +1,5 @@
-import mnStateData from 'static/data/v3/mn/mn.data.json'
-import wiStateData from 'static/data/v3/wi/wi.data.json'
+import mnStateData from 'static/data/v4/mn/mn.data.json'
+import wiStateData from 'static/data/v4/wi/wi.data.json'
 import { updateStateObject } from './StateApi'
 const stateDictionary = {
   wi: updateStateObject(wiStateData),

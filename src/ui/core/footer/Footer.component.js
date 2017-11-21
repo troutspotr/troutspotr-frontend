@@ -14,8 +14,6 @@ class FooterComponent extends Component {
     const mapClass = view === MAP ? classes.selected : classes.item
     return (<div className={classes.footer}>
       <div className={classes.menu}>
-        <button onClick={this.props.setViewToList} className={listClass}>{listText}</button>
-        <button onClick={this.props.setViewToMap} className={mapClass}>Map</button>
         <FooterGpsContainer />
       </div>
     </div>)

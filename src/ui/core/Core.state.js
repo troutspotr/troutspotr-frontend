@@ -172,7 +172,7 @@ const initialState = {
   'hasSeenIntroScreen': false,
   'hasSeenTermsOfService': false,
   'hasSeenPrivacyPolicy': false,
-  'hasAgreedToTerms': true //getHasAgreedToTerms(),
+  'hasAgreedToTerms': true, //getHasAgreedToTerms(),
 }
 
 export default function counterReducer (state = initialState, action) {

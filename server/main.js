@@ -102,10 +102,6 @@ const createServer = function (dictionary, app) {
 const startTheMusic = async () => {
   const siteDictionary = await GetSiteDictionary()
   const states = _.keys(siteDictionary)
-  if (states.length !== 3) {
-    return Promise.reject(`something bad happened - not enough states. Found ${states.length}`)
-  }
-
   createServer(siteDictionary, app)
 }
 

@@ -139,23 +139,6 @@ export const isBot = () => {
   return re.test(userAgent)
 }
 
-const getHasAgreedToTerms = () => {
-  if (isBot()) {
-    try {
-      AnonymousAnalyzerApi.recordEvent('bot_detected', {'bot': navigator.userAgent})
-    } catch (error) {
-      // do nothing
-    }
-
-    return true
-  }
-  if (localStorage == null) {
-    return false
-  }
-
-  return localStorage.getItem(HAS_AGREED_TO_TERMS) === 'true'
-}
-
 // ------------------------------------
 // Reducer
 // ------------------------------------

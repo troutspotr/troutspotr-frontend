@@ -8,8 +8,6 @@ const app = express()
 const paths = config.utils_paths
 const compress = require('compression')
 const createSeoInterceptor = require('./Interceptor')
-const GetSiteDictionary = require('./GetSiteDictionary')
-const _ = require('lodash')
 app.use(compress())
 const env = process.env.NODE_ENV || 'development'
 const forceSsl = function (req, res, next) {
@@ -100,8 +98,8 @@ const createServer = function (dictionary, app) {
 }
 
 const startTheMusic = async () => {
-  const siteDictionary = await GetSiteDictionary()
-  const states = _.keys(siteDictionary)
+  const siteDictionary = {}
+  // const states = _.keys(siteDictionary)
   createServer(siteDictionary, app)
 }
 

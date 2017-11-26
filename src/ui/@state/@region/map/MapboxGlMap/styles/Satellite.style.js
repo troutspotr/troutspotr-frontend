@@ -5,7 +5,7 @@ const SATELLITE_SOURCE_ID = 'mapbox://mapbox.satellite'
 // Zoom level 16.5 - that's the highest
 // Resolution we can get. switch
 // To 16.5 only.
-const SATELLITE_ZOOM_LEVEL = 13.5
+const SATELLITE_ZOOM_LEVEL = 13.0
 export const SatelliteStyle = {
   'id': SATELLITE_LAYER_ID,
   'type': 'raster',

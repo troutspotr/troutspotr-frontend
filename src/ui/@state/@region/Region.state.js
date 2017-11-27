@@ -71,7 +71,7 @@ export const fetchRegionData = (stateName, regionName) => async (dispatch, getSt
 
     // Give the JS engine just a second to catch its breath before
     // Navigating. it gives a better appearance to the user.
-    setTimeout(() => dispatch(selectMapFeature(selectedRegion)), 300)
+    setTimeout(() => dispatch(selectMapFeature(selectedRegion.properties.troutBbox)), 300)
   } catch (error) {
     console.log(error) // eslint-disable-line
     dispatch(setRegionDataFailed())

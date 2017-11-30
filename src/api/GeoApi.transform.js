@@ -16,8 +16,8 @@ const {
 
 const now = new Date()
 // const MINIMUM_LENGTH_MILES = 0.05
-const transformGeo = async (topojsonObject, stateData) => {
-  const geoJsonObjects = await decompressAsync(topojsonObject, stateData)
+const transformGeo = async (topojsonObject, palTopoJsonObject, stateData) => {
+  const geoJsonObjects = await decompressAsync(topojsonObject, palTopoJsonObject, stateData)
   const dictionaries = createStreamDictionaries(geoJsonObjects)
   const streamDictionary = createStreamDictionary(geoJsonObjects, dictionaries)
 
@@ -116,13 +116,13 @@ const createStreamDictionary = (geoJsonObjects, dictionaries) => {
   return streamDictionary
 }
 
-const decompressTopojsonAsync = async (topojson, topojsonObject) => {
+const decompressTopojsonAsync = async (topojson, topojsonObject, palTopoJsonObject) => {
   const ops = [
     topojson.feature.bind(null, topojsonObject, topojsonObject.objects.troutSection),
     topojson.feature.bind(null, topojsonObject, topojsonObject.objects.restrictionSection),
     topojson.feature.bind(null, topojsonObject, topojsonObject.objects.stream),
     topojson.feature.bind(null, topojsonObject, topojsonObject.objects.palSection),
-    topojson.feature.bind(null, topojsonObject, topojsonObject.objects.pal),
+    topojson.feature.bind(null, palTopoJsonObject, palTopoJsonObject.objects.pal),
     topojson.feature.bind(null, topojsonObject, topojsonObject.objects.boundingCircle),
   ]
   const [
@@ -145,16 +145,17 @@ const decompressTopojsonAsync = async (topojson, topojsonObject) => {
   return dictionary
 }
 
-const decompressAsync = async (topojsonObject, stateData) => {
-  const dictionary = await decompressTopojsonAsync(topojson, topojsonObject)
+const decompressAsync = async (topojsonObject, palTopoJsonObject, stateData) => {
+  const dictionary = await decompressTopojsonAsync(topojson, topojsonObject, palTopoJsonObject)
   return updateStreamDictionary({
     dictionary,
     topojsonObject,
+    palTopoJsonObject,
     stateData,
   })
 }
 
-const updateStreamDictionary = ({ topojsonObject, dictionary, stateData }) => {
+const updateStreamDictionary = ({ topojsonObject, palTopoJsonObject, dictionary, stateData }) => {
   // Time to update our objects to be more useful upstream!
   const regsDictionary = stateData.regulationsDictionary
   const watersDictionary = stateData.waterOpeners

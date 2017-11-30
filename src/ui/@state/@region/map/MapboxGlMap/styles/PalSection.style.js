@@ -1,7 +1,7 @@
 import * as colors from 'ui/core/Colors'
 import {PAL_SECTIONS_ACTIVE_LAYER_ID, PAL_SECTIONS_QUITE_LAYER_ID} from '../filters/Filters.selectors'
 import {PAL_SECTIONS_SOURCE_ID} from '../sources/Source.selectors'
-
+import {SATELLITE_ZOOM_LEVEL} from './Satellite.style'
 export const PalSectionActiveStyle = {
   'id': PAL_SECTIONS_ACTIVE_LAYER_ID,
   'type': 'line',
@@ -31,12 +31,12 @@ export const PalSectionActiveStyle = {
           1.25,
         ],
         [
-          16.5,
-          16,
+          SATELLITE_ZOOM_LEVEL,
+          6.1,
         ],
         [
           18.0,
-          7,
+          3,
         ],
       ],
     },
@@ -74,8 +74,8 @@ export const PalSectionQuietStyle = {
           1.25,
         ],
         [
-          16.5,
-          16,
+          SATELLITE_ZOOM_LEVEL,
+          6.1,
         ],
         [
           18.0,

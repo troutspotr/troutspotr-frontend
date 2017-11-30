@@ -1,6 +1,7 @@
 import * as colors from 'ui/core/Colors'
 import {TROUT_SECTIONS_ACTIVE_LAYER_ID, TROUT_SECTIONS_QUITE_LAYER_ID} from '../filters/Filters.selectors'
 import {TROUT_STREAM_SECTIONS_SOURCE_ID} from '../sources/Source.selectors'
+import {SATELLITE_ZOOM_LEVEL} from './Satellite.style'
 export const TroutSectionActiveStyle = {
   'id': TROUT_SECTIONS_ACTIVE_LAYER_ID,
   'type': 'line',
@@ -25,12 +26,12 @@ export const TroutSectionActiveStyle = {
           1.25,
         ],
         [
-          16.5,
-          16,
+          SATELLITE_ZOOM_LEVEL,
+          6,
         ],
         [
           18.0,
-          7,
+          3,
         ],
       ],
     },
@@ -61,12 +62,12 @@ export const TroutSectionQuietStyle = {
           1.25,
         ],
         [
-          16.5,
-          22,
+          SATELLITE_ZOOM_LEVEL,
+          6,
         ],
         [
           18.0,
-          15,
+          3,
         ],
       ],
     },

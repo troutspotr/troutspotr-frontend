@@ -12,10 +12,42 @@
   // background-color: transparentize($green, 0.8);
 }
 
+.enticeContainer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 999999;
+  align-content: center;
+  pointer-events: none;
+  animation: fadein 4.5s;
+  animation-iteration-count: infinite;
+  animation-delay: 1.5s;
+  opacity: 0;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+  .enticeText {
+    font-size: 20vmin;
+    color: $white;
+    align-content: center;
+    text-align: center;
+    transform: translateY(-30%) rotate3d(1, 2.0, 3.0, 10deg);
+    text-align: center;
+    position: relative;
+    top: 30%;
+    pointer-events: none;
+  }
+}
+
+@keyframes fadein {
+  0% { opacity: 0; }
+  80% { opacity: 0.0; }
+  100%   { opacity: 0.6; }
+}
+
 .headerLayout {
   order: 1;
   height: $header-height;
-  z-index: 100;
+  z-index: 10000;
 
   // background-color: transparentize($red, 0.8);
   flex-shrink: 0;
@@ -24,7 +56,7 @@
 .footerLayout {
   order: 3;
   height: $footer-height;
-  z-index: 100;
+  z-index: 10000;
 
   // background-color: transparentize($blue, 0.8);
   flex-shrink: 0;
@@ -32,7 +64,7 @@
 
 .coreContentLayout {
   order: 2;
-  overflow-y: auto;
+  // overflow-y: auto;
 
   // height: calc(100% - (#{$header-height} + #{$footer-height}));
   flex-grow: 2;

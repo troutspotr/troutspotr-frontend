@@ -1,32 +1,32 @@
-import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Footer.scss'
-import { MAP, LIST } from 'ui/@state/@region/Region.state'
-// import {
-//   REGION_PARAM_NAME,
-//   STATE_PARAM_NAME,
-//   STREAM_PARAM_NAME
-// } from 'ui/core/RouteConstants.js'
-
-const FooterComponent = React.createClass({
-  propTypes: {
-    params:  PropTypes.object.isRequired,
-    view: PropTypes.string.isRequired,
-    setViewToMap: PropTypes.func.isRequired,
-    setViewToList: PropTypes.func.isRequired
-  },
-
-  onClick () {
-
-  },
-
+import {LIST, MAP} from 'ui/core/Core.state'
+import {isEmpty} from 'lodash'
+import FooterGpsContainer from './Footer.gps.container'
+/* eslint-disable react/prefer-stateless-function */
+class FooterComponent extends Component {
   render () {
-    let { view } = this.props
+    const {view, selectedStream} = this.props
+    const listText = isEmpty(selectedStream) ? 'List' : 'Details'
+
+    const listClass = view === LIST ? classes.selected : classes.item
+    const mapClass = view === MAP ? classes.selected : classes.item
     return (<div className={classes.footer}>
-      <button onClick={this.props.setViewToList} className={view === LIST ? classes.selected : classes.item}>List</button>
-      <button onClick={this.props.setViewToMap} className={view === MAP ? classes.selected : classes.item}>Map</button>
-      <Link to={'/'} className={classes.help}>Help</Link>
+      <div className={classes.menu}>
+        <button onClick={this.props.setViewToList} className={listClass}>{listText}</button>
+        <button onClick={this.props.setViewToMap} className={mapClass}>Map</button>
+        <FooterGpsContainer />
+      </div>
     </div>)
   }
-})
+}
+
+FooterComponent.propTypes = {
+  'view': PropTypes.string.isRequired,
+  'setViewToMap': PropTypes.func.isRequired,
+  'setViewToList': PropTypes.func.isRequired,
+  'selectedStream': PropTypes.object,
+}
+
 export default FooterComponent

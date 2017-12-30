@@ -1,39 +1,16 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
+import classes from './SvgMap.scss'
+const StreamCentroidComponent = (props) => {
+  const json = {'type': 'Point', 'coordinates': props.geoJson.centroid, 'properties': props.geoJson}
+  const path = props.pathGenerator(json)
+  return (<path className={props.isOpen ? classes.open : classes.closed} data-name={json.properties.name} d={path} />)
+}
 
-const StreamCentroidComponent = React.createClass({
-  propTypes: {
-    geoJson: PropTypes.object.isRequired,
-    isSelected: PropTypes.bool.isRequired,
-    pathGenerator: PropTypes.func.isRequired,
-    projection: PropTypes.func.isRequired
-  },
+StreamCentroidComponent.propTypes = {
+  'geoJson': PropTypes.object.isRequired,
+  'pathGenerator': PropTypes.func.isRequired,
+  'isOpen': PropTypes.bool.isRequired,
+}
 
-  componentWillMount () {
-    // this.initializeMap()
-  },
-
-  componentDidMount () {
-  },
-
-  componentWillUnmount () {
-  },
-
-  selectRegion (e, region) {
-  },
-
-  zoomToRegion (region) {
-
-  },
-
-  // shouldComponentUpdate (nextProps, nextState) {
-  //   let isSame = nextProps.geoJson === this.props.geoJson
-  //   return isSame === false
-  // },
-
-  render () {
-    let json = { type: 'Point', coordinates: this.props.geoJson.centroid, properties: this.props.geoJson }
-    let path = this.props.pathGenerator(json)
-    return (<path data-name={json.properties.name} d={path} />)
-  }
-})
 export default StreamCentroidComponent

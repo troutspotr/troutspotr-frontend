@@ -2,12 +2,16 @@
   "parser": "babel-eslint",
   "extends": [
     "standard",
-    "standard-react"
+    "eslint:recommended", 
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended"
   ],
   "plugins": [
     "babel",
     "react",
-    "promise"
+    "promise",
+    "jsx-a11y",
+    "extra-rules"
   ],
   "env": {
     "browser" : true
@@ -18,11 +22,58 @@
     "__PROD__"     : false,
     "__COVERAGE__" : false,
     "__DEBUG__"    : false,
+    "expect"       : false,
+    "describe"     : false,
+    "it"           : false,
+    "beforeEach": false,
+    "after": false,
+    "before": false,
+    "should" : false,
+    "sinon"  : false,
   },
   "rules": {
-    "key-spacing"          : 0,
-    "jsx-quotes"           : [2, "prefer-single"],
-    "max-len"              : [2, 150, 2],
-    "object-curly-spacing" : [2, "always"]
+    "prefer-const": 2,
+    "max-depth": ["error", 3],
+    "max-lines": ["error", 500],
+    "complexity": ["error", 10],
+    "max-statements": ["error", 25],
+    "semi": [2, "never"],
+    "eol-last": 2,
+    "indent": ["error", 2],
+    "keyword-spacing": 2,
+    "no-alert": 2,
+    "no-cond-assign": 2,
+    "no-confusing-arrow": 2,
+    "no-console": 2,
+    "no-debugger": 2,
+    "no-dupe-args": 2,
+    "no-empty": 2,
+    "no-mixed-spaces-and-tabs": 2,
+    "no-spaced-func": 2,
+    "no-trailing-spaces": 2,
+    "no-unreachable": 2,
+    "no-unused-vars": 2,
+    "no-useless-constructor": 2,
+    "no-var": 2,
+    "no-undef": 2,
+    "one-var": [2, "never"],
+    "arrow-spacing": 2,
+    "block-spacing": 2,
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "camelcase": 2,
+    "extra-rules/no-commented-out-code": 2,
+    "comma-style": 2,
+    "comma-dangle": ["error", "always-multiline"],
+    "curly": 2,
+    "eqeqeq": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/no-interactive-element-to-noninteractive-role": 0,
+    "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "key-spacing": [2, {
+      "beforeColon": false,
+      "afterColon": true
+    }],
   }
 }

@@ -2,6 +2,7 @@
 @import "src/ui/styles/_variables";
 @import "src/ui/styles/_fonts";
 @import "src/ui/styles/NumberCircle";
+@import "src/ui/styles/ZeldaText";
 
 .container {}
 
@@ -22,12 +23,87 @@
   font-size: 1.0em;
 }
 
-.listItem {
+@media (orientation: portrait) and (min-width: 801px) {
+  .list {
+    columns: 3 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 800px) {
+  .list {
+    columns: 2 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 450px) {
+  .list {
+    columns: 1 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 1300px) {
+  .list {
+    columns: 3 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 855px) {
+  .list {
+    columns: 2 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 854px) {
+  .list {
+    columns: 1 2em;
+    column-gap: 1em;
+    font-size: 1.0em;
+  }
+}
+
+.listItemBasis {
   font-size: 12px;
   clear: both;
   margin-bottom: 10px;
   display: inline-flex;
   width: 100%;
+  color: $white;
+}
+
+.listItem {
+  composes: listItemBasis;
+
+  // font-size: 12px;
+  // clear: both;
+  // margin-bottom: 10px;
+  // display: inline-flex;
+  // width: 100%;
+  cursor: pointer;
+
+  // color: $off-white;
+}
+
+.hoveredItem {
+  composes: listItem;
+  text-decoration: underline;
+}
+
+.selectedItem {
+  composes: listItem;
+  font-weight: bold;
+  color: $white;
+  text-decoration: underline;
+  margin-bottom: 0px;
 }
 
 .listText {
@@ -38,6 +114,8 @@
 .listHeader {
   composes: listItem;
   color: $white;
+  text-decoration: none !important;
+  cursor: default;
 }
 
 .listHeader:not(:first-child) {
@@ -66,7 +144,7 @@
 .unsafeBridgeOverTroutStream {
   composes: numberCircle;
   composes: badge;
-  color: $red;
+  color: $blueGray;
 }
 
 .bridge {
@@ -74,4 +152,116 @@
   color: $gray;
   font-size: 12px;
   order: 1;
+}
+
+.selectedBridge {
+  composes: bridge;
+  font-weight: bold;
+  color: black !important;
+
+  // the only time you'll see black in this app
+}
+
+.selectedPublicBridgeTroutStream {
+  composes: publicBridgeTroutStream;
+  composes: selectedBridge;
+  color: $green;
+  background-color: $green;
+}
+
+.selectedBridgeOverTroutStream {
+  composes: bridgeOverTroutStream;
+  composes: selectedBridge;
+  color: $blue;
+  background-color: $blue;
+}
+
+.selectedUnsafeBridgeOverTroutStream {
+  composes: unsafeBridgeOverTroutStream;
+  composes: selectedBridge;
+  color: $blueGray;
+  background-color: $blueGray;
+}
+
+.googleLink {
+  color: $blue;
+  display: inline;
+  text-decoration: none;
+  margin-left: 5px;
+  font-weight: normal;
+  pointer-events: all;
+}
+
+.googleLink:after {
+  content: '\29C9';
+}
+
+.species {
+  font-size: 12px;
+}
+
+.brownTrout {
+  composes: zeldaText;
+  color: $yellow;
+}
+
+.brookTrout {
+  composes: zeldaText;
+  color: $green;
+}
+
+.rainbowTrout {
+  composes: zeldaText;
+  color: $red;
+}
+
+.number {
+  composes: zeldaText;
+  order: 2;
+  text-align: left;
+}
+
+.totalMiles {
+  composes: number;
+  color: $off-white;
+}
+
+.troutMiles {
+  composes: number;
+  color: $blue;
+}
+
+.publicMiles {
+  composes: number;
+  color: $green;
+}
+
+.summaryContainer {
+  display: flex;
+  align-items: baseline;
+}
+
+.marker {
+  min-width: 10px;
+  order: 1;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.publicMarker {
+  composes: marker;
+  height: 0.3em;
+  background-color: $green;
+}
+
+.troutMarker {
+  composes: marker;
+  height: 0.2em;
+  background-color: $blue;
+}
+
+.waterMarker {
+  composes: marker;
+  height: 0.1em;
+  background-color: $blueGray;
 }

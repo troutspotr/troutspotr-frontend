@@ -1,157 +1,163 @@
-import React, { PropTypes } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import RingAxisComponent from './RingAxis.component'
 import RingSectionComponent from './RingSection.component'
 
 import classes from '../SvgBubble.scss'
-const FISH_SANCTUARY_ID = 7
-// const ANIMATION_SCALE = 2.0
-
-const RingComponent = React.createClass({
-  propTypes: {
-    streamPackage: React.PropTypes.shape({
-      stream: PropTypes.object.isRequired,
-      sections: PropTypes.array.isRequired,
-      restrictions: PropTypes.array.isRequired,
-      palSections: PropTypes.array.isRequired,
-      accessPoints: PropTypes.array.isRequired,
-      tributaries: PropTypes.array.isRequired
-    }),
-    timing: PropTypes.object.isRequired,
-    pathGenerator: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired,
-    layout: PropTypes.shape({
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-      radius: PropTypes.number.isRequired,
-      arcCompressionRatio: PropTypes.number.isRequired,
-      rotatePhase: PropTypes.number.isRequired
-    })
-  },
-
-  componentWillUnmount () {
-    console.log('unmounting')
-  },
+// Const ANIMATION_SCALE = 2.0
+class RingComponent extends Component {
+  shouldComponentUpdate (nextProps) {
+    return true
+  }
 
   renderPalRings () {
     return this.props.streamPackage.palSections.map((pal, palIndex) => {
-      let streamLength = this.props.streamPackage.stream.properties.length_mi
-      let itemOffset = ((streamLength - pal.properties.stop) / streamLength) * this.props.timing.palSectionSpeed
-      let offset = this.props.timing.basePalOffset + itemOffset
+      const streamLength = this.props.streamPackage.stream.properties.length_mi
+      const itemOffset = ((streamLength - pal.properties.stop) / streamLength) * this.props.timing.palSectionSpeed
+      const offset = this.props.timing.basePalOffset + itemOffset
       return (<RingSectionComponent
-        timing={{ offset, length: this.props.timing.baseStreamLength }}
+        timing={{offset, 'length': this.props.timing.baseStreamLength}}
         cssName={classes.pal}
-        key={pal.properties.id}
+        key={`${pal.properties.id}pal`}
         layout={this.props.layout}
         length={this.props.streamPackage.stream.properties.length_mi}
         start={pal.properties.start}
-        stop={pal.properties.stop} />)
+        stop={pal.properties.stop}
+      />)
     })
-  },
+  }
 
   renderSectionRings () {
     return this.props.streamPackage.sections.map((section, sectionIndex) => {
-      let streamLength = this.props.streamPackage.stream.properties.length_mi
-      let itemOffset = ((streamLength - section.properties.stop) / streamLength) * this.props.timing.troutSectionSpeed
-      let offset = this.props.timing.baseTroutSectionOffset + itemOffset
+      const streamLength = this.props.streamPackage.stream.properties.length_mi
+      const itemOffset = ((streamLength - section.properties.stop) / streamLength) * this.props.timing.troutSectionSpeed
+      const offset = this.props.timing.baseTroutSectionOffset + itemOffset
       return (<RingSectionComponent
-        timing={{ offset, length: this.props.timing.baseStreamLength }}
+        timing={{offset, 'length': this.props.timing.baseStreamLength}}
         cssName={classes.section}
         key={section.properties.gid}
         layout={this.props.layout}
         length={this.props.streamPackage.stream.properties.length_mi}
         start={section.properties.start}
-        stop={section.properties.stop} />)
+        stop={section.properties.stop}
+      />)
     })
-  },
+  }
 
   renderRestrictionRings () {
     return this.props.streamPackage.restrictions.map((restriction, restrictionIndex) => {
-      let streamLength = this.props.streamPackage.stream.properties.length_mi
-      let positionOffset = ((streamLength - restriction.properties.stop) / streamLength)
-      let itemOffset = positionOffset * this.props.timing.troutSectionSpeed
-      let offset = this.props.timing.baseTroutSectionOffset + itemOffset
-      let className = restriction.properties.restriction_id === FISH_SANCTUARY_ID
-        ? classes.fishSanctuary
-        : classes.restriction
+      const streamLength = this.props.streamPackage.stream.properties.length_mi
+      const positionOffset = ((streamLength - restriction.properties.stop) / streamLength)
+      const itemOffset = positionOffset * this.props.timing.troutSectionSpeed
+      const offset = this.props.timing.baseTroutSectionOffset + itemOffset
+      let className
+      if (restriction.properties.color === 'yellow') {
+        className = classes.restriction
+      } else if (restriction.properties.color === 'blue') {
+        className = classes.restrictionAlt
+      } else if (restriction.properties.color === 'white') {
+        className = classes.restrictionAltAlt
+      } else {
+        className = classes.fishSanctuary
+      }
       return (
-        <g>
+        <g key={restriction.properties.gid}>
           <RingSectionComponent
-            timing={{ offset, length: this.props.timing.baseStreamLength }}
+            timing={{offset, 'length': this.props.timing.baseStreamLength}}
             cssName={className}
-            key={restriction.properties.gid}
             layout={this.props.layout}
             length={this.props.streamPackage.stream.properties.length_mi}
             start={restriction.properties.start}
-            stop={restriction.properties.stop} />)
+            stop={restriction.properties.stop}
+          />)
           <RingSectionComponent
-            timing={{ offset, length: this.props.timing.baseStreamLength }}
+            timing={{offset, 'length': this.props.timing.baseStreamLength}}
             cssName={classes.restrictionBackground}
-            key={restriction.properties.gid}
             layout={this.props.layout}
             length={this.props.streamPackage.stream.properties.length_mi}
             start={restriction.properties.start}
-            stop={restriction.properties.stop} />
+            stop={restriction.properties.stop}
+          />
         </g>
       )
     })
-  },
+  }
 
   renderStreamRing () {
-    // return this.props.streamPackage.stream
-    console.log(classes.stream)
-    let streamLength = this.props.streamPackage.stream.properties.length_mi
+    const streamLength = this.props.streamPackage.stream.properties.length_mi
     return (<RingSectionComponent
-      timing={0}
+      timing={{'offset': this.props.timing.baseStreamOffset, 'length': this.props.timing.baseStreamLength}}
       cssName={classes.stream}
       layout={this.props.layout}
       length={streamLength}
       start={0}
-      stop={streamLength} />)
-  },
+      stop={streamLength}
+    />)
+  }
 
   renderRingAxis () {
-    let length = this.props.streamPackage.stream.properties.length_mi
-    let index = 0
+    const length = this.props.streamPackage.stream.properties.length_mi
+    const index = 0
     return (<RingAxisComponent
       length={length}
       index={index}
-      layout={this.props.layout} />)
-  },
+      layout={this.props.layout}
+    />)
+  }
 
   render () {
     return (
-      <g id='ring'>
-        <g id='ring-restrictions'>
+      <g id="ring">
+        <g id="ring-restrictions">
           {
-          this.renderRestrictionRings()
-        }
+            this.renderRestrictionRings()
+          }
         </g>
 
-        <g id='ring-stream'>
+        <g id="ring-stream">
           {
-          this.renderStreamRing()
-        }
+            this.renderStreamRing()
+          }
         </g>
 
-        <g id='ring-sections'>
+        <g id="ring-sections">
           {
-          this.renderSectionRings()
-        }
+            this.renderSectionRings()
+          }
         </g>
 
-        <g id='ring-pal'>
+        <g id="ring-pal">
           {
-          this.renderPalRings()
-        }
+            this.renderPalRings()
+          }
         </g>
-        <g id='ring-axis'>
+        <g id="ring-axis">
           {
-          this.renderRingAxis()
-        }
+            this.renderRingAxis()
+          }
         </g>
       </g>
     )
   }
-})
+}
+
+RingComponent.propTypes = {
+  'streamPackage': PropTypes.shape({
+    'stream': PropTypes.object.isRequired,
+    'sections': PropTypes.array.isRequired,
+    'restrictions': PropTypes.array.isRequired,
+    'palSections': PropTypes.array.isRequired,
+    'accessPoints': PropTypes.array.isRequired,
+    'tributaries': PropTypes.array.isRequired,
+  }),
+  'timing': PropTypes.object.isRequired,
+  'layout': PropTypes.shape({
+    'width': PropTypes.number.isRequired,
+    'height': PropTypes.number.isRequired,
+    'radius': PropTypes.number.isRequired,
+    'arcCompressionRatio': PropTypes.number.isRequired,
+    'rotatePhase': PropTypes.number.isRequired,
+  }),
+}
 
 export default RingComponent

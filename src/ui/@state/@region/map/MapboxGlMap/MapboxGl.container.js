@@ -1,19 +1,18 @@
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import MapboxGlComponent from './MapboxGl.component'
-// import * as region from 'ui/@state/@region/Region.selectors'
-// import * as sourceLayerSelectors from './MapboxGl.selectors.source'
-import { getMapboxGlSources } from './sources/Source.selectors'
-import { getLayerPackage } from './MapboxGl.selectors.layerPackage'
-// import { getStreamFilters } from './filters/Filters.selectors'
-// import { layersSelector } from './styles/Style.selectors'
+import {getMapboxGlSources} from './sources/Source.selectors'
+import {getLayerPackage} from './MapboxGl.selectors.layerPackage'
+import {selectedRegionIdSelector} from 'ui/core/Core.selectors'
+import {getGpsCoordinateFeatureSelector} from 'ui/core/gps/Gps.selectors'
 
-const mapDispatchToProps = {
-}
+const mapDispatchToProps = {}
 
 const mapStateToProps = (state) => {
-  let props = {
-    sources: getMapboxGlSources(state),
-    layerPackage: getLayerPackage(state)
+  const props = {
+    'sources': getMapboxGlSources(state),
+    'layerPackage': getLayerPackage(state),
+    'selectedRegionId': selectedRegionIdSelector(state),
+    'gpsLocation': getGpsCoordinateFeatureSelector(state),
   }
   return props
 }

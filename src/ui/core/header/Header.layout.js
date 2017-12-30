@@ -1,34 +1,38 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import classes from './Header.scss'
+const HeaderLayout = (props) => {
+  const headerContainerClass = props.isOffline
+    ? classes.isOffline
+    : classes.headerContainer
 
-const HeaderLayout = React.createClass({
-  propTypes: {
-    backButton:  PropTypes.element,
-    locationSubtitle: PropTypes.element,
-    title: PropTypes.element,
-    minimap: PropTypes.element,
-    search: PropTypes.element
-  },
-
-  render () {
-    return (
-      <div className={classes.headerContainer} role='navigation'>
-        <div className={classes.header}>
-          <div className={classes.backButtonContainer}>{this.props.backButton}</div>
-          <div className={classes.details}>
-            <div className={classes.top}>
-              <div>{this.props.locationSubtitle}</div>
-            </div>
-            <div className={classes.bottom}>
-              <span className={classes.title}>{this.props.title}</span>
-              <span>{this.props.search}</span>
-            </div>
+  return (
+    <div className={headerContainerClass} role="navigation">
+      <div className={classes.offlineIndicator} />
+      <div className={classes.header}>
+        <div className={classes.backButtonContainer}>{props.backButton}</div>
+        <div className={classes.details}>
+          <div className={classes.top}>
+            <div>{props.locationSubtitle}</div>
           </div>
-
-          <div className={classes.minimapContainer}>{this.props.minimap}</div>
+          <div className={classes.bottom}>
+            <span className={classes.title}>{props.title}</span>
+            <span>{props.search}</span>
+          </div>
         </div>
+
+        <div className={classes.minimapContainer}>{props.minimap}</div>
       </div>
-    )
-  }
-})
+    </div>
+  )
+}
+HeaderLayout.propTypes = {
+  'backButton': PropTypes.element,
+  'locationSubtitle': PropTypes.element,
+  'title': PropTypes.element,
+  'minimap': PropTypes.element,
+  'search': PropTypes.element,
+  'isOffline': PropTypes.bool.isRequired,
+}
+
 export default HeaderLayout

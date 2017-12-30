@@ -1,9 +1,12 @@
-# Check it out: http://humanstxt.org/
-
 # TEAM
 
-    <name> -- <role> -- <twitter>
+	Chef:Stu
+	Contact: troutspotr [at] gmail.com
+	Twitter: @troutspotr
+	From:MPLS, Minnesota, USA
 
 # THANKS
 
-    <name>
+    Open Source Software
+    Open Data
+    Everyone who helped me.

@@ -1,0 +1,67 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "src/ui/styles/ZeldaText";
+@import "src/ui/styles/NumberCircle";
+
+.regionContainer {
+  display: flex;
+  flex-direction: row;
+  max-width: 400px;
+}
+
+.leftItems {
+  // background-color: $green;
+  order: 1;
+  flex-grow: 1;
+  max-width: 50%;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+}
+
+.marker {
+  width: 10px;
+  height: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  order: 1;
+}
+
+.text {
+  font-size: 12px;
+  order: 2;
+  margin-left: 4px;
+}
+
+.rightItems {
+  order: 2;
+  flex-grow: 1;
+  max-width: 50%;
+}
+
+.publicMarker {
+  composes: marker;
+  background-color: $green;
+}
+
+.nonPublicMarker {
+  composes: marker;
+  background-color: $blue;
+  height: 2px;
+}
+
+.publicBridgesBadge {
+  composes: numberCircle;
+  font-size: 5px;
+  background-color: $green;
+  color: $green;
+}
+
+.privateBridgesBadge {
+  composes: numberCircle;
+  font-size: 5px;
+  background-color: $blue;
+  color: $blue;
+}

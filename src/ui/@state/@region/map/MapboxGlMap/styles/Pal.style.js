@@ -1,6 +1,6 @@
 import * as colors from 'ui/core/Colors'
-import { PAL_SECTION_LAYER_ID } from '../filters/Filters.selectors'
-import { PALS_SOURCE_ID } from '../sources/Source.selectors'
+import {PAL_SECTION_LAYER_ID} from '../filters/Filters.selectors'
+import {PALS_SOURCE_ID} from '../sources/Source.selectors'
 
 export const PalStyle = {
   'id': PAL_SECTION_LAYER_ID,
@@ -10,11 +10,9 @@ export const PalStyle = {
   'filter': [
     '==',
     '$type',
-    'Polygon'
+    'Polygon',
   ],
-  'layout': {
-    'visibility': 'visible'
-  },
+  'layout': {'visibility': 'visible'},
   'paint': {
     'fill-color': colors.PalGreen,
     'fill-opacity': {
@@ -22,25 +20,29 @@ export const PalStyle = {
       'stops': [
         [
           7,
-          0
+          0,
         ],
         [
           9,
-          0.05
+          0.05,
         ],
         [
           12,
-          0.05
+          0.05,
         ],
         [
           14,
-          0.15
+          0.15,
         ],
         [
           16,
-          0.3
-        ]
-      ]
-    }
-  }
+          0.25,
+        ],
+        [
+          18,
+          0.1,
+        ],
+      ],
+    },
+  },
 }

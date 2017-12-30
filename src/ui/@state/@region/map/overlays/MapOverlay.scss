@@ -1,0 +1,31 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "src/ui/styles/ZeldaText";
+@import "src/ui/styles/NumberCircle";
+
+.container {
+  font-size: 12px;
+  a {
+    margin-bottom: 0px !important;
+  }
+}
+
+.importantNote {
+  // font-size: 18px;
+  font-weight: bold;
+
+  // text-transform: uppercase;
+}
+
+.private {
+  composes: importantNote;
+  color: $blue;
+}
+
+.specialRegulationsTitle {
+  font-size: 12px;
+  color: $white;
+  margin-bottom: 5px;
+
+  @include medium-font;
+}

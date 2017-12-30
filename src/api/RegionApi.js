@@ -1,9 +1,7 @@
 import BaseApi from './BaseApi'
 import StateApi from './StateApi'
-import { transformGeo } from './GeoApi.transform'
-export const buildRegionEndpoint = (stateName, regionName) => {
-  return `/data/v1/${stateName}/${regionName}.topo.json`
-}
+import {transformGeo} from './GeoApi.transform'
+export const buildRegionEndpoint = (stateName, regionName) => `/data/v3/${stateName}/${regionName}.topo.json`
 export class RegionApi extends BaseApi {
   async getRegionData (stateName, regionName) {
     if (stateName == null) {
@@ -13,11 +11,31 @@ export class RegionApi extends BaseApi {
     if (regionName == null) {
       return Promise.reject('region name was not specificed')
     }
-    let endpoint = buildRegionEndpoint(stateName, regionName)
-    let regionGeoData = await this.get(endpoint)
-    let stateData = await StateApi.getStateData(stateName)
-    let transformedData = transformGeo(regionGeoData, stateData)
-    return transformedData
+    try {
+      let regionGeoData = {}
+      const endpoint = buildRegionEndpoint(stateName, regionName)
+      try {
+        regionGeoData = await this.get(endpoint)
+        // Sometimes the cache may send us bad data.
+        // See if it's valid.
+      } catch (exception) {
+        throw new Error('Could not retrieve region ', regionName)
+      }
+
+      const stateData = await StateApi.getStateData(stateName)
+
+      let transformedData = {}
+      try {
+        transformedData = await transformGeo(regionGeoData, stateData)
+      } catch (error) {
+        // Yes, we're going to super-murder their cache.
+        this.clearCache()
+      }
+      return transformedData
+    } catch (error) {
+      console.log(error) // eslint-disable-line
+      throw new Error('Could not load region.')
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 import * as colors from 'ui/core/Colors'
-import { PAL_SECTIONS_ACTIVE_LAYER_ID, PAL_SECTIONS_QUITE_LAYER_ID } from '../filters/Filters.selectors'
-import { PAL_SECTIONS_SOURCE_ID } from '../sources/Source.selectors'
+import {PAL_SECTIONS_ACTIVE_LAYER_ID, PAL_SECTIONS_QUITE_LAYER_ID} from '../filters/Filters.selectors'
+import {PAL_SECTIONS_SOURCE_ID} from '../sources/Source.selectors'
 
 export const PalSectionActiveStyle = {
   'id': PAL_SECTIONS_ACTIVE_LAYER_ID,
@@ -10,39 +10,43 @@ export const PalSectionActiveStyle = {
   'filter': [
     '==',
     '$type',
-    'LineString'
+    'LineString',
   ],
   'layout': {
     'visibility': 'visible',
     'line-cap': 'round',
-    'line-join': 'round'
+    'line-join': 'round',
   },
   'paint': {
     'line-color': colors.PalGreen,
     'line-width': {
-      'base': 1.4,
+      'base': 1.5,
       'stops': [
         [
           8.5,
-          2
+          1,
         ],
         [
           10,
-          2.75
+          1.25,
         ],
         [
-          18,
-          30
-        ]
-      ]
+          16.5,
+          16,
+        ],
+        [
+          18.0,
+          7,
+        ],
+      ],
     },
-    // credit goes to MMA
+    // Credit goes to MMA
     'line-opacity': 1.0,
     'line-dasharray': [
       1,
-      0
-    ]
-  }
+      0,
+    ],
+  },
 }
 
 export const PalSectionQuietStyle = {
@@ -53,43 +57,35 @@ export const PalSectionQuietStyle = {
   'layout': {
     'visibility': 'visible',
     'line-cap': 'round',
-    'line-join': 'round'
+    'line-join': 'round',
   },
   'paint': {
     'line-color': colors.StreamGray,
+
     'line-width': {
-      'base': 1.4,
+      'base': 1.5,
       'stops': [
         [
           8.5,
-          2
+          1,
         ],
         [
           10,
-          2.75
+          1.25,
         ],
         [
-          18,
-          30
-        ]
-      ]
-    },
-    'line-opacity': {
-      'base': 1.3,
-      'stops': [
-        [
-          12,
-          1
+          16.5,
+          16,
         ],
         [
-          15,
-          0
-        ]
-      ]
+          18.0,
+          3,
+        ],
+      ],
     },
     'line-dasharray': [
       1,
-      0
-    ]
-  }
+      0,
+    ],
+  },
 }

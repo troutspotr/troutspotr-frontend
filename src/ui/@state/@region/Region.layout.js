@@ -1,44 +1,28 @@
-import React, { PropTypes } from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classes from './Region.scss'
-import { MAP, LIST } from 'ui/core/Core.state'
+import {LIST, MAP} from 'ui/core/Core.state'
 import MapContainer from './map/Map.container'
-import ListComponent from './list/StreamList.container'
+import CountyListContainer from './list/CountyList.container'
 import LoadingComponent from 'ui/core/loading/Loading.component'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-import MessageOverlay from 'ui/core/messageOverlay/MessageOverlay.component'
-import { isEmpty } from 'lodash'
+import {LOADING_CONSTANTS} from 'ui/core/LoadingConstants'
+import {isEmpty} from 'lodash'
 import SvgSpriteSheet from './svgSpriteSheet/SvgSpriteSheet.component'
-// console.log(MAP, LIST)
-const RegionLayout = React.createClass({
-  propTypes: {
-    view: PropTypes.string.isRequired,
-    children: PropTypes.element,
-    fetchRegionData: PropTypes.func.isRequired,
-    selectedState: PropTypes.string.isRequired,
-    selectedRegion: PropTypes.string.isRequired,
-    regionLoadingStatus: PropTypes.string.isRequired,
-    troutStreams: PropTypes.array,
-    // searchText: PropTypes.string.isRequired,
-    clearText: PropTypes.func.isRequired,
-    streams: PropTypes.object,
-    showNoResultsFoundOverlay: PropTypes.bool.isRequired
-  },
-
+class RegionLayout extends Component {
   componentDidMount () {
-    let { fetchRegionData, selectedState, selectedRegion } = this.props
+    const {fetchRegionData, selectedState, selectedRegion} = this.props
     fetchRegionData(selectedState, selectedRegion)
-  },
+  }
 
   componentWillReceiveProps (nextProps) {
-    let { selectedState, selectedRegion } = nextProps
-    let nextCombo = (selectedState + selectedRegion).toLowerCase()
-    let currentCombo = (this.props.selectedState + this.props.selectedRegion).toLowerCase()
+    const {selectedState, selectedRegion} = nextProps
+    const nextCombo = (selectedState + selectedRegion).toLowerCase()
+    const currentCombo = (this.props.selectedState + this.props.selectedRegion).toLowerCase()
 
     if (nextCombo !== currentCombo) {
-      console.log('props changed, loading next region')
       this.props.fetchRegionData(selectedState, selectedRegion)
     }
-  },
+  }
 
   renderLoading () {
     if (this.props.regionLoadingStatus === LOADING_CONSTANTS.IS_PENDING) {
@@ -46,54 +30,51 @@ const RegionLayout = React.createClass({
     }
 
     return null
-  },
+  }
 
-  renderNoElementsFoundInRegionOverlay () {
-    let { showNoResultsFoundOverlay, streams } = this.props
-    if (showNoResultsFoundOverlay === false) {
+  renderMap () {
+    const {view} = this.props
+    const isVisible = view === MAP
+    return (<MapContainer
+      isVisible={isVisible}
+    />)
+  }
+
+  renderList () {
+    const {view, selectedStream} = this.props
+    const isVisible = view === LIST && isEmpty(selectedStream)
+    return (<CountyListContainer
+      isVisible={isVisible}
+    />)
+  }
+
+  render () {
+    const {view, hasAgreedToTerms} = this.props
+    if (hasAgreedToTerms === false) {
       return null
     }
 
-    let safeStreamCount = isEmpty(streams) ? 0 : streams.features.length
-    return (
-      <MessageOverlay
-        position='top' >
-        <div>
-          <div className={classes.clearSearchTitle}>No streams matched your search.</div>
-          <div>
-            <button onClick={this.props.clearText} className={classes.actionButton}>Clear your search</button> to see {safeStreamCount} streams.
-          </div>
-        </div>
-      </MessageOverlay>)
-  },
-
-  renderMap () {
-    let { view } = this.props
-    let isVisible = view === MAP
-    return <MapContainer
-      isVisible={isVisible} />
-  },
-
-  renderList () {
-    let { view } = this.props
-    let isVisible = view === LIST
-    return <ListComponent
-      isVisible={isVisible} />
-  },
-
-  render () {
-    let { view } = this.props
     return (
       <div className={classes.regionContainer}>
         <SvgSpriteSheet />
-        {this.renderMap()}
-        {this.renderList()}
-        {view === LIST && this.props.children}
         {this.renderLoading()}
-        {this.renderNoElementsFoundInRegionOverlay()}
+        {this.renderList()}
+        {this.renderMap()}
+        {view === LIST && this.props.children}
       </div>
-
     )
   }
-})
+}
+
+RegionLayout.propTypes = {
+  'view': PropTypes.string.isRequired,
+  'children': PropTypes.element,
+  'fetchRegionData': PropTypes.func.isRequired,
+  'selectedState': PropTypes.string.isRequired,
+  'selectedRegion': PropTypes.string.isRequired,
+  'regionLoadingStatus': PropTypes.string.isRequired,
+  'selectedStream': PropTypes.object,
+  'hasAgreedToTerms': PropTypes.bool.isRequired,
+}
+
 export default RegionLayout

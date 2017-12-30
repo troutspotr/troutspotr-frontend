@@ -1,9 +1,9 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
-
-$stream_width: 0.05em * 3;
+@import "src/ui/styles/_fonts";
+$stream_width: 0.05em * 1.5;
 $section_width: $stream_width * 1.2;
-$restriction_width: $section_width * 3.5;
+$restriction_width: $section_width * 7;
 $pal_width: $stream_width * 1.5;
 
 $MN_HIGHWAY_BLUE: #223A74;
@@ -90,12 +90,15 @@ $tributary_pal_width: $tributary_width * 7;
   right: 0;
   left: 0;
   margin: auto;
-
-  svg {
+  transform: translateZ(0);
+  .svgContainer {
     height: 100%;
     max-width: 100%;
     display: block;
     margin: auto;
+    will-change: transform;
+    transform: translateZ(0);
+    @include book-font;
   }
 }
 
@@ -120,7 +123,8 @@ $tributary_pal_width: $tributary_width * 7;
 
 .stream {
   composes: streamComponent;
-  stroke: $gray;
+  stroke-width: $stream_width * 0.3;
+  stroke: $off-white;
 }
 
 .section {
@@ -135,7 +139,19 @@ $tributary_pal_width: $tributary_width * 7;
   composes: streamComponent;
   stroke: $yellow;
   stroke-linecap: butt;
-  stroke-linejoin: butt;
+  stroke-linejoin: round;
+  stroke-width: $restriction_width;
+}
+
+.restrictionAlt {
+  composes: restriction;
+  stroke: $blue;
+  stroke-width: $restriction_width;
+}
+
+.restrictionAltAlt {
+  composes: restriction;
+  stroke: $white;
   stroke-width: $restriction_width;
 }
 
@@ -143,8 +159,8 @@ $tributary_pal_width: $tributary_width * 7;
   composes: streamComponent;
   stroke: $background;
   stroke-linecap: butt;
-  stroke-linejoin: butt;
-  stroke-width: $restriction_width * 0.85;
+  stroke-linejoin: round;
+  stroke-width: $restriction_width * 0.8;
 }
 
 .fishSanctuary {
@@ -156,7 +172,8 @@ $tributary_pal_width: $tributary_width * 7;
 .pal {
   composes: streamComponent;
   stroke: $green;
-
+  stroke-linecap: butt;
+  stroke-linejoin: round;
   // stroke-linecap: butt;
   stroke-width: $pal_width;
   animation: pal-fade 1000ms;
@@ -195,27 +212,6 @@ $tributary_pal_width: $tributary_width * 7;
     opacity: 1.0;
     stroke-width: $section_width;
   }
-}
-
-.accessPoint:hover {
-  fill: $red;
-  stroke-dasharray: 1,4;
-}
-
-.accessPoint:hover .accessPointConnector {
-  fill: $red;
-  stroke-dasharray: 1,4;
-  stroke: $off_white;
-}
-
-.accessPointStream {
-  stroke-width: 1px;
-}
-
-.accessPoint:hover .accessPointStream {
-  fill: $red;
-  stroke-width: 20px;
-  stroke-color: $red;
 }
 
 

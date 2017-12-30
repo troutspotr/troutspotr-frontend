@@ -29,6 +29,20 @@
   }
 }
 
+.selectedBridge {
+  composes: bridge;
+
+  text {
+    color: black;
+    font-weight: bold;
+    fill: black;
+  }
+
+  circle {
+    fill: unset;
+  }
+}
+
 .publicTroutBridge {
   composes: bridge;
   stroke: $green;
@@ -43,12 +57,37 @@
 
 .unsafeBridge {
   composes: bridge;
-  stroke: $red;
-  fill: $red;
+  stroke: $blueGray;
+  fill: $blueGray;
 }
 
 .uninterestingBridge {
+  display: none;
   composes: bridge;
+  stroke: $gray;
+  fill: $gray;
+}
+
+.selectedPublicTroutBridge {
+  composes: selectedBridge;
+  stroke: $green;
+  fill: $green;
+}
+
+.selectedTroutBridge {
+  composes: selectedBridge;
+  stroke: $blue;
+  fill: $blue;
+}
+
+.selectedUnsafeBridge {
+  composes: selectedBridge;
+  stroke: $blueGray;
+  fill: $blueGray;
+}
+
+.selectedUninterestingBridge {
+  composes: selectedBridge;
   stroke: $gray;
   fill: $gray;
 }

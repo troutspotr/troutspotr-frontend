@@ -1,0 +1,29 @@
+@import "src/ui/styles/NumberCircle";
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "src/ui/styles/_fonts";
+@import "src/ui/styles/ZeldaText";
+
+.container {
+  font-size: 12px;
+}
+
+.closed {
+  composes: zeldaText;
+  color: $red;
+}
+
+.open {
+  composes: zeldaText;
+  color: $white;
+}
+
+.openEmphasis {
+  composes: open;
+  color: $blue;
+}
+
+.openCaution {
+  composes: open;
+  color: $yellow;
+}

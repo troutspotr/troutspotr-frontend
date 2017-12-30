@@ -18,10 +18,14 @@
     margin: 0;
     padding: 0;
     height: 100%;
-
-    // background-color: $green;
+    color: $white;
+    background-color: $background;
 
     @include book-font;
+  }
+
+  #root {
+    height: 100%;
   }
 
   li,
@@ -93,7 +97,7 @@
 
   .mapboxgl-ctrl-bottom-right {
     right: 0;
-    bottom: 0;
+    bottom: 40px;
   }
 
   .mapboxgl-ctrl {

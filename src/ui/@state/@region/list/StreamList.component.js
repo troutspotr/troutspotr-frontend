@@ -1,40 +1,37 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classes from './List.scss'
-// import BubbleComponent from './Bubble.component'
 import StreamItemComponent from './streamItem/StreamItem.component'
 
-const StreamListComponent = React.createClass({
-  propTypes: {
-    isVisible: React.PropTypes.bool.isRequired,
-    visibleTroutStreams: React.PropTypes.array.isRequired,
-    selectedState: React.PropTypes.string.isRequired,
-    selectedRegion: React.PropTypes.string.isRequired
-  },
+const StreamListComponent = (props) => {
+  const {selectedRegion, selectedState, visibleTroutStreams, getSummary} = props
+  return (
+    <div className={classes.streamList}>
+      {visibleTroutStreams.map((stream, index) => {
+        const realStream = stream.stream
+        const fakeName = realStream.properties.name
+        const url = realStream.properties.slug
+        return (
+          <div key={realStream.properties.slug}>
+            <StreamItemComponent
+              getSummary={getSummary}
+              title={fakeName}
+              url={`/${selectedState}/${selectedRegion}/${url}`}
+              streamObject={stream}
+              isVisible={props.isListVisible}
+            />
+          </div>)
+      })
+      }
+    </div>)
+}
 
-  componentDidMount () {
-    // console.log('LIST VIEW MOUNTED')
-  },
+StreamListComponent.propTypes = {
+  'visibleTroutStreams': PropTypes.array.isRequired,
+  'selectedState': PropTypes.string.isRequired,
+  'selectedRegion': PropTypes.string.isRequired,
+  'isListVisible': PropTypes.bool.isRequired,
+  'getSummary': PropTypes.func.isRequired,
+}
 
-  render () {
-    let { selectedRegion, selectedState, visibleTroutStreams, isVisible } = this.props
-    return (
-      <div className={isVisible ? classes.listViewContainer : classes.invisible}>
-        <ul className={classes.list}>
-          {visibleTroutStreams.map((stream, index) => {
-            let realStream = stream.stream
-            let fakeName = realStream.properties.name
-            let url = realStream.properties.slug
-            return (
-              <li key={realStream.properties.gid}>
-                <StreamItemComponent
-                  title={fakeName}
-                  url={`/${selectedState}/${selectedRegion}/${url}`}
-                  streamObject={stream} />
-              </li>)
-          })
-          }
-        </ul>
-      </div>)
-  }
-})
 export default StreamListComponent

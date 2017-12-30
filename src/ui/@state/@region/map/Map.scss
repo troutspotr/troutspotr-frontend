@@ -7,10 +7,13 @@
   top: 0;
   bottom: 0;
   width: 100%;
+  background-color: $background;
+  touch-action: none;
+  z-index: 500;
 }
 
 .map {
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   width: 100%;

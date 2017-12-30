@@ -1,41 +1,59 @@
-import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import classes from './SvgMap.scss'
+import AnimatedPathComponent from './AnimatedPath.component'
+const lengthInMilliseconds = 500
+const offsetInMilliseconds = 200
 
-const RegionComponent = React.createClass({
-  propTypes: {
-    geoJson: PropTypes.object.isRequired,
-    isSelected: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    pathGenerator: PropTypes.func.isRequired,
-    stateName: PropTypes.string.isRequired,
+class RegionComponent extends Component {
+  constructor () {
+    super()
+    this.onClick = this.onClick.bind(this)
+    this.state = {
+      offset: offsetInMilliseconds + (Math.random() * 300),
+    }
+  }
 
-    selectRegion: PropTypes.func.isRequired
-  },
+  onClick (e) {
+    const json = this.props.geoJson
+    if (this.props.isActive === false) {
+      e.preventDefault()
+      return
+    }
 
-  componentWillMount () {
-    // this.initializeMap()
-  },
+    this.props.selectRegion(e, json)
+  }
 
-  componentDidMount () {
-  },
+  getClassName() {
+    const { isActive } = this.props
+    const activeClassName = isActive
+      ? ''
+      : classes.inactiveRegion
 
-  componentWillUnmount () {
-  },
-
-  selectRegion (e, region) {
-  },
-
-  zoomToRegion (region) {
-
-  },
+    return activeClassName
+  }
 
   render () {
-    let json = this.props.geoJson
-    let path = this.props.pathGenerator(json.geometry)
+    const json = this.props.geoJson
+    const path = this.props.pathGenerator(json.geometry)
+    const className = this.getClassName()
     return (
-      <Link onClick={e => this.props.selectRegion(e, json)} to={`/${this.props.stateName.toLowerCase()}/${json.properties.name.toLowerCase()}`}>
-        <path data-name={json.properties.name} d={path} />
-      </Link>)
+      <g className={className} onClick={this.onClick} data-name={json.properties.name}>
+        <AnimatedPathComponent
+          path={path}
+          length={lengthInMilliseconds}
+          offset={this.state.offset}/>
+      </g>)
   }
-})
+}
+
+RegionComponent.propTypes = {
+  'geoJson': PropTypes.object.isRequired,
+  'pathGenerator': PropTypes.func.isRequired,
+  'selectRegion': PropTypes.func.isRequired,
+  'isCached': PropTypes.bool.isRequired,
+  // isActive refers to it being selectable - if you're online or if it's offline but cached.
+  'isActive': PropTypes.bool.isRequired,
+}
+
 export default RegionComponent

@@ -1,0 +1,42 @@
+{
+  "version": 8,
+  "name": "Satellite-Empty",
+  "metadata": {
+    "mapbox:autocomposite": true,
+    "mapbox:type": "default"
+  },
+  "center": [-92.06160947991737, 43.599069256484114],
+  "zoom": 7.57592854763862,
+  "bearing": 0,
+  "pitch": 0,
+  "sources": {
+    "mapbox": {
+      "url": "mapbox://mapbox.satellite",
+      "type": "raster",
+      "tileSize": 256
+    }
+  },
+  "sprite": "mapbox://sprites/andest01/cjc24waff10kw2rmo627uukk7",
+  "glyphs": "mapbox://fonts/andest01/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "rgb(4,7,14)"
+      }
+    },
+    {
+      "id": "satellite",
+      "type": "raster",
+      "source": "mapbox",
+      "source-layer": "mapbox_satellite_full"
+    }
+  ],
+  "created": "2018-01-05T16:27:43.554Z",
+  "id": "cjc24waff10kw2rmo627uukk7",
+  "modified": "2018-01-05T16:28:07.736Z",
+  "owner": "andest01",
+  "visibility": "private",
+  "draft": false
+}

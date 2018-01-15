@@ -1,157 +1,75 @@
-const path = require('path');
+const autoprefixer = require('autoprefixer')
 const webpack = require('webpack')
-const cssnano = require('cssnano')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const genDefaultConfig = require('@storybook/react/dist/server/config/defaults/webpack.config.js')
+const developmentWebpackConfig = require('../config/webpack.config.dev')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const config = require('../config')
-const debug = require('debug')('app:webpack:config')
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // eslint-disable-line
-const OfflinePlugin = require('offline-plugin')
+const { preactAliases } = require('../config/preactAliases')
 
-const paths = config.utils_paths
-const __DEV__ = config.globals.__DEV__
-const __PROD__ = config.globals.__PROD__
-const __TEST__ = config.globals.__TEST__
+module.exports = (baseConfig, env) => {
+  const config = genDefaultConfig(baseConfig, env)
+  // Extend it as you need.
+  // For example, add typescript loader:
+  config.module.rules.push({
+    test: /\.(ts|tsx)$/,
+    loader: require.resolve('awesome-typescript-loader'),
+  })
 
-const webpackConfig = {
-  resolve: {
-    root: paths.client(),
-  },
-  module: {
-    rules: [
+  // in this house we respect and appreciate preact
+  config.resolve.alias = {
+    ...preactAliases,
+  }
+  config.module.rules.push({
+    test: /\.css$/,
+    use: [
+      require.resolve('style-loader'),
       {
-        test: /\.scss$/,
-        loaders: ["style-loader", "css-loader", "sass-loader"],
-        include: path.resolve(__dirname, '../'),
+        loader: require.resolve('css-loader'),
+        options: {
+          importLoaders: 1,
+        },
+      },
+      {
+        loader: require.resolve('postcss-loader'),
+        options: {
+          // Necessary for external CSS imports to work
+          // https://github.com/facebookincubator/create-react-app/issues/2677
+          ident: 'postcss',
+          plugins: () => [
+            require('postcss-flexbugs-fixes'),
+            autoprefixer({
+              browsers: [
+                '>1%',
+                'last 4 versions',
+                'Firefox ESR',
+                'not ie < 9', // React doesn't support IE8 anyway
+              ],
+              flexbox: 'no-2009',
+            }),
+          ],
+        },
       },
     ],
-  },
-  plugins: [
-    new webpack.DefinePlugin(config.globals),
-  ],
-}
-
-webpackConfig.module.loaders = [{
-  test: /\.(js|jsx)$/,
-  exclude: /node_modules/,
-  loader: 'babel',
-  query: config.compiler_babel,
-}, {
-  test: /\.json$/,
-  loader: 'json',
-}]
-
-// ------------------------------------
-// Style Loaders
-// ------------------------------------
-// We use cssnano with the postcss loader, so we tell
-// css-loader not to duplicate minimization.
-const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
-
-// Add any packge names here whose styles need to be treated as CSS modules.
-// These paths will be combined into a single regex.
-const PATHS_TO_TREAT_AS_CSS_MODULES = [
-
-]
-
-// If config has CSS modules enabled, treat this project's styles as CSS modules.
-if (true) {
-  PATHS_TO_TREAT_AS_CSS_MODULES.push(
-    paths.client().replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, '\\$&') // eslint-disable-line
-  )
-}
-
-const isUsingCSSModules = !!PATHS_TO_TREAT_AS_CSS_MODULES.length
-const cssModulesRegex = new RegExp(`(${PATHS_TO_TREAT_AS_CSS_MODULES.join('|')})`)
-
-// Loaders for styles that need to be treated as CSS modules.
-if (isUsingCSSModules) {
-  const cssModulesLoader = [
-    BASE_CSS_LOADER,
-    'modules',
-    'importLoaders=1',
-    'localIdentName=[name]__[local]___[hash:base64:5]',
-  ].join('&')
-
-  webpackConfig.module.loaders.push({
+  })
+  config.module.rules.push({
     test: /\.scss$/,
-    include: cssModulesRegex,
-    loaders: [
-      'style',
-      cssModulesLoader,
-      'postcss',
-      'sass?sourceMap',
-    ],
+    use: ExtractTextPlugin.extract({
+      fallback: 'style-loader',
+      use: [
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+            sourceMap: true,
+            importLoaders: 2,
+            localIdentName: '[name]__[local]__[hash:base64:5]',
+          },
+        },
+        'sass-loader',
+      ],
+    }),
   })
 
-  webpackConfig.module.loaders.push({
-    test: /\.css$/,
-    include: cssModulesRegex,
-    loaders: [
-      'style',
-      cssModulesLoader,
-      'postcss',
-    ],
-  })
+  config.resolve.extensions.push('.ts', '.tsx')
+  // config.plugins.unshift(new ExtractTextPlugin({ filename: 'styles.css', allChunks: true }))
+  return config
 }
-
-// Loaders for files that should not be treated as CSS modules.
-const excludeCSSModules = isUsingCSSModules ? cssModulesRegex : false
-webpackConfig.module.loaders.push({
-  test: /\.scss$/,
-  exclude: excludeCSSModules,
-  loaders: [
-    'style',
-    BASE_CSS_LOADER,
-    'postcss',
-    'sass?sourceMap',
-  ],
-})
-webpackConfig.module.loaders.push({
-  test: /\.css$/,
-  exclude: excludeCSSModules,
-  loaders: [
-    'style',
-    BASE_CSS_LOADER,
-    'postcss',
-  ],
-})
-
-// ------------------------------------
-// Style Configuration
-// ------------------------------------
-webpackConfig.sassLoader = {
-  includePaths: paths.client('styles'),
-}
-
-webpackConfig.postcss = [
-  cssnano({
-    autoprefixer: {
-      add: true,
-      remove: true,
-      browsers: ['last 2 versions'],
-    },
-    discardComments: {
-      removeAll: true,
-    },
-    discardUnused: false,
-    mergeIdents: false,
-    reduceIdents: false,
-    safe: true,
-    sourcemap: true,
-  }),
-]
-
-// File loaders
-/* eslint-disable */
-webpackConfig.module.loaders.push(
-  { test: /\.woff(\?.*)?$/,  loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff' },
-  { test: /\.woff2(\?.*)?$/, loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2' },
-  { test: /\.otf(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=font/opentype' },
-  { test: /\.ttf(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream' },
-  { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
-  { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
-  { test: /\.(png|jpg|gif)$/,    loader: 'url?limit=8192' }
-)
-
-module.exports = webpackConfig

@@ -1,13 +1,19 @@
 $default-padding: 15px;
 $default-margin: 20px;
 
-$page-header-height: 70px;
-$page-footer-height: 70px;
+$header-height: 60px;
+$footer-height: 40px;
+
+$page-header-height: $header-height;
+$page-header-z-index: 100;
+
+$page-footer-height: $footer-height;
+$page-footer-z-index: 100;
 
 $button-hover-darken-pct: 10;
 
 $body-top-padding: 61px;
 $body-side-padding: 15px;
 
-$header-height: 60px;
-$footer-height: 40px;
+$default-line-height: 1.35em;
+$default-font-size: 16px;

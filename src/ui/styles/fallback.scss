@@ -1,0 +1,4 @@
+@mixin fallback($property, $variable, $fallback) {
+  #{$property}: $fallback;
+  #{$property}: var($variable);
+}

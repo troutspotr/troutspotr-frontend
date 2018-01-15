@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Jest",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+              "run",
+              "test:inspect",
+            ],
+            "args": [
+            ],
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "port": 58585,
+            "internalConsoleOptions": "openOnSessionStart",
+            "envFile": "${workspaceRoot}/.env"
+          }
+    ]
+}

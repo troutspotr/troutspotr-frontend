@@ -1,0 +1,45 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "outDir": "build/dist",
+    "module": "esnext",
+    "target": "es5",
+    "lib": [
+      "es5",
+      "dom",
+      "es2015"
+    ],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDirs": [
+      "./src",
+      "./config"
+    ],
+    "baseUrl": "./src/",
+    "paths": {
+      "src/*": [
+        "./src/*"
+      ]
+    },
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "watch": true
+  },
+  "exclude": [
+    "node_modules",
+    "!node_modules/@types",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts"
+  ]
+}

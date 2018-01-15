@@ -1,0 +1,57 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/fallback';
+
+.footer {
+  // background-color: $messageBackgroundDark;
+  @include fallback(background-color, --message-background-color, $messageBackgroundDark);
+  height: 100%;
+  padding-left: $default-margin;
+  padding-right: $default-margin;
+  font-size: 18px;
+  border-top: 1px solid transparentize($offTextDark, 0.7);
+  border-top: 1px solid var(--border-color);
+
+  // backdrop-filter: blur(2px);
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  touch-action: manipulation;
+  max-width: 400px;
+  text-align: center;
+  height: 100%;
+}
+
+.item {
+  align-self: center;
+  text-align: center;
+  border: none;
+  // color: $offTextDark;
+  @include fallback(color, --text-color-secondary, $offTextDark);
+  font-size: 1em;
+  transition: all 0.1s;
+  text-decoration: none;
+  height: 30px;
+  vertical-align: middle;
+  line-height: normal;
+  cursor: pointer;
+  background-image: none;
+  background-color: transparent;
+}
+
+.selected {
+  composes: item;
+  color: $blueDark;
+  font-weight: bold;
+}
+
+.underlight {
+  height: 5px;
+  @include fallback(background-color, --text-color-secondary, $offTextDark);
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

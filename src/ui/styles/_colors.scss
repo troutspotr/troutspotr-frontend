@@ -1,11 +1,54 @@
-$background: hsla(0, 0%, 6.7%, 1);
-$gray: hsl(0, 0%, 13%);
-$blueGray: hsla(199, 18%, 32%, 1);
-$green: hsla(72, 90%, 48%, 1);
-$yellow: hsla(48, 97%, 53%, 1);
-$red: hsla(15.6, 100%, 53.1%, 1);
-$off-white: hsla(0, 0%, 73.7%, 1);
-$white: hsla(0, 0%, 100%, 1);
-$blue: hsla(199, 69%, 61%, 1);
+// http://chir.ag/projects/name-that-color/
 
-$messageBackground: transparentize($background, 0.3);
+// core colors
+$black: hsl(0, 0%, 0%);
+$cod-gray: hsl(0, 0%, 7%);
+$mine-shaft: hsl(0, 0%, 13%);
+$river-bed: hsla(199, 18%, 32%, 1);
+$fuego: hsla(72, 90%, 48%, 1);
+$candlelight: hsla(48, 97%, 53%, 1);
+$vermillion: hsla(15.6, 100%, 53.1%, 1);
+$picton-blue: hsla(199, 69%, 61%, 1);
+$gray: hsl(0, 0%, 54%);
+$silver: hsla(0, 0%, 73.7%, 1);
+$white: hsla(0, 0%, 100%, 1);
+
+// dark interface colors
+$backgroundDark: $cod-gray;
+$textDark: $white;
+$offTextDark: $silver;
+$grayDark: $mine-shaft;
+$blueGrayDark: $river-bed;
+$greenDark: $fuego;
+$yellowDark: $candlelight;
+$redDark: $vermillion;
+$blueDark: $picton-blue;
+$messageBackgroundDark: transparentize($backgroundDark, 0.3);
+
+// light interface colors
+$backgroundLight: $white;
+$textLight: $black;
+$offTextLight: $gray;
+$grayLight: $mine-shaft;
+$blueGrayLight: $river-bed;
+$greenLight: $fuego;
+$yellowLight: $candlelight;
+$redLight: $vermillion;
+$blueLight: $picton-blue;
+$messageBackgroundLight: transparentize($backgroundLight, 0.8);
+
+/* stylelint-disable property-no-unknown */
+
+:export {
+  background: $messageBackgroundDark;
+  gray: $mine-shaft;
+  bluegray: $river-bed;
+  green: $fuego;
+  yellow: $candlelight;
+  red: $vermillion;
+  offwhite: $silver;
+  white: $white;
+  blue: $picton-blue;
+}
+
+/* stylelint-enable property-no-unknown */

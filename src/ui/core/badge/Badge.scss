@@ -1,0 +1,110 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/_fonts';
+@import 'src/ui/styles/fallback';
+$circle-size: 0.9em;
+
+.numberCircle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  // font: 32px Arial, sans-serif;
+  width: $circle-size;
+  height: $circle-size;
+  box-sizing: initial;
+
+  // background: #fff;
+  border: 0.1em solid;
+
+  // color: #666;
+  text-align: center;
+  border-radius: 50%;
+  line-height: $circle-size + 0.1em;
+  box-sizing: content-box;
+  text-transform: uppercase;
+  transform: translateY(0.15em);
+  @include heavy-font;
+  transition: color 800ms, background-color 800ms;
+}
+
+.content {
+  font-size: 0.6em;
+  position: absolute;
+  transform: translateY(0.05em);
+  transition: color 800ms, background-color 800ms;
+}
+
+.contentSmall {
+  composes: content;
+}
+
+@mixin make-solid($color) {
+  composes: numberCircle;
+  background-color: $color;
+  @include fallback(color, var(--text-color-primary), $backgroundDark);
+  border-color: $color;
+}
+
+@mixin make-hollow($color) {
+  composes: numberCircle;
+  color: $color;
+}
+
+.yellow {
+  @include make-hollow($yellowDark);
+}
+
+.blue {
+  @include make-hollow($blueDark);
+}
+
+.green {
+  @include make-hollow($greenDark);
+}
+
+.red {
+  @include make-hollow($redDark);
+}
+
+.blueGray {
+  @include make-hollow($blueGrayDark);
+  @include fallback(color, --badge-unsafe-to-fish-border, blue);
+  .content {
+    @include fallback(color, --badge-unsafe-to-fish-content, blue);
+  }
+}
+
+.yellowSolid {
+  @include make-solid($yellowDark);
+}
+
+.blueSolid {
+  @include make-solid($blueDark);
+}
+
+.greenSolid {
+  @include make-solid($greenDark);
+}
+
+.redSolid {
+  @include make-solid($redDark);
+}
+
+.blueGraySolid {
+  @include make-solid($blueGrayDark);
+}
+
+:global(.ts-light) {
+  .blueGraySolid {
+    .content {
+      @include fallback(color, --white, $black);
+    }
+  }
+
+  .content {
+    @include fallback(color, --text-color-primary, $black);
+  }
+}
+
+:global(.ts-dark) {
+}

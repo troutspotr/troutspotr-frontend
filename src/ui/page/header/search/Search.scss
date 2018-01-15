@@ -1,0 +1,45 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/fallback';
+
+$padding: 7px;
+
+.streamSearch {
+  input[type='search'] {
+    max-width: 170px;
+    -webkit-appearance: textfield;
+    width: calc(100% - 10px);
+    // background-color: $messageBackground;
+    @include fallback(background-color, --message-background-color, $messageBackgroundDark);
+    // border: 2px solid $off-white;
+    border: 2px solid $textDark;
+    // @include fallback(border, --text-color-primary, $textDark);
+    border: 2px solid var(--text-color-primary);
+    height: 30px;
+    border-radius: 15px;
+    font-size: 18px;
+    // color: $blue;
+    @include fallback(color, --blue, $blueDark);
+    padding-left: $padding;
+    padding-right: $padding;
+    resize: horizontal;
+    transition: all 800ms;
+  }
+
+  input[type='search']::placeholder {
+    // color: $off-white;
+    @include fallback(color, --text-color-secondary, $textDark);
+    transition: all 800ms;
+  }
+
+  .hidden {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+  }
+}

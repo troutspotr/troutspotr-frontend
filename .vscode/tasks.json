@@ -1,0 +1,55 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "test",
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": {
+        "base": "$tslint5",
+        "fileLocation": "absolute"
+      }
+    },
+    {
+      "command": "tsc",
+      "type": "shell",
+      "args": [
+        "-w",
+        "-p",
+        ".",
+        "--noEmit"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      },
+      "isBackground": true,
+      "problemMatcher": "$tsc-watch",
+      "label": "find some damn problems please"
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "base": "$tslint5",
+        "fileLocation": "absolute"
+      },
+      "label": "i need you to lint please im so tired"
+    }
+  ]
+}

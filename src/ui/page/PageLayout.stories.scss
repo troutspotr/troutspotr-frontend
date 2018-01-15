@@ -1,0 +1,49 @@
+.fakeContentStyle {
+  width: 7vmin;
+  height: 7vmin;
+  margin: 2vmin;
+  display: inline-block;
+}
+
+.scrollingContainer {
+  background-color: blue;
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fullscreenContainer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-image: radial-gradient(blue 0%, green 100%);
+  width: 100%;
+  height: 100%;
+}
+
+.ll {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.lr {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.tl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.tr {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

@@ -1,0 +1,57 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/fallback';
+$largeFontSize: 1em;
+
+.backButton {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  display: inline-block;
+  transition: fill 0.1s linear 0ms;
+  cursor: pointer;
+  :hover {
+    .backdrop {
+      // fill: $backgroundDark;
+      @include fallback(fill, --background-color, $backgroundDark);
+    }
+
+    .circle {
+      // fill: $blueDark;
+      @include fallback(fill, --blue, $blueDark);
+    }
+
+    .chevron {
+      // fill: $blueDark;
+      @include fallback(fill, --blue, $blueDark);
+    }
+  }
+}
+
+.inactive {
+  composes: backButton;
+  display: none;
+}
+
+.svg {
+  height: 100%;
+  width: 100%;
+}
+
+.circle {
+  transition: fill 0.1s linear 0ms;
+  // fill: $white;
+  @include fallback(fill, --text-color-primary, $white);
+}
+
+.backdrop {
+  transition: fill 0.1s linear 0ms;
+  // fill: $messageBackgroundDark;
+  @include fallback(fill, --message-background-color, $messageBackgroundDark);
+}
+
+.chevron {
+  transition: fill 0.1s linear 0ms;
+  // fill: $textDark;
+  @include fallback(fill, --text-color-primary, $textDark);
+}

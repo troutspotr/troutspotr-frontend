@@ -1,0 +1,43 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/fallback';
+.viewport {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: fallback(background-color, var(--background-color), $backgroundDark);
+  color: $textDark;
+}
+
+.content {
+  flex: 1;
+  flex-grow: 1;
+  display: box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+header {
+  z-index: $page-header-z-index;
+  height: $page-header-height;
+  background-color: $messageBackgroundDark;
+}
+
+footer {
+  z-index: $page-footer-z-index;
+  height: $page-footer-height;
+  background-color: $messageBackgroundDark;
+}
+
+::-webkit-scrollbar {
+  // -webkit-appearance:; // you need to tweak this to make it available..
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: $blueGrayDark;
+}

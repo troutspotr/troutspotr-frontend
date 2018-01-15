@@ -1,0 +1,95 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+
+.polygon {
+  fill: transparent;
+  stroke-width: 0.3px;
+  stroke-linejoin: round;
+}
+
+.states {
+  composes: polygon;
+  stroke: $off-white;
+  stroke-width: 0.1px;
+  pointer-events: none;
+}
+
+.regions {
+  composes: polygon;
+
+  g {
+    stroke: $off-white;
+    fill: $background;
+  }
+
+  g:hover {
+    fill: transparentize($gray, 0);
+    stroke-width: 0.4px;
+    cursor: pointer;
+  }
+}
+
+.counties {
+  composes: polygon;
+}
+
+.centroids {
+  composes: polygon;
+  pointer-events: none;
+
+  .closed {
+    fill: transparentize($blueGray, 0.3);
+  }
+
+  .open {
+    fill: transparentize($blue, 0.3);
+  }
+}
+
+.selectedStreamCentroid {
+  composes: polygon;
+  fill: $blue;
+}
+
+.selectedRegions {
+  pointer-events: none;
+
+  g {
+    stroke: $blue;
+    stroke-width: 0.8px;
+  }
+
+  composes: polygon;
+}
+
+.cachedRegion {
+  // fill: transparentize($green, 0.8)
+  fill: transparentize($gray, 0.1);
+}
+
+.notChachedRegion {
+  fill: transparentize($blue, 0.1);
+}
+
+.regions .inactiveRegion {
+  stroke: $gray;
+  stroke-width: 0.2px;
+  fill: transparentize($background, 0.1);
+  cursor: default;
+  :hover {
+    fill: none !important;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.gpsCoordinates {
+  composes: centroids;
+  fill: transparentize($red, 0.3);
+}
+
+.expand from '../Minimap.scss' {
+  .regions {
+    stroke-width: 0.1px;
+  }
+}

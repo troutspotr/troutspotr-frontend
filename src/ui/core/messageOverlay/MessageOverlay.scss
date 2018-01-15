@@ -1,15 +1,31 @@
-@import "src/ui/styles/_colors";
-@import "src/ui/styles/_variables";
-@import "src/ui/styles/_fonts";
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/_fonts';
+@import 'src/ui/styles/fallback';
 
+@keyframes appearAnimation {
+  0% {
+    // transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    // transform: translateX(0);
+    opacity: 1;
+  }
+}
 
 .container {
-  background-color: $messageBackground;
+  @include fallback(background-color, --message-background-color, $messageBackgroundDark);
   position: absolute;
-  pointer-events: none;
   padding: ($default-margin / 2) ($default-margin / 2);
   z-index: 10000;
-  // backdrop-filter: blur(2px);
+  min-height: 2.7em;
+  max-height: calc(80vh / 2.4 - 60px);
+  overflow-y: scroll;
+  animation-duration: 200ms;
+  animation-name: appearAnimation;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
 }
 
 .top {
@@ -24,10 +40,6 @@
   bottom: 0;
   left: 0;
   right: 0;
-}
-
-.center {
-  composes: container;
 }
 
 .fullscreen {

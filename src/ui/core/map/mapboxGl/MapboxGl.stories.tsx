@@ -1,14 +1,16 @@
 import { MapboxGlComponent, IMapboxGlProps } from './MapboxGl.component'
-import { withKnobs, number, select } from '@storybook/addon-knobs'
+import { withKnobs, number, select, color } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { ICameraPadding, ICameraProps } from '../ICameraProps'
-import { Style } from 'mapbox-gl'
+import { Style, Layer } from 'mapbox-gl'
 import * as React from 'react'
-
 import boundingBox from '@turf/bbox'
+const darkStyle = require('./_stubs/dark-style.json')
+const lightStyle = require('./_stubs/light-style.json')
+const satelliteStyle = require('./_stubs/satellite-style.json')
 const RushRiver = require('./_stubs/rush-river-watershed.geo.json')
-const WhitewaterRiver = require('./_stubs/rush-river-watershed.geo.json')
+const WhitewaterRiver = require('./_stubs/whitewater-watershed.geo.json')
 const rushRiverBbox = boundingBox(RushRiver)
 const whitewaterRiverBbox = boundingBox(WhitewaterRiver)
 
@@ -16,23 +18,21 @@ const stories = storiesOf('Core/Map/Mapbox Gl', module)
 stories.addDecorator(withKnobs)
 
 const locations = {
-  whitewaterRiverBbox,
-  rushRiverBbox,
+  whitewater: whitewaterRiverBbox,
+  rushriver: rushRiverBbox,
 }
 
 const createPlacesToVisit = (): number[][] => {
   const label = 'Places to go'
   const options = {
-    whitewaterRiverBbox: 'whitewater',
-    rushRiverBbox: 'rush river',
-    pasig: 'pasig',
-    falkanIslands: 'falkanIslands',
+    whitewater: 'whitewater',
+    rushriver: 'rushriver',
   }
 
   const defaultValue = 'whitewater'
   const item = select(label, options, defaultValue)
   const bbox = locations[item]
-  return bbox
+  return [[bbox[0], bbox[1]], [bbox[2], bbox[3]]]
 }
 
 export const createCameraPaddingOffset = (): ICameraPadding => {
@@ -85,10 +85,32 @@ const createCameraObject = (): ICameraProps => {
   }
 }
 
+const createCustomMapboxLayer = (
+  sourceId: string,
+  layerId: string,
+  lineColor = 'pink',
+  lineWidth = 5
+): Layer => {
+  const lineStyle: Layer = {
+    id: layerId,
+    source: sourceId,
+    type: 'line',
+    layout: {
+      visibility: 'visible',
+      'line-join': 'round',
+    },
+    paint: {
+      'line-color': lineColor,
+      'line-width': lineWidth,
+    },
+  }
+
+  return lineStyle
+}
+
 stories.add('Show a map with a default mapbox style', () => {
   const camera = createCameraObject()
   const styleOption = createStyles()
-
   const mapboxProps: IMapboxGlProps = {
     onMapInitialized: action('map initialized'),
     camera,
@@ -98,15 +120,64 @@ stories.add('Show a map with a default mapbox style', () => {
   return <MapboxGlComponent {...mapboxProps} />
 })
 
-// stories.add('Show a map with a mapbox style', () => {
-//   const camera = createCameraObject()
-//   const styleOption = createStyles()
+const getSelectedStyle = (styles: Style[]): Style => {
+  const label = 'Styles (via Mapbox.com)'
+  const options = styles.reduce((dictionary, item: Style) => {
+    dictionary[item.name] = item.name
+    return dictionary
+  }, {})
 
-//   const mapboxProps: IMapboxGlProps = {
-//     onMapInitialized: action('map initialized'),
-//     camera,
-//     style: styleOption,
-//     onFeaturesSelected: action('features clicked'),
-//   }
-//   return <MapboxGlComponent {...mapboxProps} />
-// })
+  const defaultValue = styles[0].name
+  const selectedName = select(label, options, defaultValue)
+  return styles.find(x => x.name === selectedName)
+}
+
+stories.add('Show a map with a custom style and custom sources', () => {
+  const camera = createCameraObject()
+  const styles = [darkStyle, lightStyle, satelliteStyle].map(x => x as Style)
+  const selectedRawStyle = getSelectedStyle(styles)
+  const customLayers = [
+    createCustomMapboxLayer(
+      'whitewater-river-layer',
+      'whitewater-river-source',
+      color('whitewater Color', 'blue'),
+      number('Whitewater Line Width', 3, { range: true, min: 1, max: 100, step: 0.1 })
+    ),
+    createCustomMapboxLayer(
+      'rush-river-layer',
+      'rush-river-source',
+      color('Rush Color', 'orange'),
+      number('Rush Line Width', 3, { range: true, min: 1, max: 100, step: 0.1 })
+    ),
+  ]
+
+  const insertBeforeLayerId = 'waterway-river-canal'
+  const waterwayIndex = selectedRawStyle.layers.findIndex(x => x.id === insertBeforeLayerId)
+  const insertIntoIndex = waterwayIndex >= 0 ? waterwayIndex + 1 : selectedRawStyle.layers.length
+  const safeLayers = [...selectedRawStyle.layers]
+  safeLayers.splice(insertIntoIndex + 1, 0, customLayers[0])
+  safeLayers.splice(insertIntoIndex + 1, 0, customLayers[1])
+
+  const mapboxProps: IMapboxGlProps = {
+    onMapInitialized: action('map initialized'),
+    camera,
+    // style: { ...selectedRawStyle },
+    style: {
+      ...selectedRawStyle,
+      layers: safeLayers,
+      sources: {
+        ...selectedRawStyle.sources,
+        'rush-river-layer': {
+          type: 'geojson',
+          data: RushRiver,
+        },
+        'whitewater-river-layer': {
+          type: 'geojson',
+          data: WhitewaterRiver,
+        },
+      },
+    },
+    onFeaturesSelected: action('features clicked'),
+  }
+  return <MapboxGlComponent {...mapboxProps} />
+})

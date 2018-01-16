@@ -1,10 +1,10 @@
 import * as React from 'react'
-// require('mapbox-gl/dist/mapbox-gl.css')
-// require('mapbox-gl/dist/svg/mapboxgl-ctrl-compass.svg')
-// require('mapbox-gl/dist/svg/mapboxgl-ctrl-geolocate.svg')
-// require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg')
-// require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg')
-require('./somebullshit.css')
+require('mapbox-gl/dist/mapbox-gl.css')
+require('mapbox-gl/dist/svg/mapboxgl-ctrl-compass.svg')
+require('mapbox-gl/dist/svg/mapboxgl-ctrl-geolocate.svg')
+require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg')
+require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg')
+
 import MapboxGlCamera from './MapboxGl.component.camera'
 import { ICameraProps } from '../ICameraProps'
 import * as mapboxGl from 'mapbox-gl'
@@ -18,17 +18,24 @@ export interface IMapboxGlProps {
   readonly onFeaturesSelected: (t: any) => void
   readonly onMapInitialized: (t: boolean) => void
   readonly style: mapboxGl.Style | string
-  readonly camera: ICameraProps
+  readonly camera?: ICameraProps
 }
 
-export class MapboxGlComponent extends React.Component<IMapboxGlProps> {
-  private map: mapboxgl.Map
+export interface IMapboxGlState {
+  readonly map: mapboxGl.Map
+  readonly isLoaded: boolean
+}
+export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGlState> {
   private mapContainer: HTMLDivElement
-  constructor(props) {
-    super(props)
+  constructor(props, state) {
+    super(props, state)
     this.onClick = this.onClick.bind(this)
     this.getInteractiveFeaturesOverPoint = this.getInteractiveFeaturesOverPoint.bind(this)
     this.onDataLoad = this.onDataLoad.bind(this)
+    this.state = {
+      map: null,
+      isLoaded: false,
+    }
   }
 
   onClick(e) {
@@ -42,8 +49,8 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps> {
 
   componentWillUpdate(nextProps) {
     const nextStyle = nextProps.style
-    if (this.props.style !== nextStyle) {
-      this.map.setStyle(nextStyle)
+    if (this.state.map != null && this.props.style !== nextStyle) {
+      this.state.map.setStyle(nextStyle)
     }
   }
 
@@ -63,13 +70,13 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps> {
       [point.x + BOX_DIMENSION / 2, point.y + BOX_DIMENSION / 2],
     ]
 
-    const features = this.map.queryRenderedFeatures(boundingBox)
+    const features = this.state.map.queryRenderedFeatures(boundingBox)
 
     return features
   }
 
   componentDidMount() {
-    this.map = new mapboxGl.Map({
+    const map = new mapboxGl.Map({
       container: this.mapContainer,
       style: this.props.style,
       center: [-93.5, 42],
@@ -77,19 +84,33 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps> {
     })
 
     // inactivate rotation.
-    this.map.dragRotate.disable()
-    this.map.touchZoomRotate.disableRotation()
-    this.map.on('click', this.onClick)
-    this.map.on('load', this.onDataLoad)
+    map.dragRotate.disable()
+    map.touchZoomRotate.disableRotation()
+    map.on('click', this.onClick)
+    // wait until we've loaded before setting the map property
+    map.on('load', e => {
+      // this.map = map
+      this.setState(
+        () => {
+          return {
+            map,
+            isLoaded: true,
+          }
+        },
+        () => {
+          this.onDataLoad(e)
+        }
+      )
+    })
   }
 
   onDataLoad(e) {
-    this.map.setStyle(this.props.style)
+    this.state.map.setStyle(this.props.style)
     this.props.onMapInitialized(true)
   }
 
   componentWillUnmount() {
-    if (this.map) {
+    if (this.state.map) {
       // adding and removing lots of maps
       // can cause a pretty bad memory leak
       // https://github.com/mapbox/mapbox-gl-js/issues/3264
@@ -97,12 +118,11 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps> {
       // remove events to be safe.
       // this component instance is gonna go away, but
       // GC is a mystery to some 👻
-      this.map.off('click', this.onClick)
+      this.state.map.off('click', this.onClick)
 
       // guh-bye!
-      this.map.remove()
+      this.state.map.remove()
     }
-    this.map = null
   }
 
   render() {
@@ -111,9 +131,10 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps> {
       height: '100%',
       touchAction: 'none',
     }
+
     return (
       <div style={style} ref={el => (this.mapContainer = el)}>
-        {this.map != null && <MapboxGlCamera camera={this.props.camera} map={this.map} />}
+        {this.state.isLoaded && <MapboxGlCamera camera={this.props.camera} map={this.state.map} />}
       </div>
     )
   }

@@ -14,8 +14,8 @@ function loadStories() {
 // addDecorator(StorybookStyleDecorator)
 addDecorator(story => {
   const content = story() // call story early so knob store is created before `select` call
-  const theme = select('Theme', { dark: 'dark', light: 'light' }, 'dark')
-  const themeClass = theme === 'dark' ? 'ts-dark' : 'ts-light'
+  const theme = select('Theme', { dark: 'dark', light: 'light', none: 'none' }, 'dark')
+  const themeClass = theme === 'dark' ? 'ts-dark' : theme === 'none' ? '' : 'ts-light'
   return (
     <div
       className={themeClass}

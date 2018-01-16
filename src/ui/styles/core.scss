@@ -93,6 +93,8 @@
   #storybookRoot,
   #root {
     height: 100%;
+    @include fallback(background-color, --background-color, blue);
+    @include fallback(color, --text-color-primary, blue);
   }
 
   #storybookRoot {

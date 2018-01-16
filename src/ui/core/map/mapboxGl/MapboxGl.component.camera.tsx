@@ -1,15 +1,18 @@
 import * as React from 'react'
 import { ICameraProps } from 'ui/core/map/ICameraProps'
 import { Map } from 'mapbox-gl'
-
+import { isEqual } from 'lodash'
 export interface IMapboxGlCameraProps {
   camera: ICameraProps
   map: Map
 }
 
-export default class MapboxGlComponentCamera extends React.Component<IMapboxGlCameraProps> {
+export default class MapboxGlComponentCamera extends React.PureComponent<IMapboxGlCameraProps> {
   updateCamera(camera: ICameraProps, map: Map) {
     const { bbox, padding } = camera
+    if (bbox == null) {
+      return
+    }
     if (padding == null) {
       map.fitBounds(bbox)
     } else {
@@ -26,7 +29,7 @@ export default class MapboxGlComponentCamera extends React.Component<IMapboxGlCa
       return
     }
 
-    if (camera != null && camera !== currentcamera) {
+    if (camera != null && isEqual(camera, currentcamera) === false) {
       this.updateCamera(camera, map)
     }
 

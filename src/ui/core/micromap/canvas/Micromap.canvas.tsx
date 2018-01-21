@@ -1,6 +1,6 @@
 // tslint:disable:no-object-mutation
 
-import { IStreamObject } from 'ui/core/IStreamObject'
+import { IStreamObject } from 'coreTypes/IStreamObject'
 import { IDimensionsSettings, IMicromapSettings, TAU } from '../Micromap.settings'
 import { drawRingToCanvas } from './ring.canvas'
 import { renderStreams } from './stream.canvas'

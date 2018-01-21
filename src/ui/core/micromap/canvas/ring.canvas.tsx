@@ -2,8 +2,8 @@
 // This file only does one thing: draw rings.
 // tslint:disable:max-file-line-count
 import { groupBy } from 'lodash'
-import { ISection } from 'ui/core/ISection'
-import { IStreamObject } from 'ui/core/IStreamObject'
+import { ISection } from 'coreTypes/ISection'
+import { IStreamObject } from 'coreTypes/IStreamObject'
 import { IMicromapSettings, TAU } from '../Micromap.settings'
 const colors = require('ui/styles/_colors.scss')
 

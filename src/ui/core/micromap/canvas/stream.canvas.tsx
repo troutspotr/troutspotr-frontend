@@ -1,5 +1,5 @@
 // tslint:disable:no-object-mutation
-import { IStreamObject } from 'ui/core/IStreamObject'
+import { IStreamObject } from 'coreTypes/IStreamObject'
 
 import { ExtendedFeature, geoPath, GeoPath, GeoPermissibleObjects } from 'd3-geo'
 

@@ -15,17 +15,21 @@
 
 .container {
   position: relative;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
 }
 
 .minimapContent {
   transform: scale(1);
   transition: 0.2s ease-in-out;
   touch-action: manipulation;
-  transform-origin: right top;
+  transform-origin: center;
   height: 100%;
   margin: 0;
   padding: 0;
-  border-color: transparentize($off-white, 1);
+  overflow: hidden;
+  // border-color: transparentize($off-white, 1);
   border-width: 1px;
   border-style: solid;
   position: relative;
@@ -42,12 +46,12 @@
     width: 100%;
   }
 
-  &.expand {
-    transform: translateY(55px) translateX(0px) scale(14.42);
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    border-color: transparent;
-  }
+  // &.expand {
+  //   transform: translateY(55px) translateX(0px) scale(14.42);
+  //   backface-visibility: hidden;
+  //   transform: translateZ(0);
+  //   border-color: transparent;
+  // }
 
   .tl {
     top: 0;

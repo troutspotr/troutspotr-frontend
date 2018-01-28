@@ -1,4 +1,4 @@
-import { ISection } from 'core/ISection'
+import { ISection } from 'coreTypes/ISection'
 
 export interface ITroutStreamSection extends ISection {
   gid: number

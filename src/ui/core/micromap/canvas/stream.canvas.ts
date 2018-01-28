@@ -5,10 +5,9 @@ import { ExtendedFeature, geoPath, GeoPath, GeoPermissibleObjects } from 'd3-geo
 
 import { Feature, LineString } from 'geojson'
 
-const colors = require('ui/styles/_colors.scss')
-import { getProjectionFromFeature } from '../GetProjectionFromFeature'
-import { IMicromapSettings } from '../Micromap.settings'
-import { renderPointOnStream } from './point.canvas'
+import { getProjectionFromFeature } from 'ui/core/micromap/GetProjectionFromFeature'
+import { IMicromapCanvasSettings } from 'ui/core/micromap/Micromap.settings'
+import { renderPointOnStream } from 'ui/core/micromap/canvas/point.canvas'
 
 export const renderStream = (
   // tslint:disable-next-line:no-any
@@ -45,14 +44,10 @@ export const renderStream = (
 export const renderStreams = (
   streamObject: IStreamObject,
   canvasContext: CanvasRenderingContext2D,
-  settings: IMicromapSettings
+  settings: IMicromapCanvasSettings
 ) => {
   const streamSettings = settings.settings.stream
-  const projection = getProjectionFromFeature(
-    streamObject.circle,
-    settings.dimensions,
-    settings.settings.circle
-  )
+  const projection = getProjectionFromFeature(streamObject.circle, settings)
 
   const pathGenerator = geoPath()
     .projection(projection)
@@ -64,17 +59,17 @@ export const renderStreams = (
     pathGenerator,
     canvasContext,
     streamObject.stream,
-    colors.gray,
+    settings.colors.stream,
     streamSettings.streamWidth
   )
 
   // render sections
-  streamObject.troutSections.forEach(section => {
+  streamObject.sections.forEach(section => {
     renderStream(
       pathGenerator,
       canvasContext,
       section,
-      colors.blue,
+      settings.colors.troutStreamSection,
       streamSettings.troutSectionWidth
     )
   })
@@ -85,7 +80,7 @@ export const renderStreams = (
       pathGenerator,
       canvasContext,
       section,
-      colors.green,
+      settings.colors.palSection,
       streamSettings.publicSectionWidth
     )
   })
@@ -99,7 +94,7 @@ export const renderStreams = (
     projection,
     canvasContext,
     streamConfluence,
-    colors.offWhite,
+    settings.colors.secondaryText,
     streamSettings.terminusDiameter * 0.5
   )
 }

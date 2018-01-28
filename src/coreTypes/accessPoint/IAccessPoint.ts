@@ -12,3 +12,10 @@ export interface IAccessPoint {
   is_previous_neighbor_same_road: boolean
   road_type_id: number
 }
+
+export interface IAccessPointGeoJsonProps extends IAccessPoint {
+  isParkable: boolean
+  bridgeType: 'permissionRequired' | 'publicTrout' | 'unsafe' | 'uninteresting'
+  alphabetLetter: string
+  slug: string
+}

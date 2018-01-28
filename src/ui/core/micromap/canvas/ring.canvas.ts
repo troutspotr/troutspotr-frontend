@@ -1,16 +1,15 @@
 // tslint:disable:no-object-mutation
 // This file only does one thing: draw rings.
 // tslint:disable:max-file-line-count
-import { groupBy } from 'lodash'
 import { ISection } from 'coreTypes/ISection'
 import { IStreamObject } from 'coreTypes/IStreamObject'
-import { IMicromapSettings, TAU } from '../Micromap.settings'
+import { IMicromapCanvasSettings, TAU } from 'ui/core/micromap/Micromap.settings'
 const colors = require('ui/styles/_colors.scss')
 
 const renderRing = (
   { start, stop, length }: ISection,
   context: CanvasRenderingContext2D,
-  settings: IMicromapSettings,
+  settings: IMicromapCanvasSettings,
   color = 'red',
   thickness = 1
 ) => {
@@ -39,9 +38,10 @@ const renderRing = (
 const renderPointAlongRing = (
   normalizedOffset: number,
   context: CanvasRenderingContext2D,
-  settings: IMicromapSettings,
+  settings: IMicromapCanvasSettings,
   color = 'red',
-  thickness = 1
+  thickness = 1,
+  radius: number
 ) => {
   const dimensions = {
     ...settings.dimensions,
@@ -49,11 +49,12 @@ const renderPointAlongRing = (
     rotationPhase: settings.settings.rotationPhase,
     radius: settings.settings.circle.radius,
   }
-  const { width, height, radius, arcCompressionRatio, rotationPhase } = dimensions
+  const { width, height, arcCompressionRatio, rotationPhase } = dimensions
   const normalizedArcLength = TAU * arcCompressionRatio
   const arcOffset = normalizedOffset * normalizedArcLength - rotationPhase
   const xCoordinate = Math.cos(arcOffset) * radius + width * 0.5
   const yCoordinate = Math.sin(arcOffset) * radius + height * 0.5
+  console.log(xCoordinate, yCoordinate)
   context.beginPath()
   context.fillStyle = color
   context.strokeStyle = color
@@ -64,7 +65,7 @@ const renderPointAlongRing = (
 export const drawPointAlongRing = (
   streamObject: IStreamObject,
   canvasContext: CanvasRenderingContext2D,
-  settings: IMicromapSettings,
+  settings: IMicromapCanvasSettings,
   scale = 1,
   color = colors.OffWhite,
   canvasCoordiantes: ReadonlyArray<number>
@@ -81,7 +82,7 @@ export const drawPointAlongRing = (
 export const renderPublicSectionRings = (
   streamObject: IStreamObject,
   canvasContext: CanvasRenderingContext2D,
-  settings: IMicromapSettings
+  settings: IMicromapCanvasSettings
 ) => {
   if (streamObject.stream.properties == null) {
     return
@@ -101,7 +102,7 @@ export const renderPublicSectionRings = (
       ring,
       canvasContext,
       settings,
-      colors.PalGreen,
+      settings.colors.palSection,
       settings.settings.circle.publicSectionWidth
     )
   })
@@ -110,7 +111,7 @@ export const renderPublicSectionRings = (
 export const renderStreamRing = (
   streamObject: IStreamObject,
   canvasContext: CanvasRenderingContext2D,
-  settings: IMicromapSettings
+  settings: IMicromapCanvasSettings
 ) => {
   const length =
     streamObject.stream.properties == null ? 0 : streamObject.stream.properties.length_mi
@@ -118,20 +119,26 @@ export const renderStreamRing = (
   const stop = length
   const ring: ISection = { start, stop, length }
 
-  renderRing(ring, canvasContext, settings, colors.StreamGray, settings.settings.stream.streamWidth)
+  renderRing(
+    ring,
+    canvasContext,
+    settings,
+    settings.colors.stream,
+    settings.settings.stream.streamWidth
+  )
 }
 
 export const renderTroutStreamSectionRings = (
   canvasContext: CanvasRenderingContext2D,
   streamObject: IStreamObject,
-  settings: IMicromapSettings
+  settings: IMicromapCanvasSettings
 ) => {
   if (streamObject.stream == null || streamObject.stream.properties == null) {
     return
   }
 
   const streamLength = streamObject.stream.properties.length_mi
-  streamObject.troutSections.forEach((section, index: number) => {
+  streamObject.sections.forEach((section, index: number) => {
     const ring: ISection = {
       start: section.properties == null ? 0 : section.properties.start,
       stop: section.properties == null ? 0 : section.properties.stop,
@@ -142,7 +149,7 @@ export const renderTroutStreamSectionRings = (
       ring,
       canvasContext,
       settings,
-      colors.StreamBlue,
+      settings.colors.troutStreamSection,
       settings.settings.circle.troutSectionWidth
     )
   })
@@ -151,8 +158,7 @@ export const renderTroutStreamSectionRings = (
 export const renderTerminusStreamRing = (
   streamObject: IStreamObject,
   canvasContext: CanvasRenderingContext2D,
-  settings: IMicromapSettings,
-  color = colors.OffWhite
+  settings: IMicromapCanvasSettings
 ) => {
   const { dimensions } = settings
   const canvasCoordinates = [
@@ -164,7 +170,7 @@ export const renderTerminusStreamRing = (
     canvasContext,
     settings,
     settings.settings.circle.terminusDiameter * 0.5,
-    color,
+    settings.colors.secondaryText,
     canvasCoordinates
   )
 }
@@ -172,39 +178,63 @@ export const renderTerminusStreamRing = (
 const renderRings = (
   canvasContext: CanvasRenderingContext2D,
   streamObject: IStreamObject,
-  settings: IMicromapSettings
+  settings: IMicromapCanvasSettings
 ) => {
   renderStreamRing(streamObject, canvasContext, settings)
   renderTroutStreamSectionRings(canvasContext, streamObject, settings)
   renderPublicSectionRings(streamObject, canvasContext, settings)
-  const accessPointTypes = groupBy(
-    streamObject.accessPoints,
-    ap => (ap.properties || {}).bridgeType
-  )
-  if (accessPointTypes.permissionRequired != null) {
-    accessPointTypes.permissionRequired.forEach(ap => {
-      const normalizedOffset = 0 // ap.properties.linear_offset
+  if (streamObject.accessPoints == null) {
+    return
+  }
+
+  streamObject.accessPoints.forEach(ap => {
+    const { bridgeType, linear_offset } = ap.properties
+
+    if (bridgeType === 'publicTrout') {
       renderPointAlongRing(
-        normalizedOffset,
+        linear_offset,
         canvasContext,
         settings,
-        colors.StreamBlue,
-        settings.settings.accessPoints.permissionRequiredDiameter * 0.5
+        settings.colors.palSection,
+        settings.settings.accessPoints.publiclyFishableDiameter * 0.5,
+        settings.settings.accessPoints.radius
       )
-    })
-  }
-  if (accessPointTypes.publicTrout != null) {
-    accessPointTypes.publicTrout.forEach(ap => {
-      const normalizedOffset = 0 // ap.properties.linear_offset
+    }
+
+    if (bridgeType === 'permissionRequired') {
       renderPointAlongRing(
-        normalizedOffset,
+        linear_offset,
         canvasContext,
         settings,
-        colors.PalGreen,
-        settings.settings.accessPoints.publiclyFishableDiameter * 0.5
+        settings.colors.troutStreamSection,
+        settings.settings.accessPoints.permissionRequiredDiameter * 0.5,
+        settings.settings.accessPoints.radius
       )
-    })
-  }
+    }
+  })
+  // if (accessPointTypes.permissionRequired != null) {
+  //   accessPointTypes.permissionRequired.forEach(ap => {
+  //     const normalizedOffset = ap.properties.linear_offset
+  //     renderPointAlongRing(
+  //       normalizedOffset,
+  //       canvasContext,
+  //       settings,
+  //       settings.colors.troutStreamSection,
+  //       settings.settings.accessPoints.permissionRequiredDiameter * 0.5
+  //     )
+  //   })
+  // }
+  // if (accessPointTypes.publicTrout != null) {
+  //   accessPointTypes.publicTrout.forEach(ap => {
+  //     const normalizedOffset = ap.properties.linear_offset
+  //     renderPointAlongRing(
+  //       normalizedOffset,
+  //       canvasContext,
+  //       settings,
+  //       settings.colors.palSection,
+  //       settings.settings.accessPoints.publiclyFishableDiameter * 0.5
+  //     )
+  //   })
 
   renderTerminusStreamRing(streamObject, canvasContext, settings)
 }
@@ -212,7 +242,7 @@ const renderRings = (
 export const drawRingToCanvas = (
   canvasContext: CanvasRenderingContext2D,
   streamObject: IStreamObject,
-  settings: IMicromapSettings
+  settings: IMicromapCanvasSettings
 ) => {
   renderRings(canvasContext, streamObject, settings)
   return canvasContext

@@ -40,7 +40,7 @@ $messageBackgroundLight: transparentize($backgroundLight, 0.8);
 /* stylelint-disable property-no-unknown */
 
 :export {
-  background: $messageBackgroundDark;
+  background: $backgroundDark;
   gray: $mine-shaft;
   bluegray: $river-bed;
   green: $fuego;

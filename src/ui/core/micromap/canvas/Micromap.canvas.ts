@@ -1,9 +1,13 @@
 // tslint:disable:no-object-mutation
 
 import { IStreamObject } from 'coreTypes/IStreamObject'
-import { IDimensionsSettings, IMicromapSettings, TAU } from '../Micromap.settings'
-import { drawRingToCanvas } from './ring.canvas'
-import { renderStreams } from './stream.canvas'
+import {
+  IDimensionsSettings,
+  IMicromapCanvasSettings,
+  TAU,
+} from 'ui/core/micromap/Micromap.settings'
+import { drawRingToCanvas } from 'ui/core/micromap/canvas/ring.canvas'
+import { renderStreams } from 'ui/core/micromap/canvas/stream.canvas'
 
 export const setUpCanvas = (
   canvasElement: HTMLCanvasElement,
@@ -46,10 +50,11 @@ export const drawBackground = (
 export const drawStreamToCanvas = (
   canvasContext: CanvasRenderingContext2D,
   streamObject: IStreamObject,
-  settings: IMicromapSettings
+  settings: IMicromapCanvasSettings
 ) => {
   const { dimensions } = settings
   canvasContext.clearRect(0, 0, dimensions.width, dimensions.height)
+  renderPetriDish(canvasContext, settings, settings.colors.petriDish)
   renderStreams(streamObject, canvasContext, settings)
   drawRingToCanvas(canvasContext, streamObject, settings)
   return canvasContext
@@ -57,7 +62,7 @@ export const drawStreamToCanvas = (
 
 export const renderPetriDish = (
   context: CanvasRenderingContext2D,
-  settings: IMicromapSettings,
+  settings: IMicromapCanvasSettings,
   color = 'red'
 ) => {
   const { width, height } = settings.dimensions

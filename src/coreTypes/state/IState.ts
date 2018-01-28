@@ -1,8 +1,8 @@
-import { IStreamCentroid } from 'core/state/IStreamCentroid'
-import { IRegulation } from 'core/state/IRegulation'
-import { IRoadType } from 'core/state/IRoadType'
-import { IPalType } from 'core/state/IPalType'
-import { IWaterOpener } from 'core/state/IWaterOpener'
+import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid'
+import { IRegulation } from 'coreTypes/state/IRegulation'
+import { IRoadType } from 'coreTypes/state/IRoadType'
+import { IPalType } from 'coreTypes/state/IPalType'
+import { IWaterOpener } from 'coreTypes/state/IWaterOpener'
 export interface IState {
   regionIndex: any
   streamCentroids: IStreamCentroid[]

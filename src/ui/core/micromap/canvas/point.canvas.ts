@@ -1,7 +1,7 @@
 // tslint:disable:no-object-mutation
 import { GeoProjection } from 'd3-geo'
 import { Position } from 'geojson'
-import { TAU } from '../Micromap.settings'
+import { TAU } from 'ui/core/micromap/Micromap.settings'
 
 export const renderPointOnStream = (
   projection: GeoProjection,

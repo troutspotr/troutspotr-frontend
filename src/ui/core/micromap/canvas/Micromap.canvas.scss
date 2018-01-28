@@ -1,0 +1,20 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+
+$microMap-sm: 300px;
+$microMap-md: $microMap-sm * 4;
+$microMap-lg: $microMap-sm * 8;
+
+.container {
+  position: relative;
+  transform: translateZ(0);
+  background-color: blue;
+}
+
+.microMap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

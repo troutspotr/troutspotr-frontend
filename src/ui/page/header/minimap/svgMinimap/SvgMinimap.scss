@@ -9,7 +9,7 @@
 
 .states {
   composes: polygon;
-  stroke: $off-white;
+  // stroke: $off-white;
   stroke-width: 0.1px;
   pointer-events: none;
 }
@@ -18,7 +18,7 @@
   composes: polygon;
 
   g {
-    stroke: $off-white;
+    // stroke: $off-white;
     fill: $background;
   }
 
@@ -38,11 +38,11 @@
   pointer-events: none;
 
   .closed {
-    fill: transparentize($blueGray, 0.3);
+    // fill: transparentize($blueGray, 0.3);
   }
 
   .open {
-    fill: transparentize($blue, 0.3);
+    // fill: transparentize($blue, 0.3);
   }
 }
 

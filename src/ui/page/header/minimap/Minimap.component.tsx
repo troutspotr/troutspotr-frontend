@@ -55,10 +55,18 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     this.setState(() => {
       const width = window.innerWidth > 0 ? window.innerWidth : screen.width
       const height = window.innerHeight > 0 ? window.innerHeight : screen.height
+
       return {
         windowHeight: height,
         windowWidth: width,
-        containerRect: rect,
+        containerRect: {
+          width: Math.round(rect.width),
+          height: Math.round(rect.height),
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+          bottom: Math.round(rect.bottom),
+          top: Math.round(rect.top),
+        },
       }
     })
   }

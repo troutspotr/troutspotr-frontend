@@ -5,7 +5,7 @@ import { ExtendedFeature, geoPath, GeoPath, GeoPermissibleObjects } from 'd3-geo
 
 import { Feature, LineString } from 'geojson'
 
-import { getProjectionFromFeature } from 'ui/core/micromap/GetProjectionFromFeature'
+import { getProjectionFromFeatureAndSettings } from 'ui/core/micromap/GetProjectionFromFeature'
 import { IMicromapCanvasSettings } from 'ui/core/micromap/Micromap.settings'
 import { renderPointOnStream } from 'ui/core/micromap/canvas/point.canvas'
 
@@ -47,7 +47,7 @@ export const renderStreams = (
   settings: IMicromapCanvasSettings
 ) => {
   const streamSettings = settings.settings.stream
-  const projection = getProjectionFromFeature(streamObject.circle, settings)
+  const projection = getProjectionFromFeatureAndSettings(streamObject.circle, settings)
 
   const pathGenerator = geoPath()
     .projection(projection)

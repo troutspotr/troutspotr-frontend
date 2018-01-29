@@ -1,17 +1,28 @@
 @import 'src/ui/styles/_colors';
 @import 'src/ui/styles/_variables';
+@import 'src/ui/styles/fallback';
+
+.container {
+  background-color: transparent;
+  // transition: color 800ms, background-color 800ms;
+  // @include fallback(background-color, --message-background-color, $messageBackgroundDark);
+}
+
+.sneezeGuard {
+  fill: transparent;
+}
 
 .polygon {
   fill: transparent;
-  stroke-width: 0.3px;
   stroke-linejoin: round;
 }
 
 .states {
   composes: polygon;
-  // stroke: $off-white;
-  stroke-width: 0.1px;
-  pointer-events: none;
+  transition: stroke 800ms;
+  @include fallback(stroke, --text-color-primary, $offTextDark);
+  // stroke-width: 3px;
+  background-color: green;
 }
 
 .regions {
@@ -19,7 +30,7 @@
 
   g {
     // stroke: $off-white;
-    fill: $background;
+    // fill: $background;
   }
 
   g:hover {
@@ -48,14 +59,14 @@
 
 .selectedStreamCentroid {
   composes: polygon;
-  fill: $blue;
+  // fill: $blue;
 }
 
 .selectedRegions {
   pointer-events: none;
 
   g {
-    stroke: $blue;
+    // stroke: $blue;
     stroke-width: 0.8px;
   }
 
@@ -64,17 +75,17 @@
 
 .cachedRegion {
   // fill: transparentize($green, 0.8)
-  fill: transparentize($gray, 0.1);
+  // fill: transparentize($gray, 0.1);
 }
 
 .notChachedRegion {
-  fill: transparentize($blue, 0.1);
+  // fill: transparentize($blue, 0.1);
 }
 
 .regions .inactiveRegion {
   stroke: $gray;
   stroke-width: 0.2px;
-  fill: transparentize($background, 0.1);
+  // fill: transparentize($background, 0.1);
   cursor: default;
   :hover {
     fill: none !important;
@@ -85,7 +96,7 @@
 
 .gpsCoordinates {
   composes: centroids;
-  fill: transparentize($red, 0.3);
+  // fill: transparentize($red, 0.3);
 }
 
 .expand from '../Minimap.scss' {

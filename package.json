@@ -5,8 +5,11 @@
   "dependencies": {
     "@storybook/addon-knobs": "^3.3.3",
     "@turf/bbox": "^5.1.5",
+    "@turf/bbox-polygon": "^5.1.5",
     "@turf/circle": "^5.1.5",
     "@types/d3-geo": "^1.9.4",
+    "@types/d3-selection": "^1.2.0",
+    "@types/d3-zoom": "^1.7.0",
     "@types/es6-promise": "^3.3.0",
     "@types/lodash": "^4.14.91",
     "@types/mapbox-gl": "^0.43.0",
@@ -26,6 +29,8 @@
     "css-loader": "^0.28.8",
     "d3-geo": "^1.9.1",
     "d3-path": "^1.0.5",
+    "d3-selection": "^1.2.0",
+    "d3-zoom": "^1.7.1",
     "dotenv": "4.0.0",
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "0.11.2",
@@ -86,8 +91,7 @@
     "test:ci": "CI=true node scripts/test.js --env=jsdom --forceExit",
     "test:inspect": "node --inspect-brk=58585 scripts/test.js --runInBand",
     "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/**/*.{ts,tsx}\"",
-    "lint:fix":
-      "node_modules/.bin/tslint --project tsconfig.json \"src/**/*.{ts,tsx}\" --fix --format codeFrame",
+    "lint:fix": "node_modules/.bin/tslint --project tsconfig.json \"src/**/*.{ts,tsx}\" --fix --format codeFrame",
     "storybook": "cross-env NODE_PATH=src/ start-storybook -p 6006 -s src/static",
     "build-storybook": "build-storybook",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
@@ -104,9 +108,15 @@
   },
   "jest": {
     "mapCoverage": true,
-    "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}"],
-    "setupFiles": ["<rootDir>/config/polyfills.js"],
-    "testMatch": ["<rootDir>/src/**/?(*.)(spec|test).ts?(x)"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/?(*.)(spec|test).ts?(x)"
+    ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
@@ -114,7 +124,9 @@
       "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$"],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$"
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
@@ -137,7 +149,9 @@
     }
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -4,23 +4,42 @@ import { select } from '@storybook/addon-knobs'
 import { keyBy } from 'lodash'
 import { storiesOf } from '@storybook/react'
 import boundingBox from '@turf/bbox'
+import { featureCollection } from '@turf/helpers'
 
 import {
-  // Feature,
+  Feature,
   MultiPolygon,
   // Point,
   FeatureCollection,
 } from 'geojson'
 
 import { IState } from 'coreTypes/tableOfContents/IState'
+import { IRegion } from 'coreTypes/tableOfContents/IRegion'
 const US_STATES = require('ui/page/header/minimap/_stubs/states.geo.json') as FeatureCollection<
   MultiPolygon,
   IState
 >
 
-const US_STATES_DICTIONARY = keyBy(US_STATES.features, x => x.properties.name)
+const REGIONS = require('ui/page/header/minimap/_stubs/regions.geo.json') as FeatureCollection<
+  MultiPolygon,
+  IRegion
+>
+
+const RegionHash: { [key: string]: [Feature<MultiPolygon, IRegion>] } = {}
+
+const regionionsByName = REGIONS.features.reduce((dictionary, item) => {
+  if (dictionary[item.properties.state_short_name] == null) {
+    dictionary[item.properties.state_short_name] = [item]
+    return dictionary
+  }
+
+  dictionary[item.properties.state_short_name].push(item)
+  return dictionary
+}, RegionHash)
+
+const US_STATES_DICTIONARY = keyBy(US_STATES.features, x => x.properties.short_name)
 const US_STATES_KEYS = US_STATES.features.reduce((dictionary, item) => {
-  dictionary[item.properties.name] = item.properties.name
+  dictionary[item.properties.short_name] = item.properties.short_name
   return dictionary
 }, {})
 const usStateOptions = {
@@ -29,14 +48,14 @@ const usStateOptions = {
 }
 
 const stories = storiesOf('Page/Header/Minimap/SvgMinimap', module)
-
-const getSelectedState = () => {
-  const selectedItem = select('Selected US State', usStateOptions, 'All')
-  if (selectedItem === 'All') {
+const getSelectedStateName = (): string => {
+  return select('Selected US State', usStateOptions, 'All') || 'All'
+}
+const getSelectedState = (stateName: string) => {
+  if (stateName === 'All') {
     return US_STATES
   }
-
-  return US_STATES_DICTIONARY[selectedItem]
+  return US_STATES_DICTIONARY[stateName]
 }
 
 stories.add('Just states', () => {
@@ -48,7 +67,7 @@ stories.add('Just states', () => {
     height: `${height}px`,
   }
 
-  const selectedState = getSelectedState()
+  const selectedState = getSelectedState(getSelectedStateName())
   const bbox = boundingBox(selectedState)
   const cameraProps = {
     bbox: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
@@ -67,6 +86,10 @@ stories.add('Just states', () => {
     height,
     width,
     usStatesGeojson: US_STATES,
+    regionsGeojson: {
+      features: [],
+      type: 'FeatureCollection',
+    },
     camera: cameraProps,
   }
   return (
@@ -76,7 +99,7 @@ stories.add('Just states', () => {
   )
 })
 
-stories.add('Crazy content', () => {
+stories.add('States and regions', () => {
   const width = 500
   const height = 500
 
@@ -84,11 +107,35 @@ stories.add('Crazy content', () => {
     width: `${width}px`,
     height: `${height}px`,
   }
+  const stateName = getSelectedStateName()
+  const selectedState = getSelectedState(stateName)
+  const bbox = boundingBox(selectedState)
+  const regions =
+    stateName === 'All'
+      ? ({
+          features: [],
+          type: 'FeatureCollection',
+        } as FeatureCollection<MultiPolygon, IRegion>)
+      : (featureCollection(regionionsByName[stateName]) as FeatureCollection<MultiPolygon, IRegion>)
+  const cameraProps = {
+    bbox: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
+    pitch: 0,
+    bearing: 0,
+    speed: 0,
+    padding: {
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+    },
+  }
 
   const props: IMinimapSvgProps = {
     height,
     width,
     usStatesGeojson: US_STATES,
+    regionsGeojson: regions,
+    camera: cameraProps,
   }
   return (
     <div style={style}>

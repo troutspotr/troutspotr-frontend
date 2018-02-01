@@ -22,12 +22,13 @@
   transition: stroke 800ms;
   @include fallback(stroke, --text-color-primary, $offTextDark);
   // stroke-width: 3px;
+  transform-origin: center;
   background-color: green;
 }
 
 .regions {
   composes: polygon;
-
+  @include fallback(stroke, --text-color-primary, $offTextDark);
   g {
     // stroke: $off-white;
     // fill: $background;
@@ -35,7 +36,6 @@
 
   g:hover {
     fill: transparentize($gray, 0);
-    stroke-width: 0.4px;
     cursor: pointer;
   }
 }
@@ -67,7 +67,7 @@
 
   g {
     // stroke: $blue;
-    stroke-width: 0.8px;
+    // stroke-width: 0.8px;
   }
 
   composes: polygon;
@@ -84,7 +84,7 @@
 
 .regions .inactiveRegion {
   stroke: $gray;
-  stroke-width: 0.2px;
+  // stroke-width: 0.2px;
   // fill: transparentize($background, 0.1);
   cursor: default;
   :hover {
@@ -100,7 +100,7 @@
 }
 
 .expand from '../Minimap.scss' {
-  .regions {
-    stroke-width: 0.1px;
-  }
+  // .regions {
+  //   // stroke-width: 0.1px;
+  // }
 }

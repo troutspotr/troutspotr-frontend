@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-  // Feature,
   MultiPolygon,
   // Point,
   FeatureCollection,
@@ -9,19 +8,20 @@ import bboxPolygon from '@turf/bbox-polygon'
 // import { ICounty } from 'coreTypes/tableOfContents/ICounty'
 import { IState } from 'coreTypes/tableOfContents/IState'
 import { getProjectionFromFeature } from 'ui/core/micromap/GetProjectionFromFeature'
-// import { IRegion } from 'coreTypes/tableOfContents/IRegion'
+import { IRegion } from 'coreTypes/tableOfContents/IRegion'
 import { ICameraProps } from 'ui/core/map/ICameraProps'
 
 import * as d3Selection from 'd3-selection'
 import * as d3Zoom from 'd3-zoom'
 import * as d3Geo from 'd3-geo'
+// import { multiPolygon } from '@turf/helpers'
 
 const styles = require('./SvgMinimap.scss')
 
 export interface IMinimapSvgProps {
   // readonly isExpanded: boolean
   readonly usStatesGeojson: FeatureCollection<MultiPolygon, IState>
-  // readonly regionsGeojson: ReadonlyArray<Feature<MultiPolygon, IRegion>>
+  readonly regionsGeojson: FeatureCollection<MultiPolygon, IRegion>
   // readonly countiesGeojson: ReadonlyArray<Feature<MultiPolygon, ICounty>>
   // readonly cachedRegionsGeojson: ReadonlyArray<Feature<MultiPolygon, IRegion>>
   // readonly gpsFeature: Feature<Point>
@@ -40,14 +40,18 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     this.zoomed = this.zoomed.bind(this)
     this.clicked = this.clicked.bind(this)
     this.reset = this.reset.bind(this)
+    this.renderData = this.renderData.bind(this)
+
     this.active = d3Selection.select(null)
   }
 
   private projection: d3Geo.GeoProjection = null
   private zoom: any = null
-  private path: d3Geo.GeoPath<any, d3Geo.GeoPermissibleObjects> = null
+  private path: d3Geo.GeoPath<SVGPathElement, d3Geo.GeoPermissibleObjects> = null
   private active: any = null
-  private g: any = null
+  private mapGroup: any = null
+  private stateGroup: any = null
+  private regionGroup: any = null
   private svg: any = null
 
   private containerElement: HTMLDivElement = null
@@ -59,14 +63,12 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
 
     this.active.classed('active', false)
     this.active = d3Selection.select(item).classed('active', true)
-
     this.setCameraToItem(d)
   }
 
   setCameraToItem(d) {
     const { width, height } = this.props
     const bounds = this.path.bounds(d)
-    console.log(bounds)
     const dx = bounds[1][0] - bounds[0][0]
     const dy = bounds[1][1] - bounds[0][1]
     const x = (bounds[0][0] + bounds[1][0]) / 2
@@ -80,7 +82,7 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       .call(
         this.zoom.transform,
         d3Zoom.zoomIdentity.translate(translate[0], translate[1]).scale(scale)
-      ) // updated for d3 v4
+      )
   }
 
   reset() {
@@ -90,12 +92,12 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     this.svg
       .transition()
       .duration(750)
-      .call(this.zoom.transform, d3Zoom.zoomIdentity) // updated for d3 v4
+      .call(this.zoom.transform, d3Zoom.zoomIdentity)
   }
 
   zoomed() {
-    this.g.style('stroke-width', 1.5 / d3Selection.event.transform.k + 'px')
-    this.g.attr('transform', d3Selection.event.transform) // updated for d3 v4
+    this.stateGroup.style('stroke-width', 1.5 / d3Selection.event.transform.k + 'px')
+    this.stateGroup.attr('transform', d3Selection.event.transform)
   }
 
   stopped() {
@@ -104,8 +106,9 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     }
   }
 
-  componentWillUpdate(nextProps) {
-    const { camera } = nextProps
+  componentDidUpdate() {
+    const { camera } = this.props
+    this.renderData()
     this.centerCameraOnCamera(camera)
   }
 
@@ -130,7 +133,7 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     const { width, height } = this.props
 
     this.projection = d3Geo
-      .geoAlbersUsa() // updated for d3 v4
+      .geoAlbersUsa()
       .scale(1000)
       .translate([width / 2, height / 2])
 
@@ -139,9 +142,7 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       .scaleExtent([1, 8])
       .on('zoom', this.zoomed)
 
-    this.path = d3Geo
-      .geoPath() // updated for d3 v4se
-      .projection(this.projection)
+    this.path = d3Geo.geoPath().projection(this.projection)
 
     this.svg = d3Selection
       .select(`.${styles.container}`)
@@ -157,7 +158,10 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       .attr('height', height)
       .on('click', this.reset)
 
-    this.g = this.svg.append('g')
+    this.mapGroup = this.svg.append('g').attr('class', 'js-d3-map')
+    console.log(this.mapGroup)
+    this.stateGroup = this.svg.append('g').attr('class', 'states')
+    this.regionGroup = this.stateGroup.append('g').attr('class', 'regions')
 
     this.svg.call(this.zoom) // delete this line to disable free zooming
     this.renderData()
@@ -165,34 +169,63 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
   }
 
   renderData() {
-    const { usStatesGeojson, width, height } = this.props
-
+    const { usStatesGeojson, regionsGeojson, width, height } = this.props
     this.projection = getProjectionFromFeature(
       usStatesGeojson,
       { width, height },
       Math.min(width, height) * 0.5
     )
-    this.path = d3Geo
-      .geoPath() // updated for d3 v4
-      .projection(this.projection)
+    this.path = d3Geo.geoPath().projection(this.projection)
 
     const obnoxiousClosure = this.clicked
-    this.g
-      .selectAll('path')
-      .data(usStatesGeojson.features)
-      .enter()
-      .append('path')
-      .attr('d', this.path)
-      .attr('class', styles.states)
-      .on('click', function(asdf) {
-        obnoxiousClosure(asdf, this)
+
+    const regionSelection = this.regionGroup
+      .selectAll(`path.js-d3-regions`)
+      .data(regionsGeojson.features, x => {
+        return x.properties.gid
       })
 
-    this.g
+    regionSelection
+      .enter()
       .append('path')
-      .datum(usStatesGeojson.features)
-      .attr('class', 'mesh')
+      .attr('class', `js-d3-regions ${styles.regions}`)
       .attr('d', this.path)
+      .on('click', function(item) {
+        obnoxiousClosure(item, this)
+      })
+      .style('opacity', 0)
+      .transition()
+      .duration(300)
+      .style('opacity', 1)
+
+    regionSelection
+      .exit()
+      .transition()
+      .duration(300)
+      .style('opacity', 0)
+      .remove()
+
+    const stateSelection = this.stateGroup
+      .selectAll(`path.js-d3-states`)
+      .data([...usStatesGeojson.features], x => {
+        return x.properties.gid
+      })
+
+    stateSelection
+      .enter()
+      .append('path')
+      .attr('class', `js-d3-states ${styles.states}`)
+      .attr('d', this.path)
+      .on('click', function(item) {
+        obnoxiousClosure(item, this)
+      })
+
+    stateSelection
+      .exit()
+      .transition()
+      .duration(300)
+      .style('opacity', 0)
+      .remove()
   }
 
   render() {

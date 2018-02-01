@@ -96,8 +96,9 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
   }
 
   zoomed() {
-    this.stateGroup.style('stroke-width', 1.5 / d3Selection.event.transform.k + 'px')
-    this.stateGroup.attr('transform', d3Selection.event.transform)
+    this.stateGroup.style('stroke-width', 2.2 / d3Selection.event.transform.k + 'px')
+    this.regionGroup.style('stroke-width', 1.5 / d3Selection.event.transform.k + 'px')
+    this.mapGroup.attr('transform', d3Selection.event.transform)
   }
 
   stopped() {
@@ -159,9 +160,8 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       .on('click', this.reset)
 
     this.mapGroup = this.svg.append('g').attr('class', 'js-d3-map')
-    console.log(this.mapGroup)
-    this.stateGroup = this.svg.append('g').attr('class', 'states')
-    this.regionGroup = this.stateGroup.append('g').attr('class', 'regions')
+    this.stateGroup = this.mapGroup.append('g').attr('class', 'states')
+    this.regionGroup = this.mapGroup.append('g').attr('class', 'regions')
 
     this.svg.call(this.zoom) // delete this line to disable free zooming
     this.renderData()

@@ -1,3 +1,4 @@
+import { IRegulation } from 'coreTypes/state/IRegulation'
 export interface IWaterOpener {
   id: number
   name: string
@@ -10,4 +11,5 @@ export interface IOpener {
   id: number
   water_id: number
   restriction_id: number
+  restriction?: IRegulation
 }

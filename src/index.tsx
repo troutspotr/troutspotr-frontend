@@ -4,10 +4,10 @@ import { browserHistory } from 'react-router'
 import { createRoutes } from 'ui/routes/Routes'
 import { store } from 'ui/redux/Store.redux'
 import 'ui/styles/core.scss'
-import { TroutMapsAppContainer } from 'ui/TroutMapsAppContainer'
+import { TroutSpotrAppContainer } from 'ui/TroutSpotrAppContainer'
 
 const routes = createRoutes()
 ReactDOM.render(
-  <TroutMapsAppContainer history={browserHistory} store={store} routes={routes} />,
+  <TroutSpotrAppContainer history={browserHistory} store={store} routes={routes} />,
   document.getElementById('root') as HTMLElement
 )

@@ -1,15 +1,16 @@
 import { connect } from 'react-redux'
-import { FooterComponent } from './Footer.component'
+import { FooterComponent, IFooterStateProps } from './Footer.component'
 import { setViewToList, setViewToMap } from 'ui/core/Core.redux'
 import { viewSelector } from 'ui/core//Core.selectors'
-import { selectedStreamObjectSelector } from 'ui/routes/_state/_region/Region.selectors'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+import { selectedStreamObjectSelector } from 'ui/routes/@usState/@region/Region.selectors'
 import {
-  getGpsCoordinateFeatureSelector,
+  // getGpsCoordinateFeatureSelector,
   getIsActiveAndSuccessful,
   getIsGpsActiveButLoading,
-  gpsCoordinatesLoadingStatusStateSelector,
+  // gpsCoordinatesLoadingStatusStateSelector,
   isGpsFailedSelector,
-  isGpsTrackingActiveStateSelector,
+  // isGpsTrackingActiveStateSelector,
   isGpsTrackingSupportedStateSelector,
 } from './gps/Gps.selectors'
 import { startGpsTracking, stopGpsTracking } from './gps/Gps.redux'
@@ -21,34 +22,24 @@ export interface IFooterDispatchProps {
   stopGpsTracking: () => void
 }
 
-export interface IFooterStateProps {
-  isGpsTrackingSupported: boolean
-  isGpsActiveButLoading: boolean
-  isGpsActiveAndSuccessful: boolean
-  isGpsFailed: boolean
-}
-
 const mapDispatchToProps = (dispatch): IFooterDispatchProps => ({
-  setViewToMap: () => dispatch(setViewToMap()),
-  setViewToList: () => dispatch(setViewToList()),
+  setViewToMap: () => dispatch(setViewToMap(null)),
+  setViewToList: () => dispatch(setViewToList(null)),
   startGpsTracking: () => dispatch(startGpsTracking()),
   stopGpsTracking: () => dispatch(stopGpsTracking()),
 })
 
-const mapStateToProps = (state): IFooterStateProps => {
-  const props = {
-    isGpsTrackingSupported: isGpsTrackingSupportedStateSelector(state),
-    status: gpsCoordinatesLoadingStatusStateSelector(state),
-    isGpsTrackingActive: isGpsTrackingActiveStateSelector(state),
-    gpsCoordinateFeature: getGpsCoordinateFeatureSelector(state),
-    isGpsActiveButLoading: getIsGpsActiveButLoading(state),
-    isGpsActiveAndSuccessful: getIsActiveAndSuccessful(state),
-    isGpsFailed: isGpsFailedSelector(state),
-    view: viewSelector(state),
-    selectedStream: selectedStreamObjectSelector(state),
+const mapStateToProps = (reduxState: IReduxState): IFooterStateProps => {
+  const props: IFooterStateProps = {
+    isGpsTrackingSupported: isGpsTrackingSupportedStateSelector(reduxState),
+    isGpsActiveButLoading: getIsGpsActiveButLoading(reduxState),
+    isGpsActiveAndSuccessful: getIsActiveAndSuccessful(reduxState),
+    isGpsFailed: isGpsFailedSelector(reduxState),
+    view: viewSelector(reduxState),
+    selectedStream: selectedStreamObjectSelector(reduxState),
   }
 
   return props
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FooterComponent)
+export const FooterContainer = connect(mapStateToProps, mapDispatchToProps)(FooterComponent)

@@ -22,4 +22,5 @@ export interface IStream {
   circular_box_xmax: number
   trout_stream_section_length: number
   publicly_accessible_trout_stream_section_length: number
+  linear_offset: number
 }

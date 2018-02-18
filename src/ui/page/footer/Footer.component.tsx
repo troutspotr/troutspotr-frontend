@@ -1,23 +1,32 @@
 import * as React from 'react'
 const classes = require('./Footer.scss')
-import { LIST, MAP } from 'ui/core/Core.redux'
+import { View } from 'ui/core/Core.redux'
 import { isEmpty } from 'lodash'
-import { FooterGpsComponent, IGpsComponentProps } from './gps/Footer.gps.component'
+import {
+  FooterGpsComponent,
+  // IGpsComponentProps,
+  IGpsDispatchProps,
+  IGpsComponentStateProps,
+} from './gps/Footer.gps.component'
 
-export interface IFooterComponent extends IGpsComponentProps {
-  view: string
+export interface IFooterDispatchProps extends IGpsDispatchProps {
   setViewToMap: () => void
   setViewToList: () => void
+}
+export interface IFooterStateProps extends IGpsComponentStateProps {
+  view: View
   selectedStream: any
 }
 
-export class FooterComponent extends React.PureComponent<IFooterComponent> {
+export interface IFooterProps extends IFooterDispatchProps, IFooterStateProps {}
+
+export class FooterComponent extends React.PureComponent<IFooterProps> {
   render() {
     const { view, selectedStream } = this.props
     const listText = isEmpty(selectedStream) ? 'List' : 'Details'
 
-    const listClass = view === LIST ? classes.selected : classes.item
-    const mapClass = view === MAP ? classes.selected : classes.item
+    const listClass = view === View.list ? classes.selected : classes.item
+    const mapClass = view === View.map ? classes.selected : classes.item
     return (
       <div className={classes.footer}>
         <div className={classes.menu}>

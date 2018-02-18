@@ -1,4 +1,3 @@
-console.log('lksjdfljk')
 import { browserHistory } from 'react-router'
 import { applyMiddleware, compose, createStore } from 'redux'
 import promiseMiddleware from 'redux-promise-middleware'

@@ -20,8 +20,10 @@ const styles = require('./SvgMinimap.scss')
 
 export interface IMinimapSvgProps {
   // readonly isExpanded: boolean
-  readonly usStatesGeojson: FeatureCollection<MultiPolygon, IState>
-  readonly regionsGeojson: FeatureCollection<MultiPolygon, IRegion>
+  readonly usStatesGeoJson: FeatureCollection<MultiPolygon, IState>
+  readonly availableRegionsGeoJson: FeatureCollection<MultiPolygon, IRegion>
+  readonly loadingRegionsGeoJson: FeatureCollection<MultiPolygon, IRegion>
+  readonly selectedRegionsGeoJson: FeatureCollection<MultiPolygon, IRegion>
   // readonly countiesGeojson: ReadonlyArray<Feature<MultiPolygon, ICounty>>
   // readonly cachedRegionsGeojson: ReadonlyArray<Feature<MultiPolygon, IRegion>>
   // readonly gpsFeature: Feature<Point>
@@ -52,6 +54,7 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
   private mapGroup: any = null
   private stateGroup: any = null
   private regionGroup: any = null
+  private loadingRegionsGroup: any = null
   private svg: any = null
 
   private containerElement: HTMLDivElement = null
@@ -98,6 +101,7 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
   zoomed() {
     this.stateGroup.style('stroke-width', 2.2 / d3Selection.event.transform.k + 'px')
     this.regionGroup.style('stroke-width', 1.5 / d3Selection.event.transform.k + 'px')
+    this.loadingRegionsGroup.style('stroke-width', 3 / d3Selection.event.transform.k + 'px')
     this.mapGroup.attr('transform', d3Selection.event.transform)
   }
 
@@ -162,6 +166,7 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     this.mapGroup = this.svg.append('g').attr('class', 'js-d3-map')
     this.stateGroup = this.mapGroup.append('g').attr('class', 'states')
     this.regionGroup = this.mapGroup.append('g').attr('class', 'regions')
+    this.loadingRegionsGroup = this.mapGroup.append('g').attr('class', 'loading-regions')
 
     this.svg.call(this.zoom) // delete this line to disable free zooming
     this.renderData()
@@ -169,9 +174,15 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
   }
 
   renderData() {
-    const { usStatesGeojson, regionsGeojson, width, height } = this.props
+    const {
+      usStatesGeoJson,
+      availableRegionsGeoJson,
+      width,
+      height,
+      loadingRegionsGeoJson,
+    } = this.props
     this.projection = getProjectionFromFeature(
-      usStatesGeojson,
+      usStatesGeoJson,
       { width, height },
       Math.min(width, height) * 0.5
     )
@@ -181,7 +192,7 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
 
     const regionSelection = this.regionGroup
       .selectAll(`path.js-d3-regions`)
-      .data(regionsGeojson.features, x => {
+      .data(availableRegionsGeoJson.features, x => {
         return x.properties.gid
       })
 
@@ -195,19 +206,19 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       })
       .style('opacity', 0)
       .transition()
-      .duration(300)
+      .duration(400)
       .style('opacity', 1)
 
     regionSelection
       .exit()
       .transition()
-      .duration(300)
+      .duration(400)
       .style('opacity', 0)
       .remove()
 
     const stateSelection = this.stateGroup
       .selectAll(`path.js-d3-states`)
-      .data([...usStatesGeojson.features], x => {
+      .data([...usStatesGeoJson.features], x => {
         return x.properties.gid
       })
 
@@ -223,6 +234,36 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     stateSelection
       .exit()
       .transition()
+      .duration(300)
+      .style('opacity', 0)
+      .remove()
+
+    // loadingRegionsGroup
+    const loadingRegionsSelection = this.loadingRegionsGroup
+      .selectAll(`path.js-d3-loading-regions`)
+      .data([...loadingRegionsGeoJson.features], x => {
+        return x.properties.gid
+      })
+
+    loadingRegionsSelection
+      .enter()
+      .append('path')
+      .attr('class', `js-d3-loading-regions ${styles.loadingRegions}`)
+      .attr('d', this.path)
+      .on('click', function(item) {
+        obnoxiousClosure(item, this)
+      })
+      .style('opacity', 0)
+      .transition()
+      .duration(400)
+      .style('opacity', 1)
+
+    loadingRegionsSelection
+      .exit()
+      .transition()
+      .duration(300)
+      .style('opacity', 0)
+      .remove()
       .duration(300)
       .style('opacity', 0)
       .remove()

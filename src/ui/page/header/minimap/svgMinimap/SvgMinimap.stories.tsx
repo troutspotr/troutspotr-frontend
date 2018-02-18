@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { MinimapSvgComponent, IMinimapSvgProps } from './SvgMinimap.component'
 import { select } from '@storybook/addon-knobs'
-import { keyBy } from 'lodash'
+import { keyBy, head } from 'lodash'
 import { storiesOf } from '@storybook/react'
 import boundingBox from '@turf/bbox'
 import { featureCollection } from '@turf/helpers'
@@ -24,7 +24,10 @@ const REGIONS = require('ui/page/header/minimap/_stubs/regions.geo.json') as Fea
   MultiPolygon,
   IRegion
 >
-
+const emptyRegion = {
+  features: [],
+  type: 'FeatureCollection',
+} as FeatureCollection<MultiPolygon, IRegion>
 const RegionHash: { [key: string]: [Feature<MultiPolygon, IRegion>] } = {}
 
 const regionionsByName = REGIONS.features.reduce((dictionary, item) => {
@@ -85,11 +88,10 @@ stories.add('Just states', () => {
   const props: IMinimapSvgProps = {
     height,
     width,
-    usStatesGeojson: US_STATES,
-    regionsGeojson: {
-      features: [],
-      type: 'FeatureCollection',
-    },
+    usStatesGeoJson: US_STATES,
+    availableRegionsGeoJson: emptyRegion,
+    loadingRegionsGeoJson: emptyRegion,
+    selectedRegionsGeoJson: emptyRegion,
     camera: cameraProps,
   }
   return (
@@ -112,10 +114,7 @@ stories.add('States and regions', () => {
   const bbox = boundingBox(selectedState)
   const regions =
     stateName === 'All'
-      ? ({
-          features: [],
-          type: 'FeatureCollection',
-        } as FeatureCollection<MultiPolygon, IRegion>)
+      ? emptyRegion
       : (featureCollection(regionionsByName[stateName]) as FeatureCollection<MultiPolygon, IRegion>)
   const cameraProps = {
     bbox: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
@@ -133,9 +132,111 @@ stories.add('States and regions', () => {
   const props: IMinimapSvgProps = {
     height,
     width,
-    usStatesGeojson: US_STATES,
-    regionsGeojson: regions,
+    usStatesGeoJson: US_STATES,
+    availableRegionsGeoJson: regions,
     camera: cameraProps,
+    loadingRegionsGeoJson: emptyRegion,
+    selectedRegionsGeoJson: emptyRegion,
+  }
+  return (
+    <div style={style}>
+      <MinimapSvgComponent {...props} />
+    </div>
+  )
+})
+
+stories.add('Region Loading', () => {
+  const width = 500
+  const height = 500
+
+  const style = {
+    width: `${width}px`,
+    height: `${height}px`,
+  }
+  const stateName = getSelectedStateName()
+  const selectedState = getSelectedState(stateName)
+  const bbox = boundingBox(selectedState)
+  const regions =
+    stateName === 'All'
+      ? emptyRegion
+      : (featureCollection(regionionsByName[stateName]) as FeatureCollection<MultiPolygon, IRegion>)
+
+  const firstRegion = head(regions.features)
+  const loadingRegionsFeatureCollection =
+    firstRegion == null
+      ? emptyRegion
+      : (featureCollection([firstRegion]) as FeatureCollection<MultiPolygon, IRegion>)
+  const cameraProps = {
+    bbox: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
+    pitch: 0,
+    bearing: 0,
+    speed: 0,
+    padding: {
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+    },
+  }
+
+  const props: IMinimapSvgProps = {
+    height,
+    width,
+    usStatesGeoJson: US_STATES,
+    availableRegionsGeoJson: regions,
+    camera: cameraProps,
+    loadingRegionsGeoJson: loadingRegionsFeatureCollection,
+    selectedRegionsGeoJson: emptyRegion,
+  }
+  return (
+    <div style={style}>
+      <MinimapSvgComponent {...props} />
+    </div>
+  )
+})
+
+stories.add('Region Selected', () => {
+  const width = 500
+  const height = 500
+
+  const style = {
+    width: `${width}px`,
+    height: `${height}px`,
+  }
+  const stateName = getSelectedStateName()
+  const selectedState = getSelectedState(stateName)
+  const bbox = boundingBox(selectedState)
+  const regions =
+    stateName === 'All'
+      ? emptyRegion
+      : (featureCollection(regionionsByName[stateName]) as FeatureCollection<MultiPolygon, IRegion>)
+
+  const firstRegion = head(regions.features)
+  const selectedRegionsFeatureCollection =
+    firstRegion == null
+      ? emptyRegion
+      : (featureCollection([firstRegion]) as FeatureCollection<MultiPolygon, IRegion>)
+  const cameraProps = {
+    bbox: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
+    pitch: 0,
+    bearing: 0,
+    speed: 0,
+    padding: {
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+    },
+  }
+
+  const props: IMinimapSvgProps = {
+    height,
+    width,
+    usStatesGeoJson: US_STATES,
+    availableRegionsGeoJson: regions,
+    camera: cameraProps,
+    loadingRegionsGeoJson: selectedRegionsFeatureCollection,
+    selectedRegionsGeoJson: emptyRegion,
   }
   return (
     <div style={style}>

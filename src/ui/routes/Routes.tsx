@@ -1,21 +1,13 @@
 import { PlainRoute } from 'react-router'
-// import CoreLayoutContainer from './core/CoreLayout.container'
-// import HomeContainer from './core'
-// import stateRoutes from './@state/state.routes'
-// import { isRootPageByUrl } from './Location.selectors'
+import { HomeComponent, PageContainer } from './Home.component'
+import { createLegalRoutes } from 'ui/routes/legal/Legal.routes'
+import { createUsStateRoutes } from 'ui/routes/@usState/UsState.routes'
 export const createRoutes = (store = null): PlainRoute => ({
   path: '/',
-  // onEnter: ({ location }, replace) => {
-  //   let noOtherStatesButMinnesotaSoJustRedirectToMnThanks = true
-  //   let isRoot = isRootPageByUrl(location.pathname)
-  //   if (isRoot && noOtherStatesButMinnesotaSoJustRedirectToMnThanks) {
-  //     console.log('forcing redirect to minnesota because why not')
-  //     return replace(`/mn`)
-  //   }
-  // },
-  // component: CoreLayoutContainer,
-  // indexRoute: HomeContainer,
+  component: PageContainer,
+  indexRoute: {
+    component: HomeComponent,
+  },
 
-  // childRoutes: [stateRoutes(store)]
-  childRoutes: [],
+  childRoutes: [createLegalRoutes(store), createUsStateRoutes(store)],
 })

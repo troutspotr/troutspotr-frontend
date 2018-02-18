@@ -2,14 +2,18 @@ import * as React from 'react'
 const classes = require('./Footer.gps.scss')
 const GPS_ELEMENT_ID = 'js-footer-gps-id'
 
-export interface IGpsComponentProps {
+export interface IGpsDispatchProps {
+  startGpsTracking: () => void
+  stopGpsTracking: () => void
+}
+export interface IGpsComponentStateProps {
   isGpsTrackingSupported: boolean
   isGpsActiveButLoading: boolean
   isGpsActiveAndSuccessful: boolean
   isGpsFailed: boolean
-  startGpsTracking: () => void
-  stopGpsTracking: () => void
 }
+
+export interface IGpsComponentProps extends IGpsDispatchProps, IGpsComponentStateProps {}
 
 export class FooterGpsComponent extends React.PureComponent<IGpsComponentProps> {
   handleActivateGpsClick = () => {

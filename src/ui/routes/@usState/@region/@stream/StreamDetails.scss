@@ -1,0 +1,69 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+
+.streamDetailsContainer {
+  background-color: green;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  padding-left: $default-margin;
+  padding-right: $default-margin;
+  z-index: 500;
+}
+
+.layout {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.content {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.stream {
+  composes: content;
+  order: 1;
+  position: relative;
+  overflow-y: auto;
+  height: 60%;
+}
+
+.details {
+  composes: content;
+  order: 2;
+  height: 40%;
+  padding-bottom: $default-margin;
+}
+
+@media (orientation: landscape) {
+  .layout {
+    flex-direction: row;
+  }
+
+  .content {
+    width: 50%;
+    height: 100%;
+  }
+
+  .details {
+    padding-left: $default-margin;
+    width: 50%;
+    height: 100%;
+  }
+}
+
+@media (orientation: portrait) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .content {
+  }
+
+  .details {
+    border-top: 1px solid transparentize(blue, 0.7);
+  }
+}

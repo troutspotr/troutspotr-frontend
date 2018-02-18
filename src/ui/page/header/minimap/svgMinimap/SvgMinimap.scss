@@ -14,14 +14,13 @@
 
 .polygon {
   fill: transparent;
+  transition: stroke 800ms;
   stroke-linejoin: round;
 }
 
 .states {
   composes: polygon;
-  transition: stroke 800ms;
   @include fallback(stroke, --text-color-primary, $offTextDark);
-  // stroke-width: 3px;
   transform-origin: center;
   background-color: green;
 }
@@ -29,14 +28,23 @@
 .regions {
   composes: polygon;
   @include fallback(stroke, --text-color-primary, $offTextDark);
-  g {
-    // stroke: $off-white;
-    // fill: $background;
-  }
 
   g:hover {
     fill: transparentize($gray, 0);
     cursor: pointer;
+  }
+}
+
+.loadingRegions {
+  composes: polygon;
+  stroke-dasharray: 10 5;
+  animation: dash 30s linear infinite;
+  @include fallback(stroke, --blue, $blueDark);
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 1500;
   }
 }
 

@@ -1,8 +1,9 @@
 import * as React from 'react'
+const styles = require('./Legal.layout.scss')
+
 export const LegalLayout = props => {
   return (
-    <div>
-      <h1>Legal layout goes here</h1>
+    <div className={styles.container}>
       <div>{props.children}</div>
     </div>
   )

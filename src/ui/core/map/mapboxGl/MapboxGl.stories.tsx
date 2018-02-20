@@ -6,6 +6,7 @@ import { ICameraPadding, ICameraProps } from '../ICameraProps'
 import { Style, Layer } from 'mapbox-gl'
 import * as React from 'react'
 import boundingBox from '@turf/bbox'
+import * as mapboxGl from 'mapbox-gl'
 const darkStyle = require('./_stubs/dark-style.json')
 const lightStyle = require('./_stubs/light-style.json')
 const satelliteStyle = require('./_stubs/satellite-style.json')
@@ -113,6 +114,7 @@ stories.add('Show a map with a default mapbox style', () => {
   const styleOption = createStyles()
   const mapboxProps: IMapboxGlProps = {
     onMapInitialized: action('map initialized'),
+    mapboxGl,
     camera,
     style: styleOption,
     onFeaturesSelected: action('features clicked'),
@@ -160,6 +162,7 @@ stories.add('Show a map with a custom style and custom sources', () => {
 
   const mapboxProps: IMapboxGlProps = {
     onMapInitialized: action('map initialized'),
+    mapboxGl,
     camera,
     // style: { ...selectedRawStyle },
     style: {

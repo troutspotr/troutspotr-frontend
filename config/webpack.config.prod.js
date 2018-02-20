@@ -1,5 +1,6 @@
 'use strict'
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const PreloadWebpackPlugin = require('preload-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const path = require('path')
 const webpack = require('webpack')
@@ -166,48 +167,88 @@ module.exports = {
           // tags. If you use code splitting, however, any async bundles will still
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
+
+          // {
+          //   test: /\.css$/,
+          //   loader: ExtractTextPlugin.extract(
+          //     Object.assign(
+          //       {
+          //         fallback: require.resolve('style-loader'),
+          //         use: [
+          //           {
+          //             loader: require.resolve('css-loader'),
+          //             options: {
+          //               importLoaders: 1,
+          //               minimize: true,
+          //               sourceMap: shouldUseSourceMap,
+          //             },
+          //           },
+          //           {
+          //             loader: require.resolve('postcss-loader'),
+          //             options: {
+          //               // Necessary for external CSS imports to work
+          //               // https://github.com/facebookincubator/create-react-app/issues/2677
+          //               ident: 'postcss',
+          //               plugins: () => [
+          //                 require('postcss-flexbugs-fixes'),
+          //                 autoprefixer({
+          //                   browsers: [
+          //                     '>1%',
+          //                     'last 4 versions',
+          //                     'Firefox ESR',
+          //                     'not ie < 9', // React doesn't support IE8 anyway
+          //                   ],
+          //                   flexbox: 'no-2009',
+          //                 }),
+          //               ],
+          //             },
+          //           },
+          //         ],
+          //       },
+          //       extractTextPluginOptions
+          //     )
+          //   ),
+          //   // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          // },
+
           {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
+            use: ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              use: [
                 {
-                  fallback: require.resolve('style-loader'),
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: {
-                        // Necessary for external CSS imports to work
-                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                        ident: 'postcss',
-                        plugins: () => [
-                          require('postcss-flexbugs-fixes'),
-                          autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                            ],
-                            flexbox: 'no-2009',
-                          }),
-                        ],
-                      },
-                    },
-                  ],
+                  loader: 'css-loader',
+                  options: {
+                    importLoaders: 2,
+                    minimize: true,
+                    modules: true,
+                    localIdentName: '[name]__[local]__[hash:base64:5]',
+                  },
                 },
-                extractTextPluginOptions
-              )
-            ),
-            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+                'postcss-loader',
+              ],
+            }),
           },
+          {
+            test: /\.scss$/,
+            use: ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              use: [
+                {
+                  loader: 'css-loader',
+                  options: {
+                    minimize: true,
+                    modules: true,
+                    sourceMap: true,
+                    importLoaders: 2,
+                    localIdentName: '[name]__[local]__[hash:base64:5]',
+                  },
+                },
+                'sass-loader',
+              ],
+            }),
+          },
+
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader don't uses a "test" so it will catch all modules
@@ -252,6 +293,10 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true,
       },
+    }),
+    new PreloadWebpackPlugin({
+      rel: 'prefetch',
+      include: ['api', 'mapLibrary', 'legal'],
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
@@ -322,6 +367,10 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    // new BundleAnalyzerPlugin({
+    //   generateStatsFile: true,
+    //   statsFilename: 'production-webpack-stats.json',
+    // }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

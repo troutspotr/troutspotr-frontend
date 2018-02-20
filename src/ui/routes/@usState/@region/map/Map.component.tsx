@@ -6,7 +6,9 @@ import * as React from 'react'
 import { browserHistory } from 'react-router'
 // import RegulationsOverlayContainer from './overlays/RegulationsOverlay.container'
 // import DetailsOverlay from './overlays/DetailsOverlay.container'
-import { find, has, isEmpty } from 'lodash'
+import find from 'lodash-es/find'
+import has from 'lodash-es/has'
+import isEmpty from 'lodash-es/isEmpty'
 // const MAP_ID = 'primary_map_id'
 export class MapComponent extends React.Component<any> {
   public componentWillUnmount() {

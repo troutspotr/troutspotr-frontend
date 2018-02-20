@@ -5,7 +5,7 @@ const classes = require('./Region.scss')
 // import CountyListContainer from './list/CountyList.container'
 import { LoadingComponent } from 'ui/core/loading/Loading.component'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-// import { isEmpty } from 'lodash'
+// import isEmpty from 'lodash-es/isEmpty'
 // import SvgSpriteSheet from './svgSpriteSheet/SvgSpriteSheet.component'
 class RegionLayout extends React.Component<any> {
   componentDidMount() {

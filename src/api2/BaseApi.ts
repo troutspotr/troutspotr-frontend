@@ -1,8 +1,8 @@
 import axios, { AxiosInstance } from 'axios'
 import { config as defaultConfig } from './BaseApi.config'
 import * as lf from 'localforage'
-import { isEmpty, isString } from 'lodash'
-
+import isEmpty from 'lodash-es/isEmpty'
+import isString from 'lodash-es/isString'
 export default class BaseApi {
   protected cache?: LocalForage
   protected httpClient: AxiosInstance

@@ -1,14 +1,13 @@
 import { createAction, handleActions } from 'redux-actions'
 import { Loading } from 'ui/core/LoadingConstants'
-import TableOfContentsApi from 'api/TableOfContentsApi'
-import { keyBy } from 'lodash'
-import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
+import { getApi } from 'api/Api.module'
+// import TableOfContentsApi from 'api/TableOfContentsApi'
+import keyBy from 'lodash-es/keyBy'
+// import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
 // ------------------------------------
 // Constants
 // ------------------------------------
-// export const MAP = 'map'
-// export const LIST = 'list'
 export enum View {
   map,
   list,
@@ -49,6 +48,7 @@ export const agreeToTerms = isAgreed => dispatch => {
 export const fetchTableOfContents = () => async dispatch => {
   dispatch(setTableOfContentsLoading())
   try {
+    const { TableOfContentsApi } = await getApi()
     const gettingTableOfContents = TableOfContentsApi.getTableOfContents()
     const [tableOfContents] = await Promise.all([gettingTableOfContents])
     dispatch(setTableOfContents(tableOfContents))
@@ -63,7 +63,12 @@ export const fetchTableOfContents = () => async dispatch => {
 // ------------------------------------
 const ACTION_HANDLERS: any = {
   [REGION_SET_VIEW]: (state: ICoreState, { payload }): ICoreState => {
-    AnonymousAnalyzerApi.recordEvent('view_change', { view: payload })
+    try {
+      getApi().then(({ AnonymousAnalyzerApi }) => {
+        AnonymousAnalyzerApi.recordEvent('view_change', { view: payload })
+      })
+    } catch (error) {}
+
     const view = payload || INITIAL_CORE_STATE.view
     const newState = { ...state, ...{ view } }
     return newState
@@ -103,39 +108,39 @@ const ACTION_HANDLERS: any = {
     const newState = { ...state, ...{ searchText: payload } }
     return newState
   },
-  [HAS_AGREED_TO_TERMS]: (state: ICoreState, { payload }): ICoreState => {
-    if (localStorage != null && localStorage.setItem != null) {
-      try {
-        localStorage.setItem(HAS_AGREED_TO_TERMS, payload)
-      } catch (e) {
-        console.log('could not store token; perhaps private mode?') // eslint-disable-line
-      }
-    }
+  // [HAS_AGREED_TO_TERMS]: (state: ICoreState, { payload }): ICoreState => {
+  //   if (localStorage != null && localStorage.setItem != null) {
+  //     try {
+  //       localStorage.setItem(HAS_AGREED_TO_TERMS, payload)
+  //     } catch (e) {
+  //       console.log('could not store token; perhaps private mode?') // eslint-disable-line
+  //     }
+  //   }
 
-    const newState = { ...state, ...{ hasAgreedToTerms: payload === 'true' } }
-    return newState
-  },
-  [SET_AGREEMENT_STATE]: (state: ICoreState, { payload }): ICoreState => {
-    const { view, time } = payload
-    if (view == null || time == null) {
-      throw new Error('view and time cannot be null')
-    }
+  //   const newState = { ...state, ...{ hasAgreedToTerms: payload === 'true' } }
+  //   return newState
+  // },
+  // [SET_AGREEMENT_STATE]: (state: ICoreState, { payload }): ICoreState => {
+  //   const { view, time } = payload
+  //   if (view == null || time == null) {
+  //     throw new Error('view and time cannot be null')
+  //   }
 
-    if (view === 'intro') {
-      const newState = { ...state, ...{ hasSeenIntroScreen: true } }
-      AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
-      return newState
-    } else if (view === 'termsOfService') {
-      const newState = { ...state, ...{ hasSeenTermsOfService: true } }
-      AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
-      return newState
-    } else if (view === 'privacyPolicy') {
-      const newState = { ...state, ...{ hasSeenPrivacyPolicy: true } }
-      AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
-      return newState
-    }
-    return { ...state }
-  },
+  //   if (view === 'intro') {
+  //     const newState = { ...state, ...{ hasSeenIntroScreen: true } }
+  //     AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+  //     return newState
+  //   } else if (view === 'termsOfService') {
+  //     const newState = { ...state, ...{ hasSeenTermsOfService: true } }
+  //     AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+  //     return newState
+  //   } else if (view === 'privacyPolicy') {
+  //     const newState = { ...state, ...{ hasSeenPrivacyPolicy: true } }
+  //     AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+  //     return newState
+  //   }
+  //   return { ...state }
+  // },
 }
 
 export const isBot = (): boolean => {
@@ -149,11 +154,11 @@ export const isBot = (): boolean => {
 
 const getHasAgreedToTerms = (): boolean => {
   if (isBot()) {
-    try {
-      AnonymousAnalyzerApi.recordEvent('bot_detected', { bot: navigator.userAgent })
-    } catch (error) {
-      // do nothing
-    }
+    // try {
+    //   AnonymousAnalyzerApi.recordEvent('bot_detected', { bot: navigator.userAgent })
+    // } catch (error) {
+    //   // do nothing
+    // }
 
     return true
   }

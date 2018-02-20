@@ -1,4 +1,4 @@
-const has = require('lodash/has')
+const has = require('lodash-es/has')
 
 export const naiveRegColorizer = (reg, index = 1) => {
   const isSanctuary = reg.legalText.toLowerCase().indexOf('sanctuary') >= 0

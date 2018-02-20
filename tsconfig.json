@@ -4,25 +4,19 @@
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "lib": [
-      "es5",
-      "dom",
-      "es2015"
-    ],
+    "lib": ["es5", "dom", "es2015"],
+    "typeRoots": ["node_modules/@types", "manual_typings"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDirs": [
-      "./src",
-      "./config"
-    ],
+    "rootDirs": ["./src", "./config"],
     "baseUrl": "./src/",
     "paths": {
-      "src/*": [
-        "./src/*"
-      ]
+      "src/*": ["./src/*"],
+      "lodash/*": ["node_modules/@types/lodash-es/*"]
     },
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": false,
@@ -40,6 +34,7 @@
     "acceptance-tests",
     "webpack",
     "jest",
-    "src/setupTests.ts"
+    "src/setupTests.ts",
+    "**/*test_.ts"
   ]
 }

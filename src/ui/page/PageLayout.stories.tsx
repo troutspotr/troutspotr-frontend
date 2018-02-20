@@ -2,7 +2,7 @@ import { storiesOf } from '@storybook/react'
 import * as React from 'react'
 import { number } from '@storybook/addon-knobs'
 import { PageLayoutComponent, IPageLayoutProps } from './PageLayout.component'
-import { range } from 'lodash'
+import range from 'lodash-es/range'
 const styles = require('./PageLayout.stories.scss')
 const stories = storiesOf('Page/Layout', module)
 stories.add('Page', () => {

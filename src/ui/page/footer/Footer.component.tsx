@@ -1,7 +1,7 @@
 import * as React from 'react'
 const classes = require('./Footer.scss')
 import { View } from 'ui/core/Core.redux'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash-es/isEmpty'
 import {
   FooterGpsComponent,
   // IGpsComponentProps,

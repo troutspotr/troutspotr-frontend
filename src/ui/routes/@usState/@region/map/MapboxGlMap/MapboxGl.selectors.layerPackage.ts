@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect'
-import { keyBy } from 'lodash'
-
+import keyBy from 'lodash-es/keyBy'
 import * as filterSelectors from './filters/Filters.selectors'
 import * as stylesSelectors from './styles/Style.selectors'
 

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { createSelector } from 'reselect'
 import { getWatersObjectSelector } from 'ui/routes/@usState/UsState.selectors'
-import { find } from 'lodash'
+import find from 'lodash-es/find'
 const now = new Date()
 const getIsWithinBonds = ({ start_time, end_time }) => {
   return now < end_time && now >= start_time

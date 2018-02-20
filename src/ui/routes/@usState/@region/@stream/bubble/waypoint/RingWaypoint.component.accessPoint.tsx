@@ -1,10 +1,18 @@
 import * as React from 'react'
-import { isEmpty, startsWith } from 'lodash'
+import isEmpty from 'lodash-es/isEmpty'
+import startsWith from 'lodash-es/startsWith'
 import RingWaypointLineComponent from './RingWaypoint.component.line'
 import RingWaypointLabelComponent from './RingWaypoint.component.label'
 const accessPointClasses = require('./RingWaypoint.accessPoint.scss')
 const waypointClasses = require('./RingWaypoint.scss')
-import { CROSSING_TYPES } from 'api/GeoApi.accessPoints'
+// import { CROSSING_TYPES } from 'api/GeoApi.accessPoints'
+
+export const CROSSING_TYPES = {
+  publicTrout: 'publicTrout',
+  permissionRequired: 'permissionRequired',
+  unsafe: 'unsafe',
+  uninteresting: 'uninteresting',
+}
 
 export interface ILayout {
   width: any

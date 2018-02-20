@@ -1,7 +1,11 @@
 import { createSelector } from 'reselect'
 import { searchTextSelector, selectedStreamIdSelector } from 'ui/core/Core.selectors'
 import { Loading } from 'ui/core/LoadingConstants'
-import { every, has, isEmpty, keyBy, reduce } from 'lodash'
+import every from 'lodash-es/every'
+import has from 'lodash-es/has'
+import isEmpty from 'lodash-es/isEmpty'
+import keyBy from 'lodash-es/keyBy'
+import reduce from 'lodash-es/reduce'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 export const regionIndexSelector = (state: IReduxState) => state.usState.regionIndex
 export const regulationsSelector = (state: IReduxState) => state.usState.regulations

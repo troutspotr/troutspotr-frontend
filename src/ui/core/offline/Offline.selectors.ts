@@ -1,4 +1,5 @@
-import { isEmpty, keyBy } from 'lodash'
+import isEmpty from 'lodash-es/isEmpty'
+import keyBy from 'lodash-es/keyBy'
 import { createSelector } from 'reselect'
 import { regionsDictionarySelector } from 'ui/core/Core.selectors'
 export const isOfflineSelector = state => {

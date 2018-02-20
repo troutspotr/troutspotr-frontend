@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ICameraProps } from 'ui/core/map/ICameraProps'
 import { Map } from 'mapbox-gl'
-import { isEqual } from 'lodash'
+import isEqual from 'lodash-es/isEqual'
 export interface IMapboxGlCameraProps {
   camera: ICameraProps
   map: Map

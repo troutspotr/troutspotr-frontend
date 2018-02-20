@@ -1,6 +1,6 @@
 import * as React from 'react'
 const classes = require('./Details.scss')
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash-es/isEmpty'
 /* eslint-disable camelcase */
 
 class SpeciesComponent extends React.Component<any> {

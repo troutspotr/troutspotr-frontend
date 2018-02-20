@@ -1,6 +1,7 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { flatten, map } from 'lodash'
+import flatten from 'lodash-es/flatten'
+import map from 'lodash-es/map'
 import { ILayout } from './RingWaypoint.component.accessPoint'
 // Import classes from '../SvgBubble.scss'
 const waypointClasses = require('./RingWaypoint.scss')

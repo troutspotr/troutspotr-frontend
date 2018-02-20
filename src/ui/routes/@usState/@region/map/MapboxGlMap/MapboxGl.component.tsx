@@ -2,7 +2,10 @@ import * as React from 'react'
 import MapboxGlComponentCamera from './MapboxGl.component.camera'
 const classes = require('../Map.scss')
 import MapboxGlLayerComponent from './MapboxGl.component.layer'
-import { clamp, debounce, flatten, isEmpty } from 'lodash'
+import clamp from 'lodash-es/clamp'
+import debounce from 'lodash-es/debounce'
+import flatten from 'lodash-es/flatten'
+import isEmpty from 'lodash-es/isEmpty'
 import BaseStyle from './styles/Base.style'
 import MapboxGlGpsLayer from './MapboxGl.gps.layer'
 class MapboxGlComponent extends React.Component<any> {

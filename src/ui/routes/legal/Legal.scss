@@ -1,0 +1,305 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/ZeldaText';
+@import 'src/ui/styles/fallback';
+
+.container {
+  z-index: 1000;
+  position: static;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  font-size: 5vmin;
+  margin-bottom: 20vmin;
+  padding: 10px;
+}
+
+.thanksContainer {
+  margin: 0 auto;
+  display: table;
+  position: relative;
+  top: 50%;
+  margin-top: 40vmin;
+}
+
+.APP {
+  font-size: 4vmin;
+}
+
+.thanks {
+  font-weight: bold;
+  // @include fallback(color, --blue, $blueDark);
+  @include fallback(color, --blue, $blueDark);
+  font-size: 11vmin;
+}
+
+.fishing {
+  // color: $white;
+  @include fallback(color, --white, $textDark);
+  font-size: 5.5vmin;
+}
+
+.jumbo {
+  font-weight: bold;
+  @include fallback(color, --white, $textDark);
+}
+
+.equation {
+  text-align: right;
+  font-size: 6vmin;
+  width: 60vmin;
+  margin-bottom: 8vmin;
+  font-weight: bold;
+}
+
+.list {
+  li {
+    list-style: inherit;
+  }
+}
+
+.update {
+  font-size: 3vmin;
+  // color: $off-white;
+  @include fallback(color, --text-color-secondary, $offTextLight);
+}
+
+.blue {
+  @include fallback(color, --blue, $blueDark);
+}
+
+.green {
+  // color: $green;
+  @include fallback(color, --green, $greenDark);
+}
+
+.white {
+  color: $white;
+}
+
+.alert {
+  composes: zeldaText;
+  // color: $red;
+  @include fallback(color, --red, $redDark);
+  margin-bottom: 3vmin;
+  font-weight: bold;
+}
+
+.plus {
+  float: left;
+  text-align: left;
+  margin-left: 30px;
+}
+
+.groundRule {
+  padding-top: 10vmin;
+  min-height: 60vmin;
+}
+
+.term {
+  // font-size: 6vmin;
+  font-weight: bold;
+  @include fallback(color, --blue, $blueDark);
+  margin-bottom: 1vmin;
+}
+
+.termBody {
+  // font-size: 4vmin;
+  font-weight: medium;
+  color: $white;
+}
+
+.title {
+  // font-size: 9vmin;
+  font-weight: bold;
+  color: $white;
+}
+
+.link {
+  composes: zeldaText;
+  @include fallback(color, --blue, $blueDark);
+  cursor: pointer;
+}
+
+.preambleContainer {
+  position: relative;
+}
+
+.shieldRight {
+  // background-color: transparentize($background, 0);
+  @include fallback(background-color, --background-color, $backgroundDark);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: scaleX(0);
+  animation: revealAnimationRight 500ms ease-in;
+  transform-origin: right top;
+  overflow: hidden;
+}
+
+.shieldDown {
+  composes: shieldRight;
+  animation: revealAnimationDown 500ms ease-in;
+  transform-origin: bottom left;
+}
+
+.preambleItem {
+  margin-bottom: 2vmin;
+
+  // animation: revealAnimation 500ms ease-in-out;
+}
+
+@keyframes revealAnimationRight {
+  0% {
+    transform: scaleX(1);
+  }
+
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes revealAnimationDown {
+  0% {
+    transform: scaleY(1);
+  }
+
+  100% {
+    transform: scaleY(0);
+  }
+}
+
+:global {
+  .example-enter {
+    opacity: 0.01;
+    transition: opacity 0.2s ease-in;
+    background-color: green;
+  }
+
+  .example-enter.example-enter-active {
+    opacity: 1;
+  }
+
+  .example-leave {
+    opacity: 1;
+    transition: opacity 0.2s ease-in;
+  }
+
+  .example-leave.example-leave-active {
+    opacity: 0.01;
+  }
+}
+
+.preamble {
+  // font-size: 6vmin;
+
+  // font-weight: bold;
+  color: $white;
+
+  hr {
+    margin: 3vmin 0 10vmin 0;
+  }
+}
+
+.private {
+  composes: zeldaText;
+  @include fallback(color, --blue, $blueDark);
+}
+
+.public {
+  composes: zeldaText;
+  // color: $green;
+  @include fallback(color, --green, $greenDark);
+}
+
+.warning {
+  // color: $yellow;
+  @include fallback(color, --yellow, $yellowDark);
+}
+
+.body {
+}
+
+.summary {
+  // font-size: 5vmin;
+
+  @include medium-font;
+
+  // font-weight: bold;
+}
+
+.button {
+  width: 100%;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0.5vmin solid transparent;
+  padding: 0.5rem 1rem;
+  // font-size: 1rem;
+  border-radius: 0.25rem;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  @include fallback(color, --blue, $blueDark);
+  background-image: none;
+  background-color: transparent;
+  @include fallback(border-color, --blue, $blueDark);
+  transform-origin: 50% 50%;
+  cursor: pointer;
+  // font-size: 5vmin;
+  animation: buttonAnimation 500ms ease-out;
+  margin-bottom: 4vmin;
+}
+
+.button:hover {
+  box-shadow: inset 0px 0px 0px 0.5vmin $blueDark;
+}
+
+@keyframes buttonAnimation {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+    filter: grayscale(1);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: grayscale(0);
+  }
+}
+
+.content {
+}
+
+.meatballs {
+  display: table;
+}
+
+.meatball {
+  // composes: numberCircle;
+  // background-color: $background;
+  display: inline-block;
+  // border-color: $blueGray;
+  // color: $blueGray;
+  margin: 0 5px;
+}
+
+.selectedMeatball {
+  composes: meatball;
+  // border-color: $green;
+  @include fallback(color, --green, $greenDark);
+  // color: $off-white;
+  @include fallback(color, --white, $textDark);
+}

@@ -2,7 +2,7 @@ import * as React from 'react'
 // const classes = require('./MapOverlay.scss')
 // import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import { MessageOverlayComponent } from 'ui/core/messageOverlay/MessageOverlay.component'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash-es/isEmpty'
 class RegulationsOverlayComponent extends React.Component<any> {
   renderSpecialRegulationsOverlay() {
     const { selectedStream, specialRegulationsCurrentSeason } = this.props

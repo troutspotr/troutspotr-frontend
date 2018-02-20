@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import * as regionSelectors from 'ui/routes/@usState/@region/Region.selectors'
 import { getGpsCoordinateFeatureSelector } from 'ui/page/footer/gps/Gps.selectors'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash-es/isEmpty'
 
 export const PALS_SOURCE_ID = 'pals-src'
 export const TROUT_STREAM_SECTIONS_SOURCE_ID = 'trout-stream-sections-src'

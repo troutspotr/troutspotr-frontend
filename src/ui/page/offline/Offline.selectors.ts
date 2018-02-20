@@ -1,7 +1,8 @@
-import {isEmpty, keyBy} from 'lodash'
-import {createSelector} from 'reselect'
-import {regionsDictionarySelector} from 'ui/core/Core.selectors'
-export const isOfflineSelector = (state) => {
+import isEmpty from 'lodash-es/isEmpty'
+import keyBy from 'lodash-es/keyBy'
+import { createSelector } from 'reselect'
+import { regionsDictionarySelector } from 'ui/core/Core.selectors'
+export const isOfflineSelector = state => {
   if (state == null) {
     return false
   }
@@ -13,25 +14,23 @@ export const isOfflineSelector = (state) => {
   return state.offline.isOffline
 }
 
-export const cachedEndpointsSelector = (state) => state.offline.cachedEndpoints
+export const cachedEndpointsSelector = state => state.offline.cachedEndpoints
 
 const EMPTY_DICTIONARY = {}
 
 export const cachedEndpointsDictionarySelector = createSelector(
   [cachedEndpointsSelector],
-  (cachedEndpoints) => {
+  cachedEndpoints => {
     if (isEmpty(cachedEndpoints)) {
       return EMPTY_DICTIONARY
     }
 
-    return keyBy(cachedEndpoints, (x) => x)
-  })
+    return keyBy(cachedEndpoints, x => x)
+  }
+)
 
 export const cachedRegionsDictionary = createSelector(
-  [
-    cachedEndpointsSelector,
-    regionsDictionarySelector,
-  ],
+  [cachedEndpointsSelector, regionsDictionarySelector],
   (endpoints, regionDictionary) => {
     if (isEmpty(endpoints)) {
       return EMPTY_DICTIONARY
@@ -44,8 +43,7 @@ export const cachedRegionsDictionary = createSelector(
     const cachedRegionDictionary = endpoints
       .filter(x => x.indexOf('v3') >= 0)
       .reduce((dictionary, endpoint) => {
-        const tokens = endpoint.split('/')
-          .filter((x) => x.length > 0)
+        const tokens = endpoint.split('/').filter(x => x.length > 0)
         const isNotStateRegion = tokens.length <= 3
         if (isNotStateRegion) {
           return dictionary
@@ -67,4 +65,5 @@ export const cachedRegionsDictionary = createSelector(
       }, {})
 
     return cachedRegionDictionary
-  })
+  }
+)

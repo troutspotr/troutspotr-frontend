@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { debounce } from 'lodash'
+import debounce from 'lodash-es/debounce'
 const classes = require('./Minimap.scss')
 // const MINIMAP_WIDTH = 50
 

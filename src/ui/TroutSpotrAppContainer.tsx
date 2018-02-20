@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Provider, Store } from 'react-redux'
 import { PlainRoute } from 'react-router'
 import { Router } from 'react-router'
-
+require('ui/styles/core.scss')
 export interface IAppProps {
   readonly routes: PlainRoute
   readonly history: History

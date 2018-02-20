@@ -1,4 +1,4 @@
-const keyBy = require('lodash/keyBy')
+import keyBy from 'lodash-es/keyBy'
 import { IUsState } from 'coreTypes/state/IUsState'
 const formatStateData = (stateMetadata: IUsState) => {
   const regsDictionary = keyBy(stateMetadata.regulations, 'id')

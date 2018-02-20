@@ -1,7 +1,6 @@
 import * as React from 'react'
 const ringClasses = require('./RingAxis.scss')
-import { times } from 'lodash'
-
+import times from 'lodash-es/times'
 const TICK_MOD = 20
 const RADIANS_TO_DEGREES = 180 / Math.PI
 

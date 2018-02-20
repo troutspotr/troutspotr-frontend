@@ -1,5 +1,6 @@
 'use strict'
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const PreloadWebpackPlugin = require('preload-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const path = require('path')
 const webpack = require('webpack')
@@ -239,6 +240,10 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
     }),
+    new PreloadWebpackPlugin({
+      rel: 'prefetch',
+      include: ['api', 'mapLibrary', 'legal'],
+    }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
@@ -261,6 +266,7 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new BundleAnalyzerPlugin(),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

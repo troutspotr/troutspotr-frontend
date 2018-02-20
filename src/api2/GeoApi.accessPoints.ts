@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-const kebabCase = require('lodash/kebabCase')
-const has = require('lodash/has')
+const kebabCase = require('lodash-es/kebabCase')
+const has = require('lodash-es/has')
 export const CROSSING_TYPES = {
   publicTrout: 'publicTrout',
   permissionRequired: 'permissionRequired',

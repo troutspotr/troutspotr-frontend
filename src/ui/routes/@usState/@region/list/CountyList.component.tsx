@@ -1,6 +1,6 @@
 import * as React from 'react'
 const classes = require('./List.scss')
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash-es/isEmpty'
 import StreamListComponent from './StreamList.component'
 class CountyListComponent extends React.Component<any> {
   renderCounty(county, index) {

@@ -4,7 +4,7 @@ import {
   isGpsTrackingActiveStateSelector,
   isGpsTrackingSupportedStateSelector,
 } from './Gps.selectors'
-import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
+import { getApi } from 'api/Api.module'
 
 export const GPS_UPDATE_GPS_POSITION = 'GPS_UPDATE_GPS_POSITION'
 export const GPS_ACTIVATE_GPS_TRACKING = 'GPS_ACTIVATE_GPS_TRACKING'
@@ -34,7 +34,12 @@ const throttleGpsUpdate = (dispatch, coordinates: [number, number], accuracy: nu
 }
 
 export const startGpsTracking = () => async (dispatch, getState) => {
-  AnonymousAnalyzerApi.recordEvent('start_gps', {})
+  try {
+    getApi().then(({ AnonymousAnalyzerApi }) => {
+      AnonymousAnalyzerApi.recordEvent('start_gps', {})
+    })
+  } catch (error) {}
+
   try {
     const state = getState()
     const isActive = isGpsTrackingActiveStateSelector(state)
@@ -79,7 +84,12 @@ export const startGpsTracking = () => async (dispatch, getState) => {
 }
 
 export const stopGpsTracking = () => async dispatch => {
-  AnonymousAnalyzerApi.recordEvent('stop_gps', {})
+  try {
+    getApi().then(({ AnonymousAnalyzerApi }) => {
+      AnonymousAnalyzerApi.recordEvent('stop_gps', {})
+    })
+  } catch (error) {}
+
   navigator.geolocation.clearWatch(GPS_WATCH_CALLBACK_ID)
   clearInterval(GPS_WATCH_CALLBACK_ID)
   dispatch(deactivateGpsTracking())

@@ -5,7 +5,7 @@ import { AccessPointDetails } from './AccessPointDetails.component'
 import RegionDetails from './RegionDetails.component'
 import { StreamDetailsComponent } from './StreamDetails.component'
 
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash-es/isEmpty'
 
 export interface IDetailsOverlayComponent {
   visibleTroutStreams: any

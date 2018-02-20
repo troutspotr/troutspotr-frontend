@@ -7,7 +7,9 @@ import 'ui/styles/core.scss'
 import { TroutSpotrAppContainer } from 'ui/TroutSpotrAppContainer'
 
 const routes = createRoutes()
-ReactDOM.render(
-  <TroutSpotrAppContainer history={browserHistory} store={store} routes={routes} />,
-  document.getElementById('root') as HTMLElement
-)
+setTimeout(() => {
+  ReactDOM.render(
+    <TroutSpotrAppContainer history={browserHistory} store={store} routes={routes} />,
+    document.getElementById('root') as HTMLElement
+  )
+}, 200)

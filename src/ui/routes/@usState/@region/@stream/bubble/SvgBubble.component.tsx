@@ -2,7 +2,8 @@
 import * as React from 'react'
 // const classes = require('./SvgBubble.scss')
 // import * as d3 from 'd3-geo'
-// import { concat, sortBy } from 'lodash'
+// import concat from 'lodash-es/concat'
+// import sortBy from 'lodash-es/sortBy'
 // import StreamComponent from './stream/Stream.component'
 // import { getProjectionFromFeature, getTiming } from './SvgBubble.selectors'
 // import RingComponent from './ring/Ring.component'

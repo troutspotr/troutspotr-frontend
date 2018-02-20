@@ -1,6 +1,6 @@
 import * as React from 'react'
 const classes = require('./Details.scss')
-import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
+// import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 /* eslint-disable camelcase */
 // const DEFAULT_ZOOM = 16
 
@@ -39,7 +39,7 @@ class AccessPointComponent extends React.Component<any> {
     e.preventDefault()
     const address = e.target.getAttribute('href')
     window.open(address, '_blank')
-    AnonymousAnalyzerApi.recordEvent('open_in_google_maps', { address })
+    // AnonymousAnalyzerApi.recordEvent('open_in_google_maps', { address })
     return false
   }
 

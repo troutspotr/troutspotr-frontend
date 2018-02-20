@@ -7,22 +7,23 @@ require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg')
 
 import MapboxGlCamera from './MapboxGl.component.camera'
 import { ICameraProps } from '../ICameraProps'
-import * as mapboxGl from 'mapbox-gl'
-import * as GeoJSON from 'geojson'
+// import * as mapboxGl from 'mapbox-gl'
+import { Style as MapboxStyle, Map } from 'mapbox-gl'
+// import * as GeoJSON from 'geojson'
 
 const token = 'pk.eyJ1IjoiYW5kZXN0MDEiLCJhIjoibW02QnJLSSJ9._I2ruvGf4OGDxlZBU2m3KQ'
 // https://stackoverflow.com/a/44393954
-Object.getOwnPropertyDescriptor(mapboxGl, 'accessToken').set(token)
 
 export interface IMapboxGlProps {
   readonly onFeaturesSelected: (t: any) => void
   readonly onMapInitialized: (t: boolean) => void
-  readonly style: mapboxGl.Style | string
+  readonly style: MapboxStyle | string
   readonly camera?: ICameraProps
+  readonly mapboxGl: any
 }
 
 export interface IMapboxGlState {
-  readonly map: mapboxGl.Map
+  readonly map: Map
   readonly isLoaded: boolean
 }
 export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGlState> {
@@ -54,16 +55,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
   }
 
-  getInteractiveFeaturesOverPoint(
-    point
-  ): Array<
-    GeoJSON.Feature<
-      mapboxGl.GeoJSONGeometry,
-      {
-        [name: string]: any
-      }
-    >
-  > {
+  getInteractiveFeaturesOverPoint(point): any {
     const BOX_DIMENSION = 2
     const boundingBox = [
       [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
@@ -71,11 +63,12 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     ]
 
     const features = this.state.map.queryRenderedFeatures(boundingBox)
-
     return features
   }
 
   componentDidMount() {
+    const { mapboxGl } = this.props
+    Object.getOwnPropertyDescriptor(mapboxGl, 'accessToken').set(token)
     const map = new mapboxGl.Map({
       container: this.mapContainer,
       style: this.props.style,

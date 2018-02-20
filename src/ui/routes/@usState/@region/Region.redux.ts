@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import { Loading } from 'ui/core/LoadingConstants'
-import RegionApi from 'api/RegionApi'
-import { isEmpty } from 'lodash'
+import { getApi } from 'api/Api.module'
+import isEmpty from 'lodash-es/isEmpty'
 import { selectedRegionSelector } from 'ui/core/Core.selectors'
 import { getSelectedRoadSelector, selectedStreamObjectSelector } from './Region.selectors'
 import {
@@ -47,7 +47,7 @@ export const fetchRegionData = (stateName, regionName) => async (dispatch, getSt
     if (regionName == null) {
       throw new Error('regionName cannot be null')
     }
-
+    const { RegionApi } = await getApi()
     const gettingRegion = RegionApi.getRegionData(stateName, regionName)
     const regionData = await gettingRegion
     dispatch(setRegionData(regionData))

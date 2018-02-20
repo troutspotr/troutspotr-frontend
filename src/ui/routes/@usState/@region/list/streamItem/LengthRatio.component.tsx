@@ -1,6 +1,6 @@
 import * as React from 'react'
 const classes = require('./StreamItem.scss')
-import { round } from 'lodash'
+import round from 'lodash-es/round'
 
 const LengthRatioComponent = props => {
   const { troutLength, publicLength } = props

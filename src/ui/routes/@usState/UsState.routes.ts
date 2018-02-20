@@ -4,9 +4,5 @@ import { createCreditsRoutes } from './credits/Credits.routes'
 export const createUsStateRoutes = store => ({
   path: '/:usState',
   component: StateContainer,
-  childRoutes: [
-    // having fun
-    createCreditsRoutes(store),
-    regionRoutes(store),
-  ],
+  childRoutes: [createCreditsRoutes(store), regionRoutes(store)],
 })

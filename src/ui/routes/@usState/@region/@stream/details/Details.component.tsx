@@ -7,7 +7,7 @@ import * as React from 'react'
 // import { crossingTypes } from 'api/GeoApi.accessPoints'
 import { IStreamObject } from 'coreTypes/IStreamObject'
 
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash-es/isEmpty'
 // import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import AccessPointComponent from './AccessPoint.component'
 // import SpeciesComponent from './Species.component'

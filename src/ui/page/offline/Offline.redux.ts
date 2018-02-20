@@ -1,6 +1,5 @@
 import { createAction } from 'redux-actions'
-import BaseApi from 'api/BaseApi'
-const baseApi = new BaseApi()
+import { getApi } from 'api/Api.module'
 
 export const OFFLINE_SET_OFFLINE_STATUS = 'OFFLINE_SET_OFFLINE_STATUS'
 export const OFFLINE_UPDATE_CACHED_ENDPOINTS = 'OFFLINE_UPDATE_CACHED_ENDPOINTS'
@@ -18,6 +17,8 @@ export const setCachedEndpoints = createAction(
 export const updateCachedEndpoints = () => async dispatch => {
   try {
     // First off, get our keys.
+    const { BaseApi } = await getApi()
+    const baseApi = new BaseApi()
     const keys = await baseApi.getAllCachedEndpoints()
     // Remap our keys -- this avoids array equality issues.
     dispatch(setCachedEndpoints(keys))
@@ -29,6 +30,8 @@ export const updateCachedEndpoints = () => async dispatch => {
 export const setIsOffline = (isOffline = false) => async dispatch => {
   try {
     // First off, get our keys.
+    const { BaseApi } = await getApi()
+    const baseApi = new BaseApi()
     const keys = await baseApi.getAllCachedEndpoints()
     dispatch(updateOfflineStatus(isOffline, keys))
   } catch (error) {

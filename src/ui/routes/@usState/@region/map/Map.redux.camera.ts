@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
-import { clamp, some } from 'lodash'
-
+import clamp from 'lodash-es/clamp'
+import some from 'lodash-es/some'
 // ------------------------------------
 // Constants
 // ------------------------------------

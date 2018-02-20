@@ -1,5 +1,5 @@
-import { createAction } from 'redux-actions'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
+import { createAction, handleActions } from 'redux-actions'
+import { Loading } from 'ui/core/LoadingConstants'
 
 // ------------------------------------
 // Constants
@@ -49,27 +49,27 @@ export const loadMapModuleAsync = () => (dispatch, getState) => {
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS = {
-  [MAP_MODULE_LOADING]: (state, { payload }) => {
+const ACTION_HANDLERS: any = {
+  [MAP_MODULE_LOADING]: (state: IMapboxModuleState, { payload }): IMapboxModuleState => {
     const newState = {
       ...state,
-      mapModuleStatus: LOADING_CONSTANTS.IS_PENDING,
+      mapModuleStatus: Loading.Pending,
     }
 
     return newState
   },
-  [MAP_MODULE_FAILED]: (state, { payload }) => {
+  [MAP_MODULE_FAILED]: (state: IMapboxModuleState, { payload }): IMapboxModuleState => {
     const newState = {
       ...state,
-      mapModuleStatus: LOADING_CONSTANTS.IS_FAILED,
+      mapModuleStatus: Loading.Failed,
     }
 
     return newState
   },
-  [MAP_MODULE_SUCCESS]: (state, { payload }) => {
+  [MAP_MODULE_SUCCESS]: (state: IMapboxModuleState, { payload }): IMapboxModuleState => {
     const newState = {
       ...state,
-      mapModuleStatus: LOADING_CONSTANTS.IS_SUCCESS,
+      mapModuleStatus: Loading.Success,
       mapModule: payload,
     }
 
@@ -81,13 +81,13 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = {
-  mapModuleStatus: LOADING_CONSTANTS.IS_NOT_STARTED,
+export interface IMapboxModuleState {
+  mapModule: any
+  mapModuleStatus: Loading
+}
+const INITIAL_MAPBOX_STATE: IMapboxModuleState = {
+  mapModuleStatus: Loading.NotStarted,
   mapModule: null,
 }
 
-export default function counterReducer(state = initialState, action) {
-  const handler = ACTION_HANDLERS[action.type]
-
-  return handler ? handler(state, action) : state
-}
+export default handleActions(ACTION_HANDLERS, INITIAL_MAPBOX_STATE)

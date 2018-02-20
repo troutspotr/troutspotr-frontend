@@ -1,5 +1,6 @@
 import BaseApi from './BaseApi'
-import { has, keyBy } from 'lodash'
+import has from 'lodash-es/has'
+import keyBy from 'lodash-es/keyBy'
 import { IUsState } from 'coreTypes/state/IUsState'
 export const buildStateEndpoint = stateName => `/data/v3/${stateName}/${stateName}.data.json`
 

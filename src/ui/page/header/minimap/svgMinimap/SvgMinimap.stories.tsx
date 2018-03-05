@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { MinimapSvgComponent, IMinimapSvgProps } from './SvgMinimap.component'
-import { select } from '@storybook/addon-knobs'
+import { select, boolean } from '@storybook/addon-knobs'
 import keyBy from 'lodash-es/keyBy'
-import head from 'lodash-es/head'
 import { storiesOf } from '@storybook/react'
 import boundingBox from '@turf/bbox'
 import { featureCollection } from '@turf/helpers'
@@ -16,6 +15,9 @@ import {
 
 import { IState } from 'coreTypes/tableOfContents/IState'
 import { IRegion } from 'coreTypes/tableOfContents/IRegion'
+import { Loading } from 'ui/core/LoadingConstants'
+import { Selection } from 'ui/core/SelectionConstants'
+
 const US_STATES = require('ui/page/header/minimap/_stubs/states.geo.json') as FeatureCollection<
   MultiPolygon,
   IState
@@ -70,9 +72,25 @@ stories.add('Just states', () => {
     width: `${width}px`,
     height: `${height}px`,
   }
-
-  const selectedState = getSelectedState(getSelectedStateName())
-  const bbox = boundingBox(selectedState)
+  const selectedStateName = getSelectedStateName()
+  const states = {
+    ...US_STATES,
+    features: US_STATES.features.map(x => {
+      const selectionStatus =
+        x.properties.short_name === selectedStateName
+          ? Selection.Selected
+          : selectedStateName === 'All' ? Selection.Active : Selection.Inactive
+      return {
+        ...x,
+        properties: {
+          ...x.properties,
+          loadingStatus: Loading.Success,
+          selectionStatus,
+        },
+      }
+    }),
+  }
+  const bbox = boundingBox(getSelectedState(selectedStateName))
   const cameraProps = {
     bbox: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
     pitch: 0,
@@ -89,11 +107,11 @@ stories.add('Just states', () => {
   const props: IMinimapSvgProps = {
     height,
     width,
-    usStatesGeoJson: US_STATES,
-    availableRegionsGeoJson: emptyRegion,
-    loadingRegionsGeoJson: emptyRegion,
-    selectedRegionsGeoJson: emptyRegion,
+    usStatesGeoJson: states,
+    regionsGeoJson: emptyRegion,
     camera: cameraProps,
+    isOffline: boolean('offline', false),
+    isExpanded: boolean('expanded', true),
   }
   return (
     <div style={style}>
@@ -110,13 +128,25 @@ stories.add('States and regions', () => {
     width: `${width}px`,
     height: `${height}px`,
   }
-  const stateName = getSelectedStateName()
-  const selectedState = getSelectedState(stateName)
-  const bbox = boundingBox(selectedState)
-  const regions =
-    stateName === 'All'
-      ? emptyRegion
-      : (featureCollection(regionionsByName[stateName]) as FeatureCollection<MultiPolygon, IRegion>)
+  const selectedStateName = getSelectedStateName()
+  const states = {
+    ...US_STATES,
+    features: US_STATES.features.map(x => {
+      const selectionStatus =
+        x.properties.short_name === selectedStateName
+          ? Selection.Selected
+          : selectedStateName === 'All' ? Selection.Active : Selection.Inactive
+      return {
+        ...x,
+        properties: {
+          ...x.properties,
+          loadingStatus: Loading.Success,
+          selectionStatus,
+        },
+      }
+    }),
+  }
+  const bbox = boundingBox(getSelectedState(selectedStateName))
   const cameraProps = {
     bbox: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
     pitch: 0,
@@ -130,14 +160,28 @@ stories.add('States and regions', () => {
     },
   }
 
+  const regions =
+    selectedStateName === 'All'
+      ? emptyRegion
+      : (featureCollection(regionionsByName[selectedStateName]) as FeatureCollection<
+          MultiPolygon,
+          IRegion
+        >)
+
+  // const firstRegion = head(regions.features)
+  // const selectedRegionsFeatureCollection =
+  //   firstRegion == null
+  //     ? emptyRegion
+  //     : (featureCollection([firstRegion]) as FeatureCollection<MultiPolygon, IRegion>)
+
   const props: IMinimapSvgProps = {
     height,
     width,
-    usStatesGeoJson: US_STATES,
-    availableRegionsGeoJson: regions,
+    usStatesGeoJson: states,
     camera: cameraProps,
-    loadingRegionsGeoJson: emptyRegion,
-    selectedRegionsGeoJson: emptyRegion,
+    regionsGeoJson: regions,
+    isOffline: boolean('offline', false),
+    isExpanded: boolean('expanded', true),
   }
   return (
     <div style={style}>
@@ -154,19 +198,59 @@ stories.add('Region Loading', () => {
     width: `${width}px`,
     height: `${height}px`,
   }
-  const stateName = getSelectedStateName()
-  const selectedState = getSelectedState(stateName)
-  const bbox = boundingBox(selectedState)
-  const regions =
-    stateName === 'All'
-      ? emptyRegion
-      : (featureCollection(regionionsByName[stateName]) as FeatureCollection<MultiPolygon, IRegion>)
+  // const stateName = getSelectedStateName()
+  // const selectedState = getSelectedState(stateName)
+  // const bbox = boundingBox(selectedState)
+  const selectedStateName = getSelectedStateName()
+  const states = {
+    ...US_STATES,
+    features: US_STATES.features.map(x => {
+      const selectionStatus =
+        x.properties.short_name === selectedStateName
+          ? Selection.Selected
+          : selectedStateName === 'All' ? Selection.Active : Selection.Inactive
+      return {
+        ...x,
+        properties: {
+          ...x.properties,
+          loadingStatus: Loading.Success,
+          selectionStatus,
+        },
+      }
+    }),
+  }
+  const bbox = boundingBox(getSelectedState(selectedStateName))
 
-  const firstRegion = head(regions.features)
-  const loadingRegionsFeatureCollection =
-    firstRegion == null
+  const regions =
+    selectedStateName === 'All'
       ? emptyRegion
-      : (featureCollection([firstRegion]) as FeatureCollection<MultiPolygon, IRegion>)
+      : (featureCollection(regionionsByName[selectedStateName]) as FeatureCollection<
+          MultiPolygon,
+          IRegion
+        >)
+  if (selectedStateName !== 'All') {
+    const regionOptions = regionionsByName[selectedStateName].reduce(
+      (dictionary, item) => {
+        dictionary[item.properties.path] = item.properties.path
+        return dictionary
+      },
+      { None: 'None' }
+    )
+    const selectedRegionName = select('Selected Region', regionOptions, 'None')
+    regions.features = regions.features.map((x, index) => {
+      const isItemLoading = selectedRegionName === x.properties.path
+      const isNoneSelected = selectedRegionName === 'None'
+      return {
+        ...x,
+        properties: {
+          ...x.properties,
+          selectionStatus: isNoneSelected || isItemLoading ? Selection.Active : Selection.Inactive,
+          loadingStatus: isItemLoading ? Loading.Pending : Loading.Success,
+        },
+      }
+    })
+  }
+
   const cameraProps = {
     bbox: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
     pitch: 0,
@@ -183,11 +267,11 @@ stories.add('Region Loading', () => {
   const props: IMinimapSvgProps = {
     height,
     width,
-    usStatesGeoJson: US_STATES,
-    availableRegionsGeoJson: regions,
+    usStatesGeoJson: states,
     camera: cameraProps,
-    loadingRegionsGeoJson: loadingRegionsFeatureCollection,
-    selectedRegionsGeoJson: emptyRegion,
+    regionsGeoJson: regions,
+    isOffline: boolean('offline', false),
+    isExpanded: boolean('expanded', true),
   }
   return (
     <div style={style}>
@@ -212,11 +296,11 @@ stories.add('Region Selected', () => {
       ? emptyRegion
       : (featureCollection(regionionsByName[stateName]) as FeatureCollection<MultiPolygon, IRegion>)
 
-  const firstRegion = head(regions.features)
-  const selectedRegionsFeatureCollection =
-    firstRegion == null
-      ? emptyRegion
-      : (featureCollection([firstRegion]) as FeatureCollection<MultiPolygon, IRegion>)
+  // const firstRegion = head(regions.features)
+  // const selectedRegionsFeatureCollection =
+  //   firstRegion == null
+  //     ? emptyRegion
+  //     : (featureCollection([firstRegion]) as FeatureCollection<MultiPolygon, IRegion>)
   const cameraProps = {
     bbox: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
     pitch: 0,
@@ -234,10 +318,10 @@ stories.add('Region Selected', () => {
     height,
     width,
     usStatesGeoJson: US_STATES,
-    availableRegionsGeoJson: regions,
+    regionsGeoJson: regions,
     camera: cameraProps,
-    loadingRegionsGeoJson: selectedRegionsFeatureCollection,
-    selectedRegionsGeoJson: emptyRegion,
+    isOffline: boolean('offline', false),
+    isExpanded: boolean('expanded', true),
   }
   return (
     <div style={style}>

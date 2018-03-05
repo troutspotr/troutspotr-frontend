@@ -8,30 +8,80 @@
   // @include fallback(background-color, --message-background-color, $messageBackgroundDark);
 }
 
+:global(.ts-light) {
+  .container {
+    --selected-region-background: darken($messageBackgroundLight, 50);
+  }
+}
+
+:global(.ts-dark) {
+  .container {
+    --selected-region-background: lighten($messageBackgroundDark, 10);
+  }
+}
+
 .sneezeGuard {
   fill: transparent;
 }
 
 .polygon {
   fill: transparent;
-  transition: stroke 800ms;
+  transition: stroke 800ms, fill 800ms;
   stroke-linejoin: round;
 }
 
 .states {
   composes: polygon;
-  @include fallback(stroke, --text-color-primary, $offTextDark);
+  transition: stroke 800ms;
+  @include fallback(stroke, --text-color-primary, $textDark);
   transform-origin: center;
   background-color: green;
+}
+
+.statesInactive {
+  composes: states;
+  @include fallback(stroke, --text-color-secondary, $offTextDark);
+  transform-origin: center;
+}
+
+.selectedStates {
+  composes: polygon;
+  transition: stroke 800ms;
+  @include fallback(stroke, --text-color-primary, $textDark);
+  transform-origin: center;
 }
 
 .regions {
   composes: polygon;
   @include fallback(stroke, --text-color-primary, $offTextDark);
-
+  @include fallback(fill, --selected-region-background, green);
   g:hover {
     fill: transparentize($gray, 0);
     cursor: pointer;
+  }
+}
+
+.stateLabels {
+  transition: fill 800ms;
+  text-anchor: middle;
+  @include fallback(fill, --text-color-primary, $offTextDark);
+  user-select: none;
+}
+
+.stateLabelsInactive {
+  composes: stateLabels;
+  @include fallback(fill, --text-color-secondary, $offTextDark);
+}
+
+.regionLabels {
+  text-anchor: middle;
+  @include fallback(fill, --text-color-primary, $offTextDark);
+  user-select: none;
+}
+
+:global(.ts-light) {
+  .stateLabels {
+    font-weight: 800;
   }
 }
 

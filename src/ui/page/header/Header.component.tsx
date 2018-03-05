@@ -6,9 +6,9 @@ import { HeaderLayout } from './Header.layout'
 import TitleComponent from './title/Title.component'
 import { SubtitleComponent } from './subtitle/Subtitle.component'
 import ClipboardButton from 'react-clipboard.js'
-import ClipboardIconComponent from 'ui/core/clipboard/ClipboardIcon.component'
+import { ClipboardIcon } from 'ui/page/header/title/clipboard/ClipboardIcon.component'
 
-export interface IHeaderComponent {
+export interface IHeaderComponentPrps {
   subtitle: string
   title: string
   isTitleVisible: boolean
@@ -20,7 +20,7 @@ export interface IHeaderComponent {
   onCopyToClipboard: any
 }
 
-export class HeaderComponent extends React.PureComponent {
+export class HeaderComponent extends React.PureComponent<IHeaderComponentPrps> {
   renderMinimap() {
     return <MinimapContainer params={this.props.params} location={this.props.location} />
   }
@@ -42,10 +42,10 @@ export class HeaderComponent extends React.PureComponent {
       return null
     }
 
-    const body = <TitleComponent title={this.props.title} isVisible={this.props.isTitleVisible} />
+    const body = <TitleComponent title={this.props.title} />
 
     const symbol = (
-      <ClipboardIconComponent
+      <ClipboardIcon
         size={14}
         style={{ fill: 'hsla(199, 69%, 61%, 1)', color: 'hsla(199, 69%, 61%, 1)' }}
       />
@@ -65,7 +65,7 @@ export class HeaderComponent extends React.PureComponent {
   }
 
   renderBackButton() {
-    return <BackButtonContainer previous={'/'} isEnabled={false} />
+    return <BackButtonContainer />
   }
 
   render() {
@@ -74,7 +74,6 @@ export class HeaderComponent extends React.PureComponent {
         backButton={this.renderBackButton()}
         locationSubtitle={this.renderLocationSubtitle()}
         title={this.renderTitle()}
-        isOffline={this.props.isOffline}
         minimap={this.renderMinimap()}
         search={this.renderSearch()}
       />

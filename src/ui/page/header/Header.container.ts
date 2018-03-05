@@ -5,7 +5,7 @@ import {
   isTitleVisibleSelector,
   titleSelector,
 } from './title/Title.selectors'
-import { subtitleSelector } from './subtitle/Subtitle.selectors'
+import { subtitleSelector } from 'ui/page/header/subtitle/Subtitle.selectors'
 import { isSearchVisibleSelector } from './search/Search.selectors'
 import { isOfflineSelector } from 'ui/core/offline/Offline.selectors'
 

@@ -1,5 +1,8 @@
 import { connect } from 'react-redux'
-import DetailsComponent from './Details.component'
+import DetailsComponent, {
+  IDetailsComponentStateProps,
+  IDetailsComponentDispatchProps,
+} from './Details.component'
 import {
   getSelectedRoadSelector,
   getSpecialRegulationsCurrentSeasonSelector,
@@ -12,7 +15,7 @@ import {
   setHoveredStream,
   setSelectedRoad,
 } from 'ui/routes/@usState/@region/Region.redux'
-const mapDispatchToProps = {
+const mapDispatchToProps: IDetailsComponentDispatchProps = {
   setHoveredRoad: accessPoint => setHoveredRoad(accessPoint || null),
   setHoveredStream: stream => setHoveredStream(stream || null),
   setSelectedRoad: accessPoint => setSelectedRoad(accessPoint || null),
@@ -20,7 +23,8 @@ const mapDispatchToProps = {
 export interface IPassedDetailsProps {
   selectedStream: any
 }
-const mapStateToProps = state => {
+
+const mapStateToProps = (state): IDetailsComponentStateProps => {
   const props = {
     specialRegulationsCurrentSeason: getSpecialRegulationsCurrentSeasonSelector(state),
     selectedAccessPoint: getSelectedRoadSelector(state),
@@ -30,6 +34,8 @@ const mapStateToProps = state => {
   }
   return props
 }
-export default connect<{}, {}, IPassedDetailsProps>(mapStateToProps, mapDispatchToProps)(
-  DetailsComponent as any
-)
+export default connect<
+  IDetailsComponentStateProps,
+  IDetailsComponentDispatchProps,
+  IPassedDetailsProps
+>(mapStateToProps, mapDispatchToProps)(DetailsComponent)

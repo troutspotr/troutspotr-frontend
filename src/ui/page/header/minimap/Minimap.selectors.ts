@@ -1,12 +1,12 @@
 import { createSelector } from 'reselect'
-import { waterOpenersDictionarySelector } from 'ui/@state/State.selectors'
+import { waterOpenersDictionarySelector } from 'ui/routes/@usState/UsState.selectors'
 import { hasAgreedToTermsSelector, isSearchingSelector } from 'ui/core/Core.selectors'
 import { has } from 'lodash'
 export const isExpandedBoolSelector = state => state.minimap.isExpanded
 
 export const isExpandedSelector = createSelector(
   [isExpandedBoolSelector, hasAgreedToTermsSelector],
-  (isExpanded, hasAgreedToTermsSelector) => isExpanded && hasAgreedToTermsSelector
+  (isExpanded, hasAgreedToTerms) => isExpanded && hasAgreedToTerms
 )
 
 // This determines if the collection of stream centroids

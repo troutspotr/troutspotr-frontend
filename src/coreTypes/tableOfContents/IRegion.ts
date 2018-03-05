@@ -1,3 +1,6 @@
+import { Loading } from 'ui/core/LoadingConstants'
+import { Selection } from 'ui/core/SelectionConstants'
+
 export interface IRegion {
   gid: number
   name: string
@@ -11,4 +14,6 @@ export interface IRegion {
   long_name: string
   state_gid: number
   state_short_name: string
+  loadingStatus: Loading
+  selectionStatus: Selection
 }

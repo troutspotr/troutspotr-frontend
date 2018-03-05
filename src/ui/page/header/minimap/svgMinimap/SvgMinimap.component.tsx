@@ -1,39 +1,35 @@
 import * as React from 'react'
-import {
-  MultiPolygon,
-  // Point,
-  FeatureCollection,
-} from 'geojson'
+import { MultiPolygon, GeoJsonObject, FeatureCollection } from 'geojson'
 import bboxPolygon from '@turf/bbox-polygon'
-// import { ICounty } from 'coreTypes/tableOfContents/ICounty'
+import * as MicromapSettings from 'ui/core/micromap/Micromap.settings'
 import { IState } from 'coreTypes/tableOfContents/IState'
-import { getProjectionFromFeature } from 'ui/core/micromap/GetProjectionFromFeature'
 import { IRegion } from 'coreTypes/tableOfContents/IRegion'
 import { ICameraProps } from 'ui/core/map/ICameraProps'
-
-import * as d3Selection from 'd3-selection'
-import * as d3Zoom from 'd3-zoom'
-import * as d3Geo from 'd3-geo'
-// import { multiPolygon } from '@turf/helpers'
-
+import { select, event } from 'd3-selection'
+import { zoomIdentity, zoom } from 'd3-zoom'
+import { featureCollection } from '@turf/helpers'
+import {
+  GeoGeometryObjects,
+  GeoProjection,
+  GeoPath,
+  GeoPermissibleObjects,
+  geoPath,
+  geoMercator,
+} from 'd3-geo'
+import { Selection } from 'ui/core/SelectionConstants'
+import { Loading } from '../../../../core/LoadingConstants'
 const styles = require('./SvgMinimap.scss')
 
+type RegionGeoJson = FeatureCollection<MultiPolygon, IRegion>
+type StateGeoJson = FeatureCollection<MultiPolygon, IState>
 export interface IMinimapSvgProps {
-  // readonly isExpanded: boolean
-  readonly usStatesGeoJson: FeatureCollection<MultiPolygon, IState>
-  readonly availableRegionsGeoJson: FeatureCollection<MultiPolygon, IRegion>
-  readonly loadingRegionsGeoJson: FeatureCollection<MultiPolygon, IRegion>
-  readonly selectedRegionsGeoJson: FeatureCollection<MultiPolygon, IRegion>
-  // readonly countiesGeojson: ReadonlyArray<Feature<MultiPolygon, ICounty>>
-  // readonly cachedRegionsGeojson: ReadonlyArray<Feature<MultiPolygon, IRegion>>
-  // readonly gpsFeature: Feature<Point>
-
+  readonly usStatesGeoJson: StateGeoJson
+  readonly regionsGeoJson: RegionGeoJson
   readonly width: number
   readonly height: number
-
   readonly camera?: ICameraProps
-  // readonly handleFeatureSelected: any
-  // readonly handleExpand: any
+  readonly isOffline: boolean
+  readonly isExpanded: boolean
 }
 
 export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
@@ -44,17 +40,20 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     this.reset = this.reset.bind(this)
     this.renderData = this.renderData.bind(this)
 
-    this.active = d3Selection.select(null)
+    this.active = select(null)
   }
 
-  private projection: d3Geo.GeoProjection = null
+  private projection: GeoProjection = null
   private zoom: any = null
-  private path: d3Geo.GeoPath<SVGPathElement, d3Geo.GeoPermissibleObjects> = null
+  private path: GeoPath<SVGPathElement, GeoPermissibleObjects> = null
   private active: any = null
   private mapGroup: any = null
-  private stateGroup: any = null
-  private regionGroup: any = null
-  private loadingRegionsGroup: any = null
+  private usStatesBackdrop: any = null
+  private regionsBackdrop: any = null
+  private selectedRegionsGroup: any = null
+  private selectedStatesGroup: any = null
+  private stateLabelsGroup: any = null
+  private regionLabelsGroup: any = null
   private svg: any = null
 
   private containerElement: HTMLDivElement = null
@@ -65,7 +64,7 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     }
 
     this.active.classed('active', false)
-    this.active = d3Selection.select(item).classed('active', true)
+    this.active = select(item).classed('active', true)
     this.setCameraToItem(d)
   }
 
@@ -82,32 +81,32 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     this.svg
       .transition()
       .duration(750)
-      .call(
-        this.zoom.transform,
-        d3Zoom.zoomIdentity.translate(translate[0], translate[1]).scale(scale)
-      )
+      .call(this.zoom.transform, zoomIdentity.translate(translate[0], translate[1]).scale(scale))
   }
 
   reset() {
     this.active.classed('active', false)
-    this.active = d3Selection.select(null)
+    this.active = select(null)
 
     this.svg
       .transition()
       .duration(750)
-      .call(this.zoom.transform, d3Zoom.zoomIdentity)
+      .call(this.zoom.transform, zoomIdentity)
   }
 
   zoomed() {
-    this.stateGroup.style('stroke-width', 2.2 / d3Selection.event.transform.k + 'px')
-    this.regionGroup.style('stroke-width', 1.5 / d3Selection.event.transform.k + 'px')
-    this.loadingRegionsGroup.style('stroke-width', 3 / d3Selection.event.transform.k + 'px')
-    this.mapGroup.attr('transform', d3Selection.event.transform)
+    this.usStatesBackdrop.style('stroke-width', 1.2 / event.transform.k + 'px')
+    this.regionsBackdrop.style('stroke-width', 1.0 / event.transform.k + 'px')
+    this.selectedRegionsGroup.style('stroke-width', 3 / event.transform.k + 'px')
+    this.selectedStatesGroup.style('stroke-width', 2.5 / event.transform.k + 'px')
+    this.stateLabelsGroup.style('font-size', 0.75 / event.transform.k + 'em')
+    this.regionLabelsGroup.style('font-size', 0.6 / event.transform.k + 'em')
+    this.mapGroup.attr('transform', event.transform)
   }
 
   stopped() {
-    if (d3Selection.event.defaultPrevented) {
-      d3Selection.event.stopPropagation()
+    if (event.defaultPrevented) {
+      event.stopPropagation()
     }
   }
 
@@ -137,20 +136,17 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
   componentDidMount() {
     const { width, height } = this.props
 
-    this.projection = d3Geo
-      .geoAlbersUsa()
+    this.projection = geoMercator()
       .scale(1000)
       .translate([width / 2, height / 2])
 
-    this.zoom = d3Zoom
-      .zoom()
+    this.zoom = zoom()
       .scaleExtent([1, 8])
       .on('zoom', this.zoomed)
 
-    this.path = d3Geo.geoPath().projection(this.projection)
+    this.path = geoPath().projection(this.projection)
 
-    this.svg = d3Selection
-      .select(`.${styles.container}`)
+    this.svg = select(`.${styles.container}`)
       .append('svg')
       .attr('width', width)
       .attr('height', height)
@@ -163,36 +159,37 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       .attr('height', height)
       .on('click', this.reset)
 
+    const filter = this.svg
+      .append('defs')
+      .append('filter')
+      .attr('x', '0')
+      .attr('y', '0')
+      .attr('width', '1')
+      .attr('height', '1')
+      .attr('id', 'solid')
+
+    filter.append('feFlood').attr('flood-color', 'rgba(18, 18, 18, 0.9)')
+    filter.append('feComposite').attr('in', 'SourceGraphic')
+
     this.mapGroup = this.svg.append('g').attr('class', 'js-d3-map')
-    this.stateGroup = this.mapGroup.append('g').attr('class', 'states')
-    this.regionGroup = this.mapGroup.append('g').attr('class', 'regions')
-    this.loadingRegionsGroup = this.mapGroup.append('g').attr('class', 'loading-regions')
+    this.usStatesBackdrop = this.mapGroup.append('g').attr('class', 'us-states-backdrop')
+    this.regionsBackdrop = this.mapGroup.append('g').attr('class', 'regions-backdrop')
+    this.selectedStatesGroup = this.mapGroup.append('g').attr('class', 'selected-states')
+    this.selectedRegionsGroup = this.mapGroup.append('g').attr('class', 'selected-regions')
+    this.stateLabelsGroup = this.mapGroup.append('g').attr('class', 'state-labels')
+    this.regionLabelsGroup = this.mapGroup.append('g').attr('class', 'region-labels')
 
     this.svg.call(this.zoom) // delete this line to disable free zooming
     this.renderData()
     this.centerCameraOnCamera(this.props.camera)
   }
 
-  renderData() {
-    const {
-      usStatesGeoJson,
-      availableRegionsGeoJson,
-      width,
-      height,
-      loadingRegionsGeoJson,
-    } = this.props
-    this.projection = getProjectionFromFeature(
-      usStatesGeoJson,
-      { width, height },
-      Math.min(width, height) * 0.5
-    )
-    this.path = d3Geo.geoPath().projection(this.projection)
-
+  renderRegionsBackdrop(svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>) {
+    const { regionsGeoJson } = this.props
     const obnoxiousClosure = this.clicked
-
-    const regionSelection = this.regionGroup
+    const regionSelection = this.regionsBackdrop
       .selectAll(`path.js-d3-regions`)
-      .data(availableRegionsGeoJson.features, x => {
+      .data(regionsGeoJson.features, x => {
         return x.properties.gid
       })
 
@@ -200,7 +197,7 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       .enter()
       .append('path')
       .attr('class', `js-d3-regions ${styles.regions}`)
-      .attr('d', this.path)
+      .attr('d', svgPathGenerator)
       .on('click', function(item) {
         obnoxiousClosure(item, this)
       })
@@ -215,18 +212,31 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       .duration(400)
       .style('opacity', 0)
       .remove()
+  }
 
-    const stateSelection = this.stateGroup
+  renderStateBackdrop(svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>) {
+    const { usStatesGeoJson } = this.props
+    const obnoxiousClosure = this.clicked
+    const stateSelection = this.usStatesBackdrop
       .selectAll(`path.js-d3-states`)
       .data([...usStatesGeoJson.features], x => {
         return x.properties.gid
       })
 
+    stateSelection.attr('class', (item, index) => {
+      const isInactive = item.properties.selectionStatus === Selection.Inactive
+      const className = isInactive ? styles.statesInactive : styles.states
+      return `js-d3-states ${className}`
+    })
+
     stateSelection
       .enter()
       .append('path')
-      .attr('class', `js-d3-states ${styles.states}`)
-      .attr('d', this.path)
+      .attr('data-name', item => item.properties.short_name)
+      .attr('class', (item, index) => {
+        return `js-d3-states ${styles.states}`
+      })
+      .attr('d', svgPathGenerator)
       .on('click', function(item) {
         obnoxiousClosure(item, this)
       })
@@ -237,19 +247,62 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       .duration(300)
       .style('opacity', 0)
       .remove()
+  }
 
-    // loadingRegionsGroup
-    const loadingRegionsSelection = this.loadingRegionsGroup
-      .selectAll(`path.js-d3-loading-regions`)
-      .data([...loadingRegionsGeoJson.features], x => {
+  renderSelectedStates(svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>) {
+    const { usStatesGeoJson } = this.props
+    const selectedUsStatesFeatures =
+      usStatesGeoJson == null
+        ? []
+        : usStatesGeoJson.features.filter(feature => {
+            return feature.properties.selectionStatus === Selection.Selected
+          })
+    const selectedFeatureCollection = featureCollection(selectedUsStatesFeatures) as StateGeoJson
+
+    const selectedStateSelection = this.selectedStatesGroup
+      .selectAll(`path.js-d3-selected-states`)
+      .data([...selectedFeatureCollection.features], x => {
         return x.properties.gid
       })
 
+    const obnoxiousClosure = this.clicked
+    selectedStateSelection
+      .enter()
+      .append('path')
+      .attr('class', `js-d3-selected-states ${styles.selectedStates}`)
+      .attr('d', svgPathGenerator)
+      .on('click', function(item) {
+        obnoxiousClosure(item, this)
+      })
+
+    selectedStateSelection
+      .exit()
+      .transition()
+      .duration(300)
+      .style('opacity', 0)
+      .remove()
+  }
+
+  renderSelectedRegions(svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>) {
+    const { regionsGeoJson } = this.props
+    const selectedRegionFeatures =
+      regionsGeoJson == null
+        ? []
+        : regionsGeoJson.features.filter(feature => {
+            return feature.properties.loadingStatus === Loading.Pending
+          })
+
+    const loadingRegionsSelection = this.selectedRegionsGroup
+      .selectAll(`path.js-d3-selected-regions`)
+      .data([...selectedRegionFeatures], x => {
+        return x.properties.gid
+      })
+    const obnoxiousClosure = this.clicked
     loadingRegionsSelection
       .enter()
       .append('path')
-      .attr('class', `js-d3-loading-regions ${styles.loadingRegions}`)
-      .attr('d', this.path)
+      .attr('class', `js-d3-selected-regions ${styles.loadingRegions}`)
+      .attr('d', svgPathGenerator)
       .on('click', function(item) {
         obnoxiousClosure(item, this)
       })
@@ -257,7 +310,6 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       .transition()
       .duration(400)
       .style('opacity', 1)
-
     loadingRegionsSelection
       .exit()
       .transition()
@@ -269,7 +321,131 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
       .remove()
   }
 
+  renderStateLabels(svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>) {
+    const { usStatesGeoJson, isExpanded } = this.props
+    const nonSelectedStates = {
+      ...usStatesGeoJson,
+      features: isExpanded
+        ? usStatesGeoJson.features.filter(x => x.properties.selectionStatus !== Selection.Selected)
+        : [],
+    }
+    console.log(nonSelectedStates.features)
+    const stateSelection = this.stateLabelsGroup
+      .selectAll(`text.js-d3-states-labels`)
+      .data([...nonSelectedStates.features], x => {
+        return x.properties.gid
+      })
+
+    stateSelection.attr('class', (item, index) => {
+      const isInactive = item.properties.selectionStatus === Selection.Inactive
+      const className = isInactive ? styles.stateLabelsInactive : styles.stateLabels
+      return `js-d3-states-labels ${className}`
+    })
+
+    stateSelection
+      .enter()
+      .append('text')
+      .attr('data-name', item => item.properties.short_name)
+      .text(item => item.properties.name)
+      .attr('x', d => {
+        return svgPathGenerator.centroid(d)[0]
+      })
+      .attr('y', d => {
+        return svgPathGenerator.centroid(d)[1]
+      })
+      .attr('class', (item, index) => {
+        return `js-d3-states-labels ${styles.stateLabels}`
+      })
+      .attr('filter', 'url(#solid)')
+      .style('opacity', 0)
+      .transition()
+      .delay(200)
+      .duration(300)
+      .style('opacity', 1)
+
+    stateSelection
+      .exit()
+      .transition()
+      .duration(100)
+      .style('opacity', 0)
+      .remove()
+  }
+
+  renderRegionLabels(svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>) {
+    const { regionsGeoJson, isExpanded } = this.props
+    const regionsWithLabels = isExpanded
+      ? regionsGeoJson.features.filter(x => x.properties.selectionStatus !== Selection.Inactive)
+      : []
+    const regionSelection = this.regionLabelsGroup
+      .selectAll(`text.js-d3-regions-labels`)
+      .data([...regionsWithLabels], x => {
+        return x.properties.gid
+      })
+
+    regionSelection
+      .enter()
+      .append('text')
+      .attr('data-name', item => item.properties.long_name)
+      .text(item => item.properties.long_name)
+      .attr('x', d => {
+        return svgPathGenerator.centroid(d)[0]
+      })
+      .attr('y', d => {
+        return svgPathGenerator.centroid(d)[1]
+      })
+      .attr('class', (item, index) => {
+        return `js-d3-regions-labels ${styles.regionLabels}`
+      })
+      .attr('filter', 'url(#solid)')
+      .style('opacity', 0)
+      .transition()
+      .delay(400)
+      .duration(300)
+      .style('opacity', 1)
+
+    regionSelection
+      .exit()
+      .transition()
+      .duration(100)
+      .style('opacity', 0)
+      .remove()
+  }
+
+  renderData() {
+    const { usStatesGeoJson, width, height } = this.props
+    this.projection = getProjectionFromFeature(
+      usStatesGeoJson,
+      { width, height },
+      Math.min(width, height) * 0.5
+    )
+    this.path = geoPath().projection(this.projection)
+    this.renderRegionsBackdrop(this.path)
+    this.renderStateBackdrop(this.path)
+    this.renderSelectedRegions(this.path)
+    this.renderSelectedStates(this.path)
+    this.renderStateLabels(this.path)
+    this.renderRegionLabels(this.path)
+  }
+
   render() {
     return <div className={styles.container} ref={element => (this.containerElement = element)} />
   }
+}
+
+export const getProjectionFromFeature = (
+  feature: GeoJsonObject,
+  dimmensions: MicromapSettings.IDimensionsSettings,
+  radius: number
+): GeoProjection => {
+  const { width, height } = dimmensions
+  const streamGeometry = feature as GeoGeometryObjects
+  const diameter = radius * 2 * 0.9
+  const lower = [(width - diameter) / 2, (height - diameter) / 2]
+  const upper = [width - lower[0], height - lower[1]]
+  const projection = geoMercator().fitExtent(
+    [[lower[0], lower[1]], [upper[0], upper[1]]],
+    streamGeometry
+  )
+
+  return projection
 }

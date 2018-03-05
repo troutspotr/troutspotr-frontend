@@ -13,6 +13,39 @@ $gray: hsl(0, 0%, 54%);
 $silver: hsla(0, 0%, 73.7%, 1);
 $white: hsla(0, 0%, 100%, 1);
 
+// map colors
+// water
+$woodsmoke: hsl(185, 2%, 10%);
+
+// secondary road interior: hsl(0, 0%, 27%)
+$tundora: hsl(0, 0%, 27%);
+
+// secondary road border: hsl(0, 0%, 17%)
+$mine-shaft-2: hsl(0, 0%, 17%);
+
+// primary road interior: hsl(0, 0%, 20%)
+$mine-shaft-3: hsl(0, 0%, 20%);
+
+// primary road border: hsl(0, 0%, 13%)
+$mine-shaft-4: hsl(0, 0%, 13%);
+
+// building: hsl(55, 1%, 17%)
+$tuatara: hsl(55, 1%, 17%);
+
+// primary text color: hsl(0, 0%, 45%)
+$dove-gray: hsl(0, 0%, 45%);
+
+// primary text halo: hsla(0, 0%, 10%, 0.75)
+$cod-gray-2: hsla(0, 0%, 10%, 0.75);
+
+// secondary text color: hsl(0, 0%, 90%)
+$mercury: hsl(0, 0%, 90%);
+
+// secondary text halo: hsla(0, 0%, 10%, 0.75)
+// same as cod-gray-2
+
+// admin 1 border color: hsl(0, 0%, 10%)
+
 // dark interface colors
 $backgroundDark: $cod-gray;
 $textDark: $white;

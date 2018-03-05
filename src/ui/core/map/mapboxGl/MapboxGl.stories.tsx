@@ -76,13 +76,23 @@ const createStyles = (): Style | string => {
   return select(label, options, defaultValue)
 }
 
-const createCameraObject = (): ICameraProps => {
+export const createCameraObject = (): ICameraProps => {
   return {
     bbox: createPlacesToVisit(),
     pitch: number('Pitch (aka tilt)', 0, { range: true, min: 0, max: 90, step: 0.01 }),
     bearing: number('Bearing (aka rotation)', 0, { range: true, min: 0, max: 360.0, step: 0.01 }),
     padding: createCameraPaddingOffset(),
     speed: number('Speed', 0, { range: true, min: 0.01, max: 3, step: 0.01 }),
+  }
+}
+
+export const createCameraObjectSimple = (): ICameraProps => {
+  return {
+    bbox: createPlacesToVisit(),
+    pitch: 0,
+    bearing: 0,
+    padding: { top: 0, bottom: 0, left: 0, right: 0 },
+    speed: 1,
   }
 }
 

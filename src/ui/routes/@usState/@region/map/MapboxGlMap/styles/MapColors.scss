@@ -1,0 +1,38 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+
+:export {
+  // -------
+  // DARK
+  // -------
+  backgroundfill-dark: $backgroundDark;
+  waterfill-dark: $woodsmoke;
+  primaryroadfill-dark: $mine-shaft-3;
+  primaryroadborder-dark: $mine-shaft-4;
+  secondaryroadfill-dark: $tundora;
+  secondaryroadborder-dark: $mine-shaft-2;
+  buildingfill-dark: $tuatara;
+  primarylabelfill-dark: $mercury;
+  primarylabelbackground-dark: $cod-gray-2;
+  secondarylabelfill-dark: $dove-gray;
+  secondarylabelbackground-dark: $cod-gray-2;
+  admin0bordercolor-dark: $mine-shaft;
+  admin1bordercolor-dark: $mine-shaft;
+
+  // -------
+  // LIGHT
+  // -------
+  backgroundfill-light: $backgroundLight;
+  waterfill-light: $cod-gray;
+  primaryroadfill-light: green;
+  primaryroadborder-light: blue;
+  secondaryroadfill-light: $mercury;
+  secondaryroadborder-light: $tuatara;
+  buildingfill-light: $mercury;
+  primarylabelfill-light: yellow;
+  primarylabelbackground-light: purple;
+  secondarylabelfill-light: $woodsmoke;
+  secondarylabelbackground-light: $white;
+  admin0bordercolor-light: pink;
+  admin1bordercolor-light: indigo;
+}

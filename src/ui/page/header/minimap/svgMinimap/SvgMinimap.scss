@@ -35,7 +35,6 @@
   transition: stroke 800ms;
   @include fallback(stroke, --text-color-primary, $textDark);
   transform-origin: center;
-  background-color: green;
 }
 
 .statesInactive {
@@ -81,7 +80,15 @@
 
 :global(.ts-light) {
   .stateLabels {
-    font-weight: 800;
+    @include fallback(fill, --white, white);
+  }
+
+  .stateLabelsInactive {
+    @include fallback(fill, --white, white);
+  }
+
+  .regionLabels {
+    @include fallback(fill, --white, white);
   }
 }
 

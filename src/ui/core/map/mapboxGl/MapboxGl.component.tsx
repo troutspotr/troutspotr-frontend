@@ -20,6 +20,7 @@ export interface IMapboxGlProps {
   readonly style: MapboxStyle | string
   readonly camera?: ICameraProps
   readonly mapboxGl: any
+  readonly debugMode?: boolean
 }
 
 export interface IMapboxGlState {
@@ -77,8 +78,13 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     })
 
     // inactivate rotation.
-    map.dragRotate.disable()
-    map.touchZoomRotate.disableRotation()
+    // map.dragRotate.disable()
+    // map.touchZoomRotate.disableRotation()
+    if (this.props.debugMode === true) {
+      map.on('zoom', e => {
+        console.log('zoom:', map.getZoom())
+      })
+    }
     map.on('click', this.onClick)
     // wait until we've loaded before setting the map property
     map.on('load', e => {

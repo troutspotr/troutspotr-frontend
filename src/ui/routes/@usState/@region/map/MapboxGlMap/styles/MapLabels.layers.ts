@@ -1,9 +1,32 @@
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 import { Layer } from 'mapbox-gl'
-import { IMapColors } from './MapColors'
+import { ILayerProperties } from './ICreateLayer'
 
-export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
-  return [
+// export const createHalo
+
+export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[] => {
+  const { isOnline, isHighContrastEnabled } = originalLayerProps
+  if (isOnline === false) {
+    return []
+  }
+
+  // if it's high contrast mode, update our pallete.
+  const layerProps = {
+    ...originalLayerProps,
+    pallete: {
+      ...originalLayerProps.pallete,
+    },
+  }
+
+  if (isHighContrastEnabled) {
+    layerProps.pallete.secondaryLabelFill = originalLayerProps.pallete.primaryLabelFill
+    layerProps.pallete.secondaryLabelBackground =
+      originalLayerProps.pallete.secondaryLabelBackground
+  }
+
+  const { pallete } = layerProps
+
+  const labels = [
     {
       id: 'waterway-label',
       type: 'symbol',
@@ -25,7 +48,7 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
       paint: {
         'text-halo-width': 0,
         'text-halo-blur': 0,
-        'text-color': colorsDictionary.secondaryLabelFill,
+        'text-color': pallete.secondaryLabelFill,
       },
     },
     {
@@ -66,8 +89,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-max-width': 8,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'text-halo-blur': 0,
       },
@@ -111,9 +134,9 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
       },
       paint: {
         'text-halo-blur': 0,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
-        'text-color': colorsDictionary.secondaryLabelFill,
+        'text-color': pallete.secondaryLabelFill,
       },
     },
     {
@@ -159,8 +182,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-letter-spacing': 0.01,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1.25,
         'text-halo-blur': 0,
       },
@@ -192,8 +215,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-letter-spacing': 0.01,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'text-halo-blur': 0,
       },
@@ -221,8 +244,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-letter-spacing': 0.01,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'text-halo-blur': 0,
       },
@@ -265,8 +288,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-max-width': 8,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'text-halo-blur': 0,
       },
@@ -309,8 +332,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-max-width': 8,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'text-halo-blur': 0,
       },
@@ -332,7 +355,7 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         },
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
+        'text-color': pallete.secondaryLabelFill,
         'text-halo-blur': 0,
       },
     },
@@ -374,8 +397,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-max-width': 8,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'text-halo-blur': 0,
       },
@@ -418,8 +441,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-max-width': 8,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'text-halo-blur': 0,
       },
@@ -445,9 +468,9 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         },
       },
       paint: {
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
-        'text-color': colorsDictionary.secondaryLabelFill,
+        'text-color': pallete.secondaryLabelFill,
         'text-halo-blur': 0,
       },
     },
@@ -472,9 +495,9 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         },
       },
       paint: {
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
-        'text-color': colorsDictionary.secondaryLabelFill,
+        'text-color': pallete.secondaryLabelFill,
         'text-halo-blur': 0,
       },
     },
@@ -495,9 +518,9 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         },
       },
       paint: {
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1.25,
-        'text-color': colorsDictionary.secondaryLabelFill,
+        'text-color': pallete.secondaryLabelFill,
         'text-halo-blur': 0,
       },
     },
@@ -519,9 +542,9 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         },
       },
       paint: {
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1.25,
-        'text-color': colorsDictionary.secondaryLabelFill,
+        'text-color': pallete.secondaryLabelFill,
         'text-halo-blur': 0,
       },
     },
@@ -548,8 +571,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-max-width': 7,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1.25,
         'icon-opacity': {
           base: 1,
@@ -581,8 +604,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-max-width': 7,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'text-halo-blur': 0,
       },
@@ -608,8 +631,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'text-max-width': 7,
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1.25,
         'icon-opacity': {
           base: 1,
@@ -649,8 +672,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
       },
       paint: {
         'text-halo-width': 1,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
-        'text-color': colorsDictionary.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
         'text-halo-blur': 0,
         'icon-opacity': {
           base: 1,
@@ -689,8 +712,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         'icon-image': 'dot-10',
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'icon-opacity': {
           base: 1,
@@ -734,8 +757,8 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         },
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'icon-opacity': {
           base: 1,
@@ -779,9 +802,9 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
         },
       },
       paint: {
-        'text-color': colorsDictionary.secondaryLabelFill,
+        'text-color': pallete.secondaryLabelFill,
         'text-opacity': 1,
-        'text-halo-color': colorsDictionary.secondaryLabelBackground,
+        'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'icon-opacity': {
           base: 1,
@@ -791,4 +814,25 @@ export const getMapLabelLayers = (colorsDictionary: IMapColors): Layer[] => {
       },
     },
   ] as Layer[]
+
+  if (isHighContrastEnabled) {
+    labels.forEach(label => {
+      if (label.type !== 'symbol') {
+        return
+      }
+
+      const paint = label.paint
+      paint['text-halo-blur'] = 10
+      paint['text-halo-width'] = 10
+      paint['text-halo-color'] = pallete.primaryLabelBackground
+
+      const layout = label.layout
+      if (layout['text-size'] != null && layout['text-size'].stops != null) {
+        layout['text-size'].stops.forEach(x => {
+          x[1] *= 1.2
+        })
+      }
+    })
+  }
+  return labels
 }

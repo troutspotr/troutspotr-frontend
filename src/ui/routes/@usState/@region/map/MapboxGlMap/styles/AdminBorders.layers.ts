@@ -1,7 +1,11 @@
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 import { Layer } from 'mapbox-gl'
-import { IMapColors } from './MapColors'
-export const getAdminBorderLayers = (colorsDictionary: IMapColors): Layer[] => {
+import { ILayerProperties } from './ICreateLayer'
+export const getAdminBorderLayers = (layerProps: ILayerProperties): Layer[] => {
+  const { pallete, isOnline } = layerProps
+  if (isOnline === false) {
+    return []
+  }
   return [
     {
       id: 'admin-3-4-boundaries-bg',
@@ -13,7 +17,7 @@ export const getAdminBorderLayers = (colorsDictionary: IMapColors): Layer[] => {
         'line-join': 'bevel',
       },
       paint: {
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-width': {
           base: 1,
           stops: [[3, 3.5], [10, 8]],
@@ -45,7 +49,7 @@ export const getAdminBorderLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1,
           stops: [[3, 3.5], [10, 10]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-opacity': {
           base: 1,
           stops: [[3, 0], [4, 0.5]],
@@ -80,7 +84,7 @@ export const getAdminBorderLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1,
           stops: [[2, 0], [3, 1]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
       },
     },
     {
@@ -95,7 +99,7 @@ export const getAdminBorderLayers = (colorsDictionary: IMapColors): Layer[] => {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-width': {
           base: 1,
           stops: [[3, 0.5], [10, 2]],

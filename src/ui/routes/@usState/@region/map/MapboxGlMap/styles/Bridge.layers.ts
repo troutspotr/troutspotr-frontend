@@ -1,9 +1,13 @@
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 import { Layer } from 'mapbox-gl'
-import { IMapColors } from './MapColors'
-
-export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
-  return [
+import { ILayerProperties } from './ICreateLayer'
+import { setMaximumAtZoomsAboveSatellite, defeaultFillOpacity } from './Roads.layers'
+export const getBridgeLayers = (layerProps: ILayerProperties): Layer[] => {
+  const { pallete, isOnline } = layerProps
+  if (isOnline === false) {
+    return []
+  }
+  const bridgeLayers = [
     {
       id: 'bridge-pedestrian-case',
       type: 'line',
@@ -23,7 +27,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[14, 2], [18, 14.5]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': 0,
         'line-opacity': {
           base: 1,
@@ -51,7 +55,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12.5, 0.5], [14, 2], [18, 18]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-opacity': {
           stops: [[11.5, 0], [12, 1], [14, 1], [14.01, 0]],
         },
@@ -77,7 +81,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12.5, 0.5], [14, 2], [18, 18]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-opacity': {
           stops: [[11.5, 0], [12, 1], [14, 1], [14.01, 0]],
         },
@@ -107,7 +111,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.75], [20, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': {
           base: 1.5,
           stops: [[14, 0.5], [18, 12]],
@@ -133,7 +137,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.75], [20, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': {
           base: 1.5,
           stops: [[13, 0], [14, 2], [18, 18]],
@@ -159,7 +163,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.75], [20, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-opacity': {
           base: 1,
           stops: [[13.99, 0], [14, 1]],
@@ -188,7 +192,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.2,
           stops: [[10, 0.75], [18, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': {
           base: 1.5,
           stops: [[8.5, 0.5], [10, 0.75], [18, 26]],
@@ -214,7 +218,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[5, 0.75], [16, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': {
           base: 1.5,
           stops: [[5, 0.75], [18, 32]],
@@ -241,7 +245,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.75], [20, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': {
           base: 1.5,
           stops: [[12, 0.5], [14, 2], [18, 18]],
@@ -276,7 +280,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.75], [20, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': {
           base: 1.5,
           stops: [[12, 0.5], [14, 2], [18, 18]],
@@ -302,7 +306,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[10, 1], [16, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': {
           base: 1.5,
           stops: [[5, 0.75], [18, 32]],
@@ -327,7 +331,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[7, 0.5], [10, 1], [16, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': {
           base: 1.5,
           stops: [[5, 0.75], [18, 32]],
@@ -353,7 +357,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12.5, 0.5], [14, 2], [18, 18]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-opacity': {
           base: 1,
           stops: [[13.99, 0], [14, 1]],
@@ -388,7 +392,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[15, 1], [18, 4]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-dasharray': {
           base: 1,
           stops: [[14, [1, 0]], [15, [1.75, 1]], [16, [1, 0.75]], [17, [1, 0.5]]],
@@ -417,7 +421,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[15, 1], [18, 4]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-dasharray': {
           base: 1,
           stops: [[14, [1, 0]], [15, [1.75, 1]], [16, [1, 0.75]], [17, [0.3, 0.3]]],
@@ -453,7 +457,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.5], [14, 2], [18, 18]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
       },
     },
     {
@@ -481,7 +485,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.5], [14, 2], [18, 18]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
       },
     },
     {
@@ -503,7 +507,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[14, 0.5], [18, 12]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-opacity': 1,
         'line-dasharray': {
           base: 1,
@@ -536,7 +540,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[14, 0.5], [18, 12]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
       },
     },
     {
@@ -559,7 +563,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12.5, 0.5], [14, 2], [18, 18]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-opacity': {
           base: 1,
           stops: [[13.99, 0], [14, 1]],
@@ -586,7 +590,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12.5, 0.5], [14, 2], [18, 18]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-opacity': {
           base: 1,
           stops: [[13.99, 0], [14, 1]],
@@ -612,7 +616,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[8.5, 0.5], [10, 0.75], [18, 26]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-opacity': {
           base: 1.2,
           stops: [[5, 0], [5.5, 1]],
@@ -638,7 +642,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[5, 0.75], [18, 32]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-opacity': {
           base: 1.2,
           stops: [[5, 0], [5.5, 1]],
@@ -669,7 +673,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[5, 0.75], [18, 32]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
       },
     },
     {
@@ -696,7 +700,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[5, 0.75], [18, 32]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
       },
     },
     {
@@ -714,7 +718,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
         'line-join': 'round',
       },
       paint: {
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-width': {
           base: 1,
           stops: [[14, 0.75], [20, 1]],
@@ -740,7 +744,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.75], [20, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-gap-width': {
           base: 1.5,
           stops: [[12, 0.5], [14, 2], [18, 18]],
@@ -775,7 +779,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.75], [20, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': {
           base: 1.5,
           stops: [[12, 0.5], [14, 2], [18, 18]],
@@ -801,7 +805,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[10, 1], [16, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
         'line-gap-width': {
           base: 1.5,
           stops: [[5, 0.75], [18, 32]],
@@ -826,7 +830,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[7, 0.5], [10, 1], [16, 2]],
         },
-        'line-color': colorsDictionary.secondaryRoadBorder,
+        'line-color': pallete.secondaryRoadBorder,
         'line-gap-width': {
           base: 1.5,
           stops: [[5, 0.75], [18, 32]],
@@ -853,7 +857,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.5], [14, 2], [18, 18]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
       },
     },
     {
@@ -881,7 +885,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[12, 0.5], [14, 2], [18, 18]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
       },
     },
     {
@@ -903,7 +907,7 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[5, 0.75], [18, 32]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
       },
     },
     {
@@ -925,8 +929,22 @@ export const getBridgeLayers = (colorsDictionary: IMapColors): Layer[] => {
           base: 1.5,
           stops: [[5, 0.75], [18, 32]],
         },
-        'line-color': colorsDictionary.secondaryRoadFill,
+        'line-color': pallete.secondaryRoadFill,
       },
     },
   ] as Layer[]
+
+  bridgeLayers.forEach(layer => {
+    const lineOpacity = layer.paint['line-opacity']
+    if (lineOpacity == null) {
+      layer.paint['line-opacity'] = defeaultFillOpacity(layerProps)
+      return
+    }
+
+    if (lineOpacity.stops != null) {
+      layer.paint['line-opacity'] = setMaximumAtZoomsAboveSatellite(layerProps, lineOpacity.stops)
+    }
+  })
+
+  return bridgeLayers
 }

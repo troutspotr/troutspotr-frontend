@@ -2,21 +2,45 @@
 import { Style as MapboxStyle, Layer } from 'mapbox-gl'
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 export const FONT_ROBOTO_BOLD = ['roboto-bold']
-import { IMapColors } from './MapColors'
+import { ILayerProperties } from './ICreateLayer'
 import { getRoadsLayers } from './Roads.layers'
 import { getMapLabelLayers } from './MapLabels.layers'
 import { getBridgeLayers } from './Bridge.layers'
 import { getAdminBorderLayers } from './AdminBorders.layers'
-export const createLayers = (colorsDictionary: IMapColors): Layer[] => {
+import { getSatelliteLayers } from './Satellite.layers'
+
+export const createBackgroundLayers = (layerProps: ILayerProperties): Layer[] => {
+  const { pallete } = layerProps
   return [
     {
       id: 'background',
       type: 'background',
       layout: {},
       paint: {
-        'background-color': colorsDictionary.backgroundFill,
+        'background-color': pallete.backgroundFill,
       },
     },
+  ]
+}
+
+export const createWaterLayers = (layerProps: ILayerProperties): Layer[] => {
+  const { pallete, isOnline, satelliteZoomLevel } = layerProps
+  if (isOnline === false) {
+    return []
+  }
+
+  const canalMinimumZoomLevel = 8
+  const fuzzyRange = 1.5
+  const shouldUseSimpleOpacityStops = canalMinimumZoomLevel + fuzzyRange >= satelliteZoomLevel
+  const canalOpacityStops = shouldUseSimpleOpacityStops
+    ? [[satelliteZoomLevel, 1], [satelliteZoomLevel + 0.3, 0]]
+    : [
+        [canalMinimumZoomLevel, 0],
+        [canalMinimumZoomLevel + 0.5, 1],
+        [satelliteZoomLevel, 1],
+        [satelliteZoomLevel + 0.3, 0],
+      ]
+  return [
     {
       id: 'waterway-river-canal',
       type: 'line',
@@ -32,14 +56,14 @@ export const createLayers = (colorsDictionary: IMapColors): Layer[] => {
         'line-join': 'round',
       },
       paint: {
-        'line-color': colorsDictionary.waterFill,
+        'line-color': pallete.waterFill,
         'line-width': {
           base: 1.3,
-          stops: [[8.5, 0.1], [20, 8]],
+          stops: [[canalMinimumZoomLevel + 0.5, 0.1], [20, 8]],
         },
         'line-opacity': {
           base: 1,
-          stops: [[8, 0], [8.5, 1]],
+          stops: canalOpacityStops,
         },
       },
     },
@@ -50,21 +74,40 @@ export const createLayers = (colorsDictionary: IMapColors): Layer[] => {
       'source-layer': 'water',
       layout: {},
       paint: {
-        'fill-color': colorsDictionary.waterFill,
+        'fill-color': {
+          base: 1,
+          stops: [
+            // [satelliteZoomLevel - 0.2, pallete.waterFill],
+            // [satelliteZoomLevel + 0.4, pallete.waterOutline],
+            [satelliteZoomLevel, pallete.waterFill],
+            [satelliteZoomLevel + 0.3, 'transparent'],
+          ],
+        },
+        'fill-outline-color': {
+          base: 1,
+          stops: [
+            // [satelliteZoomLevel - 0.2, pallete.waterFill],
+            // [satelliteZoomLevel + 0.4, pallete.waterOutline],
+            [satelliteZoomLevel, pallete.waterFill],
+            [satelliteZoomLevel + 0.4, pallete.waterOutline],
+          ],
+        },
+        // 'fill-opacity': {
+        //   base: 1,
+        //   stops: [[satelliteZoomLevel, 1], [satelliteZoomLevel + 0.3, 0]],
+        // },
       },
     },
-    {
-      id: 'barrier_line-land-polygon',
-      type: 'fill',
-      source: 'composite',
-      'source-layer': 'barrier_line',
-      filter: ['all', ['==', '$type', 'Polygon'], ['==', 'class', 'land']],
-      layout: {},
-      paint: {
-        'fill-color': colorsDictionary.backgroundFill,
-        'fill-outline-color': colorsDictionary.backgroundFill,
-      },
-    },
+  ] as Layer[]
+}
+
+export const createAirports = (layerProps: ILayerProperties): Layer[] => {
+  const { pallete, isOnline } = layerProps
+  if (isOnline === false) {
+    return []
+  }
+
+  return [
     {
       id: 'aeroway-polygon',
       type: 'fill',
@@ -74,7 +117,7 @@ export const createLayers = (colorsDictionary: IMapColors): Layer[] => {
       filter: ['all', ['!=', 'type', 'apron'], ['==', '$type', 'Polygon']],
       layout: {},
       paint: {
-        'fill-color': 'hsl(0, 0%, 27%)',
+        'fill-color': pallete.secondaryRoadFill,
         'fill-opacity': {
           base: 1,
           stops: [[11, 0], [11.5, 1]],
@@ -90,7 +133,7 @@ export const createLayers = (colorsDictionary: IMapColors): Layer[] => {
       filter: ['all', ['==', '$type', 'LineString'], ['==', 'type', 'runway']],
       layout: {},
       paint: {
-        'line-color': 'hsl(0, 0%, 27%)',
+        'line-color': pallete.secondaryRoadFill,
         'line-width': {
           base: 1.5,
           stops: [[9, 1], [18, 80]],
@@ -106,13 +149,35 @@ export const createLayers = (colorsDictionary: IMapColors): Layer[] => {
       filter: ['all', ['==', '$type', 'LineString'], ['==', 'type', 'taxiway']],
       layout: {},
       paint: {
-        'line-color': 'hsl(0, 0%, 27%)',
+        'line-color': pallete.secondaryRoadFill,
         'line-width': {
           base: 1.5,
           stops: [[10, 0.5], [18, 20]],
         },
       },
     },
+  ] as Layer[]
+}
+
+export const createBuildingsAndBarrierLayers = (layerProps: ILayerProperties): Layer[] => {
+  const { pallete, isOnline } = layerProps
+  if (isOnline === false) {
+    return []
+  }
+  return [
+    {
+      id: 'barrier_line-land-polygon',
+      type: 'fill',
+      source: 'composite',
+      'source-layer': 'barrier_line',
+      filter: ['all', ['==', '$type', 'Polygon'], ['==', 'class', 'land']],
+      layout: {},
+      paint: {
+        'fill-color': pallete.backgroundFill,
+        'fill-outline-color': pallete.backgroundFill,
+      },
+    },
+
     {
       id: 'building',
       type: 'fill',
@@ -122,25 +187,36 @@ export const createLayers = (colorsDictionary: IMapColors): Layer[] => {
       filter: ['all', ['!=', 'type', 'building:part'], ['==', 'underground', 'false']],
       layout: {},
       paint: {
-        'fill-color': colorsDictionary.buildingFill,
+        'fill-color': pallete.buildingFill,
         'fill-opacity': {
           base: 1,
-          stops: [[15.5, 0], [16, 1]],
+          stops: [[15.5, 0], [16, 0.4]],
         },
-        'fill-outline-color': colorsDictionary.buildingFill,
+        'fill-outline-color': pallete.buildingFill,
       },
     },
+  ]
+}
+
+export const createLayers = (layerProps: ILayerProperties): Layer[] => {
+  return [
+    ...createBackgroundLayers(layerProps),
+    ...getSatelliteLayers(layerProps),
+    ...createWaterLayers(layerProps),
+    ...createAirports(layerProps),
+    ...createBuildingsAndBarrierLayers(layerProps),
+
     // ROADS GO HERE
-    ...getRoadsLayers(colorsDictionary),
-  
+    ...getRoadsLayers(layerProps),
+
     // BRIDGES GO HERE
-    ...getBridgeLayers(colorsDictionary),
+    ...getBridgeLayers(layerProps),
 
     // ADMIN
-    ...getAdminBorderLayers(colorsDictionary),
+    ...getAdminBorderLayers(layerProps),
 
     // LABELS
-    ...getMapLabelLayers(colorsDictionary),
+    ...getMapLabelLayers(layerProps),
   ] as Layer[]
 }
 
@@ -167,7 +243,7 @@ export const BaseStyle: MapboxStyle = {
   layers: null,
 }
 
-export const createStyle = (colorsDictionary: IMapColors): MapboxStyle => {
+export const createStyle = (layerProps: ILayerProperties): MapboxStyle => {
   return {
     version: 8,
     name: 'TroutSpotr',
@@ -180,6 +256,11 @@ export const createStyle = (colorsDictionary: IMapColors): MapboxStyle => {
         url: 'mapbox://mapbox.mapbox-streets-v7',
         type: 'vector',
       },
+      'mapbox://mapbox.satellite': {
+        url: 'mapbox://mapbox.satellite',
+        type: 'raster',
+        tileSize: layerProps.satelliteResolution,
+      },
     },
     transition: {
       duration: 800,
@@ -188,6 +269,6 @@ export const createStyle = (colorsDictionary: IMapColors): MapboxStyle => {
     sprite: 'mapbox://sprites/andest01/civsy0pgb00022kkxcbqtcogh',
     glyphs: '/map-fonts/{fontstack}/{range}.pbf',
     // glyphs: 'mapbox://fonts/andest01/{fontstack}/{range}.pbf',
-    layers: createLayers(colorsDictionary),
+    layers: createLayers(layerProps),
   }
 }

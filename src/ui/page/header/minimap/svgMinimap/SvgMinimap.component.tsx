@@ -162,13 +162,16 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     const filter = this.svg
       .append('defs')
       .append('filter')
-      .attr('x', '0')
-      .attr('y', '0')
-      .attr('width', '1')
-      .attr('height', '1')
+      .attr('x', '-0.05')
+      .attr('y', '-0.05')
+      .attr('width', '1.1')
+      .attr('height', '1.1')
       .attr('id', 'solid')
 
-    filter.append('feFlood').attr('flood-color', 'rgba(18, 18, 18, 0.9)')
+    filter
+      .append('feFlood')
+      .attr('flood-color', 'rgba(18, 18, 18, 0.9)')
+      .attr('flood-opacity', 0.8)
     filter.append('feComposite').attr('in', 'SourceGraphic')
 
     this.mapGroup = this.svg.append('g').attr('class', 'js-d3-map')

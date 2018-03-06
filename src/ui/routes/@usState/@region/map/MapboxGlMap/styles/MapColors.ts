@@ -2,6 +2,7 @@ const colors = require('./MapColors.scss')
 export interface IMapColors {
   backgroundFill: string
   waterFill: string
+  waterOutline: string
   primaryRoadFill: string
   primaryRoadBorder: string
   secondaryRoadFill: string
@@ -19,6 +20,7 @@ const getColorPallete = (suffix: string): IMapColors => {
   const item = {
     backgroundFill: colors[`backgroundfill${suffix}`],
     waterFill: colors[`waterfill${suffix}`],
+    waterOutline: colors[`wateroutline${suffix}`],
     primaryRoadFill: colors[`primaryroadfill${suffix}`],
     primaryRoadBorder: colors[`primaryroadborder${suffix}`],
     secondaryRoadFill: colors[`secondaryroadfill${suffix}`],

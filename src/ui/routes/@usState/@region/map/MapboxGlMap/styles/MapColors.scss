@@ -5,8 +5,9 @@
   // -------
   // DARK
   // -------
-  backgroundfill-dark: $backgroundDark;
-  waterfill-dark: $woodsmoke;
+  backgroundfill-dark: $mine-shaft-4;
+  waterfill-dark: transparentize($woodsmoke, 0.5);
+  wateroutline-dark: $woodsmoke;
   primaryroadfill-dark: $mine-shaft-3;
   primaryroadborder-dark: $mine-shaft-4;
   secondaryroadfill-dark: $tundora;
@@ -24,13 +25,14 @@
   // -------
   backgroundfill-light: $backgroundLight;
   waterfill-light: $cod-gray;
+  wateroutline-light: transparentize($cod-gray, 0.5);
   primaryroadfill-light: green;
   primaryroadborder-light: blue;
   secondaryroadfill-light: $mercury;
   secondaryroadborder-light: $tuatara;
   buildingfill-light: $mercury;
-  primarylabelfill-light: yellow;
-  primarylabelbackground-light: purple;
+  primarylabelfill-light: $cod-gray;
+  primarylabelbackground-light: $backgroundLight;
   secondarylabelfill-light: $woodsmoke;
   secondarylabelbackground-light: $white;
   admin0bordercolor-light: pink;

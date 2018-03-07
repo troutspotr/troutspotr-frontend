@@ -14,6 +14,16 @@ export interface IMapColors {
   secondaryLabelBackground: string
   admin0BorderColor: string
   admin1BorderColor: string
+
+  // stream colors
+  streamFill: string
+  troutSectionFill: string
+  palSectionFill: string
+
+  restrictionYellow: string
+  restrictionRed: string
+  restrictionWhite: string
+  restrictionBlue: string
 }
 
 const getColorPallete = (suffix: string): IMapColors => {
@@ -32,6 +42,15 @@ const getColorPallete = (suffix: string): IMapColors => {
     secondaryLabelBackground: colors[`secondarylabelbackground${suffix}`],
     admin0BorderColor: colors[`admin0bordercolor${suffix}`],
     admin1BorderColor: colors[`admin1bordercolor${suffix}`],
+
+    streamFill: colors[`stream${suffix}`],
+    troutSectionFill: colors[`troutstreamsection${suffix}`],
+    palSectionFill: colors[`palsection${suffix}`],
+
+    restrictionYellow: colors[`restrictionyellow${suffix}`],
+    restrictionRed: colors[`restrictionred${suffix}`],
+    restrictionWhite: colors[`restrictionwhite${suffix}`],
+    restrictionBlue: colors[`restrictionblue${suffix}`],
   }
   return item
 }

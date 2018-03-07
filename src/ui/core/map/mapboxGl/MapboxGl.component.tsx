@@ -81,6 +81,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     // map.dragRotate.disable()
     // map.touchZoomRotate.disableRotation()
     if (this.props.debugMode === true) {
+      setTimeout(() => map.resize(), 200)
       map.on('zoom', e => {
         console.log('zoom:', map.getZoom())
       })

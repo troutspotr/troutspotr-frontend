@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-const groupBy = require('lodash-es/groupBy')
-const keyBy = require('lodash-es/keyBy')
-const valuesIn = require('lodash-es/valuesIn')
-const has = require('lodash-es/has')
+const groupBy = require('lodash-es/groupBy').default
+const keyBy = require('lodash-es/keyBy').default
+const valuesIn = require('lodash-es/valuesIn').default
+const has = require('lodash-es/has').default
 const topojson = require('topojson-client')
 const { throttleReduce } = require('./Throttle')
 const { getSanitizedRegulations } = require('./GeoApi.regulations')

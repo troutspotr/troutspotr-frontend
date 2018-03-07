@@ -20,6 +20,15 @@
   admin0bordercolor-dark: $mine-shaft;
   admin1bordercolor-dark: $mine-shaft;
 
+  stream-dark: $blueGrayDark;
+  troutstreamsection-dark: $blueDark;
+  palsection-dark: $greenDark;
+
+  restrictionyellow-dark: $candlelight;
+  restrictionred-dark: $vermillion;
+  restrictionwhite-dark: $white;
+  restrictionblue-dark: $picton-blue;
+
   // -------
   // LIGHT
   // -------
@@ -37,4 +46,13 @@
   secondarylabelbackground-light: $white;
   admin0bordercolor-light: pink;
   admin1bordercolor-light: indigo;
+
+  stream-light: $tundora;
+  troutstreamsection-light: $blueLight;
+  palsection-light: $greenLight;
+
+  restrictionyellow-light: $candlelight;
+  restrictionred-light: $vermillion;
+  restrictionwhite-light: $mine-shaft;
+  restrictionblue-light: $picton-blue;
 }

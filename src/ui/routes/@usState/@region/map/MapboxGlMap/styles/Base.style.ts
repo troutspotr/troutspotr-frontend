@@ -198,11 +198,12 @@ export const createBuildingsAndBarrierLayers = (layerProps: ILayerProperties): L
   ]
 }
 
-export const createLayers = (layerProps: ILayerProperties): Layer[] => {
+export const createLayers = (layerProps: ILayerProperties, streams?: Layer[]): Layer[] => {
   return [
     ...createBackgroundLayers(layerProps),
     ...getSatelliteLayers(layerProps),
     ...createWaterLayers(layerProps),
+    ...(streams != null ? streams : []),
     ...createAirports(layerProps),
     ...createBuildingsAndBarrierLayers(layerProps),
 
@@ -243,6 +244,45 @@ export const BaseStyle: MapboxStyle = {
   layers: null,
 }
 
+export const createSources = (
+  layerProps: ILayerProperties,
+  geoJsons?: Array<{ id: string; geojson: any }>
+) => {
+  let sources = {}
+  const { isOnline } = layerProps
+
+  const coreItems = {
+    composite: {
+      url: 'mapbox://mapbox.mapbox-streets-v7',
+      type: 'vector',
+    },
+    'mapbox://mapbox.satellite': {
+      url: 'mapbox://mapbox.satellite',
+      type: 'raster',
+      tileSize: layerProps.satelliteResolution,
+    },
+  }
+
+  if (isOnline) {
+    sources = {
+      ...coreItems,
+    }
+  }
+
+  if (geoJsons == null || geoJsons.length === null) {
+    return sources
+  }
+
+  return geoJsons.reduce((dictionary, item) => {
+    dictionary[item.id] = {
+      type: 'geojson',
+      data: item.geojson,
+    }
+
+    return dictionary
+  }, sources)
+}
+
 export const createStyle = (layerProps: ILayerProperties): MapboxStyle => {
   return {
     version: 8,
@@ -251,24 +291,13 @@ export const createStyle = (layerProps: ILayerProperties): MapboxStyle => {
     zoom: 16.67091316232325,
     bearing: -0.33453331132216135,
     pitch: 0,
-    sources: {
-      composite: {
-        url: 'mapbox://mapbox.mapbox-streets-v7',
-        type: 'vector',
-      },
-      'mapbox://mapbox.satellite': {
-        url: 'mapbox://mapbox.satellite',
-        type: 'raster',
-        tileSize: layerProps.satelliteResolution,
-      },
-    },
+    sources: createSources(layerProps),
     transition: {
       duration: 800,
       delay: 0,
     },
     sprite: 'mapbox://sprites/andest01/civsy0pgb00022kkxcbqtcogh',
     glyphs: '/map-fonts/{fontstack}/{range}.pbf',
-    // glyphs: 'mapbox://fonts/andest01/{fontstack}/{range}.pbf',
     layers: createLayers(layerProps),
   }
 }

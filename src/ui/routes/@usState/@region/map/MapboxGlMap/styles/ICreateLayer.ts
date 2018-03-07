@@ -1,4 +1,5 @@
 import { IMapColors } from './MapColors'
+import { IStreamSettings } from 'ui/core/micromap/Micromap.settings'
 export interface ILayerProperties {
   pallete: IMapColors
   isOnline: boolean
@@ -9,4 +10,5 @@ export interface ILayerProperties {
   satelliteResolution: 128 | 256 | 512 | 1024
   roadTransparencyZoomLevel: number
   roadTransparency: number
+  streamSettings: IStreamSettings
 }

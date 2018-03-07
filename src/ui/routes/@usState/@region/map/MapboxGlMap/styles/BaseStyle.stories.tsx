@@ -9,7 +9,52 @@ import { createStyle } from './Base.style'
 import { LightMapColors, DarkMapColors } from './MapColors'
 import { ILayerProperties } from './ICreateLayer'
 
-const stories = storiesOf('Map Styles', module)
+const stories = storiesOf('Map Styles/Base Map', module)
+
+export const createLayerProperties = (): ILayerProperties => {
+  const theme = select('Map Theme', { dark: 'dark', light: 'light' }, 'dark')
+  const colorDictionary = theme === 'dark' ? DarkMapColors : LightMapColors
+  const isOnline = boolean('isOnline', true)
+  const satelliteZoomLevel = 12
+  const satelliteTransitionScalar = 1
+  const satellitePrefetchZoomLevel = 12
+  const isHighContrastEnabled = boolean('high contrast', false)
+
+  const layerProps: ILayerProperties = {
+    satelliteZoomLevel,
+    satelliteResolution: 256,
+    satelliteTransitionScalar,
+    satellitePrefetchZoomLevel,
+    pallete: colorDictionary,
+    isOnline,
+    roadTransparencyZoomLevel: DEFAULT_ROAD_TRANSPARENCY_ZOOM,
+    roadTransparency: DEFAULT_ROAD_TRANSPARENCY,
+    isHighContrastEnabled,
+    streamSettings: {
+      radius: 0,
+      streamWidth: 1,
+      troutSectionWidth: 1,
+      specialRegulationsWidth: 1,
+      publicSectionWidth: 1,
+      terminusDiameter: 0,
+    },
+  }
+
+  return layerProps
+}
+export const createDefaultSettings = (layerProps = createLayerProperties()) => {
+  // const layerProps = createLayerProperties()
+  const props: IMapboxGlProps = {
+    onMapInitialized: action('onMapInitialized'),
+    onFeaturesSelected: action('asdf'),
+    camera: createCameraObjectSimple(),
+    mapboxGl,
+    debugMode: true,
+    style: createStyle(layerProps),
+  }
+
+  return props
+}
 
 const getResolution = () => {
   const satelliteResolution = parseInt(
@@ -58,6 +103,14 @@ stories.add('Dark and Light', () => {
     roadTransparencyZoomLevel: DEFAULT_ROAD_TRANSPARENCY_ZOOM,
     roadTransparency: DEFAULT_ROAD_TRANSPARENCY,
     isHighContrastEnabled,
+    streamSettings: {
+      radius: 0,
+      streamWidth: 1,
+      troutSectionWidth: 1,
+      specialRegulationsWidth: 1,
+      publicSectionWidth: 1,
+      terminusDiameter: 0,
+    },
   }
   const props: IMapboxGlProps = {
     onMapInitialized: action('onMapInitialized'),
@@ -110,6 +163,14 @@ stories.add('Satellite Tweaks', () => {
     pallete: colorDictionary,
     isOnline,
     isHighContrastEnabled,
+    streamSettings: {
+      radius: 0,
+      streamWidth: 1,
+      troutSectionWidth: 1,
+      specialRegulationsWidth: 1,
+      publicSectionWidth: 1,
+      terminusDiameter: 0,
+    },
   }
   const props: IMapboxGlProps = {
     onMapInitialized: action('onMapInitialized'),
@@ -164,6 +225,14 @@ stories.add('Street Transparency Tweaks', () => {
     pallete: colorDictionary,
     isOnline,
     isHighContrastEnabled,
+    streamSettings: {
+      radius: 0,
+      streamWidth: 1,
+      troutSectionWidth: 1,
+      specialRegulationsWidth: 1,
+      publicSectionWidth: 1,
+      terminusDiameter: 0,
+    },
   }
   const props: IMapboxGlProps = {
     onMapInitialized: action('onMapInitialized'),
@@ -198,6 +267,14 @@ stories.add('High Contrast Mode', () => {
     pallete: colorDictionary,
     isOnline,
     isHighContrastEnabled,
+    streamSettings: {
+      radius: 0,
+      streamWidth: 1,
+      troutSectionWidth: 1,
+      specialRegulationsWidth: 1,
+      publicSectionWidth: 1,
+      terminusDiameter: 0,
+    },
   }
   const props: IMapboxGlProps = {
     onMapInitialized: action('onMapInitialized'),

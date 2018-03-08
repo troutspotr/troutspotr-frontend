@@ -22,8 +22,8 @@
     "object-literal-sort-keys": false,
     "no-var-requires": false,
     "no-identical-functions": true,
-    "max-file-line-count": [true, 200],
-    "mccabe-complexity": [true, 15],
+    "max-file-line-count": [true, 300],
+    "mccabe-complexity": [true, 12],
     "ordered-imports": true,
     "member-ordering": [
       false,
@@ -47,7 +47,7 @@
     "no-any": true,
     "no-arg": true,
     "no-bitwise": true,
-    "no-console": [true, "log", "error", "debug", "info", "time", "timeEnd", "trace"],
+    "no-console": [true, "log", "debug", "info", "time", "timeEnd", "trace"],
     "no-construct": true,
     "no-debugger": true,
     "no-duplicate-variable": true,
@@ -83,7 +83,8 @@
       "ban-keywords",
       "check-format",
       "allow-leading-underscore",
-      "allow-pascal-case"
+      "allow-pascal-case",
+      "allow-snake-case"
     ],
     "react-tsx-curly-spacing": false,
     "no-relative-imports": false,

@@ -56,8 +56,7 @@ export const filterBadAccessPoints = ap => {
 export const provideRoadCrossingText = (stream, roads) => {
   const props = roads.reduce(
     (dictionary, roadCrossing) => {
-      const key = `${roadCrossing.properties.bridgeType}BridgeCount`
-      dictionary[key]++
+      dictionary[`${roadCrossing.properties.bridgeType}BridgeCount`]++
       return dictionary
     },
     {
@@ -71,33 +70,9 @@ export const provideRoadCrossingText = (stream, roads) => {
 
   // I expect that stream and roads are not null,
   // And that stream is geojson and that roads is an array of geojson
-  const number = props.publicTroutBridgeCount
-  props.bridgeText = number === 0 ? NONE_TEXT : number === 1 ? SINGLE_TEXT : MANY_TEXT
+  const bridgeCount = props.publicTroutBridgeCount
+  props.bridgeText = bridgeCount === 0 ? NONE_TEXT : bridgeCount === 1 ? SINGLE_TEXT : MANY_TEXT
   return props
-}
-
-export const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
-  apFeatures
-    // HACK: get rid of OSM streets that over-extend across states.
-    // Back end should do this...
-    .filter(feature => has(roadTypesDictionary, feature.properties.road_type_id))
-    .forEach((feature, index) => {
-      const properties = feature.properties
-      // Get rid of this 0 vs 1 nonsense
-      // allow truthy values.
-      // remember, 1 == true, amirite?
-      properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land == 1
-      properties.is_over_trout_stream = properties.is_over_trout_stream == 1
-      properties.is_previous_neighbor_same_road = properties.is_previous_neighbor_same_road == 1
-      const roadTypeId = properties.road_type_id
-      const roadType = roadTypesDictionary[roadTypeId]
-      const isParkable = roadType.isParkable
-      properties.isParkable = isParkable
-      properties.bridgeType = determineBridgeType(properties, roadTypesDictionary)
-      properties.alphabetLetter = ' '
-      properties.slug = `${kebabCase(properties.street_name)}@${properties.linear_offset}`
-    })
-  return apFeatures
 }
 
 export const determineBridgeType = (bridgeProperties, roadTypesDictionary) => {
@@ -119,14 +94,28 @@ export const determineBridgeType = (bridgeProperties, roadTypesDictionary) => {
   return CROSSING_TYPES.publicTrout
 }
 
-// module.exports = {
-//   filterBadAccessPoints: filterBadAccessPoints,
-//   crossingTypes: CROSSING_TYPES,
-//   addLettersToCrossings: addLettersToCrossings,
-//   provideRoadCrossingText: provideRoadCrossingText,
-//   determineBridgeType: determineBridgeType,
-//   updateRoadCrossingProperties: updateRoadCrossingProperties,
-//   NONE_TEXT,
-//   SINGLE_TEXT,
-//   MANY_TEXT,
-// }
+export const updateRoadCrossingProperties = (apFeatures, roadTypesDictionary) => {
+  apFeatures
+    // HACK: get rid of OSM streets that over-extend across states.
+    // Back end should do this...
+    .filter(feature => has(roadTypesDictionary, feature.properties.road_type_id))
+    .forEach((feature, index) => {
+      const properties = feature.properties
+      // Get rid of this 0 vs 1 nonsense
+      // allow truthy values.
+      // remember, 1 == true, amirite?
+      // tslint:disable:triple-equals
+      properties.is_over_publicly_accessible_land = properties.is_over_publicly_accessible_land == 1
+      properties.is_over_trout_stream = properties.is_over_trout_stream == 1
+      properties.is_previous_neighbor_same_road = properties.is_previous_neighbor_same_road == 1
+      // tslint:enable:triple-equals
+      const roadTypeId = properties.road_type_id
+      const roadType = roadTypesDictionary[roadTypeId]
+      const isParkable = roadType.isParkable
+      properties.isParkable = isParkable
+      properties.bridgeType = determineBridgeType(properties, roadTypesDictionary)
+      properties.alphabetLetter = ' '
+      properties.slug = `${kebabCase(properties.street_name)}@${properties.linear_offset}`
+    })
+  return apFeatures
+}

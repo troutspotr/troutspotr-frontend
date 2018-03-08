@@ -47,9 +47,9 @@
     "test": "node scripts/test.js --env=jsdom",
     "test:ci": "CI=true node scripts/test.js --env=jsdom --forceExit",
     "test:inspect": "node --inspect-brk=58585 scripts/test.js --runInBand",
-    "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/api2/**/*.{ts,tsx}\"",
+    "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/coreTypes/**/*.{ts,tsx}\"",
     "lint:fix":
-      "node_modules/.bin/tslint --project tsconfig.json \"src/api2/**/*.{ts,tsx}\" --fix --format codeFrame",
+      "node_modules/.bin/tslint --project tsconfig.json \"src/coreTypes/**/*.{ts,tsx}\" --fix --format codeFrame",
     "storybook": "cross-env NODE_PATH=src/ start-storybook -p 6006 -s src/static",
     "build-storybook": "build-storybook",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
@@ -98,7 +98,7 @@
     "topojson-client": "^3.0.0",
     "ts-jest": "^20.0.7",
     "ts-loader": "^2.3.7",
-    "tslint": "^5.8.0",
+    "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.6.0",
     "tslint-eslint-rules": "^4.1.1",
     "tslint-immutable": "^4.4.0",

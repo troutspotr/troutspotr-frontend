@@ -12,8 +12,8 @@ export class StateApiSync {
       throw new Error('stateName cannot be null')
     }
 
-    stateName = stateName.toLowerCase()
-    return stateDictionary[stateName]
+    const lowerStateName = stateName.toLowerCase()
+    return stateDictionary[lowerStateName]
   }
 }
 

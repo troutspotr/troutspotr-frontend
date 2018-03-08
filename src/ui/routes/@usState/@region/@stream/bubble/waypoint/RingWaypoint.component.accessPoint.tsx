@@ -1,11 +1,11 @@
+import { AccessPointFeature } from 'coreTypes/IStreamObject'
 import isEmpty from 'lodash-es/isEmpty'
-import startsWith from 'lodash-es/startsWith'
 import * as React from 'react'
 import RingWaypointLabelComponent from './RingWaypoint.component.label'
 import RingWaypointLineComponent from './RingWaypoint.component.line'
+
 const accessPointClasses = require('./RingWaypoint.accessPoint.scss')
 const waypointClasses = require('./RingWaypoint.scss')
-// import { CROSSING_TYPES } from 'api/GeoApi.accessPoints'
 
 export const CROSSING_TYPES = {
   publicTrout: 'publicTrout',
@@ -22,12 +22,12 @@ export interface ILayout {
   rotatePhase: {}
 }
 export interface IRingWaypointAccessPointComponent {
-  accessPoint: {}
-  projection: {}
-  selectedAccessPoint: {}
-  hoveredRoad: {}
+  accessPoint: AccessPointFeature
+  projection: (coords: [number, number]) => [number, number]
+  selectedAccessPoint: AccessPointFeature
+  hoveredRoad: AccessPointFeature
   roadTypesDictionary: {}
-  setHoveredRoad: {}
+  setHoveredRoad: (road: AccessPointFeature) => void
   layout: ILayout
 }
 
@@ -76,10 +76,6 @@ export class RingWaypointAccessPointComponent extends React.Component<
       />
     )
   }
-
-  // renderUsHighway(offsetLocationDegrees, radius, width, height, labelOffsetFromRadius) {
-  //   return this.renderLabelMarker(offsetLocationDegrees, labelOffsetFromRadius)
-  // }
 
   public renderDefaultMarker(text, className) {
     return (
@@ -144,60 +140,6 @@ export class RingWaypointAccessPointComponent extends React.Component<
     this.props.setHoveredRoad(null)
   }
 
-  public renderInterstateIcon(num) {
-    const asdf = -6
-    return (
-      <g>
-        <use
-          className={accessPointClasses.roadSignText}
-          xlinkHref="#us-interstate"
-          x={asdf}
-          y={asdf}
-        />
-        <text
-          className={accessPointClasses.roadSignText}
-          textAnchor="middle"
-          x={asdf + 6}
-          y={asdf + 6}
-          dominantBaseline="central"
-        >
-          {num}
-        </text>
-      </g>
-    )
-  }
-
-  public renderUsHighwayIcon(num) {
-    const asdf = -6
-    return (
-      <g>
-        <use className={accessPointClasses.roadSign} xlinkHref="#us-highway" x={asdf} y={asdf} />
-        <text textAnchor="middle" x={asdf + 6} y={asdf + 6} dominantBaseline="central">
-          {num}
-        </text>
-      </g>
-    )
-  }
-
-  public renderMnHighwayIcon(num) {
-    const asdf = -6
-    return (
-      <g>
-        <use className={accessPointClasses.roadSign} xlinkHref="#mn-highway" x={asdf} y={asdf} />
-        <text
-          className={accessPointClasses.roadSignText}
-          textAnchor="middle"
-          x={asdf + 6}
-          y={asdf + 7}
-          dominantBaseline="central"
-        >
-          {num}
-        </text>
-      </g>
-    )
-    // Return null
-  }
-
   public renderRailroadIcon() {
     const asdf = -6
     // Railroad
@@ -207,10 +149,6 @@ export class RingWaypointAccessPointComponent extends React.Component<
       </g>
     )
   }
-
-  public renderMnStateAidHighway(num) {}
-
-  public renderMnTownshipRoad() {}
 
   public renderMnCountyRoad(num) {
     const asdf = -6
@@ -245,41 +183,6 @@ export class RingWaypointAccessPointComponent extends React.Component<
         </text>
       </g>
     )
-  }
-
-  public getLabelText() {
-    const roadId = this.props.accessPoint.properties.road_type_id
-    const streetName = this.props.accessPoint.properties.street_name
-    const roadTypeDictionary = this.props.roadTypesDictionary
-    const hasRoadType = roadTypeDictionary[roadId] != null
-    if (hasRoadType === false) {
-      console.warn(`ROAD TYPE NOT FOUND: ${roadId}`) // eslint-disable-line
-      console.warn(`roadTypeDictionary: ${roadTypeDictionary}`) // eslint-disable-line
-    }
-
-    if (hasRoadType && roadTypeDictionary[roadId].prefix != null) {
-      if (roadId === 1) {
-        return `${roadTypeDictionary[roadId].prefix} ${
-          this.props.accessPoint.properties.road_shield_text
-        }`
-      }
-      if (roadId === 4) {
-        return `${roadTypeDictionary[roadId].prefix} ${
-          this.props.accessPoint.properties.road_shield_text
-        }`
-      }
-
-      if (roadId === 5 && startsWith(streetName, roadTypeDictionary[roadId].defaultStart)) {
-        return ''
-      }
-
-      if (roadId === 7 && startsWith(streetName, roadTypeDictionary[roadId].defaultStart)) {
-        return `${roadTypeDictionary[roadId].prefix} ${
-          this.props.accessPoint.properties.road_shield_text
-        }`
-      }
-    }
-    return this.props.accessPoint.properties.street_name
   }
 
   public getMarkerComponent() {

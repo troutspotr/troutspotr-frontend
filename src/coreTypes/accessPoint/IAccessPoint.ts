@@ -18,4 +18,5 @@ export interface IAccessPointGeoJsonProps extends IAccessPoint {
   bridgeType: 'permissionRequired' | 'publicTrout' | 'unsafe' | 'uninteresting'
   alphabetLetter: string
   slug: string
+  road_shield_text?: string
 }

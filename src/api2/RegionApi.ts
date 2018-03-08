@@ -13,7 +13,8 @@ export class RegionApi extends BaseApi {
       return Promise.reject('region name was not specificed')
     }
     try {
-      const regionGeoData = {}
+      // tslint:disable-next-line:no-let
+      let regionGeoData = {}
       const endpoint = buildRegionEndpoint(stateName, regionName)
       try {
         regionGeoData = await this.get(endpoint)
@@ -25,7 +26,8 @@ export class RegionApi extends BaseApi {
 
       const stateData = await StateApi.getStateData(stateName)
 
-      const transformedData = {}
+      // tslint:disable-next-line:no-let
+      let transformedData = {}
       try {
         transformedData = await transformGeo(regionGeoData, stateData)
       } catch (error) {
@@ -34,7 +36,7 @@ export class RegionApi extends BaseApi {
       }
       return transformedData
     } catch (error) {
-      console.log(error) // eslint-disable-line
+      console.error(error) // eslint-disable-line
       throw new Error('Could not load region.')
     }
   }

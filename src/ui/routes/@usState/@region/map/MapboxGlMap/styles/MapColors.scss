@@ -2,6 +2,8 @@
 @import 'src/ui/styles/_variables';
 
 :export {
+  black: $black;
+  white: $white;
   // -------
   // DARK
   // -------
@@ -29,6 +31,8 @@
   restrictionwhite-dark: $white;
   restrictionblue-dark: $picton-blue;
 
+  gpsborder-dark: $white;
+
   // -------
   // LIGHT
   // -------
@@ -51,8 +55,10 @@
   troutstreamsection-light: $blueLight;
   palsection-light: $greenLight;
 
-  restrictionyellow-light: $candlelight;
-  restrictionred-light: $vermillion;
+  restrictionyellow-light: $yellowLight;
+  restrictionred-light: $redLight;
   restrictionwhite-light: $mine-shaft;
-  restrictionblue-light: $picton-blue;
+  restrictionblue-light: $blueLight;
+
+  gpsborder-light: $black;
 }

@@ -4,7 +4,7 @@ import { IStream } from 'coreTypes/stream/IStream'
 
 export type AccessPointFeature = Feature<Point, IAccessPointGeoJsonProps>
 export type AccessPointFeatureCollection = ReadonlyArray<AccessPointFeature>
-
+export type StreamFeature = Feature<LineString, IStream>
 export interface IStreamObject {
   readonly accessPoints: AccessPointFeatureCollection
   readonly palSections: ReadonlyArray<Feature<LineString>>

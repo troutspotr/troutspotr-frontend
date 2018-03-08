@@ -198,7 +198,7 @@ export const getMicromapCanvasSettings = (): MicromapSettings.IMicromapCanvasSet
   return micromapSettings
 }
 
-stories.add('default button', () => {
+stories.add('Customize', () => {
   const settings = getMicromapCanvasSettings()
   const props = {
     settings,

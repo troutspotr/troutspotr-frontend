@@ -12,7 +12,7 @@ $picton-blue: hsla(199, 69%, 61%, 1);
 $gray: hsl(0, 0%, 54%);
 $silver: hsla(0, 0%, 73.7%, 1);
 $white: hsla(0, 0%, 100%, 1);
-
+$tahiti-gold: hsl(33, 100%, 49%);
 // map colors
 // water
 $woodsmoke: hsl(185, 2%, 10%);
@@ -65,7 +65,7 @@ $offTextLight: $gray;
 $grayLight: $mine-shaft;
 $blueGrayLight: $river-bed;
 $greenLight: $fuego;
-$yellowLight: $candlelight;
+$yellowLight: $tahiti-gold;
 $redLight: $vermillion;
 $blueLight: $picton-blue;
 $messageBackgroundLight: transparentize($backgroundLight, 0.8);

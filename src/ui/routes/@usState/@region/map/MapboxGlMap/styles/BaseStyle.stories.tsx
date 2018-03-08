@@ -7,7 +7,7 @@ import { createCameraObjectSimple } from 'ui/core/map/mapboxGl/MapboxGl.stories'
 import * as mapboxGl from 'mapbox-gl'
 import { createStyle } from './Base.style'
 import { LightMapColors, DarkMapColors } from './MapColors'
-import { ILayerProperties } from './ICreateLayer'
+import { ILayerProperties, defaultLayerProperties } from './ICreateLayer'
 
 const stories = storiesOf('Map Styles/Base Map', module)
 
@@ -21,6 +21,7 @@ export const createLayerProperties = (): ILayerProperties => {
   const isHighContrastEnabled = boolean('high contrast', false)
 
   const layerProps: ILayerProperties = {
+    ...defaultLayerProperties(),
     satelliteZoomLevel,
     satelliteResolution: 256,
     satelliteTransitionScalar,
@@ -94,6 +95,7 @@ stories.add('Dark and Light', () => {
   const satellitePrefetchZoomLevel = 12
   const colorDictionary = theme === 'dark' ? DarkMapColors : LightMapColors
   const layerProps: ILayerProperties = {
+    ...defaultLayerProperties(),
     satelliteZoomLevel,
     satelliteResolution: 256,
     satelliteTransitionScalar,
@@ -154,6 +156,7 @@ stories.add('Satellite Tweaks', () => {
   const satellitePrefetchZoomLevel = satelliteZoomLevel + satellitePrefetch
   const colorDictionary = theme === 'dark' ? DarkMapColors : LightMapColors
   const layerProps: ILayerProperties = {
+    ...defaultLayerProperties(),
     satelliteZoomLevel,
     satelliteResolution: getResolution(),
     satelliteTransitionScalar,
@@ -216,6 +219,7 @@ stories.add('Street Transparency Tweaks', () => {
   const satellitePrefetchZoomLevel = satelliteZoomLevel
   const colorDictionary = theme === 'dark' ? DarkMapColors : LightMapColors
   const layerProps: ILayerProperties = {
+    ...defaultLayerProperties(),
     satelliteZoomLevel,
     satelliteResolution: 256,
     satelliteTransitionScalar,
@@ -258,6 +262,7 @@ stories.add('High Contrast Mode', () => {
   const satellitePrefetchZoomLevel = 12
   const colorDictionary = theme === 'dark' ? DarkMapColors : LightMapColors
   const layerProps: ILayerProperties = {
+    ...defaultLayerProperties(),
     satelliteZoomLevel,
     satelliteResolution: 256,
     satelliteTransitionScalar,

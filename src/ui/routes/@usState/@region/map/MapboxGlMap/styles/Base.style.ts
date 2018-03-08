@@ -198,11 +198,19 @@ export const createBuildingsAndBarrierLayers = (layerProps: ILayerProperties): L
   ]
 }
 
-export const createLayers = (layerProps: ILayerProperties, streams?: Layer[]): Layer[] => {
+export const createLayers = (
+  layerProps: ILayerProperties,
+  streams?: Layer[],
+  pals?: Layer[],
+  accessPoints?: Layer[],
+  labels?: Layer[],
+  gps?: Layer[]
+): Layer[] => {
   return [
     ...createBackgroundLayers(layerProps),
     ...getSatelliteLayers(layerProps),
     ...createWaterLayers(layerProps),
+    ...(pals != null ? pals : []),
     ...(streams != null ? streams : []),
     ...createAirports(layerProps),
     ...createBuildingsAndBarrierLayers(layerProps),
@@ -217,7 +225,11 @@ export const createLayers = (layerProps: ILayerProperties, streams?: Layer[]): L
     ...getAdminBorderLayers(layerProps),
 
     // LABELS
+
+    ...(accessPoints != null ? accessPoints : []),
+    ...(gps != null ? gps : []),
     ...getMapLabelLayers(layerProps),
+    ...(labels != null ? labels : []),
   ] as Layer[]
 }
 

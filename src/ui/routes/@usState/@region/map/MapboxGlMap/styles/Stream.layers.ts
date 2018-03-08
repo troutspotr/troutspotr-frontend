@@ -1,11 +1,11 @@
-import { Layer, LineLayout, LinePaint } from 'mapbox-gl'
+import { Layer, LineLayout, LinePaint, StyleFunction } from 'mapbox-gl'
 import { ILayerProperties } from './ICreateLayer'
 
 export const STREAM_LAYER_ID = 'stream_layer'
 export const TROUT_SECTION_LAYER_ID = 'trout_section_layer'
 export const PAL_LAYER_ID = 'pal_layer'
-export const RESTRICTION_SECTION_LAYER = 'restriction_layer'
-
+export const RESTRICTION_SECTION_HIGH_LAYER = 'restriction_layer_high'
+export const RESTRICTION_SECTION_LOW_LAYER = 'restriction_layer_low'
 export const createStreamLayer = (layerProps: ILayerProperties, sourceId: string): Layer[] => {
   const { pallete, streamSettings } = layerProps
   const lineLayout: LineLayout = {
@@ -32,7 +32,10 @@ export const createTroutSectionLayerLayer = (
   layerProps: ILayerProperties,
   sourceId: string
 ): Layer[] => {
-  const { pallete, streamSettings } = layerProps
+  const { pallete, streamSettings, isHighContrastEnabled } = layerProps
+  const widthMultiplier = isHighContrastEnabled
+    ? streamSettings.troutSectionWidth * 1.75
+    : streamSettings.troutSectionWidth
   const lineLayout: LineLayout = {
     'line-cap': 'round',
     'line-join': 'round',
@@ -43,9 +46,9 @@ export const createTroutSectionLayerLayer = (
     'line-width': {
       base: 1.5,
       stops: [
-        [1, 1],
-        [8.5, 1 * streamSettings.troutSectionWidth],
-        [10, 1.25 * streamSettings.troutSectionWidth],
+        [1, 1 * widthMultiplier],
+        [8.5, 1 * widthMultiplier],
+        [10, 1.25 * widthMultiplier],
         [12.5, 6],
         [15.5, 7],
         [18.0, 7],
@@ -64,7 +67,11 @@ export const createTroutSectionLayerLayer = (
 }
 
 export const createPalLayerLayer = (layerProps: ILayerProperties, sourceId: string): Layer[] => {
-  const { pallete, streamSettings } = layerProps
+  const { pallete, streamSettings, isHighContrastEnabled } = layerProps
+  const widthMultiplier = isHighContrastEnabled
+    ? streamSettings.publicSectionWidth * 1.75
+    : streamSettings.publicSectionWidth
+
   const lineLayout: LineLayout = {
     'line-cap': 'round',
     'line-join': 'round',
@@ -75,9 +82,9 @@ export const createPalLayerLayer = (layerProps: ILayerProperties, sourceId: stri
     'line-width': {
       base: 1.5,
       stops: [
-        [1, 1.1],
-        [8.5, 1 * streamSettings.publicSectionWidth],
-        [10, 1.25 * streamSettings.publicSectionWidth],
+        [1, 1.1 * widthMultiplier],
+        [8.5, 1 * widthMultiplier],
+        [10, 1.25 * widthMultiplier],
         [12.5, 8.5],
         [15.5, 7],
         [18.0, 7],
@@ -123,10 +130,15 @@ export const createRestrictionSectionLayer = (
   sourceId: string
 ): Layer[] => {
   const { pallete, streamSettings, isHighContrastEnabled } = layerProps
-  const widthMultiplier = isHighContrastEnabled ? 3 : 1
+  const widthMultiplier = isHighContrastEnabled ? 3 : 2
+
+  const lowZoomOpacity: StyleFunction = {
+    base: 1,
+    stops: [[8.5, 0], [9.5, 0.3], [10, 1], [11.5, 1], [13.5, 0]],
+  }
   const paint: LinePaint = {
     'line-offset': 0,
-    'line-dasharray': [4, 1],
+    // 'line-dasharray': [2, 4],
     // {
     //   base: 1,
     //   stops: [[10, [1, 0]], [12, [4, 1]], [16, [3, 4]]],
@@ -144,17 +156,34 @@ export const createRestrictionSectionLayer = (
     'line-gap-width': {
       property: 'colorOffset',
       stops: [
-        // at zoom 10
-        [{ zoom: 10, value: 1 }, 1 + 1.1 * streamSettings.publicSectionWidth],
-        [{ zoom: 10, value: 2 }, 2 + 1.2 * streamSettings.publicSectionWidth],
-        [{ zoom: 10, value: 3 }, 3 + 1.3 * streamSettings.publicSectionWidth],
-        [{ zoom: 10, value: 4 }, 4 + 1.4 * streamSettings.publicSectionWidth],
+        // at zoom 9
+        [{ zoom: 9, value: 1 }, 1 + streamSettings.publicSectionWidth * 1.7],
+        [{ zoom: 9, value: 2 }, 1 + streamSettings.publicSectionWidth * 1.7],
+        [{ zoom: 9, value: 3 }, 1 + streamSettings.publicSectionWidth * 1.7],
+        [{ zoom: 9, value: 4 }, 1 + streamSettings.publicSectionWidth * 1.7],
 
-        // at zoom 13
-        [{ zoom: 13, value: 1 }, 9 + 1.0 * streamSettings.publicSectionWidth],
-        [{ zoom: 13, value: 2 }, 13 + 1.1 * streamSettings.publicSectionWidth],
-        [{ zoom: 13, value: 3 }, 16 + 1.2 * streamSettings.publicSectionWidth],
-        [{ zoom: 13, value: 4 }, 20 + 1.3 * streamSettings.publicSectionWidth],
+        // at zoom 10
+        [{ zoom: 10, value: 1 }, 2 + 2 * streamSettings.publicSectionWidth],
+        [{ zoom: 10, value: 2 }, 2 + 2 * streamSettings.publicSectionWidth],
+        [{ zoom: 10, value: 3 }, 2 + 2 * streamSettings.publicSectionWidth],
+        [{ zoom: 10, value: 4 }, 2 + 2 * streamSettings.publicSectionWidth],
+
+        [{ zoom: 11.5, value: 1 }, 2 + 2.2 * streamSettings.publicSectionWidth],
+        [{ zoom: 11.5, value: 2 }, 2 + 2.2 * streamSettings.publicSectionWidth],
+        [{ zoom: 11.5, value: 3 }, 2 + 2.2 * streamSettings.publicSectionWidth],
+        [{ zoom: 11.5, value: 4 }, 2 + 2.2 * streamSettings.publicSectionWidth],
+
+        // at zoom 12.5
+        [{ zoom: 12.5, value: 1 }, 9 + 2 * streamSettings.publicSectionWidth],
+        [{ zoom: 12.5, value: 2 }, 12.5 + 3 * streamSettings.publicSectionWidth],
+        [{ zoom: 12.5, value: 3 }, 16 + 4 * streamSettings.publicSectionWidth],
+        [{ zoom: 12.5, value: 4 }, 20 + 5 * streamSettings.publicSectionWidth],
+
+        // 15.5
+        [{ zoom: 15.5, value: 1 }, 9 + 2 * streamSettings.publicSectionWidth],
+        [{ zoom: 15.5, value: 2 }, 12 + 3 * streamSettings.publicSectionWidth],
+        [{ zoom: 15.5, value: 3 }, 16 + 4 * streamSettings.publicSectionWidth],
+        [{ zoom: 15.5, value: 4 }, 20 + 5 * streamSettings.publicSectionWidth],
 
         // at zoom 18
         [{ zoom: 18, value: 1 }, 40 + 1.0 * streamSettings.publicSectionWidth],
@@ -165,25 +194,37 @@ export const createRestrictionSectionLayer = (
     },
     'line-width': {
       base: 1.4,
-      stops: [[9, 1 * widthMultiplier], [18, 10]],
+      stops: [[8.5, 0.01], [9, 1], [10, 1 * widthMultiplier], [18, 10]],
     },
-    'line-opacity': {
-      base: 1,
-      stops: [[9, 0], [10, 1]],
-    },
+    'line-opacity': lowZoomOpacity,
   }
-  const restrictionLayer: Layer = {
-    id: RESTRICTION_SECTION_LAYER,
+  const lowZoomRestrictionLayer: Layer = {
+    id: RESTRICTION_SECTION_HIGH_LAYER,
     type: 'line',
     source: sourceId,
     layout: {
       visibility: 'visible',
-      'line-cap': 'butt',
-      'line-join': 'miter',
+      'line-cap': 'round',
+      'line-join': 'round',
     },
     paint,
   }
-  return [restrictionLayer]
+
+  const highZoomOpacity: StyleFunction = {
+    base: 1,
+    stops: [[10, 0], [11, 1], [12, 1]],
+  }
+  const highZoomRestrictionLayer: Layer = {
+    ...lowZoomRestrictionLayer,
+    id: RESTRICTION_SECTION_LOW_LAYER,
+    paint: {
+      ...lowZoomRestrictionLayer.paint,
+      'line-opacity': highZoomOpacity,
+      'line-dasharray': [4, 1.5],
+    },
+  }
+
+  return [lowZoomRestrictionLayer, highZoomRestrictionLayer]
 }
 
 export const createRestrictionBackdropLayer = (

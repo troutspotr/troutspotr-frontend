@@ -1,7 +1,7 @@
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 import { Layer } from 'mapbox-gl'
 import { ILayerProperties } from './ICreateLayer'
-import { setMaximumAtZoomsAboveSatellite, defeaultFillOpacity } from './Roads.layers'
+import { defeaultFillOpacity, setMaximumAtZoomsAboveSatellite } from './Roads.layers'
 export const getBridgeLayers = (layerProps: ILayerProperties): Layer[] => {
   const { pallete, isOnline } = layerProps
   if (isOnline === false) {

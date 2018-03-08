@@ -1,21 +1,21 @@
 import * as React from 'react'
 import MapboxGlComponentCamera from './MapboxGl.component.camera'
 const classes = require('../Map.scss')
-import MapboxGlLayerComponent from './MapboxGl.component.layer'
 import clamp from 'lodash-es/clamp'
 import debounce from 'lodash-es/debounce'
 import flatten from 'lodash-es/flatten'
 import isEmpty from 'lodash-es/isEmpty'
-import BaseStyle from './styles/Base.style'
+import MapboxGlLayerComponent from './MapboxGl.component.layer'
 import MapboxGlGpsLayer from './MapboxGl.gps.layer'
-class MapboxGlComponent extends React.Component<any> {
-  protected map: any = null
-  protected proxyOnLayerMouseOver: any
-  protected proxyOnClick: any
+import BaseStyle from './styles/Base.style'
+class MapboxGlComponent extends React.Component<{}> {
+  protected map: {} = null
+  protected proxyOnLayerMouseOver: {}
+  protected proxyOnClick: {}
 
-  onClick() {}
+  public onClick() {}
 
-  componentDidMount() {
+  public componentDidMount() {
     this.map = new this.props.mapbox.Map({
       attributionControl: true,
       container: this.props.elementId,
@@ -58,7 +58,7 @@ class MapboxGlComponent extends React.Component<any> {
     this.map.on('click', this.proxyOnClick)
   }
 
-  onLayerMouseOver = e => {
+  public onLayerMouseOver = e => {
     const features = this.getInteractiveFeaturesOverPoint(e.point)
     if (features == null) {
       return
@@ -74,7 +74,7 @@ class MapboxGlComponent extends React.Component<any> {
     }
   }
 
-  getInteractiveFeaturesOverPoint = point => {
+  public getInteractiveFeaturesOverPoint = point => {
     const BOX_DIMENSION = 20
     const boundingBox = [
       [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
@@ -82,13 +82,13 @@ class MapboxGlComponent extends React.Component<any> {
     ]
 
     const interactiveLayers = flatten(this.props.layerPackage.map(x => x.layers))
-      .filter(layer => (layer as any).layerDefinition.interactive)
-      .map(layer => (layer as any).layerDefinition.id)
+      .filter(layer => (layer as {}).layerDefinition.interactive)
+      .map(layer => (layer as {}).layerDefinition.id)
     const features = this.map.queryRenderedFeatures(boundingBox, { layers: interactiveLayers })
     return features
   }
 
-  onLayerClick = e => {
+  public onLayerClick = e => {
     const features = this.getInteractiveFeaturesOverPoint(e.point)
     if (features == null || features.length === 0) {
       return
@@ -96,7 +96,7 @@ class MapboxGlComponent extends React.Component<any> {
     this.props.onFeatureClick(features)
   }
 
-  componentWillReceiveProps(nextProps) {
+  public componentWillReceiveProps(nextProps) {
     const { isReadyToInsertLayers } = nextProps
 
     // Did our geoJson change?
@@ -121,18 +121,18 @@ class MapboxGlComponent extends React.Component<any> {
     }
   }
 
-  getZoomBackbounce(currentZoom, minZoom = 10, maxZoom = 15, boostMultiplier = 3.5) {
+  public getZoomBackbounce(currentZoom, minZoom = 10, maxZoom = 15, boostMultiplier = 3.5) {
     const clampedZoom = clamp(currentZoom, minZoom, maxZoom)
     const normalizedBoost = (clampedZoom - minZoom) / (maxZoom - minZoom)
     const boostBack = normalizedBoost * boostMultiplier + 0.2
     return currentZoom - boostBack
   }
 
-  zoomOutALittle() {}
+  public zoomOutALittle() {}
 
-  setSourceOnStyleLoad(e) {}
+  public setSourceOnStyleLoad(e) {}
 
-  safelySetSources(map, sources) {
+  public safelySetSources(map, sources) {
     sources.forEach(source => {
       const { sourceId, sourceData } = source
       const jsonSource = {
@@ -148,9 +148,9 @@ class MapboxGlComponent extends React.Component<any> {
     })
   }
 
-  onMapLoad = e => {}
+  public onMapLoad = e => {}
 
-  onDataLoad = e => {
+  public onDataLoad = e => {
     if (e.dataType !== 'style') {
       return
     }
@@ -169,14 +169,14 @@ class MapboxGlComponent extends React.Component<any> {
     this.props.setIsMapInitialized(true)
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     if (this.map) {
       this.map.remove()
       this.props.setIsMapInitialized(false)
     }
   }
 
-  renderGpsLocationLayer() {
+  public renderGpsLocationLayer() {
     if (this.props.isReadyToInsertLayers === false) {
       return null
     }
@@ -191,7 +191,7 @@ class MapboxGlComponent extends React.Component<any> {
   /*
 
 */
-  render() {
+  public render() {
     // Return null
     return (
       <div id={this.props.elementId} className={classes.map}>

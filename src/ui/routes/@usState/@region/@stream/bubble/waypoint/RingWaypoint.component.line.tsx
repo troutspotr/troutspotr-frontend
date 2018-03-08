@@ -1,7 +1,7 @@
-import * as React from 'react'
-import PropTypes from 'prop-types'
 import flatten from 'lodash-es/flatten'
 import map from 'lodash-es/map'
+import PropTypes from 'prop-types'
+import * as React from 'react'
 import { ILayout } from './RingWaypoint.component.accessPoint'
 // Import classes from '../SvgBubble.scss'
 const waypointClasses = require('./RingWaypoint.scss')
@@ -19,7 +19,7 @@ export interface IRingWaypointLineComponent {
 }
 
 class RingWaypointLineComponent extends React.Component<IRingWaypointLineComponent> {
-  renderLine(
+  public renderLine(
     screenCoordinates: [
       { dotXScreenCoordinate: number; dotYScreenCoordinate: number; dotMiddlePoint: number }
     ]
@@ -41,17 +41,17 @@ class RingWaypointLineComponent extends React.Component<IRingWaypointLineCompone
     )
   }
 
-  getXCoordinate(radialPosition, labelOffsetFromRadius, width) {
+  public getXCoordinate(radialPosition, labelOffsetFromRadius, width) {
     const result = labelOffsetFromRadius * Math.cos(-Math.PI * 0.5 + radialPosition) + width * 0.5
     return result
   }
 
-  getYCoordinate(radialPosition, labelOffsetFromRadius, height) {
+  public getYCoordinate(radialPosition, labelOffsetFromRadius, height) {
     const result = labelOffsetFromRadius * Math.sin(-Math.PI * 0.5 + radialPosition) + height * 0.5
     return result
   }
 
-  render() {
+  public render() {
     const { width, height, radius, arcCompressionRatio } = this.props.layout
     const { subjectCoordinates, normalizedOffset, projection } = this.props
     // Let offsetLocationDegrees = 360 * arcCompressionRatio * normalizedOffset
@@ -88,7 +88,7 @@ class RingWaypointLineComponent extends React.Component<IRingWaypointLineCompone
       dotYScreenCoordinate: labelCircleYCoordinate,
     }
 
-    const lineCoordinates: any = [lineStartPoint, lineMiddlePoint, lineEndPoint]
+    const lineCoordinates: {} = [lineStartPoint, lineMiddlePoint, lineEndPoint]
 
     return this.renderLine(lineCoordinates)
   }

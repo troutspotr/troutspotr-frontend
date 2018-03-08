@@ -46,14 +46,14 @@ const createRootEvent = () => {
 }
 
 class AnonymousAnalyzerApi {
-  private client: any
+  private client: {}
   constructor() {
     const client = new Keen(getKey())
     client.extendEvents(() => createRootEvent())
     this.client = client
   }
 
-  recordEvent(key, data) {
+  public recordEvent(key, data) {
     /* eslint-disable eqeqeq */
     const doNotTrackUser = navigator != null && parseInt(navigator.doNotTrack, 10) === 1
     if (doNotTrackUser) {

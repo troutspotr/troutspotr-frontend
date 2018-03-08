@@ -1,8 +1,8 @@
 import * as React from 'react'
 const classes = require('./StreamDetails.scss')
+import { IStreamObject } from 'coreTypes/IStreamObject'
 import SvgBubbleComponent from './bubble/SvgBubble.component'
 import DetailsContainer from './details/Details.container'
-import { IStreamObject } from 'coreTypes/IStreamObject'
 
 export interface IStreamItemComponent {
   selectedStream: IStreamObject

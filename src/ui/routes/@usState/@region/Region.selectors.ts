@@ -1,20 +1,21 @@
+import find from 'lodash-es/find'
+import has from 'lodash-es/has'
+import isEmpty from 'lodash-es/isEmpty'
+import keyBy from 'lodash-es/keyBy'
+import keys from 'lodash-es/keys'
+import round from 'lodash-es/round'
+import sortBy from 'lodash-es/sortBy'
+import values from 'lodash-es/values'
 import { createSelector } from 'reselect'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import {
   countiesDictionarySelector,
   searchTextSelector,
   selectedRegionSelector,
 } from 'ui/core/Core.selectors'
+import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import { getHashSelector } from 'ui/Location.selectors'
-import find from 'lodash-es/find'
-import has from 'lodash-es/has'
-import isEmpty from 'lodash-es/isEmpty'
-import keys from 'lodash-es/keys'
-import round from 'lodash-es/round'
-import sortBy from 'lodash-es/sortBy'
-import values from 'lodash-es/values'
-import keyBy from 'lodash-es/keyBy'
 
+import { getRegulationsSummarySelector } from 'ui/core/regulations/RegulationsSummary.selectors'
 import {
   displayedCentroidDictionarySelector,
   displayedStreamCentroidDataSelector,
@@ -22,7 +23,6 @@ import {
   regulationsSelector,
   waterOpenersDictionarySelector,
 } from 'ui/routes/@usState/UsState.selectors'
-import { getRegulationsSummarySelector } from 'ui/core/regulations/RegulationsSummary.selectors'
 export const troutStreamDictionarySelector = state => state.region.troutStreamDictionary
 export const regionLoadingStatusSelector = state => state.region.regionLoadingStatus
 

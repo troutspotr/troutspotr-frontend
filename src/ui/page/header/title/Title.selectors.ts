@@ -1,8 +1,8 @@
-import { createSelector } from 'reselect'
-import { isSearchVisibleSelector } from '../search/Search.selectors'
-import { displayedStreamTitleSelector } from 'ui/routes/@usState/UsState.selectors'
-import { isRootPageSelector } from 'ui/Location.selectors'
 import { isEmpty } from 'lodash'
+import { createSelector } from 'reselect'
+import { isRootPageSelector } from 'ui/Location.selectors'
+import { displayedStreamTitleSelector } from 'ui/routes/@usState/UsState.selectors'
+import { isSearchVisibleSelector } from '../search/Search.selectors'
 export const isTitleVisibleSelector = createSelector(
   [isSearchVisibleSelector],
   isSearchVisible => !isSearchVisible

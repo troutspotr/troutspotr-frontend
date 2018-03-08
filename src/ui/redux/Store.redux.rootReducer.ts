@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
-import usState, { IUsStateReduxState } from 'ui/routes/@usState/UsState.redux'
-import { routingWithHistoryReducer, IRoutingState } from './Routing.redux'
 import coreReducer, { ICoreState } from 'ui/core/Core.redux'
 import gpsReducer, { IGpsState } from 'ui/core/gps/Gps.redux'
-import offlineReducer, { IOfflineState } from 'ui/core/offline/Offline.redux'
 import mapboxReducer, { IMapboxModuleState } from 'ui/core/MapboxModule.redux'
-import regionReducer, { IRegionState } from 'ui/routes/@usState/@region/Region.redux'
+import offlineReducer, { IOfflineState } from 'ui/core/offline/Offline.redux'
 import minimapReducer, { IMinimapReduxState } from 'ui/page/header/minimap/Minimap.redux'
+import regionReducer, { IRegionState } from 'ui/routes/@usState/@region/Region.redux'
+import usState, { IUsStateReduxState } from 'ui/routes/@usState/UsState.redux'
+import { IRoutingState, routingWithHistoryReducer } from './Routing.redux'
 export interface IReduxState {
   readonly usState: IUsStateReduxState
   readonly offline: IOfflineState

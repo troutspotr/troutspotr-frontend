@@ -1,11 +1,11 @@
-import { Feature, Point } from 'geojson'
 import { IAccessPointGeoJsonProps } from 'coreTypes/accessPoint/IAccessPoint'
-import * as React from 'react'
 // Import { Link } from 'react-router'
 // const classes = require('./Details.scss')
 /* eslint-disable camelcase */
 // import { crossingTypes } from 'api/GeoApi.accessPoints'
 import { IStreamObject } from 'coreTypes/IStreamObject'
+import { Feature, Point } from 'geojson'
+import * as React from 'react'
 
 import isEmpty from 'lodash-es/isEmpty'
 // import RestrictionComponent from 'ui/core/regulations/Restriction.component'
@@ -15,16 +15,16 @@ import AccessPointComponent from './AccessPoint.component'
 // Const DEFAULT_ZOOM = 16
 
 export interface IDetailsComponentStateProps {
-  specialRegulationsCurrentSeason: any
+  specialRegulationsCurrentSeason: {}
   selectedAccessPoint: Feature<Point, IAccessPointGeoJsonProps>
   hoveredRoad: Feature<Point, IAccessPointGeoJsonProps>
-  location: any
+  location: {}
 }
 
 export interface IDetailsComponentDispatchProps {
-  setHoveredRoad: any
-  setSelectedRoad: any
-  setHoveredStream: any
+  setHoveredRoad: {}
+  setSelectedRoad: {}
+  setHoveredStream: {}
 }
 
 export interface IDetailsComponent
@@ -34,7 +34,7 @@ export interface IDetailsComponent
 }
 
 class DetailsComponent extends React.Component<IDetailsComponent> {
-  renderRestrictions() {
+  public renderRestrictions() {
     // const { specialRegulationsCurrentSeason } = this.props
     // const hasNoRestrictions = specialRegulationsCurrentSeason.length === 0
     // if (hasNoRestrictions) {
@@ -62,7 +62,7 @@ class DetailsComponent extends React.Component<IDetailsComponent> {
     return null
   }
 
-  mapAccessPoints(bridge, defaultBridgeClass, selectedBridgeClass, key) {
+  public mapAccessPoints(bridge, defaultBridgeClass, selectedBridgeClass, key) {
     const selectedAccessPoint = this.props.selectedAccessPoint
     const hoveredRoad = this.props.hoveredRoad
     const isSelected =
@@ -229,7 +229,7 @@ class DetailsComponent extends React.Component<IDetailsComponent> {
   //   )
   // }
 
-  render() {
+  public render() {
     return null
     // return (
     //   <div className={classes.container}>

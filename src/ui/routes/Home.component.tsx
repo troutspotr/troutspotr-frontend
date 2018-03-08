@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { PageLayoutComponent } from 'ui/page/PageLayout.component'
-import { FooterContainer } from 'ui/page/footer/Footer.container'
 import { Link } from 'react-router'
+import { FooterContainer } from 'ui/page/footer/Footer.container'
+import { PageLayoutComponent } from 'ui/page/PageLayout.component'
 // import { HeaderLayout } from 'ui/page/header/Header.layout'
 // import { View } from 'ui/core/Core.redux'
 export const HomeComponent = props => {
@@ -14,19 +14,19 @@ export class PageContainer extends React.PureComponent {
     super(props)
   }
 
-  renderFooter() {
+  public renderFooter() {
     return <FooterContainer />
   }
 
-  renderHeader() {
+  public renderHeader() {
     return <Link to="/legal">Go to legal</Link>
   }
 
-  renderContent() {
+  public renderContent() {
     return this.props.children
   }
 
-  render() {
+  public render() {
     return (
       <PageLayoutComponent
         header={this.renderHeader()}

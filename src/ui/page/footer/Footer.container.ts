@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
-import { FooterComponent, IFooterStateProps } from './Footer.component'
-import { setViewToList, setViewToMap } from 'ui/core/Core.redux'
 import { viewSelector } from 'ui/core//Core.selectors'
+import { setViewToList, setViewToMap } from 'ui/core/Core.redux'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { selectedStreamObjectSelector } from 'ui/routes/@usState/@region/Region.selectors'
+import { FooterComponent, IFooterStateProps } from './Footer.component'
+import { startGpsTracking, stopGpsTracking } from './gps/Gps.redux'
 import {
   // getGpsCoordinateFeatureSelector,
   getIsActiveAndSuccessful,
@@ -13,7 +14,6 @@ import {
   // isGpsTrackingActiveStateSelector,
   isGpsTrackingSupportedStateSelector,
 } from './gps/Gps.selectors'
-import { startGpsTracking, stopGpsTracking } from './gps/Gps.redux'
 
 export interface IFooterDispatchProps {
   setViewToMap: () => void

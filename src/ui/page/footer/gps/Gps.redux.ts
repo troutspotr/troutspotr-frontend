@@ -1,15 +1,15 @@
+import { getApi } from 'api/Api.module'
 import { createAction } from 'redux-actions'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import {
   isGpsTrackingActiveStateSelector,
   isGpsTrackingSupportedStateSelector,
 } from './Gps.selectors'
-import { getApi } from 'api/Api.module'
 
 export const GPS_UPDATE_GPS_POSITION = 'GPS_UPDATE_GPS_POSITION'
 export const GPS_ACTIVATE_GPS_TRACKING = 'GPS_ACTIVATE_GPS_TRACKING'
 
-let GPS_WATCH_CALLBACK_ID = null
+const GPS_WATCH_CALLBACK_ID = null
 const MAX_TIMEOUT_LENGTH_MILLISECONDS = 20 * 1000
 
 export const updateGpsPosition = createAction(

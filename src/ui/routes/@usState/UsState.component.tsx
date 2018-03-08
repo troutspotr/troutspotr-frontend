@@ -1,18 +1,18 @@
 import * as React from 'react'
 // import PropTypes from 'prop-types'
-class StateComponent extends React.PureComponent<any> {
-  componentDidMount() {
+class StateComponent extends React.PureComponent<{}> {
+  public componentDidMount() {
     // this.props.fetchStateData(this.props.selectedState)
   }
 
-  componentWillReceiveProps(nextProps) {
+  public componentWillReceiveProps(nextProps) {
     // if (nextProps.selectedState === this.props.selectedState) {
     //   return
     // }
     // this.props.fetchStateData(nextProps.selectedState)
   }
 
-  render() {
+  public render() {
     console.log('renderin')
     return this.props.children
   }

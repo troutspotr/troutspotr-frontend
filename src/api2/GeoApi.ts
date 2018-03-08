@@ -1,7 +1,7 @@
 import BaseApi from './BaseApi'
 export const buildGeoEndpoint = (stateName) => `data/${stateName}/${stateName}.topo.json`
 export class GeoApi extends BaseApi {
-  getStateStreamData (stateName) {
+  public getStateStreamData (stateName) {
     if (stateName == null) {
       return Promise.reject(new Error('stateName cannot be null'))
     }

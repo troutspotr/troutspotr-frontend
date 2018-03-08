@@ -1,12 +1,12 @@
 import * as React from 'react'
-import BackButtonContainer from './backButton/BackButton.container'
-import SearchContainer from './search/Search.container'
-import MinimapContainer from './minimap/Minimap.container'
-import { HeaderLayout } from './Header.layout'
-import TitleComponent from './title/Title.component'
-import { SubtitleComponent } from './subtitle/Subtitle.component'
 import ClipboardButton from 'react-clipboard.js'
 import { ClipboardIcon } from 'ui/page/header/title/clipboard/ClipboardIcon.component'
+import BackButtonContainer from './backButton/BackButton.container'
+import { HeaderLayout } from './Header.layout'
+import MinimapContainer from './minimap/Minimap.container'
+import SearchContainer from './search/Search.container'
+import { SubtitleComponent } from './subtitle/Subtitle.component'
+import TitleComponent from './title/Title.component'
 
 export interface IHeaderComponentPrps {
   subtitle: string
@@ -14,18 +14,18 @@ export interface IHeaderComponentPrps {
   isTitleVisible: boolean
   isSearchVisible: boolean
   isIconVisible: boolean
-  params: any
-  location: any
+  params: {}
+  location: {}
   isOffline: boolean
-  onCopyToClipboard: any
+  onCopyToClipboard: {}
 }
 
 export class HeaderComponent extends React.PureComponent<IHeaderComponentPrps> {
-  renderMinimap() {
+  public renderMinimap() {
     return <MinimapContainer params={this.props.params} location={this.props.location} />
   }
 
-  renderSearch() {
+  public renderSearch() {
     if (this.props.isSearchVisible) {
       return <SearchContainer />
     }
@@ -33,11 +33,11 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentPrps> {
     return null
   }
 
-  renderLocationSubtitle() {
+  public renderLocationSubtitle() {
     return <SubtitleComponent subtitle={this.props.subtitle} />
   }
 
-  renderTitle() {
+  public renderTitle() {
     if (this.props.isTitleVisible === false) {
       return null
     }
@@ -64,11 +64,11 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentPrps> {
     )
   }
 
-  renderBackButton() {
+  public renderBackButton() {
     return <BackButtonContainer />
   }
 
-  render() {
+  public render() {
     return (
       <HeaderLayout
         backButton={this.renderBackButton()}

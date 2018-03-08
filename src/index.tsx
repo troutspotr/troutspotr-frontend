@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { browserHistory } from 'react-router'
-import { createRoutes } from 'ui/routes/Routes'
 import { store } from 'ui/redux/Store.redux'
+import { createRoutes } from 'ui/routes/Routes'
 import 'ui/styles/core.scss'
 import { TroutSpotrAppContainer } from 'ui/TroutSpotrAppContainer'
 

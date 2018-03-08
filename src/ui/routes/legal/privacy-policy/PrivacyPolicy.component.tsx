@@ -3,14 +3,14 @@ const classes = require('ui/routes/legal/Legal.scss')
 const MAGICAL_NUMBER_OF_PREAMBLES = 5
 const scalar = 0.2
 export interface IPrivacyPolicyProps {
-  advance: any
+  advance: {}
 }
 
 export interface IPrivacyPolicyState {
   preambles: string[]
   isAgreementShown: boolean
   preambleIsFinished: boolean
-  time: any
+  time: {}
 }
 export class PrivacyPolicyComponent extends React.PureComponent<
   IPrivacyPolicyProps,
@@ -27,7 +27,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     }
   }
 
-  renderTerm({ index, title, body }) {
+  public renderTerm({ index, title, body }) {
     return (
       <li key={index}>
         <h2 className={classes.term}>{title}</h2>
@@ -36,7 +36,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     )
   }
 
-  renderTitle() {
+  public renderTitle() {
     return (
       <div>
         <h1 className={classes.jumbo}>Privacy Policy</h1>
@@ -44,15 +44,15 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     )
   }
 
-  addElement(element) {
+  public addElement(element) {
     if (element == null) {
       return
     }
-    let { preambles } = this.state
+    const { preambles } = this.state
     preambles = preambles.concat([element])
     if (preambles.length === MAGICAL_NUMBER_OF_PREAMBLES) {
       setTimeout(() => {
-        let { preambleIsFinished } = this.state
+        const { preambleIsFinished } = this.state
         preambleIsFinished = true
         this.setState({ preambleIsFinished })
       }, 600)
@@ -60,7 +60,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     this.setState({ preambles })
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     const container = document.getElementById('scrollContainer')
     if (container != null) {
       container.scrollTop = 0
@@ -99,7 +99,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     }, 8100 * scalar)
   }
 
-  renderPreamble = () => (
+  public renderPreamble = () => (
     <div className={classes.preamble}>
       {this.state.preambles.map((p, i) => {
         const key = i + 1
@@ -117,7 +117,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     </div>
   )
 
-  renderIntro() {
+  public renderIntro() {
     if (this.state.isAgreementShown === false) {
       return null
     }
@@ -139,7 +139,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     )
   }
 
-  renderCollection(index) {
+  public renderCollection(index) {
     const title = 'We may collect and utilize the following:'
     const body = (
       <div>
@@ -184,7 +184,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderIpAddress(index) {
+  public renderIpAddress(index) {
     const title = 'IP addresses'
     const body = (
       <div>
@@ -199,7 +199,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderCookies(index) {
+  public renderCookies(index) {
     const title = 'Cookies'
     const body = (
       <div>
@@ -210,7 +210,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderDataSecurity(index) {
+  public renderDataSecurity(index) {
     const title = 'Data Security'
     const body = (
       <div>
@@ -229,7 +229,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderUseOfInformation(index) {
+  public renderUseOfInformation(index) {
     const title = 'Use of Information'
     const body = (
       <div>
@@ -266,7 +266,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderDisclosureOfInformation(index) {
+  public renderDisclosureOfInformation(index) {
     const title = 'Disclosure of your information'
     const body = (
       <div>
@@ -300,7 +300,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderPrivacyPolicyUpdates(index) {
+  public renderPrivacyPolicyUpdates(index) {
     const title = 'Privacy Policy Updates'
     const body = (
       <div>
@@ -315,7 +315,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderContact(index) {
+  public renderContact(index) {
     const title = 'Contact'
     const body = (
       <div key={index}>
@@ -333,7 +333,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderKeen(index) {
+  public renderKeen(index) {
     const url = 'https://keen.io/privacy-policy/'
     return (
       <div key={index}>
@@ -348,7 +348,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     )
   }
 
-  renderDoNotTrack(index) {
+  public renderDoNotTrack(index) {
     const url = 'https://allaboutdnt.com/'
     return (
       <div key={index}>
@@ -363,7 +363,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     )
   }
 
-  renderButtonText() {
+  public renderButtonText() {
     const { isAgreementShown } = this.state
     if (isAgreementShown === false) {
       return 'Show Privacy Policy'
@@ -372,7 +372,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     return 'Agree and Finish'
   }
 
-  renderButton() {
+  public renderButton() {
     const { preambleIsFinished } = this.state
     if (preambleIsFinished === false) {
       return null
@@ -385,9 +385,9 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     )
   }
 
-  onButtonClick = () => {
+  public onButtonClick = () => {
     const { preambleIsFinished } = this.state
-    let { isAgreementShown } = this.state
+    const { isAgreementShown } = this.state
     if (preambleIsFinished && isAgreementShown === false) {
       setTimeout(() => {
         isAgreementShown = true
@@ -399,7 +399,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     }
   }
 
-  generateTerms() {
+  public generateTerms() {
     const { isAgreementShown } = this.state
     if (isAgreementShown === false) {
       return []
@@ -420,7 +420,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     ]
   }
 
-  renderBody = () => {
+  public renderBody = () => {
     const terms = this.generateTerms().map((termGenerator, index) => termGenerator(index + 1))
 
     return (
@@ -434,7 +434,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     )
   }
 
-  render() {
+  public render() {
     return (
       <div>
         {this.renderPreamble()}

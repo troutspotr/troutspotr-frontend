@@ -1,11 +1,11 @@
-import * as React from 'react'
 import debounce from 'lodash-es/debounce'
+import * as React from 'react'
 const classes = require('./Minimap.scss')
 // const MINIMAP_WIDTH = 50
 
 export interface IMinimapProps {
   readonly isExpanded: boolean
-  readonly handleExpand: any
+  readonly handleExpand: {}
   readonly isReadyToReveal: boolean
   readonly mapComponent: React.ReactNode
   readonly closeButton: React.ReactNode
@@ -31,7 +31,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
   private containerElement: HTMLDivElement
   protected debouncedResizeEvent = () => {}
 
-  componentWillMount() {
+  public componentWillMount() {
     if (window) {
       this.debouncedResizeEvent = debounce(this.resizeEvent, 200)
       window.addEventListener('resize', this.debouncedResizeEvent)
@@ -39,18 +39,18 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     setTimeout(this.resizeEvent, 20)
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     if (window) {
       window.removeEventListener('resize', this.debouncedResizeEvent)
       window.removeEventListener('orientationchange', this.debouncedResizeEvent)
     }
   }
 
-  resizeEvent() {
+  public resizeEvent() {
     const rect = this.containerElement.getBoundingClientRect()
     this.setState(() => {
       const width = window.innerWidth > 0 ? window.innerWidth : screen.width
@@ -71,7 +71,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     })
   }
 
-  getStyle() {
+  public getStyle() {
     const { windowWidth, windowHeight, containerRect } = this.state
 
     if (containerRect == null || windowWidth === 0 || windowHeight === 0) {
@@ -112,7 +112,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     // result.style.transform = newStyle
   }
 
-  render() {
+  public render() {
     const { isExpanded, mapComponent, isReadyToReveal } = this.props
     const style = isExpanded ? this.getStyle() : null
     return (

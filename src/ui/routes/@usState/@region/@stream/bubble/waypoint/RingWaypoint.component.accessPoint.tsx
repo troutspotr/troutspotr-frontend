@@ -1,8 +1,8 @@
-import * as React from 'react'
 import isEmpty from 'lodash-es/isEmpty'
 import startsWith from 'lodash-es/startsWith'
-import RingWaypointLineComponent from './RingWaypoint.component.line'
+import * as React from 'react'
 import RingWaypointLabelComponent from './RingWaypoint.component.label'
+import RingWaypointLineComponent from './RingWaypoint.component.line'
 const accessPointClasses = require('./RingWaypoint.accessPoint.scss')
 const waypointClasses = require('./RingWaypoint.scss')
 // import { CROSSING_TYPES } from 'api/GeoApi.accessPoints'
@@ -15,19 +15,19 @@ export const CROSSING_TYPES = {
 }
 
 export interface ILayout {
-  width: any
-  height: any
-  radius: any
-  arcCompressionRatio: any
-  rotatePhase: any
+  width: {}
+  height: {}
+  radius: {}
+  arcCompressionRatio: {}
+  rotatePhase: {}
 }
 export interface IRingWaypointAccessPointComponent {
-  accessPoint: any
-  projection: any
-  selectedAccessPoint: any
-  hoveredRoad: any
-  roadTypesDictionary: any
-  setHoveredRoad: any
+  accessPoint: {}
+  projection: {}
+  selectedAccessPoint: {}
+  hoveredRoad: {}
+  roadTypesDictionary: {}
+  setHoveredRoad: {}
   layout: ILayout
 }
 
@@ -41,7 +41,7 @@ export class RingWaypointAccessPointComponent extends React.Component<
     this.onMouseLeave = this.onMouseLeave.bind(this)
   }
 
-  shouldComponentUpdate(nextProps) {
+  public shouldComponentUpdate(nextProps) {
     const gid = this.props.accessPoint.properties.gid
     const { selectedAccessPoint, hoveredRoad } = this.props
 
@@ -66,7 +66,7 @@ export class RingWaypointAccessPointComponent extends React.Component<
     return false
   }
 
-  renderTargetMarker(dotXScreenCoordinate, dotYScreenCoordinate) {
+  public renderTargetMarker(dotXScreenCoordinate, dotYScreenCoordinate) {
     return (
       <circle
         className={waypointClasses.target}
@@ -81,7 +81,7 @@ export class RingWaypointAccessPointComponent extends React.Component<
   //   return this.renderLabelMarker(offsetLocationDegrees, labelOffsetFromRadius)
   // }
 
-  renderDefaultMarker(text, className) {
+  public renderDefaultMarker(text, className) {
     return (
       <g className={className}>
         <circle cx={0} cy={0} r={8} />
@@ -92,7 +92,7 @@ export class RingWaypointAccessPointComponent extends React.Component<
     )
   }
 
-  decideRoadShield(roadType, isSelected) {
+  public decideRoadShield(roadType, isSelected) {
     const { alphabetLetter, bridgeType } = roadType.properties
     if (bridgeType === CROSSING_TYPES.publicTrout) {
       return this.renderDefaultMarker(
@@ -118,12 +118,12 @@ export class RingWaypointAccessPointComponent extends React.Component<
     return null
   }
 
-  getXCoordinate(radialPosition, labelOffsetFromRadius, width) {
+  public getXCoordinate(radialPosition, labelOffsetFromRadius, width) {
     const result = labelOffsetFromRadius * Math.cos(-Math.PI * 0.5 + radialPosition) + width * 0.5
     return result
   }
 
-  onClick(e) {
+  public onClick(e) {
     // I swear this is the dumbest thing...
     // But clicking on links in mobile safari added to homescreen
     // Causes it to try to bug out and open a new tab in ios safari.
@@ -134,17 +134,17 @@ export class RingWaypointAccessPointComponent extends React.Component<
     return false
   }
 
-  onMouseEnter(e) {
+  public onMouseEnter(e) {
     e.preventDefault()
     this.props.setHoveredRoad(this.props.accessPoint)
   }
 
-  onMouseLeave(e) {
+  public onMouseLeave(e) {
     e.preventDefault()
     this.props.setHoveredRoad(null)
   }
 
-  renderInterstateIcon(num) {
+  public renderInterstateIcon(num) {
     const asdf = -6
     return (
       <g>
@@ -167,7 +167,7 @@ export class RingWaypointAccessPointComponent extends React.Component<
     )
   }
 
-  renderUsHighwayIcon(num) {
+  public renderUsHighwayIcon(num) {
     const asdf = -6
     return (
       <g>
@@ -179,7 +179,7 @@ export class RingWaypointAccessPointComponent extends React.Component<
     )
   }
 
-  renderMnHighwayIcon(num) {
+  public renderMnHighwayIcon(num) {
     const asdf = -6
     return (
       <g>
@@ -198,7 +198,7 @@ export class RingWaypointAccessPointComponent extends React.Component<
     // Return null
   }
 
-  renderRailroadIcon() {
+  public renderRailroadIcon() {
     const asdf = -6
     // Railroad
     return (
@@ -208,11 +208,11 @@ export class RingWaypointAccessPointComponent extends React.Component<
     )
   }
 
-  renderMnStateAidHighway(num) {}
+  public renderMnStateAidHighway(num) {}
 
-  renderMnTownshipRoad() {}
+  public renderMnTownshipRoad() {}
 
-  renderMnCountyRoad(num) {
+  public renderMnCountyRoad(num) {
     const asdf = -6
     return (
       <g>
@@ -230,12 +230,12 @@ export class RingWaypointAccessPointComponent extends React.Component<
     )
   }
 
-  getYCoordinate(radialPosition, labelOffsetFromRadius, height) {
+  public getYCoordinate(radialPosition, labelOffsetFromRadius, height) {
     const result = labelOffsetFromRadius * Math.sin(-Math.PI * 0.5 + radialPosition) + height * 0.5
     return result
   }
 
-  debuggerInterstate(num) {
+  public debuggerInterstate(num) {
     const asdf = -6
     return (
       <g>
@@ -247,7 +247,7 @@ export class RingWaypointAccessPointComponent extends React.Component<
     )
   }
 
-  getLabelText() {
+  public getLabelText() {
     const roadId = this.props.accessPoint.properties.road_type_id
     const streetName = this.props.accessPoint.properties.street_name
     const roadTypeDictionary = this.props.roadTypesDictionary
@@ -282,7 +282,7 @@ export class RingWaypointAccessPointComponent extends React.Component<
     return this.props.accessPoint.properties.street_name
   }
 
-  getMarkerComponent() {
+  public getMarkerComponent() {
     // Let externalLink = <use xlinkHref='#externalLink' x={asdf - 4} y={asdf} />
     // Let asdf = -6
     return (
@@ -292,7 +292,7 @@ export class RingWaypointAccessPointComponent extends React.Component<
     )
   }
 
-  render() {
+  public render() {
     const { accessPoint, projection } = this.props
     const isUninteresting = accessPoint.properties.bridgeType === CROSSING_TYPES.uninteresting
     if (isUninteresting) {

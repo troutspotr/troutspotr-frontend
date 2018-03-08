@@ -2,16 +2,16 @@ import * as React from 'react'
 const classes = require('./SneezeGuard.scss')
 
 export interface ISneezeguardProps {
-  close: any
+  close: {}
 }
 export class SneezeGuardComponent extends React.Component<ISneezeguardProps> {
-  onClick = () => {
+  public onClick = () => {
     if (this.props.close) {
       this.props.close()
     }
   }
 
-  render() {
+  public render() {
     return <span onClick={this.onClick} className={classes.sneezeGuard} />
   }
 }

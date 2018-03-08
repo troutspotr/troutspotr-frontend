@@ -1,5 +1,5 @@
-import StateApi from './StateApi.sync'
 import { transformGeo } from './GeoApi.transform.sync'
+import StateApi from './StateApi.sync'
 
 const mnBwca = require('static/data/v3/mn/upper-superior.topo.json')
 const mnDriftless = require('static/data/v3/mn/driftless.topo.json')
@@ -29,7 +29,7 @@ const dictionary = {
 }
 
 export class RegionApiSync {
-  getRegionData(stateName, regionName) {
+  public getRegionData(stateName, regionName) {
     if (stateName == null) {
       throw new Error('state name was not specificed')
     }

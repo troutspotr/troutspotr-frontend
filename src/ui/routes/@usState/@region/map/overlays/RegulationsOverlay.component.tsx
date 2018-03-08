@@ -1,10 +1,10 @@
+import isEmpty from 'lodash-es/isEmpty'
 import * as React from 'react'
 // const classes = require('./MapOverlay.scss')
 // import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import { MessageOverlayComponent } from 'ui/core/messageOverlay/MessageOverlay.component'
-import isEmpty from 'lodash-es/isEmpty'
-class RegulationsOverlayComponent extends React.Component<any> {
-  renderSpecialRegulationsOverlay() {
+class RegulationsOverlayComponent extends React.Component<{}> {
+  public renderSpecialRegulationsOverlay() {
     const { selectedStream, specialRegulationsCurrentSeason } = this.props
     if (isEmpty(selectedStream) || specialRegulationsCurrentSeason.length === 0) {
       return null
@@ -35,7 +35,7 @@ class RegulationsOverlayComponent extends React.Component<any> {
     )
   }
 
-  render() {
+  public render() {
     return this.renderSpecialRegulationsOverlay()
   }
 }

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
-import { isMapboxModuleLoadedSelector } from 'ui/core/MapboxModule.selectors'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
+import { isMapboxModuleLoadedSelector } from 'ui/core/MapboxModule.selectors'
 import { regionLoadingStatusSelector } from 'ui/routes/@usState/@region/Region.selectors'
 export const getMapCameraSelector = state => state.map.camera
 export const getMapGroundSelector = state => state.map.ground

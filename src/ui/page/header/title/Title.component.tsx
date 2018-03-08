@@ -4,7 +4,7 @@ export interface ITitleProps {
   title?: string
 }
 export class TitleComponent extends React.PureComponent<ITitleProps> {
-  render() {
+  public render() {
     const { title } = this.props
     return <span>{title}</span>
   }

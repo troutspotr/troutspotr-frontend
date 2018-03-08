@@ -1,5 +1,5 @@
-import { IMapColors } from './MapColors'
 import { IStreamSettings } from 'ui/core/micromap/Micromap.settings'
+import { IMapColors } from './MapColors'
 
 export interface ILayerProperties {
   pallete: IMapColors

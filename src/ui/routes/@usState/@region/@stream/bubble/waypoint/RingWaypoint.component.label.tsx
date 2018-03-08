@@ -2,14 +2,14 @@ import * as React from 'react'
 const waypointClasses = require('./RingWaypoint.accessPoint.scss')
 import { ILayout } from './RingWaypoint.component.accessPoint'
 export interface IRingWaypointLabelComponent {
-  marker: any
-  icon: any
-  normalizedOffset: any
+  marker: {}
+  icon: {}
+  normalizedOffset: {}
   layout: ILayout
 }
 
 class RingWaypointLabelComponent extends React.Component<IRingWaypointLabelComponent> {
-  renderLabelText(text, offset, labelOffsetFromRadius) {
+  public renderLabelText(text, offset, labelOffsetFromRadius) {
     const labelTextTransform = this.getLabelTextTransform(offset, labelOffsetFromRadius)
 
     if (text == null || offset == null) {
@@ -27,7 +27,7 @@ class RingWaypointLabelComponent extends React.Component<IRingWaypointLabelCompo
     )
   }
 
-  getContainerTransform(rotationDegrees, radialOffset) {
+  public getContainerTransform(rotationDegrees, radialOffset) {
     const { width, height } = this.props.layout
     const translate = `translate(${radialOffset}, ${0})`
     const postRotate = `rotate(${rotationDegrees - 90})`
@@ -36,7 +36,7 @@ class RingWaypointLabelComponent extends React.Component<IRingWaypointLabelCompo
     return transform
   }
 
-  getLabelTextTransform(rotationDegrees, radialOffset) {
+  public getLabelTextTransform(rotationDegrees, radialOffset) {
     const rotate = rotationDegrees
 
     const textXPos = 0
@@ -46,13 +46,13 @@ class RingWaypointLabelComponent extends React.Component<IRingWaypointLabelCompo
     return transform
   }
 
-  getIconTransform(rotationDegrees) {
+  public getIconTransform(rotationDegrees) {
     const rotate = rotationDegrees
     const transform = `translate(5,0) rotate(${-rotate + 90})`
     return transform
   }
 
-  renderInterstateIcon(offset) {
+  public renderInterstateIcon(offset) {
     const transform = this.getIconTransform(offset)
     return (
       <g transform={transform} className={waypointClasses.icon}>
@@ -61,7 +61,7 @@ class RingWaypointLabelComponent extends React.Component<IRingWaypointLabelCompo
     )
   }
 
-  render() {
+  public render() {
     const { radius, arcCompressionRatio } = this.props.layout
     const { normalizedOffset } = this.props
 

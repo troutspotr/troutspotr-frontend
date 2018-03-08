@@ -7,8 +7,8 @@ import {
   STREAM_QUITE_LAYER_ID,
 } from '../filters/Filters.selectors'
 
+import { STREAM_CENTROIDS_SOURCE_ID, STREAMS_SOURCE_ID } from '../sources/Source.selectors'
 import { FONT_ROBOTO_REGULAR } from './Base.style'
-import { STREAMS_SOURCE_ID, STREAM_CENTROIDS_SOURCE_ID } from '../sources/Source.selectors'
 
 const CENTROID_LABEL_MIN_ZOOM = 8
 const CENTROID_LABEL_MAX_ZOOM = 13.3

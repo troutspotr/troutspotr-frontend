@@ -1,10 +1,10 @@
-import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid'
+import { IPalType } from 'coreTypes/state/IPalType'
 import { IRegulation } from 'coreTypes/state/IRegulation'
 import { IRoadType } from 'coreTypes/state/IRoadType'
-import { IPalType } from 'coreTypes/state/IPalType'
+import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid'
 import { IWaterOpener } from 'coreTypes/state/IWaterOpener'
 export interface IUsState {
-  regionIndex: any
+  regionIndex: {}
   streamCentroids: IStreamCentroid[]
   regulations: IRegulation[]
   roadTypes: IRoadType[]

@@ -1,6 +1,6 @@
 import { Layer, StyleFunction } from 'mapbox-gl'
-import { ILayerProperties } from './ICreateLayer'
 import { FONT_ROBOTO_BOLD } from './Base.style'
+import { ILayerProperties } from './ICreateLayer'
 
 export const ACCESSPOINT_CIRCLE_LABEL_LAYER = 'access_point_circle_label_layer'
 export const ACCESSPOINT_CIRCLE_BORDER_LAYER = 'access_point_circle_border_layer'

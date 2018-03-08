@@ -4,24 +4,24 @@ const classes = require('./Details.scss')
 /* eslint-disable camelcase */
 // const DEFAULT_ZOOM = 16
 
-class AccessPointComponent extends React.Component<any> {
+class AccessPointComponent extends React.Component<{}> {
   constructor() {
     super({})
     this.onMouseLeave = this.onMouseLeave.bind(this)
     this.onMouseEnter = this.onMouseEnter.bind(this)
     this.onClick = this.onClick.bind(this)
   }
-  onMouseLeave(e) {
+  public onMouseLeave(e) {
     e.stopPropagation()
     this.props.onHover(null)
   }
 
-  onMouseEnter(e) {
+  public onMouseEnter(e) {
     e.stopPropagation()
     this.props.onHover(this.props.accessPoint)
   }
 
-  onClick(e) {
+  public onClick(e) {
     e.preventDefault()
     // Other folks use this component and don't need
     // So much fancy stuff.
@@ -33,7 +33,7 @@ class AccessPointComponent extends React.Component<any> {
     // Return false
   }
 
-  openGoogleMaps(e) {
+  public openGoogleMaps(e) {
     // When it rains it pours. Because of the iOS add to start menu
     // Bug, we have to manually do this. yuck. whatever.
     e.preventDefault()
@@ -43,7 +43,7 @@ class AccessPointComponent extends React.Component<any> {
     return false
   }
 
-  renderOpenInGoogleMapsLink(selectedAccessPoint) {
+  public renderOpenInGoogleMapsLink(selectedAccessPoint) {
     return (
       <span onClick={this.openGoogleMaps} className={classes.googleLink}>
         Google Maps
@@ -51,7 +51,7 @@ class AccessPointComponent extends React.Component<any> {
     )
   }
 
-  mapAccessPoints(bridge, defaultBridgeClass, selectedBridgeClass, isSelected, isHovered) {
+  public mapAccessPoints(bridge, defaultBridgeClass, selectedBridgeClass, isSelected, isHovered) {
     const { street_name } = bridge.properties
     const letter = bridge.properties.alphabetLetter
     const bridgeClass = isSelected ? selectedBridgeClass : defaultBridgeClass
@@ -75,7 +75,7 @@ class AccessPointComponent extends React.Component<any> {
     )
   }
 
-  render() {
+  public render() {
     const { accessPoint, selectedClass, defaultClass, isSelected, isHovered } = this.props
     return this.mapAccessPoints(accessPoint, defaultClass, selectedClass, isSelected, isHovered)
   }

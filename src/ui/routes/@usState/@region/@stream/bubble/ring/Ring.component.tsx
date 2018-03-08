@@ -5,12 +5,12 @@ import RingSectionComponent from './RingSection.component'
 
 const classes = require('../SvgBubble.scss')
 // Const ANIMATION_SCALE = 2.0
-class RingComponent extends React.Component<any> {
-  shouldComponentUpdate(nextProps) {
+class RingComponent extends React.Component<{}> {
+  public shouldComponentUpdate(nextProps) {
     return true
   }
 
-  renderPalRings() {
+  public renderPalRings() {
     return this.props.streamPackage.palSections.map((pal, palIndex) => {
       const streamLength = this.props.streamPackage.stream.properties.length_mi
       const itemOffset =
@@ -30,7 +30,7 @@ class RingComponent extends React.Component<any> {
     })
   }
 
-  renderSectionRings() {
+  public renderSectionRings() {
     return this.props.streamPackage.sections.map((section, sectionIndex) => {
       const streamLength = this.props.streamPackage.stream.properties.length_mi
       const itemOffset =
@@ -52,13 +52,13 @@ class RingComponent extends React.Component<any> {
     })
   }
 
-  renderRestrictionRings() {
+  public renderRestrictionRings() {
     return this.props.streamPackage.restrictions.map((restriction, restrictionIndex) => {
       const streamLength = this.props.streamPackage.stream.properties.length_mi
       const positionOffset = (streamLength - restriction.properties.stop) / streamLength
       const itemOffset = positionOffset * this.props.timing.troutSectionSpeed
       const offset = this.props.timing.baseTroutSectionOffset + itemOffset
-      let className
+      const className
       if (restriction.properties.color === 'yellow') {
         className = classes.restriction
       } else if (restriction.properties.color === 'blue') {
@@ -91,7 +91,7 @@ class RingComponent extends React.Component<any> {
     })
   }
 
-  renderStreamRing() {
+  public renderStreamRing() {
     const streamLength = this.props.streamPackage.stream.properties.length_mi
     return (
       <RingSectionComponent
@@ -108,13 +108,13 @@ class RingComponent extends React.Component<any> {
     )
   }
 
-  renderRingAxis() {
+  public renderRingAxis() {
     const length = this.props.streamPackage.stream.properties.length_mi
     const index = 0
     return <RingAxisComponent length={length} index={index} layout={this.props.layout} />
   }
 
-  render() {
+  public render() {
     return (
       <g id="ring">
         <g id="ring-restrictions">{this.renderRestrictionRings()}</g>

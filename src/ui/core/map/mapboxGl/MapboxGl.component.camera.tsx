@@ -1,14 +1,14 @@
+import isEqual from 'lodash-es/isEqual'
+import { Map } from 'mapbox-gl'
 import * as React from 'react'
 import { ICameraProps } from 'ui/core/map/ICameraProps'
-import { Map } from 'mapbox-gl'
-import isEqual from 'lodash-es/isEqual'
 export interface IMapboxGlCameraProps {
   camera: ICameraProps
   map: Map
 }
 
 export default class MapboxGlComponentCamera extends React.PureComponent<IMapboxGlCameraProps> {
-  updateCamera(camera: ICameraProps, map: Map) {
+  public updateCamera(camera: ICameraProps, map: Map) {
     const { bbox, padding } = camera
     if (bbox == null) {
       return
@@ -22,7 +22,7 @@ export default class MapboxGlComponentCamera extends React.PureComponent<IMapbox
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  public componentWillReceiveProps(nextProps) {
     const { camera, map } = nextProps
     const currentcamera = this.props.camera
     if (camera == null) {
@@ -43,12 +43,12 @@ export default class MapboxGlComponentCamera extends React.PureComponent<IMapbox
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     const { camera, map } = this.props
     this.updateCamera(camera, map)
   }
 
-  render() {
+  public render() {
     return null
   }
 }

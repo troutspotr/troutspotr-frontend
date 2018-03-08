@@ -7,13 +7,13 @@ import { LoadingComponent } from 'ui/core/loading/Loading.component'
 import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 // import isEmpty from 'lodash-es/isEmpty'
 // import SvgSpriteSheet from './svgSpriteSheet/SvgSpriteSheet.component'
-class RegionLayout extends React.Component<any> {
-  componentDidMount() {
+class RegionLayout extends React.Component<{}> {
+  public componentDidMount() {
     const { fetchRegionData, selectedState, selectedRegion } = this.props
     fetchRegionData(selectedState, selectedRegion)
   }
 
-  componentWillReceiveProps(nextProps) {
+  public componentWillReceiveProps(nextProps) {
     const { selectedState, selectedRegion } = nextProps
     const nextCombo = (selectedState + selectedRegion).toLowerCase()
     const currentCombo = (this.props.selectedState + this.props.selectedRegion).toLowerCase()
@@ -23,7 +23,7 @@ class RegionLayout extends React.Component<any> {
     }
   }
 
-  renderLoading() {
+  public renderLoading() {
     if (this.props.regionLoadingStatus === LOADING_CONSTANTS.IS_PENDING) {
       return <LoadingComponent title="" subTitle={'Loading New Region'} />
     }
@@ -31,21 +31,21 @@ class RegionLayout extends React.Component<any> {
     return null
   }
 
-  renderMap() {
+  public renderMap() {
     // const { view } = this.props
     // const isVisible = view === MAP
     // return <MapContainer isVisible={isVisible} />
     return null
   }
 
-  renderList() {
+  public renderList() {
     // const { view, selectedStream } = this.props
     // const isVisible = view === LIST && isEmpty(selectedStream)
     // return <CountyListContainer isVisible={isVisible} />
     return null
   }
 
-  render() {
+  public render() {
     const {
       // view,
       hasAgreedToTerms,

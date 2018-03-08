@@ -1,9 +1,7 @@
 import { connect } from 'react-redux'
-import { MapComponent } from './Map.component'
+import { selectedRegionIdSelector, selectedStateIdSelector } from 'ui/core/Core.selectors'
 import { loadMapModuleAsync } from 'ui/core/MapboxModule.redux'
 import { isMapboxModuleLoadedSelector, mapboxModuleSelector } from 'ui/core/MapboxModule.selectors'
-import { selectFoculPoint, selectMapFeature, setIsMapInitialized } from './Map.redux.interactivity'
-import { selectedRegionIdSelector, selectedStateIdSelector } from 'ui/core/Core.selectors'
 import {
   getSelectedRoadSelector,
   getSpecialRegulationsCurrentSeasonSelector,
@@ -11,6 +9,8 @@ import {
   selectedStreamObjectSelector,
   troutStreamDictionarySelector,
 } from 'ui/routes/@usState/@region/Region.selectors'
+import { MapComponent } from './Map.component'
+import { selectFoculPoint, selectMapFeature, setIsMapInitialized } from './Map.redux.interactivity'
 
 import { withRouter } from 'react-router'
 
@@ -50,4 +50,4 @@ const mapStateToProps = state => {
   return props
 }
 
-export default withRouter<any, any>(connect(mapStateToProps, mapDispatchToProps)(MapComponent))
+export default withRouter<{}, {}>(connect(mapStateToProps, mapDispatchToProps)(MapComponent))

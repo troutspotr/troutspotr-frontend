@@ -1,5 +1,5 @@
-import { createAction, handleActions } from 'redux-actions'
 import { getApi } from 'api/Api.module'
+import { createAction, handleActions } from 'redux-actions'
 
 // Import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 
@@ -56,9 +56,9 @@ export const INITIAL_OFFLINE_STATE: IOfflineState = {
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: any = {
+const ACTION_HANDLERS: {} = {
   [OFFLINE_UPDATE_CACHED_ENDPOINTS]: (state: IOfflineState, { payload }): IOfflineState => {
-    let { cachedEndpoints } = payload
+    const { cachedEndpoints } = payload
     cachedEndpoints = cachedEndpoints == null ? [] : cachedEndpoints.map(x => x)
     const newState = { ...state, ...{ cachedEndpoints } }
     return newState

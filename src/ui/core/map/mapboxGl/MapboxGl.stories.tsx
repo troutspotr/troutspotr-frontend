@@ -1,12 +1,12 @@
-import { MapboxGlComponent, IMapboxGlProps } from './MapboxGl.component'
-import { withKnobs, number, select, color } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { ICameraPadding, ICameraProps } from '../ICameraProps'
-import { Style, Layer } from 'mapbox-gl'
-import * as React from 'react'
+import { color, number, select, withKnobs } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 import boundingBox from '@turf/bbox'
+import { Layer, Style } from 'mapbox-gl'
 import * as mapboxGl from 'mapbox-gl'
+import * as React from 'react'
+import { ICameraPadding, ICameraProps } from '../ICameraProps'
+import { IMapboxGlProps, MapboxGlComponent } from './MapboxGl.component'
 const darkStyle = require('./_stubs/dark-style.json')
 const lightStyle = require('./_stubs/light-style.json')
 const satelliteStyle = require('./_stubs/satellite-style.json')

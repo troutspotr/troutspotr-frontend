@@ -1,6 +1,6 @@
 export interface IRegulation {
   id: number
-  sourceId: any
+  sourceId: {}
   shortText: string
   legalText: string
 }

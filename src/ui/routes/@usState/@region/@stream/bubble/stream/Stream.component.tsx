@@ -3,8 +3,8 @@ import * as React from 'react'
 const classes = require('../SvgBubble.scss')
 import SvgAnimatedPathComponent from '../SvgAnimatedPath.component'
 
-class StreamComponent extends React.Component<any> {
-  renderPalSections() {
+class StreamComponent extends React.Component<{}> {
+  public renderPalSections() {
     const streamLength = this.props.streamPackage.stream.properties.length_mi
     return (
       <g id="stream-pal">
@@ -26,7 +26,7 @@ class StreamComponent extends React.Component<any> {
     )
   }
 
-  renderStream() {
+  public renderStream() {
     return (
       <g id="stream-stream">
         <SvgAnimatedPathComponent
@@ -39,7 +39,7 @@ class StreamComponent extends React.Component<any> {
     )
   }
 
-  renderTroutStreamSections() {
+  public renderTroutStreamSections() {
     return (
       <g id="stream-sections">
         {this.props.streamPackage.sections.map((section, sectionIndex) => {
@@ -61,11 +61,11 @@ class StreamComponent extends React.Component<any> {
     )
   }
 
-  renderRestrictions() {
+  public renderRestrictions() {
     return (
       <g id="stream-restrictions">
         {this.props.streamPackage.restrictions.map(restriction => {
-          let className
+          const className
           if (restriction.properties.color === 'yellow') {
             className = classes.restriction
           } else if (restriction.properties.color === 'blue') {
@@ -97,7 +97,7 @@ class StreamComponent extends React.Component<any> {
     )
   }
 
-  render() {
+  public render() {
     return (
       <g>
         {this.renderRestrictions()}

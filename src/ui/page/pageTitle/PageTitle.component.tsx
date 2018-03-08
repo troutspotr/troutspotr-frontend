@@ -4,7 +4,7 @@ export interface IPageTitleComponent {
   pageTitle: string
 }
 class PageTitleComponent extends React.PureComponent<IPageTitleComponent> {
-  shouldComponentUpdate(nextProps) {
+  public shouldComponentUpdate(nextProps) {
     if (nextProps.pageTitle === this.props.pageTitle) {
       return false
     }
@@ -12,7 +12,7 @@ class PageTitleComponent extends React.PureComponent<IPageTitleComponent> {
     return true
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     if (this.props.pageTitle == null || this.props.pageTitle === '') {
       return
     }
@@ -22,7 +22,7 @@ class PageTitleComponent extends React.PureComponent<IPageTitleComponent> {
     }
   }
 
-  componentWillUpdate(nextProps) {
+  public componentWillUpdate(nextProps) {
     if (nextProps.pageTitle == null || nextProps.pageTitle === '') {
       return
     }
@@ -32,7 +32,7 @@ class PageTitleComponent extends React.PureComponent<IPageTitleComponent> {
     }
   }
 
-  render() {
+  public render() {
     return null
   }
 }

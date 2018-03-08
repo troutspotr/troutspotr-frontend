@@ -1,13 +1,13 @@
-import { storiesOf } from '@storybook/react'
-import * as React from 'react'
-import { select, boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { MapboxGlComponent, IMapboxGlProps } from 'ui/core/map/mapboxGl/MapboxGl.component'
-import { createCameraObjectSimple } from 'ui/core/map/mapboxGl/MapboxGl.stories'
+import { boolean, number, select } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 import * as mapboxGl from 'mapbox-gl'
+import * as React from 'react'
+import { IMapboxGlProps, MapboxGlComponent } from 'ui/core/map/mapboxGl/MapboxGl.component'
+import { createCameraObjectSimple } from 'ui/core/map/mapboxGl/MapboxGl.stories'
 import { createStyle } from './Base.style'
-import { LightMapColors, DarkMapColors } from './MapColors'
-import { ILayerProperties, defaultLayerProperties } from './ICreateLayer'
+import { defaultLayerProperties, ILayerProperties } from './ICreateLayer'
+import { DarkMapColors, LightMapColors } from './MapColors'
 
 const stories = storiesOf('Map Styles/Base Map', module)
 

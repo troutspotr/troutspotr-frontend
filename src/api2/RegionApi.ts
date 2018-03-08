@@ -1,10 +1,10 @@
 import BaseApi from './BaseApi'
-import StateApi from './StateApi'
 import { transformGeo } from './GeoApi.transform'
+import StateApi from './StateApi'
 export const buildRegionEndpoint = (stateName, regionName) =>
   `/data/v3/${stateName}/${regionName}.topo.json`
 export class RegionApi extends BaseApi {
-  async getRegionData(stateName, regionName) {
+  public async getRegionData(stateName, regionName) {
     if (stateName == null) {
       return Promise.reject('state name was not specificed')
     }
@@ -13,7 +13,7 @@ export class RegionApi extends BaseApi {
       return Promise.reject('region name was not specificed')
     }
     try {
-      let regionGeoData = {}
+      const regionGeoData = {}
       const endpoint = buildRegionEndpoint(stateName, regionName)
       try {
         regionGeoData = await this.get(endpoint)
@@ -25,7 +25,7 @@ export class RegionApi extends BaseApi {
 
       const stateData = await StateApi.getStateData(stateName)
 
-      let transformedData = {}
+      const transformedData = {}
       try {
         transformedData = await transformGeo(regionGeoData, stateData)
       } catch (error) {

@@ -1,8 +1,8 @@
-import { createSelector } from 'reselect'
-import { isSearchVisibleSelector } from '../search/Search.selectors'
-import { isRootPageSelector } from 'ui/Location.selectors'
-import { selectedRegionSelector, selectedStateSelector } from 'ui/core/Core.selectors'
 import { isEmpty, toUpper } from 'lodash'
+import { createSelector } from 'reselect'
+import { selectedRegionSelector, selectedStateSelector } from 'ui/core/Core.selectors'
+import { isRootPageSelector } from 'ui/Location.selectors'
+import { isSearchVisibleSelector } from '../search/Search.selectors'
 export const isTitleVisibleSelector = createSelector(
   [isSearchVisibleSelector],
   isSearchVisible => !isSearchVisibleSelector

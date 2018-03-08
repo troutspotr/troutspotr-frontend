@@ -1,7 +1,7 @@
 import * as React from 'react'
 const getIsOnlineStatusFromNavigator = () => window.navigator.onLine
 export interface IOfflineListenerComponent {
-  setIsOffline: any
+  setIsOffline: {}
 }
 
 class OfflineListenerComponent extends React.Component<IOfflineListenerComponent> {
@@ -10,22 +10,22 @@ class OfflineListenerComponent extends React.Component<IOfflineListenerComponent
     this.getOnlineStatus = this.getOnlineStatus.bind(this)
   }
 
-  getOnlineStatus() {
+  public getOnlineStatus() {
     const isOffline = getIsOnlineStatusFromNavigator() === false
     this.props.setIsOffline(isOffline)
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     window.addEventListener('online', this.getOnlineStatus)
     window.addEventListener('offline', this.getOnlineStatus)
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     window.removeEventListener('online', this.getOnlineStatus)
     window.removeEventListener('offline', this.getOnlineStatus)
   }
 
-  render() {
+  public render() {
     return null
   }
 }

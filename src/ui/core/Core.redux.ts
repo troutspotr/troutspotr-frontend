@@ -1,8 +1,8 @@
-import { createAction, handleActions } from 'redux-actions'
-import { Loading } from 'ui/core/LoadingConstants'
 import { getApi } from 'api/Api.module'
 // import TableOfContentsApi from 'api/TableOfContentsApi'
 import keyBy from 'lodash-es/keyBy'
+import { createAction, handleActions } from 'redux-actions'
+import { Loading } from 'ui/core/LoadingConstants'
 // import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
 // ------------------------------------
@@ -61,7 +61,7 @@ export const fetchTableOfContents = () => async dispatch => {
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: any = {
+const ACTION_HANDLERS: {} = {
   [REGION_SET_VIEW]: (state: ICoreState, { payload }): ICoreState => {
     try {
       getApi().then(({ AnonymousAnalyzerApi }) => {
@@ -177,12 +177,12 @@ export interface ICoreState {
   isMapModuleLoaded: boolean
   isMapReadyToDisplay: boolean
   searchText: string
-  statesGeoJson: any
-  statesDictionary: any
-  countiesGeoJson: any
-  countyDictionary: any
-  regionsGeoJson: any
-  regionDictionary: any
+  statesGeoJson: {}
+  statesDictionary: {}
+  countiesGeoJson: {}
+  countyDictionary: {}
+  regionsGeoJson: {}
+  regionDictionary: {}
   tableOfContentsLoadingStatus: Loading
   hasAgreedToTerms: boolean
   hasSeenIntroScreen: boolean

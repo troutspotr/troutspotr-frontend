@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
+import { action } from '@storybook/addon-actions'
 import { storiesOf } from '@storybook/react'
 import * as React from 'react'
-import { PrivacyPolicyComponent } from './PrivacyPolicy.component'
-import { action } from '@storybook/addon-actions'
 import { LegalLayout } from 'ui/routes/legal/Legal.layout'
+import { PrivacyPolicyComponent } from './PrivacyPolicy.component'
 const stories = storiesOf('Legal', module)
 
 stories.add('Terms of Service', () => {

@@ -6,10 +6,10 @@ export class LegalIntroComponent extends React.PureComponent {
     super(props)
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     import(/* webpackChunkName: "legal" */ './Legal.imports')
   }
-  render() {
+  public render() {
     return (
       <div>
         <h1>Legal Intro here</h1>

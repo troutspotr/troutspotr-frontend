@@ -1,9 +1,9 @@
-import * as React from 'react'
 import debounce from 'lodash-es/debounce'
+import * as React from 'react'
 
-class MapboxGlLayerComponent extends React.PureComponent<any> {
+class MapboxGlLayerComponent extends React.PureComponent<{}> {
   protected proxyOnUpdateLayerFilter
-  componentDidMount() {
+  public componentDidMount() {
     // Load the layers.
     this.addLayers(this.props.map, this.props.layers)
 
@@ -14,7 +14,7 @@ class MapboxGlLayerComponent extends React.PureComponent<any> {
     this.proxyOnUpdateLayerFilter = debounce(this.updateLayerFilter, 20, { maxWait: 20 })
   }
 
-  componentWillReceiveProps(nextProps) {
+  public componentWillReceiveProps(nextProps) {
     const isDuplicate = nextProps === this.props
     if (isDuplicate) {
       return
@@ -34,7 +34,7 @@ class MapboxGlLayerComponent extends React.PureComponent<any> {
     }
   }
 
-  updateLayerFilter(layer) {
+  public updateLayerFilter(layer) {
     if (layer.layerDefinition.filter == null) {
       return
     }
@@ -42,20 +42,20 @@ class MapboxGlLayerComponent extends React.PureComponent<any> {
     this.props.map.setFilter(layer.layerDefinition.id, layer.layerDefinition.filter)
   }
 
-  addFilters(map, filters) {
+  public addFilters(map, filters) {
     filters.forEach(filter => {
       // Check to see if we already have it.
       map.setFilter(filter.layerId, filter.filterDefinition)
     })
   }
 
-  addLayers(map, layers) {
+  public addLayers(map, layers) {
     layers.forEach(layer => {
       map.addLayer(layer.layerDefinition, layer.insertBefore)
     })
   }
 
-  removeLayers(map, layers) {
+  public removeLayers(map, layers) {
     layers.forEach(layer => {
       try {
         map.removeLayer(layer.layerDefinition.id)
@@ -67,11 +67,11 @@ class MapboxGlLayerComponent extends React.PureComponent<any> {
     })
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     this.removeLayers(this.props.map, this.props.layers)
   }
 
-  render() {
+  public render() {
     return null
   }
 }

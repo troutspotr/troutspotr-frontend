@@ -1,6 +1,6 @@
+import { isEmpty } from 'lodash'
 import { createSelector } from 'reselect'
 import { getHashSelector, isRootPageSelector, locationSelector, paramsSelector } from 'ui/Location.selectors'
-import { isEmpty } from 'lodash'
 export const isEnabledSelector = createSelector(
   [paramsSelector, isRootPageSelector],
   (params, isRootPage) => {

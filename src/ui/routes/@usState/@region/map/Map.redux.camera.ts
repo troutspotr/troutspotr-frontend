@@ -1,6 +1,6 @@
-import { createAction, handleActions } from 'redux-actions'
 import clamp from 'lodash-es/clamp'
 import some from 'lodash-es/some'
+import { createAction, handleActions } from 'redux-actions'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -76,7 +76,7 @@ const cleanBounds = (minLong, minLat, maxLong, maxLat) => {
   return bounds
 }
 
-const actionHandlers: any = {
+const actionHandlers: {} = {
   MAP_CAMERA_SET_BOUNDS: (state, { payload }) => {
     const { bounds } = payload
     const isBoundsValid = bounds != null && bounds.length === 2

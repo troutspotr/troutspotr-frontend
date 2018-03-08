@@ -47,8 +47,9 @@
     "test": "node scripts/test.js --env=jsdom",
     "test:ci": "CI=true node scripts/test.js --env=jsdom --forceExit",
     "test:inspect": "node --inspect-brk=58585 scripts/test.js --runInBand",
-    "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/**/*.{ts,tsx}\"",
-    "lint:fix": "node_modules/.bin/tslint --project tsconfig.json \"src/**/*.{ts,tsx}\" --fix --format codeFrame",
+    "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/api2/**/*.{ts,tsx}\"",
+    "lint:fix":
+      "node_modules/.bin/tslint --project tsconfig.json \"src/api2/**/*.{ts,tsx}\" --fix --format codeFrame",
     "storybook": "cross-env NODE_PATH=src/ start-storybook -p 6006 -s src/static",
     "build-storybook": "build-storybook",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
@@ -113,15 +114,9 @@
   },
   "jest": {
     "mapCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/?(*.)(spec|test).ts?(x)"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}"],
+    "setupFiles": ["<rootDir>/config/polyfills.js"],
+    "testMatch": ["<rootDir>/src/**/?(*.)(spec|test).ts?(x)"],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
@@ -129,9 +124,7 @@
       "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$"
-    ],
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$"],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
@@ -154,9 +147,7 @@
     }
   },
   "babel": {
-    "presets": [
-      "react-app"
-    ]
+    "presets": ["react-app"]
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,8 +1,8 @@
 import axios, { AxiosInstance } from 'axios'
-import { config as defaultConfig } from './BaseApi.config'
 import * as lf from 'localforage'
 import isEmpty from 'lodash-es/isEmpty'
 import isString from 'lodash-es/isString'
+import { config as defaultConfig } from './BaseApi.config'
 export default class BaseApi {
   protected cache?: LocalForage
   protected httpClient: AxiosInstance
@@ -14,18 +14,18 @@ export default class BaseApi {
     this.tryGetFromInternet = this.tryGetFromInternet.bind(this)
   }
 
-  handleFailure(response) {
+  public handleFailure(response) {
     return Promise.reject(response)
   }
 
   // This super-murders the cache.
-  async clearCache() {
+  public async clearCache() {
     if (this.cache) {
       await this.cache.clear()
     }
   }
 
-  async getAllCachedEndpoints() {
+  public async getAllCachedEndpoints() {
     if (this.cache == null) {
       return []
     }
@@ -34,7 +34,7 @@ export default class BaseApi {
     return keys
   }
 
-  tryGetFromCache(endpoint) {
+  public tryGetFromCache(endpoint) {
     if (this.cache == null) {
       return Promise.reject('Caching not available')
     }
@@ -52,7 +52,7 @@ export default class BaseApi {
       })
   }
 
-  tryGetFromInternet(endpoint) {
+  public tryGetFromInternet(endpoint) {
     return this.httpClient
       .get(endpoint)
       .then(async response => {
@@ -71,25 +71,25 @@ export default class BaseApi {
       })
   }
 
-  async get(endpoint, config = null) {
+  public async get(endpoint, config = null) {
     return this.tryGetFromCache(endpoint).catch(() => {
       return this.tryGetFromInternet(endpoint)
     })
   }
 
-  put(endpoint, data) {
+  public put(endpoint, data) {
     return this.httpClient.put(endpoint, data).catch(response => this.handleFailure(response))
   }
 
-  delete(endpoint) {
+  public delete(endpoint) {
     return this.httpClient.delete(endpoint).catch(response => this.handleFailure(response))
   }
 
-  patch(endpoint, data) {
+  public patch(endpoint, data) {
     return this.httpClient.patch(endpoint, data).catch(response => this.handleFailure(response))
   }
 
-  post(endpoint, data) {
+  public post(endpoint, data) {
     return this.httpClient.post(endpoint, data).catch(response => this.handleFailure(response))
   }
 }

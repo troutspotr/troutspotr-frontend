@@ -1,7 +1,7 @@
+import { getApi } from 'api/Api.module'
 import { handleActions } from 'redux-actions'
 // import { Loading } from 'ui/core/LoadingConstants'
 import { isBot } from 'ui/core/Core.redux'
-import { getApi } from 'api/Api.module'
 // import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 
 export const HAS_AGREED_TO_TERMS = 'HAS_AGREED_TO_TERMS'
@@ -31,7 +31,7 @@ const INITIAL_CORE_STATE: ICoreState = {
   hasAgreedToTerms: getHasAgreedToTerms(),
 }
 
-export const ACTION_HANDLERS: any = {
+export const ACTION_HANDLERS: {} = {
   [HAS_AGREED_TO_TERMS]: (state: ICoreState, { payload }): ICoreState => {
     if (localStorage != null && localStorage.setItem != null) {
       try {

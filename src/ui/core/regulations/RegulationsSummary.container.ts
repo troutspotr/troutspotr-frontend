@@ -9,4 +9,4 @@ const mapStateToProps = state => {
   return props
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegulationsSummaryComponent) as any
+export default connect(mapStateToProps, mapDispatchToProps)(RegulationsSummaryComponent) as {}

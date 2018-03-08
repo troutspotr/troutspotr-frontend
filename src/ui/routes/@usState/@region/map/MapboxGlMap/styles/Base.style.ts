@@ -1,12 +1,12 @@
 /* eslint-disable max-lines */
-import { Style as MapboxStyle, Layer } from 'mapbox-gl'
+import { Layer, Style as MapboxStyle } from 'mapbox-gl'
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 export const FONT_ROBOTO_BOLD = ['roboto-bold']
-import { ILayerProperties } from './ICreateLayer'
-import { getRoadsLayers } from './Roads.layers'
-import { getMapLabelLayers } from './MapLabels.layers'
-import { getBridgeLayers } from './Bridge.layers'
 import { getAdminBorderLayers } from './AdminBorders.layers'
+import { getBridgeLayers } from './Bridge.layers'
+import { ILayerProperties } from './ICreateLayer'
+import { getMapLabelLayers } from './MapLabels.layers'
+import { getRoadsLayers } from './Roads.layers'
 import { getSatelliteLayers } from './Satellite.layers'
 
 export const createBackgroundLayers = (layerProps: ILayerProperties): Layer[] => {
@@ -258,9 +258,9 @@ export const BaseStyle: MapboxStyle = {
 
 export const createSources = (
   layerProps: ILayerProperties,
-  geoJsons?: Array<{ id: string; geojson: any }>
+  geoJsons?: Array<{ id: string; geojson: {} }>
 ) => {
-  let sources = {}
+  const sources = {}
   const { isOnline } = layerProps
 
   const coreItems = {

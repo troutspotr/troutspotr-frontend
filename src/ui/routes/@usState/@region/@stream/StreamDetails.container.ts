@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import StreamItemComponent from './StreamDetails.layout'
 import { selectedStreamObjectSelector } from 'ui/routes/@usState/@region/Region.selectors'
+import StreamItemComponent from './StreamDetails.layout'
 const mapDispatchToProps = {}
 
 const mapStateToProps = state => ({ selectedStream: selectedStreamObjectSelector(state) })

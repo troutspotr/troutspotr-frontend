@@ -4,13 +4,13 @@ import * as React from 'react'
 import { GPS_LOCATION_SOURCE_ID } from './sources/Source.selectors'
 // const EMPTY_FILTERS = []
 
-class MapboxGlGpsLayer extends React.Component<any> {
+class MapboxGlGpsLayer extends React.Component<{}> {
   constructor(props) {
     super(props)
     this.state = { isSourceLoaded: false }
   }
 
-  componentWillMount() {
+  public componentWillMount() {
     // Add our source
     const jsonSource = {
       type: 'geojson',
@@ -30,19 +30,19 @@ class MapboxGlGpsLayer extends React.Component<any> {
   //   this.updateSource(nextProps.map, nextProps.source)
   // }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     const mapSource = this.props.map.getSource(GPS_LOCATION_SOURCE_ID)
     if (mapSource != null) {
       this.props.map.removeSource(GPS_LOCATION_SOURCE_ID)
     }
   }
 
-  updateSource(map, source) {
+  public updateSource(map, source) {
     const mapSource = map.getSource(GPS_LOCATION_SOURCE_ID)
     mapSource.setData(source)
   }
 
-  render() {
+  public render() {
     return null
     // if (this.state.isSourceLoaded === false) {
     //   return null

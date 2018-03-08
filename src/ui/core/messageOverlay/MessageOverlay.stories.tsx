@@ -1,7 +1,7 @@
+import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import * as React from 'react'
 import { MessageOverlayComponent } from './MessageOverlay.component'
-import { select, text } from '@storybook/addon-knobs'
 const stories = storiesOf('Core/Message Overlay', module)
 const generateFakeContainer = content => {
   return (

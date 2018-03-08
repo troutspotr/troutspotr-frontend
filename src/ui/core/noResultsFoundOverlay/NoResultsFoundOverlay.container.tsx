@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
+import { updateSearchText } from 'ui/core/Core.redux'
 import NoResultsFoundOverlayComponent from './NoResultsFoundOverlay.component'
 import * as selectors from './NoResultsFoundOverlay.selectors'
-import { updateSearchText } from 'ui/core/Core.redux'
 
 const mapDispatchToProps = { clearText: () => updateSearchText('') }
 

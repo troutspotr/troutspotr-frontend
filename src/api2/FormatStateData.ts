@@ -1,5 +1,5 @@
-import keyBy from 'lodash-es/keyBy'
 import { IUsState } from 'coreTypes/state/IUsState'
+import keyBy from 'lodash-es/keyBy'
 const formatStateData = (stateMetadata: IUsState) => {
   const regsDictionary = keyBy(stateMetadata.regulations, 'id')
   // tslint:disable-next-line:forin

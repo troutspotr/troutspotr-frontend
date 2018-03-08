@@ -1,5 +1,5 @@
-import { createAction } from 'redux-actions'
 import { getApi } from 'api/Api.module'
+import { createAction } from 'redux-actions'
 
 export const OFFLINE_SET_OFFLINE_STATUS = 'OFFLINE_SET_OFFLINE_STATUS'
 export const OFFLINE_UPDATE_CACHED_ENDPOINTS = 'OFFLINE_UPDATE_CACHED_ENDPOINTS'
@@ -51,7 +51,7 @@ const initialState = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [OFFLINE_UPDATE_CACHED_ENDPOINTS]: (state, { payload }) => {
-    let { cachedEndpoints } = payload
+    const { cachedEndpoints } = payload
     cachedEndpoints = cachedEndpoints == null ? [] : cachedEndpoints.map(x => x)
     const newState = { ...state, ...{ cachedEndpoints } }
     return newState

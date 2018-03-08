@@ -1,7 +1,7 @@
 import { text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import * as React from 'react'
-import { Color, BadgeComponent, Fill, IBadgeProps } from './Badge.component'
+import { BadgeComponent, Color, Fill, IBadgeProps } from './Badge.component'
 const styles = require('./Badge.stories.scss')
 
 const stories = storiesOf('Core/Badge', module)

@@ -1,11 +1,11 @@
 import * as React from 'react'
-import AccessPointComponent from 'ui/routes/@usState/@region/@stream/details/AccessPoint.component'
 import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
+import AccessPointComponent from 'ui/routes/@usState/@region/@stream/details/AccessPoint.component'
 const classes = require('./MapOverlay.scss')
 const AccessPointClasses = require('ui/routes/@usState/@region/@stream/details/Details.scss')
 
-export class AccessPointDetails extends React.Component<any> {
-  protected renderPublicAccess(selectedAccessPoint: any) {
+export class AccessPointDetails extends React.Component<{}> {
+  protected renderPublicAccess(selectedAccessPoint: {}) {
     return (
       <AccessPointComponent
         accessPoint={selectedAccessPoint}

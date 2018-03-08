@@ -3,8 +3,8 @@ const classes = require('./Details.scss')
 import isEmpty from 'lodash-es/isEmpty'
 /* eslint-disable camelcase */
 
-class SpeciesComponent extends React.Component<any> {
-  createSpeciesViewModels(stream) {
+class SpeciesComponent extends React.Component<{}> {
+  public createSpeciesViewModels(stream) {
     const {
       has_brook_trout,
       has_brown_trout,
@@ -36,7 +36,7 @@ class SpeciesComponent extends React.Component<any> {
     ]
   }
 
-  renderSpeciesElement(viewModel, isFirstThingInSentence = false) {
+  public renderSpeciesElement(viewModel, isFirstThingInSentence = false) {
     const { name, stocked, className } = viewModel
     const stockedPrefix = isFirstThingInSentence ? 'Stocked' : 'stocked'
     const text = stocked ? `${stockedPrefix} ${name}` : name
@@ -44,7 +44,7 @@ class SpeciesComponent extends React.Component<any> {
     return <mark className={cssClass}>{text}</mark>
   }
 
-  renderSpeciesBody(viewModels) {
+  public renderSpeciesBody(viewModels) {
     if (isEmpty(viewModels)) {
       return <span>Unknown.</span>
     }
@@ -82,7 +82,7 @@ class SpeciesComponent extends React.Component<any> {
     return oxfordCommaList
   }
 
-  renderSpecies() {
+  public renderSpecies() {
     const { selectedStream } = this.props
     const speciesViewModels = this.createSpeciesViewModels(selectedStream.stream)
 
@@ -96,7 +96,7 @@ class SpeciesComponent extends React.Component<any> {
     )
   }
 
-  render() {
+  public render() {
     return this.renderSpecies()
   }
 }

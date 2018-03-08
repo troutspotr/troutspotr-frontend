@@ -1,11 +1,11 @@
 import * as React from 'react'
 const classes = require('./RegulationsSummary.scss')
-class RegulationsSummary extends React.PureComponent<any> {
-  getIsOpenStatus(streamObject) {
+class RegulationsSummary extends React.PureComponent<{}> {
+  public getIsOpenStatus(streamObject) {
     return this.props.getSummary(streamObject)
   }
 
-  renderOpenClosedHelper({ statusClass, statusText, explainerText, dateText }) {
+  public renderOpenClosedHelper({ statusClass, statusText, explainerText, dateText }) {
     return (
       <div className={classes.container}>
         <span className={statusClass}>
@@ -16,7 +16,7 @@ class RegulationsSummary extends React.PureComponent<any> {
     )
   }
 
-  renderOpenOrClosed(streamObject) {
+  public renderOpenOrClosed(streamObject) {
     const now = new Date()
 
     const {
@@ -93,7 +93,7 @@ class RegulationsSummary extends React.PureComponent<any> {
     throw new Error('not covered')
   }
 
-  render() {
+  public render() {
     const { streamObject } = this.props
     return this.renderOpenOrClosed(streamObject)
   }

@@ -1,6 +1,6 @@
+import { IStreamObject } from 'coreTypes/IStreamObject'
 import * as React from 'react'
 import * as Settings from 'ui/core/micromap/Micromap.settings'
-import { IStreamObject } from 'coreTypes/IStreamObject'
 import * as Micromap from './Micromap.canvas'
 const styles = require('./Micromap.canvas.scss')
 
@@ -60,7 +60,7 @@ export class MicroMapComponentCanvas extends React.PureComponent<
     })
   }
 
-  componentDidUpdate(prevProps: IMicromapCanvasProps, prevState) {
+  public componentDidUpdate(prevProps: IMicromapCanvasProps, prevState) {
     if (this.state.isInitialized === false) {
       return
     }
@@ -73,7 +73,7 @@ export class MicroMapComponentCanvas extends React.PureComponent<
     this.renderToCanvas(this.props.streamObject)
   }
 
-  deferredRenderToCanvas(operation) {
+  public deferredRenderToCanvas(operation) {
     // https://github.com/Microsoft/TypeScript/issues/21309
     // "working as intended"
     // if (window.requestIdleCallback != null) {
@@ -88,7 +88,7 @@ export class MicroMapComponentCanvas extends React.PureComponent<
     operation()
   }
 
-  renderToCanvas(streamObject) {
+  public renderToCanvas(streamObject) {
     // const scale = Math.min(this.dimensions.height, this.dimensions.width) / 40.0
     const operation = Micromap.drawStreamToCanvas.bind(
       null,
@@ -99,7 +99,7 @@ export class MicroMapComponentCanvas extends React.PureComponent<
     this.deferredRenderToCanvas(operation)
   }
 
-  setUpRefCanvas(canvasElement: HTMLCanvasElement) {
+  public setUpRefCanvas(canvasElement: HTMLCanvasElement) {
     if (canvasElement == null) {
       return
     }
@@ -112,14 +112,14 @@ export class MicroMapComponentCanvas extends React.PureComponent<
     })
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     setTimeout(() => {
       this.setUpCanvas()
       this.renderToCanvas(this.props.streamObject)
     }, 2)
   }
 
-  render() {
+  public render() {
     return (
       <div className={styles.container}>
         <canvas

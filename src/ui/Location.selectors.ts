@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect'
 import isEmpty from 'lodash-es/isEmpty'
+import { createSelector } from 'reselect'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 export const locationSelector = (state: IReduxState) => state.routing.location
 export const paramsSelector = (state: IReduxState) => state.routing.params

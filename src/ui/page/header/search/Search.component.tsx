@@ -17,7 +17,7 @@ export class SearchComponent extends React.PureComponent<IBackButtonProps> {
     this.props.updateSearchText(text)
   }
 
-  render() {
+  public render() {
     return (
       <span className={classes.streamSearch}>
         <label htmlFor="streamSearch" className={classes.hidden}>

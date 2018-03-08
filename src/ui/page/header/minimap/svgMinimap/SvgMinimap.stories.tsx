@@ -1,20 +1,20 @@
-import * as React from 'react'
-import { MinimapSvgComponent, IMinimapSvgProps } from './SvgMinimap.component'
-import { select, boolean } from '@storybook/addon-knobs'
-import keyBy from 'lodash-es/keyBy'
+import { boolean, select } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import boundingBox from '@turf/bbox'
 import { featureCollection } from '@turf/helpers'
+import keyBy from 'lodash-es/keyBy'
+import * as React from 'react'
+import { IMinimapSvgProps, MinimapSvgComponent } from './SvgMinimap.component'
 
 import {
   Feature,
-  MultiPolygon,
-  // Point,
   FeatureCollection,
+  // Point,
+  MultiPolygon,
 } from 'geojson'
 
-import { IState } from 'coreTypes/tableOfContents/IState'
 import { IRegion } from 'coreTypes/tableOfContents/IRegion'
+import { IState } from 'coreTypes/tableOfContents/IState'
 import { Loading } from 'ui/core/LoadingConstants'
 import { Selection } from 'ui/core/SelectionConstants'
 

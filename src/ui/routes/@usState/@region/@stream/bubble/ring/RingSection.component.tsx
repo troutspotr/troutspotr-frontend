@@ -1,10 +1,10 @@
-import * as React from 'react'
 import * as d3 from 'd3-path'
+import * as React from 'react'
 import SvgAnimatedPathComponent from '../SvgAnimatedPath.component'
 
 const TAU = Math.PI * 2
-class RingSectionComponent extends React.Component<any> {
-  createRadialPath() {
+class RingSectionComponent extends React.Component<{}> {
+  public createRadialPath() {
     const { start, stop, length } = this.props
     const { width, height, radius, arcCompressionRatio, rotatePhase } = this.props.layout
     const data = [start, stop].map(mileOffset => {
@@ -20,7 +20,7 @@ class RingSectionComponent extends React.Component<any> {
     return result
   }
 
-  render() {
+  public render() {
     return (
       <SvgAnimatedPathComponent
         offset={this.props.timing.offset}

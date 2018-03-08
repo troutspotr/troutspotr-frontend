@@ -1,13 +1,13 @@
-import { createAction, handleActions } from 'redux-actions'
-import { Loading } from 'ui/core/LoadingConstants'
 import { getApi } from 'api/Api.module'
 import isEmpty from 'lodash-es/isEmpty'
+import { createAction, handleActions } from 'redux-actions'
 import { selectedRegionSelector } from 'ui/core/Core.selectors'
-import { getSelectedRoadSelector, selectedStreamObjectSelector } from './Region.selectors'
+import { Loading } from 'ui/core/LoadingConstants'
 import {
   selectFoculPoint,
   selectMapFeature,
 } from 'ui/routes/@usState/@region/map/Map.redux.interactivity'
+import { getSelectedRoadSelector, selectedStreamObjectSelector } from './Region.selectors'
 
 // ------------------------------------
 // Constants
@@ -84,7 +84,7 @@ export const fetchRegionData = (stateName, regionName) => async (dispatch, getSt
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: any = {
+const ACTION_HANDLERS: {} = {
   [REGION_SET_VIEW]: (state: IRegionState, { payload }): IRegionState => {
     const view = payload
     const newState = { ...state, ...{ view } }
@@ -133,16 +133,16 @@ const ACTION_HANDLERS: any = {
 // ------------------------------------
 export interface IRegionState {
   // View: MAP,
-  troutStreamDictionary: any
-  troutStreamSections: any
-  restrictionSections: any
-  streams: any
-  palSections: any
-  streamAccessPoint: any
-  pals: any
-  hoveredStream: any
+  troutStreamDictionary: {}
+  troutStreamSections: {}
+  restrictionSections: {}
+  streams: {}
+  palSections: {}
+  streamAccessPoint: {}
+  pals: {}
+  hoveredStream: {}
   // SelectedRoad: null,
-  hoveredRoad: any
+  hoveredRoad: {}
   regionLoadingStatus: Loading
 }
 const initialState: IRegionState = {

@@ -6,7 +6,7 @@ export const isExpaned = createAction(MINIMAP_SET_SIZE, (x: boolean) => x)
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: any = {
+const ACTION_HANDLERS: {} = {
   [MINIMAP_SET_SIZE]: (state: IMinimapReduxState, { payload }): IMinimapReduxState => {
     const newState = { ...state, ...{ isExpanded: payload } }
     return newState

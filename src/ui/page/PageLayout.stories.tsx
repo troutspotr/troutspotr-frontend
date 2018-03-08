@@ -1,8 +1,8 @@
-import { storiesOf } from '@storybook/react'
-import * as React from 'react'
 import { number } from '@storybook/addon-knobs'
-import { PageLayoutComponent, IPageLayoutProps } from './PageLayout.component'
+import { storiesOf } from '@storybook/react'
 import range from 'lodash-es/range'
+import * as React from 'react'
+import { IPageLayoutProps, PageLayoutComponent } from './PageLayout.component'
 const styles = require('./PageLayout.stories.scss')
 const stories = storiesOf('Page/Layout', module)
 stories.add('Page', () => {
@@ -20,8 +20,8 @@ stories.add('Page', () => {
 
 const getRandomColor = () => {
   const letters = '0123456789ABCDEF'
-  let color = '#'
-  for (let i = 0; i < 6; i++) {
+  const color = '#'
+  for (const i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)]
   }
   return color

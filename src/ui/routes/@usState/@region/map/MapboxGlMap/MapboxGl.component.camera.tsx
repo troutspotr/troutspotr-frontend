@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-class MapboxGlComponentCamera extends React.PureComponent<any> {
-  setBounds({ bounds, bearing = 0, angle = 0, animationSpeed = 1.4, pixelBuffer = 80 }) {
+class MapboxGlComponentCamera extends React.PureComponent<{}> {
+  public setBounds({ bounds, bearing = 0, angle = 0, animationSpeed = 1.4, pixelBuffer = 80 }) {
     if (this.props.map == null) {
       /* eslint-disable no-console */
       console.warn('Map was driven prior to being available.')
@@ -18,18 +18,18 @@ class MapboxGlComponentCamera extends React.PureComponent<any> {
     })
   }
 
-  componentWillUpdate(nextProps) {}
+  public componentWillUpdate(nextProps) {}
 
   // Update camera takes priority. If there are two changes at once,
   // Only update camera position - not bearing or angle.
-  updateCamera(camera, previousCamera) {
+  public updateCamera(camera, previousCamera) {
     const isBoundsChanged = previousCamera.bounds !== camera.bounds
     if (isBoundsChanged) {
       this.setBounds(camera)
     }
   }
 
-  componentDidUpdate(previousProps) {
+  public componentDidUpdate(previousProps) {
     if (this.props.map == null) {
       /* eslint-disable no-console */
       console.warn('Map was driven prior to being available.')
@@ -42,9 +42,9 @@ class MapboxGlComponentCamera extends React.PureComponent<any> {
     this.updateCamera(this.props.camera, previousProps.camera)
   }
 
-  componentWillUnmount() {}
+  public componentWillUnmount() {}
 
-  render() {
+  public render() {
     return null
   }
 }

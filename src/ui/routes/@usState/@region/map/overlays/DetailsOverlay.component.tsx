@@ -8,9 +8,9 @@ import { StreamDetailsComponent } from './StreamDetails.component'
 import isEmpty from 'lodash-es/isEmpty'
 
 export interface IDetailsOverlayComponent {
-  visibleTroutStreams: any
-  selectedAccessPoint: any
-  selectedStream: any
+  visibleTroutStreams: {}
+  selectedAccessPoint: {}
+  selectedStream: {}
 }
 
 class DetailsOverlayComponent extends React.Component<IDetailsOverlayComponent> {

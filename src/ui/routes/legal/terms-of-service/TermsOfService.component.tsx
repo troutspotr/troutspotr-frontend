@@ -5,14 +5,14 @@ const MAGICAL_NUMBER_OF_PREAMBLES = 5
 const scalar = 0.5
 
 export interface ITermsOfServiceProps {
-  advance: any
+  advance: {}
 }
 
 export interface ITermsOfServiceState {
   preambles: string[]
   isAgreementShown: boolean
   preambleIsFinished: boolean
-  time: any
+  time: {}
 }
 
 export class TermsOfServiceComponent extends React.PureComponent<
@@ -28,19 +28,19 @@ export class TermsOfServiceComponent extends React.PureComponent<
       time: new Date(),
     }
   }
-  onShowAgreement() {
+  public onShowAgreement() {
     this.setState({ ...this.state, ...{ isAgreementShown: true } })
   }
 
-  addElement(element) {
+  public addElement(element) {
     if (element == null) {
       return
     }
-    let { preambles } = this.state
+    const { preambles } = this.state
     preambles = preambles.concat([element])
     if (preambles.length === MAGICAL_NUMBER_OF_PREAMBLES) {
       setTimeout(() => {
-        let { preambleIsFinished } = this.state
+        const { preambleIsFinished } = this.state
         preambleIsFinished = true
         this.setState({ preambleIsFinished })
       }, 1200 * scalar)
@@ -48,7 +48,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     this.setState({ preambles })
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     const timelapseLengthMilliseconds = 200
 
     const container = document.getElementById('scrollContainer')
@@ -77,7 +77,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     }, 3300 * scalar + timelapseLengthMilliseconds)
   }
 
-  renderTitle() {
+  public renderTitle() {
     return (
       <div>
         <h1 className={classes.jumbo}>Terms of Service</h1>
@@ -85,7 +85,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     )
   }
 
-  renderPreamble = () => (
+  public renderPreamble = () => (
     <div className={classes.preamble}>
       {this.state.preambles.map((p, index) => {
         const key = index + 1
@@ -99,7 +99,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     </div>
   )
 
-  renderIntro = () => {
+  public renderIntro = () => {
     if (this.state.isAgreementShown === false) {
       return null
     }
@@ -113,7 +113,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     )
   }
 
-  renderTerm = ({ index, title, body }) => (
+  public renderTerm = ({ index, title, body }) => (
     <li key={index}>
       <div className={classes.term}>
         {index}. {title}
@@ -122,7 +122,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     </li>
   )
 
-  renderAccept = index => {
+  public renderAccept = index => {
     const title = 'Accepting Our Terms'
     const discontinueUseText =
       "By using the App, you agree to be bound by all of the terms below. If you don't agree to all of the terms below, please discontinue use of the App immediately. "
@@ -140,7 +140,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderDontTresspass = index => {
+  public renderDontTresspass = index => {
     const title = 'Don’t Trespass!!!'
     const body = (
       <div>
@@ -172,7 +172,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderObeyLaw(index) {
+  public renderObeyLaw(index) {
     const title = 'Obey the Law!!!'
     const body = (
       <p>
@@ -184,7 +184,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderTermsOfServiceUpdates(index) {
+  public renderTermsOfServiceUpdates(index) {
     const title = 'Terms of Service Updates.'
     const body = (
       <p>
@@ -196,7 +196,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderDataIsNotGuaranteed(index) {
+  public renderDataIsNotGuaranteed(index) {
     const title = 'Data is not Guaranteed.'
     const body = (
       <p>
@@ -213,7 +213,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderAppropriateUse(index) {
+  public renderAppropriateUse(index) {
     const title = 'Appropriate Use.'
     const body = (
       <div>
@@ -239,7 +239,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderOwnershipOfTroutspotrMaterials(index) {
+  public renderOwnershipOfTroutspotrMaterials(index) {
     const title = 'Ownership of TroutSpotr Materials.'
     const body = (
       <p>
@@ -253,7 +253,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderDisclaimerOfWarranties(index) {
+  public renderDisclaimerOfWarranties(index) {
     const title = 'Disclaimer of Warranties.'
     const body = (
       <div>
@@ -278,7 +278,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderGoverningLaw(index) {
+  public renderGoverningLaw(index) {
     const title = 'Governing Law.'
     const body = (
       <p>
@@ -289,7 +289,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderTermination(index) {
+  public renderTermination(index) {
     const title = 'Termination.'
     const body = (
       <p>
@@ -300,7 +300,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderEntireAgreement(index) {
+  public renderEntireAgreement(index) {
     const title = 'Entire Agreement.'
     const body = (
       <p>
@@ -311,7 +311,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return this.renderTerm({ index, title, body })
   }
 
-  renderContactUs(index) {
+  public renderContactUs(index) {
     return (
       <div key={index}>
         <div className={classes.term}>Contact Us.</div>
@@ -325,7 +325,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     )
   }
 
-  renderButtonText() {
+  public renderButtonText() {
     const { isAgreementShown } = this.state
     if (isAgreementShown === false) {
       return 'Read Terms of Service'
@@ -334,7 +334,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     return 'Agree and Continue'
   }
 
-  renderButton() {
+  public renderButton() {
     const { preambleIsFinished } = this.state
     if (preambleIsFinished === false) {
       return null
@@ -347,9 +347,9 @@ export class TermsOfServiceComponent extends React.PureComponent<
     )
   }
 
-  onButtonClick = () => {
+  public onButtonClick = () => {
     const { preambleIsFinished } = this.state
-    let { isAgreementShown } = this.state
+    const { isAgreementShown } = this.state
     if (preambleIsFinished && isAgreementShown === false) {
       setTimeout(() => {
         isAgreementShown = true
@@ -361,7 +361,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     }
   }
 
-  generateTerms = () => {
+  public generateTerms = () => {
     const { isAgreementShown } = this.state
     if (isAgreementShown === false) {
       return []
@@ -384,7 +384,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     ]
   }
 
-  renderLastUpdate(index) {
+  public renderLastUpdate(index) {
     return (
       <div key={index} className={classes.update}>
         Last Updated: January 20, 2017
@@ -392,7 +392,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     )
   }
 
-  renderBody() {
+  public renderBody() {
     const terms = this.generateTerms().map((termGenerator, index) => termGenerator(index + 1))
 
     return (
@@ -406,7 +406,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     )
   }
 
-  render() {
+  public render() {
     return (
       <div>
         {this.renderPreamble()}

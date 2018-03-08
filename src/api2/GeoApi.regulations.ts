@@ -26,7 +26,7 @@ export const getSanitizedRegulations = restrictionsForGivenStream => {
   if (restrictionsForGivenStream == null) {
     return []
   }
-  let count = 1
+  const count = 1
   restrictionsForGivenStream.reduce((regDictionary, item, index) => {
     // We're gonna try to colorize our restrictions.
     // We need to be careful. there could be 16 restriction

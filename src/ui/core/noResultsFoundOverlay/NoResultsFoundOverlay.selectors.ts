@@ -1,8 +1,8 @@
+import isEmpty from 'lodash-es/isEmpty'
 import { createSelector } from 'reselect'
 import * as coreSelectors from 'ui/core/Core.selectors'
-import * as stateSelectors from 'ui/routes/@usState/UsState.selectors'
 import * as regionSelectors from 'ui/routes/@usState/@region/Region.selectors'
-import isEmpty from 'lodash-es/isEmpty'
+import * as stateSelectors from 'ui/routes/@usState/UsState.selectors'
 
 const EMPTY_STREAMS = []
 

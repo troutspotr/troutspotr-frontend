@@ -1,32 +1,32 @@
 import { storiesOf } from '@storybook/react'
+import { featureCollection, point } from '@turf/helpers'
+import { transformGeo } from 'api2/GeoApi.transform.sync'
+import { updateStateObject } from 'api2/StateApi'
 import * as React from 'react'
-import { point, featureCollection } from '@turf/helpers'
 // import { select, boolean } from '@storybook/addon-knobs'
 // import { action } from '@storybook/addon-actions'
 import { MapboxGlComponent } from 'ui/core/map/mapboxGl/MapboxGl.component'
+import { createLayers, createSources, createStyle } from './Base.style'
 import { createDefaultSettings, createLayerProperties } from './BaseStyle.stories'
-import { transformGeo } from 'api2/GeoApi.transform.sync'
-import { updateStateObject } from 'api2/StateApi'
-import { createStyle, createSources, createLayers } from './Base.style'
 import {
-  createStreamLayer,
-  createTroutSectionLayerLayer,
-  createPalLayerLayer,
   createPalBackdropLayer,
-  createTroutSectionBackdropLayer,
+  createPalLayerLayer,
   createRestrictionSectionLayer,
+  createStreamLayer,
+  createTroutSectionBackdropLayer,
+  createTroutSectionLayerLayer,
   // createRestrictionBackdropLayer,
 } from './Stream.layers'
 
 import { createGpsBorderLayer } from './Gps.layers'
 
 import {
-  createAccessPointCircleLayerLayer,
   createAccessPointCircleLabelLayer,
+  createAccessPointCircleLayerLayer,
 } from './AccessPoints.layers'
 
-import { createPalLayer, createPalBorderLayer } from './Pal.layers'
-import { number, boolean } from '@storybook/addon-knobs'
+import { boolean, number } from '@storybook/addon-knobs'
+import { createPalBorderLayer, createPalLayer } from './Pal.layers'
 
 const topojson = require('static/data/v3/wi/driftless-central.topo.json')
 const stateData = require('static/data/v3/wi/wi.data.json')

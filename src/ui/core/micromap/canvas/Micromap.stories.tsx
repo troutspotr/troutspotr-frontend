@@ -1,10 +1,10 @@
+import {
+  color,
+  // select,
+  number,
+} from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import * as React from 'react'
-import {
-  number,
-  // select,
-  color,
-} from '@storybook/addon-knobs'
 const TroutRunCreek = require('./_stubs/trout-run-creek.json')
 import * as MicromapSettings from 'ui/core/micromap/Micromap.settings'
 import { MicroMapComponentCanvas } from './Micromap.component.canvas'

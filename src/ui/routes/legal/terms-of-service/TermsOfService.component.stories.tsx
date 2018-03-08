@@ -1,8 +1,8 @@
+import { action } from '@storybook/addon-actions'
 import { storiesOf } from '@storybook/react'
 import * as React from 'react'
-import { TermsOfServiceComponent } from './TermsOfService.component'
-import { action } from '@storybook/addon-actions'
 import { LegalLayout } from '../Legal.layout'
+import { TermsOfServiceComponent } from './TermsOfService.component'
 const stories = storiesOf('Legal', module)
 
 stories.add('Privacy Policy', () => {

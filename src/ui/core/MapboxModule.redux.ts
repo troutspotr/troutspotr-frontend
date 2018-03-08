@@ -17,7 +17,7 @@ export const setMapModuleFailed = createAction(MAP_MODULE_FAILED)
 export const setMapModuleSuccess = createAction(MAP_MODULE_SUCCESS, x => x)
 const key = 'pk.eyJ1IjoiYW5kZXN0MDEiLCJhIjoibW02QnJLSSJ9._I2ruvGf4OGDxlZBU2m3KQ'
 // Const setMapModule = createAction(MAP_LOADING_MODULE)
-let cachedPromise = null
+const cachedPromise = null
 export const loadMapModuleAsync = () => (dispatch, getState) => {
   if (cachedPromise != null) {
     return cachedPromise
@@ -49,7 +49,7 @@ export const loadMapModuleAsync = () => (dispatch, getState) => {
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: any = {
+const ACTION_HANDLERS: {} = {
   [MAP_MODULE_LOADING]: (state: IMapboxModuleState, { payload }): IMapboxModuleState => {
     const newState = {
       ...state,
@@ -82,7 +82,7 @@ const ACTION_HANDLERS: any = {
 // Reducer
 // ------------------------------------
 export interface IMapboxModuleState {
-  mapModule: any
+  mapModule: {}
   mapModuleStatus: Loading
 }
 const INITIAL_MAPBOX_STATE: IMapboxModuleState = {

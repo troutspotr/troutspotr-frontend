@@ -1,13 +1,13 @@
 // tslint:disable:no-object-mutation
 
 import { IStreamObject } from 'coreTypes/IStreamObject'
+import { drawRingToCanvas } from 'ui/core/micromap/canvas/ring.canvas'
+import { renderStreams } from 'ui/core/micromap/canvas/stream.canvas'
 import {
   IDimensionsSettings,
   IMicromapCanvasSettings,
   TAU,
 } from 'ui/core/micromap/Micromap.settings'
-import { drawRingToCanvas } from 'ui/core/micromap/canvas/ring.canvas'
-import { renderStreams } from 'ui/core/micromap/canvas/stream.canvas'
 
 export const setUpCanvas = (
   canvasElement: HTMLCanvasElement,

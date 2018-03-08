@@ -1,7 +1,7 @@
-import { createSelector } from 'reselect'
 import { point } from '@turf/helpers'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 import isEmpty from 'lodash-es/isEmpty'
+import { createSelector } from 'reselect'
+import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 export const isGpsTrackingActiveStateSelector = state => state.gps.isGpsTrackingActive
 export const gpsCoordinatesLoadingStatusStateSelector = state =>
   state.gps.gpsCoordinatesLoadingStatus
@@ -10,7 +10,7 @@ export const isGpsTrackingSupportedStateSelector = state => state.gps.isGpsTrack
 export const gpsAccuracyMetersStateSelector = state => state.gps.gpsAccuracyMeters
 
 const getMessage = loadingStatus => {
-  let message = ''
+  const message = ''
   if (loadingStatus === LOADING_CONSTANTS.IS_PENDING) {
     'Loading location'
   } else if (loadingStatus === LOADING_CONSTANTS.IS_FAILED) {

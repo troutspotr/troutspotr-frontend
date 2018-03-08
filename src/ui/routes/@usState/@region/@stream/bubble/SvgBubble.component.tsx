@@ -14,7 +14,7 @@ import * as React from 'react'
 // const SQUISH_FACTOR = 0.9
 // const ROTATE_PHASE = Math.PI / 2
 // const RADIUS = DIMENSIONS / 2 - 50
-class SvgBubbleComponent extends React.Component<any> {
+class SvgBubbleComponent extends React.Component<{}> {
   // shouldComponentUpdate (nextProps) {
   //   return true
   // }
@@ -108,7 +108,7 @@ class SvgBubbleComponent extends React.Component<any> {
   //   />)
   // }
 
-  render() {
+  public render() {
     return null
     // const name = this.props.streamPackage.stream.properties.name
     // const id = this.props.streamPackage.stream.properties.gid

@@ -8,7 +8,7 @@ export const throttleReduce = async ops => {
   }
 
   const resolvedResults = []
-  for (let i = 0; i < ops.length; i++) {
+  for (const i = 0; i < ops.length; i++) {
     const op = ops[i]
     const result = await waitForNext(op.bind(null, i))
     resolvedResults.push(result)

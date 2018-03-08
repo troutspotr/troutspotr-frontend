@@ -1,18 +1,18 @@
-import * as React from 'react'
-import StreamComponent from '../stream/Stream.component'
+import { IStream } from 'coreTypes/stream/IStream'
 // import { IStreamObject } from 'coreTypes/IStreamObject'
 import { Feature, LineString } from 'geojson'
-import { IStream } from 'coreTypes/stream/IStream'
-import RingWaypointLineComponent from './RingWaypoint.component.line'
+import * as React from 'react'
+import StreamComponent from '../stream/Stream.component'
 import { ILayout } from './RingWaypoint.component.accessPoint'
+import RingWaypointLineComponent from './RingWaypoint.component.line'
 const streamClasses = require('./RingWaypoint.stream.scss')
 const waypointClasses = require('./RingWaypoint.scss')
 
 export interface IRingWaypointStreamComponent {
   stream: Feature<LineString, IStream>
-  timing: any
-  projection: any
-  pathGenerator: any
+  timing: {}
+  projection: {}
+  pathGenerator: {}
   layout: ILayout
 }
 
@@ -22,7 +22,7 @@ class RingWaypointStreamComponent extends React.Component<IRingWaypointStreamCom
     this.onClick = this.onClick.bind(this)
   }
 
-  renderStream(dotXScreenCoordinate, dotYScreenCoordinate, stream) {
+  public renderStream(dotXScreenCoordinate, dotYScreenCoordinate, stream) {
     return (
       <g id={'subject'} clipPath="url(#circle-stencil)">
         <g className={streamClasses.tributary}>
@@ -45,15 +45,15 @@ class RingWaypointStreamComponent extends React.Component<IRingWaypointStreamCom
     )
   }
 
-  onClick(e) {
+  public onClick(e) {
     e.preventDefault()
   }
 
-  renderLabelMarker() {
+  public renderLabelMarker() {
     return <circle className={streamClasses.icon_tributary} cx={0} cy={0} r="0.001" />
   }
 
-  render() {
+  public render() {
     const normalizedOffset = this.props.stream.properties.linear_offset
     const tributaryConfluenceCoordinates = {
       latitude: this.props.stream.properties.centroid_latitude,

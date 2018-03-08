@@ -7,7 +7,7 @@ const stateDictionary = {
 }
 
 export class StateApiSync {
-  getStateData(stateName) {
+  public getStateData(stateName) {
     if (stateName == null) {
       throw new Error('stateName cannot be null')
     }

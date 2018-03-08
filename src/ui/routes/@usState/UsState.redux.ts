@@ -1,10 +1,10 @@
-import { createAction, handleActions } from 'redux-actions'
-import { Loading } from 'ui/core/LoadingConstants'
 // import StateApi from 'api/StateApi'
 import { getApi } from 'api/Api.module'
+import { IUsState } from 'coreTypes/state/IUsState'
 // import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
 import keyBy from 'lodash-es/keyBy'
-import { IUsState } from 'coreTypes/state/IUsState'
+import { createAction, handleActions } from 'redux-actions'
+import { Loading } from 'ui/core/LoadingConstants'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -13,10 +13,10 @@ import { IUsState } from 'coreTypes/state/IUsState'
 
 export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 export interface IUsStateReduxState extends IUsState {
-  streamIdDictionary: any
+  streamIdDictionary: {}
   stateDataLoadingStatus: Loading
-  slugDictionary: any
-  roadTypesDictionary: any
+  slugDictionary: {}
+  roadTypesDictionary: {}
 }
 const INITIAL_US_STATE_STATE: IUsStateReduxState = {
   regionIndex: {},
@@ -67,7 +67,7 @@ export const fetchStateData = stateName => async dispatch => {
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: any = {
+const ACTION_HANDLERS: {} = {
   [REGION_SET_VIEW]: (state: IUsStateReduxState, { payload }): IUsStateReduxState => {
     const view = payload || INITIAL_US_STATE_STATE
     const newState = { ...state, ...{ view } }

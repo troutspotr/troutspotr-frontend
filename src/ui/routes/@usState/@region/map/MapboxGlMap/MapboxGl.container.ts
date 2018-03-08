@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import MapboxGlComponent from './MapboxGl.component'
-import { getMapboxGlSources } from './sources/Source.selectors'
-import { getLayerPackage } from './MapboxGl.selectors.layerPackage'
 import { selectedRegionIdSelector } from 'ui/core/Core.selectors'
 import { getGpsCoordinateFeatureSelector } from 'ui/page/footer/gps/Gps.selectors'
+import MapboxGlComponent from './MapboxGl.component'
+import { getLayerPackage } from './MapboxGl.selectors.layerPackage'
+import { getMapboxGlSources } from './sources/Source.selectors'
 
 const mapDispatchToProps = {}
 

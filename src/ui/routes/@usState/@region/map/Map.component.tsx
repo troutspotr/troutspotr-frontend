@@ -1,16 +1,16 @@
+// import RegulationsOverlayContainer from './overlays/RegulationsOverlay.container'
+// import DetailsOverlay from './overlays/DetailsOverlay.container'
+import find from 'lodash-es/find'
+import has from 'lodash-es/has'
+import isEmpty from 'lodash-es/isEmpty'
 import * as React from 'react'
 // const classes = require('./Map.scss')
 // import MapboxGlContainer from './MapboxGlMap/MapboxGl.container'
 // import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
 // import LoadingComponent from 'ui/core/loading/Loading.component'
 import { browserHistory } from 'react-router'
-// import RegulationsOverlayContainer from './overlays/RegulationsOverlay.container'
-// import DetailsOverlay from './overlays/DetailsOverlay.container'
-import find from 'lodash-es/find'
-import has from 'lodash-es/has'
-import isEmpty from 'lodash-es/isEmpty'
 // const MAP_ID = 'primary_map_id'
-export class MapComponent extends React.Component<any> {
+export class MapComponent extends React.Component<{}> {
   public componentWillUnmount() {
     if (this.state == null) {
       return
@@ -53,7 +53,7 @@ export class MapComponent extends React.Component<any> {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  public componentWillReceiveProps(nextProps) {
     // try {
     //   this.performZoomOnFeature(nextProps)
     // } catch (e) {
@@ -91,7 +91,7 @@ export class MapComponent extends React.Component<any> {
   //   )
   // }
 
-  renderLoading() {
+  public renderLoading() {
     // if (this.props.isVisible === false) {
     //   return null
     // }
@@ -101,7 +101,7 @@ export class MapComponent extends React.Component<any> {
     // return <LoadingComponent subTitle={'Loading Map'} />
   }
 
-  userSelectedStreamAndAccessPoint(streams, accessPoints) {
+  public userSelectedStreamAndAccessPoint(streams, accessPoints) {
     const { selectedState, selectedRegion, streamDictionary, selectedRoad } = this.props
     if (accessPoints.length > 1 && streams.length > 1) {
       // too many candidates. Bail!
@@ -127,7 +127,7 @@ export class MapComponent extends React.Component<any> {
     }
   }
 
-  userSelectedStream(stream) {
+  public userSelectedStream(stream) {
     const { selectedGeometry, selectedState, selectedRegion } = this.props
     const hasSelectedGeometry = isEmpty(selectedGeometry) === false
     const slug = stream.properties.slug
@@ -143,7 +143,7 @@ export class MapComponent extends React.Component<any> {
     browserHistory.push(`/${selectedState}/${selectedRegion}/${slug}`)
   }
 
-  userSelectedAccessPoint = accessPoint => {
+  public userSelectedAccessPoint = accessPoint => {
     const {
       selectedGeometry,
       selectedState,
@@ -184,7 +184,7 @@ export class MapComponent extends React.Component<any> {
     browserHistory.push(`/${selectedState}/${selectedRegion}/${streamSlug}#${roadSlug}`)
   }
 
-  onFeatureClick = features => {
+  public onFeatureClick = features => {
     if (isEmpty(features)) {
       return
     }
@@ -221,9 +221,9 @@ export class MapComponent extends React.Component<any> {
     }
   }
 
-  onFeatureHover = feature => {}
+  public onFeatureHover = feature => {}
 
-  render() {
+  public render() {
     return <div>Not yet implemented</div>
     //   const isMapLoaded = this.props.mapboxModuleStatus === LOADING_CONSTANTS.IS_SUCCESS
     //   const { isReadyToInsertLayers } = this.props

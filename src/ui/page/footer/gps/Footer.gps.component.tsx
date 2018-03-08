@@ -16,15 +16,15 @@ export interface IGpsComponentStateProps {
 export interface IGpsComponentProps extends IGpsDispatchProps, IGpsComponentStateProps {}
 
 export class FooterGpsComponent extends React.PureComponent<IGpsComponentProps> {
-  handleActivateGpsClick = () => {
+  public handleActivateGpsClick = () => {
     this.props.startGpsTracking()
   }
 
-  handleDeactivateGpsClick = () => {
+  public handleDeactivateGpsClick = () => {
     this.props.stopGpsTracking()
   }
 
-  handleChange = e => {
+  public handleChange = e => {
     e.preventDefault()
     const { checked } = e.target
     if (checked) {
@@ -33,7 +33,7 @@ export class FooterGpsComponent extends React.PureComponent<IGpsComponentProps> 
     return this.handleDeactivateGpsClick()
   }
 
-  renderSliderText() {
+  public renderSliderText() {
     const { isGpsActiveButLoading, isGpsActiveAndSuccessful, isGpsFailed } = this.props
     const isChecked = isGpsActiveButLoading || isGpsActiveAndSuccessful
     const leftText = isGpsActiveAndSuccessful ? 'On' : isGpsActiveButLoading ? 'Wait' : 'On'
@@ -48,7 +48,7 @@ export class FooterGpsComponent extends React.PureComponent<IGpsComponentProps> 
     )
   }
 
-  render() {
+  public render() {
     const {
       isGpsTrackingSupported,
       isGpsActiveButLoading,

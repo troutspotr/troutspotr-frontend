@@ -3,7 +3,7 @@ import * as React from 'react'
 export interface IClipboardIconProps {
   readonly size: number
   readonly style: object
-  readonly onClick?: any
+  readonly onClick?: {}
 }
 
 const ClipboardIcon: React.SFC<IClipboardIconProps> = ({ size, style, onClick }) => (

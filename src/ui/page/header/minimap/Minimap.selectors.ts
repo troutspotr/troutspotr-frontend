@@ -1,7 +1,7 @@
-import { createSelector } from 'reselect'
-import { waterOpenersDictionarySelector } from 'ui/routes/@usState/UsState.selectors'
-import { hasAgreedToTermsSelector, isSearchingSelector } from 'ui/core/Core.selectors'
 import { has } from 'lodash'
+import { createSelector } from 'reselect'
+import { hasAgreedToTermsSelector, isSearchingSelector } from 'ui/core/Core.selectors'
+import { waterOpenersDictionarySelector } from 'ui/routes/@usState/UsState.selectors'
 export const isExpandedBoolSelector = state => state.minimap.isExpanded
 
 export const isExpandedSelector = createSelector(

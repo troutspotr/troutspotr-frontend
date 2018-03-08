@@ -1,8 +1,8 @@
 import * as React from 'react'
 const classes = require('./RegionDetails.scss')
 
-class RegionDetails extends React.PureComponent<any> {
-  renderPublic() {
+class RegionDetails extends React.PureComponent<{}> {
+  public renderPublic() {
     return (
       <div>
         <div>
@@ -17,7 +17,7 @@ class RegionDetails extends React.PureComponent<any> {
     )
   }
 
-  renderPrivate() {
+  public renderPrivate() {
     return (
       <div>
         <div>
@@ -32,7 +32,7 @@ class RegionDetails extends React.PureComponent<any> {
     )
   }
 
-  render() {
+  public render() {
     return (
       <div className={classes.regionContainer}>
         <div className={classes.leftItems}>{this.renderPublic()}</div>

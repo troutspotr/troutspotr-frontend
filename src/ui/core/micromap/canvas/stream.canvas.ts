@@ -5,9 +5,9 @@ import { ExtendedFeature, geoPath, GeoPath, GeoPermissibleObjects } from 'd3-geo
 
 import { Feature, LineString } from 'geojson'
 
+import { renderPointOnStream } from 'ui/core/micromap/canvas/point.canvas'
 import { getProjectionFromFeatureAndSettings } from 'ui/core/micromap/GetProjectionFromFeature'
 import { IMicromapCanvasSettings } from 'ui/core/micromap/Micromap.settings'
-import { renderPointOnStream } from 'ui/core/micromap/canvas/point.canvas'
 
 export const renderStream = (
   // tslint:disable-next-line:no-any

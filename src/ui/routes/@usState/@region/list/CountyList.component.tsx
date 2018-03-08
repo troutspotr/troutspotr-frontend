@@ -2,8 +2,8 @@ import * as React from 'react'
 const classes = require('./List.scss')
 import isEmpty from 'lodash-es/isEmpty'
 import StreamListComponent from './StreamList.component'
-class CountyListComponent extends React.Component<any> {
-  renderCounty(county, index) {
+class CountyListComponent extends React.Component<{}> {
+  public renderCounty(county, index) {
     const { gid, name, streams } = county
     return (
       <li key={gid} className={classes.countyListItem}>
@@ -21,7 +21,7 @@ class CountyListComponent extends React.Component<any> {
     )
   }
 
-  renderCounties() {
+  public renderCounties() {
     const { visibleCounties } = this.props
     if (isEmpty(visibleCounties)) {
       return null
@@ -34,7 +34,7 @@ class CountyListComponent extends React.Component<any> {
     )
   }
 
-  render() {
+  public render() {
     return (
       <div className={classes.listViewContainer}>
         {this.renderCounties()}

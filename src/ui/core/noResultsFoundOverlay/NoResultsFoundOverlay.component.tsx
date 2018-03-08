@@ -5,13 +5,13 @@ import { MessageOverlayComponent } from 'ui/core/messageOverlay/MessageOverlay.c
 import isEmpty from 'lodash-es/isEmpty'
 
 export interface IRegionLayout {
-  clearText: any
-  totalStreams: any
-  isDisplayed: any
+  clearText: {}
+  totalStreams: {}
+  isDisplayed: {}
 }
 
 class RegionLayout extends React.Component<IRegionLayout> {
-  renderNoStreamsFound() {
+  public renderNoStreamsFound() {
     const { totalStreams, clearText } = this.props
     const safeStreamCount = isEmpty(totalStreams) ? 0 : totalStreams.length
     return (
@@ -27,7 +27,7 @@ class RegionLayout extends React.Component<IRegionLayout> {
     )
   }
 
-  render() {
+  public render() {
     if (this.props.isDisplayed === false) {
       return null
     }

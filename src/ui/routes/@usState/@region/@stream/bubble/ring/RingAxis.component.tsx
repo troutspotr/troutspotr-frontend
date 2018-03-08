@@ -4,8 +4,8 @@ import times from 'lodash-es/times'
 const TICK_MOD = 20
 const RADIANS_TO_DEGREES = 180 / Math.PI
 
-class RingAxisComponent extends React.Component<any> {
-  renderTicks() {
+class RingAxisComponent extends React.Component<{}> {
+  public renderTicks() {
     const { length, layout } = this.props
     const { width, height, radius, arcCompressionRatio, rotatePhase } = layout
     const ticks = Math.floor(length)
@@ -61,7 +61,7 @@ class RingAxisComponent extends React.Component<any> {
     })
   }
 
-  render() {
+  public render() {
     return (
       <g id="radial-axis" className={ringClasses.radial}>
         {this.renderTicks()}

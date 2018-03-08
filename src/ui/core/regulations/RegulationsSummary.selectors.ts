@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
+import find from 'lodash-es/find'
 import { createSelector } from 'reselect'
 import { getWatersObjectSelector } from 'ui/routes/@usState/UsState.selectors'
-import find from 'lodash-es/find'
 const now = new Date()
 const getIsWithinBonds = ({ start_time, end_time }) => {
   return now < end_time && now >= start_time
@@ -16,7 +16,7 @@ export const getRegulationsSummarySelector = createSelector(
     const watersId = stream.properties.water_id
     const water = watersObject(watersId)
     const openers = water.openSeasons
-    let closestOpener = null
+    const closestOpener = null
     if (water.openers != null) {
       closestOpener = find(water.openers, x => x.start_time > now)
     }

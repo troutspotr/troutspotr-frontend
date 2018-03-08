@@ -1,6 +1,6 @@
-import BaseApi from './BaseApi'
 import * as lf from 'localforage'
 import * as topojson from 'topojson-client'
+import BaseApi from './BaseApi'
 export const buildTableOfContentsEndpoint = () => `/data/v3/TableOfContents.topo.json`
 export const decompress = tocTopojson => {
   const states = topojson.feature(tocTopojson, tocTopojson.objects.minnesota)
@@ -13,7 +13,7 @@ export const decompress = tocTopojson => {
   }
 }
 export class TableOfContentsApi extends BaseApi {
-  async getTableOfContents() {
+  public async getTableOfContents() {
     const endpoint = buildTableOfContentsEndpoint()
     const tocTopojson = await this.get(endpoint)
     return decompress(tocTopojson)

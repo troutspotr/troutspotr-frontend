@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
+import { selectedRegionSelector, selectedStateSelector } from 'ui/core/Core.selectors'
 import { displayedStreamTitleSelector } from 'ui/routes/@usState/UsState.selectors'
-import { selectedStateSelector, selectedRegionSelector } from 'ui/core/Core.selectors'
 
 const defaultTitle = 'TroutSpotr'
 

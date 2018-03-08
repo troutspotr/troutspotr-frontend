@@ -11,22 +11,22 @@ class OfflineListenerComponent extends React.PureComponent<IOfflineListenerCompo
     this.getOnlineStatus = this.getOnlineStatus.bind(this)
   }
 
-  getOnlineStatus() {
+  public getOnlineStatus() {
     const isOffline = getIsOnlineStatusFromNavigator() === false
     this.props.setIsOffline(isOffline)
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     window.addEventListener('online', this.getOnlineStatus)
     window.addEventListener('offline', this.getOnlineStatus)
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     window.removeEventListener('online', this.getOnlineStatus)
     window.removeEventListener('offline', this.getOnlineStatus)
   }
 
-  render() {
+  public render() {
     return null
   }
 }

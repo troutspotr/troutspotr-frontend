@@ -5,21 +5,21 @@ require('mapbox-gl/dist/svg/mapboxgl-ctrl-geolocate.svg')
 require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg')
 require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg')
 
-import MapboxGlCamera from './MapboxGl.component.camera'
-import { ICameraProps } from '../ICameraProps'
 // import * as mapboxGl from 'mapbox-gl'
-import { Style as MapboxStyle, Map } from 'mapbox-gl'
+import { Map, Style as MapboxStyle } from 'mapbox-gl'
+import { ICameraProps } from '../ICameraProps'
+import MapboxGlCamera from './MapboxGl.component.camera'
 // import * as GeoJSON from 'geojson'
 
 const token = 'pk.eyJ1IjoiYW5kZXN0MDEiLCJhIjoibW02QnJLSSJ9._I2ruvGf4OGDxlZBU2m3KQ'
 // https://stackoverflow.com/a/44393954
 
 export interface IMapboxGlProps {
-  readonly onFeaturesSelected: (t: any) => void
+  readonly onFeaturesSelected: (t: {}) => void
   readonly onMapInitialized: (t: boolean) => void
   readonly style: MapboxStyle | string
   readonly camera?: ICameraProps
-  readonly mapboxGl: any
+  readonly mapboxGl: {}
   readonly debugMode?: boolean
 }
 
@@ -40,7 +40,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
   }
 
-  onClick(e) {
+  public onClick(e) {
     const features = this.getInteractiveFeaturesOverPoint(e.point)
     if (features == null || features.length === 0) {
       return
@@ -49,14 +49,14 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     this.props.onFeaturesSelected(features)
   }
 
-  componentWillUpdate(nextProps) {
+  public componentWillUpdate(nextProps) {
     const nextStyle = nextProps.style
     if (this.state.map != null && this.props.style !== nextStyle) {
       this.state.map.setStyle(nextStyle)
     }
   }
 
-  getInteractiveFeaturesOverPoint(point): any {
+  public getInteractiveFeaturesOverPoint(point): {} {
     const BOX_DIMENSION = 2
     const boundingBox = [
       [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
@@ -67,7 +67,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     return features
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     const { mapboxGl } = this.props
     Object.getOwnPropertyDescriptor(mapboxGl, 'accessToken').set(token)
     const map = new mapboxGl.Map({
@@ -104,12 +104,12 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     })
   }
 
-  onDataLoad(e) {
+  public onDataLoad(e) {
     this.state.map.setStyle(this.props.style)
     this.props.onMapInitialized(true)
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     if (this.state.map) {
       // adding and removing lots of maps
       // can cause a pretty bad memory leak
@@ -125,7 +125,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
   }
 
-  render() {
+  public render() {
     const style = {
       width: '100%',
       height: '100%',

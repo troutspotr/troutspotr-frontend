@@ -6,14 +6,14 @@ export interface ILocation {
   hash: string
   action: string
   key: string
-  query: any
+  query: {}
 }
 export interface IRoutingState {
   location: ILocation
-  params: any
+  params: {}
   previousRouting: {
     location: ILocation
-    params: any
+    params: {}
   }
 }
 export const INITIAL_ROUTING_STATE: IRoutingState = {

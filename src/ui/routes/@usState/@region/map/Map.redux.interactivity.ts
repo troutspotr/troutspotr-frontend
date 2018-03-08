@@ -1,6 +1,6 @@
-import { createAction, handleActions } from 'redux-actions'
 import extent from '@turf/bbox'
 import turfCircle from '@turf/circle'
+import { createAction, handleActions } from 'redux-actions'
 // Import { getSelectedStateProperties } from '../sidebar/Sidebar.selectors'
 import { BOUNDING_BOX_OF_LOWER_48_STATES, mapCameraActions } from './Map.redux.camera'
 // ------------------------------------
@@ -69,10 +69,10 @@ export const mapInteractivityActions = {
   resetMap,
 }
 
-const actionHandlers: any = {
+const actionHandlers: {} = {
   [MAP_INTERACTIVITY_SET_SELECTED_FEATURES]: (state, { payload: { featureCollection } }) => {
     // Check if feature
-    let selectedItems
+    const selectedItems
     if (
       featureCollection == null ||
       featureCollection.features == null ||
@@ -89,7 +89,7 @@ const actionHandlers: any = {
     state,
     { payload: { featureCollection } }
   ) => {
-    let selectedItems
+    const selectedItems
     if (
       featureCollection == null ||
       featureCollection.features == null ||

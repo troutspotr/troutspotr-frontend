@@ -1,12 +1,12 @@
 import * as React from 'react'
 const classes = require('./Footer.scss')
-import { View } from 'ui/core/Core.redux'
 import isEmpty from 'lodash-es/isEmpty'
+import { View } from 'ui/core/Core.redux'
 import {
   FooterGpsComponent,
   // IGpsComponentProps,
-  IGpsDispatchProps,
   IGpsComponentStateProps,
+  IGpsDispatchProps,
 } from './gps/Footer.gps.component'
 
 export interface IFooterDispatchProps extends IGpsDispatchProps {
@@ -15,13 +15,13 @@ export interface IFooterDispatchProps extends IGpsDispatchProps {
 }
 export interface IFooterStateProps extends IGpsComponentStateProps {
   view: View
-  selectedStream: any
+  selectedStream: {}
 }
 
 export interface IFooterProps extends IFooterDispatchProps, IFooterStateProps {}
 
 export class FooterComponent extends React.PureComponent<IFooterProps> {
-  render() {
+  public render() {
     const { view, selectedStream } = this.props
     const listText = isEmpty(selectedStream) ? 'List' : 'Details'
 

@@ -1,14 +1,14 @@
+import bboxPolygon from '@turf/bbox-polygon'
 import {
+  ExtendedFeature,
   geoCentroid,
+  GeoGeometryObjects,
   geoOrthographic,
   GeoProjection,
-  GeoGeometryObjects,
-  ExtendedFeature,
 } from 'd3-geo'
 import { GeoJsonObject } from 'geojson'
-import * as MicromapSettings from 'ui/core/micromap/Micromap.settings'
-import bboxPolygon from '@turf/bbox-polygon'
 import { ICameraProps } from 'ui/core/map/ICameraProps'
+import * as MicromapSettings from 'ui/core/micromap/Micromap.settings'
 export const getProjectionFromFeatureAndSettings = (
   feature: GeoJsonObject,
   settings: MicromapSettings.IMicromapSettings
@@ -46,7 +46,7 @@ export const getProjectionFromBoundingBox = (
     number,
     number
   ]
-  const streamGeometry = bboxPolygon(bboxArray) as ExtendedFeature<GeoGeometryObjects, any>
+  const streamGeometry = bboxPolygon(bboxArray) as ExtendedFeature<GeoGeometryObjects, {}>
   const centroid = geoCentroid(streamGeometry)
   const lower = [0 / 2, 0 / 2]
   const upper = [width - lower[0], height - lower[1]]

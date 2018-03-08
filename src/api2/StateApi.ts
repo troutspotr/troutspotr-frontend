@@ -1,7 +1,7 @@
-import BaseApi from './BaseApi'
+import { IUsState } from 'coreTypes/state/IUsState'
 import has from 'lodash-es/has'
 import keyBy from 'lodash-es/keyBy'
-import { IUsState } from 'coreTypes/state/IUsState'
+import BaseApi from './BaseApi'
 export const buildStateEndpoint = stateName => `/data/v3/${stateName}/${stateName}.data.json`
 
 const stateCache = {}
@@ -32,7 +32,7 @@ export const updateStateObject = (stateMetadata: IUsState) => {
 }
 
 export class StateApi extends BaseApi {
-  async getStateData(stateName) {
+  public async getStateData(stateName) {
     if (stateName == null) {
       return Promise.reject('state name was not specificed')
     }

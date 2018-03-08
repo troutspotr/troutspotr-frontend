@@ -1,9 +1,9 @@
+import has from 'lodash-es/has'
+import isEmpty from 'lodash-es/isEmpty'
 import { createSelector } from 'reselect'
+import { View } from 'ui/core/Core.redux'
 import { isRootPageSelector, locationSelector } from 'ui/Location.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
-import isEmpty from 'lodash-es/isEmpty'
-import has from 'lodash-es/has'
-import { View } from 'ui/core/Core.redux'
 
 export const statesGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.statesGeoJson
 export const countiesGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.countiesGeoJson

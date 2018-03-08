@@ -3,7 +3,7 @@ import {
   GPS_LOCATION_CENTER_LAYER_ID,
   GPS_LOCATION_OUTLINE_LAYER_ID,
 } from '../filters/Filters.selectors'
-import { UNDER_LABEL_PLACEHOLDER, layerGeneratorBetter } from './Style.selectors'
+import { layerGeneratorBetter, UNDER_LABEL_PLACEHOLDER } from './Style.selectors'
 
 import { GPS_LOCATION_SOURCE_ID } from '../sources/Source.selectors'
 

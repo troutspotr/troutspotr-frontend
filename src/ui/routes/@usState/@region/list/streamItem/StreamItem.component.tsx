@@ -5,15 +5,15 @@ const classes = require('./StreamItem.scss')
 import RegulationsSummaryComponent from 'ui/core/regulations/RegulationsSummary.component'
 /* eslint-disable camelcase */
 
-export class StreamItemBodyComponent extends React.Component<any> {
-  renderOpenOrClosed(streamObject, getSummary) {
+export class StreamItemBodyComponent extends React.Component<{}> {
+  public renderOpenOrClosed(streamObject, getSummary) {
     if (getSummary == null) {
       throw new Error('getSummary not defined')
     }
     return <RegulationsSummaryComponent getSummary={getSummary} streamObject={streamObject} />
   }
 
-  renderOpenBridges(streamObject) {
+  public renderOpenBridges(streamObject) {
     const { publicTroutBridgeCount, bridgeText } = streamObject.stream.properties
     return (
       <div>
@@ -25,7 +25,7 @@ export class StreamItemBodyComponent extends React.Component<any> {
     )
   }
 
-  render() {
+  public render() {
     const { title, streamObject } = this.props
     return (
       <div className={classes.body}>
@@ -43,8 +43,8 @@ export class StreamItemBodyComponent extends React.Component<any> {
 //   getSummary: PropTypes.func.isRequired,
 // }
 
-class StreamItemComponent extends React.PureComponent<any> {
-  render() {
+class StreamItemComponent extends React.PureComponent<{}> {
+  public render() {
     // const { title, url, streamObject, getSummary } = this.props
     return null
     // return (

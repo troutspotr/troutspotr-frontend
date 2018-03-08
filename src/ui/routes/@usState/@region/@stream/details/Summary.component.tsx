@@ -1,12 +1,12 @@
 import * as React from 'react'
 const classes = require('./Details.scss')
-import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
+import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 // Import { Link } from 'react-router'
 /* eslint-disable camelcase */
 
-class SummaryComponent extends React.Component<any> {
-  renderSummary({ miles, textClass, pattern, text, heightMultiplier }) {
+class SummaryComponent extends React.Component<{}> {
+  public renderSummary({ miles, textClass, pattern, text, heightMultiplier }) {
     // const roundedMiles = parseFloat(Math.round(miles * 10) / 10).toFixed(1)
     const roundedMiles = 1.1
     return (
@@ -27,7 +27,7 @@ class SummaryComponent extends React.Component<any> {
     // </div>)
   }
 
-  render() {
+  public render() {
     const { selectedStream } = this.props
     const { stream } = selectedStream
     const {

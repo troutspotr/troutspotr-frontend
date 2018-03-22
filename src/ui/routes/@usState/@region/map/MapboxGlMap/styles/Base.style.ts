@@ -24,7 +24,7 @@ export const createBackgroundLayers = (layerProps: ILayerProperties): Layer[] =>
 }
 
 export const createWaterLayers = (layerProps: ILayerProperties): Layer[] => {
-  const { pallete, isOnline, satelliteZoomLevel } = layerProps
+  const { pallete, isOnline, satelliteZoomLevel, satelliteTransitionScalar } = layerProps
   if (isOnline === false) {
     return []
   }
@@ -33,13 +33,15 @@ export const createWaterLayers = (layerProps: ILayerProperties): Layer[] => {
   const fuzzyRange = 1.5
   const shouldUseSimpleOpacityStops = canalMinimumZoomLevel + fuzzyRange >= satelliteZoomLevel
   const canalOpacityStops = shouldUseSimpleOpacityStops
-    ? [[satelliteZoomLevel, 1], [satelliteZoomLevel + 0.3, 0]]
+    ? [[satelliteZoomLevel, 1], [satelliteZoomLevel + 1, 0]]
     : [
         [canalMinimumZoomLevel, 0],
         [canalMinimumZoomLevel + 0.5, 1],
         [satelliteZoomLevel, 1],
-        [satelliteZoomLevel + 0.3, 0],
+        [satelliteZoomLevel + 0.6 * satelliteTransitionScalar, 0],
       ]
+
+  console.log(canalOpacityStops)
   return [
     {
       id: 'waterway-river-canal',
@@ -80,7 +82,7 @@ export const createWaterLayers = (layerProps: ILayerProperties): Layer[] => {
             // [satelliteZoomLevel - 0.2, pallete.waterFill],
             // [satelliteZoomLevel + 0.4, pallete.waterOutline],
             [satelliteZoomLevel, pallete.waterFill],
-            [satelliteZoomLevel + 0.3, 'transparent'],
+            [satelliteZoomLevel + 0.4 * satelliteTransitionScalar, 'transparent'],
           ],
         },
         'fill-outline-color': {
@@ -89,7 +91,7 @@ export const createWaterLayers = (layerProps: ILayerProperties): Layer[] => {
             // [satelliteZoomLevel - 0.2, pallete.waterFill],
             // [satelliteZoomLevel + 0.4, pallete.waterOutline],
             [satelliteZoomLevel, pallete.waterFill],
-            [satelliteZoomLevel + 0.4, pallete.waterOutline],
+            [satelliteZoomLevel + 0.4 * satelliteTransitionScalar, 'transparent'],
           ],
         },
         // 'fill-opacity': {
@@ -260,7 +262,7 @@ export const createSources = (
   layerProps: ILayerProperties,
   geoJsons?: Array<{ id: string; geojson: {} }>
 ) => {
-  const sources = {}
+  let sources = {}
   const { isOnline } = layerProps
 
   const coreItems = {

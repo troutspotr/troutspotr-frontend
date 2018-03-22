@@ -5,14 +5,14 @@ const MAGICAL_NUMBER_OF_PREAMBLES = 5
 const scalar = 0.5
 
 export interface ITermsOfServiceProps {
-  advance: {}
+  advance: any
 }
 
 export interface ITermsOfServiceState {
   preambles: string[]
   isAgreementShown: boolean
   preambleIsFinished: boolean
-  time: {}
+  time: any
 }
 
 export class TermsOfServiceComponent extends React.PureComponent<
@@ -36,11 +36,11 @@ export class TermsOfServiceComponent extends React.PureComponent<
     if (element == null) {
       return
     }
-    const { preambles } = this.state
+    let { preambles } = this.state
     preambles = preambles.concat([element])
     if (preambles.length === MAGICAL_NUMBER_OF_PREAMBLES) {
       setTimeout(() => {
-        const { preambleIsFinished } = this.state
+        let { preambleIsFinished } = this.state
         preambleIsFinished = true
         this.setState({ preambleIsFinished })
       }, 1200 * scalar)
@@ -91,7 +91,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         const key = index + 1
         return (
           <div key={key} className={classes.preambleContainer}>
-            <h4>{p}</h4>
+            <h2>{p}</h2>
             <div className={classes.shieldRight} />
           </div>
         )
@@ -115,9 +115,9 @@ export class TermsOfServiceComponent extends React.PureComponent<
 
   public renderTerm = ({ index, title, body }) => (
     <li key={index}>
-      <div className={classes.term}>
+      <h3 className={classes.term}>
         {index}. {title}
-      </div>
+      </h3>
       <div className={classes.termBody}>{body}</div>
     </li>
   )
@@ -349,7 +349,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
 
   public onButtonClick = () => {
     const { preambleIsFinished } = this.state
-    const { isAgreementShown } = this.state
+    let { isAgreementShown } = this.state
     if (preambleIsFinished && isAgreementShown === false) {
       setTimeout(() => {
         isAgreementShown = true

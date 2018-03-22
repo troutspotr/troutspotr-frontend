@@ -8,6 +8,17 @@ import {
   selectMapFeature,
 } from 'ui/routes/@usState/@region/map/Map.redux.interactivity'
 import { getSelectedRoadSelector, selectedStreamObjectSelector } from './Region.selectors'
+import { IGeoPackageOrWhatver } from '../../../../api/region/Region.transform'
+import { Dictionary } from 'lodash'
+import { IStreamObject } from 'coreTypes/IStreamObject'
+import {
+  AccessPointFeatureCollection,
+  PalSectionFeatureCollection,
+  RestrictionFeatureCollection,
+  TroutStreamSectionFeatureCollection,
+  StreamFeatureCollection,
+  PalFeatureCollection,
+} from '../../../../api/region/IRegionGeoJSON'
 
 // ------------------------------------
 // Constants
@@ -29,7 +40,10 @@ export const REGION_SET_HOVERED_ROAD = 'REGION_SET_HOVERED_ROAD'
 export const REGION_SET_SELECTED_ROAD = 'REGION_SET_SELECTED_ROAD'
 export const REGION_SET_HOVERED_STREAM = 'REGION_SET_HOVERED_STREAM'
 
-export const setRegionData = createAction(REGION_SET_REGION_DATA, region => region)
+export const setRegionData = createAction(
+  REGION_SET_REGION_DATA,
+  (region: IGeoPackageOrWhatver) => region
+)
 export const setRegionDataLoading = createAction(REGION_SET_REGION_LOADING)
 export const setRegionDataFailed = createAction(REGION_SET_REGION_LOADING_FAILED)
 
@@ -37,7 +51,10 @@ export const setHoveredRoad = createAction(REGION_SET_HOVERED_ROAD, x => x)
 export const setSelectedRoad = createAction(REGION_SET_SELECTED_ROAD, x => x)
 export const setHoveredStream = createAction(REGION_SET_HOVERED_STREAM, x => x)
 
-export const fetchRegionData = (stateName, regionName) => async (dispatch, getState) => {
+export const fetchRegionData = (stateName: string, regionName: string) => async (
+  dispatch,
+  getState
+) => {
   dispatch(setRegionDataLoading())
   try {
     if (stateName == null) {
@@ -76,7 +93,7 @@ export const fetchRegionData = (stateName, regionName) => async (dispatch, getSt
     // Navigating. it gives a better appearance to the user.
     setTimeout(() => dispatch(selectMapFeature(selectedRegion)), 300)
   } catch (error) {
-    console.log(error) // eslint-disable-line
+    console.error(error) // eslint-disable-line
     dispatch(setRegionDataFailed())
   }
 }
@@ -133,16 +150,16 @@ const ACTION_HANDLERS: {} = {
 // ------------------------------------
 export interface IRegionState {
   // View: MAP,
-  troutStreamDictionary: {}
-  troutStreamSections: {}
-  restrictionSections: {}
-  streams: {}
-  palSections: {}
-  streamAccessPoint: {}
-  pals: {}
-  hoveredStream: {}
+  troutStreamDictionary: Dictionary<IStreamObject>
+  troutStreamSections: TroutStreamSectionFeatureCollection
+  restrictionSections: RestrictionFeatureCollection
+  streams: StreamFeatureCollection
+  palSections: PalSectionFeatureCollection
+  streamAccessPoint: AccessPointFeatureCollection
+  pals: PalFeatureCollection
+  hoveredStream: any
   // SelectedRoad: null,
-  hoveredRoad: {}
+  hoveredRoad: any
   regionLoadingStatus: Loading
 }
 const initialState: IRegionState = {

@@ -3,7 +3,7 @@ import * as React from 'react'
 // const classes = require('./MapOverlay.scss')
 // import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 import { MessageOverlayComponent } from 'ui/core/messageOverlay/MessageOverlay.component'
-class RegulationsOverlayComponent extends React.Component<{}> {
+class RegulationsOverlayComponent extends React.Component<any> {
   public renderSpecialRegulationsOverlay() {
     const { selectedStream, specialRegulationsCurrentSeason } = this.props
     if (isEmpty(selectedStream) || specialRegulationsCurrentSeason.length === 0) {

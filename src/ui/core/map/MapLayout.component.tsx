@@ -9,20 +9,26 @@ export interface IMapLayoutProps {
   readonly middleOverlay: React.ReactNode | undefined
 }
 
-export const MapLayoutComponent: React.SFC<IMapLayoutProps> = props => {
+const makeOverlay = (key: 'bottom' | 'top', overlay: React.ReactNode | undefined): JSX.Element => {
+  if (overlay == null) {
+    return null
+  }
+
+  return (
+    <MessageOverlayComponent key={key} position={key}>
+      {overlay}
+    </MessageOverlayComponent>
+  )
+}
+
+export const MapLayoutComponent: React.SFC<IMapLayoutProps> = (props): JSX.Element => {
   const { topOverlay, bottomOverlay, map } = props
+  const top = makeOverlay('top', topOverlay)
+  const bottom = makeOverlay('bottom', bottomOverlay)
   return (
     <div className={styles.container}>
-      {topOverlay && (
-        <MessageOverlayComponent key="top" position={'top'}>
-          {topOverlay}
-        </MessageOverlayComponent>
-      )}
-      {bottomOverlay && (
-        <MessageOverlayComponent key="bottom" position={'bottom'}>
-          {bottomOverlay}
-        </MessageOverlayComponent>
-      )}
+      {top}
+      {bottom}
       {map}
     </div>
   )

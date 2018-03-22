@@ -1,6 +1,7 @@
 @import '_colors';
 @import '_fonts';
 @import '_variables';
+@import 'utilities';
 @import 'fallback';
 
 :global {
@@ -62,8 +63,14 @@
   html {
     box-sizing: border-box;
     @include book-font;
-    font-size: 16px;
-    line-height: 1.35em;
+    font-size: $default-font-size;
+    line-height: $default-line-height;
+  }
+
+  h4 {
+    font-size: 1em;
+    @include heavy-font;
+    margin: 0;
   }
 
   // body::after {
@@ -74,18 +81,18 @@
 
   @media screen and (min-width: 320px) and (orientation: portrait) {
     html {
-      font-size: 16px;
+      font-size: $default-font-size;
     }
   }
 
   @media screen and (min-height: 320px) and (orientation: landscape) {
     html {
-      font-size: 16px;
+      font-size: $default-font-size;
     }
   }
   @media screen and (min-width: 1000px) {
     html {
-      font-size: 22px;
+      font-size: $default-font-size; ///rem(18px);
     }
   }
 

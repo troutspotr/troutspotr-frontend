@@ -40,7 +40,6 @@ export class MicroMapComponentCanvas extends React.PureComponent<
 
   protected setUpCanvas() {
     const { height, width } = this.state.canvasElement.getBoundingClientRect()
-    console.log(height, width)
     const devicePixelRatio = window.devicePixelRatio || 1
     const canvasContext = Micromap.setUpCanvas(
       this.state.canvasElement,
@@ -74,22 +73,12 @@ export class MicroMapComponentCanvas extends React.PureComponent<
   }
 
   public deferredRenderToCanvas(operation) {
-    // https://github.com/Microsoft/TypeScript/issues/21309
-    // "working as intended"
-    // if (window.requestIdleCallback != null) {
-    //   window.requestIdleCallback(() => {
-    //     operation()
-    //   })
-    //   return
-    // }
-
     // It's polite to save our canvas style here.
     // Draw a big rectangle to clear our canvas.
     operation()
   }
 
   public renderToCanvas(streamObject) {
-    // const scale = Math.min(this.dimensions.height, this.dimensions.width) / 40.0
     const operation = Micromap.drawStreamToCanvas.bind(
       null,
       this.state.canvasContext,
@@ -120,15 +109,16 @@ export class MicroMapComponentCanvas extends React.PureComponent<
   }
 
   public render() {
+    const style = {
+      width: this.props.settings.dimensions.width,
+      height: this.props.settings.dimensions.height,
+    }
     return (
       <div className={styles.container}>
         <canvas
           id={this.props.id}
           className={styles.microMap}
-          style={{
-            width: this.props.settings.dimensions.width,
-            height: this.props.settings.dimensions.height,
-          }}
+          style={style}
           ref={this.setUpRefCanvas}
         />
       </div>

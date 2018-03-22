@@ -1,7 +1,24 @@
+// Justification for turning off rule:
+// Originally, I tried creating like, 4 different files
+// to support regions, counties, etc. When I went
+// fully over to D3 instead of smaller react components,
+// that forced me to use one big file.
+// Also, D3 wants single lines for each attribute,
+// so it's needlessly long without adding too much
+// complexity.
+
+// I could see myself breaking this down into smaller
+// chunks if I wanted to hash it out into
+// A. Administrative Geometry (states, counties, etc)
+// B. Label
+// C. Stream Centroids (?)
+// D. Parent class that zooms and selects, etc.
+// tslint:disable:max-file-line-count
+
 import bboxPolygon from '@turf/bbox-polygon'
 import { featureCollection } from '@turf/helpers'
 import { IRegion } from 'coreTypes/tableOfContents/IRegion'
-import { IState } from 'coreTypes/tableOfContents/IState'
+import { IUsState } from 'coreTypes/tableOfContents/IState'
 import {
   GeoGeometryObjects,
   geoMercator,
@@ -19,9 +36,10 @@ import * as MicromapSettings from 'ui/core/micromap/Micromap.settings'
 import { Selection } from 'ui/core/SelectionConstants'
 import { Loading } from '../../../../core/LoadingConstants'
 const styles = require('./SvgMinimap.scss')
+// const MAGICAL_SCALE_NUMBER = 1 / 400
 
 type RegionGeoJson = FeatureCollection<MultiPolygon, IRegion>
-type StateGeoJson = FeatureCollection<MultiPolygon, IState>
+type StateGeoJson = FeatureCollection<MultiPolygon, IUsState>
 export interface IMinimapSvgProps {
   readonly usStatesGeoJson: StateGeoJson
   readonly regionsGeoJson: RegionGeoJson
@@ -39,23 +57,31 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     this.clicked = this.clicked.bind(this)
     this.reset = this.reset.bind(this)
     this.renderData = this.renderData.bind(this)
-
+    this.worldWidth = 500
+    this.worldHeight = 500
     this.active = select(null)
   }
 
   private projection: GeoProjection = null
-  private zoom: {} = null
   private path: GeoPath<SVGPathElement, GeoPermissibleObjects> = null
-  private active: {} = null
-  private mapGroup: {} = null
-  private usStatesBackdrop: {} = null
-  private regionsBackdrop: {} = null
-  private selectedRegionsGroup: {} = null
-  private selectedStatesGroup: {} = null
-  private stateLabelsGroup: {} = null
-  private regionLabelsGroup: {} = null
-  private svg: {} = null
+  // tslint:disable:no-any
+  private active: any
+  private mapGroup: any
+  private usStatesBackdrop: any
+  private regionsBackdrop: any
+  private selectedRegionsGroup: any
+  private selectedStatesGroup: any
+  private stateLabelsGroup: any
+  private regionLabelsGroup: any
+  private svg: any
+  // private rect: any
+  private zoom: any
+  private strokeWidthEm: number
+  private fontSizeEm: number
+  private worldWidth: number
+  private worldHeight: number
 
+  // tslint:enable:no-any
   private containerElement: HTMLDivElement = null
 
   public clicked(d, item) {
@@ -69,15 +95,18 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
   }
 
   public setCameraToItem(d) {
-    const { width, height } = this.props
+    // const { width, height } = this.props
+    const width = this.worldWidth
+    const height = this.worldHeight
+
     const bounds = this.path.bounds(d)
+    console.log(bounds)
     const dx = bounds[1][0] - bounds[0][0]
     const dy = bounds[1][1] - bounds[0][1]
     const x = (bounds[0][0] + bounds[1][0]) / 2
     const y = (bounds[0][1] + bounds[1][1]) / 2
     const scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height)))
     const translate = [width / 2 - scale * x, height / 2 - scale * y]
-
     this.svg
       .transition()
       .duration(750)
@@ -95,12 +124,16 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
   }
 
   public zoomed() {
-    this.usStatesBackdrop.style('stroke-width', 1.2 / event.transform.k + 'px')
-    this.regionsBackdrop.style('stroke-width', 1.0 / event.transform.k + 'px')
-    this.selectedRegionsGroup.style('stroke-width', 3 / event.transform.k + 'px')
-    this.selectedStatesGroup.style('stroke-width', 2.5 / event.transform.k + 'px')
-    this.stateLabelsGroup.style('font-size', 0.75 / event.transform.k + 'em')
-    this.regionLabelsGroup.style('font-size', 0.6 / event.transform.k + 'em')
+    const sw = 'stroke-width'
+    this.usStatesBackdrop.style(sw, this.strokeWidthEm * 1.2 / event.transform.k + 'px')
+    this.regionsBackdrop.style(sw, this.strokeWidthEm * 1.0 / event.transform.k + 'px')
+    this.selectedRegionsGroup.style(sw, this.strokeWidthEm * 3 / event.transform.k + 'px')
+    this.selectedStatesGroup.style(sw, this.strokeWidthEm * 2.5 / event.transform.k + 'px')
+    this.stateLabelsGroup.style('font-size', this.fontSizeEm * 0.75 / event.transform.k + 'em')
+    this.regionLabelsGroup.style('font-size', this.fontSizeEm * 0.6 / event.transform.k + 'em')
+    console.log(event.transform)
+    event.transform.x *= 1.0
+    event.transform.y *= 1.0
     this.mapGroup.attr('transform', event.transform)
   }
 
@@ -133,30 +166,29 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     this.setCameraToItem(bboxFeature)
   }
 
-  public componentDidMount() {
-    const { width, height } = this.props
-
-    this.projection = geoMercator()
-      .scale(1000)
-      .translate([width / 2, height / 2])
-
-    this.zoom = zoom()
-      .scaleExtent([1, 8])
-      .on('zoom', this.zoomed)
-
-    this.path = geoPath().projection(this.projection)
-
+  // use D3 to set up our SVG container and its initial elements.
+  private initializeElements() {
+    // const { width, height } = this.props
+    // const width = this.worldWidth
+    // const height = this.worldHeight
+    this.strokeWidthEm = 1
+    this.fontSizeEm = 1
+    // const asfd = this.worldWidth / 2
+    // const asdfasdf = this.worldHeight / 2
     this.svg = select(`.${styles.container}`)
       .append('svg')
-      .attr('width', width)
-      .attr('height', height)
+      // .attr('width', '100%')
+      // .attr('height', '100%')
+      // .attr('viewBox', `${-asfd} ${-asdfasdf} ${asfd} ${asdfasdf}`)
+      .attr('viewBox', `${0} ${0} ${this.worldWidth} ${this.worldHeight}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
       .on('click', this.stopped, true)
 
     this.svg
       .append('rect')
       .attr('class', styles.sneezeGuard)
-      .attr('width', width)
-      .attr('height', height)
+      .attr('width', this.worldWidth)
+      .attr('height', this.worldHeight)
       .on('click', this.reset)
 
     const filter = this.svg
@@ -181,6 +213,28 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
     this.selectedRegionsGroup = this.mapGroup.append('g').attr('class', 'selected-regions')
     this.stateLabelsGroup = this.mapGroup.append('g').attr('class', 'state-labels')
     this.regionLabelsGroup = this.mapGroup.append('g').attr('class', 'region-labels')
+  }
+
+  public componentDidMount() {
+    // const { width, height } = this.props
+    const width = this.worldWidth
+    const height = this.worldHeight
+    this.projection = geoMercator()
+      .scale(1000)
+      .translate([width / 2, height / 2])
+
+    const asdf = this.containerElement.getBoundingClientRect()
+    console.log(asdf)
+    debugger
+
+    this.zoom = zoom()
+      .scaleExtent([1, 10])
+      .extent([[0, 0], [700, 700]])
+      .on('zoom', this.zoomed)
+
+    this.path = geoPath().projection(this.projection)
+
+    this.initializeElements()
 
     this.svg.call(this.zoom) // delete this line to disable free zooming
     this.renderData()
@@ -332,7 +386,6 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
         ? usStatesGeoJson.features.filter(x => x.properties.selectionStatus !== Selection.Selected)
         : [],
     }
-    console.log(nonSelectedStates.features)
     const stateSelection = this.stateLabelsGroup
       .selectAll(`text.js-d3-states-labels`)
       .data([...nonSelectedStates.features], x => {
@@ -415,11 +468,12 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
   }
 
   public renderData() {
-    const { usStatesGeoJson, width, height } = this.props
+    const { usStatesGeoJson } = this.props
+
     this.projection = getProjectionFromFeature(
       usStatesGeoJson,
-      { width, height },
-      Math.min(width, height) * 0.5
+      { width: this.worldWidth, height: this.worldHeight },
+      Math.min(this.worldWidth, this.worldHeight) * 0.5
     )
     this.path = geoPath().projection(this.projection)
     this.renderRegionsBackdrop(this.path)
@@ -437,18 +491,17 @@ export class MinimapSvgComponent extends React.Component<IMinimapSvgProps> {
 
 export const getProjectionFromFeature = (
   feature: GeoJsonObject,
-  dimmensions: MicromapSettings.IDimensionsSettings,
+  dimensions: MicromapSettings.IDimensionsSettings,
   radius: number
 ): GeoProjection => {
-  const { width, height } = dimmensions
+  const { width, height } = dimensions
   const streamGeometry = feature as GeoGeometryObjects
   const diameter = radius * 2 * 0.9
   const lower = [(width - diameter) / 2, (height - diameter) / 2]
   const upper = [width - lower[0], height - lower[1]]
-  const projection = geoMercator().fitExtent(
-    [[lower[0], lower[1]], [upper[0], upper[1]]],
-    streamGeometry
-  )
+  const projection = geoMercator()
+    .fitExtent([[lower[0], lower[1]], [upper[0], upper[1]]], streamGeometry)
+    .translate([width, height])
 
   return projection
 }

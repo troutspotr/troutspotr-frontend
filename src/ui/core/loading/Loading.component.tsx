@@ -6,7 +6,7 @@ export interface ILoadingProps {
   subTitle: string
 }
 
-export const LoadingComponent: React.SFC<ILoadingProps> = props => {
+export const LoadingComponent: React.SFC<ILoadingProps> = (props): JSX.Element => {
   return (
     <div className={classes.box}>
       <div className={classes.title}>{props.title}</div>
@@ -26,8 +26,3 @@ export const LoadingComponent: React.SFC<ILoadingProps> = props => {
     </div>
   )
 }
-
-// LoadingComponent.propTypes = {
-//   'title': PropTypes.string,
-//   'subTitle': PropTypes.string,
-// }

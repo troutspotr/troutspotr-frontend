@@ -1,7 +1,7 @@
 import * as React from 'react'
 const classes = require('./RegionDetails.scss')
 
-class RegionDetails extends React.PureComponent<{}> {
+class RegionDetails extends React.PureComponent<any> {
   public renderPublic() {
     return (
       <div>

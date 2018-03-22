@@ -1,20 +1,24 @@
 import * as React from 'react'
 import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 import AccessPointComponent from 'ui/routes/@usState/@region/@stream/details/AccessPoint.component'
+import { IStreamObject } from 'coreTypes/IStreamObject'
 const classes = require('./MapOverlay.scss')
 const AccessPointClasses = require('ui/routes/@usState/@region/@stream/details/Details.scss')
 
-export class AccessPointDetails extends React.Component<{}> {
-  protected renderPublicAccess(selectedAccessPoint: {}) {
+// tslint:disable-next-line:no-any
+export interface IAccessPointProps {
+  selectedStream: IStreamObject
+  selectedAccessPoint: any
+}
+export class AccessPointDetails extends React.Component<IAccessPointProps> {
+  protected renderPublicAccess(selectedAccessPoint: any) {
     return (
       <AccessPointComponent
         accessPoint={selectedAccessPoint}
-        streamObject={this.props.selectedStream}
         selectedClass={AccessPointClasses.selectedPublicBridgeTroutStream}
         defaultClass={AccessPointClasses.publicBridgeTroutStream}
         isSelected
         isHovered={false}
-        location={null}
         onHover={() => {}}
       />
     )
@@ -26,12 +30,10 @@ export class AccessPointDetails extends React.Component<{}> {
         <div className={classes.private}>Access requires landowner permission.</div>
         <AccessPointComponent
           accessPoint={selectedAccessPoint}
-          streamObject={this.props.selectedStream}
           selectedClass={AccessPointClasses.selectedBridgeOverTroutStream}
           defaultClass={AccessPointClasses.bridgeOverTroutStream}
           isSelected
           isHovered={false}
-          location={null}
           onHover={() => {}}
         />
       </div>
@@ -42,12 +44,10 @@ export class AccessPointDetails extends React.Component<{}> {
     return (
       <AccessPointComponent
         accessPoint={selectedAccessPoint}
-        streamObject={this.props.selectedStream}
         selectedClass={AccessPointClasses.selectedUnsafeBridgeOverTroutStream}
         defaultClass={AccessPointClasses.unsafeBridgeOverTroutStream}
         isSelected
         isHovered={false}
-        location={null}
         onHover={() => {}}
       />
     )

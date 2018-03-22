@@ -1,6 +1,6 @@
 import { ISection } from '../ISection'
 
-export interface IPalSection extends ISection {
+export interface IPal extends ISection {
   gid: number
   area_name: string
   shape_area: number

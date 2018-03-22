@@ -3,7 +3,7 @@ const classes = require('./Details.scss')
 import isEmpty from 'lodash-es/isEmpty'
 /* eslint-disable camelcase */
 
-class SpeciesComponent extends React.Component<{}> {
+class SpeciesComponent extends React.Component<any> {
   public createSpeciesViewModels(stream) {
     const {
       has_brook_trout,

@@ -19,7 +19,7 @@ stories.add('Position', () => {
 
   const overlay = (
     <MessageOverlayComponent position={orientation}>
-      {text('Content', 'Hello here is your content please type away')}
+      {text('Content', 'Hello hay')}
     </MessageOverlayComponent>
   )
   return generateFakeContainer(overlay)

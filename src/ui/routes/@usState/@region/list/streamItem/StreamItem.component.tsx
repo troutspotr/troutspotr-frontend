@@ -1,81 +1,91 @@
 import * as React from 'react'
-// import { Link } from 'react-router'
 const classes = require('./StreamItem.scss')
-// import MicroMapContainer from 'ui/core/microMap/MicroMap.container'
-import RegulationsSummaryComponent from 'ui/core/regulations/RegulationsSummary.component'
-/* eslint-disable camelcase */
+import { RegulationsSummary } from 'ui/core/regulations/RegulationsSummary.component'
+import { IStreamObject } from 'coreTypes/IStreamObject'
+import { DEFAULT_MICROMAP_CANVAS_SETTINGS } from 'ui/core/micromap/Micromap.settings'
+import { IMiscRegsProperties } from 'ui/core/regulations/RegulationsSummary.selectors'
+import { MicroMapComponentCanvas } from 'ui/core/micromap/canvas/Micromap.component.canvas'
+import { StreamItemLayout } from 'ui/routes/@usState/@region/list/streamItem/StreamItem.layout'
+import { BridgeSummaryComponent } from './BridgeSummary.component'
 
-export class StreamItemBodyComponent extends React.Component<{}> {
-  public renderOpenOrClosed(streamObject, getSummary) {
+export interface IStreamItemBodyProps {
+  stream: IStreamObject
+}
+
+export class StreamItemBodyComponent extends React.Component<IStreamItemBodyProps> {
+  public renderOpenOrClosed(streamObject: IStreamObject, getSummary) {
     if (getSummary == null) {
       throw new Error('getSummary not defined')
     }
-    return <RegulationsSummaryComponent getSummary={getSummary} streamObject={streamObject} />
+    return <RegulationsSummary getSummary={getSummary} streamObject={streamObject} />
   }
 
-  public renderOpenBridges(streamObject) {
-    const { publicTroutBridgeCount, bridgeText } = streamObject.stream.properties
-    return (
-      <div>
-        {publicTroutBridgeCount > 0 && (
-          <span className={classes.publicBridgesBadge}>{publicTroutBridgeCount}</span>
-        )}
-        {bridgeText}
-      </div>
-    )
+  public renderOpenBridges(streamObject: IStreamObject) {
+    return <BridgeSummaryComponent stream={streamObject} />
+  }
+
+  private getSummary(streamObject: IStreamObject): IMiscRegsProperties {
+    const fakeOpener = {
+      start_time: new Date(),
+      end_time: new Date(),
+      id: 123,
+      water_id: 123,
+      restriction_id: 123,
+      restriction: {
+        id: 123,
+        sourceId: 'asdf',
+        shortText: 'asdf',
+        legalText: 'lkjsdf',
+      },
+    }
+    return {
+      hasRegulationThatOverridesOpenSeason: false,
+      isOpenSeason: true,
+      openSeasonOverrides: [],
+      openers: [fakeOpener],
+      closestOpener: fakeOpener,
+    }
   }
 
   public render() {
-    const { title, streamObject } = this.props
+    const { stream } = this.props
     return (
       <div className={classes.body}>
-        <div className={classes.header}>{title}</div>
-        {this.renderOpenOrClosed(streamObject, this.props.getSummary)}
-        {this.renderOpenBridges(streamObject)}
+        {this.renderOpenOrClosed(stream, this.getSummary)}
+        {this.renderOpenBridges(stream)}
       </div>
     )
   }
 }
 
-// StreamItemBodyComponent.propTypes = {
-//   title: PropTypes.string.isRequired,
-//   streamObject: PropTypes.object.isRequired,
-//   getSummary: PropTypes.func.isRequired,
-// }
-
-class StreamItemComponent extends React.PureComponent<{}> {
-  public render() {
-    // const { title, url, streamObject, getSummary } = this.props
-    return null
-    // return (
-    //   <Link
-    //     to={url}
-    //     className={classes.container}
-    //     data-stream-gid={streamObject.stream.properties.gid}
-    //   >
-    //     <div className={classes.media}>
-    //       <MicroMapContainer
-    //         id={`${streamObject.stream.properties.slug}-canvas`}
-    //         isVisible={this.props.isVisible}
-    //         streamObject={streamObject}
-    //       />
-    //     </div>
-    //     <StreamItemBodyComponent
-    //       title={title}
-    //       streamObject={streamObject}
-    //       getSummary={getSummary}
-    //     />
-    //   </Link>
-    // )
-  }
+export interface IStreamItemProps {
+  stream: IStreamObject
+  isVisible: boolean
+  url: string
 }
 
-// StreamItemComponent.propTypes = {
-//   title: PropTypes.string.isRequired,
-//   url: PropTypes.string.isRequired,
-//   streamObject: PropTypes.object.isRequired,
-//   isVisible: PropTypes.bool.isRequired,
-//   getSummary: PropTypes.func.isRequired,
-// }
+export class StreamItemComponent extends React.PureComponent<IStreamItemProps> {
+  public render() {
+    const { stream, isVisible } = this.props
+    const id = stream.stream.properties.gid + stream.stream.properties.name
+    const title = <div className={classes.header}>{stream.stream.properties.name}</div>
+    const canvas = (
+      <MicroMapComponentCanvas
+        settings={DEFAULT_MICROMAP_CANVAS_SETTINGS}
+        id={id}
+        streamObject={this.props.stream}
+      />
+    )
 
-export default StreamItemComponent
+    const body = <StreamItemBodyComponent stream={stream} />
+    return (
+      <StreamItemLayout
+        isVisible={isVisible}
+        title={title}
+        micromap={canvas}
+        body={body}
+        link={'#'}
+      />
+    )
+  }
+}

@@ -1,15 +1,21 @@
-import { IAccessPointGeoJsonProps } from 'coreTypes/accessPoint/IAccessPoint'
 import { IStream } from 'coreTypes/stream/IStream'
-import { Feature, LineString, MultiPolygon, Point } from 'geojson'
+import { Feature, LineString, MultiPolygon } from 'geojson'
+import {
+  AccessPointFeature,
+  TroutStreamSectionFeature,
+  PalSectionFeature,
+  RestrictionFeature,
+} from 'api/region/IRegionGeoJSON'
 
-export type AccessPointFeature = Feature<Point, IAccessPointGeoJsonProps>
-export type AccessPointFeatureCollection = ReadonlyArray<AccessPointFeature>
-export type StreamFeature = Feature<LineString, IStream>
+export type AccessPointFeatures = ReadonlyArray<AccessPointFeature>
+export type TroutStreamSectionFeatures = ReadonlyArray<TroutStreamSectionFeature>
+export type PalSectionFeatures = ReadonlyArray<PalSectionFeature>
+
 export interface IStreamObject {
-  readonly accessPoints: AccessPointFeatureCollection
-  readonly palSections: ReadonlyArray<Feature<LineString>>
+  readonly accessPoints: AccessPointFeatures
+  readonly palSections: PalSectionFeatures
   readonly stream: Feature<LineString, IStream>
-  readonly restrictions: ReadonlyArray<Feature<LineString>>
-  readonly sections: ReadonlyArray<Feature<LineString>>
+  readonly restrictions: ReadonlyArray<RestrictionFeature>
+  readonly sections: TroutStreamSectionFeatures
   readonly circle: MultiPolygon
 }

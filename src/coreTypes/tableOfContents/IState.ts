@@ -1,7 +1,7 @@
 import { Loading } from 'ui/core/LoadingConstants'
 import { Selection } from 'ui/core/SelectionConstants'
 
-export interface IState {
+export interface IUsState {
   gid: number
   statefp: string
   statefp_2: {}

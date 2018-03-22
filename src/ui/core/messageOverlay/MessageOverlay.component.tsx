@@ -5,7 +5,7 @@ export interface IMessageOverlayProps {
   position: 'top' | 'bottom'
 }
 
-export const MessageOverlayComponent: React.SFC<IMessageOverlayProps> = props => {
+export const MessageOverlayComponent: React.SFC<IMessageOverlayProps> = (props): JSX.Element => {
   const { position, children } = props
   const className = classes[position]
   return <div className={className}>{children}</div>

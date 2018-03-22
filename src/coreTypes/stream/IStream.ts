@@ -1,4 +1,6 @@
-export interface IStream {
+import { IOpener } from 'coreTypes/state/IWaterOpener'
+import { IBridgeCount } from '../../api/region/Region.accessPoints'
+export interface IStream extends IBridgeCount {
   gid: number
   name: string
   local_name: string
@@ -23,4 +25,5 @@ export interface IStream {
   trout_stream_section_length: number
   publicly_accessible_trout_stream_section_length: number
   linear_offset: number
+  openers?: IOpener[]
 }

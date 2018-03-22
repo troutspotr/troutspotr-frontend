@@ -1,16 +1,20 @@
 import { createSelector } from 'reselect'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
+import { Loading } from 'ui/core/LoadingConstants'
 import { isMapboxModuleLoadedSelector } from 'ui/core/MapboxModule.selectors'
 import { regionLoadingStatusSelector } from 'ui/routes/@usState/@region/Region.selectors'
-export const getMapCameraSelector = state => state.map.camera
-export const getMapGroundSelector = state => state.map.ground
-export const getMapSettingsSelector = state => state.map.settings
-export const getMapInteractivitySelector = state => state.map.interactivity
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+import { ICameraReduxState } from './Map.redux.camera'
+import { IMapInteractivity } from './Map.redux.interactivity'
+
+export const getMapCameraSelector = (reduxState: IReduxState): ICameraReduxState =>
+  reduxState.map.camera
+export const getMapInteractivitySelector = (reduxState: IReduxState): IMapInteractivity =>
+  reduxState.map.interactivity
 
 export const isReadyToInsertLayersSelector = createSelector(
   [isMapboxModuleLoadedSelector, getMapInteractivitySelector, regionLoadingStatusSelector],
   (isMapboxModuleLoaded, interactivity) => {
-    const isMapModuleLoaded = isMapboxModuleLoaded === LOADING_CONSTANTS.IS_SUCCESS
+    const isMapModuleLoaded = isMapboxModuleLoaded === Loading.Success
     const result = isMapModuleLoaded && interactivity.isMapInitialized
     return result
   }

@@ -54,7 +54,7 @@ export const drawStreamToCanvas = (
 ) => {
   const { dimensions } = settings
   canvasContext.clearRect(0, 0, dimensions.width, dimensions.height)
-  renderPetriDish(canvasContext, settings, settings.colors.petriDish)
+  // renderPetriDish(canvasContext, settings, settings.colors.petriDish)
   renderStreams(streamObject, canvasContext, settings)
   drawRingToCanvas(canvasContext, streamObject, settings)
   return canvasContext

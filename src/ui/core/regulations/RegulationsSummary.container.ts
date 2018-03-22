@@ -1,12 +1,22 @@
 import { connect } from 'react-redux'
-import RegulationsSummaryComponent from './RegulationsSummary.component'
+import {
+  RegulationsSummary,
+  IRegulationsSummaryStateProps,
+  IRegulationsSummaryDispatchProps,
+  IRegulationsSummaryPassedProps,
+} from './RegulationsSummary.component'
 import { getRegulationsSummarySelector } from './RegulationsSummary.selectors'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 const mapDispatchToProps = {}
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IReduxState): IRegulationsSummaryStateProps => {
   const getSummary = getRegulationsSummarySelector(state)
   const props = { getSummary }
   return props
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegulationsSummaryComponent) as {}
+export default connect<
+  IRegulationsSummaryStateProps,
+  IRegulationsSummaryDispatchProps,
+  IRegulationsSummaryPassedProps
+>(mapStateToProps, mapDispatchToProps)(RegulationsSummary)

@@ -17,16 +17,18 @@ export const renderPointOnStream = (
   if (context == null) {
     return
   }
-  context.beginPath()
-  context.fillStyle = color
   const canvasCoordiantes = projection([coordinates[0], coordinates[1]])
+
   if (canvasCoordiantes == null) {
     return
   }
-
+  context.save()
+  context.beginPath()
+  context.fillStyle = color
   context.lineWidth = 1
   context.strokeStyle = color
   context.arc(canvasCoordiantes[0], canvasCoordiantes[1], radius, 0, TAU, false)
   context.fill()
   context.stroke()
+  context.restore()
 }

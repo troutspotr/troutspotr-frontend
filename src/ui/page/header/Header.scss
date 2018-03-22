@@ -2,87 +2,37 @@
 @import 'src/ui/styles/_variables';
 @import 'src/ui/styles/_fonts';
 @import 'src/ui/styles/ZeldaText';
+@import 'src/ui/styles/fallback';
+@import 'src/ui/styles/utilities';
+@import 'src/ui/page/header/search/Search.scss';
 
 $fontSize: 12px;
 $largeFontSize: 1.25em;
 $smallFontSize: 0.85em;
-$cautionaryYellow: transparentize($yellow, 0.8);
-
-@keyframes highlight {
-  0% {
-    background-color: $messageBackground;
-  }
-
-  40% {
-    background-color: $messageBackground;
-  }
-
-  45% {
-    background-color: $cautionaryYellow;
-  }
-  50% {
-    background-color: $messageBackground;
-  }
-}
 
 .headerContainer {
-  // fixes animation issue on header in offline mode
-  // in (of course) safari iOS.
-
-  // height: $header-height;
-  background-color: $messageBackground;
-  transition: background-color 0.3s ease;
-  // BLURRY KIRBY FIX. I don't know why, but iOS safari
-  // gets blurry unless the header is set to fixed position.
+  @include fallback(background-color, --message-background-color, $messageBackgroundDark);
   height: $header-height;
   position: fixed;
   width: 100%;
 
-  // top: 0px;
   z-index: 10000;
-  border-bottom: 1px solid transparentize($off-white, 0.4);
-
-  // overflow: hidden;
+  transition: none;
+  border-bottom: 1px solid transparentize($white, 0.4);
+  border-bottom: 1px solid var(--text-color-primary);
   font-size: $fontSize;
-  // backdrop-filter: blur(2px);
-}
-
-.isOffline {
-  composes: headerContainer;
-  transition: background-color 0.3s ease;
-  animation: highlight 12s linear infinite;
-  .offlineIndicator {
-    z-index: -100;
-    position: absolute;
-    top: 0;
-    left: -60px;
-    right: 0;
-    bottom: 0;
-    opacity: 0.3;
-    transition: opacity 0.3s ease;
-    background-size: 30px 30px;
-  }
-}
-
-@keyframes barberpole {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(60px, 0px, 0);
-  }
 }
 
 .header {
-  margin-top: 5px;
+  padding-top: 5px;
   margin-left: 0px;
   margin-right: 0px;
   display: flex;
+  height: 100%;
 }
 
 .backButtonContainer {
   order: 1;
-
   min-width: 50px;
   max-width: 50px;
 }
@@ -93,30 +43,91 @@ $cautionaryYellow: transparentize($yellow, 0.8);
   max-width: 50px;
   height: 50px;
   z-index: 1000;
-
-  // background-color: transparentize($red, 0.8);
 }
-
-// calc(100vmin / 50px)
-
 .details {
   padding-top: 0px;
   order: 2;
   flex-grow: 1;
 
   padding-left: 10px;
-
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
   .top {
-    color: $white;
     margin-bottom: 1px;
+  }
+
+  .bottom {
+    overflow: hidden;
+    flex-grow: 1;
+    position: relative;
   }
 }
 
-.title {
-  color: $white;
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 1.1;
-  cursor: pointer;
-  @include medium-font;
+.thing {
+  display: inline-block;
+  position: absolute;
+  height: 100%;
+}
+$enter-speed: 500;
+$exit-speed: $enter-speed / 3;
+
+$enter-speed-ms: $enter-speed * 1ms;
+$enter-delay-ms: $enter-speed-ms / 3;
+$enter-length-ms: $enter-speed-ms - $enter-delay-ms;
+$exit-speed-ms: $exit-speed * 1ms;
+
+$something-ease: cubic-bezier(0.75, 0, 0.25, 1);
+
+:global .whatever--enter {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path $enter-length-ms, opacity $enter-length-ms;
+  transition-delay: $enter-delay-ms;
+  transition-timing-function: $something-ease;
+}
+
+:global .whatever--enter-active {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+}
+
+:global .whatever--exit {
+  transition: clip-path $exit-speed-ms, opacity $exit-speed-ms;
+  opacity: 1;
+
+  transition-timing-function: $something-ease;
+}
+
+:global .whatever--exit-active {
+  opacity: 0;
+}
+
+:global .hello--enter {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path $enter-length-ms, opacity $enter-length-ms;
+  transition-delay: $enter-delay-ms;
+  transition-timing-function: $something-ease;
+}
+
+:global .hello--enter-active {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+}
+
+:global .hello--exit {
+  opacity: 1;
+  transition: opacity $exit-speed-ms;
+  transition-timing-function: $something-ease;
+}
+
+:global .hello--exit-active {
+  opacity: 0;
+}
+
+:export {
+  enter-speed: $enter-speed;
+  exit-speed: $exit-speed;
 }

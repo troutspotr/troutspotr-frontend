@@ -10,12 +10,12 @@ import {
 } from './gps/Footer.gps.component'
 
 export interface IFooterDispatchProps extends IGpsDispatchProps {
-  setViewToMap: () => void
-  setViewToList: () => void
+  setViewToMap(): void
+  setViewToList(): void
 }
 export interface IFooterStateProps extends IGpsComponentStateProps {
   view: View
-  selectedStream: {}
+  selectedStream: any
 }
 
 export interface IFooterProps extends IFooterDispatchProps, IFooterStateProps {}

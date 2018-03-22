@@ -1,112 +1,18 @@
-@import "src/ui/styles/_colors";
-@import "src/ui/styles/_variables";
-@import "src/ui/styles/_fonts";
-@import "src/ui/styles/ZeldaText";
-@import "src/ui/styles/NumberCircle";
-
-.container {
-  margin-bottom: 15px;
-  font-size: 12px;
-  display: inline-flex;
-  width: 100%;
-  color: inherit;
-  text-decoration: inherit;
-  color: $white;
-  .media {
-    order: 1;
-  }
-
-  .body {
-    margin-left: 5px;
-    order: 2;
-    flex-grow: 1;
-  }
-
-  .header {
-    font-size: 1.5em;
-    color: $white;
-    text-decoration: none;
-
-    @include medium-font;
-  }
-}
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/_fonts';
+@import 'src/ui/styles/ZeldaText';
+@import 'src/ui/styles/fallback';
+@import 'src/ui/styles/utilities';
+$micromap-height: 3.5rem;
+$micromap-width: $micromap-height;
 
 .closed {
   composes: zeldaText;
-  color: $red;
-}
-
-.open {
-  composes: zeldaText;
-  color: $white;
-}
-
-// .openEmphasis {
-//   composes: open;
-//   color: $blue;
-// }
-
-// .openCaution {
-//   composes: open;
-//   color: $yellow;
-// }
-
-.emphasis {
-  composes: zeldaText;
-  color: $white;
+  @include fallback(color, --red, $redDark);
 }
 
 .deemphasis {
-  composes: open;
-  color: $blueGray;
-}
-
-.openGreen {
-  composes: open;
-  color: $green;
-}
-
-.publicBridgesBadge {
-  composes: numberCircle;
-  color: $green;
-  font-size: 0.8em;
-  font-weight: 500;
-}
-
-.publicBridgesBadgeDull {
-  composes: publicBridgesBadge;
-  color: $off-white;
-}
-
-.microLength {
-  list-style: none;
-  display: inline-flex;
-  font-size: 10px;
-  width: 100%;
-
-  // background: $gray;
-
-  .trout {
-    color: $blue;
-    order: 3;
-    text-align: left;
-    flex-grow: 1;
-
-    // composes: lengthItem;
- 
-  }
-
-  .marker {
-    order: 2;
-  }
-
-  .public {
-    color: $green;
-    order: 1;
-    text-align: right;
-    flex-grow: 1;
-
-    // composes: lengthItem;
- 
-  }
+  composes: closed;
+  @include fallback(color, --text-color-secondary, $offTextDark);
 }

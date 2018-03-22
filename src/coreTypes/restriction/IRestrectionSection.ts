@@ -1,4 +1,5 @@
 import { ISection } from 'coreTypes/ISection'
+import { IRegulation } from 'coreTypes/state/IRegulation'
 
 export interface IRestrictionSection extends ISection {
   restriction_id: number
@@ -7,4 +8,7 @@ export interface IRestrictionSection extends ISection {
   start_time?: Date
   end_time?: Date
   gid: number
+  restriction?: IRegulation
+  color?: string
+  colorOffset?: number
 }

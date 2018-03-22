@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { FooterContainer } from 'ui/page/footer/Footer.container'
 import { PageLayoutComponent } from 'ui/page/PageLayout.component'
-// import { HeaderLayout } from 'ui/page/header/Header.layout'
-// import { View } from 'ui/core/Core.redux'
+
 export const HomeComponent = props => {
-  return <div>Home lol</div>
+  return <div>Home Etc</div>
 }
 
 export class PageContainer extends React.PureComponent {

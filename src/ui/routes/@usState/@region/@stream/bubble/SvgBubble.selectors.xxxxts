@@ -1,0 +1,2 @@
+export const getStreamDictionary = state => state.bubbles.streamDictionary
+export const getSelectedStreamGid = state => state.bubbles.streamDictioanry

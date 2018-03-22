@@ -18,6 +18,8 @@ const createCircleRadius = (diameter: number): StyleFunction => {
   return circleRadius
 }
 
+export const filter = () => {}
+
 export const createAccessPointCircleLabelLayer = (
   layerProps: ILayerProperties,
   sourceId: string

@@ -15,5 +15,13 @@ $button-hover-darken-pct: 10;
 $body-top-padding: 61px;
 $body-side-padding: 15px;
 
-$default-line-height: 1.35em;
-$default-font-size: 16px;
+$default-line-height: 1.2em;
+$default-font-size: 14px;
+
+:export {
+  default-padding: $default-padding;
+  default-margin: $default-margin;
+  footer-height: $footer-height;
+  header-height: $header-height;
+  default-font-size: $default-font-size;
+}

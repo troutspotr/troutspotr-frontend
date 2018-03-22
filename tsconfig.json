@@ -30,6 +30,7 @@
     "node_modules",
     "!node_modules/@types",
     "build",
+    "dist",
     "scripts",
     "acceptance-tests",
     "webpack",

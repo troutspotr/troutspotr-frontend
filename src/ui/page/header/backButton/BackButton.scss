@@ -8,7 +8,7 @@ $largeFontSize: 1em;
   height: 40px;
   margin: 5px;
   display: inline-block;
-  transition: fill 0.1s linear 0ms;
+  transition: fill 800ms;
   cursor: pointer;
   :hover {
     .backdrop {
@@ -39,19 +39,19 @@ $largeFontSize: 1em;
 }
 
 .circle {
-  transition: fill 0.1s linear 0ms;
+  transition: fill 800ms;
   // fill: $white;
   @include fallback(fill, --text-color-primary, $white);
 }
 
 .backdrop {
-  transition: fill 0.1s linear 0ms;
+  transition: fill 800ms;
   // fill: $messageBackgroundDark;
   @include fallback(fill, --message-background-color, $messageBackgroundDark);
 }
 
 .chevron {
-  transition: fill 0.1s linear 0ms;
+  transition: fill 800ms;
   // fill: $textDark;
   @include fallback(fill, --text-color-primary, $textDark);
 }

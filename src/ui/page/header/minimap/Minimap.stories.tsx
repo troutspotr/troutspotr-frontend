@@ -4,11 +4,36 @@ import { storiesOf } from '@storybook/react'
 import * as React from 'react'
 const kirby = require('ui/page/header/minimap/_stubs/kirby.gif')
 import { IMinimapProps, MinimapComponent } from 'ui/page/header/minimap/Minimap.component'
+import { createStatesAndRegions } from './svgMinimap/SvgMinimap.stories'
 const stories = storiesOf('Page/Header/Minimap', module)
-
+const classes = require('./Minimap.scss')
+const dimensions = parseInt(classes['minimap-size'])
+console.log(dimensions)
 stories.add('Deafult Container', () => {
   const closeButton = <button>Hello</button>
   const mapComponent = <img src={kirby} />
+  const props: IMinimapProps = {
+    isExpanded: boolean('Expand', true),
+    handleExpand: action('Handle expand'),
+    isReadyToReveal: boolean('Is ready to reveal', true),
+    closeButton,
+    mapComponent,
+  }
+  return (
+    <div style={{ position: 'absolute', bottom: 0, right: 10 }}>
+      <MinimapComponent {...props} />
+    </div>
+  )
+})
+
+stories.add('Crazy content', () => {
+  const closeButton = <button>Hello</button>
+  const mapComponent = (
+    <span>
+      <span>hello</span>
+      <span>yes its me</span>
+    </span>
+  )
   const props: IMinimapProps = {
     isExpanded: boolean('Expand', false),
     handleExpand: action('Handle expand'),
@@ -23,14 +48,9 @@ stories.add('Deafult Container', () => {
   )
 })
 
-stories.add('Crazy content', () => {
+stories.add('Real content', () => {
   const closeButton = <button>Hello</button>
-  const mapComponent = (
-    <span>
-      <span>hello</span>
-      <span>yes its me</span>
-    </span>
-  )
+  const mapComponent = createStatesAndRegions(50, 50)
   const props: IMinimapProps = {
     isExpanded: boolean('Expand', false),
     handleExpand: action('Handle expand'),

@@ -6,7 +6,7 @@ interface IPublicBridgesComponent {
   count: number
 }
 
-const PublicBridgesComponent: React.SFC<IPublicBridgesComponent> = props => {
+const PublicBridgesComponent: React.SFC<IPublicBridgesComponent> = (props): JSX.Element => {
   const { count } = props
   const noun = count === 1 ? ' bridge' : ' bridges'
   const countSymbol =

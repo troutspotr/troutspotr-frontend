@@ -1,6 +1,6 @@
 import * as React from 'react'
 // import PropTypes from 'prop-types'
-class StateComponent extends React.PureComponent<{}> {
+class StateComponent extends React.PureComponent<any> {
   public componentDidMount() {
     // this.props.fetchStateData(this.props.selectedState)
   }

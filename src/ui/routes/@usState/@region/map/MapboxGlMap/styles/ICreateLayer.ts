@@ -27,6 +27,7 @@ export const defaultLayerProperties = (): ILayerProperties => {
     publicSectionWidth: 3,
     specialRegulationsWidth: 4,
     terminusDiameter: 0,
+    backdropWidth: 3,
   }
   return {
     pallete: null,

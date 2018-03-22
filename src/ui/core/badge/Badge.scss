@@ -5,43 +5,33 @@
 $circle-size: 0.9em;
 
 .numberCircle {
-  display: inline-flex;
+  display: inline-block;
   align-items: center;
   justify-content: center;
-  // font: 32px Arial, sans-serif;
   width: $circle-size;
   height: $circle-size;
   box-sizing: initial;
 
-  // background: #fff;
   border: 0.1em solid;
 
-  // color: #666;
   text-align: center;
   border-radius: 50%;
   line-height: $circle-size + 0.1em;
   box-sizing: content-box;
   text-transform: uppercase;
-  transform: translateY(0.15em);
+  transform: translateY(0.05em);
   @include heavy-font;
   transition: color 800ms, background-color 800ms;
 }
 
-.content {
-  font-size: 0.6em;
-  position: absolute;
-  transform: translateY(0.05em);
-  transition: color 800ms, background-color 800ms;
-}
-
-.contentSmall {
-  composes: content;
+.numberCircle::first-line {
+  font-size: 0.62em;
 }
 
 @mixin make-solid($color) {
   composes: numberCircle;
   background-color: $color;
-  @include fallback(color, var(--text-color-primary), $backgroundDark);
+  @include fallback(color, --black, $backgroundDark);
   border-color: $color;
 }
 
@@ -69,7 +59,7 @@ $circle-size: 0.9em;
 .blueGray {
   @include make-hollow($blueGrayDark);
   @include fallback(color, --badge-unsafe-to-fish-border, blue);
-  .content {
+  &::first-line {
     @include fallback(color, --badge-unsafe-to-fish-content, blue);
   }
 }
@@ -96,12 +86,12 @@ $circle-size: 0.9em;
 
 :global(.ts-light) {
   .blueGraySolid {
-    .content {
+    &::first-line {
       @include fallback(color, --white, $black);
     }
   }
 
-  .content {
+  &::first-line {
     @include fallback(color, --text-color-primary, $black);
   }
 }

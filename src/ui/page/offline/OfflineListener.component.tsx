@@ -1,10 +1,11 @@
 import * as React from 'react'
 const getIsOnlineStatusFromNavigator = () => window.navigator.onLine
+
 export interface IOfflineListenerComponent {
-  setIsOffline: {}
+  setIsOffline: ((isOffline: boolean) => void)
 }
 
-class OfflineListenerComponent extends React.Component<IOfflineListenerComponent> {
+class OfflineListenerComponent extends React.PureComponent<IOfflineListenerComponent> {
   constructor(props) {
     super(props)
     this.getOnlineStatus = this.getOnlineStatus.bind(this)

@@ -6,11 +6,12 @@ import RegionDetails from './RegionDetails.component'
 import { StreamDetailsComponent } from './StreamDetails.component'
 
 import isEmpty from 'lodash-es/isEmpty'
+import { IStreamObject } from '../../../../../../coreTypes/IStreamObject'
 
 export interface IDetailsOverlayComponent {
-  visibleTroutStreams: {}
-  selectedAccessPoint: {}
-  selectedStream: {}
+  visibleTroutStreams: any
+  selectedAccessPoint: any
+  selectedStream: IStreamObject
 }
 
 class DetailsOverlayComponent extends React.Component<IDetailsOverlayComponent> {

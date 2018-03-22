@@ -1,29 +1,26 @@
-@import "src/ui/styles/NumberCircle";
-@import "src/ui/styles/_colors";
-@import "src/ui/styles/_variables";
-@import "src/ui/styles/_fonts";
-@import "src/ui/styles/ZeldaText";
-
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/_fonts';
+@import 'src/ui/styles/ZeldaText';
+@import 'src/ui/styles/fallback';
 .container {
-  font-size: 12px;
+  // font-size: 12px;
 }
 
 .closed {
-  composes: zeldaText;
-  color: $red;
+  @include fallback(color, --red, $redDark);
 }
 
 .open {
-  composes: zeldaText;
-  color: $white;
-}
-
-.openEmphasis {
-  composes: open;
-  color: $blue;
 }
 
 .openCaution {
-  composes: open;
-  color: $yellow;
+  @include fallback(color, --yellow, $yellowDark);
+}
+
+:global(.ts-light) {
+  .closed,
+  .openCaution {
+    @include heavy-font;
+  }
 }

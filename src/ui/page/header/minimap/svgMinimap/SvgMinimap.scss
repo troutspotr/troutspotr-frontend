@@ -3,9 +3,10 @@
 @import 'src/ui/styles/fallback';
 
 .container {
-  background-color: transparent;
-  // transition: color 800ms, background-color 800ms;
-  // @include fallback(background-color, --message-background-color, $messageBackgroundDark);
+  background-color: gray;
+
+  height: 100%;
+  width: 100%;
 }
 
 :global(.ts-light) {

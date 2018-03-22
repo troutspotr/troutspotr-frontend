@@ -1,7 +1,6 @@
 const autoprefixer = require('autoprefixer')
 const webpack = require('webpack')
 const genDefaultConfig = require('@storybook/react/dist/server/config/defaults/webpack.config.js')
-const developmentWebpackConfig = require('../config/webpack.config.dev')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const { preactAliases } = require('../config/preactAliases')
 // TODO: this was a giant pain in the ass, and this should be moved to /config tbh
@@ -31,10 +30,6 @@ module.exports = (baseConfig, env) => {
     loader: require.resolve('awesome-typescript-loader'),
   })
 
-  // in this house we respect and appreciate preact
-  config.resolve.alias = {
-    ...preactAliases,
-  }
   config.module.rules.push({
     test: /\.scss$/,
     exclude: /\.global\.scss$/,

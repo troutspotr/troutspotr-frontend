@@ -13,7 +13,7 @@ export const defeaultFillOpacity = (props: ILayerProperties, from = 1, to = 0.2)
 
 export const setMaximumAtZoomsAboveSatellite = (
   props: ILayerProperties,
-  orignalStops: Array<Array<{}>>,
+  orignalStops: any[][],
   fadeLength = 3
 ): StyleFunction => {
   if (orignalStops == null || orignalStops.length < 2) {
@@ -21,7 +21,7 @@ export const setMaximumAtZoomsAboveSatellite = (
   }
   const newStops = [...orignalStops]
   const length = newStops.length
-  for (const i = 0; i < length; i++) {
+  for (let i = 0; i < length; i++) {
     const stop = newStops[i]
     if (stop[0] > props.roadTransparencyZoomLevel) {
       stop[1] = Math.min(stop[1], props.roadTransparency)

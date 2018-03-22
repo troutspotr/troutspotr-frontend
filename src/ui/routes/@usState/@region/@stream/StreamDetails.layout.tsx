@@ -1,7 +1,7 @@
 import * as React from 'react'
 const classes = require('./StreamDetails.scss')
 import { IStreamObject } from 'coreTypes/IStreamObject'
-import SvgBubbleComponent from './bubble/SvgBubble.component'
+// import SvgBubbleComponent from './bubble/SvgBubble.component'
 import DetailsContainer from './details/Details.container'
 
 export interface IStreamItemComponent {
@@ -22,7 +22,7 @@ const renderStream = props => {
   if (selectedStream == null) {
     return null
   }
-  return <SvgBubbleComponent streamPackage={selectedStream} index={0} />
+  return null // <SvgBubbleComponent streamPackage={selectedStream} index={0} />
 }
 
 const renderDetails = props => {

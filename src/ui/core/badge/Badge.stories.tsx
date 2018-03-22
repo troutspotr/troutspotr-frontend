@@ -76,7 +76,6 @@ const createCombo = (content: string | number): ReadonlyArray<IBadgeProps> => {
       arr.push(makeBadgeProps(content, fill, color))
     }
   }
-  console.log(arr.length)
   return arr
 }
 
@@ -101,25 +100,19 @@ stories.add('Badges shift size of contents', () => {
   }
 
   const items = array.map((i, ind) => {
-    return (
-      <div key={ind}>
-        {createCombo(i).map((x, index) => (
-          <span key={`${x.content} ${index}`}>
-            <BadgeComponent {...x} />
-          </span>
-        ))}
-      </div>
-    )
+    const combo1 = createCombo(i).map((x, index) => (
+      <span key={`${x.content} ${index}`}>
+        <BadgeComponent {...x} />
+      </span>
+    ))
+    return <div key={ind}>{combo1}</div>
   })
-  const emptyStuff = (
-    <div>
-      {createCombo('').map((x, index) => (
-        <span key={`${x.content} ${index}`}>
-          <BadgeComponent {...x} />
-        </span>
-      ))}
-    </div>
-  )
+  const combo2 = createCombo('').map((x, index) => (
+    <span key={`${x.content} ${index}`}>
+      <BadgeComponent {...x} />
+    </span>
+  ))
+  const emptyStuff = <div>{combo2}</div>
   return (
     <div>
       {emptyStuff}

@@ -3,12 +3,12 @@
 @import 'src/ui/styles/fallback';
 
 $padding: 7px;
-
+$search-max-width: 170px;
 .streamSearch {
   input[type='search'] {
-    max-width: 170px;
+    max-width: $search-max-width;
     -webkit-appearance: textfield;
-    width: calc(100% - 10px);
+    width: calc(100%);
     // background-color: $messageBackground;
     @include fallback(background-color, --message-background-color, $messageBackgroundDark);
     // border: 2px solid $off-white;
@@ -23,7 +23,7 @@ $padding: 7px;
     padding-left: $padding;
     padding-right: $padding;
     resize: horizontal;
-    transition: all 800ms;
+    transition: border-color 800ms, color 800ms, background-color 800ms;
   }
 
   input[type='search']::placeholder {

@@ -1,22 +1,40 @@
 import * as React from 'react'
+import { IStreamObject } from 'coreTypes/IStreamObject'
+import { IMiscRegsProperties } from './RegulationsSummary.selectors'
+import { RegulationsSummaryLayout, IRegulationsSummaryLayout } from './RegulationsSummary.layout'
 const classes = require('./RegulationsSummary.scss')
-class RegulationsSummary extends React.PureComponent<{}> {
+
+export interface IRegulationsSummaryPassedProps {
+  streamObject: IStreamObject
+}
+
+export interface IRegulationsSummaryDispatchProps {}
+
+export interface IRegulationsSummaryStateProps {
+  getSummary(streamObject: IStreamObject): IMiscRegsProperties
+}
+
+export interface IRegulationsSummaryProps
+  extends IRegulationsSummaryDispatchProps,
+    IRegulationsSummaryStateProps,
+    IRegulationsSummaryPassedProps {}
+export class RegulationsSummary extends React.PureComponent<IRegulationsSummaryProps> {
   public getIsOpenStatus(streamObject) {
     return this.props.getSummary(streamObject)
   }
 
   public renderOpenClosedHelper({ statusClass, statusText, explainerText, dateText }) {
-    return (
-      <div className={classes.container}>
-        <span className={statusClass}>
-          {statusText} until {dateText}
-        </span>
-        <span> {explainerText}</span>
-      </div>
-    )
+    const props: IRegulationsSummaryLayout = {
+      status: statusClass,
+      statusText: statusText,
+      untilDateText: dateText,
+      additionalText: explainerText,
+    }
+    return <RegulationsSummaryLayout {...props} />
   }
-
-  public renderOpenOrClosed(streamObject) {
+  // TODO: FIX THIS
+  // move this to the Region API so we don't have to re-calc this in the view.
+  public renderOpenOrClosed(streamObject: IStreamObject) {
     const now = new Date()
 
     const {
@@ -31,8 +49,8 @@ class RegulationsSummary extends React.PureComponent<{}> {
       const openerDate = streamObject.stream.properties.openers.filter(x => x.start_time > now)
       const dateText =
         openerDate.length >= 1
-          ? `${openerDate[0].start_time.toLocaleDateString('en-US')}.`
-          : 'an unknown date. Call the DNR for more details.'
+          ? `${openerDate[0].start_time.toLocaleDateString('en-US')}`
+          : 'an unknown date. Call the DNR for more details'
 
       const args = {
         statusClass: classes.closed,
@@ -46,7 +64,7 @@ class RegulationsSummary extends React.PureComponent<{}> {
 
     if (isOpenSeason && hasRegulationThatOverridesOpenSeason === false) {
       // It's plain vanilla open. Go nuts.
-      const dateText = `${openers[0].end_time.toLocaleDateString('en-US')}.`
+      const dateText = `${openers[0].end_time.toLocaleDateString('en-US')}`
       const args = {
         statusClass: classes.open,
         statusText: 'Open',
@@ -62,8 +80,8 @@ class RegulationsSummary extends React.PureComponent<{}> {
       const explainerText = openSeasonOverrides[0].properties.restriction.shortText
       const hasCloseOpener = closestOpener != null
       const dateText = hasCloseOpener
-        ? `${closestOpener.start_time.toLocaleDateString('en-US')}.`
-        : `${openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US')}.`
+        ? `${closestOpener.start_time.toLocaleDateString('en-US')}`
+        : `${openSeasonOverrides[0].properties.end_time.toLocaleDateString('en-US')}`
       const args = {
         statusClass: classes.openCaution,
         statusText: 'Closed with exceptions',
@@ -98,5 +116,3 @@ class RegulationsSummary extends React.PureComponent<{}> {
     return this.renderOpenOrClosed(streamObject)
   }
 }
-
-export default RegulationsSummary

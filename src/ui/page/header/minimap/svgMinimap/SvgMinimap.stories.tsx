@@ -14,13 +14,13 @@ import {
 } from 'geojson'
 
 import { IRegion } from 'coreTypes/tableOfContents/IRegion'
-import { IState } from 'coreTypes/tableOfContents/IState'
+import { IUsState } from 'coreTypes/tableOfContents/IState'
 import { Loading } from 'ui/core/LoadingConstants'
 import { Selection } from 'ui/core/SelectionConstants'
 
 const US_STATES = require('ui/page/header/minimap/_stubs/states.geo.json') as FeatureCollection<
   MultiPolygon,
-  IState
+  IUsState
 >
 
 const REGIONS = require('ui/page/header/minimap/_stubs/regions.geo.json') as FeatureCollection<
@@ -120,14 +120,7 @@ stories.add('Just states', () => {
   )
 })
 
-stories.add('States and regions', () => {
-  const width = 500
-  const height = 500
-
-  const style = {
-    width: `${width}px`,
-    height: `${height}px`,
-  }
+export const createStatesAndRegions = (width = 500, height = 500) => {
   const selectedStateName = getSelectedStateName()
   const states = {
     ...US_STATES,
@@ -168,12 +161,6 @@ stories.add('States and regions', () => {
           IRegion
         >)
 
-  // const firstRegion = head(regions.features)
-  // const selectedRegionsFeatureCollection =
-  //   firstRegion == null
-  //     ? emptyRegion
-  //     : (featureCollection([firstRegion]) as FeatureCollection<MultiPolygon, IRegion>)
-
   const props: IMinimapSvgProps = {
     height,
     width,
@@ -183,11 +170,15 @@ stories.add('States and regions', () => {
     isOffline: boolean('offline', false),
     isExpanded: boolean('expanded', true),
   }
-  return (
-    <div style={style}>
-      <MinimapSvgComponent {...props} />
-    </div>
-  )
+  return <MinimapSvgComponent {...props} />
+}
+stories.add('States and regions', () => {
+  const style = {
+    width: `${500}px`,
+    height: `${500}px`,
+  }
+
+  return <div style={style}>{createStatesAndRegions(500, 500)}</div>
 })
 
 stories.add('Region Loading', () => {

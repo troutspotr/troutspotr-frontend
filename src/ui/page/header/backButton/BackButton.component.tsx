@@ -7,7 +7,7 @@ export interface IBackButton {
   readonly isEnabled: boolean
 }
 
-export const BackButtonComponent: React.SFC<IBackButton> = props => {
+export const BackButtonComponent: React.SFC<IBackButton> = (props): JSX.Element => {
   const { previous, isEnabled } = props
   return (
     <Link

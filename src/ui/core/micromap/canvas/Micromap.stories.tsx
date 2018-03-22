@@ -1,15 +1,11 @@
-import {
-  color,
-  // select,
-  number,
-} from '@storybook/addon-knobs'
+import { color, select, number } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import * as React from 'react'
 const TroutRunCreek = require('./_stubs/trout-run-creek.json')
 import * as MicromapSettings from 'ui/core/micromap/Micromap.settings'
 import { MicroMapComponentCanvas } from './Micromap.component.canvas'
 const colors = require('ui/styles/_colors.scss')
-
+import * as MapColors from 'ui/routes/@usState/@region/map/MapboxGlMap/styles/MapColors'
 export const getRadius = (dimensions: number, ratio: number): number => {
   return dimensions * ratio / 2
 }
@@ -64,6 +60,13 @@ const getStreamSettings = (
     step: 0.01,
   })
 
+  const backdropWidth = number('stream backdrop width', 1, {
+    range: true,
+    min: 0,
+    max: 10,
+    step: 0.01,
+  })
+
   const radius = getRadius(dimensions.height, radiusRatio)
   const streamWidth = number('Stream Width', 1, {
     range: true,
@@ -103,6 +106,7 @@ const getStreamSettings = (
     publicSectionWidth,
     specialRegulationsWidth,
     terminusDiameter,
+    backdropWidth,
   }
 }
 
@@ -157,31 +161,41 @@ const getAccessPointSettings = (
     step: 0.01,
   })
 
+  const backdropWidth = number('AP Backdrop Width', 1, {
+    range: true,
+    min: 0,
+    max: 10,
+    step: 0.01,
+  })
+
   return {
     radius,
     permissionRequiredDiameter,
     publiclyFishableDiameter,
+    backdropWidth: backdropWidth,
   }
 }
 
 export const getMicromapColorSettings = (): MicromapSettings.IColorSettings => {
-  const background = color('background color', colors.background)
-  const streamColor = color('stream color', colors.secondaryText)
-  const troutStreamSection = color('troutStreamSection color', colors.blue)
-  const specialRegulation = color('specialRegulation color', colors.yellow)
-  const palSection = color('palSection color', colors.green)
-  const primaryText = color('primaryText color', colors.white)
-  const secondaryText = color('secondaryText color', colors.offwhite)
+  const backgroundFill = color('background color', colors.background)
+  const streamColor = color('stream colors', colors.bluegray)
+  const troutSectionFill = color('troutStreamSection color', colors.blue)
+  const restrictionYellow = color('specialRegulation color', colors.yellow)
+  const palSectionFill = color('palSection color', colors.green)
+  const primaryLabelFill = color('primaryText color', colors.white)
+  const secondaryLabelFill = color('secondaryText color', colors.offwhite)
   const petriDish = color('petri dish color', colors.gray)
+  const backdropColor = color('backdrop', colors.black)
   return {
-    background,
-    stream: streamColor,
-    troutStreamSection,
-    specialRegulation,
-    palSection,
-    primaryText,
-    secondaryText,
+    backgroundFill,
+    streamFill: streamColor,
+    troutSectionFill,
+    restrictionYellow,
+    palSectionFill,
+    primaryLabelFill,
+    secondaryLabelFill,
     petriDish,
+    backdropFill: backdropColor,
   }
 }
 
@@ -205,6 +219,27 @@ stories.add('Customize', () => {
     streamObject: TroutRunCreek,
     id: '123',
   }
+
+  console.log(settings)
+
+  return <MicroMapComponentCanvas {...props} />
+})
+
+stories.add('Dark/Light', () => {
+  const theme = select('Map Theme', { dark: 'dark', light: 'light' }, 'dark')
+  const settings = MicromapSettings.DEFAULT_MICROMAP_CANVAS_SETTINGS
+  const colorSettings = theme === 'dark' ? MapColors.DarkMapColors : MapColors.LightMapColors
+  const updatedSettings: MicromapSettings.IMicromapCanvasSettings = {
+    ...settings,
+    colors: colorSettings,
+  }
+  const props = {
+    settings: updatedSettings,
+    streamObject: TroutRunCreek,
+    id: '123',
+  }
+
+  console.log(settings)
 
   return <MicroMapComponentCanvas {...props} />
 })

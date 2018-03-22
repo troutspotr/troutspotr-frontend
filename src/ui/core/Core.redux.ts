@@ -1,10 +1,18 @@
 import { getApi } from 'api/Api.module'
-// import TableOfContentsApi from 'api/TableOfContentsApi'
 import keyBy from 'lodash-es/keyBy'
 import { createAction, handleActions } from 'redux-actions'
 import { Loading } from 'ui/core/LoadingConstants'
-// import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
+import { Dictionary } from 'lodash'
+import {
+  UsStateFeatureCollection,
+  CountyFeatureCollection,
+  RegionFeatureCollection,
+  UsStateFeature,
+  CountyFeature,
+  RegionFeature,
+} from '../../coreTypes/tableOfContents/ITableOfContentsGeoJSON'
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -16,6 +24,72 @@ export enum View {
 export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 export const HAS_AGREED_TO_TERMS = 'HAS_AGREED_TO_TERMS'
 export const SET_AGREEMENT_STATE = 'SET_AGREEMENT_STATE'
+
+export const isBot = (): boolean => {
+  /* eslint-disable no-useless-escape */
+  const botPattern =
+    '(googlebot/|Googlebot-Mobile|Googlebot-Image|Google favicon|Mediapartners-Google|bingbot|slurp|java|wget|curl|Commons-HttpClient|Python-urllib|libwww|httpunit|nutch|phpcrawl|msnbot|jyxobot|FAST-WebCrawler|FAST Enterprise Crawler|biglotron|teoma|convera|seekbot|gigablast|exabot|ngbot|ia_archiver|GingerCrawler|webmon |httrack|webcrawler|grub.org|UsineNouvelleCrawler|antibot|netresearchserver|speedy|fluffy|bibnum.bnf|findlink|msrbot|panscient|yacybot|AISearchBot|IOI|ips-agent|tagoobot|MJ12bot|dotbot|woriobot|yanga|buzzbot|mlbot|yandexbot|purebot|Linguee Bot|Voyager|CyberPatrol|voilabot|baiduspider|citeseerxbot|spbot|twengabot|postrank|turnitinbot|scribdbot|page2rss|sitebot|linkdex|Adidxbot|blekkobot|ezooms|dotbot|Mail.RU_Bot|discobot|heritrix|findthatfile|europarchive.org|NerdByNature.Bot|sistrix crawler|ahrefsbot|Aboundex|domaincrawler|wbsearchbot|summify|ccbot|edisterbot|seznambot|ec2linkfinder|gslfbot|aihitbot|intelium_bot|facebookexternalhit|yeti|RetrevoPageAnalyzer|lb-spider|sogou|lssbot|careerbot|wotbox|wocbot|ichiro|DuckDuckBot|lssrocketcrawler|drupact|webcompanycrawler|acoonbot|openindexspider|gnam gnam spider|web-archive-net.com.bot|backlinkcrawler|coccoc|integromedb|content crawler spider|toplistbot|seokicks-robot|it2media-domain-crawler|ip-web-crawler.com|siteexplorer.info|elisabot|proximic|changedetection|blexbot|arabot|WeSEE:Search|niki-bot|CrystalSemanticsBot|rogerbot|360Spider|psbot|InterfaxScanBot|Lipperhey SEO Service|CC Metadata Scaper|g00g1e.net|GrapeshotCrawler|urlappendbot|brainobot|fr-crawler|binlar|SimpleCrawler|Livelapbot|Twitterbot|cXensebot|smtbot|bnf.fr_bot|A6-Indexer|ADmantX|Facebot|Twitterbot|OrangeBot|memorybot|AdvBot|MegaIndex|SemanticScholarBot|ltx71|nerdybot|xovibot|BUbiNG|Qwantify|archive.org_bot|Applebot|TweetmemeBot|crawler4j|findxbot|SemrushBot|yoozBot|lipperhey|y!j-asr|Domain Re-Animator Bot|AddThis)'
+  const re = new RegExp(botPattern, 'i')
+  const userAgent = navigator.userAgent
+  return re.test(userAgent)
+}
+
+const getHasAgreedToTerms = (): boolean => {
+  if (isBot()) {
+    // tslint:disable-next-line:no-commented-code
+    // try {
+    //   AnonymousAnalyzerApi.recordEvent('bot_detected', { bot: navigator.userAgent })
+    // } catch (error) {
+    //   // do nothing
+    // }
+
+    return true
+  }
+  if (localStorage == null) {
+    return false
+  }
+
+  return localStorage.getItem(HAS_AGREED_TO_TERMS) === 'true'
+}
+
+// ------------------------------------
+// Reducer
+// ------------------------------------
+export interface ICoreState {
+  view: View
+  isMapModuleLoaded: boolean
+  isMapReadyToDisplay: boolean
+  searchText: string
+  statesGeoJson: UsStateFeatureCollection
+  statesDictionary: Dictionary<UsStateFeature>
+  countiesGeoJson: CountyFeatureCollection
+  countyDictionary: Dictionary<CountyFeature>
+  regionsGeoJson: RegionFeatureCollection
+  regionDictionary: Dictionary<RegionFeature>
+  tableOfContentsLoadingStatus: Loading
+  hasAgreedToTerms: boolean
+  hasSeenIntroScreen: boolean
+  hasSeenTermsOfService: boolean
+  hasSeenPrivacyPolicy: boolean
+}
+const INITIAL_CORE_STATE: ICoreState = {
+  view: isBot() ? View.list : View.map,
+  isMapModuleLoaded: false,
+  isMapReadyToDisplay: false,
+  searchText: '',
+  statesGeoJson: null,
+  statesDictionary: {},
+  countiesGeoJson: null,
+  countyDictionary: {},
+  regionsGeoJson: null,
+  regionDictionary: {},
+  tableOfContentsLoadingStatus: Loading.NotStarted,
+  hasSeenIntroScreen: false,
+  hasSeenTermsOfService: false,
+  hasSeenPrivacyPolicy: false,
+  hasAgreedToTerms: getHasAgreedToTerms(),
+}
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -34,18 +108,21 @@ export const setAgreeToTerms = createAction(HAS_AGREED_TO_TERMS, x => x)
 export const setAgreementState = createAction(SET_AGREEMENT_STATE)
 
 const updateSearchTextAction = createAction(GEO_UPDATE_SEARCH_TEXT, item => item)
-export const updateSearchText = searchText => async dispatch => {
+// tslint:disable-next-line:typedef
+export const updateSearchText = (searchText: string) => async (dispatch): Promise<void> => {
   // TODO: debounce this and check for 3 character limit
   const sanitizedString = searchText == null ? '' : searchText.trim()
   dispatch(updateSearchTextAction(sanitizedString))
 }
 
-export const agreeToTerms = isAgreed => dispatch => {
+// tslint:disable-next-line:typedef
+export const agreeToTerms = (isAgreed: 'true' | 'false') => (dispatch): void => {
   const agreement = isAgreed ? 'true' : 'false'
   dispatch(setAgreeToTerms(agreement))
 }
 
-export const fetchTableOfContents = () => async dispatch => {
+// tslint:disable-next-line:typedef
+export const fetchTableOfContents = () => async (dispatch): Promise<void> => {
   dispatch(setTableOfContentsLoading())
   try {
     const { TableOfContentsApi } = await getApi()
@@ -67,7 +144,9 @@ const ACTION_HANDLERS: {} = {
       getApi().then(({ AnonymousAnalyzerApi }) => {
         AnonymousAnalyzerApi.recordEvent('view_change', { view: payload })
       })
-    } catch (error) {}
+    } catch (error) {
+      console.error(error)
+    }
 
     const view = payload || INITIAL_CORE_STATE.view
     const newState = { ...state, ...{ view } }
@@ -142,74 +221,5 @@ const ACTION_HANDLERS: {} = {
   //   return { ...state }
   // },
 }
-
-export const isBot = (): boolean => {
-  /* eslint-disable no-useless-escape */
-  const botPattern =
-    '(googlebot/|Googlebot-Mobile|Googlebot-Image|Google favicon|Mediapartners-Google|bingbot|slurp|java|wget|curl|Commons-HttpClient|Python-urllib|libwww|httpunit|nutch|phpcrawl|msnbot|jyxobot|FAST-WebCrawler|FAST Enterprise Crawler|biglotron|teoma|convera|seekbot|gigablast|exabot|ngbot|ia_archiver|GingerCrawler|webmon |httrack|webcrawler|grub.org|UsineNouvelleCrawler|antibot|netresearchserver|speedy|fluffy|bibnum.bnf|findlink|msrbot|panscient|yacybot|AISearchBot|IOI|ips-agent|tagoobot|MJ12bot|dotbot|woriobot|yanga|buzzbot|mlbot|yandexbot|purebot|Linguee Bot|Voyager|CyberPatrol|voilabot|baiduspider|citeseerxbot|spbot|twengabot|postrank|turnitinbot|scribdbot|page2rss|sitebot|linkdex|Adidxbot|blekkobot|ezooms|dotbot|Mail.RU_Bot|discobot|heritrix|findthatfile|europarchive.org|NerdByNature.Bot|sistrix crawler|ahrefsbot|Aboundex|domaincrawler|wbsearchbot|summify|ccbot|edisterbot|seznambot|ec2linkfinder|gslfbot|aihitbot|intelium_bot|facebookexternalhit|yeti|RetrevoPageAnalyzer|lb-spider|sogou|lssbot|careerbot|wotbox|wocbot|ichiro|DuckDuckBot|lssrocketcrawler|drupact|webcompanycrawler|acoonbot|openindexspider|gnam gnam spider|web-archive-net.com.bot|backlinkcrawler|coccoc|integromedb|content crawler spider|toplistbot|seokicks-robot|it2media-domain-crawler|ip-web-crawler.com|siteexplorer.info|elisabot|proximic|changedetection|blexbot|arabot|WeSEE:Search|niki-bot|CrystalSemanticsBot|rogerbot|360Spider|psbot|InterfaxScanBot|Lipperhey SEO Service|CC Metadata Scaper|g00g1e.net|GrapeshotCrawler|urlappendbot|brainobot|fr-crawler|binlar|SimpleCrawler|Livelapbot|Twitterbot|cXensebot|smtbot|bnf.fr_bot|A6-Indexer|ADmantX|Facebot|Twitterbot|OrangeBot|memorybot|AdvBot|MegaIndex|SemanticScholarBot|ltx71|nerdybot|xovibot|BUbiNG|Qwantify|archive.org_bot|Applebot|TweetmemeBot|crawler4j|findxbot|SemrushBot|yoozBot|lipperhey|y!j-asr|Domain Re-Animator Bot|AddThis)'
-  const re = new RegExp(botPattern, 'i')
-  const userAgent = navigator.userAgent
-  return re.test(userAgent)
-}
-
-const getHasAgreedToTerms = (): boolean => {
-  if (isBot()) {
-    // try {
-    //   AnonymousAnalyzerApi.recordEvent('bot_detected', { bot: navigator.userAgent })
-    // } catch (error) {
-    //   // do nothing
-    // }
-
-    return true
-  }
-  if (localStorage == null) {
-    return false
-  }
-
-  return localStorage.getItem(HAS_AGREED_TO_TERMS) === 'true'
-}
-
-// ------------------------------------
-// Reducer
-// ------------------------------------
-export interface ICoreState {
-  view: View
-  isMapModuleLoaded: boolean
-  isMapReadyToDisplay: boolean
-  searchText: string
-  statesGeoJson: {}
-  statesDictionary: {}
-  countiesGeoJson: {}
-  countyDictionary: {}
-  regionsGeoJson: {}
-  regionDictionary: {}
-  tableOfContentsLoadingStatus: Loading
-  hasAgreedToTerms: boolean
-  hasSeenIntroScreen: boolean
-  hasSeenTermsOfService: boolean
-  hasSeenPrivacyPolicy: boolean
-}
-const INITIAL_CORE_STATE: ICoreState = {
-  view: isBot() ? View.list : View.map,
-  isMapModuleLoaded: false,
-  isMapReadyToDisplay: false,
-  searchText: '',
-  statesGeoJson: {},
-  statesDictionary: {},
-  countiesGeoJson: {},
-  countyDictionary: {},
-  regionsGeoJson: {},
-  regionDictionary: {},
-  tableOfContentsLoadingStatus: Loading.NotStarted,
-  hasSeenIntroScreen: false,
-  hasSeenTermsOfService: false,
-  hasSeenPrivacyPolicy: false,
-  hasAgreedToTerms: getHasAgreedToTerms(),
-}
-
-// export default function counterReducer(state = initialState, action) {
-//   const handler = ACTION_HANDLERS[action.type]
-//   return handler ? handler(state, action) : state
-// }
 
 export default handleActions(ACTION_HANDLERS, INITIAL_CORE_STATE)

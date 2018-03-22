@@ -1,11 +1,13 @@
 import debounce from 'lodash-es/debounce'
 import * as React from 'react'
 const classes = require('./Minimap.scss')
-// const MINIMAP_WIDTH = 50
+// const cssVariables = require('ui/styles/_variables.scss')
+// const headerHeight = parseInt(cssVariables['header-height'])
+// const footerHeight = parseInt(cssVariables['footer-height'])
 
 export interface IMinimapProps {
   readonly isExpanded: boolean
-  readonly handleExpand: {}
+  readonly handleExpand: any
   readonly isReadyToReveal: boolean
   readonly mapComponent: React.ReactNode
   readonly closeButton: React.ReactNode
@@ -20,7 +22,6 @@ export interface IMinimapState {
 export class MinimapComponent extends React.Component<IMinimapProps, IMinimapState> {
   constructor(props) {
     super(props)
-    // this.getCSSRule = this.getCSSRule.bind(this)
     this.resizeEvent = this.resizeEvent.bind(this)
     this.state = {
       windowWidth: 0,
@@ -71,7 +72,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     })
   }
 
-  public getStyle() {
+  public getStyle(): React.CSSProperties {
     const { windowWidth, windowHeight, containerRect } = this.state
 
     if (containerRect == null || windowWidth === 0 || windowHeight === 0) {
@@ -109,7 +110,6 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
       backfaceVisibility: 'hidden',
       borderColor: 'transparent',
     }
-    // result.style.transform = newStyle
   }
 
   public render() {

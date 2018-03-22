@@ -12,10 +12,13 @@ import {
   searchTextSelector,
   selectedRegionSelector,
 } from 'ui/core/Core.selectors'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
+import { Loading } from 'ui/core/LoadingConstants'
 import { getHashSelector } from 'ui/Location.selectors'
 
 import { getRegulationsSummarySelector } from 'ui/core/regulations/RegulationsSummary.selectors'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+import { IRegionState } from './Region.redux'
+import { Dictionary } from 'lodash'
 import {
   displayedCentroidDictionarySelector,
   displayedStreamCentroidDataSelector,
@@ -23,17 +26,47 @@ import {
   regulationsSelector,
   waterOpenersDictionarySelector,
 } from 'ui/routes/@usState/UsState.selectors'
-export const troutStreamDictionarySelector = state => state.region.troutStreamDictionary
-export const regionLoadingStatusSelector = state => state.region.regionLoadingStatus
 
-export const troutStreamSectionsSelector = state => state.region.troutStreamSections
-export const restrictionSectionsSelector = state => state.region.restrictionSections
-export const streamsSelector = state => state.region.streams
-export const palSectionsSelector = state => state.region.palSections
-export const streamAccessPointSelector = state => state.region.streamAccessPoint
-export const palsSelector = state => state.region.pals
-export const hoveredStreamSelector = state => state.region.hoveredStream
-export const hoveredRoadSelector = state => state.region.hoveredRoad
+export const regionReduxStateSelector = (reduxState: IReduxState): IRegionState => reduxState.region
+export const troutStreamDictionarySelector = createSelector([regionReduxStateSelector], state => {
+  return state.troutStreamDictionary
+})
+
+export const regionLoadingStatusSelector = createSelector([regionReduxStateSelector], state => {
+  return state.regionLoadingStatus
+})
+
+export const troutStreamSectionsSelector = createSelector([regionReduxStateSelector], state => {
+  return state.troutStreamSections
+})
+
+export const restrictionSectionsSelector = createSelector([regionReduxStateSelector], state => {
+  return state.restrictionSections
+})
+
+export const streamsSelector = createSelector([regionReduxStateSelector], state => {
+  return state.streams
+})
+
+export const palSectionsSelector = createSelector([regionReduxStateSelector], state => {
+  return state.palSections
+})
+
+export const streamAccessPointSelector = createSelector([regionReduxStateSelector], state => {
+  return state.streamAccessPoint
+})
+
+export const palsSelector = createSelector([regionReduxStateSelector], state => {
+  return state.pals
+})
+
+export const hoveredStreamSelector = createSelector([regionReduxStateSelector], state => {
+  return state.hoveredStream
+})
+
+export const hoveredRoadSelector = createSelector([regionReduxStateSelector], state => {
+  return state.hoveredRoad
+})
 
 const EMPTY_STREAM_CENTROIDS = []
 export const streamCentroidsSelector = createSelector([streamsSelector], streams => {
@@ -64,7 +97,7 @@ export const streamCentroidsSelector = createSelector([streamsSelector], streams
 export const isFinishedLoadingRegion = createSelector(
   [regionLoadingStatusSelector],
   regionLoadingStatus => {
-    if (regionLoadingStatus !== LOADING_CONSTANTS.IS_SUCCESS) {
+    if (regionLoadingStatus !== Loading.Success) {
       return false
     }
 
@@ -112,6 +145,15 @@ export const visibleTroutStreamDictionarySelector = createSelector(
   visibleStreams => keyBy(visibleStreams, s => s.stream.properties.gid)
 )
 
+export const filterRestrictionsByTime = (now, sp) => {
+  const { startTime, stopTime } = sp
+  if (startTime == null || stopTime == null) {
+    return true
+  }
+  const isInBounds = startTime < now && stopTime > now
+  return isInBounds
+}
+
 export const selectedStreamObjectSelector = createSelector(
   [troutStreamDictionarySelector, displayedStreamCentroidDataSelector],
   (streamDictionary, displayedCentroid) => {
@@ -140,7 +182,7 @@ export const showNoResultsFoundSelector = createSelector(
     selectedStreamObjectSelector,
   ],
   (text, regionLoading, streams, selectedStreamObject) => {
-    if (regionLoading !== LOADING_CONSTANTS.IS_SUCCESS) {
+    if (regionLoading !== Loading.Success) {
       return false
     }
 
@@ -162,6 +204,19 @@ export const showNoResultsFoundSelector = createSelector(
 
 const EMPTY_REGS = []
 const MAGICAL_OPEN_ID = 18
+interface IAsdf {
+  startTime: Date
+  stopTime: Date
+  isFishSanctuary: boolean
+  isOpenerOverride: boolean
+  color: string
+  restrictionId: number
+  streamId: number
+  shortText: string
+  legalText: string
+  length: number
+  roundedLength?: number
+}
 export const getSpecialRegulationsSelector = createSelector(
   [selectedStreamObjectSelector, regulationsSelector],
   (selectedStream, regulations) => {
@@ -173,7 +228,7 @@ export const getSpecialRegulationsSelector = createSelector(
       return EMPTY_REGS
     }
     const specialRegulationsDictionary = selectedStream.restrictions
-      .map(r => {
+      .map((r): IAsdf => {
         const {
           stream_gid,
           restriction_id,
@@ -193,7 +248,7 @@ export const getSpecialRegulationsSelector = createSelector(
         const length = stop - start
         // Let roundedLength = round(length, 1)
         const { shortText, legalText } = regulation
-        const result = {
+        const result: IAsdf = {
           startTime: start_time,
           stopTime: end_time,
           isFishSanctuary,
@@ -208,7 +263,7 @@ export const getSpecialRegulationsSelector = createSelector(
 
         return result
       })
-      .reduce((dictionary, item) => {
+      .reduce((dictionary, item): Dictionary<IAsdf> => {
         if (has(dictionary, item.restrictionId)) {
           dictionary[item.restrictionId].length += item.length
           return dictionary
@@ -216,7 +271,7 @@ export const getSpecialRegulationsSelector = createSelector(
 
         dictionary[item.restrictionId] = item
         return dictionary
-      }, {})
+      }, {}) as Dictionary<IAsdf>
 
     const specialRegulationsArray = values(specialRegulationsDictionary)
 
@@ -250,15 +305,6 @@ export const getSelectedRoadSelector = createSelector(
     return accessPoint
   }
 )
-
-export const filterRestrictionsByTime = (now, sp) => {
-  const { startTime, stopTime } = sp
-  if (startTime == null || stopTime == null) {
-    return true
-  }
-  const isInBounds = startTime < now && stopTime > now
-  return isInBounds
-}
 
 export const filterRestrictionsByCurrentTime = specialRegulations => {
   if (isEmpty(specialRegulations)) {
@@ -348,13 +394,13 @@ export const getCountyListSelector = createSelector(
         }
         return countyList
       } catch (e) {
-        console.log(e) // eslint-disable-line
-        console.log(visibleStreamsInCounty) // eslint-disable-line
+        console.error(e) // eslint-disable-line
+        console.error(visibleStreamsInCounty) // eslint-disable-line
       }
 
       return null
     })
-    const filteredCountyObjects = countyObjects
+    const filteredCountyObjects = [...countyObjects]
       .sort((a, b) => a.name.localeCompare(b.name))
       .filter(x => x.streams.length > 0)
     if (filteredCountyObjects.length === 0) {

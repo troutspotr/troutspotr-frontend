@@ -1,10 +1,27 @@
 import isEmpty from 'lodash-es/isEmpty'
 import { createSelector } from 'reselect'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
-export const locationSelector = (state: IReduxState) => state.routing.location
-export const paramsSelector = (state: IReduxState) => state.routing.params
-
+import { ILocation } from './redux/Routing.redux'
+export const locationSelector = (state: IReduxState): ILocation => state.routing.location
+// tslint:disable-next-line:no-any
+export const paramsSelector = (state: IReduxState): any => state.routing.params
 const ROOT = '/'
+
+export const isRootPageByUrl = (url): boolean => {
+  const isRoot = url === ROOT
+  return isRoot
+}
+
+export const isStatePageByUrl = (url): boolean => {
+  const isRoot = isRootPageByUrl(url)
+  if (isRoot) {
+    return false
+  }
+
+  const isState = url.split('/').filter(x => x.length > 0).length === 1
+  return isState
+}
+
 export const isRootPageSelector = createSelector([locationSelector], location => {
   const isRoot = isRootPageByUrl(location.pathname)
   return isRoot
@@ -28,18 +45,3 @@ export const getHashSelector = createSelector([locationSelector], location => {
   }
   return location.hash
 })
-
-export const isRootPageByUrl = url => {
-  const isRoot = url === ROOT
-  return isRoot
-}
-
-export const isStatePageByUrl = url => {
-  const isRoot = isRootPageByUrl(url)
-  if (isRoot) {
-    return false
-  }
-
-  const isState = url.split('/').filter(x => x.length > 0).length === 1
-  return isState
-}

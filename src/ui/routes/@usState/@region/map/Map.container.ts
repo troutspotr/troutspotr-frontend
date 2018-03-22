@@ -16,9 +16,7 @@ import { withRouter } from 'react-router'
 
 import {
   getMapCameraSelector,
-  getMapGroundSelector,
   getMapInteractivitySelector,
-  getMapSettingsSelector,
   isReadyToInsertLayersSelector,
 } from './Map.selectors'
 
@@ -35,8 +33,8 @@ const mapStateToProps = state => {
     mapboxModuleStatus: isMapboxModuleLoadedSelector(state),
     isReadyToInsertLayers: isReadyToInsertLayersSelector(state),
     camera: getMapCameraSelector(state),
-    ground: getMapGroundSelector(state),
-    settings: getMapSettingsSelector(state),
+    // ground: getMapGroundSelector(state),
+    // settings: getMapSettingsSelector(state),
     interactivity: getMapInteractivitySelector(state),
     selectedState: selectedStateIdSelector(state),
     selectedRegion: selectedRegionIdSelector(state),
@@ -50,4 +48,4 @@ const mapStateToProps = state => {
   return props
 }
 
-export default withRouter<{}, {}>(connect(mapStateToProps, mapDispatchToProps)(MapComponent))
+export default withRouter(connect<any, any, any>(mapStateToProps, mapDispatchToProps)(MapComponent))

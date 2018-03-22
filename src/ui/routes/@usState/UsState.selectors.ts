@@ -7,18 +7,49 @@ import { createSelector } from 'reselect'
 import { searchTextSelector, selectedStreamIdSelector } from 'ui/core/Core.selectors'
 import { Loading } from 'ui/core/LoadingConstants'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
-export const regionIndexSelector = (state: IReduxState) => state.usState.regionIndex
-export const regulationsSelector = (state: IReduxState) => state.usState.regulations
-export const roadTypesSelector = (state: IReduxState) => state.usState.roadTypes
-export const roadTypeDictionarySelector = (state: IReduxState) => state.usState.roadTypesDictionary
-export const palTypesSelector = (state: IReduxState) => state.usState.palTypes
-export const streamCentroidsStateSelector = (state: IReduxState) => state.usState.streamCentroids
-export const stateDataLoadingStatusSelector = (state: IReduxState) =>
-  state.usState.stateDataLoadingStatus
-export const slugDictionarySelector = (state: IReduxState) => state.usState.slugDictionary
-export const streamIdDictionarySelector = (state: IReduxState) => state.usState.streamIdDictionary
-export const waterOpenersDictionaryStateSelector = (state: IReduxState) =>
-  state.usState.waterOpeners
+import { IUsStateReduxState } from './UsState.redux'
+const emptyCentroids = []
+export const usStateReduxStateSelector = (reduxState: IReduxState): IUsStateReduxState =>
+  reduxState.usState
+
+export const regionIndexSelector = createSelector([usStateReduxStateSelector], x => x.regionIndex)
+
+export const regulationsSelector = createSelector([usStateReduxStateSelector], x => x.regulations)
+
+export const roadTypesSelector = createSelector([usStateReduxStateSelector], x => x.roadTypes)
+
+export const roadTypeDictionarySelector = createSelector(
+  [usStateReduxStateSelector],
+  x => x.roadTypesDictionary
+)
+
+export const palTypesSelector = createSelector([usStateReduxStateSelector], x => x.palTypes)
+
+export const streamCentroidsStateSelector = createSelector(
+  [usStateReduxStateSelector],
+  x => x.streamCentroids
+)
+
+export const stateDataLoadingStatusSelector = createSelector(
+  [usStateReduxStateSelector],
+  x => x.stateDataLoadingStatus
+)
+
+export const slugDictionarySelector = createSelector(
+  [usStateReduxStateSelector],
+  x => x.slugDictionary
+)
+
+export const streamIdDictionarySelector = createSelector(
+  [usStateReduxStateSelector],
+  x => x.streamIdDictionary
+)
+
+export const waterOpenersDictionaryStateSelector = createSelector(
+  [usStateReduxStateSelector],
+  x => x.waterOpeners
+)
+
 /* eslint-disable camelcase */
 export const waterOpenersDictionarySelector = createSelector(
   [waterOpenersDictionaryStateSelector],
@@ -70,7 +101,6 @@ export const streamCentroidsSelector = createSelector(
   }
 )
 
-const emptyCentroids = []
 export const displayedCentroidsSelector = createSelector(
   [searchTextSelector, streamCentroidsSelector],
   (searchText, streamCentroids) => {
@@ -86,12 +116,12 @@ export const displayedCentroidsSelector = createSelector(
     const filteredCentroids = streamCentroids.filter(centroid => {
       const { altName } = centroid
       const { name } = centroid
-      altName = altName || ''
+      const safeAltName = altName || ''
       const isMatch = every(
         tokens,
         token =>
           name.toLocaleLowerCase().indexOf(token) >= 0 ||
-          altName.toLocaleLowerCase().indexOf(token) >= 0
+          safeAltName.toLocaleLowerCase().indexOf(token) >= 0
       )
       return isMatch
     })

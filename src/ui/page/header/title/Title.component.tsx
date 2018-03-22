@@ -1,12 +1,13 @@
 import * as React from 'react'
+const classes = require('./Title.scss')
 
 export interface ITitleProps {
-  title?: string
+  children?: JSX.Element
 }
 export class TitleComponent extends React.PureComponent<ITitleProps> {
   public render() {
-    const { title } = this.props
-    return <span>{title}</span>
+    const { children } = this.props
+    return <h4 className={classes.container}>{children}</h4>
   }
 }
 

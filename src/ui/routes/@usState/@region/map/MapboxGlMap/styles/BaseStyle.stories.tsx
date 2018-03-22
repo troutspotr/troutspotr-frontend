@@ -38,6 +38,7 @@ export const createLayerProperties = (): ILayerProperties => {
       specialRegulationsWidth: 1,
       publicSectionWidth: 1,
       terminusDiameter: 0,
+      backdropWidth: 3,
     },
   }
 
@@ -112,6 +113,7 @@ stories.add('Dark and Light', () => {
       specialRegulationsWidth: 1,
       publicSectionWidth: 1,
       terminusDiameter: 0,
+      backdropWidth: 3,
     },
   }
   const props: IMapboxGlProps = {
@@ -173,6 +175,7 @@ stories.add('Satellite Tweaks', () => {
       specialRegulationsWidth: 1,
       publicSectionWidth: 1,
       terminusDiameter: 0,
+      backdropWidth: 3,
     },
   }
   const props: IMapboxGlProps = {
@@ -236,6 +239,7 @@ stories.add('Street Transparency Tweaks', () => {
       specialRegulationsWidth: 1,
       publicSectionWidth: 1,
       terminusDiameter: 0,
+      backdropWidth: 3,
     },
   }
   const props: IMapboxGlProps = {
@@ -279,6 +283,7 @@ stories.add('High Contrast Mode', () => {
       specialRegulationsWidth: 1,
       publicSectionWidth: 1,
       terminusDiameter: 0,
+      backdropWidth: 3,
     },
   }
   const props: IMapboxGlProps = {

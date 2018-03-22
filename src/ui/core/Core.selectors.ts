@@ -4,29 +4,44 @@ import { createSelector } from 'reselect'
 import { View } from 'ui/core/Core.redux'
 import { isRootPageSelector, locationSelector } from 'ui/Location.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+import { Dictionary } from 'lodash'
+import { Loading } from './LoadingConstants'
+import {
+  CountyFeature,
+  RegionFeature,
+} from '../../coreTypes/tableOfContents/ITableOfContentsGeoJSON'
+import {
+  UsStateFeatureCollection,
+  CountyFeatureCollection,
+  RegionFeatureCollection,
+  UsStateFeature,
+} from '../../coreTypes/tableOfContents/ITableOfContentsGeoJSON'
 
-export const statesGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.statesGeoJson
-export const countiesGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.countiesGeoJson
-export const regionsGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.regionsGeoJson
+export const statesGeoJsonSelector = (reduxState: IReduxState): UsStateFeatureCollection =>
+  reduxState.core.statesGeoJson
+export const countiesGeoJsonSelector = (reduxState: IReduxState): CountyFeatureCollection =>
+  reduxState.core.countiesGeoJson
+export const regionsGeoJsonSelector = (reduxState: IReduxState): RegionFeatureCollection =>
+  reduxState.core.regionsGeoJson
 
-export const statesDictionarySelector = (reduxState: IReduxState) =>
+export const statesDictionarySelector = (reduxState: IReduxState): Dictionary<UsStateFeature> =>
   reduxState.core.statesDictionary
-export const countiesDictionarySelector = (reduxState: IReduxState) =>
+export const countiesDictionarySelector = (reduxState: IReduxState): Dictionary<CountyFeature> =>
   reduxState.core.countyDictionary
-export const regionsDictionarySelector = (reduxState: IReduxState) =>
+export const regionsDictionarySelector = (reduxState: IReduxState): Dictionary<RegionFeature> =>
   reduxState.core.regionDictionary
-export const hasAgreedToTermsSelector = (reduxState: IReduxState) =>
+export const hasAgreedToTermsSelector = (reduxState: IReduxState): boolean =>
   reduxState.core.hasAgreedToTerms
-export const hasSeenIntroScreenSelector = (reduxState: IReduxState) =>
+export const hasSeenIntroScreenSelector = (reduxState: IReduxState): boolean =>
   reduxState.core.hasSeenIntroScreen
-export const hasSeenTermsOfServiceSelector = (reduxState: IReduxState) =>
+export const hasSeenTermsOfServiceSelector = (reduxState: IReduxState): boolean =>
   reduxState.core.hasSeenTermsOfService
-export const hasSeenPrivacyPolicySelector = (reduxState: IReduxState) =>
+export const hasSeenPrivacyPolicySelector = (reduxState: IReduxState): boolean =>
   reduxState.core.hasSeenPrivacyPolicy
 // Export const streamCentroidsGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.streamCentroidsGeoJson
-export const tableOfContentsLoadingStatusSelector = (reduxState: IReduxState) =>
+export const tableOfContentsLoadingStatusSelector = (reduxState: IReduxState): Loading =>
   reduxState.core.tableOfContentsLoadingStatus
-export const searchTextSelector = (reduxState: IReduxState) => reduxState.core.searchText
+export const searchTextSelector = (reduxState: IReduxState): string => reduxState.core.searchText
 
 export const viewSelector = (reduxState: IReduxState): View => reduxState.core.view
 

@@ -33,7 +33,7 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
       source: 'composite',
       'source-layer': 'waterway_label',
       minzoom: 12,
-      filter: ['in', 'class', 'canal', 'river'],
+      filter: ['in', 'class', 'canal'],
       layout: {
         'text-field': '{name_en}',
         'text-font': FONT_ROBOTO_REGULAR,
@@ -219,6 +219,10 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
         'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1,
         'text-halo-blur': 0,
+        'text-opacity': {
+          base: 1,
+          stops: [[13, 0.0], [13.5, 1.0]],
+        },
       },
     },
     {

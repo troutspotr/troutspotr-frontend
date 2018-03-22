@@ -1,27 +1,31 @@
 import { point } from '@turf/helpers'
 import isEmpty from 'lodash-es/isEmpty'
 import { createSelector } from 'reselect'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-export const isGpsTrackingActiveStateSelector = state => state.gps.isGpsTrackingActive
-export const gpsCoordinatesLoadingStatusStateSelector = state =>
-  state.gps.gpsCoordinatesLoadingStatus
-export const gpsCoordinatesStateSelector = state => state.gps.gpsCoordinates
-export const isGpsTrackingSupportedStateSelector = state => state.gps.isGpsTrackingSupported
-export const gpsAccuracyMetersStateSelector = state => state.gps.gpsAccuracyMeters
+import { LOADING_CONSTANTS, Loading } from 'ui/core/LoadingConstants'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 
-const getMessage = loadingStatus => {
-  const message = ''
+export const isGpsTrackingActiveStateSelector = (reduxState: IReduxState): boolean =>
+  reduxState.gps.isGpsTrackingActive
+export const gpsCoordinatesLoadingStatusStateSelector = (reduxState: IReduxState): Loading =>
+  reduxState.gps.gpsCoordinatesLoadingStatus
+export const gpsCoordinatesStateSelector = (reduxState: IReduxState): [number, number] =>
+  reduxState.gps.gpsCoordinates
+export const isGpsTrackingSupportedStateSelector = (reduxState: IReduxState): boolean =>
+  reduxState.gps.isGpsTrackingSupported
+export const gpsAccuracyMetersStateSelector = (reduxState: IReduxState): number =>
+  reduxState.gps.gpsAccuracyMeters
+
+const emptyMessage = ''
+const getMessage = (loadingStatus): string => {
   if (loadingStatus === LOADING_CONSTANTS.IS_PENDING) {
-    'Loading location'
+    return 'Loading location'
   } else if (loadingStatus === LOADING_CONSTANTS.IS_FAILED) {
-    'Failed to load location'
+    return 'Failed to load location'
   } else if (loadingStatus === LOADING_CONSTANTS.IS_NOT_STARTED) {
-    'Location not loaded yet'
-  } else {
-    message = ''
+    return 'Location not loaded yet'
   }
 
-  return message
+  return emptyMessage
 }
 
 export const getGpsCoordinateFeatureSelector = createSelector(
@@ -54,7 +58,7 @@ export const getGpsCoordinateFeatureSelector = createSelector(
 
 export const isGpsFailedSelector = createSelector(
   [gpsCoordinatesLoadingStatusStateSelector],
-  loadingStatus => loadingStatus === LOADING_CONSTANTS.IS_FAILED
+  loadingStatus => loadingStatus === Loading.Failed
 )
 
 export const getIsGpsActiveButLoading = createSelector(
@@ -68,7 +72,7 @@ export const getIsGpsActiveButLoading = createSelector(
       return false
     }
 
-    if (isActive && loadingStatus === LOADING_CONSTANTS.IS_PENDING) {
+    if (isActive && loadingStatus === Loading.Pending) {
       return true
     }
 
@@ -87,7 +91,7 @@ export const getIsActiveAndSuccessful = createSelector(
       return false
     }
 
-    if (isActive && loadingStatus === LOADING_CONSTANTS.IS_SUCCESS) {
+    if (isActive && loadingStatus === Loading.Success) {
       return true
     }
 

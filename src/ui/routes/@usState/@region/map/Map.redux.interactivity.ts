@@ -1,14 +1,13 @@
 import extent from '@turf/bbox'
 import turfCircle from '@turf/circle'
 import { createAction, handleActions } from 'redux-actions'
-// Import { getSelectedStateProperties } from '../sidebar/Sidebar.selectors'
 import { BOUNDING_BOX_OF_LOWER_48_STATES, mapCameraActions } from './Map.redux.camera'
+import { AllGeoJSON, Coord } from '@turf/helpers'
 // ------------------------------------
 // Constants
 // ------------------------------------
 
 const TURF_CIRCLE_RADIUS_KM = 0.042
-
 export const MAP_INTERACTIVITY_SET_SELECTED_FEATURES = 'MAP_INTERACTIVITY_SET_SELECTED_FEATURES'
 export const MAP_INTERACTIVITY_SET_SELECTED_FEATURE_COLLECTION =
   'MAP_INTERACTIVITY_SET_SELECTED_FEATURE_COLLECTION'
@@ -18,7 +17,12 @@ export const MAP_INTERACTIVITY_RESET_MAP = 'MAP_INTERACTIVITY_RESET_MAP'
 // ------------------------------------
 // Default State
 // ------------------------------------
-const DEFAULT_SETTINGS_STATE = {
+export interface IMapInteractivity {
+  isMapInitialized: boolean
+  // tslint:disable-next-line:no-any
+  selectedItems: any
+}
+export const DEFAULT_SETTINGS_STATE: IMapInteractivity = {
   selectedItems: [],
   isMapInitialized: false,
 }
@@ -35,7 +39,7 @@ export const setIsMapInitialized = createAction(
   isMapInitialized => ({ isMapInitialized })
 )
 
-export const selectMapFeature = feature => (dispatch, getState) => {
+export const selectMapFeature = (feature: AllGeoJSON) => (dispatch, getState) => {
   const selectedState = feature
   const boundingBox = extent(selectedState)
 
@@ -44,7 +48,7 @@ export const selectMapFeature = feature => (dispatch, getState) => {
   dispatch(mapCameraActions.setCamera(newCamera))
 }
 
-export const selectFoculPoint = feature => (dispatch, getState) => {
+export const selectFoculPoint = (feature: Coord) => (dispatch, getState) => {
   if (feature == null) {
     throw new Error('feature cannot be null')
   }
@@ -70,38 +74,6 @@ export const mapInteractivityActions = {
 }
 
 const actionHandlers: {} = {
-  [MAP_INTERACTIVITY_SET_SELECTED_FEATURES]: (state, { payload: { featureCollection } }) => {
-    // Check if feature
-    const selectedItems
-    if (
-      featureCollection == null ||
-      featureCollection.features == null ||
-      featureCollection.features.length === 0
-    ) {
-      selectedItems = DEFAULT_SETTINGS_STATE.selectedItems
-    } else {
-      selectedItems = [featureCollection]
-    }
-
-    return { ...state, selectedItems }
-  },
-  [MAP_INTERACTIVITY_SET_SELECTED_FEATURE_COLLECTION]: (
-    state,
-    { payload: { featureCollection } }
-  ) => {
-    const selectedItems
-    if (
-      featureCollection == null ||
-      featureCollection.features == null ||
-      featureCollection.features.length === 0
-    ) {
-      selectedItems = DEFAULT_SETTINGS_STATE.selectedItems
-    } else {
-      selectedItems = [featureCollection]
-    }
-
-    return { ...state, selectedItems }
-  },
   [MAP_INTERACTIVITY_IS_MAP_INITIALIZED]: (state, { payload: { isMapInitialized } }) => ({
     ...state,
     isMapInitialized,

@@ -1,4 +1,3 @@
-import isEqual from 'lodash-es/isEqual'
 import { Map } from 'mapbox-gl'
 import * as React from 'react'
 import { ICameraProps } from 'ui/core/map/ICameraProps'
@@ -19,27 +18,6 @@ export default class MapboxGlComponentCamera extends React.PureComponent<IMapbox
       map.fitBounds(bbox, {
         padding,
       })
-    }
-  }
-
-  public componentWillReceiveProps(nextProps) {
-    const { camera, map } = nextProps
-    const currentcamera = this.props.camera
-    if (camera == null) {
-      return
-    }
-
-    if (camera != null && isEqual(camera, currentcamera) === false) {
-      this.updateCamera(camera, map)
-    }
-
-    const { bearing, pitch } = camera
-    if (this.props.camera.bearing !== bearing && bearing != null) {
-      map.setBearing(bearing)
-    }
-
-    if (this.props.camera.pitch !== pitch && pitch != null) {
-      map.setPitch(pitch)
     }
   }
 

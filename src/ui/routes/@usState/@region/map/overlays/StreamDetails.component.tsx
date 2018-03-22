@@ -3,7 +3,7 @@ import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.
 import { PublicBridgesComponent } from 'ui/core/streamDetails/PublicBridges.component'
 
 export interface IStreamDetailsComponentProps {
-  selectedStream: {}
+  selectedStream: any
 }
 
 export class StreamDetailsComponent extends React.PureComponent<IStreamDetailsComponentProps> {

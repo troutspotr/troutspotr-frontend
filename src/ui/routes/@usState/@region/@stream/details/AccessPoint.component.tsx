@@ -1,12 +1,23 @@
 import * as React from 'react'
 const classes = require('./Details.scss')
-// import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
+import { AccessPointFeature } from 'api/region/IRegionGeoJSON'
 /* eslint-disable camelcase */
 // const DEFAULT_ZOOM = 16
 
-class AccessPointComponent extends React.Component<{}> {
-  constructor() {
-    super({})
+export interface IAccessPointsDispatchProps {
+  onHover(feature: AccessPointFeature | null): void
+}
+
+export interface IAccessPointProps extends IAccessPointsDispatchProps {
+  accessPoint: AccessPointFeature
+  selectedClass: string
+  defaultClass: string
+  isSelected: boolean
+  isHovered: boolean
+}
+class AccessPointComponent extends React.Component<IAccessPointProps> {
+  constructor(props) {
+    super(props)
     this.onMouseLeave = this.onMouseLeave.bind(this)
     this.onMouseEnter = this.onMouseEnter.bind(this)
     this.onClick = this.onClick.bind(this)
@@ -80,15 +91,5 @@ class AccessPointComponent extends React.Component<{}> {
     return this.mapAccessPoints(accessPoint, defaultClass, selectedClass, isSelected, isHovered)
   }
 }
-
-// AccessPointComponent.propTypes = {
-//   accessPoint: PropTypes.object.isRequired,
-//   selectedClass: PropTypes.string.isRequired,
-//   defaultClass: PropTypes.string.isRequired,
-//   isSelected: PropTypes.bool.isRequired,
-//   isHovered: PropTypes.bool.isRequired,
-
-//   onHover: PropTypes.func.isRequired,
-// }
 
 export default AccessPointComponent

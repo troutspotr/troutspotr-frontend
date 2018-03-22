@@ -1,6 +1,7 @@
 import clamp from 'lodash-es/clamp'
 import some from 'lodash-es/some'
 import { createAction, handleActions } from 'redux-actions'
+// import { ICameraReduxState } from 'ui/redux/Store.redux.rootReducer'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -15,7 +16,14 @@ export const MAP_CAMERA_SET_CAMERA = 'MAP_CAMERA_SET_CAMERA'
 // ------------------------------------
 // Default State
 // ------------------------------------
-const DEFAULT_CAMERA_STATE = {
+export interface ICameraReduxState {
+  bounds: number[][]
+  bearing: number
+  angle: number
+  pixelBuffer: number
+  animationSpeed: number
+}
+export const DEFAULT_CAMERA_STATE: ICameraReduxState = {
   bounds: BOUNDING_BOX_OF_LOWER_48_STATES,
   bearing: 0.0,
   angle: 0.0,
@@ -77,7 +85,7 @@ const cleanBounds = (minLong, minLat, maxLong, maxLat) => {
 }
 
 const actionHandlers: {} = {
-  MAP_CAMERA_SET_BOUNDS: (state, { payload }) => {
+  MAP_CAMERA_SET_BOUNDS: (state: ICameraReduxState, { payload }): ICameraReduxState => {
     const { bounds } = payload
     const isBoundsValid = bounds != null && bounds.length === 2
     if (isBoundsValid === false) {
@@ -92,30 +100,36 @@ const actionHandlers: {} = {
     return { ...state, bounds: cleanedBounds }
   },
 
-  MAP_CAMERA_SET_BEARING: (state, { payload }) => {
+  MAP_CAMERA_SET_BEARING: (state: ICameraReduxState, { payload }): ICameraReduxState => {
     const newState = { ...state }
     newState.bearing = payload
     return newState
   },
 
-  MAP_CAMERA_SET_ANGLE: (state, { payload }) => {
+  MAP_CAMERA_SET_ANGLE: (state: ICameraReduxState, { payload }): ICameraReduxState => {
     // Return { ...state, angle: clamp(payload, 0, 360) }
     const newState = { ...state }
     newState.angle = clamp(payload, 0, 360)
     return newState
   },
 
-  MAP_CAMERA_SET_PIXEL_BUFFER: (state, { payload: { pixelBuffer } }) => ({
+  MAP_CAMERA_SET_PIXEL_BUFFER: (
+    state: ICameraReduxState,
+    { payload: { pixelBuffer } }
+  ): ICameraReduxState => ({
     ...state,
     pixelBuffer: clamp(pixelBuffer, 0, 500),
   }),
 
-  MAP_CAMERA_SET_CAMERA: (state, { payload }) => {
+  MAP_CAMERA_SET_CAMERA: (state: ICameraReduxState, { payload }): ICameraReduxState => {
     const newState = { ...state, ...payload }
     return newState
   },
 
-  MAP_CAMERA_SET_ANIMATION_SPEED: (state, { payload: { animationSpeed } }) => ({
+  MAP_CAMERA_SET_ANIMATION_SPEED: (
+    state: ICameraReduxState,
+    { payload: { animationSpeed } }
+  ): ICameraReduxState => ({
     ...state,
     animationSpeed: clamp(animationSpeed, 0.00001, 5),
   }),

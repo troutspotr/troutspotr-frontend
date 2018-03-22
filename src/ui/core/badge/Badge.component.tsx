@@ -20,16 +20,12 @@ export interface IBadgeProps {
   readonly content: string | number
 }
 
-export const BadgeComponent: React.SFC<IBadgeProps> = props => {
+export const BadgeComponent: React.SFC<IBadgeProps> = (props): JSX.Element => {
   const { content, badgeColor, fillType } = props
   const safeContent = content === '' ? ' ' : content
-  const isLong = safeContent.toString().length >= 2
-  const contentClassName = isLong ? classes.contentSmall : classes.content
+  // const isLong = safeContent.toString().length >= 2
+  // const contentClassName = isLong ? classes.contentSmall : classes.content
   const key = `${badgeColor}${fillType === Fill.solid ? 'Solid' : ''}`
   const className = classes[key]
-  return (
-    <span className={className}>
-      <span className={contentClassName}>{content}</span>
-    </span>
-  )
+  return <span className={className}>{safeContent}</span>
 }

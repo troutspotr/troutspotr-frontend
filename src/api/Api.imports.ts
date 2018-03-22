@@ -1,7 +1,12 @@
-import AnonymousAnalyzerApi from 'api2/AnonymousAnalyzerApi'
-import BaseApi from 'api2/BaseApi'
-import GeoApi from 'api2/GeoApi'
-import RegionApi from 'api2/RegionApi'
-import StateApi from 'api2/StateApi'
-import TableOfContentsApi from 'api2/TableOfContentsApi'
-export { AnonymousAnalyzerApi, GeoApi, RegionApi, StateApi, TableOfContentsApi, BaseApi }
+import AnonymousAnalyzerApi, { IAnonymousAnalyzerApi } from 'api/tracking/AnonymousAnalyzerApi'
+import RegionApi, { IRegionApi } from 'api/region/Region.api'
+import StateApi, { IStateApi } from 'api/usState/StateApi'
+import TableOfContentsApi from 'api/tableOfContents/TableOfContentsApi'
+import { ITableOfContentsApi } from './tableOfContents/TableOfContentsApi'
+export interface IApiModule {
+  AnonymousAnalyzerApi: IAnonymousAnalyzerApi
+  RegionApi: IRegionApi
+  StateApi: IStateApi
+  TableOfContentsApi: ITableOfContentsApi
+}
+export { AnonymousAnalyzerApi, RegionApi, StateApi, TableOfContentsApi }

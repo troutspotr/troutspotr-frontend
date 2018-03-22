@@ -16,22 +16,25 @@ export const setMapModuleLoading = createAction(MAP_MODULE_LOADING)
 export const setMapModuleFailed = createAction(MAP_MODULE_FAILED)
 export const setMapModuleSuccess = createAction(MAP_MODULE_SUCCESS, x => x)
 const key = 'pk.eyJ1IjoiYW5kZXN0MDEiLCJhIjoibW02QnJLSSJ9._I2ruvGf4OGDxlZBU2m3KQ'
-// Const setMapModule = createAction(MAP_LOADING_MODULE)
-const cachedPromise = null
+// tslint:disable-next-line:no-let
+let cachedPromise = null
+// tslint:disable-next-line:typedef
 export const loadMapModuleAsync = () => (dispatch, getState) => {
   if (cachedPromise != null) {
     return cachedPromise
   }
 
   dispatch(setMapModuleLoading())
+  // tslint:disable-next-line:typedef
   cachedPromise = new Promise(resolve => {
     try {
       require.ensure(
         [],
         require => {
           const mapboxGl = require('mapbox-gl/dist/mapbox-gl')
-          /* eslint-disable no-console */
+          // tslint:disable-next-line:no-console
           console.log('Mapbox GL JS loaded.')
+          // tslint:disable-next-line:no-console
           console.log(`Mapbox Gl JS version: ${mapboxGl.version}`)
           setTimeout(() => dispatch(setMapModuleSuccess(mapboxGl)), 0)
         },

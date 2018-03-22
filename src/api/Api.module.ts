@@ -1,3 +1,6 @@
-export const getApi = async () => {
-  return import(/* webpackChunkName: "api" */ './Api.imports')
+import { IApiModule } from './Api.imports'
+// tslint:disable-next-line:no-any
+export const getApi = async (): Promise<IApiModule> => {
+  const mod = await import(/* webpackChunkName: "api" */ './Api.imports')
+  return mod
 }

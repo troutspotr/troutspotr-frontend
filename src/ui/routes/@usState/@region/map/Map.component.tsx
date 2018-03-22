@@ -1,16 +1,10 @@
-// import RegulationsOverlayContainer from './overlays/RegulationsOverlay.container'
-// import DetailsOverlay from './overlays/DetailsOverlay.container'
 import find from 'lodash-es/find'
 import has from 'lodash-es/has'
 import isEmpty from 'lodash-es/isEmpty'
 import * as React from 'react'
-// const classes = require('./Map.scss')
-// import MapboxGlContainer from './MapboxGlMap/MapboxGl.container'
-// import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-// import LoadingComponent from 'ui/core/loading/Loading.component'
 import { browserHistory } from 'react-router'
-// const MAP_ID = 'primary_map_id'
-export class MapComponent extends React.Component<{}> {
+// tslint:disable-next-line:no-any
+export class MapComponent extends React.Component<any> {
   public componentWillUnmount() {
     if (this.state == null) {
       return
@@ -53,53 +47,9 @@ export class MapComponent extends React.Component<{}> {
     }
   }
 
-  public componentWillReceiveProps(nextProps) {
-    // try {
-    //   this.performZoomOnFeature(nextProps)
-    // } catch (e) {
-    //   console.log(e) // eslint-disable-line
-    // }
-    // const previousModuleLoadStatus = this.props.mapboxModuleStatus
-    // const currentlyVisible = nextProps.isVisible
-    // const isVisibleAndNeedsLoad =
-    //   currentlyVisible && previousModuleLoadStatus === LOADING_CONSTANTS.IS_NOT_STARTED
-    // if (isVisibleAndNeedsLoad) {
-    //   this.props.loadMapModuleAsync()
-    // }
-  }
+  public componentWillReceiveProps(nextProps) {}
 
-  // renderMap() {
-  //   return (
-  //     <div>
-  //       <MapboxGlContainer
-  //         mapbox={this.props.mapboxModule}
-  //         setIsMapInitialized={this.props.setIsMapInitialized}
-  //         camera={this.props.camera}
-  //         ground={this.props.ground}
-  //         settings={this.props.settings}
-  //         interactivity={this.props.interactivity}
-  //         onFeatureClick={this.onFeatureClick}
-  //         onFeatureHover={this.onFeatureHover}
-  //         isReadyToInsertLayers={this.props.isReadyToInsertLayers}
-  //         elementId={MAP_ID}
-  //         isVisible={this.props.isVisible}
-  //         selectedGeometry={this.props.selectedGeometry}
-  //       />
-  //       {this.renderDetailsOverlay()}
-  //       {this.renderRegulationsOverlay()}
-  //     </div>
-  //   )
-  // }
-
-  public renderLoading() {
-    // if (this.props.isVisible === false) {
-    //   return null
-    // }
-    // if (this.props.isRegionFinishedLoading === false) {
-    //   return null
-    // }
-    // return <LoadingComponent subTitle={'Loading Map'} />
-  }
+  public renderLoading() {}
 
   public userSelectedStreamAndAccessPoint(streams, accessPoints) {
     const { selectedState, selectedRegion, streamDictionary, selectedRoad } = this.props
@@ -236,24 +186,3 @@ export class MapComponent extends React.Component<{}> {
     // }
   }
 }
-
-// MapComponent.propTypes = {
-//   mapboxModule: PropTypes.object,
-//   mapboxModuleStatus: PropTypes.string.isRequired,
-//   isVisible: PropTypes.bool.isRequired,
-//   isReadyToInsertLayers: PropTypes.bool.isRequired,
-//   camera: PropTypes.object.isRequired,
-//   ground: PropTypes.object.isRequired,
-//   settings: PropTypes.object.isRequired,
-//   interactivity: PropTypes.object.isRequired,
-//   selectedState: PropTypes.string.isRequired,
-//   selectedRegion: PropTypes.string.isRequired,
-//   selectedGeometry: PropTypes.object,
-//   loadMapModuleAsync: PropTypes.func.isRequired,
-//   setIsMapInitialized: PropTypes.func.isRequired,
-//   selectMapFeature: PropTypes.func.isRequired,
-//   selectFoculPoint: PropTypes.func.isRequired,
-//   selectedRoad: PropTypes.object,
-//   streamDictionary: PropTypes.object.isRequired,
-//   isRegionFinishedLoading: PropTypes.bool.isRequired,
-// }

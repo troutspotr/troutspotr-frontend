@@ -2,11 +2,12 @@ import { connect } from 'react-redux'
 import { selectedRegionIdSelector, selectedStateIdSelector } from 'ui/core/Core.selectors'
 import { getRegulationsSummarySelector } from 'ui/core/regulations/RegulationsSummary.selectors'
 import { getCountyListSelector } from '../Region.selectors'
-import CountyListComponent from './CountyList.component'
+import { CountyListComponent } from './CountyList.component'
 import { isListViewed } from './List.selectors'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 const mapDispatchToProps = {}
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IReduxState) => {
   const props = {
     visibleCounties: getCountyListSelector(state),
     selectedState: selectedStateIdSelector(state),
@@ -18,4 +19,4 @@ const mapStateToProps = state => {
   return props
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CountyListComponent) as {}
+export default connect(mapStateToProps, mapDispatchToProps)(CountyListComponent)

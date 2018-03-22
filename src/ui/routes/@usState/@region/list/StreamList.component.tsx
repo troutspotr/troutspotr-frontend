@@ -1,37 +1,35 @@
 import * as React from 'react'
-const classes = require('./List.scss')
-import StreamItemComponent from './streamItem/StreamItem.component'
+import { StreamItemComponent } from './streamItem/StreamItem.component'
+import { IStreamObject } from 'coreTypes/IStreamObject'
 
-const StreamListComponent = props => {
-  const { selectedRegion, selectedState, visibleTroutStreams, getSummary } = props
-  return (
-    <div className={classes.streamList}>
-      {visibleTroutStreams.map((stream, index) => {
-        const realStream = stream.stream
-        const fakeName = realStream.properties.name
-        const url = realStream.properties.slug
-        return (
-          <div key={realStream.properties.slug}>
-            <StreamItemComponent
-              getSummary={getSummary}
-              title={fakeName}
-              url={`/${selectedState}/${selectedRegion}/${url}`}
-              streamObject={stream}
-              isVisible={props.isListVisible}
-            />
-          </div>
-        )
-      })}
-    </div>
-  )
+export interface IStreamListComponent {
+  readonly visibleTroutStreams: IStreamObject[]
+  readonly selectedState: string
+  readonly selectedRegion: string
+  readonly isListVisible: boolean
 }
 
-// StreamListComponent.propTypes = {
-//   'visibleTroutStreams': PropTypes.array.isRequired,
-//   'selectedState': PropTypes.string.isRequired,
-//   'selectedRegion': PropTypes.string.isRequired,
-//   'isListVisible': PropTypes.bool.isRequired,
-//   'getSummary': PropTypes.func.isRequired,
-// }
+class StreamListComponent extends React.Component<IStreamListComponent> {
+  render() {
+    const { selectedRegion, selectedState, visibleTroutStreams } = this.props
+    return (
+      <>
+        {visibleTroutStreams.map((stream, index) => {
+          const realStream = stream.stream
+          const url = realStream.properties.slug
+          return (
+            <div key={realStream.properties.slug}>
+              <StreamItemComponent
+                url={`/${selectedState}/${selectedRegion}/${url}`}
+                stream={stream}
+                isVisible={true}
+              />
+            </div>
+          )
+        })}
+      </>
+    )
+  }
+}
 
 export default StreamListComponent

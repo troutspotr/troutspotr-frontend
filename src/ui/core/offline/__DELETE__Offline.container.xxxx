@@ -1,0 +1,16 @@
+import { connect } from 'react-redux'
+import OfflineComponent from './OfflineListener.component'
+import { setIsOffline } from '../../page/offline/Offline.redux'
+import {
+  isOfflineSelector,
+  cachedEndpointsDictionarySelector,
+} from '../../page/offline/Offline.selectors'
+
+const mapDispatchToProps = { setIsOffline: isOffline => setIsOffline(isOffline) }
+
+const mapStateToProps = state => ({
+  isOffline: isOfflineSelector(state),
+  cachedEndpointsDictionary: cachedEndpointsDictionarySelector(state),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(OfflineComponent)

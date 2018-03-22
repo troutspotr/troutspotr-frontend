@@ -1,12 +1,12 @@
 import * as React from 'react'
 const classes = require('./Search.scss')
 
-export interface IBackButtonProps {
-  readonly updateSearchText: (t: string) => void
+export interface ISearchProps {
+  updateSearchText(t: string): void
   readonly searchText: string
 }
 
-export class SearchComponent extends React.PureComponent<IBackButtonProps> {
+export class SearchComponent extends React.PureComponent<ISearchProps> {
   constructor(props) {
     super(props)
     this.onTextChange = this.onTextChange.bind(this)

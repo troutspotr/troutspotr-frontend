@@ -3,12 +3,12 @@ import { withRouter } from 'react-router'
 import { fetchTableOfContents } from 'ui/core/Core.redux'
 import * as coreSelectors from 'ui/core/Core.selectors'
 import { getGpsCoordinateFeatureSelector } from 'ui/core/gps/Gps.selectors'
-import { updateCachedEndpoints } from 'ui/core/offline/Offline.redux'
-import * as offlineSelectors from 'ui/core/offline/Offline.selectors'
 import { isRootPageSelector } from 'ui/Location.selectors'
 import * as stateSelectors from 'ui/routes/@usState/UsState.selectors'
 import { MinimapComponent } from './Minimap.component'
 import { isExpaned } from './Minimap.redux'
+import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
+import { isOfflineSelector, cachedRegionsDictionary } from 'ui/page/offline/Offline.selectors'
 import {
   getIsOpenSelector,
   isExpandedSelector,
@@ -34,13 +34,13 @@ const mapStateToProps = state => {
     tableOfContentsLoadingStatus: coreSelectors.tableOfContentsLoadingStatusSelector(state),
     getIsOpen: getIsOpenSelector(state),
     isStreamCentroidsDisplayed: isStreamCentroidsDisplayedSelector(state),
-    isOffline: offlineSelectors.isOfflineSelector(state),
-    cachedRegions: offlineSelectors.cachedRegionsDictionary(state),
+    isOffline: isOfflineSelector(state),
+    cachedRegions: cachedRegionsDictionary(state),
     currentGpsCoordinatesFeature: getGpsCoordinateFeatureSelector(state),
   }
   return props
 }
 
 export default withRouter(
-  connect<{}, {}, {}>(mapStateToProps, mapDispatchToProps)(MinimapComponent)
+  connect<any, any, any>(mapStateToProps, mapDispatchToProps)(MinimapComponent)
 )

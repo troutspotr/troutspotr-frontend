@@ -1,9 +1,13 @@
+// turning off big function rule
+// because most of this is content and is very large
+// tslint:disable:no-big-function
 import * as React from 'react'
+
 const classes = require('ui/routes/legal/Legal.scss')
 const MAGICAL_NUMBER_OF_PREAMBLES = 5
 const scalar = 0.2
 export interface IPrivacyPolicyProps {
-  advance: {}
+  advance(ellapsed: number): void
 }
 
 export interface IPrivacyPolicyState {
@@ -48,13 +52,10 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     if (element == null) {
       return
     }
-    const { preambles } = this.state
-    preambles = preambles.concat([element])
+    const preambles = [...this.state.preambles].concat([element])
     if (preambles.length === MAGICAL_NUMBER_OF_PREAMBLES) {
       setTimeout(() => {
-        const { preambleIsFinished } = this.state
-        preambleIsFinished = true
-        this.setState({ preambleIsFinished })
+        this.setState({ preambleIsFinished: true })
       }, 600)
     }
     this.setState({ preambles })
@@ -72,25 +73,25 @@ export class PrivacyPolicyComponent extends React.PureComponent<
 
     setTimeout(() => {
       this.addElement(
-        <div className={classes.preambleItem}>
+        <h2 className={classes.preambleItem}>
           We are not interested in your secret fishing spots.
-        </div>
+        </h2>
       )
     }, 1200 * scalar)
 
     setTimeout(() => {
       this.addElement(
-        <div className={classes.preambleItem}>
+        <h2 className={classes.preambleItem}>
           We are very interested in using the web to help anglers make safe and legal choices.
-        </div>
+        </h2>
       )
     }, 3200 * scalar)
 
     setTimeout(() => {
       this.addElement(
-        <div className={classes.preambleItem}>
+        <h2 className={classes.preambleItem}>
           To that end, we track usage, not users, <strong>and you can opt out</strong>.
-        </div>
+        </h2>
       )
     }, 6100 * scalar)
 
@@ -99,23 +100,20 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     }, 8100 * scalar)
   }
 
-  public renderPreamble = () => (
-    <div className={classes.preamble}>
-      {this.state.preambles.map((p, i) => {
-        const key = i + 1
-        const shield =
-          i === MAGICAL_NUMBER_OF_PREAMBLES - 1 || i === 0
-            ? classes.shieldRight
-            : classes.shieldDown
-        return (
-          <div key={key} className={classes.preambleContainer}>
-            <h4>{p}</h4>
-            <div className={shield} />
-          </div>
-        )
-      })}
-    </div>
-  )
+  public renderPreamble = () => {
+    const preambles = this.state.preambles.map((p, i) => {
+      const key = i + 1
+      const shield =
+        i === MAGICAL_NUMBER_OF_PREAMBLES - 1 || i === 0 ? classes.shieldRight : classes.shieldDown
+      return (
+        <div key={key} className={classes.preambleContainer}>
+          <h4>{p}</h4>
+          <div className={shield} />
+        </div>
+      )
+    })
+    return <div className={classes.preamble}>{preambles}</div>
+  }
 
   public renderIntro() {
     if (this.state.isAgreementShown === false) {
@@ -390,8 +388,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     const { isAgreementShown } = this.state
     if (preambleIsFinished && isAgreementShown === false) {
       setTimeout(() => {
-        isAgreementShown = true
-        this.setState({ isAgreementShown })
+        this.setState({ isAgreementShown: true })
       }, 0)
     } else {
       const ellapsed = +new Date() - +this.state.time

@@ -3,8 +3,8 @@ const classes = require('./Footer.gps.scss')
 const GPS_ELEMENT_ID = 'js-footer-gps-id'
 
 export interface IGpsDispatchProps {
-  startGpsTracking: () => void
-  stopGpsTracking: () => void
+  startGpsTracking(): void
+  stopGpsTracking(): void
 }
 export interface IGpsComponentStateProps {
   isGpsTrackingSupported: boolean

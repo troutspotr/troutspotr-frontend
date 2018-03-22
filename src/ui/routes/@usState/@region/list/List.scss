@@ -1,5 +1,5 @@
-@import "src/ui/styles/_colors";
-@import "src/ui/styles/_variables";
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
 
 $hefty-bottom-margin: 30vh;
 
@@ -26,7 +26,6 @@ $hefty-bottom-margin: 30vh;
 }
 
 .countyListContainer {
-  
 }
 
 .countyListItem:after {
@@ -42,21 +41,26 @@ $hefty-bottom-margin: 30vh;
   display: none;
 }
 
+// https://remysharp.com/2012/05/24/issues-with-position-fixed-scrolling-on-ios
 .listHeaderContainer {
   position: sticky;
   padding-top: 5px;
-  top: -2px;
+  top: 0px;
   height: 30px;
-  border-top: 1px solid transparentize($off-white, 0.85);
-  background-color: transparentize($background, 0.1);
+  border-top: black;
+  // border-top: 1px solid transparentize($off-white, 0.85);
+  background-color: green;
   z-index: 10;
+  transform: translateZ(0);
+}
+
+.listHeaderContainer > * {
+  transform: translateZ(0);
+  background-color: purple;
 }
 
 .listTitle {
   display: inline;
-  font-size: 18px;
-  color: #fff;
-  font-weight: 500;
   margin-left: 10px;
 }
 
@@ -67,6 +71,7 @@ $hefty-bottom-margin: 30vh;
 
 .streamList {
   padding: 10px 10px 40px 10px;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media only screen and (min-width: 50px) and (max-width: 640px) {
@@ -81,7 +86,7 @@ $hefty-bottom-margin: 30vh;
   .streamList {
     columns: 2 2em;
     column-gap: 1em;
-    font-size: 1.0em;
+    font-size: 1em;
   }
 }
 
@@ -89,7 +94,7 @@ $hefty-bottom-margin: 30vh;
   .streamList {
     columns: 3 2em;
     column-gap: 1em;
-    font-size: 1.0em;
+    font-size: 1em;
   }
 }
 
@@ -97,6 +102,51 @@ $hefty-bottom-margin: 30vh;
   .streamList {
     columns: 4 2em;
     column-gap: 1em;
-    font-size: 1.0em;
+    font-size: 1em;
+  }
+}
+
+.scrollDemo {
+  background-color: black;
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  p {
+    font-weight: normal;
+    background: #fff59d;
+    padding: 0.8em;
+  }
+
+  a {
+    color: #07c;
+  }
+
+  dl {
+    margin: 0;
+    padding: 24px 0 0 0;
+  }
+
+  dt {
+    background: #b8c1c8;
+    border-bottom: 1px solid #989ea4;
+    border-top: 1px solid #717d85;
+    color: #fff;
+    margin: 0;
+    padding: 2px 0 0 12px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: -1px;
+  }
+
+  dd {
+    font: bold 20px/45px Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0 0 0 12px;
+    white-space: nowrap;
+  }
+
+  dd + dd {
+    border-top: 1px solid #ccc;
   }
 }

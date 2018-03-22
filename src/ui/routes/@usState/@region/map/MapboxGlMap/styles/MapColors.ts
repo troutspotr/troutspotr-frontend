@@ -1,6 +1,6 @@
+import { IColorSettings } from 'ui/core/micromap/Micromap.settings'
 const colors = require('./MapColors.scss')
-export interface IMapColors {
-  backgroundFill: string
+export interface IMapColors extends IColorSettings {
   waterFill: string
   waterOutline: string
   primaryRoadFill: string
@@ -8,19 +8,11 @@ export interface IMapColors {
   secondaryRoadFill: string
   secondaryRoadBorder: string
   buildingFill: string
-  primaryLabelFill: string
   primaryLabelBackground: string
-  secondaryLabelFill: string
   secondaryLabelBackground: string
   admin0BorderColor: string
   admin1BorderColor: string
 
-  // stream colors
-  streamFill: string
-  troutSectionFill: string
-  palSectionFill: string
-
-  restrictionYellow: string
   restrictionRed: string
   restrictionWhite: string
   restrictionBlue: string
@@ -63,6 +55,8 @@ const getColorPallete = (suffix: string): IMapColors => {
 
     gpsCenterColor: colors[`restrictionred${suffix}`],
     gpsBorderColor: colors[`gpsborder${suffix}`],
+    petriDish: colors[`buildingfill${suffix}`],
+    backdropFill: 'black',
   }
   return item
 }

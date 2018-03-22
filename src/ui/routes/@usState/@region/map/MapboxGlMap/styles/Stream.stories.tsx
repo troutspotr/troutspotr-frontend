@@ -1,10 +1,7 @@
 import { storiesOf } from '@storybook/react'
 import { featureCollection, point } from '@turf/helpers'
-import { transformGeo } from 'api2/GeoApi.transform.sync'
-import { updateStateObject } from 'api2/StateApi'
+import { transformGeo } from 'api/region/Region.transform.sync'
 import * as React from 'react'
-// import { select, boolean } from '@storybook/addon-knobs'
-// import { action } from '@storybook/addon-actions'
 import { MapboxGlComponent } from 'ui/core/map/mapboxGl/MapboxGl.component'
 import { createLayers, createSources, createStyle } from './Base.style'
 import { createDefaultSettings, createLayerProperties } from './BaseStyle.stories'
@@ -27,11 +24,11 @@ import {
 
 import { boolean, number } from '@storybook/addon-knobs'
 import { createPalBorderLayer, createPalLayer } from './Pal.layers'
+import { formatStateData } from 'api/usState/FormatStateData'
 
-const topojson = require('static/data/v3/wi/driftless-central.topo.json')
-const stateData = require('static/data/v3/wi/wi.data.json')
-const dictionary = transformGeo(topojson, updateStateObject(stateData))
-console.log(dictionary)
+const topojson = require('static/data/v3/mn/driftless.topo.json')
+const stateData = require('static/data/v3/mn/mn.data.json')
+const dictionary = transformGeo(topojson, formatStateData(stateData))
 const stories = storiesOf('Map Styles/Stream', module)
 
 stories.add('Default', () => {
@@ -76,7 +73,9 @@ stories.add('Default', () => {
   })
 
   const layerProperties = createLayerProperties()
-  layerProperties.satelliteZoomLevel = 16
+  layerProperties.satelliteZoomLevel = 14.55
+  layerProperties.satellitePrefetchZoomLevel = 14.0
+  layerProperties.satelliteTransitionScalar = 1
   layerProperties.streamSettings = {
     ...layerProperties.streamSettings,
     streamWidth,
@@ -84,9 +83,10 @@ stories.add('Default', () => {
     troutSectionWidth,
   }
   const props = createDefaultSettings(layerProperties)
-  layerProperties.satelliteZoomLevel = 14
-  layerProperties.satellitePrefetchZoomLevel = 14
-  const newSources = [
+  // layerProperties.satelliteZoomLevel = 16.6
+  // layerProperties.satellitePrefetchZoomLevel = 16.51
+  layerProperties.satelliteResolution = 256
+  const newSources: any = [
     { id: 'streams', geojson: dictionary.streamProperties },
     { id: 'trout_stream_section', geojson: dictionary.trout_stream_section },
     { id: 'pal_routes', geojson: dictionary.pal_routes },
@@ -125,8 +125,6 @@ stories.add('Default', () => {
 
   const labelsLayers = [createAccessPointCircleLabelLayer(layerProperties, 'stream_access_point')]
 
-  // palLayers.pop()
-  // palLayers.pop()
   const myLayers = createLayers(
     layerProperties,
     streamLayers,

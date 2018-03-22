@@ -24,21 +24,24 @@ export const renderStream = (
   if (context == null) {
     return
   }
-  context.lineWidth = thickness
-  context.lineJoin = 'round'
-  context.strokeStyle = color
-  context.beginPath()
+
   if (geoJson.geometry == null) {
     return
   }
-
   const d3Thing: ExtendedFeature<LineString, typeof geoJson.properties> = {
     ...geoJson,
     geometry: geoJson.geometry,
   }
 
+  context.save()
+
+  context.lineWidth = thickness
+  context.lineJoin = 'round'
+  context.strokeStyle = color
+  context.beginPath()
   path(d3Thing)
   context.stroke()
+  context.restore()
 }
 
 export const renderStreams = (
@@ -53,13 +56,46 @@ export const renderStreams = (
     .projection(projection)
     .pointRadius(streamSettings.terminusDiameter)
     .context(canvasContext)
+  if (streamObject.stream.geometry == null) {
+    return
+  }
 
-  // Render stream
+  const streamConfluence = streamObject.stream.geometry.coordinates[0]
+  renderPointOnStream(
+    projection,
+    canvasContext,
+    streamConfluence,
+    settings.colors.secondaryLabelFill,
+    streamSettings.terminusDiameter * 0.5
+  )
+
+  // render trout black backdrop:
+  streamObject.sections.forEach(section => {
+    renderStream(
+      pathGenerator,
+      canvasContext,
+      section,
+      settings.colors.backdropFill,
+      streamSettings.troutSectionWidth + streamSettings.backdropWidth
+    )
+  })
+
+  // render PAL black backdrop
+  streamObject.palSections.forEach(section => {
+    renderStream(
+      pathGenerator,
+      canvasContext,
+      section,
+      settings.colors.backdropFill,
+      streamSettings.publicSectionWidth + streamSettings.backdropWidth
+    )
+  })
+
   renderStream(
     pathGenerator,
     canvasContext,
     streamObject.stream,
-    settings.colors.stream,
+    settings.colors.streamFill,
     streamSettings.streamWidth
   )
 
@@ -69,7 +105,7 @@ export const renderStreams = (
       pathGenerator,
       canvasContext,
       section,
-      settings.colors.troutStreamSection,
+      settings.colors.troutSectionFill,
       streamSettings.troutSectionWidth
     )
   })
@@ -80,21 +116,8 @@ export const renderStreams = (
       pathGenerator,
       canvasContext,
       section,
-      settings.colors.palSection,
+      settings.colors.palSectionFill,
       streamSettings.publicSectionWidth
     )
   })
-
-  if (streamObject.stream.geometry == null) {
-    return
-  }
-
-  const streamConfluence = streamObject.stream.geometry.coordinates[0]
-  renderPointOnStream(
-    projection,
-    canvasContext,
-    streamConfluence,
-    settings.colors.secondaryText,
-    streamSettings.terminusDiameter * 0.5
-  )
 }

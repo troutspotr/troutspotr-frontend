@@ -5,7 +5,7 @@ import RestrictionComponent from 'ui/core/regulations/Restriction.component'
 // Import { Link } from 'react-router'
 /* eslint-disable camelcase */
 
-class SummaryComponent extends React.Component<{}> {
+class SummaryComponent extends React.Component<any> {
   public renderSummary({ miles, textClass, pattern, text, heightMultiplier }) {
     // const roundedMiles = parseFloat(Math.round(miles * 10) / 10).toFixed(1)
     const roundedMiles = 1.1

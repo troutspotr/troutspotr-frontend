@@ -2,19 +2,21 @@ import isEmpty from 'lodash-es/isEmpty'
 import keyBy from 'lodash-es/keyBy'
 import { createSelector } from 'reselect'
 import { regionsDictionarySelector } from 'ui/core/Core.selectors'
-export const isOfflineSelector = state => {
-  if (state == null) {
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+export const isOfflineSelector = (reduxState: IReduxState): boolean => {
+  if (reduxState == null) {
     return false
   }
 
-  if (state.offline == null) {
+  if (reduxState.offline == null) {
     return false
   }
 
-  return state.offline.isOffline
+  return reduxState.offline.isOffline
 }
 
-export const cachedEndpointsSelector = state => state.offline.cachedEndpoints
+export const cachedEndpointsSelector = (reduxState: IReduxState): string[] =>
+  reduxState.offline.cachedEndpoints
 
 const EMPTY_DICTIONARY = {}
 

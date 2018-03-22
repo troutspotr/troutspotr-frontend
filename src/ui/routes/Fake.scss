@@ -1,0 +1,44 @@
+.scrollDemo {
+  background-color: black;
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  p {
+    font-weight: normal;
+    background: #fff59d;
+    padding: 0.8em;
+  }
+
+  a {
+    color: #07c;
+  }
+
+  dl {
+    margin: 0;
+    padding: 24px 0 0 0;
+  }
+
+  dt {
+    background: #b8c1c8;
+    border-bottom: 1px solid #989ea4;
+    border-top: 1px solid #717d85;
+    color: #fff;
+    margin: 0;
+    padding: 2px 0 0 12px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: -1px;
+  }
+
+  dd {
+    font: bold 20px/45px Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0 0 0 12px;
+    white-space: nowrap;
+  }
+
+  dd + dd {
+    border-top: 1px solid #ccc;
+  }
+}

@@ -26,8 +26,8 @@ export const getSatelliteLayers = (layerProps: ILayerProperties): Layer[] => {
         'raster-saturation': {
           base: 1,
           stops: [
-            [satelliteZoomLevel + 0.2 * satelliteTransitionScalar, -0.8],
-            [satelliteZoomLevel + 0.6 * satelliteTransitionScalar, 0],
+            [satelliteZoomLevel + 0.3 * satelliteTransitionScalar, -0.9],
+            [satelliteZoomLevel + 0.7 * satelliteTransitionScalar, 0.1],
           ],
         },
         'raster-opacity': {

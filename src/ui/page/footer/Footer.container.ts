@@ -4,22 +4,19 @@ import { setViewToList, setViewToMap } from 'ui/core/Core.redux'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { selectedStreamObjectSelector } from 'ui/routes/@usState/@region/Region.selectors'
 import { FooterComponent, IFooterStateProps } from './Footer.component'
-import { startGpsTracking, stopGpsTracking } from './gps/Gps.redux'
+import { startGpsTracking, stopGpsTracking } from '../../core/gps/Gps.redux'
 import {
-  // getGpsCoordinateFeatureSelector,
-  getIsActiveAndSuccessful,
-  getIsGpsActiveButLoading,
-  // gpsCoordinatesLoadingStatusStateSelector,
-  isGpsFailedSelector,
-  // isGpsTrackingActiveStateSelector,
   isGpsTrackingSupportedStateSelector,
-} from './gps/Gps.selectors'
+  getIsGpsActiveButLoading,
+  getIsActiveAndSuccessful,
+  isGpsFailedSelector,
+} from '../../core/gps/Gps.selectors'
 
 export interface IFooterDispatchProps {
-  setViewToMap: () => void
-  setViewToList: () => void
-  startGpsTracking: () => void
-  stopGpsTracking: () => void
+  setViewToMap(): void
+  setViewToList(): void
+  startGpsTracking(): void
+  stopGpsTracking(): void
 }
 
 const mapDispatchToProps = (dispatch): IFooterDispatchProps => ({

@@ -1,7 +1,12 @@
 import { combineReducers } from 'redux'
 
-import cameraActions from './Map.redux.camera'
-import interactivityActions from './Map.redux.interactivity'
+import cameraActions, { ICameraReduxState } from './Map.redux.camera'
+import interactivityActions, { IMapInteractivity } from './Map.redux.interactivity'
+
+export interface IMapRedux {
+  camera: ICameraReduxState
+  interactivity: IMapInteractivity
+}
 
 export default combineReducers({
   camera: cameraActions,

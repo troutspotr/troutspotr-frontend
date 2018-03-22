@@ -1,10 +1,13 @@
 // import StateApi from 'api/StateApi'
 import { getApi } from 'api/Api.module'
-import { IUsState } from 'coreTypes/state/IUsState'
+import { IUsStateMetadata } from 'coreTypes/state/IUsState'
 // import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
 import keyBy from 'lodash-es/keyBy'
 import { createAction, handleActions } from 'redux-actions'
 import { Loading } from 'ui/core/LoadingConstants'
+import { Dictionary } from 'lodash'
+import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid'
+import { IRoadType } from 'coreTypes/state/IRoadType'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -12,11 +15,11 @@ import { Loading } from 'ui/core/LoadingConstants'
 // Export const LIST = 'list'
 
 export const REGION_SET_VIEW = 'REGION_SET_VIEW'
-export interface IUsStateReduxState extends IUsState {
-  streamIdDictionary: {}
+export interface IUsStateReduxState extends IUsStateMetadata {
+  streamIdDictionary: Dictionary<IStreamCentroid>
   stateDataLoadingStatus: Loading
-  slugDictionary: {}
-  roadTypesDictionary: {}
+  slugDictionary: Dictionary<IStreamCentroid>
+  roadTypesDictionary: Dictionary<IRoadType>
 }
 const INITIAL_US_STATE_STATE: IUsStateReduxState = {
   regionIndex: {},
@@ -47,7 +50,7 @@ export const setStateData = createAction(STATE_SET_STATE_DATA, x => x)
 export const setStateDataLoading = createAction(STATE_SET_STATE_LOADING)
 export const setStateDataFailed = createAction(STATE_SET_STATE_LOADING_FAILED)
 
-export const fetchStateData = stateName => async dispatch => {
+export const fetchStateData = (stateName: string) => async dispatch => {
   dispatch(setStateDataLoading())
   try {
     if (stateName == null) {
@@ -59,7 +62,7 @@ export const fetchStateData = stateName => async dispatch => {
     dispatch(setStateData(stateData))
     // dispatch(updateCachedEndpoints())
   } catch (error) {
-    console.log(error) // eslint-disable-line
+    console.error(error) // eslint-disable-line
     dispatch(setStateDataFailed())
   }
 }

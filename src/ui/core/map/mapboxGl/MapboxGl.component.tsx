@@ -5,21 +5,30 @@ require('mapbox-gl/dist/svg/mapboxgl-ctrl-geolocate.svg')
 require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg')
 require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg')
 
-// import * as mapboxGl from 'mapbox-gl'
-import { Map, Style as MapboxStyle } from 'mapbox-gl'
+import { Map, Style as MapboxStyle, GeoJSONGeometry } from 'mapbox-gl'
 import { ICameraProps } from '../ICameraProps'
 import MapboxGlCamera from './MapboxGl.component.camera'
-// import * as GeoJSON from 'geojson'
+import { Feature } from 'geojson'
 
+type MapboxGeoJSONLayers = Array<
+  Feature<
+    GeoJSONGeometry,
+    {
+      // tslint:disable-next-line:no-any
+      [name: string]: any
+    }
+  >
+>
 const token = 'pk.eyJ1IjoiYW5kZXN0MDEiLCJhIjoibW02QnJLSSJ9._I2ruvGf4OGDxlZBU2m3KQ'
 // https://stackoverflow.com/a/44393954
 
 export interface IMapboxGlProps {
-  readonly onFeaturesSelected: (t: {}) => void
-  readonly onMapInitialized: (t: boolean) => void
+  onFeaturesSelected(t: MapboxGeoJSONLayers): void
+  onMapInitialized(t: boolean): void
   readonly style: MapboxStyle | string
   readonly camera?: ICameraProps
-  readonly mapboxGl: {}
+  // tslint:disable-next-line:no-any
+  readonly mapboxGl: any
   readonly debugMode?: boolean
 }
 
@@ -45,7 +54,6 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     if (features == null || features.length === 0) {
       return
     }
-    // const groups = groupBy(features, f => f.layer.id)
     this.props.onFeaturesSelected(features)
   }
 
@@ -56,7 +64,8 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
   }
 
-  public getInteractiveFeaturesOverPoint(point): {} {
+  // tslint:disable-next-line:no-any
+  public getInteractiveFeaturesOverPoint(point): MapboxGeoJSONLayers {
     const BOX_DIMENSION = 2
     const boundingBox = [
       [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
@@ -73,17 +82,24 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     const map = new mapboxGl.Map({
       container: this.mapContainer,
       style: this.props.style,
-      center: [-93.5, 42],
+      center: [-90.04663446020976, 42],
       zoom: 4,
-    })
+    }) as Map
 
-    // inactivate rotation.
-    // map.dragRotate.disable()
-    // map.touchZoomRotate.disableRotation()
     if (this.props.debugMode === true) {
       setTimeout(() => map.resize(), 200)
       map.on('zoom', e => {
-        console.log('zoom:', map.getZoom())
+        // const zoom = map.getZoom()
+        // const center = map.getCenter()
+        // const bearing = map.getBearing()
+        // const pitch = map.getPitch()
+        // const args = {
+        //   zoom,
+        //   bearing,
+        //   center,
+        //   pitch,
+        // }
+        // console.info('args:', args)
       })
     }
     map.on('click', this.onClick)

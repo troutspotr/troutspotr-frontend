@@ -1,0 +1,48 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/_fonts';
+@import 'src/ui/styles/ZeldaText';
+@import 'src/ui/styles/fallback';
+@import 'src/ui/styles/utilities';
+$micromap-height: 3.5rem;
+$micromap-width: $micromap-height;
+
+.container {
+  margin-bottom: 15px;
+  margin-top: 1.3125rem;
+  display: inline-flex;
+  width: 100%;
+  color: inherit;
+  text-decoration: inherit;
+
+  @include fallback(color, --text-color-primary, blue);
+  .media {
+    order: 1;
+    width: $micromap-width;
+    min-width: $micromap-width;
+    height: $micromap-height;
+    overflow: hidden;
+  }
+
+  .body {
+    order: 2;
+    flex-grow: 1;
+    width: 100%;
+    margin-left: 5px;
+  }
+
+  .header {
+    font-size: 1em;
+    @include heavy-font;
+  }
+}
+
+.invisible {
+  composes: container;
+  display: none;
+}
+
+:export {
+  micromap-width: $micromap-width;
+  micromap-height: $micromap-height;
+}

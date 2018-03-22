@@ -8,7 +8,7 @@ export interface IPageLayoutProps {
   readonly theme: 'dark' | 'light'
 }
 
-export const PageLayoutComponent: React.SFC<IPageLayoutProps> = props => {
+export const PageLayoutComponent: React.SFC<IPageLayoutProps> = (props): JSX.Element => {
   const { header, content, footer, theme } = props
   const themeClass = theme === 'dark' || theme == null ? 'ts-dark' : 'ts-light'
   return (

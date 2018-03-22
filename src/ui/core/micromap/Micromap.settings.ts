@@ -7,6 +7,11 @@ export interface IDimensionsSettings {
   // readonly padding: number
 }
 
+export const DEFAULT_DIMENSIONS: IDimensionsSettings = {
+  width: 45,
+  height: 45,
+}
+
 export interface IStreamSettings {
   readonly radius: number
   readonly streamWidth: number
@@ -14,6 +19,17 @@ export interface IStreamSettings {
   readonly publicSectionWidth: number
   readonly specialRegulationsWidth: number
   readonly terminusDiameter: number
+  readonly backdropWidth: number
+}
+
+export const DEFAULT_STREAM_SETTINGS: IStreamSettings = {
+  radius: 14.5,
+  streamWidth: 0.83,
+  troutSectionWidth: 1.16,
+  publicSectionWidth: 1.54,
+  specialRegulationsWidth: 1.3,
+  terminusDiameter: 2.34,
+  backdropWidth: 1,
 }
 
 export interface ICircleSettings {
@@ -23,12 +39,31 @@ export interface ICircleSettings {
   readonly publicSectionWidth: number
   readonly specialRegulationsWidth: number
   readonly terminusDiameter: number
+  readonly backdropWidth: number
+}
+
+export const DEFAULT_CIRCLE_SETTINGS: ICircleSettings = {
+  radius: 18.0,
+  streamWidth: 0.83,
+  troutSectionWidth: 1.16,
+  publicSectionWidth: 1.54,
+  specialRegulationsWidth: 1.3,
+  terminusDiameter: 2.34,
+  backdropWidth: 1,
 }
 
 export interface IAccessPointsSettings {
   readonly radius: number
   readonly permissionRequiredDiameter: number
   readonly publiclyFishableDiameter: number
+  readonly backdropWidth: number
+}
+
+export const DEFAULT_ACCESS_POINT_SETTINGS: IAccessPointsSettings = {
+  radius: 21.0,
+  permissionRequiredDiameter: 2.0,
+  publiclyFishableDiameter: 2.5,
+  backdropWidth: 0.5,
 }
 
 export interface IContentSettings {
@@ -40,14 +75,27 @@ export interface IContentSettings {
 }
 
 export interface IColorSettings {
-  background: string
-  petriDish: string
-  stream: string
-  troutStreamSection: string
-  specialRegulation: string
-  palSection: string
-  primaryText: string
-  secondaryText: string
+  readonly backgroundFill: string
+  readonly petriDish: string
+  readonly streamFill: string
+  readonly troutSectionFill: string
+  readonly restrictionYellow: string
+  readonly palSectionFill: string
+  readonly primaryLabelFill: string
+  readonly secondaryLabelFill: string
+  readonly backdropFill: string
+}
+
+export const DEFAULT_COLOR_SETTINGS: IColorSettings = {
+  backgroundFill: '#121212',
+  troutSectionFill: '#57b5e0',
+  restrictionYellow: '#fbcd13',
+  palSectionFill: '#bce90c',
+  primaryLabelFill: 'white',
+  secondaryLabelFill: '#bcbcbc',
+  petriDish: '#212121',
+  streamFill: '#fff',
+  backdropFill: 'black',
 }
 
 export interface IMicromapSettings {
@@ -58,3 +106,56 @@ export interface IMicromapSettings {
 export interface IMicromapCanvasSettings extends IMicromapSettings {
   readonly colors: IColorSettings
 }
+
+export const DEFAULT_MICROMAP_CANVAS_SETTINGS: IMicromapCanvasSettings = {
+  colors: DEFAULT_COLOR_SETTINGS,
+  dimensions: DEFAULT_DIMENSIONS,
+  settings: {
+    arcCompressionRatio: 0.9,
+    rotationPhase: Math.PI * 0.5,
+    stream: DEFAULT_STREAM_SETTINGS,
+    circle: DEFAULT_CIRCLE_SETTINGS,
+    accessPoints: DEFAULT_ACCESS_POINT_SETTINGS,
+  },
+}
+
+// const t = {
+//   dimensions: {
+//     width: 51,
+//     height: 51,
+//   },
+//   settings: {
+//     arcCompressionRatio: 0.87,
+//     rotationPhase: 1.59,
+//     stream: {
+//       radius: 16.830000000000002,
+//       streamWidth: 0.83,
+//       troutSectionWidth: 1.16,
+//       publicSectionWidth: 1.54,
+//       specialRegulationsWidth: 1.3,
+//       terminusDiameter: 2.34,
+//     },
+//     circle: {
+//       radius: 20.655,
+//       streamWidth: 0.83,
+//       troutSectionWidth: 1.16,
+//       publicSectionWidth: 1.54,
+//       specialRegulationsWidth: 1.3,
+//       terminusDiameter: 2.34,
+//     },
+//     accessPoints: {
+//       radius: 22.95,
+//       permissionRequiredDiameter: 2.98,
+//       publiclyFishableDiameter: 3.13,
+//     },
+//   },
+//   colors: {
+//     background: '#121212',
+//     troutStreamSection: '#57b5e0',
+//     specialRegulation: '#fbcd13',
+//     palSection: '#bce90c',
+//     primaryText: 'white',
+//     secondaryText: '#bcbcbc',
+//     petriDish: '#212121',
+//   },
+// }

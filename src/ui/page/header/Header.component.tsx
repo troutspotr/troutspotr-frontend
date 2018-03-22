@@ -8,19 +8,29 @@ import SearchContainer from './search/Search.container'
 import { SubtitleComponent } from './subtitle/Subtitle.component'
 import TitleComponent from './title/Title.component'
 
-export interface IHeaderComponentPrps {
+export interface IHeaderStateDispatchProps {}
+
+export interface IHeaderPassedProps {
+  params: any
+  location: any
+}
+
+export interface IHeaderStateProps {
   subtitle: string
   title: string
   isTitleVisible: boolean
   isSearchVisible: boolean
   isIconVisible: boolean
-  params: {}
-  location: {}
   isOffline: boolean
-  onCopyToClipboard: {}
+  onCopyToClipboard(): void
 }
 
-export class HeaderComponent extends React.PureComponent<IHeaderComponentPrps> {
+export interface IHeaderComponentProps
+  extends IHeaderPassedProps,
+    IHeaderStateProps,
+    IHeaderStateDispatchProps {}
+
+export class HeaderComponent extends React.PureComponent<IHeaderComponentProps> {
   public renderMinimap() {
     return <MinimapContainer params={this.props.params} location={this.props.location} />
   }
@@ -42,7 +52,11 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentPrps> {
       return null
     }
 
-    const body = <TitleComponent title={this.props.title} />
+    const body = (
+      <TitleComponent>
+        <>{this.props.title}</>
+      </TitleComponent>
+    )
 
     const symbol = (
       <ClipboardIcon
@@ -76,6 +90,7 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentPrps> {
         title={this.renderTitle()}
         minimap={this.renderMinimap()}
         search={this.renderSearch()}
+        viewMode={'search'}
       />
     )
   }

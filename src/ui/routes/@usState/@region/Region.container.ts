@@ -1,37 +1,15 @@
 import { connect } from 'react-redux'
-import RegionLayout from './Region.layout'
+import { RegionLayout, IRegionLayoutDispatchProps, IRegionLayoutStateProps } from './Region.layout'
 import { fetchRegionData } from './Region.redux'
-import {
-  regionLoadingStatusSelector,
-  showNoResultsFoundSelector,
-  streamsSelector,
-  visibleTroutStreams,
-} from './Region.selectors'
-// import {
-//   hasAgreedToTermsSelector,
-//   selectedRegionIdSelector,
-//   selectedStateIdSelector,
-//   viewSelector,
-// } from 'ui/core/Core.selectors'
-// import { updateSearchText } from 'ui/core/Core.redux'
+import { getSvgMinimapStateProps } from './Region.selectors'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 
-const mapDispatchToProps = {
-  fetchRegionData: (stateId, regionId) => fetchRegionData(stateId, regionId),
-  // clearText: () => updateSearchText(''),
+const mapDispatchToProps: IRegionLayoutDispatchProps = {
+  fetchRegionData: (stateId: string, regionId: string) => fetchRegionData(stateId, regionId),
 }
 
-const mapStateToProps = state => {
-  const props = {
-    // view: viewSelector(state),
-    troutStreams: visibleTroutStreams(state),
-    // selectedState: selectedStateIdSelector(state),
-    // selectedRegion: selectedRegionIdSelector(state),
-    regionLoadingStatus: regionLoadingStatusSelector(state),
-    streams: streamsSelector(state),
-    showNoResultsFoundOverlay: showNoResultsFoundSelector(state),
-    // hasAgreedToTerms: hasAgreedToTermsSelector(state),
-  }
-
+const mapStateToProps = (state: IReduxState): IRegionLayoutStateProps => {
+  const props = getSvgMinimapStateProps(state)
   return props
 }
 

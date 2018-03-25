@@ -1,7 +1,6 @@
-import { getApi } from 'api/Api.module'
+const { getApi } = require('api/Api.module')
 import keyBy from 'lodash-es/keyBy'
 import { createAction, handleActions } from 'redux-actions'
-import { Loading } from 'ui/core/LoadingConstants'
 import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
 import { Dictionary } from 'lodash'
 import {
@@ -11,7 +10,10 @@ import {
   UsStateFeature,
   CountyFeature,
   RegionFeature,
-} from '../../coreTypes/tableOfContents/ITableOfContentsGeoJSON'
+} from 'coreTypes/tableOfContents/ITableOfContentsGeoJSON'
+import { LoadingStatus, SelectionStatus } from '../../coreTypes/Ui'
+import { IUsState } from 'coreTypes/tableOfContents/IState'
+import { IRegion } from '../../coreTypes/tableOfContents/IRegion'
 
 // ------------------------------------
 // Constants
@@ -26,6 +28,9 @@ export const HAS_AGREED_TO_TERMS = 'HAS_AGREED_TO_TERMS'
 export const SET_AGREEMENT_STATE = 'SET_AGREEMENT_STATE'
 
 export const isBot = (): boolean => {
+  if (window == null || window.navigator == null) {
+    return false
+  }
   /* eslint-disable no-useless-escape */
   const botPattern =
     '(googlebot/|Googlebot-Mobile|Googlebot-Image|Google favicon|Mediapartners-Google|bingbot|slurp|java|wget|curl|Commons-HttpClient|Python-urllib|libwww|httpunit|nutch|phpcrawl|msnbot|jyxobot|FAST-WebCrawler|FAST Enterprise Crawler|biglotron|teoma|convera|seekbot|gigablast|exabot|ngbot|ia_archiver|GingerCrawler|webmon |httrack|webcrawler|grub.org|UsineNouvelleCrawler|antibot|netresearchserver|speedy|fluffy|bibnum.bnf|findlink|msrbot|panscient|yacybot|AISearchBot|IOI|ips-agent|tagoobot|MJ12bot|dotbot|woriobot|yanga|buzzbot|mlbot|yandexbot|purebot|Linguee Bot|Voyager|CyberPatrol|voilabot|baiduspider|citeseerxbot|spbot|twengabot|postrank|turnitinbot|scribdbot|page2rss|sitebot|linkdex|Adidxbot|blekkobot|ezooms|dotbot|Mail.RU_Bot|discobot|heritrix|findthatfile|europarchive.org|NerdByNature.Bot|sistrix crawler|ahrefsbot|Aboundex|domaincrawler|wbsearchbot|summify|ccbot|edisterbot|seznambot|ec2linkfinder|gslfbot|aihitbot|intelium_bot|facebookexternalhit|yeti|RetrevoPageAnalyzer|lb-spider|sogou|lssbot|careerbot|wotbox|wocbot|ichiro|DuckDuckBot|lssrocketcrawler|drupact|webcompanycrawler|acoonbot|openindexspider|gnam gnam spider|web-archive-net.com.bot|backlinkcrawler|coccoc|integromedb|content crawler spider|toplistbot|seokicks-robot|it2media-domain-crawler|ip-web-crawler.com|siteexplorer.info|elisabot|proximic|changedetection|blexbot|arabot|WeSEE:Search|niki-bot|CrystalSemanticsBot|rogerbot|360Spider|psbot|InterfaxScanBot|Lipperhey SEO Service|CC Metadata Scaper|g00g1e.net|GrapeshotCrawler|urlappendbot|brainobot|fr-crawler|binlar|SimpleCrawler|Livelapbot|Twitterbot|cXensebot|smtbot|bnf.fr_bot|A6-Indexer|ADmantX|Facebot|Twitterbot|OrangeBot|memorybot|AdvBot|MegaIndex|SemanticScholarBot|ltx71|nerdybot|xovibot|BUbiNG|Qwantify|archive.org_bot|Applebot|TweetmemeBot|crawler4j|findxbot|SemrushBot|yoozBot|lipperhey|y!j-asr|Domain Re-Animator Bot|AddThis)'
@@ -34,23 +39,17 @@ export const isBot = (): boolean => {
   return re.test(userAgent)
 }
 
-const getHasAgreedToTerms = (): boolean => {
-  if (isBot()) {
-    // tslint:disable-next-line:no-commented-code
-    // try {
-    //   AnonymousAnalyzerApi.recordEvent('bot_detected', { bot: navigator.userAgent })
-    // } catch (error) {
-    //   // do nothing
-    // }
+// const getHasAgreedToTerms = (): boolean => {
+//   if (isBot()) {
+//     return true
+//   }
+//   if (localStorage == null) {
+//     return false
+//   }
 
-    return true
-  }
-  if (localStorage == null) {
-    return false
-  }
-
-  return localStorage.getItem(HAS_AGREED_TO_TERMS) === 'true'
-}
+//   return true
+//   // return localStorage.getItem(HAS_AGREED_TO_TERMS) === 'true'
+// }
 
 // ------------------------------------
 // Reducer
@@ -66,13 +65,10 @@ export interface ICoreState {
   countyDictionary: Dictionary<CountyFeature>
   regionsGeoJson: RegionFeatureCollection
   regionDictionary: Dictionary<RegionFeature>
-  tableOfContentsLoadingStatus: Loading
+  tableOfContentsLoadingStatus: LoadingStatus
   hasAgreedToTerms: boolean
-  hasSeenIntroScreen: boolean
-  hasSeenTermsOfService: boolean
-  hasSeenPrivacyPolicy: boolean
 }
-const INITIAL_CORE_STATE: ICoreState = {
+export const INITIAL_CORE_STATE: ICoreState = {
   view: isBot() ? View.list : View.map,
   isMapModuleLoaded: false,
   isMapReadyToDisplay: false,
@@ -83,11 +79,8 @@ const INITIAL_CORE_STATE: ICoreState = {
   countyDictionary: {},
   regionsGeoJson: null,
   regionDictionary: {},
-  tableOfContentsLoadingStatus: Loading.NotStarted,
-  hasSeenIntroScreen: false,
-  hasSeenTermsOfService: false,
-  hasSeenPrivacyPolicy: false,
-  hasAgreedToTerms: getHasAgreedToTerms(),
+  tableOfContentsLoadingStatus: LoadingStatus.NotStarted,
+  hasAgreedToTerms: true,
 }
 
 // ------------------------------------
@@ -100,6 +93,7 @@ export const GEO_SET_TABLE_OF_CONTENTS = 'GEO_SET_TABLE_OF_CONTENTS'
 export const GEO_TABLE_OF_CONTENTS_LOADING = 'GEO_TABLE_OF_CONTENTS_LOADING'
 export const GEO_TABLE_OF_CONTENTS_LOADING_FAILED = 'GEO_TABLE_OF_CONTENTS_LOADING_FAILED'
 export const GEO_UPDATE_SEARCH_TEXT = 'GEO_UPDATE_SEARCH_TEXT'
+export const GEO_SET_SELECTION = 'GEO_SET_SELECTION'
 
 export const setTableOfContents = createAction(GEO_SET_TABLE_OF_CONTENTS, x => x)
 export const setTableOfContentsLoading = createAction(GEO_TABLE_OF_CONTENTS_LOADING)
@@ -110,7 +104,6 @@ export const setAgreementState = createAction(SET_AGREEMENT_STATE)
 const updateSearchTextAction = createAction(GEO_UPDATE_SEARCH_TEXT, item => item)
 // tslint:disable-next-line:typedef
 export const updateSearchText = (searchText: string) => async (dispatch): Promise<void> => {
-  // TODO: debounce this and check for 3 character limit
   const sanitizedString = searchText == null ? '' : searchText.trim()
   dispatch(updateSearchTextAction(sanitizedString))
 }
@@ -135,10 +128,22 @@ export const fetchTableOfContents = () => async (dispatch): Promise<void> => {
   }
 }
 
+interface IMinimapSelection {
+  usStateShortName: string
+  regionPathName?: string
+}
+export const setSelectedMinimapGeometry = createAction(
+  GEO_SET_SELECTION,
+  (args: IMinimapSelection) => ({
+    usStateShortName: args.usStateShortName == null ? null : args.usStateShortName.toLowerCase(),
+    regionPathName: args.regionPathName == null ? null : args.regionPathName,
+  })
+)
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: {} = {
+export const CORE_REDUCERS: { [name: string]: (state: ICoreState, action: any) => ICoreState } = {
   [REGION_SET_VIEW]: (state: ICoreState, { payload }): ICoreState => {
     try {
       getApi().then(({ AnonymousAnalyzerApi }) => {
@@ -154,6 +159,14 @@ const ACTION_HANDLERS: {} = {
   },
 
   [GEO_SET_TABLE_OF_CONTENTS]: (state: ICoreState, { payload }): ICoreState => {
+    payload.states.features.forEach((s: IUsState) => {
+      s.selectionStatus = SelectionStatus.Inactive
+      s.loadingStatus = LoadingStatus.Success
+    })
+    payload.regions.features.forEach((s: IRegion) => {
+      s.selectionStatus = SelectionStatus.Inactive
+      s.loadingStatus = LoadingStatus.Success
+    })
     const newState = {
       ...state,
 
@@ -170,56 +183,87 @@ const ACTION_HANDLERS: {} = {
         regionDictionary: keyBy(payload.regions.features, r => r.properties.path.toLowerCase()),
 
         streamCentroidsGeoJson: payload.streamCentroids,
-        tableOfContentsLoadingStatus: Loading.Success,
+        tableOfContentsLoadingStatus: LoadingStatus.Success,
       },
     }
     return newState
   },
   [GEO_TABLE_OF_CONTENTS_LOADING]: (state: ICoreState, { payload }): ICoreState => {
-    const newState = { ...state, ...{ tableOfContentsLoadingStatus: Loading.Pending } }
+    const newState = { ...state, ...{ tableOfContentsLoadingStatus: LoadingStatus.Pending } }
     return newState
   },
   [GEO_TABLE_OF_CONTENTS_LOADING_FAILED]: (state: ICoreState, { payload }): ICoreState => {
-    const newState = { ...state, ...{ tableOfContentsLoadingStatus: Loading.Failed } }
+    const newState = { ...state, ...{ tableOfContentsLoadingStatus: LoadingStatus.Failed } }
     return newState
   },
   [GEO_UPDATE_SEARCH_TEXT]: (state: ICoreState, { payload }): ICoreState => {
     const newState = { ...state, ...{ searchText: payload } }
     return newState
   },
-  // [HAS_AGREED_TO_TERMS]: (state: ICoreState, { payload }): ICoreState => {
-  //   if (localStorage != null && localStorage.setItem != null) {
-  //     try {
-  //       localStorage.setItem(HAS_AGREED_TO_TERMS, payload)
-  //     } catch (e) {
-  //       console.log('could not store token; perhaps private mode?') // eslint-disable-line
-  //     }
-  //   }
+  [GEO_SET_SELECTION]: (state: ICoreState, { payload }): ICoreState => {
+    const { statesGeoJson, statesDictionary, regionsGeoJson, regionDictionary } = state
 
-  //   const newState = { ...state, ...{ hasAgreedToTerms: payload === 'true' } }
-  //   return newState
-  // },
-  // [SET_AGREEMENT_STATE]: (state: ICoreState, { payload }): ICoreState => {
-  //   const { view, time } = payload
-  //   if (view == null || time == null) {
-  //     throw new Error('view and time cannot be null')
-  //   }
+    if (
+      statesGeoJson == null ||
+      statesDictionary == null ||
+      regionsGeoJson == null ||
+      regionDictionary == null
+    ) {
+      return state
+    }
+    const { usStateShortName, regionPathName } = payload
 
-  //   if (view === 'intro') {
-  //     const newState = { ...state, ...{ hasSeenIntroScreen: true } }
-  //     AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
-  //     return newState
-  //   } else if (view === 'termsOfService') {
-  //     const newState = { ...state, ...{ hasSeenTermsOfService: true } }
-  //     AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
-  //     return newState
-  //   } else if (view === 'privacyPolicy') {
-  //     const newState = { ...state, ...{ hasSeenPrivacyPolicy: true } }
-  //     AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
-  //     return newState
-  //   }
-  //   return { ...state }
-  // },
+    if (usStateShortName == null) {
+      return state
+    }
+
+    const stateItem = statesDictionary[usStateShortName]
+    if (stateItem == null) {
+      return state
+    }
+
+    // If they've selected nothing (denoted by '')
+    // then that's a national level view and they should
+    // all be actie.
+    // If there is a selection, then non-selected items
+    // should be inactive.
+    const stateLevelNonSelectedStatus =
+      usStateShortName === '' ? SelectionStatus.Active : SelectionStatus.Inactive
+
+    statesGeoJson.features = statesGeoJson.features.map(f => {
+      f.properties.selectionStatus =
+        f.properties.short_name === usStateShortName
+          ? SelectionStatus.Selected
+          : stateLevelNonSelectedStatus
+      return f
+    })
+
+    const regionLevelNonSelectedStatus =
+      regionPathName === '' ? SelectionStatus.Active : SelectionStatus.Inactive
+
+    regionsGeoJson.features = regionsGeoJson.features.map(f => {
+      const isInSelectedState = f.properties.state_short_name.toLowerCase() === usStateShortName
+
+      // if we're in the selected us state (eg mn/driftless is in MN)
+      // then set the fallback to active. It may not be SELECTED, but at least
+      // it's active.
+      const fallbackSelectionStatus = isInSelectedState
+        ? SelectionStatus.Active
+        : regionLevelNonSelectedStatus
+      f.properties.selectionStatus =
+        f.properties.path === regionPathName ? SelectionStatus.Selected : fallbackSelectionStatus
+      return f
+    })
+    return {
+      ...state,
+      statesGeoJson: {
+        ...statesGeoJson,
+      },
+      regionsGeoJson: {
+        ...regionsGeoJson,
+      },
+    }
+  },
 }
 
-export default handleActions(ACTION_HANDLERS, INITIAL_CORE_STATE)
+export default handleActions(CORE_REDUCERS, INITIAL_CORE_STATE)

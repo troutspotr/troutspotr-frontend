@@ -1,6 +1,7 @@
 import { IOpener } from 'coreTypes/state/IWaterOpener'
 import { IBridgeCount } from '../../api/region/Region.accessPoints'
-export interface IStream extends IBridgeCount {
+import { ISelectable } from '../Ui'
+export interface IStream extends IBridgeCount, ISelectable {
   gid: number
   name: string
   local_name: string

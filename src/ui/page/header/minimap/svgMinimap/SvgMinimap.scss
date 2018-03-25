@@ -3,8 +3,6 @@
 @import 'src/ui/styles/fallback';
 
 .container {
-  background-color: gray;
-
   height: 100%;
   width: 100%;
 }
@@ -49,6 +47,8 @@
   transition: stroke 800ms;
   @include fallback(stroke, --text-color-primary, $textDark);
   transform-origin: center;
+  // this backdrop is not for interactivity.
+  pointer-events: none;
 }
 
 .regions {

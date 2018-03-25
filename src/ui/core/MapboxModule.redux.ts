@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import { Loading } from 'ui/core/LoadingConstants'
+import { LoadingStatus } from '../../coreTypes/Ui'
 
 // ------------------------------------
 // Constants
@@ -56,7 +56,7 @@ const ACTION_HANDLERS: {} = {
   [MAP_MODULE_LOADING]: (state: IMapboxModuleState, { payload }): IMapboxModuleState => {
     const newState = {
       ...state,
-      mapModuleStatus: Loading.Pending,
+      mapModuleStatus: LoadingStatus.Pending,
     }
 
     return newState
@@ -64,7 +64,7 @@ const ACTION_HANDLERS: {} = {
   [MAP_MODULE_FAILED]: (state: IMapboxModuleState, { payload }): IMapboxModuleState => {
     const newState = {
       ...state,
-      mapModuleStatus: Loading.Failed,
+      mapModuleStatus: LoadingStatus.Failed,
     }
 
     return newState
@@ -72,7 +72,7 @@ const ACTION_HANDLERS: {} = {
   [MAP_MODULE_SUCCESS]: (state: IMapboxModuleState, { payload }): IMapboxModuleState => {
     const newState = {
       ...state,
-      mapModuleStatus: Loading.Success,
+      mapModuleStatus: LoadingStatus.Success,
       mapModule: payload,
     }
 
@@ -86,10 +86,10 @@ const ACTION_HANDLERS: {} = {
 // ------------------------------------
 export interface IMapboxModuleState {
   mapModule: {}
-  mapModuleStatus: Loading
+  mapModuleStatus: LoadingStatus
 }
 const INITIAL_MAPBOX_STATE: IMapboxModuleState = {
-  mapModuleStatus: Loading.NotStarted,
+  mapModuleStatus: LoadingStatus.NotStarted,
   mapModule: null,
 }
 

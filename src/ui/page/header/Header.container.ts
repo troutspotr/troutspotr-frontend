@@ -30,7 +30,8 @@ const mapStateToProps = (state): IHeaderStateProps => ({
   },
 })
 
-export default connect<IHeaderStateProps, IHeaderStateDispatchProps, IHeaderPassedProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(HeaderComponent)
+export const HeaderContainer = connect<
+  IHeaderStateProps,
+  IHeaderStateDispatchProps,
+  IHeaderPassedProps
+>(mapStateToProps, mapDispatchToProps)(HeaderComponent)

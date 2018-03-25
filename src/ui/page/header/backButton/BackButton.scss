@@ -4,54 +4,60 @@
 $largeFontSize: 1em;
 
 .backButton {
+  .svg {
+    height: 100%;
+    width: 100%;
+  }
+
   width: 40px;
   height: 40px;
   margin: 5px;
   display: inline-block;
   transition: fill 800ms;
   cursor: pointer;
+  @include fallback(fill, --text-color-primary, $textDark);
+
   :hover {
-    .backdrop {
-      // fill: $backgroundDark;
-      @include fallback(fill, --background-color, $backgroundDark);
-    }
-
-    .circle {
-      // fill: $blueDark;
-      @include fallback(fill, --blue, $blueDark);
-    }
-
+    .circle,
     .chevron {
-      // fill: $blueDark;
+      transition: fill 200ms;
       @include fallback(fill, --blue, $blueDark);
     }
   }
+
+  .backdrop {
+    @include fallback(fill, --message-background-color, $messageBackgroundDark);
+  }
 }
 
-.inactive {
-  composes: backButton;
-  display: none;
+$enter-speed: 500;
+$exit-speed: $enter-speed / 3;
+
+$enter-speed-ms: $enter-speed * 1ms;
+$enter-delay-ms: $enter-speed-ms / 3;
+$enter-length-ms: $enter-speed-ms - $enter-delay-ms;
+$exit-speed-ms: $exit-speed * 1ms;
+
+$something-ease: cubic-bezier(0.75, 0, 0.25, 1);
+
+:global .close-button--enter {
+  opacity: 0;
+  transition: opacity $enter-length-ms;
+  transition-delay: $enter-delay-ms;
+  transition-timing-function: $something-ease;
 }
 
-.svg {
-  height: 100%;
-  width: 100%;
+:global .close-button--enter-active {
+  opacity: 1;
 }
 
-.circle {
-  transition: fill 800ms;
-  // fill: $white;
-  @include fallback(fill, --text-color-primary, $white);
+:global .close-button--exit {
+  transition: clip-path $exit-speed-ms, opacity $exit-speed-ms;
+  opacity: 1;
+
+  transition-timing-function: $something-ease;
 }
 
-.backdrop {
-  transition: fill 800ms;
-  // fill: $messageBackgroundDark;
-  @include fallback(fill, --message-background-color, $messageBackgroundDark);
-}
-
-.chevron {
-  transition: fill 800ms;
-  // fill: $textDark;
-  @include fallback(fill, --text-color-primary, $textDark);
+:global .close-button--exit-active {
+  opacity: 0;
 }

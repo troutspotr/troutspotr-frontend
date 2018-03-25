@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { selectedRegionIdSelector, selectedStateIdSelector } from 'ui/core/Core.selectors'
 import { loadMapModuleAsync } from 'ui/core/MapboxModule.redux'
 import { isMapboxModuleLoadedSelector, mapboxModuleSelector } from 'ui/core/MapboxModule.selectors'
 import {
@@ -19,6 +18,7 @@ import {
   getMapInteractivitySelector,
   isReadyToInsertLayersSelector,
 } from './Map.selectors'
+import { selectedStateIdSelector, selectedRegionIdSelector } from '../../../../Location.selectors'
 
 const mapDispatchToProps = {
   loadMapModuleAsync: () => loadMapModuleAsync(),

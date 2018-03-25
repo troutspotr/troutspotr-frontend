@@ -4,10 +4,11 @@ import isEmpty from 'lodash-es/isEmpty'
 import keyBy from 'lodash-es/keyBy'
 import reduce from 'lodash-es/reduce'
 import { createSelector } from 'reselect'
-import { searchTextSelector, selectedStreamIdSelector } from 'ui/core/Core.selectors'
-import { Loading } from 'ui/core/LoadingConstants'
+import { searchTextSelector } from 'ui/core/Core.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { IUsStateReduxState } from './UsState.redux'
+import { LoadingStatus } from 'coreTypes/Ui'
+import { selectedStreamIdSelector } from '../../Location.selectors'
 const emptyCentroids = []
 export const usStateReduxStateSelector = (reduxState: IReduxState): IUsStateReduxState =>
   reduxState.usState
@@ -93,7 +94,7 @@ export const getWatersObjectSelector = createSelector(
 export const streamCentroidsSelector = createSelector(
   [stateDataLoadingStatusSelector, streamCentroidsStateSelector],
   (isLoading, streamCentroids) => {
-    if (isLoading !== Loading.Success) {
+    if (isLoading !== LoadingStatus.Success) {
       return emptyCentroids
     }
 
@@ -141,7 +142,7 @@ export const displayedCentroidDictionarySelector = createSelector(
 export const displayedStreamCentroidDataSelector = createSelector(
   [selectedStreamIdSelector, slugDictionarySelector, stateDataLoadingStatusSelector],
   (selectedStreamId, slugDictionary, stateDataLoadingStatus) => {
-    if (stateDataLoadingStatus !== Loading.Success) {
+    if (stateDataLoadingStatus !== LoadingStatus.Success) {
       return null
     }
 
@@ -156,7 +157,7 @@ export const displayedStreamCentroidDataSelector = createSelector(
 export const displayedStreamTitleSelector = createSelector(
   [displayedStreamCentroidDataSelector, stateDataLoadingStatusSelector],
   (displayedStreamCentroid, stateDataLoadingStatus) => {
-    if (stateDataLoadingStatus !== Loading.Success) {
+    if (stateDataLoadingStatus !== LoadingStatus.Success) {
       return null
     }
 
@@ -171,7 +172,7 @@ export const displayedStreamTitleSelector = createSelector(
 export const displayedStreamCentroidSelector = createSelector(
   [displayedStreamCentroidDataSelector, stateDataLoadingStatusSelector],
   (displayedStreamCentroid, stateDataLoadingStatus) => {
-    if (stateDataLoadingStatus !== Loading.Success) {
+    if (stateDataLoadingStatus !== LoadingStatus.Success) {
       return null
     }
 

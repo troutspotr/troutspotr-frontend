@@ -1,6 +1,6 @@
 import { getApi } from 'api/Api.module'
 import { createAction, handleActions } from 'redux-actions'
-import { Loading } from 'ui/core/LoadingConstants'
+import { LoadingStatus } from '../../../coreTypes/Ui'
 import {
   isGpsTrackingActiveStateSelector,
   isGpsTrackingSupportedStateSelector,
@@ -29,7 +29,7 @@ const MAX_TIMEOUT_LENGTH_MILLISECONDS = 20 * 1000
 
 export const updateGpsPosition = createAction(
   GPS_UPDATE_GPS_POSITION,
-  (longitude, latitude, status: Loading, accuracy: number) => ({
+  (longitude, latitude, status: LoadingStatus, accuracy: number) => ({
     gpsCoordinates: [longitude, latitude],
     gpsCoordinatesLoadingStatus: status,
     isGpsTrackingActive: true,
@@ -39,7 +39,7 @@ export const updateGpsPosition = createAction(
 
 export const deactivateGpsTracking = createAction(GPS_UPDATE_GPS_POSITION, () => ({
   isGpsTrackingActive: false,
-  gpsCoordinatesLoadingStatus: Loading.NotStarted,
+  gpsCoordinatesLoadingStatus: LoadingStatus.NotStarted,
   gpsCoordinates: null,
 }))
 
@@ -59,18 +59,18 @@ export const stopGpsTracking = () => async dispatch => {
 
 export const activateGpsTracking = createAction(GPS_UPDATE_GPS_POSITION, () => ({
   isGpsTrackingActive: true,
-  gpsCoordinatesLoadingStatus: Loading.Pending,
+  gpsCoordinatesLoadingStatus: LoadingStatus.Pending,
   gpsCoordinates: null,
 }))
 
 export const setGpsTrackingFailure = createAction(GPS_UPDATE_GPS_POSITION, () => ({
   isGpsTrackingActive: false,
-  gpsCoordinatesLoadingStatus: Loading.Failed,
+  gpsCoordinatesLoadingStatus: LoadingStatus.Failed,
   gpsCoordinates: null,
 }))
 
 const throttleGpsUpdate = (dispatch, coordinates: [number, number], accuracy: number = 1) => {
-  const action = updateGpsPosition(coordinates[0], coordinates[1], Loading.Success, accuracy)
+  const action = updateGpsPosition(coordinates[0], coordinates[1], LoadingStatus.Success, accuracy)
   if (window.requestAnimationFrame != null) {
     window.requestAnimationFrame(() => {
       dispatch(action)
@@ -121,14 +121,14 @@ export const startGpsTracking = () => async (dispatch, getState) => {
 
 export interface IGpsState {
   isGpsTrackingActive: boolean
-  gpsCoordinatesLoadingStatus: Loading
+  gpsCoordinatesLoadingStatus: LoadingStatus
   gpsCoordinates?: [number, number]
   isGpsTrackingSupported: boolean
   gpsAccuracyMeters: number
 }
 const INITIAL_GPS_STATE: IGpsState = {
   isGpsTrackingActive: false,
-  gpsCoordinatesLoadingStatus: Loading.NotStarted,
+  gpsCoordinatesLoadingStatus: LoadingStatus.NotStarted,
   gpsCoordinates: null,
   isGpsTrackingSupported: 'geolocation' in navigator,
   gpsAccuracyMeters: 1,

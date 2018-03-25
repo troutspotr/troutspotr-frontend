@@ -1,7 +1,6 @@
-import { Loading } from 'ui/core/LoadingConstants'
-import { Selection } from 'ui/core/SelectionConstants'
+import { ILoadable, ISelectable } from '../Ui'
 
-export interface IRegion {
+export interface IRegion extends ILoadable, ISelectable {
   gid: number
   name: string
   path: string
@@ -14,6 +13,4 @@ export interface IRegion {
   long_name: string
   state_gid: number
   state_short_name: string
-  loadingStatus: Loading
-  selectionStatus: Selection
 }

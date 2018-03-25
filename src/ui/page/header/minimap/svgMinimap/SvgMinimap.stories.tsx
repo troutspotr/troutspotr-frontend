@@ -4,7 +4,7 @@ import boundingBox from '@turf/bbox'
 import { featureCollection } from '@turf/helpers'
 import keyBy from 'lodash-es/keyBy'
 import * as React from 'react'
-import { IMinimapSvgProps, MinimapSvgComponent } from './SvgMinimap.component'
+import { IMinimapSvgProps, SvgMinimapComponent } from './SvgMinimap.component'
 
 import {
   Feature,
@@ -15,8 +15,7 @@ import {
 
 import { IRegion } from 'coreTypes/tableOfContents/IRegion'
 import { IUsState } from 'coreTypes/tableOfContents/IState'
-import { Loading } from 'ui/core/LoadingConstants'
-import { Selection } from 'ui/core/SelectionConstants'
+import { SelectionStatus, LoadingStatus } from '../../../../../coreTypes/Ui'
 
 const US_STATES = require('ui/page/header/minimap/_stubs/states.geo.json') as FeatureCollection<
   MultiPolygon,
@@ -78,13 +77,13 @@ stories.add('Just states', () => {
     features: US_STATES.features.map(x => {
       const selectionStatus =
         x.properties.short_name === selectedStateName
-          ? Selection.Selected
-          : selectedStateName === 'All' ? Selection.Active : Selection.Inactive
+          ? SelectionStatus.Selected
+          : selectedStateName === 'All' ? SelectionStatus.Active : SelectionStatus.Inactive
       return {
         ...x,
         properties: {
           ...x.properties,
-          loadingStatus: Loading.Success,
+          loadingStatus: LoadingStatus.Success,
           selectionStatus,
         },
       }
@@ -105,17 +104,19 @@ stories.add('Just states', () => {
   }
 
   const props: IMinimapSvgProps = {
-    height,
-    width,
+    handleClose: () => {},
+    handleSelection: (a: string, b: string) => {},
     usStatesGeoJson: states,
     regionsGeoJson: emptyRegion,
     camera: cameraProps,
     isOffline: boolean('offline', false),
     isExpanded: boolean('expanded', true),
   }
+
+  console.log(cameraProps)
   return (
     <div style={style}>
-      <MinimapSvgComponent {...props} />
+      <SvgMinimapComponent {...props} />
     </div>
   )
 })
@@ -127,13 +128,13 @@ export const createStatesAndRegions = (width = 500, height = 500) => {
     features: US_STATES.features.map(x => {
       const selectionStatus =
         x.properties.short_name === selectedStateName
-          ? Selection.Selected
-          : selectedStateName === 'All' ? Selection.Active : Selection.Inactive
+          ? SelectionStatus.Selected
+          : selectedStateName === 'All' ? SelectionStatus.Active : SelectionStatus.Inactive
       return {
         ...x,
         properties: {
           ...x.properties,
-          loadingStatus: Loading.Success,
+          loadingStatus: LoadingStatus.Success,
           selectionStatus,
         },
       }
@@ -162,15 +163,15 @@ export const createStatesAndRegions = (width = 500, height = 500) => {
         >)
 
   const props: IMinimapSvgProps = {
-    height,
-    width,
+    handleClose: () => {},
+    handleSelection: (a: string, b: string) => {},
     usStatesGeoJson: states,
     camera: cameraProps,
     regionsGeoJson: regions,
     isOffline: boolean('offline', false),
     isExpanded: boolean('expanded', true),
   }
-  return <MinimapSvgComponent {...props} />
+  return <SvgMinimapComponent {...props} />
 }
 stories.add('States and regions', () => {
   const style = {
@@ -198,13 +199,13 @@ stories.add('Region Loading', () => {
     features: US_STATES.features.map(x => {
       const selectionStatus =
         x.properties.short_name === selectedStateName
-          ? Selection.Selected
-          : selectedStateName === 'All' ? Selection.Active : Selection.Inactive
+          ? SelectionStatus.Selected
+          : selectedStateName === 'All' ? SelectionStatus.Active : SelectionStatus.Inactive
       return {
         ...x,
         properties: {
           ...x.properties,
-          loadingStatus: Loading.Success,
+          loadingStatus: LoadingStatus.Success,
           selectionStatus,
         },
       }
@@ -235,8 +236,9 @@ stories.add('Region Loading', () => {
         ...x,
         properties: {
           ...x.properties,
-          selectionStatus: isNoneSelected || isItemLoading ? Selection.Active : Selection.Inactive,
-          loadingStatus: isItemLoading ? Loading.Pending : Loading.Success,
+          selectionStatus:
+            isNoneSelected || isItemLoading ? SelectionStatus.Active : SelectionStatus.Inactive,
+          loadingStatus: isItemLoading ? LoadingStatus.Pending : LoadingStatus.Success,
         },
       }
     })
@@ -256,8 +258,8 @@ stories.add('Region Loading', () => {
   }
 
   const props: IMinimapSvgProps = {
-    height,
-    width,
+    handleClose: () => {},
+    handleSelection: (a: string, b: string) => {},
     usStatesGeoJson: states,
     camera: cameraProps,
     regionsGeoJson: regions,
@@ -266,7 +268,7 @@ stories.add('Region Loading', () => {
   }
   return (
     <div style={style}>
-      <MinimapSvgComponent {...props} />
+      <SvgMinimapComponent {...props} />
     </div>
   )
 })
@@ -287,11 +289,6 @@ stories.add('Region Selected', () => {
       ? emptyRegion
       : (featureCollection(regionionsByName[stateName]) as FeatureCollection<MultiPolygon, IRegion>)
 
-  // const firstRegion = head(regions.features)
-  // const selectedRegionsFeatureCollection =
-  //   firstRegion == null
-  //     ? emptyRegion
-  //     : (featureCollection([firstRegion]) as FeatureCollection<MultiPolygon, IRegion>)
   const cameraProps = {
     bbox: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
     pitch: 0,
@@ -306,8 +303,8 @@ stories.add('Region Selected', () => {
   }
 
   const props: IMinimapSvgProps = {
-    height,
-    width,
+    handleClose: () => {},
+    handleSelection: (a: string, b: string) => {},
     usStatesGeoJson: US_STATES,
     regionsGeoJson: regions,
     camera: cameraProps,
@@ -316,7 +313,7 @@ stories.add('Region Selected', () => {
   }
   return (
     <div style={style}>
-      <MinimapSvgComponent {...props} />
+      <SvgMinimapComponent {...props} />
     </div>
   )
 })

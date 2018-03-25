@@ -1,46 +1,28 @@
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-import { fetchTableOfContents } from 'ui/core/Core.redux'
-import * as coreSelectors from 'ui/core/Core.selectors'
-import { getGpsCoordinateFeatureSelector } from 'ui/core/gps/Gps.selectors'
-import { isRootPageSelector } from 'ui/Location.selectors'
-import * as stateSelectors from 'ui/routes/@usState/UsState.selectors'
-import { MinimapComponent } from './Minimap.component'
-import { isExpaned } from './Minimap.redux'
-import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
-import { isOfflineSelector, cachedRegionsDictionary } from 'ui/page/offline/Offline.selectors'
 import {
-  getIsOpenSelector,
-  isExpandedSelector,
-  isStreamCentroidsDisplayedSelector,
-} from './Minimap.selectors'
-const mapDispatchToProps = {
-  expand: expanded => isExpaned(expanded),
-  fetchTableOfContents: () => fetchTableOfContents(),
-  updateCachedEndpoints: () => updateCachedEndpoints(),
+  MinimapComponent,
+  IMinimapStateProps,
+  IMinimapDispatchProps,
+  IMinimapPassedProps,
+} from './Minimap.component'
+import { setIsExpanded } from './Minimap.redux'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+import { isExpandedSelector } from './Minimap.selectors'
+
+const mapDispatchToProps: IMinimapDispatchProps = {
+  handleExpand: expanded => setIsExpanded(expanded),
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IReduxState): IMinimapStateProps => {
   const props = {
     isExpanded: isExpandedSelector(state),
-    isRootPage: isRootPageSelector(state),
-    statesGeoJson: coreSelectors.statesGeoJsonSelector(state),
-    countiesGeoJson: coreSelectors.countiesGeoJsonSelector(state),
-    regionsGeoJson: coreSelectors.regionsGeoJsonSelector(state),
-    selectedState: coreSelectors.selectedStateSelector(state),
-    selectedRegion: coreSelectors.selectedRegionSelector(state),
-    // streamCentroidsGeoJson: stateSelectors.displayedCentroids(state),
-    selectedStreamCentroid: stateSelectors.displayedStreamCentroidDataSelector(state),
-    tableOfContentsLoadingStatus: coreSelectors.tableOfContentsLoadingStatusSelector(state),
-    getIsOpen: getIsOpenSelector(state),
-    isStreamCentroidsDisplayed: isStreamCentroidsDisplayedSelector(state),
-    isOffline: isOfflineSelector(state),
-    cachedRegions: cachedRegionsDictionary(state),
-    currentGpsCoordinatesFeature: getGpsCoordinateFeatureSelector(state),
+    isReadyToReveal: true,
   }
   return props
 }
 
-export default withRouter(
-  connect<any, any, any>(mapStateToProps, mapDispatchToProps)(MinimapComponent)
-)
+export const MinimapContainer = connect<
+  IMinimapStateProps,
+  IMinimapDispatchProps,
+  IMinimapPassedProps
+>(mapStateToProps, mapDispatchToProps)(MinimapComponent)

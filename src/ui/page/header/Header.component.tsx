@@ -3,17 +3,14 @@ import ClipboardButton from 'react-clipboard.js'
 import { ClipboardIcon } from 'ui/page/header/title/clipboard/ClipboardIcon.component'
 import BackButtonContainer from './backButton/BackButton.container'
 import { HeaderLayout } from './Header.layout'
-import MinimapContainer from './minimap/Minimap.container'
+import { MinimapContainer } from './minimap/Minimap.container'
 import SearchContainer from './search/Search.container'
 import { SubtitleComponent } from './subtitle/Subtitle.component'
 import TitleComponent from './title/Title.component'
-
+import { SvgMinimapContainer } from './minimap/svgMinimap/SvgMinimap.container'
 export interface IHeaderStateDispatchProps {}
 
-export interface IHeaderPassedProps {
-  params: any
-  location: any
-}
+export interface IHeaderPassedProps {}
 
 export interface IHeaderStateProps {
   subtitle: string
@@ -32,15 +29,12 @@ export interface IHeaderComponentProps
 
 export class HeaderComponent extends React.PureComponent<IHeaderComponentProps> {
   public renderMinimap() {
-    return <MinimapContainer params={this.props.params} location={this.props.location} />
+    const content = <SvgMinimapContainer />
+    return <MinimapContainer mapComponent={content} />
   }
 
   public renderSearch() {
-    if (this.props.isSearchVisible) {
-      return <SearchContainer />
-    }
-
-    return null
+    return <SearchContainer />
   }
 
   public renderLocationSubtitle() {

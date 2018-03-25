@@ -39,7 +39,13 @@ export const setIsOffline = (isOffline = false) => async dispatch => {
   }
 }
 
-const getOfflineStatus = (): boolean => window.navigator.onLine === false
+const getOfflineStatus = (): boolean => {
+  if (window == null || window.navigator == null) {
+    return false
+  }
+
+  return window.navigator.onLine === true
+}
 
 export interface IOfflineState {
   cachedEndpoints: string[]
@@ -67,10 +73,5 @@ const ACTION_HANDLERS: {} = {
     return newState
   },
 }
-
-// export default function counterReducer(state = INITIAL_OFFLINE_STATE, action) {
-//   const handler = ACTION_HANDLERS[action.type]
-//   return handler ? handler(state, action) : state
-// }
 
 export default handleActions(ACTION_HANDLERS, INITIAL_OFFLINE_STATE)

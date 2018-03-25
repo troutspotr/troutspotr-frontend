@@ -17,9 +17,9 @@ export const isSearchVisibleSelector = createSelector(
       return true
     }
 
-    // If (isRootPage) {
-    //   Return true
-    // }
+    if (location == null) {
+      return false
+    }
 
     // I don't really know how to do this part yet..
     // I would like to have more sophisticated access

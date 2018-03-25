@@ -1,16 +1,30 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import { FooterContainer } from 'ui/page/footer/Footer.container'
 import { PageLayoutComponent } from 'ui/page/PageLayout.component'
+import { HeaderContainer } from 'ui/page/header/Header.container'
+import { fetchTableOfContents } from 'ui/core/Core.redux'
 
 export const HomeComponent = props => {
-  return <div>Home Etc</div>
+  return <div />
 }
 
-export class PageContainer extends React.PureComponent {
+export interface IPageLayoutDispatchProps {
+  fetchTableOfContents?(): any
+}
+
+export interface IPageLayoutProps extends IPageLayoutDispatchProps {}
+
+class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   constructor(props) {
     super(props)
+  }
+
+  public componentWillMount() {
+    const { fetchTableOfContents } = this.props
+    if (fetchTableOfContents != null) {
+      setTimeout(() => fetchTableOfContents(), 200)
+    }
   }
 
   public renderFooter() {
@@ -18,7 +32,7 @@ export class PageContainer extends React.PureComponent {
   }
 
   public renderHeader() {
-    return <Link to="/legal">Go to legal</Link>
+    return <HeaderContainer />
   }
 
   public renderContent() {
@@ -37,10 +51,12 @@ export class PageContainer extends React.PureComponent {
   }
 }
 
-const mapDispatchToProps = {}
+const mapDispatchToProps: IPageLayoutDispatchProps = {
+  fetchTableOfContents: () => fetchTableOfContents(),
+}
 
 const mapStateToProps = reduxState => {
   return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageContainer)
+export const PageContainer = connect(mapStateToProps, mapDispatchToProps)(PageContainerComponent)

@@ -1,32 +1,49 @@
 import * as React from 'react'
-const classes = require('./Region.scss')
-// import { LIST, MAP } from 'ui/core/Core.redux'
-// import MapContainer from './map/Map.container'
-// import CountyListContainer from './list/CountyList.container'
-import { LoadingComponent } from 'ui/core/loading/Loading.component'
-import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
-// import isEmpty from 'lodash-es/isEmpty'
-// import SvgSpriteSheet from './svgSpriteSheet/SvgSpriteSheet.component'
-class RegionLayout extends React.Component<any> {
+import { View } from 'ui/core/Core.redux'
+import { LoadingStatus } from 'coreTypes/Ui'
+
+export interface IRegionLayoutDispatchProps {
+  fetchRegionData(selectedState: string, selectedRegion: string): any
+}
+
+export interface IRegionLayoutStateProps {
+  view: View
+  selectedState: string
+  selectedRegion: string
+  regionLoadingStatus: LoadingStatus
+  // selectedStream: IStreamObject
+  hasAgreedToTerms: boolean
+}
+
+export interface IRegionLayourProps extends IRegionLayoutDispatchProps, IRegionLayoutStateProps {
+  children: React.ReactNode
+}
+export class RegionLayout extends React.Component<IRegionLayourProps> {
   public componentDidMount() {
+    console.log('here we are a brand new day!')
     const { fetchRegionData, selectedState, selectedRegion } = this.props
+    if (selectedState == null || selectedRegion == null) {
+      return
+    }
     fetchRegionData(selectedState, selectedRegion)
   }
 
   public componentWillReceiveProps(nextProps) {
     const { selectedState, selectedRegion } = nextProps
+    if (selectedState == null || selectedRegion == null) {
+      return
+    }
     const nextCombo = (selectedState + selectedRegion).toLowerCase()
     const currentCombo = (this.props.selectedState + this.props.selectedRegion).toLowerCase()
-
     if (nextCombo !== currentCombo) {
       this.props.fetchRegionData(selectedState, selectedRegion)
     }
   }
 
   public renderLoading() {
-    if (this.props.regionLoadingStatus === LOADING_CONSTANTS.IS_PENDING) {
-      return <LoadingComponent title="" subTitle={'Loading New Region'} />
-    }
+    // if (this.props.regionLoadingStatus === LOADING_CONSTANTS.IS_PENDING) {
+    //   return <LoadingComponent title="" subTitle={'Loading New Region'} />
+    // }
 
     return null
   }
@@ -46,34 +63,19 @@ class RegionLayout extends React.Component<any> {
   }
 
   public render() {
-    const {
-      // view,
-      hasAgreedToTerms,
-    } = this.props
-    if (hasAgreedToTerms === false) {
-      return null
-    }
-
-    return (
-      <div className={classes.regionContainer}>
-        {this.renderLoading()}
-        {this.renderList()}
-        {this.renderMap()}
-        {/* {view === LIST && this.props.children} */}
-      </div>
-    )
+    return null
+    // const { view, hasAgreedToTerms } = this.props
+    // if (hasAgreedToTerms === false) {
+    //   return null
+    // }
+    // console.log('here we are in the region')
+    // return (
+    //   <div className={classes.regionContainer}>
+    //     {this.renderLoading()}
+    //     {this.renderList()}
+    //     {this.renderMap()}
+    //     {view === View.list && this.props.children}
+    //   </div>
+    // )
   }
 }
-
-// RegionLayout.propTypes = {
-//   'view': PropTypes.string.isRequired,
-//   'children': PropTypes.element,
-//   'fetchRegionData': PropTypes.func.isRequired,
-//   'selectedState': PropTypes.string.isRequired,
-//   'selectedRegion': PropTypes.string.isRequired,
-//   'regionLoadingStatus': PropTypes.string.isRequired,
-//   'selectedStream': PropTypes.object,
-//   'hasAgreedToTerms': PropTypes.bool.isRequired,
-// }
-
-export default RegionLayout

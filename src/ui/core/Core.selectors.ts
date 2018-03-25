@@ -2,10 +2,10 @@ import has from 'lodash-es/has'
 import isEmpty from 'lodash-es/isEmpty'
 import { createSelector } from 'reselect'
 import { View } from 'ui/core/Core.redux'
-import { isRootPageSelector, locationSelector } from 'ui/Location.selectors'
+import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/Location.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { Dictionary } from 'lodash'
-import { Loading } from './LoadingConstants'
+import { LoadingStatus } from '../../coreTypes/Ui'
 import {
   CountyFeature,
   RegionFeature,
@@ -32,62 +32,20 @@ export const regionsDictionarySelector = (reduxState: IReduxState): Dictionary<R
   reduxState.core.regionDictionary
 export const hasAgreedToTermsSelector = (reduxState: IReduxState): boolean =>
   reduxState.core.hasAgreedToTerms
-export const hasSeenIntroScreenSelector = (reduxState: IReduxState): boolean =>
-  reduxState.core.hasSeenIntroScreen
-export const hasSeenTermsOfServiceSelector = (reduxState: IReduxState): boolean =>
-  reduxState.core.hasSeenTermsOfService
-export const hasSeenPrivacyPolicySelector = (reduxState: IReduxState): boolean =>
-  reduxState.core.hasSeenPrivacyPolicy
+// export const hasSeenIntroScreenSelector = (reduxState: IReduxState): boolean =>
+//   reduxState.core.hasSeenIntroScreen
+// export const hasSeenTermsOfServiceSelector = (reduxState: IReduxState): boolean =>
+//   reduxState.core.hasSeenTermsOfService
+// export const hasSeenPrivacyPolicySelector = (reduxState: IReduxState): boolean =>
+//   reduxState.core.hasSeenPrivacyPolicy
 // Export const streamCentroidsGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.streamCentroidsGeoJson
-export const tableOfContentsLoadingStatusSelector = (reduxState: IReduxState): Loading =>
+export const tableOfContentsLoadingStatusSelector = (reduxState: IReduxState): LoadingStatus =>
   reduxState.core.tableOfContentsLoadingStatus
 export const searchTextSelector = (reduxState: IReduxState): string => reduxState.core.searchText
 
 export const viewSelector = (reduxState: IReduxState): View => reduxState.core.view
 
 export const isListVisible = createSelector([viewSelector], view => view === View.list)
-
-export const selectedStateIdSelector = createSelector(
-  [isRootPageSelector, locationSelector],
-  (isRoot, location) => {
-    if (isRoot) {
-      return null
-    }
-
-    const params = location.pathname.split('/')
-    const stateParam = params.length >= 2 ? params[1].toLowerCase() : null
-
-    return stateParam
-  }
-)
-
-export const selectedRegionIdSelector = createSelector(
-  [isRootPageSelector, locationSelector],
-  (isRoot, location) => {
-    if (isRoot) {
-      return null
-    }
-
-    const params = location.pathname.split('/')
-    const regionParam = params.length >= 3 ? params[2].toLowerCase() : null
-
-    return regionParam
-  }
-)
-
-export const selectedStreamIdSelector = createSelector(
-  [isRootPageSelector, locationSelector],
-  (isRoot, location) => {
-    if (isRoot) {
-      return null
-    }
-
-    const params = location.pathname.split('/')
-    const streamSlugParam = params.length >= 4 ? params[3].toLowerCase() : null
-
-    return streamSlugParam
-  }
-)
 
 export const selectedStateSelector = createSelector(
   [selectedStateIdSelector, statesDictionarySelector],

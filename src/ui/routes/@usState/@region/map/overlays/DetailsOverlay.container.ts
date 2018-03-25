@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { selectedRegionIdSelector, selectedStateIdSelector } from 'ui/core/Core.selectors'
 import {
   getSelectedRoadSelector,
   selectedStreamObjectSelector,
@@ -7,6 +6,10 @@ import {
   visibleTroutStreams,
 } from 'ui/routes/@usState/@region/Region.selectors'
 import { DetailsOverlayComponent, IDetailsOverlayComponent } from './DetailsOverlay.component'
+import {
+  selectedStateIdSelector,
+  selectedRegionIdSelector,
+} from '../../../../../Location.selectors'
 
 const mapDispatchToProps = {}
 

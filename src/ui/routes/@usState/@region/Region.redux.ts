@@ -2,15 +2,15 @@ import { getApi } from 'api/Api.module'
 import isEmpty from 'lodash-es/isEmpty'
 import { createAction, handleActions } from 'redux-actions'
 import { selectedRegionSelector } from 'ui/core/Core.selectors'
-import { Loading } from 'ui/core/LoadingConstants'
 import {
   selectFoculPoint,
   selectMapFeature,
 } from 'ui/routes/@usState/@region/map/Map.redux.interactivity'
 import { getSelectedRoadSelector, selectedStreamObjectSelector } from './Region.selectors'
-import { IGeoPackageOrWhatver } from '../../../../api/region/Region.transform'
+import { IGeoPackageOrWhatver } from 'api/region/Region.transform'
 import { Dictionary } from 'lodash'
 import { IStreamObject } from 'coreTypes/IStreamObject'
+import { LoadingStatus } from 'coreTypes/Ui'
 import {
   AccessPointFeatureCollection,
   PalSectionFeatureCollection,
@@ -18,7 +18,7 @@ import {
   TroutStreamSectionFeatureCollection,
   StreamFeatureCollection,
   PalFeatureCollection,
-} from '../../../../api/region/IRegionGeoJSON'
+} from 'api/region/IRegionGeoJSON'
 
 // ------------------------------------
 // Constants
@@ -120,7 +120,7 @@ const ACTION_HANDLERS: {} = {
         palSections: payload.pal_routes,
         streamAccessPoint: payload.stream_access_point,
         pals: payload.pal,
-        regionLoadingStatus: Loading.Success,
+        regionLoadingStatus: LoadingStatus.Success,
         hoveredStream: initialState.hoveredStream,
         hoveredRoad: initialState.hoveredRoad,
       },
@@ -128,11 +128,11 @@ const ACTION_HANDLERS: {} = {
     return newState
   },
   [REGION_SET_REGION_LOADING]: (state: IRegionState, { payload }): IRegionState => {
-    const newState = { ...state, ...{ regionLoadingStatus: Loading.Pending } }
+    const newState = { ...state, ...{ regionLoadingStatus: LoadingStatus.Pending } }
     return newState
   },
   [REGION_SET_REGION_LOADING_FAILED]: (state: IRegionState, { payload }): IRegionState => {
-    const newState = { ...state, ...{ regionLoadingStatus: Loading.Failed } }
+    const newState = { ...state, ...{ regionLoadingStatus: LoadingStatus.Failed } }
     return newState
   },
   [REGION_SET_HOVERED_ROAD]: (state: IRegionState, { payload }): IRegionState => {
@@ -160,7 +160,7 @@ export interface IRegionState {
   hoveredStream: any
   // SelectedRoad: null,
   hoveredRoad: any
-  regionLoadingStatus: Loading
+  regionLoadingStatus: LoadingStatus
 }
 const initialState: IRegionState = {
   // View: MAP,
@@ -174,7 +174,7 @@ const initialState: IRegionState = {
   hoveredStream: null,
   // SelectedRoad: null,
   hoveredRoad: null,
-  regionLoadingStatus: Loading.NotStarted,
+  regionLoadingStatus: LoadingStatus.NotStarted,
 }
 
 export default handleActions(ACTION_HANDLERS, initialState)

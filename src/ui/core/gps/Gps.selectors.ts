@@ -1,12 +1,12 @@
 import { point } from '@turf/helpers'
 import isEmpty from 'lodash-es/isEmpty'
 import { createSelector } from 'reselect'
-import { LOADING_CONSTANTS, Loading } from 'ui/core/LoadingConstants'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+import { LoadingStatus } from '../../../coreTypes/Ui'
 
 export const isGpsTrackingActiveStateSelector = (reduxState: IReduxState): boolean =>
   reduxState.gps.isGpsTrackingActive
-export const gpsCoordinatesLoadingStatusStateSelector = (reduxState: IReduxState): Loading =>
+export const gpsCoordinatesLoadingStatusStateSelector = (reduxState: IReduxState): LoadingStatus =>
   reduxState.gps.gpsCoordinatesLoadingStatus
 export const gpsCoordinatesStateSelector = (reduxState: IReduxState): [number, number] =>
   reduxState.gps.gpsCoordinates
@@ -16,12 +16,12 @@ export const gpsAccuracyMetersStateSelector = (reduxState: IReduxState): number 
   reduxState.gps.gpsAccuracyMeters
 
 const emptyMessage = ''
-const getMessage = (loadingStatus): string => {
-  if (loadingStatus === LOADING_CONSTANTS.IS_PENDING) {
+const getMessage = (loadingStatus: LoadingStatus): string => {
+  if (loadingStatus === LoadingStatus.Pending) {
     return 'Loading location'
-  } else if (loadingStatus === LOADING_CONSTANTS.IS_FAILED) {
+  } else if (loadingStatus === LoadingStatus.Failed) {
     return 'Failed to load location'
-  } else if (loadingStatus === LOADING_CONSTANTS.IS_NOT_STARTED) {
+  } else if (loadingStatus === LoadingStatus.NotStarted) {
     return 'Location not loaded yet'
   }
 
@@ -58,7 +58,7 @@ export const getGpsCoordinateFeatureSelector = createSelector(
 
 export const isGpsFailedSelector = createSelector(
   [gpsCoordinatesLoadingStatusStateSelector],
-  loadingStatus => loadingStatus === Loading.Failed
+  loadingStatus => loadingStatus === LoadingStatus.Failed
 )
 
 export const getIsGpsActiveButLoading = createSelector(
@@ -72,7 +72,7 @@ export const getIsGpsActiveButLoading = createSelector(
       return false
     }
 
-    if (isActive && loadingStatus === Loading.Pending) {
+    if (isActive && loadingStatus === LoadingStatus.Pending) {
       return true
     }
 
@@ -91,7 +91,7 @@ export const getIsActiveAndSuccessful = createSelector(
       return false
     }
 
-    if (isActive && loadingStatus === Loading.Success) {
+    if (isActive && loadingStatus === LoadingStatus.Success) {
       return true
     }
 

@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 export const MINIMAP_SET_SIZE = 'MINIMAP_SET_SIZE'
 
-export const isExpaned = createAction(MINIMAP_SET_SIZE, (x: boolean) => x)
+export const setIsExpanded = createAction(MINIMAP_SET_SIZE, (x: boolean) => x)
 
 // ------------------------------------
 // Action Handlers

@@ -6,8 +6,12 @@ export const buildTableOfContentsEndpoint = (): string => `/data/v3/TableOfConte
 // tslint:disable-next-line:no-any
 export const decompress = (tocTopojson: any): ITableOfContentsData => {
   const states = topojson.feature(tocTopojson, tocTopojson.objects.minnesota)
+  states.features.forEach(s => (s.properties.short_name = s.properties.short_name.toLowerCase()))
   const counties = topojson.feature(tocTopojson, tocTopojson.objects.minnesota_county)
   const regions = topojson.feature(tocTopojson, tocTopojson.objects.region_stats)
+  regions.features.forEach(
+    s => (s.properties.state_short_name = s.properties.state_short_name.toLowerCase())
+  )
   return {
     states,
     counties,

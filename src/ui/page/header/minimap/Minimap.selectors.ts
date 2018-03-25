@@ -2,11 +2,12 @@ import { has } from 'lodash'
 import { createSelector } from 'reselect'
 import { hasAgreedToTermsSelector, isSearchingSelector } from 'ui/core/Core.selectors'
 import { waterOpenersDictionarySelector } from 'ui/routes/@usState/UsState.selectors'
-export const isExpandedBoolSelector = state => state.minimap.isExpanded
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+export const isExpandedBoolSelector = (state: IReduxState) => state.minimap.isExpanded
 
 export const isExpandedSelector = createSelector(
   [isExpandedBoolSelector, hasAgreedToTermsSelector],
-  (isExpanded, hasAgreedToTerms) => isExpanded && hasAgreedToTerms
+  (isExpanded, hasAgreedToTerms): boolean => isExpanded && hasAgreedToTerms
 )
 
 // This determines if the collection of stream centroids
@@ -14,8 +15,9 @@ export const isExpandedSelector = createSelector(
 // If people have expanded the minimap and are searching.
 
 export const isStreamCentroidsDisplayedSelector = createSelector(
-  [isExpandedSelector, isSearchingSelector],
-  (isExpanded, isSearching) => isExpanded && isSearching
+  isExpandedSelector,
+  isSearchingSelector,
+  (isExpanded, isSearching): boolean => isExpanded && isSearching
 )
 
 /* eslint-disable camelcase */

@@ -6,19 +6,27 @@ import keys from 'lodash-es/keys'
 import round from 'lodash-es/round'
 import sortBy from 'lodash-es/sortBy'
 import values from 'lodash-es/values'
-import { createSelector } from 'reselect'
+import { createSelector, createStructuredSelector } from 'reselect'
 import {
   countiesDictionarySelector,
   searchTextSelector,
   selectedRegionSelector,
+  viewSelector,
+  hasAgreedToTermsSelector,
 } from 'ui/core/Core.selectors'
-import { Loading } from 'ui/core/LoadingConstants'
-import { getHashSelector } from 'ui/Location.selectors'
+import {
+  getHashSelector,
+  selectedStateIdSelector,
+  selectedRegionIdSelector,
+} from 'ui/Location.selectors'
 
 import { getRegulationsSummarySelector } from 'ui/core/regulations/RegulationsSummary.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { IRegionState } from './Region.redux'
 import { Dictionary } from 'lodash'
+import { LoadingStatus } from 'coreTypes/Ui'
+import { IRegionLayoutStateProps } from './Region.layout'
+import { IStreamObject } from 'coreTypes/IStreamObject'
 import {
   displayedCentroidDictionarySelector,
   displayedStreamCentroidDataSelector,
@@ -97,7 +105,7 @@ export const streamCentroidsSelector = createSelector([streamsSelector], streams
 export const isFinishedLoadingRegion = createSelector(
   [regionLoadingStatusSelector],
   regionLoadingStatus => {
-    if (regionLoadingStatus !== Loading.Success) {
+    if (regionLoadingStatus !== LoadingStatus.Success) {
       return false
     }
 
@@ -119,7 +127,7 @@ export const visibleTroutStreams = createSelector(
     isRegionLoaded,
     waterOpenersDictionary,
     regulationsDictionary
-  ) => {
+  ): IStreamObject[] => {
     if (isRegionLoaded === false) {
       return EMPTY_STREAMS
     }
@@ -182,7 +190,7 @@ export const showNoResultsFoundSelector = createSelector(
     selectedStreamObjectSelector,
   ],
   (text, regionLoading, streams, selectedStreamObject) => {
-    if (regionLoading !== Loading.Success) {
+    if (regionLoading !== LoadingStatus.Success) {
       return false
     }
 
@@ -411,3 +419,14 @@ export const getCountyListSelector = createSelector(
     return filteredCountyObjects
   }
 )
+
+export const getSvgMinimapStateProps = createStructuredSelector<
+  IReduxState,
+  IRegionLayoutStateProps
+>({
+  view: viewSelector,
+  selectedState: selectedStateIdSelector,
+  selectedRegion: selectedRegionIdSelector,
+  regionLoadingStatus: regionLoadingStatusSelector,
+  hasAgreedToTerms: hasAgreedToTermsSelector,
+})

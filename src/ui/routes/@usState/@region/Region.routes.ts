@@ -1,7 +1,7 @@
 import RegionLayout from './Region.container'
 // import StreamDetails from './@stream/StreamDetails.routes'
 const createRoutes = store => ({
-  path: '/:state/:region',
+  path: '/:usState/:region',
   component: RegionLayout,
   childRoutes: [
     // StreamDetails(store)

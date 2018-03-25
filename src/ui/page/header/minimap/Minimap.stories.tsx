@@ -10,13 +10,11 @@ const classes = require('./Minimap.scss')
 const dimensions = parseInt(classes['minimap-size'])
 console.log(dimensions)
 stories.add('Deafult Container', () => {
-  const closeButton = <button>Hello</button>
   const mapComponent = <img src={kirby} />
   const props: IMinimapProps = {
     isExpanded: boolean('Expand', true),
     handleExpand: action('Handle expand'),
     isReadyToReveal: boolean('Is ready to reveal', true),
-    closeButton,
     mapComponent,
   }
   return (
@@ -27,7 +25,6 @@ stories.add('Deafult Container', () => {
 })
 
 stories.add('Crazy content', () => {
-  const closeButton = <button>Hello</button>
   const mapComponent = (
     <span>
       <span>hello</span>
@@ -38,7 +35,6 @@ stories.add('Crazy content', () => {
     isExpanded: boolean('Expand', false),
     handleExpand: action('Handle expand'),
     isReadyToReveal: boolean('Is ready to reveal', true),
-    closeButton,
     mapComponent,
   }
   return (
@@ -49,17 +45,15 @@ stories.add('Crazy content', () => {
 })
 
 stories.add('Real content', () => {
-  const closeButton = <button>Hello</button>
   const mapComponent = createStatesAndRegions(50, 50)
   const props: IMinimapProps = {
     isExpanded: boolean('Expand', false),
     handleExpand: action('Handle expand'),
     isReadyToReveal: boolean('Is ready to reveal', true),
-    closeButton,
     mapComponent,
   }
   return (
-    <div style={{ position: 'absolute', bottom: 0, right: 0 }}>
+    <div style={{ position: 'absolute', top: 0, right: 0 }}>
       <MinimapComponent {...props} />
     </div>
   )

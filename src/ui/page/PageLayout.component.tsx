@@ -1,7 +1,13 @@
 import * as React from 'react'
 const styles = require('./PageLayout.scss')
 
-export interface IPageLayoutProps {
+export interface IPageLayoutDispatchProps {
+  fetchTableOfContents?(): void
+}
+
+export interface IPageLayoutStateProps {}
+
+export interface IPageLayoutProps extends IPageLayoutDispatchProps, IPageLayoutStateProps {
   readonly header: React.ReactNode
   readonly content: React.ReactNode
   readonly footer: React.ReactNode

@@ -4,10 +4,10 @@ import { IUsStateMetadata } from 'coreTypes/state/IUsState'
 // import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
 import keyBy from 'lodash-es/keyBy'
 import { createAction, handleActions } from 'redux-actions'
-import { Loading } from 'ui/core/LoadingConstants'
 import { Dictionary } from 'lodash'
 import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid'
 import { IRoadType } from 'coreTypes/state/IRoadType'
+import { LoadingStatus } from 'coreTypes/Ui'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -17,7 +17,7 @@ import { IRoadType } from 'coreTypes/state/IRoadType'
 export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 export interface IUsStateReduxState extends IUsStateMetadata {
   streamIdDictionary: Dictionary<IStreamCentroid>
-  stateDataLoadingStatus: Loading
+  stateDataLoadingStatus: LoadingStatus
   slugDictionary: Dictionary<IStreamCentroid>
   roadTypesDictionary: Dictionary<IRoadType>
 }
@@ -30,7 +30,7 @@ const INITIAL_US_STATE_STATE: IUsStateReduxState = {
   roadTypesDictionary: {},
   slugDictionary: {},
   streamIdDictionary: {},
-  stateDataLoadingStatus: Loading.NotStarted,
+  stateDataLoadingStatus: LoadingStatus.NotStarted,
   waterOpeners: [],
   version: null,
   releaseDate: null,
@@ -91,20 +91,20 @@ const ACTION_HANDLERS: {} = {
         roadTypesDictionary: payload.roadTypesDictionary,
         streamIdDictionary: keyBy(payload.streamCentroids, x => x.gid),
         slugDictionary: keyBy(payload.streamCentroids, x => x.slug),
-        stateDataLoadingStatus: Loading.Success,
+        stateDataLoadingStatus: LoadingStatus.Success,
       },
     }
     return newState
   },
   [STATE_SET_STATE_LOADING]: (state: IUsStateReduxState, { payload }): IUsStateReduxState => {
-    const newState = { ...state, ...{ stateDataLoadingStatus: Loading.Pending } }
+    const newState = { ...state, ...{ stateDataLoadingStatus: LoadingStatus.Pending } }
     return newState
   },
   [STATE_SET_STATE_LOADING_FAILED]: (
     state: IUsStateReduxState,
     { payload }
   ): IUsStateReduxState => {
-    const newState = { ...state, ...{ stateDataLoadingStatus: Loading.Failed } }
+    const newState = { ...state, ...{ stateDataLoadingStatus: LoadingStatus.Failed } }
     return newState
   },
 }

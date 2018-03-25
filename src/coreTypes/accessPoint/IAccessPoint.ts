@@ -1,3 +1,5 @@
+import { ISelectable } from '../Ui'
+
 export interface IAccessPoint {
   gid: number
   street_name: string
@@ -13,7 +15,7 @@ export interface IAccessPoint {
   road_type_id: number
 }
 
-export interface IAccessPointGeoJsonProps extends IAccessPoint {
+export interface IAccessPointGeoJsonProps extends IAccessPoint, ISelectable {
   isParkable: boolean
   bridgeType: 'permissionRequired' | 'publicTrout' | 'unsafe' | 'uninteresting'
   alphabetLetter: string

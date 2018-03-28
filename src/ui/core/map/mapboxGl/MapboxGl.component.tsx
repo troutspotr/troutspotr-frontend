@@ -89,8 +89,14 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
       style: this.props.style,
       center: [-90.04663446020976, 42],
       zoom: 4,
+      minZoom: 2,
+      maxZoom: 18.5,
+      // dragRotate: false,
+      // touchZoomRotate: false,
       renderWorldCopies: true,
     }) as Map
+    map.dragRotate.disable()
+    map.touchZoomRotate.disableRotation()
 
     if (this.props.debugMode === true) {
       setTimeout(() => map.resize(), 200)

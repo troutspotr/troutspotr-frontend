@@ -1,4 +1,4 @@
-import { point } from '@turf/helpers'
+import { point, featureCollection, FeatureCollection } from '@turf/helpers'
 import isEmpty from 'lodash-es/isEmpty'
 import { createSelector } from 'reselect'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
@@ -77,6 +77,20 @@ export const getIsGpsActiveButLoading = createSelector(
     }
 
     return false
+  }
+)
+
+const emptyFeatureCollection = featureCollection([])
+export const gpsFeatureCollectionSelector = createSelector(
+  gpsCoordinatesStateSelector,
+  isGpsFailedSelector,
+  (coords: [number, number], isFailed: boolean): FeatureCollection<any, any> => {
+    if (coords == null || isFailed) {
+      return emptyFeatureCollection
+    }
+
+    const p = point(coords)
+    return featureCollection([p])
   }
 )
 

@@ -146,7 +146,6 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
   }
 
   public render() {
-    console.log('rendering map')
     const { children } = this.props
     return (
       <div className={styles.container} ref={el => (this.mapContainer = el)}>

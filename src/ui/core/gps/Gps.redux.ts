@@ -71,6 +71,7 @@ export const setGpsTrackingFailure = createAction(GPS_UPDATE_GPS_POSITION, () =>
 
 const throttleGpsUpdate = (dispatch, coordinates: [number, number], accuracy: number = 1) => {
   const action = updateGpsPosition(coordinates[0], coordinates[1], LoadingStatus.Success, accuracy)
+  console.log('doin thangs')
   if (window.requestAnimationFrame != null) {
     window.requestAnimationFrame(() => {
       dispatch(action)
@@ -139,6 +140,16 @@ const INITIAL_GPS_STATE: IGpsState = {
 // ------------------------------------
 const ACTION_HANDLERS: {} = {
   [GPS_UPDATE_GPS_POSITION]: (state: IGpsState, { payload }): IGpsState => {
+    // const oldGpsCoordinates = state.gpsCoordinates
+    // const newGpsCoordinates = payload.gpsCoordinates
+    // if (oldGpsCoordinates != null && newGpsCoordinates != null) {
+    //   const noChange =
+    //     oldGpsCoordinates[0] === newGpsCoordinates[0] &&
+    //     oldGpsCoordinates[1] === newGpsCoordinates[1]
+    //   if (noChange) {
+    //     return state
+    //   }
+    // }
     const newState = { ...state, ...payload }
     return newState
   },

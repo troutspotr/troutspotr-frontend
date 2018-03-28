@@ -19,7 +19,6 @@ export interface IRegionLayourProps extends IRegionLayoutDispatchProps, IRegionL
 }
 export class RegionLayout extends React.Component<IRegionLayourProps> {
   public componentDidMount() {
-    console.log('here we are a brand new day!')
     const { fetchRegionData, selectedState, selectedRegion } = this.props
     if (selectedState == null || selectedRegion == null) {
       return
@@ -28,7 +27,6 @@ export class RegionLayout extends React.Component<IRegionLayourProps> {
   }
 
   public componentWillReceiveProps(nextProps) {
-    console.log('gettin stuffs!')
     const { selectedState, selectedRegion } = nextProps
     if (selectedState == null || selectedRegion == null) {
       return
@@ -63,7 +61,6 @@ export class RegionLayout extends React.Component<IRegionLayourProps> {
   }
 
   public render() {
-    console.log('rendering a region')
     return null
     // const { view, hasAgreedToTerms } = this.props
     // if (hasAgreedToTerms === false) {

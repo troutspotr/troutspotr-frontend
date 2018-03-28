@@ -71,7 +71,6 @@ export class SwitchComponent extends React.PureComponent<ISwitchomponentProps> {
   }
 
   public render() {
-    console.log('rendering switch')
     const { isSupported, isLoading, isSuccessful, isFailed } = this.props
     if (isSupported === false) {
       return null

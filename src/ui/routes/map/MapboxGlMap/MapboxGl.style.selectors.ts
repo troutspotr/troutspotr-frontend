@@ -22,7 +22,10 @@ import { StyleSourceId } from './styles/Style.constants'
 import * as streamLayersLib from './styles/Stream.layers'
 import * as palLayersLib from './styles/Pal.layers'
 import * as accessPointLib from './styles/AccessPoints.layers'
-import { isGpsTrackingActiveStateSelector } from '../../../core/gps/Gps.selectors'
+import {
+  isGpsTrackingActiveStateSelector,
+  gpsFeatureCollectionSelector,
+} from '../../../core/gps/Gps.selectors'
 import { createGpsBorderLayer } from './styles/Gps.layers'
 
 const DEFAULT_LAYER_PROPS = defaultLayerProperties()
@@ -73,13 +76,15 @@ export const sourceGeometryDictionarySelector = createSelector(
   restrictionSectionsSelector,
   palsSelector,
   streamAccessPointSelector,
+  gpsFeatureCollectionSelector,
   (
     streams,
     troutSection,
     palSection,
     restrictionSection,
     pals,
-    streamAccessPoint
+    streamAccessPoint,
+    gpsFeature
   ): { [index: string]: any } => {
     const s = {}
     src(StyleSourceId.streams, streams, s)
@@ -88,7 +93,7 @@ export const sourceGeometryDictionarySelector = createSelector(
     src(StyleSourceId.restrictionSection, restrictionSection, s)
     src(StyleSourceId.pals, pals, s)
     src(StyleSourceId.streamAccessPoint, streamAccessPoint, s)
-    src(StyleSourceId.gps, null, s)
+    src(StyleSourceId.gps, gpsFeature, s)
     return s
   }
 )
@@ -126,7 +131,6 @@ export const mapboxGlLayersSelector = createSelector(
   layerPropertiesSelector,
   isGpsTrackingActiveStateSelector,
   (layerProperties: ILayerProperties, isGpsEnabled: boolean): Layer[] => {
-    console.log('makkkin laaaayerrrrs')
     const streamLayers = [
       ...streamLayersLib.createRestrictionSectionLayer(layerProperties, 'restriction_section'),
       ...streamLayersLib.createTroutSectionBackdropLayer(layerProperties, 'trout_stream_section'),
@@ -192,7 +196,6 @@ export const mapboxGlStyleSelector = createSelector(
       sources,
       layers,
     }
-    console.log('makin that style')
     return style
   }
 )

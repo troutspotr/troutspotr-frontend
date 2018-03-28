@@ -17,7 +17,7 @@ $smallFontSize: 0.85em;
   width: 100%;
 
   z-index: 10000;
-  transition: none;
+  transition: background-color 800ms, border-bottom 800ms;
   border-bottom: 1px solid transparentize($white, 0.4);
   border-bottom: 1px solid var(--text-color-primary);
   font-size: $fontSize;

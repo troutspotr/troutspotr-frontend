@@ -3,51 +3,53 @@ import has from 'lodash-es/has'
 import isEmpty from 'lodash-es/isEmpty'
 import keyBy from 'lodash-es/keyBy'
 import reduce from 'lodash-es/reduce'
-import { createSelector } from 'reselect'
+import { createSelector, createStructuredSelector } from 'reselect'
 import { searchTextSelector } from 'ui/core/Core.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { IUsStateReduxState } from './UsState.redux'
 import { LoadingStatus } from 'coreTypes/Ui'
 import { selectedStreamIdSelector } from '../../Location.selectors'
+import { selectedStateIdSelector } from 'ui/Location.selectors'
+import { IUsStateComponentStateProps } from './UsState.component'
 const emptyCentroids = []
 export const usStateReduxStateSelector = (reduxState: IReduxState): IUsStateReduxState =>
   reduxState.usState
 
-export const regionIndexSelector = createSelector([usStateReduxStateSelector], x => x.regionIndex)
+export const regionIndexSelector = createSelector(usStateReduxStateSelector, x => x.regionIndex)
 
-export const regulationsSelector = createSelector([usStateReduxStateSelector], x => x.regulations)
+export const regulationsSelector = createSelector(usStateReduxStateSelector, x => x.regulations)
 
-export const roadTypesSelector = createSelector([usStateReduxStateSelector], x => x.roadTypes)
+export const roadTypesSelector = createSelector(usStateReduxStateSelector, x => x.roadTypes)
 
 export const roadTypeDictionarySelector = createSelector(
   [usStateReduxStateSelector],
   x => x.roadTypesDictionary
 )
 
-export const palTypesSelector = createSelector([usStateReduxStateSelector], x => x.palTypes)
+export const palTypesSelector = createSelector(usStateReduxStateSelector, x => x.palTypes)
 
 export const streamCentroidsStateSelector = createSelector(
-  [usStateReduxStateSelector],
+  usStateReduxStateSelector,
   x => x.streamCentroids
 )
 
 export const stateDataLoadingStatusSelector = createSelector(
-  [usStateReduxStateSelector],
+  usStateReduxStateSelector,
   x => x.stateDataLoadingStatus
 )
 
 export const slugDictionarySelector = createSelector(
-  [usStateReduxStateSelector],
+  usStateReduxStateSelector,
   x => x.slugDictionary
 )
 
 export const streamIdDictionarySelector = createSelector(
-  [usStateReduxStateSelector],
+  usStateReduxStateSelector,
   x => x.streamIdDictionary
 )
 
 export const waterOpenersDictionaryStateSelector = createSelector(
-  [usStateReduxStateSelector],
+  usStateReduxStateSelector,
   x => x.waterOpeners
 )
 
@@ -183,3 +185,10 @@ export const displayedStreamCentroidSelector = createSelector(
     return displayedStreamCentroid.centroid
   }
 )
+
+export const usStatePropertiesSelector = createStructuredSelector<
+  IReduxState,
+  IUsStateComponentStateProps
+>({
+  selectedState: selectedStateIdSelector,
+})

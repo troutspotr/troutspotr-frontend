@@ -6,9 +6,8 @@ import {
   ISvgMinimapDispatchProps,
 } from './SvgMinimap.component'
 import { connect } from 'react-redux'
-import { setIsExpanded } from '../Minimap.redux'
+import { setIsExpanded, handleRegionSelection } from '../Minimap.redux'
 import { getSvgMinimapStateProps } from './SvgMinimap.selectors'
-import { setSelectedMinimapGeometry } from '../../../../core/Core.redux'
 
 const mapStateToProps = (reduxState: IReduxState): ISvgMinimapStateProps => {
   return getSvgMinimapStateProps(reduxState)
@@ -18,7 +17,7 @@ const mapDispatchToProps = (dispatch): ISvgMinimapDispatchProps => ({
   handleClose: () => dispatch(setIsExpanded(false)),
   handleSelection: (usStateShortName: string, regionPath: string) =>
     dispatch(
-      setSelectedMinimapGeometry({
+      handleRegionSelection({
         usStateShortName: usStateShortName,
         regionPathName: regionPath,
       })

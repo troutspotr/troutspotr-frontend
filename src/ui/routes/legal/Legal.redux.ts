@@ -1,6 +1,6 @@
 import { getApi } from 'api/Api.module'
 import { handleActions } from 'redux-actions'
-// import { Loading } from 'ui/core/LoadingConstants'
+// import { Loading } from 'coreTypes/Ui'
 import { isBot } from 'ui/core/Core.redux'
 // import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 

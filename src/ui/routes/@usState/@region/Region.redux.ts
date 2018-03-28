@@ -2,10 +2,7 @@ import { getApi } from 'api/Api.module'
 import isEmpty from 'lodash-es/isEmpty'
 import { createAction, handleActions } from 'redux-actions'
 import { selectedRegionSelector } from 'ui/core/Core.selectors'
-import {
-  selectFoculPoint,
-  selectMapFeature,
-} from 'ui/routes/@usState/@region/map/Map.redux.interactivity'
+import { selectFoculPoint, selectMapFeature } from 'ui/routes/map/Map.redux.interactivity'
 import { getSelectedRoadSelector, selectedStreamObjectSelector } from './Region.selectors'
 import { IGeoPackageOrWhatver } from 'api/region/Region.transform'
 import { Dictionary } from 'lodash'

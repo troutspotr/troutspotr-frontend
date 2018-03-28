@@ -1,11 +1,11 @@
 import has from 'lodash-es/has'
 import isEmpty from 'lodash-es/isEmpty'
 import { createSelector } from 'reselect'
-import { View } from 'ui/core/Core.redux'
+import { View, Theme } from 'ui/core/Core.redux'
 import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/Location.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { Dictionary } from 'lodash'
-import { LoadingStatus } from '../../coreTypes/Ui'
+import { LoadingStatus } from 'coreTypes/Ui'
 import {
   CountyFeature,
   RegionFeature,
@@ -16,6 +16,10 @@ import {
   RegionFeatureCollection,
   UsStateFeature,
 } from '../../coreTypes/tableOfContents/ITableOfContentsGeoJSON'
+
+export const themeSelector = (reduxState: IReduxState): Theme => {
+  return reduxState.core.theme
+}
 
 export const statesGeoJsonSelector = (reduxState: IReduxState): UsStateFeatureCollection =>
   reduxState.core.statesGeoJson

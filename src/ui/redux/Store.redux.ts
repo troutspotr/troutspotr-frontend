@@ -2,7 +2,7 @@ import { browserHistory } from 'react-router'
 import { applyMiddleware, compose, createStore } from 'redux'
 import promiseMiddleware from 'redux-promise-middleware'
 import thunk from 'redux-thunk'
-
+import { composeWithDevTools } from 'redux-devtools-extension'
 import { createRoutes } from 'ui/routes/Routes'
 import { AllReducers } from './Store.redux.rootReducer'
 // tslint:disable-next-line:no-any
@@ -23,12 +23,15 @@ if (process.env.NODE_ENV === 'development') {
   const devToolsExtension = (window as any).devToolsExtension
 
   if (typeof devToolsExtension === 'function') {
-    enhancers.push(devToolsExtension())
+    enhancers.push(
+      devToolsExtension({
+        maxAge: 5,
+      })
+    )
   }
 }
 
 const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers)
-
 const store = createStore(AllReducers, initialState, composedEnhancers)
 
 // grab a copy of our application routes

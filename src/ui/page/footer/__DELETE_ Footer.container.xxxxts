@@ -1,0 +1,19 @@
+import { connect } from 'react-redux'
+import { setViewToList, setViewToMap, setTheme, Theme } from 'ui/core/Core.redux'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+import { FooterLayout, IFooterStateProps, IFooterDispatchProps } from './Footer.component'
+import { startGpsTracking, stopGpsTracking } from '../../core/gps/Gps.redux'
+import { footerStatePropsSelector } from './Footer.selectors'
+
+const mapDispatchToProps = (dispatch): IFooterDispatchProps => ({
+  setViewToMap: () => dispatch(setViewToMap(null)),
+  setViewToList: () => dispatch(setViewToList(null)),
+  startTracking: () => dispatch(startGpsTracking()),
+  stopTracking: () => dispatch(stopGpsTracking()),
+  setThemeTo: (theme: Theme) => dispatch(setTheme(theme)),
+})
+
+const mapStateToProps = (reduxState: IReduxState): IFooterStateProps =>
+  footerStatePropsSelector(reduxState)
+
+export const FooterContainer = connect(mapStateToProps, mapDispatchToProps)(FooterLayout)

@@ -8,6 +8,7 @@ import { createStatesAndRegions } from './svgMinimap/SvgMinimap.stories'
 const stories = storiesOf('Page/Header/Minimap', module)
 const classes = require('./Minimap.scss')
 const dimensions = parseInt(classes['minimap-size'])
+const styles = require('ui/page/PageLayout.stories.scss')
 console.log(dimensions)
 stories.add('Deafult Container', () => {
   const mapComponent = <img src={kirby} />
@@ -44,6 +45,18 @@ stories.add('Crazy content', () => {
   )
 })
 
+const createBackdrop = (): React.ReactNode => {
+  console.log(styles.fullscreenContainer)
+  return (
+    <div className={styles.fullscreenContainer}>
+      <span className={styles.ll}>lower left</span>
+      <span className={styles.lr}>lower right</span>
+      <span className={styles.tl}>top left</span>
+      <span className={styles.tr}>top right</span>
+    </div>
+  )
+}
+
 stories.add('Real content', () => {
   const mapComponent = createStatesAndRegions(50, 50)
   const props: IMinimapProps = {
@@ -53,8 +66,11 @@ stories.add('Real content', () => {
     mapComponent,
   }
   return (
-    <div style={{ position: 'absolute', top: 0, right: 0 }}>
-      <MinimapComponent {...props} />
+    <div>
+      <div style={{ position: 'absolute', top: 0, right: 0 }}>
+        <MinimapComponent {...props} />
+      </div>
+      {createBackdrop()}
     </div>
   )
 })

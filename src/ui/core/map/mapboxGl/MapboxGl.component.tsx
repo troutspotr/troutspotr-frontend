@@ -5,32 +5,33 @@ require('mapbox-gl/dist/svg/mapboxgl-ctrl-geolocate.svg')
 require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg')
 require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg')
 
-import { Map, Style as MapboxStyle, GeoJSONGeometry } from 'mapbox-gl'
-import { ICameraProps } from '../ICameraProps'
-import MapboxGlCamera from './MapboxGl.component.camera'
-import { Feature } from 'geojson'
+import groupBy from 'lodash-es/groupBy'
+import { Map, Style as MapboxStyle } from 'mapbox-gl'
+// import { ICameraProps } from '../ICameraProps'
+const styles = require('./MapboxGl.scss')
 
-type MapboxGeoJSONLayers = Array<
-  Feature<
-    GeoJSONGeometry,
-    {
-      // tslint:disable-next-line:no-any
-      [name: string]: any
-    }
-  >
->
+type MapboxGeoJSONLayers = Array<any>
+
 const token = 'pk.eyJ1IjoiYW5kZXN0MDEiLCJhIjoibW02QnJLSSJ9._I2ruvGf4OGDxlZBU2m3KQ'
 // https://stackoverflow.com/a/44393954
 
-export interface IMapboxGlProps {
-  onFeaturesSelected(t: MapboxGeoJSONLayers): void
+export interface IMapboxGlDispatchProps {
+  onFeaturesSelected(t: any): void
   onMapInitialized(t: boolean): void
+}
+
+export interface IMapboxGlStateProps {
   readonly style: MapboxStyle | string
-  readonly camera?: ICameraProps
-  // tslint:disable-next-line:no-any
   readonly mapboxGl: any
   readonly debugMode?: boolean
 }
+
+export interface IMapboxGlPassedProps {}
+
+export interface IMapboxGlProps
+  extends IMapboxGlDispatchProps,
+    IMapboxGlStateProps,
+    IMapboxGlPassedProps {}
 
 export interface IMapboxGlState {
   readonly map: Map
@@ -54,13 +55,17 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     if (features == null || features.length === 0) {
       return
     }
-    this.props.onFeaturesSelected(features)
+
+    const groups = groupBy(features, f => f.layer.id)
+    this.props.onFeaturesSelected(groups)
   }
 
-  public componentWillUpdate(nextProps) {
+  public componentWillUpdate(nextProps, nextState) {
     const nextStyle = nextProps.style
-    if (this.state.map != null && this.props.style !== nextStyle) {
-      this.state.map.setStyle(nextStyle)
+    const { isLoaded, map } = nextState
+    if (this.props.style !== nextStyle && isLoaded) {
+      console.log('setting style')
+      map.setStyle(nextStyle, { diff: true })
     }
   }
 
@@ -84,28 +89,14 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
       style: this.props.style,
       center: [-90.04663446020976, 42],
       zoom: 4,
+      renderWorldCopies: true,
     }) as Map
 
     if (this.props.debugMode === true) {
       setTimeout(() => map.resize(), 200)
-      map.on('zoom', e => {
-        // const zoom = map.getZoom()
-        // const center = map.getCenter()
-        // const bearing = map.getBearing()
-        // const pitch = map.getPitch()
-        // const args = {
-        //   zoom,
-        //   bearing,
-        //   center,
-        //   pitch,
-        // }
-        // console.info('args:', args)
-      })
     }
     map.on('click', this.onClick)
-    // wait until we've loaded before setting the map property
     map.on('load', e => {
-      // this.map = map
       this.setState(
         () => {
           return {
@@ -121,36 +112,45 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
   }
 
   public onDataLoad(e) {
-    this.state.map.setStyle(this.props.style)
+    // this.state.map.setStyle(this.props.style)
     this.props.onMapInitialized(true)
   }
 
   public componentWillUnmount() {
     if (this.state.map) {
-      // adding and removing lots of maps
-      // can cause a pretty bad memory leak
-      // https://github.com/mapbox/mapbox-gl-js/issues/3264
-
-      // remove events to be safe.
-      // this component instance is gonna go away, but
-      // GC is a mystery to some 👻
       this.state.map.off('click', this.onClick)
-
-      // guh-bye!
       this.state.map.remove()
     }
   }
 
-  public render() {
-    const style = {
-      width: '100%',
-      height: '100%',
-      touchAction: 'none',
+  renderChildren(children) {
+    if (children == null || !children) {
+      return null
     }
 
+    const { isLoaded, map } = this.state
+    if (isLoaded === false || map == null) {
+      return null
+    }
+
+    const activeChildren = React.Children.toArray(children).filter(x => x != null && x)
+
+    return activeChildren.map(child =>
+      React.cloneElement(child as React.ReactElement<any>, { map })
+    )
+  }
+
+  componentDidCatch(error, info) {
+    console.error('an error was caught in mapbox-gl-component')
+    console.error(error)
+  }
+
+  public render() {
+    console.log('rendering map')
+    const { children } = this.props
     return (
-      <div style={style} ref={el => (this.mapContainer = el)}>
-        {this.state.isLoaded && <MapboxGlCamera camera={this.props.camera} map={this.state.map} />}
+      <div className={styles.container} ref={el => (this.mapContainer = el)}>
+        {this.renderChildren(children)}
       </div>
     )
   }

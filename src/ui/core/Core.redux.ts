@@ -11,7 +11,7 @@ import {
   CountyFeature,
   RegionFeature,
 } from 'coreTypes/tableOfContents/ITableOfContentsGeoJSON'
-import { LoadingStatus, SelectionStatus } from '../../coreTypes/Ui'
+import { LoadingStatus, SelectionStatus } from 'coreTypes/Ui'
 import { IUsState } from 'coreTypes/tableOfContents/IState'
 import { IRegion } from '../../coreTypes/tableOfContents/IRegion'
 
@@ -19,13 +19,19 @@ import { IRegion } from '../../coreTypes/tableOfContents/IRegion'
 // Constants
 // ------------------------------------
 export enum View {
-  map,
-  list,
+  map = 'map',
+  list = 'list',
 }
 
-export const REGION_SET_VIEW = 'REGION_SET_VIEW'
-export const HAS_AGREED_TO_TERMS = 'HAS_AGREED_TO_TERMS'
-export const SET_AGREEMENT_STATE = 'SET_AGREEMENT_STATE'
+export enum Theme {
+  dark = 'dark',
+  light = 'light',
+}
+
+export const CORE_SET_REGION_VIEW = 'CORE_SET_REGION_VIEW'
+export const CORE_SET_HAS_AGREED_TO_TERMS = 'CORE_SET_HAS_AGREED_TO_TERMS'
+export const CORE_SET_AGREEMENT_STATE = 'CORE_SET_AGREEMENT_STATE'
+export const CORE_SET_THEME = 'CORE_SET_THEME'
 
 export const isBot = (): boolean => {
   if (window == null || window.navigator == null) {
@@ -39,23 +45,12 @@ export const isBot = (): boolean => {
   return re.test(userAgent)
 }
 
-// const getHasAgreedToTerms = (): boolean => {
-//   if (isBot()) {
-//     return true
-//   }
-//   if (localStorage == null) {
-//     return false
-//   }
-
-//   return true
-//   // return localStorage.getItem(HAS_AGREED_TO_TERMS) === 'true'
-// }
-
 // ------------------------------------
 // Reducer
 // ------------------------------------
 export interface ICoreState {
   view: View
+  theme: Theme
   isMapModuleLoaded: boolean
   isMapReadyToDisplay: boolean
   searchText: string
@@ -70,6 +65,7 @@ export interface ICoreState {
 }
 export const INITIAL_CORE_STATE: ICoreState = {
   view: isBot() ? View.list : View.map,
+  theme: Theme.light,
   isMapModuleLoaded: false,
   isMapReadyToDisplay: false,
   searchText: '',
@@ -86,8 +82,9 @@ export const INITIAL_CORE_STATE: ICoreState = {
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const setViewToMap = createAction(REGION_SET_VIEW, x => View.map)
-export const setViewToList = createAction(REGION_SET_VIEW, x => View.list)
+export const setViewToMap = createAction(CORE_SET_REGION_VIEW, x => View.map)
+export const setViewToList = createAction(CORE_SET_REGION_VIEW, x => View.list)
+export const setTheme = createAction(CORE_SET_THEME, (theme: Theme) => ({ theme: theme }))
 
 export const GEO_SET_TABLE_OF_CONTENTS = 'GEO_SET_TABLE_OF_CONTENTS'
 export const GEO_TABLE_OF_CONTENTS_LOADING = 'GEO_TABLE_OF_CONTENTS_LOADING'
@@ -98,8 +95,8 @@ export const GEO_SET_SELECTION = 'GEO_SET_SELECTION'
 export const setTableOfContents = createAction(GEO_SET_TABLE_OF_CONTENTS, x => x)
 export const setTableOfContentsLoading = createAction(GEO_TABLE_OF_CONTENTS_LOADING)
 export const setTableOfContentsFailed = createAction(GEO_TABLE_OF_CONTENTS_LOADING_FAILED)
-export const setAgreeToTerms = createAction(HAS_AGREED_TO_TERMS, x => x)
-export const setAgreementState = createAction(SET_AGREEMENT_STATE)
+export const setAgreeToTerms = createAction(CORE_SET_HAS_AGREED_TO_TERMS, x => x)
+export const setAgreementState = createAction(CORE_SET_AGREEMENT_STATE)
 
 const updateSearchTextAction = createAction(GEO_UPDATE_SEARCH_TEXT, item => item)
 // tslint:disable-next-line:typedef
@@ -128,10 +125,11 @@ export const fetchTableOfContents = () => async (dispatch): Promise<void> => {
   }
 }
 
-interface IMinimapSelection {
+export interface IMinimapSelection {
   usStateShortName: string
   regionPathName?: string
 }
+
 export const setSelectedMinimapGeometry = createAction(
   GEO_SET_SELECTION,
   (args: IMinimapSelection) => ({
@@ -144,7 +142,7 @@ export const setSelectedMinimapGeometry = createAction(
 // Action Handlers
 // ------------------------------------
 export const CORE_REDUCERS: { [name: string]: (state: ICoreState, action: any) => ICoreState } = {
-  [REGION_SET_VIEW]: (state: ICoreState, { payload }): ICoreState => {
+  [CORE_SET_REGION_VIEW]: (state: ICoreState, { payload }): ICoreState => {
     try {
       getApi().then(({ AnonymousAnalyzerApi }) => {
         AnonymousAnalyzerApi.recordEvent('view_change', { view: payload })
@@ -155,6 +153,12 @@ export const CORE_REDUCERS: { [name: string]: (state: ICoreState, action: any) =
 
     const view = payload || INITIAL_CORE_STATE.view
     const newState = { ...state, ...{ view } }
+    return newState
+  },
+
+  [CORE_SET_THEME]: (state: ICoreState, { payload }): ICoreState => {
+    const { theme } = payload
+    const newState = { ...state, ...{ theme } }
     return newState
   },
 
@@ -238,20 +242,20 @@ export const CORE_REDUCERS: { [name: string]: (state: ICoreState, action: any) =
       return f
     })
 
-    const regionLevelNonSelectedStatus =
-      regionPathName === '' ? SelectionStatus.Active : SelectionStatus.Inactive
-
     regionsGeoJson.features = regionsGeoJson.features.map(f => {
       const isInSelectedState = f.properties.state_short_name.toLowerCase() === usStateShortName
-
-      // if we're in the selected us state (eg mn/driftless is in MN)
-      // then set the fallback to active. It may not be SELECTED, but at least
-      // it's active.
-      const fallbackSelectionStatus = isInSelectedState
-        ? SelectionStatus.Active
-        : regionLevelNonSelectedStatus
-      f.properties.selectionStatus =
-        f.properties.path === regionPathName ? SelectionStatus.Selected : fallbackSelectionStatus
+      const isThisRegionSelected = f.properties.path === regionPathName
+      let regionStatus: SelectionStatus = null
+      if (isThisRegionSelected) {
+        regionStatus = SelectionStatus.Selected
+      } else {
+        if (isInSelectedState) {
+          regionStatus = SelectionStatus.Active
+        } else {
+          regionStatus = SelectionStatus.Inactive
+        }
+      }
+      f.properties.selectionStatus = regionStatus
       return f
     })
     return {

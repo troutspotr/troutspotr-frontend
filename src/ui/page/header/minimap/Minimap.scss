@@ -1,6 +1,6 @@
 @import 'src/ui/styles/_colors';
 @import 'src/ui/styles/_variables';
-
+@import 'src/ui/styles/fallback';
 $minimap-width: 50;
 $minimap-width-px: $minimap-width * 1px;
 
@@ -11,14 +11,14 @@ $minimap-width-px: $minimap-width * 1px;
   width: $minimap-width-px;
   user-select: none;
 }
-
+// https://www.smashingmagazine.com/2016/12/gpu-animation-doing-it-right/
 .sandboxContainer {
   user-select: none;
   z-index: 1000;
   transform: translateZ(0);
   padding: 0;
   transform-origin: center;
-  transition: 200ms ease-in-out;
+  transition: transform 200ms ease-in-out;
   margin: 0;
   overflow: hidden;
   touch-action: manipulation;
@@ -31,16 +31,13 @@ $minimap-width-px: $minimap-width * 1px;
     height: 100%;
     width: 100%;
   }
+  @include fallback(color, --text-color-primary, $black);
+  border: 1vmin solid;
+}
 
-  &:hover {
-    cursor: pointer;
-  }
-
-  // if you're hovering and expanded
-  &.expand:hover {
-    background-color: inherit;
-    cursor: inherit;
-  }
+.sandboxContainerExpand {
+  composes: sandboxContainer;
+  // border-radius: 0%;
 }
 
 .backButtonContainer {

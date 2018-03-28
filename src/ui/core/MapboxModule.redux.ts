@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import { LoadingStatus } from '../../coreTypes/Ui'
+import { LoadingStatus } from 'coreTypes/Ui'
 
 // ------------------------------------
 // Constants

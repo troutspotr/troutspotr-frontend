@@ -1,6 +1,11 @@
 import { isEmpty } from 'lodash'
 import { createSelector } from 'reselect'
-import { getHashSelector, isRootPageSelector, locationSelector, paramsSelector } from 'ui/Location.selectors'
+import {
+  getHashSelector,
+  isRootPageSelector,
+  locationSelector,
+  paramsSelector,
+} from 'ui/Location.selectors'
 export const isEnabledSelector = createSelector(
   [paramsSelector, isRootPageSelector],
   (params, isRootPage) => {
@@ -12,14 +17,8 @@ export const isEnabledSelector = createSelector(
       return false
     }
 
-    // I don't really know how to do this part yet..
-    // I would like to have more sophisticated access
-    // To the params in state.
-
-    // Guess for now.
-
-    const isOnStreamDetails = params.region != null
-    return isOnStreamDetails
+    const isStreamRoute = params.streamId != null
+    return isStreamRoute
   }
 )
 

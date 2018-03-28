@@ -8,7 +8,10 @@ import SearchContainer from './search/Search.container'
 import { SubtitleComponent } from './subtitle/Subtitle.component'
 import TitleComponent from './title/Title.component'
 import { SvgMinimapContainer } from './minimap/svgMinimap/SvgMinimap.container'
-export interface IHeaderStateDispatchProps {}
+import { RouteComponentProps } from 'react-router'
+export interface IHeaderStateDispatchProps {
+  setIsExpanded(boolean): any
+}
 
 export interface IHeaderPassedProps {}
 
@@ -19,7 +22,7 @@ export interface IHeaderStateProps {
   isSearchVisible: boolean
   isIconVisible: boolean
   isOffline: boolean
-  onCopyToClipboard(): void
+  // isBackButtonVisible: boolean
 }
 
 export interface IHeaderComponentProps
@@ -27,21 +30,51 @@ export interface IHeaderComponentProps
     IHeaderStateProps,
     IHeaderStateDispatchProps {}
 
-export class HeaderComponent extends React.PureComponent<IHeaderComponentProps> {
-  public renderMinimap() {
+export interface IHeaderComponentWithRouterProps
+  extends IHeaderComponentProps,
+    RouteComponentProps<{ fuck: string; yuck: number }, any> {}
+
+export class HeaderComponent extends React.PureComponent<IHeaderComponentWithRouterProps> {
+  constructor(props) {
+    super(props)
+  }
+
+  public componentWillMount() {
+    this.listenToRoutes()
+  }
+
+  listenToRoutes() {
+    const { router } = this.props
+    const farts = router as any
+    farts.listen(({ pathname }) => {
+      const isRoot = pathname == null || pathname === '/'
+      if (isRoot) {
+        this.props.setIsExpanded(true)
+        return
+      }
+
+      setTimeout(() => this.props.setIsExpanded(false), 200)
+    })
+  }
+
+  private renderMinimap() {
     const content = <SvgMinimapContainer />
     return <MinimapContainer mapComponent={content} />
   }
 
-  public renderSearch() {
+  private renderSearch() {
     return <SearchContainer />
   }
 
-  public renderLocationSubtitle() {
+  private renderLocationSubtitle() {
     return <SubtitleComponent subtitle={this.props.subtitle} />
   }
 
-  public renderTitle() {
+  private doStuff() {
+    return
+  }
+
+  private renderTitle() {
     if (this.props.isTitleVisible === false) {
       return null
     }
@@ -60,7 +93,7 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentProps> 
     )
     return (
       <ClipboardButton
-        onClick={this.props.onCopyToClipboard}
+        onClick={this.doStuff}
         component="a"
         data-clipboard-text={window.location.href}
         button-title="Copy to clipboard"
@@ -72,7 +105,7 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentProps> 
     )
   }
 
-  public renderBackButton() {
+  private renderBackButton() {
     return <BackButtonContainer />
   }
 

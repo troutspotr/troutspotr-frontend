@@ -38,6 +38,7 @@
     "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
+    "redux-devtools-extension": "^2.13.2",
     "redux-promise-middleware": "^5.0.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
@@ -52,8 +53,7 @@
     "test:ci": "CI=true node scripts/test.js --env=jsdom --forceExit",
     "test:inspect": "node --inspect-brk=58585 scripts/test.js --runInBand",
     "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/ui/core/**/*.{ts,tsx}\"",
-    "lint:fix":
-      "node_modules/.bin/tslint --project tsconfig.json \"src/ui/**/*.selectors.ts\" --fix --format codeFrame",
+    "lint:fix": "node_modules/.bin/tslint --project tsconfig.json \"src/ui/**/*.selectors.ts\" --fix --format codeFrame",
     "storybook": "cross-env NODE_PATH=src/ start-storybook -p 6006 -s src/static",
     "build-storybook": "build-storybook",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
@@ -117,15 +117,23 @@
   },
   "jest": {
     "mapCoverage": true,
-    "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}"],
-    "setupFiles": ["<rootDir>/config/polyfills.js"],
-    "testMatch": ["<rootDir>/src/**/?(*.)(spec|test).ts?(x)"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/?(*.)(spec|test).ts?(x)"
+    ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
       "^.+\\.(j|t)sx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "transformIgnorePatterns": ["<rootDir>/node_modules/(?!lodash-es/.*)"],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!lodash-es/.*)"
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
@@ -149,7 +157,9 @@
     }
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"

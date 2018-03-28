@@ -11,7 +11,6 @@ export interface IRegionLayoutStateProps {
   selectedState: string
   selectedRegion: string
   regionLoadingStatus: LoadingStatus
-  // selectedStream: IStreamObject
   hasAgreedToTerms: boolean
 }
 
@@ -29,6 +28,7 @@ export class RegionLayout extends React.Component<IRegionLayourProps> {
   }
 
   public componentWillReceiveProps(nextProps) {
+    console.log('gettin stuffs!')
     const { selectedState, selectedRegion } = nextProps
     if (selectedState == null || selectedRegion == null) {
       return
@@ -63,6 +63,7 @@ export class RegionLayout extends React.Component<IRegionLayourProps> {
   }
 
   public render() {
+    console.log('rendering a region')
     return null
     // const { view, hasAgreedToTerms } = this.props
     // if (hasAgreedToTerms === false) {

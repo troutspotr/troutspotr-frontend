@@ -5,7 +5,7 @@ const TroutRunCreek = require('./_stubs/trout-run-creek.json')
 import * as MicromapSettings from 'ui/core/micromap/Micromap.settings'
 import { MicroMapComponentCanvas } from './Micromap.component.canvas'
 const colors = require('ui/styles/_colors.scss')
-import * as MapColors from 'ui/routes/@usState/@region/map/MapboxGlMap/styles/MapColors'
+import * as MapColors from 'ui/routes/map/MapboxGlMap/styles/MapColors'
 export const getRadius = (dimensions: number, ratio: number): number => {
   return dimensions * ratio / 2
 }

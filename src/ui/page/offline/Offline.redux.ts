@@ -1,7 +1,7 @@
 import { getApi } from 'api/Api.module'
 import { createAction, handleActions } from 'redux-actions'
 
-// Import { LOADING_CONSTANTS } from 'ui/core/LoadingConstants'
+// Import { LOADING_CONSTANTS } from 'coreTypes/Ui'
 
 export const OFFLINE_SET_OFFLINE_STATUS = 'OFFLINE_SET_OFFLINE_STATUS'
 export const OFFLINE_UPDATE_CACHED_ENDPOINTS = 'OFFLINE_UPDATE_CACHED_ENDPOINTS'
@@ -43,8 +43,11 @@ const getOfflineStatus = (): boolean => {
   if (window == null || window.navigator == null) {
     return false
   }
-
-  return window.navigator.onLine === true
+  const online = window.navigator.onLine
+  if (online == null || online === true) {
+    return false
+  }
+  return true
 }
 
 export interface IOfflineState {

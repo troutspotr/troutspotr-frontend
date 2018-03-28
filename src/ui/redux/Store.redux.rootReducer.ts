@@ -7,7 +7,7 @@ import minimapReducer, { IMinimapReduxState } from 'ui/page/header/minimap/Minim
 import regionReducer, { IRegionState } from 'ui/routes/@usState/@region/Region.redux'
 import usState, { IUsStateReduxState } from 'ui/routes/@usState/UsState.redux'
 import { IRoutingState, routingWithHistoryReducer } from './Routing.redux'
-import mapReducer, { IMapRedux } from 'ui/routes/@usState/@region/map/Map.redux'
+import mapReducer, { IMapRedux } from 'ui/routes/map/Map.redux'
 export interface IReduxState {
   readonly usState: IUsStateReduxState
   readonly offline: IOfflineState

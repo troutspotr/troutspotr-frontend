@@ -9,8 +9,8 @@ import { isExpandedSelector } from '../Minimap.selectors'
 
 import boundingBox from '@turf/bbox'
 import { FeatureCollection, GeometryObject, Feature, MultiPolygon } from 'geojson'
-import { ISelectable, SelectionStatus } from '../../../../../coreTypes/Ui'
-import { isOfflineSelector } from '../../../offline/Offline.selectors'
+import { ISelectable, SelectionStatus } from 'coreTypes/Ui'
+import { isOfflineSelector } from 'ui/page/offline/Offline.selectors'
 import { ISvgMinimapStateProps } from './SvgMinimap.component'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { featureCollection } from '@turf/helpers'
@@ -82,15 +82,7 @@ export const getMinimapCamera = (
   if (regions == null || states == null) {
     return defaultCamera
   }
-  const selectedRegion = getSelectedItem(regions)
   const selectedState = getSelectedItem(states, SelectionStatus.Selected)
-  if (selectedRegion != null && selectedState != null) {
-    if (isExpanded === false) {
-      return createCameraObjectFromFeature(selectedState)
-    }
-    return createCameraObjectFromFeature(selectedRegion)
-  }
-
   if (selectedState != null) {
     return createCameraObjectFromFeature(selectedState)
   }
@@ -106,25 +98,44 @@ export const minimapCameraSelector = createSelector(
   getMinimapCamera
 )
 
+const minimapExpandedRegionFilter = (feature: Feature<MultiPolygon, IRegion>): boolean => {
+  if (feature == null) {
+    return false
+  }
+
+  return (
+    feature.properties.selectionStatus === SelectionStatus.Selected ||
+    feature.properties.selectionStatus === SelectionStatus.Active
+  )
+}
+
+const minimapCollapsedRegionFilter = (feature: Feature<MultiPolygon, IRegion>): boolean => {
+  if (feature == null) {
+    return false
+  }
+
+  return feature.properties.selectionStatus === SelectionStatus.Selected
+}
+
 const EMPTY_REGIONS = featureCollection<MultiPolygon, IRegion>([]) as RegionFeatureCollection
 export const getDisplayedMinimapRegions = createSelector(
   coreSelectors.regionsGeoJsonSelector,
-  (regions: RegionFeatureCollection): RegionFeatureCollection => {
+  isExpandedSelector,
+  (regions: RegionFeatureCollection, isExpanded: boolean): RegionFeatureCollection => {
     if (regions == null) {
       return EMPTY_REGIONS
     }
+
     const activeOrSelectedFeatures = featureCollection(
-      regions.features.filter(x => {
-        return (
-          x.properties.selectionStatus === SelectionStatus.Active ||
-          x.properties.selectionStatus === SelectionStatus.Selected
-        )
-      })
+      regions.features.filter(
+        isExpanded ? minimapExpandedRegionFilter : minimapCollapsedRegionFilter
+      )
     )
 
     if (activeOrSelectedFeatures.features.length === 0) {
       return EMPTY_REGIONS
     }
+
     return activeOrSelectedFeatures as RegionFeatureCollection
   }
 )

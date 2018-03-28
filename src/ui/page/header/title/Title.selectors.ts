@@ -11,8 +11,10 @@ export const isTitleVisibleSelector = createSelector(
 const EMPTY_TITLE = ''
 const SELECT_REGION = 'Select Region'
 export const titleSelector = createSelector(
-  [isRootPageSelector, isTitleVisibleSelector, displayedStreamTitleSelector],
-  (isRootPage, isTitleVisible, displayedStreamTitle) => {
+  isRootPageSelector,
+  isTitleVisibleSelector,
+  displayedStreamTitleSelector,
+  (isRootPage, isTitleVisible, displayedStreamTitle): string => {
     if (isRootPage) {
       return SELECT_REGION
     }

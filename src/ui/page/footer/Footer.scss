@@ -5,6 +5,7 @@
 .footer {
   // background-color: $messageBackgroundDark;
   @include fallback(background-color, --message-background-color, $messageBackgroundDark);
+  transition: background-color 800ms, color 800ms;
   height: 100%;
   padding-left: $default-margin;
   padding-right: $default-margin;
@@ -29,9 +30,11 @@
   text-align: center;
   border: none;
   // color: $offTextDark;
-  @include fallback(color, --text-color-secondary, $offTextDark);
-  font-size: 1em;
+
+  @include fallback(color, --text-color-primary, $offTextDark);
+  font-size: 0.8em;
   transition: all 0.1s;
+  transition: background-color 800ms, color 800ms;
   text-decoration: none;
   height: 30px;
   vertical-align: middle;

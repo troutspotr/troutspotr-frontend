@@ -1,16 +1,16 @@
 export enum LoadingStatus {
-  NotStarted,
-  Pending,
-  Success,
-  Failed,
-  Offline,
+  NotStarted = 'notStarted',
+  Pending = 'pending',
+  Success = 'success',
+  Failed = 'failed',
+  Offline = 'offline',
 }
 
 export enum SelectionStatus {
-  Disabled,
-  Inactive,
-  Active,
-  Selected,
+  Disabled = 'disabled',
+  Inactive = 'inactive',
+  Active = 'active',
+  Selected = 'selected',
 }
 
 export interface ISelectable {

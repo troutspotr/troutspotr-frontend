@@ -4,7 +4,7 @@ import { createSelector } from 'reselect'
 import { getWatersObjectSelector } from 'ui/routes/@usState/UsState.selectors'
 import { IOpener } from 'coreTypes/state/IWaterOpener'
 import { IStreamObject } from 'coreTypes/IStreamObject'
-import { RestrictionFeature } from '../../../api/region/IRegionGeoJSON'
+import { RestrictionFeature } from 'api/region/IRegionGeoJSON'
 
 export interface IMiscRegsProperties {
   hasRegulationThatOverridesOpenSeason: boolean

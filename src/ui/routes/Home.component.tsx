@@ -1,19 +1,30 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { FooterContainer } from 'ui/page/footer/Footer.container'
+import { FooterComponent } from 'ui/page/footer/Footer.component'
 import { PageLayoutComponent } from 'ui/page/PageLayout.component'
 import { HeaderContainer } from 'ui/page/header/Header.container'
-import { fetchTableOfContents } from 'ui/core/Core.redux'
-
+import { fetchTableOfContents, Theme } from 'ui/core/Core.redux'
+import { createStructuredSelector } from 'reselect'
+import { IReduxState } from '../redux/Store.redux.rootReducer'
+import { themeSelector } from '../core/Core.selectors'
+import { MapContainer } from 'ui/routes/map/Map.container'
+import { isExpandedSelector } from '../page/header/minimap/Minimap.selectors'
+import { setIsExpanded } from '../page/header/minimap/Minimap.redux'
 export const HomeComponent = props => {
   return <div />
 }
 
 export interface IPageLayoutDispatchProps {
   fetchTableOfContents?(): any
+  resetMinimap(): void
 }
 
-export interface IPageLayoutProps extends IPageLayoutDispatchProps {}
+export interface IPageLayoutStateProps {
+  theme: Theme
+  readonly isExpanded: boolean
+}
+
+export interface IPageLayoutProps extends IPageLayoutStateProps, IPageLayoutDispatchProps {}
 
 class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   constructor(props) {
@@ -28,7 +39,7 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   }
 
   public renderFooter() {
-    return <FooterContainer />
+    return <FooterComponent />
   }
 
   public renderHeader() {
@@ -36,7 +47,12 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   }
 
   public renderContent() {
-    return this.props.children
+    return (
+      <>
+        <MapContainer key="map" />
+        {this.props.children}
+      </>
+    )
   }
 
   public render() {
@@ -45,7 +61,9 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
         header={this.renderHeader()}
         footer={this.renderFooter()}
         content={this.renderContent()}
-        theme={'dark'}
+        theme={this.props.theme}
+        resetMinimap={this.props.resetMinimap}
+        isExpanded={this.props.isExpanded}
       />
     )
   }
@@ -53,10 +71,15 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
 
 const mapDispatchToProps: IPageLayoutDispatchProps = {
   fetchTableOfContents: () => fetchTableOfContents(),
+  resetMinimap: () => setIsExpanded(false),
 }
 
-const mapStateToProps = reduxState => {
-  return {}
-}
+export const pageLayoutProps = createStructuredSelector<IReduxState, IPageLayoutStateProps>({
+  theme: themeSelector,
+  isExpanded: isExpandedSelector,
+})
+
+const mapStateToProps = (reduxState: IReduxState): IPageLayoutStateProps =>
+  pageLayoutProps(reduxState)
 
 export const PageContainer = connect(mapStateToProps, mapDispatchToProps)(PageContainerComponent)

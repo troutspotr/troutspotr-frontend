@@ -5,17 +5,31 @@
 .container {
   height: 100%;
   width: 100%;
+  transition: font-size ease-in-out 250ms;
+}
+
+@media (max-width: 800px) {
+  .container {
+    font-size: 0.7em;
+  }
+}
+
+.containerExpanded {
+  composes: container;
+  font-size: 5em;
 }
 
 :global(.ts-light) {
   .container {
-    --selected-region-background: darken($messageBackgroundLight, 50);
+    --backdrop-state-background: darken(transparentize($backgroundLight, 0.3), 50);
+    --selected-region-background: darken(transparentize($backgroundLight, 0.1), 20);
   }
 }
 
 :global(.ts-dark) {
   .container {
-    --selected-region-background: lighten($messageBackgroundDark, 10);
+    --backdrop-state-background: lighten($backgroundDark, 2);
+    --selected-region-background: lighten($backgroundDark, 10);
   }
 }
 
@@ -31,14 +45,16 @@
 
 .states {
   composes: polygon;
-  transition: stroke 800ms;
+  transition: stroke 800ms, fill 800ms;
   @include fallback(stroke, --text-color-primary, $textDark);
+  @include fallback(fill, --backdrop-state-background, $textDark);
   transform-origin: center;
+  cursor: pointer;
 }
 
 .statesInactive {
   composes: states;
-  @include fallback(stroke, --text-color-secondary, $offTextDark);
+  @include fallback(stroke, --text-color-primary, $offTextDark);
   transform-origin: center;
 }
 
@@ -55,10 +71,11 @@
   composes: polygon;
   @include fallback(stroke, --text-color-primary, $offTextDark);
   @include fallback(fill, --selected-region-background, green);
-  g:hover {
-    fill: transparentize($gray, 0);
-    cursor: pointer;
-  }
+  cursor: pointer;
+  // g:hover {
+  //   fill: transparentize($gray, 0);
+  //   cursor: pointer;
+  // }
 }
 
 .stateLabels {
@@ -95,8 +112,8 @@
 
 .loadingRegions {
   composes: polygon;
-  stroke-dasharray: 10 5;
-  animation: dash 30s linear infinite;
+  // stroke-dasharray: 10 5;
+  // animation: dash 30s linear infinite;
   @include fallback(stroke, --blue, $blueDark);
 }
 

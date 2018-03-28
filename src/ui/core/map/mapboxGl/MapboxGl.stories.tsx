@@ -120,12 +120,10 @@ const createCustomMapboxLayer = (
 }
 
 stories.add('Show a map with a default mapbox style', () => {
-  const camera = createCameraObject()
   const styleOption = createStyles()
   const mapboxProps: IMapboxGlProps = {
     onMapInitialized: action('map initialized'),
     mapboxGl,
-    camera,
     style: styleOption,
     onFeaturesSelected: action('features clicked'),
   }
@@ -145,7 +143,6 @@ const getSelectedStyle = (styles: Style[]): Style => {
 }
 
 stories.add('Show a map with a custom style and custom sources', () => {
-  const camera = createCameraObject()
   const styles = [darkStyle, lightStyle, satelliteStyle].map(x => x as Style)
   const selectedRawStyle = getSelectedStyle(styles)
   const customLayers = [
@@ -173,7 +170,6 @@ stories.add('Show a map with a custom style and custom sources', () => {
   const mapboxProps: IMapboxGlProps = {
     onMapInitialized: action('map initialized'),
     mapboxGl,
-    camera,
     // style: { ...selectedRawStyle },
     style: {
       ...selectedRawStyle,

@@ -8,7 +8,7 @@ export const isTitleVisibleSelector = createSelector(
   isSearchVisible => !isSearchVisibleSelector
 )
 
-const PLACEHOLDER_TITLE = ''
+const PLACEHOLDER_TITLE = ' '
 const EN_DASH = '–'
 const WELCOME_TITLE = 'Welcome to TroutSpotr'
 // Const SELECT_REGION = 'Select Region'

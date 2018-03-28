@@ -1,11 +1,22 @@
 import { connect } from 'react-redux'
-import StateComponent from './UsState.component'
-// import { selectedStateIdSelector } from 'ui/core/Core.selectors'
-export const mapDispatchToProps = {}
-
-export const mapStateToProps = state => {
-  const props = {}
-  return props
+import {
+  UsStateComponent,
+  IUsStateComponentDispatchProps,
+  IUsStateComponentStateProps,
+  IUsStateComponentPassedProps,
+} from './UsState.component'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+import { fetchStateData } from './UsState.redux'
+import { usStatePropertiesSelector } from './UsState.selectors'
+export const mapDispatchToProps: IUsStateComponentDispatchProps = {
+  fetchStateData: (selectedState: string) => fetchStateData(selectedState),
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StateComponent)
+export const mapStateToProps = (reduxState: IReduxState): IUsStateComponentStateProps =>
+  usStatePropertiesSelector(reduxState)
+
+export default connect<
+  IUsStateComponentStateProps,
+  IUsStateComponentDispatchProps,
+  IUsStateComponentPassedProps
+>(mapStateToProps, mapDispatchToProps)(UsStateComponent)

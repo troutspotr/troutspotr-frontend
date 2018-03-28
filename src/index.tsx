@@ -5,6 +5,7 @@ import { store } from 'ui/redux/Store.redux'
 import { createRoutes } from 'ui/routes/Routes'
 import 'ui/styles/core.scss'
 import { TroutSpotrAppContainer } from 'ui/TroutSpotrAppContainer'
+require('mapbox-gl/dist/mapbox-gl.css')
 
 const routes = createRoutes()
 setTimeout(() => {

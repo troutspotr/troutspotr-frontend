@@ -21,7 +21,6 @@ export interface IHeaderLayout {
 }
 
 export class HeaderLayout extends React.Component<IHeaderLayout> {
-  displayNam
   renderBody() {
     const { title, search, viewMode } = this.props
     const isSearch = viewMode === SEARCH

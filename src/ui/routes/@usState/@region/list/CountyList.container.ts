@@ -4,7 +4,7 @@ import { getCountyListSelector } from '../Region.selectors'
 import { CountyListComponent } from './CountyList.component'
 import { isListViewed } from './List.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
-import { selectedStateIdSelector, selectedRegionIdSelector } from '../../../../Location.selectors'
+import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/Location.selectors'
 const mapDispatchToProps = {}
 
 const mapStateToProps = (state: IReduxState) => {

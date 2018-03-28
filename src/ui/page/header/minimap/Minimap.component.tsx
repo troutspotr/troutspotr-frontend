@@ -40,10 +40,10 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     const width = window.innerWidth > 0 ? window.innerWidth : screen.width
     const height = window.innerHeight > 0 ? window.innerHeight : screen.height
 
-    const clientTop = headerHeight
-    const clientBottom = height - footerHeight
-    const clientLeft = 0
-    const clientRight = width
+    const clientTop = headerHeight + 20
+    const clientBottom = height - footerHeight - 20
+    const clientLeft = 20
+    const clientRight = width - 20
 
     this.state = {
       windowWidth: 0,
@@ -137,17 +137,17 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
       const height = window.innerHeight > 0 ? window.innerHeight : screen.height
 
       const windowCenterPosition = {
-        x: width / 2,
+        x: width * 0.5,
         y: headerHeight + (height - headerHeight - footerHeight) * 0.5,
       }
 
       const minDimension = Math.min(width, height - headerHeight - footerHeight)
       const minDimensionOffset = minDimension * 0.5
 
-      const clientTop = windowCenterPosition.y - minDimensionOffset
-      const clientBottom = windowCenterPosition.y + minDimensionOffset
-      const clientLeft = windowCenterPosition.x - minDimensionOffset
-      const clientRight = windowCenterPosition.x + minDimensionOffset
+      const clientTop = windowCenterPosition.y - minDimensionOffset + 20
+      const clientBottom = windowCenterPosition.y + minDimensionOffset - 20
+      const clientLeft = windowCenterPosition.x - minDimensionOffset + 20
+      const clientRight = windowCenterPosition.x + minDimensionOffset - 20
 
       const minClientDimensions = Math.min(clientBottom - clientTop, clientRight - clientLeft)
       return {
@@ -192,6 +192,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
 
   public render() {
     const { mapComponent, isReadyToReveal, isExpanded } = this.props
+    const sandboxClassName = isExpanded ? classes.sandboxContainerExpand : classes.sandboxContainer
     return (
       <div>
         <div
@@ -205,11 +206,12 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
           id="js-sandbox-container"
           style={this.getSandboxStyle()}
           onClick={this.handleSandboxClick}
-          className={classes.sandboxContainer}
+          className={sandboxClassName}
           ref={container => (this.sandboxElement = container)}
         >
           {isReadyToReveal && mapComponent}
         </div>
+        {/* <div className={sneezeGuardClass} /> */}
       </div>
     )
   }

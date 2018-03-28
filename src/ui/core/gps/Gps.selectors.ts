@@ -2,7 +2,7 @@ import { point } from '@turf/helpers'
 import isEmpty from 'lodash-es/isEmpty'
 import { createSelector } from 'reselect'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
-import { LoadingStatus } from '../../../coreTypes/Ui'
+import { LoadingStatus } from 'coreTypes/Ui'
 
 export const isGpsTrackingActiveStateSelector = (reduxState: IReduxState): boolean =>
   reduxState.gps.isGpsTrackingActive

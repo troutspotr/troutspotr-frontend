@@ -11,7 +11,7 @@ const tableOfContents = require('static/data/v3/TableOfContents.topo.json')
 import cloneDeep from 'lodash-es/cloneDeep'
 import { decompress } from 'api/tableOfContents/TableOfContentsApi'
 import { INITIAL_CORE_STATE } from './Core.redux'
-import { SelectionStatus } from '../../coreTypes/Ui'
+import { SelectionStatus } from 'coreTypes/Ui'
 
 describe('Core.redux', () => {
   let reduxState: ICoreState = null
@@ -59,7 +59,7 @@ describe('Core.redux', () => {
       expect(results).toEqual(reduxState)
     })
 
-    test.only('selecting state activiates regions inside selected state', () => {
+    it('selecting state activiates regions inside selected state', () => {
       // arrange
       const driftlessPath = 'mn/driftless'
       const minnesotaShortName = 'mn'
@@ -94,6 +94,29 @@ describe('Core.redux', () => {
         SelectionStatus.Active
       )
       expect(minnesota.properties.selectionStatus).toBe(SelectionStatus.Selected)
+    })
+
+    it('selecting regions inactivates all other regions', () => {
+      // arrange
+      const driftlessPath = 'mn/driftless'
+      const minnesotaShortName = 'mn'
+      // act
+      const results = CORE_REDUCERS[GEO_SET_SELECTION](
+        reduxState,
+        setSelectedMinimapGeometry({
+          usStateShortName: minnesotaShortName,
+          regionPathName: driftlessPath,
+        })
+      )
+
+      results.regionsGeoJson.features.forEach(f => {
+        const isSelectedRegion = f.properties.path.toLowerCase() === driftlessPath
+        if (isSelectedRegion) {
+          expect(f.properties.selectionStatus === SelectionStatus.Active)
+        } else {
+          expect(f.properties.selectionStatus === SelectionStatus.Inactive)
+        }
+      })
     })
 
     it('selecting state activates regions', () => {

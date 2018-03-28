@@ -3,6 +3,7 @@
 @import '_variables';
 @import 'utilities';
 @import 'fallback';
+@import '../../../node_modules/mapbox-gl/dist/mapbox-gl.css';
 
 :global {
   .ts-light {
@@ -58,6 +59,11 @@
     padding: 0;
     height: 100%;
     @include book-font;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
   }
 
   html {
@@ -100,8 +106,10 @@
   #storybookRoot,
   #root {
     height: 100%;
+    width: 100%;
     @include fallback(background-color, --background-color, blue);
     @include fallback(color, --text-color-primary, blue);
+    transition: background-color 800ms, color 800ms;
   }
 
   #storybookRoot {

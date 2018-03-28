@@ -1,0 +1,21 @@
+import { createStructuredSelector } from 'reselect'
+import { IReduxState } from '../../redux/Store.redux.rootReducer'
+// import { IFooterStateProps } from './Footer.component'
+import {
+  isGpsTrackingSupportedStateSelector,
+  getIsGpsActiveButLoading,
+  getIsActiveAndSuccessful,
+  isGpsFailedSelector,
+} from '../../core/gps/Gps.selectors'
+import { viewSelector, themeSelector } from '../../core/Core.selectors'
+import { selectedStreamObjectSelector } from '../../routes/@usState/@region/Region.selectors'
+
+export const footerStatePropsSelector = createStructuredSelector<IReduxState, IFooterStateProps>({
+  isSupported: isGpsTrackingSupportedStateSelector,
+  isLoading: getIsGpsActiveButLoading,
+  isSuccessful: getIsActiveAndSuccessful,
+  isFailed: isGpsFailedSelector,
+  view: viewSelector,
+  selectedStream: selectedStreamObjectSelector,
+  theme: themeSelector,
+})

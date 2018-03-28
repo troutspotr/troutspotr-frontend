@@ -15,7 +15,8 @@ import {
 
 import { IRegion } from 'coreTypes/tableOfContents/IRegion'
 import { IUsState } from 'coreTypes/tableOfContents/IState'
-import { SelectionStatus, LoadingStatus } from '../../../../../coreTypes/Ui'
+import { SelectionStatus, LoadingStatus } from 'coreTypes/Ui'
+import { action } from '@storybook/addon-actions'
 
 const US_STATES = require('ui/page/header/minimap/_stubs/states.geo.json') as FeatureCollection<
   MultiPolygon,
@@ -104,7 +105,7 @@ stories.add('Just states', () => {
   }
 
   const props: IMinimapSvgProps = {
-    handleClose: () => {},
+    handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
     usStatesGeoJson: states,
     regionsGeoJson: emptyRegion,
@@ -163,7 +164,7 @@ export const createStatesAndRegions = (width = 500, height = 500) => {
         >)
 
   const props: IMinimapSvgProps = {
-    handleClose: () => {},
+    handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
     usStatesGeoJson: states,
     camera: cameraProps,
@@ -258,7 +259,7 @@ stories.add('Region Loading', () => {
   }
 
   const props: IMinimapSvgProps = {
-    handleClose: () => {},
+    handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
     usStatesGeoJson: states,
     camera: cameraProps,
@@ -303,7 +304,7 @@ stories.add('Region Selected', () => {
   }
 
   const props: IMinimapSvgProps = {
-    handleClose: () => {},
+    handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
     usStatesGeoJson: US_STATES,
     regionsGeoJson: regions,

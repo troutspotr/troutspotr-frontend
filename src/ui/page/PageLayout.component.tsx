@@ -1,22 +1,6 @@
 import * as React from 'react'
+import { IPageLayoutProps } from './IPageLayout'
 const styles = require('./PageLayout.scss')
-
-export interface IPageLayoutDispatchProps {
-  fetchTableOfContents?(): void
-  resetMinimap(): void
-}
-
-export interface IPageLayoutStateProps {
-  readonly theme: 'dark' | 'light'
-  readonly isExpanded: boolean
-}
-
-export interface IPageLayoutProps extends IPageLayoutDispatchProps, IPageLayoutStateProps {
-  readonly header: React.ReactNode
-  readonly content: React.ReactNode
-  readonly footer: React.ReactNode
-  readonly theme: 'dark' | 'light'
-}
 
 export class PageLayoutComponent extends React.Component<IPageLayoutProps> {
   constructor(props) {

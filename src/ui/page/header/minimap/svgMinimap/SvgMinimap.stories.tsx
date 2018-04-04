@@ -110,6 +110,8 @@ stories.add('Just states', () => {
   }
 
   const props: IMinimapSvgProps = {
+    usStatesGeoJson: US_STATES,
+    handleOpen: () => action('open'),
     handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
     displayedUsStatesGeoJson: states,
@@ -171,6 +173,8 @@ export const createStatesAndRegions = (width = 500, height = 500) => {
         >)
 
   const props: IMinimapSvgProps = {
+    usStatesGeoJson: US_STATES,
+    handleOpen: () => action('open'),
     handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
     displayedUsStatesGeoJson: states,
@@ -268,6 +272,8 @@ stories.add('Region Loading', () => {
   }
 
   const props: IMinimapSvgProps = {
+    usStatesGeoJson: US_STATES,
+    handleOpen: () => action('open'),
     handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
     displayedUsStatesGeoJson: states,
@@ -315,6 +321,8 @@ stories.add('Region Selected', () => {
   }
 
   const props: IMinimapSvgProps = {
+    usStatesGeoJson: US_STATES,
+    handleOpen: () => action('open'),
     handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
     displayedUsStatesGeoJson: US_STATES,

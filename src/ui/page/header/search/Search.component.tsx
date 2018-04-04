@@ -14,6 +14,7 @@ export class SearchComponent extends React.PureComponent<ISearchProps> {
 
   private onTextChange(e) {
     const text = e.target.value
+
     this.props.updateSearchText(text)
   }
 

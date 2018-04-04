@@ -70,7 +70,9 @@ export const fetchStateData = (stateName: string) => async dispatch => {
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: {} = {
+const ACTION_HANDLERS: {
+  [name: string]: (state: IUsStateReduxState, action: any) => IUsStateReduxState
+} = {
   [REGION_SET_VIEW]: (state: IUsStateReduxState, { payload }): IUsStateReduxState => {
     const view = payload || INITIAL_US_STATE_STATE
     const newState = { ...state, ...{ view } }

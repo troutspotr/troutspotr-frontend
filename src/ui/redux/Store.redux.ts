@@ -2,7 +2,6 @@ import { browserHistory } from 'react-router'
 import { applyMiddleware, compose, createStore } from 'redux'
 import promiseMiddleware from 'redux-promise-middleware'
 import thunk from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
 import { createRoutes } from 'ui/routes/Routes'
 import { AllReducers } from './Store.redux.rootReducer'
 // tslint:disable-next-line:no-any

@@ -15,6 +15,7 @@ const mapStateToProps = (reduxState: IReduxState): ISvgMinimapStateProps => {
 
 const mapDispatchToProps = (dispatch): ISvgMinimapDispatchProps => ({
   handleClose: () => dispatch(setIsExpanded(false)),
+  handleOpen: () => dispatch(setIsExpanded(true)),
   handleSelection: (usStateShortName: string, regionPath: string) =>
     dispatch(
       handleRegionSelection({

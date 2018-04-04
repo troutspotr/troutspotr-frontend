@@ -1,8 +1,9 @@
-import { number } from '@storybook/addon-knobs'
+import { number, boolean } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import range from 'lodash-es/range'
 import * as React from 'react'
 import { IPageLayoutProps, PageLayoutComponent } from './PageLayout.component'
+import { action } from '@storybook/addon-actions'
 const styles = require('./PageLayout.stories.scss')
 const stories = storiesOf('Page/Layout', module)
 stories.add('Page', () => {
@@ -14,6 +15,8 @@ stories.add('Page', () => {
     footer,
     content,
     theme: 'dark',
+    resetMinimap: action('reset'),
+    isExpanded: boolean('is expanded', false),
   }
   return <PageLayoutComponent {...props} />
 })
@@ -57,6 +60,8 @@ stories.add('Page with too much content', () => {
     footer,
     content,
     theme: 'dark',
+    resetMinimap: action('reset'),
+    isExpanded: boolean('is expanded', false),
   }
   return <PageLayoutComponent {...props} />
 })
@@ -78,6 +83,8 @@ stories.add('Page with content that fullscreens', () => {
     footer,
     content,
     theme: 'dark',
+    resetMinimap: action('reset'),
+    isExpanded: boolean('is expanded', false),
   }
   return <PageLayoutComponent {...props} />
 })

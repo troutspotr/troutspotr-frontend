@@ -66,12 +66,14 @@ export const INITIAL_OFFLINE_STATE: IOfflineState = {
 const ACTION_HANDLERS: {} = {
   [OFFLINE_UPDATE_CACHED_ENDPOINTS]: (state: IOfflineState, { payload }): IOfflineState => {
     let { cachedEndpoints } = payload
-    cachedEndpoints = cachedEndpoints == null ? [] : cachedEndpoints.map(x => x)
+    console.log('doing things with the cache')
+    cachedEndpoints = cachedEndpoints == null ? [] : cachedEndpoints.slice()
     const newState = { ...state, ...{ cachedEndpoints } }
     return newState
   },
   [OFFLINE_SET_OFFLINE_STATUS]: (state: IOfflineState, { payload }): IOfflineState => {
     const { isOffline, cachedEndpoints } = payload
+    console.log('oooofline????', payload)
     const newState = { ...state, ...{ isOffline, cachedEndpoints } }
     return newState
   },

@@ -8,6 +8,7 @@ import { IGeoPackageOrWhatver } from 'api/region/Region.transform'
 import { Dictionary } from 'lodash'
 import { IStreamObject } from 'coreTypes/IStreamObject'
 import { LoadingStatus } from 'coreTypes/Ui'
+import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
 import {
   AccessPointFeatureCollection,
   PalSectionFeatureCollection,
@@ -65,6 +66,7 @@ export const fetchRegionData = (stateName: string, regionName: string) => async 
     const gettingRegion = RegionApi.getRegionData(stateName, regionName)
     const regionData = await gettingRegion
     dispatch(setRegionData(regionData))
+    updateCachedEndpoints()(dispatch)
     // Get selectedRegion and fly to coordinates
     const state = getState()
     const selectedRegion = selectedRegionSelector(state)

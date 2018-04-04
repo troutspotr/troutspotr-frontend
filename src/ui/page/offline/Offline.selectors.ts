@@ -26,13 +26,13 @@ export const cachedEndpointsDictionarySelector = createSelector(
     if (isEmpty(cachedEndpoints)) {
       return EMPTY_DICTIONARY
     }
-
     return keyBy(cachedEndpoints, x => x)
   }
 )
 
-export const cachedRegionsDictionary = createSelector(
-  [cachedEndpointsSelector, regionsDictionarySelector],
+export const cachedRegionsDictionarySelector = createSelector(
+  cachedEndpointsSelector,
+  regionsDictionarySelector,
   (endpoints, regionDictionary) => {
     if (isEmpty(endpoints)) {
       return EMPTY_DICTIONARY
@@ -65,7 +65,6 @@ export const cachedRegionsDictionary = createSelector(
         dictionary[regionId] = region
         return dictionary
       }, {})
-
     return cachedRegionDictionary
   }
 )

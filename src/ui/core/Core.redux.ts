@@ -11,9 +11,9 @@ import {
   CountyFeature,
   RegionFeature,
 } from 'coreTypes/tableOfContents/ITableOfContentsGeoJSON'
-import { LoadingStatus, SelectionStatus } from 'coreTypes/Ui'
-import { IUsState } from 'coreTypes/tableOfContents/IState'
-import { IRegion } from '../../coreTypes/tableOfContents/IRegion'
+import { LoadingStatus } from 'coreTypes/Ui'
+// import { cachedEndpointsSelectorByType } from '../page/offline/Offline.selectors'
+import { ITableOfContentsData } from 'api/tableOfContents/ITableOfContentsData'
 
 // ------------------------------------
 // Constants
@@ -63,9 +63,10 @@ export interface ICoreState {
   tableOfContentsLoadingStatus: LoadingStatus
   hasAgreedToTerms: boolean
 }
+
 export const INITIAL_CORE_STATE: ICoreState = {
   view: isBot() ? View.list : View.map,
-  theme: Theme.light,
+  theme: Theme.dark,
   isMapModuleLoaded: false,
   isMapReadyToDisplay: false,
   searchText: '',
@@ -90,7 +91,6 @@ export const GEO_SET_TABLE_OF_CONTENTS = 'GEO_SET_TABLE_OF_CONTENTS'
 export const GEO_TABLE_OF_CONTENTS_LOADING = 'GEO_TABLE_OF_CONTENTS_LOADING'
 export const GEO_TABLE_OF_CONTENTS_LOADING_FAILED = 'GEO_TABLE_OF_CONTENTS_LOADING_FAILED'
 export const GEO_UPDATE_SEARCH_TEXT = 'GEO_UPDATE_SEARCH_TEXT'
-export const GEO_SET_SELECTION = 'GEO_SET_SELECTION'
 
 export const setTableOfContents = createAction(GEO_SET_TABLE_OF_CONTENTS, x => x)
 export const setTableOfContentsLoading = createAction(GEO_TABLE_OF_CONTENTS_LOADING)
@@ -112,14 +112,16 @@ export const agreeToTerms = (isAgreed: 'true' | 'false') => (dispatch): void => 
 }
 
 // tslint:disable-next-line:typedef
-export const fetchTableOfContents = () => async (dispatch): Promise<void> => {
+export const fetchTableOfContents = () => async (dispatch, getState): Promise<void> => {
   dispatch(setTableOfContentsLoading())
   try {
     const { TableOfContentsApi } = await getApi()
-    const gettingTableOfContents = TableOfContentsApi.getTableOfContents()
+    const gettingTableOfContents = TableOfContentsApi.getTableOfContents() as Promise<
+      ITableOfContentsData
+    >
     const [tableOfContents] = await Promise.all([gettingTableOfContents])
-    dispatch(setTableOfContents(tableOfContents))
     dispatch(updateCachedEndpoints())
+    dispatch(setTableOfContents(tableOfContents))
   } catch (error) {
     dispatch(setTableOfContentsFailed()) // eslint-disable-line
   }
@@ -129,14 +131,6 @@ export interface IMinimapSelection {
   usStateShortName: string
   regionPathName?: string
 }
-
-export const setSelectedMinimapGeometry = createAction(
-  GEO_SET_SELECTION,
-  (args: IMinimapSelection) => ({
-    usStateShortName: args.usStateShortName == null ? null : args.usStateShortName.toLowerCase(),
-    regionPathName: args.regionPathName == null ? null : args.regionPathName,
-  })
-)
 
 // ------------------------------------
 // Action Handlers
@@ -163,14 +157,6 @@ export const CORE_REDUCERS: { [name: string]: (state: ICoreState, action: any) =
   },
 
   [GEO_SET_TABLE_OF_CONTENTS]: (state: ICoreState, { payload }): ICoreState => {
-    payload.states.features.forEach((s: IUsState) => {
-      s.selectionStatus = SelectionStatus.Inactive
-      s.loadingStatus = LoadingStatus.Success
-    })
-    payload.regions.features.forEach((s: IRegion) => {
-      s.selectionStatus = SelectionStatus.Inactive
-      s.loadingStatus = LoadingStatus.Success
-    })
     const newState = {
       ...state,
 
@@ -203,70 +189,6 @@ export const CORE_REDUCERS: { [name: string]: (state: ICoreState, action: any) =
   [GEO_UPDATE_SEARCH_TEXT]: (state: ICoreState, { payload }): ICoreState => {
     const newState = { ...state, ...{ searchText: payload } }
     return newState
-  },
-  [GEO_SET_SELECTION]: (state: ICoreState, { payload }): ICoreState => {
-    const { statesGeoJson, statesDictionary, regionsGeoJson, regionDictionary } = state
-
-    if (
-      statesGeoJson == null ||
-      statesDictionary == null ||
-      regionsGeoJson == null ||
-      regionDictionary == null
-    ) {
-      return state
-    }
-    const { usStateShortName, regionPathName } = payload
-
-    if (usStateShortName == null) {
-      return state
-    }
-
-    const stateItem = statesDictionary[usStateShortName]
-    if (stateItem == null) {
-      return state
-    }
-
-    // If they've selected nothing (denoted by '')
-    // then that's a national level view and they should
-    // all be actie.
-    // If there is a selection, then non-selected items
-    // should be inactive.
-    const stateLevelNonSelectedStatus =
-      usStateShortName === '' ? SelectionStatus.Active : SelectionStatus.Inactive
-
-    statesGeoJson.features = statesGeoJson.features.map(f => {
-      f.properties.selectionStatus =
-        f.properties.short_name === usStateShortName
-          ? SelectionStatus.Selected
-          : stateLevelNonSelectedStatus
-      return f
-    })
-
-    regionsGeoJson.features = regionsGeoJson.features.map(f => {
-      const isInSelectedState = f.properties.state_short_name.toLowerCase() === usStateShortName
-      const isThisRegionSelected = f.properties.path === regionPathName
-      let regionStatus: SelectionStatus = null
-      if (isThisRegionSelected) {
-        regionStatus = SelectionStatus.Selected
-      } else {
-        if (isInSelectedState) {
-          regionStatus = SelectionStatus.Active
-        } else {
-          regionStatus = SelectionStatus.Inactive
-        }
-      }
-      f.properties.selectionStatus = regionStatus
-      return f
-    })
-    return {
-      ...state,
-      statesGeoJson: {
-        ...statesGeoJson,
-      },
-      regionsGeoJson: {
-        ...regionsGeoJson,
-      },
-    }
   },
 }
 

@@ -6,7 +6,7 @@ import { themeSelector } from 'ui/core/Core.selectors'
 import { Theme } from 'ui/core/Core.redux'
 import { IStreamSettings } from 'ui/core/micromap/Micromap.settings'
 import { isOfflineSelector } from 'ui/page/offline/Offline.selectors'
-import { createStyle, createLayers } from './styles/Base.style'
+import { createLayers } from './styles/Base.style'
 import { Style as MapboxStyle, Layer } from 'mapbox-gl'
 import { featureCollection } from '@turf/helpers'
 import {
@@ -17,7 +17,6 @@ import {
   palsSelector,
 } from 'ui/routes/@usState/@region/Region.selectors'
 import { streamAccessPointSelector } from '../../@usState/@region/Region.selectors'
-import { FeatureCollection } from 'geojson'
 import { StyleSourceId } from './styles/Style.constants'
 import * as streamLayersLib from './styles/Stream.layers'
 import * as palLayersLib from './styles/Pal.layers'
@@ -102,7 +101,6 @@ export const mapboxGlSourcesSelector = createSelector(
   layerPropertiesSelector,
   sourceGeometryDictionarySelector,
   (layerProps: ILayerProperties, sourcesGeometry) => {
-    let sources = {}
     const { isOnline } = layerProps
     const onlineSources = {
       composite: {
@@ -116,10 +114,14 @@ export const mapboxGlSourcesSelector = createSelector(
       },
     }
 
+    let sources = {
+      ...sourcesGeometry,
+    }
+
     if (isOnline) {
       sources = {
+        ...sources,
         ...onlineSources,
-        ...sourcesGeometry,
       }
     }
 
@@ -196,6 +198,7 @@ export const mapboxGlStyleSelector = createSelector(
       sources,
       layers,
     }
+
     return style
   }
 )

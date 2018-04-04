@@ -55,7 +55,7 @@ export const decompressTopojsonAsync = async (
     topojsonLib.feature.bind(null, topojsonObject, topojsonObject.objects.restrictionSection),
     topojsonLib.feature.bind(null, topojsonObject, topojsonObject.objects.stream),
     topojsonLib.feature.bind(null, topojsonObject, topojsonObject.objects.palSection),
-    topojsonLib.feature.bind(null, topojsonObject, topojsonObject.objects.pal),
+    // topojsonLib.feature.bind(null, topojsonObject, topojsonObject.objects.pal),
     topojsonLib.feature.bind(null, topojsonObject, topojsonObject.objects.boundingCircle),
   ]
   const [
@@ -63,7 +63,7 @@ export const decompressTopojsonAsync = async (
     restriction_section,
     streamProperties,
     pal_routes,
-    pal,
+    // pal,
     boundingCircle,
   ] = await throttleReduce(ops)
 
@@ -72,7 +72,7 @@ export const decompressTopojsonAsync = async (
     restriction_section,
     streamProperties,
     pal_routes,
-    pal,
+    pal: null,
     boundingCircle,
   }
   return dictionary

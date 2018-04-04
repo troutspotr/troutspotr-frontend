@@ -1,12 +1,12 @@
 export interface ICounty {
-  gid: number
-  statefp: string
-  countyfp: string
-  name: string
-  lsad: string
-  state_short: null
-  state_name: null
-  state_gid: number
-  region_id: number
-  stream_count: number
+  readonly gid: number
+  readonly statefp: string
+  readonly countyfp: string
+  readonly name: string
+  readonly lsad: string
+  readonly state_short: null
+  readonly state_name: null
+  readonly state_gid: number
+  readonly region_id: number
+  readonly stream_count: number
 }

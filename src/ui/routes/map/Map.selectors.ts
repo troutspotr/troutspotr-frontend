@@ -11,6 +11,23 @@ export const getMapCameraSelector = (reduxState: IReduxState): ICameraReduxState
 export const getMapInteractivitySelector = (reduxState: IReduxState): IMapInteractivity =>
   reduxState.map.interactivity
 
+export const bboxSelector = createSelector(
+  getMapCameraSelector,
+  (reduxCamera: ICameraReduxState): number[][] => reduxCamera.bounds
+)
+export const pitchSelector = createSelector(
+  getMapCameraSelector,
+  (reduxCamera: ICameraReduxState): number => reduxCamera.angle
+)
+export const bearingSelector = createSelector(
+  getMapCameraSelector,
+  (reduxCamera: ICameraReduxState): number => reduxCamera.bearing
+)
+export const speedSelector = createSelector(
+  getMapCameraSelector,
+  (reduxCamera: ICameraReduxState): number => reduxCamera.animationSpeed
+)
+
 export const isReadyToInsertLayersSelector = createSelector(
   [isMapboxModuleLoadedSelector, getMapInteractivitySelector, regionLoadingStatusSelector],
   (isMapboxModuleLoaded, interactivity) => {

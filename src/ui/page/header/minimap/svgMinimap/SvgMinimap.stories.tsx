@@ -67,7 +67,7 @@ const getSelectedState = (stateName: string) => {
 stories.add('Just states', () => {
   const width = 500
   const height = 500
-
+  const isOffline = boolean('offline', false)
   const style = {
     width: `${width}px`,
     height: `${height}px`,
@@ -75,20 +75,25 @@ stories.add('Just states', () => {
   const selectedStateName = getSelectedStateName()
   const states = {
     ...US_STATES,
-    features: US_STATES.features.map(x => {
-      const selectionStatus =
-        x.properties.short_name === selectedStateName
-          ? SelectionStatus.Selected
-          : selectedStateName === 'All' ? SelectionStatus.Active : SelectionStatus.Inactive
-      return {
-        ...x,
-        properties: {
-          ...x.properties,
-          loadingStatus: LoadingStatus.Success,
-          selectionStatus,
-        },
-      }
-    }),
+    features: US_STATES.features
+      .map((x, index) => {
+        const selectionStatus =
+          x.properties.short_name === selectedStateName
+            ? SelectionStatus.Selected
+            : selectedStateName === 'All' ? SelectionStatus.Active : SelectionStatus.Inactive
+        return {
+          ...x,
+          properties: {
+            ...x.properties,
+            loadingStatus: LoadingStatus.Success,
+            selectionStatus,
+            isCached: index % 2 === 0 || isOffline === false,
+          },
+        }
+      })
+      .filter((x, index) => {
+        return index % 2 === 0 || isOffline === false
+      }),
   }
   const bbox = boundingBox(getSelectedState(selectedStateName))
   const cameraProps = {
@@ -107,10 +112,12 @@ stories.add('Just states', () => {
   const props: IMinimapSvgProps = {
     handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
-    usStatesGeoJson: states,
-    regionsGeoJson: emptyRegion,
+    displayedUsStatesGeoJson: states,
+    displayedRegionsGeoJson: emptyRegion,
+    selectedRegionGeoJson: emptyRegion,
+    selectedUsStatesGeoJson: states,
     camera: cameraProps,
-    isOffline: boolean('offline', false),
+    isOffline,
     isExpanded: boolean('expanded', true),
   }
 
@@ -166,9 +173,11 @@ export const createStatesAndRegions = (width = 500, height = 500) => {
   const props: IMinimapSvgProps = {
     handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
-    usStatesGeoJson: states,
+    displayedUsStatesGeoJson: states,
+    selectedRegionGeoJson: emptyRegion,
+    selectedUsStatesGeoJson: states,
     camera: cameraProps,
-    regionsGeoJson: regions,
+    displayedRegionsGeoJson: regions,
     isOffline: boolean('offline', false),
     isExpanded: boolean('expanded', true),
   }
@@ -261,9 +270,11 @@ stories.add('Region Loading', () => {
   const props: IMinimapSvgProps = {
     handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
-    usStatesGeoJson: states,
+    displayedUsStatesGeoJson: states,
+    selectedRegionGeoJson: emptyRegion,
+    selectedUsStatesGeoJson: states,
     camera: cameraProps,
-    regionsGeoJson: regions,
+    displayedRegionsGeoJson: regions,
     isOffline: boolean('offline', false),
     isExpanded: boolean('expanded', true),
   }
@@ -306,8 +317,10 @@ stories.add('Region Selected', () => {
   const props: IMinimapSvgProps = {
     handleClose: action('close'),
     handleSelection: (a: string, b: string) => {},
-    usStatesGeoJson: US_STATES,
-    regionsGeoJson: regions,
+    displayedUsStatesGeoJson: US_STATES,
+    selectedRegionGeoJson: emptyRegion,
+    selectedUsStatesGeoJson: US_STATES,
+    displayedRegionsGeoJson: regions,
     camera: cameraProps,
     isOffline: boolean('offline', false),
     isExpanded: boolean('expanded', true),

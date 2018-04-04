@@ -5,7 +5,7 @@ export interface IOfflineListenerComponent {
   setIsOffline: ((isOffline: boolean) => void)
 }
 
-class OfflineListenerComponent extends React.PureComponent<IOfflineListenerComponent> {
+export class OfflineListenerComponent extends React.PureComponent<IOfflineListenerComponent> {
   constructor(props) {
     super(props)
     this.getOnlineStatus = this.getOnlineStatus.bind(this)
@@ -30,5 +30,3 @@ class OfflineListenerComponent extends React.PureComponent<IOfflineListenerCompo
     return null
   }
 }
-
-export default OfflineListenerComponent

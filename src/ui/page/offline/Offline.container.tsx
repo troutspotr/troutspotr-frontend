@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { setIsOffline } from './Offline.redux'
 import { cachedEndpointsDictionarySelector, isOfflineSelector } from './Offline.selectors'
-import OfflineComponent from './OfflineListener.component'
+import { OfflineListenerComponent } from './OfflineListener.component'
 
 const mapDispatchToProps = { setIsOffline: isOffline => setIsOffline(isOffline) }
 
@@ -10,4 +10,6 @@ const mapStateToProps = state => ({
   cachedEndpointsDictionary: cachedEndpointsDictionarySelector(state),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(OfflineComponent)
+export const OfflineContainer = connect(mapStateToProps, mapDispatchToProps)(
+  OfflineListenerComponent
+)

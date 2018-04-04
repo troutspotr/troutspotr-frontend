@@ -30,20 +30,21 @@ export interface IMinimapState {
   homeRect: ClientRect
   sandboxRect: ClientRect
 }
-
+const MARGIN = 5
 export class MinimapComponent extends React.Component<IMinimapProps, IMinimapState> {
   constructor(props) {
     super(props)
     this.resizeEvent = this.resizeEvent.bind(this)
     this.handleCloseClick = this.handleCloseClick.bind(this)
     this.handleSandboxClick = this.handleSandboxClick.bind(this)
+    this.handleHomeClick = this.handleHomeClick.bind(this)
     const width = window.innerWidth > 0 ? window.innerWidth : screen.width
     const height = window.innerHeight > 0 ? window.innerHeight : screen.height
 
-    const clientTop = headerHeight + 20
-    const clientBottom = height - footerHeight - 20
-    const clientLeft = 20
-    const clientRight = width - 20
+    const clientTop = headerHeight + MARGIN
+    const clientBottom = height - footerHeight - MARGIN
+    const clientLeft = MARGIN
+    const clientRight = width - MARGIN
 
     this.state = {
       windowWidth: 0,
@@ -144,10 +145,10 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
       const minDimension = Math.min(width, height - headerHeight - footerHeight)
       const minDimensionOffset = minDimension * 0.5
 
-      const clientTop = windowCenterPosition.y - minDimensionOffset + 20
-      const clientBottom = windowCenterPosition.y + minDimensionOffset - 20
-      const clientLeft = windowCenterPosition.x - minDimensionOffset + 20
-      const clientRight = windowCenterPosition.x + minDimensionOffset - 20
+      const clientTop = windowCenterPosition.y - minDimensionOffset + MARGIN
+      const clientBottom = windowCenterPosition.y + minDimensionOffset - MARGIN
+      const clientLeft = windowCenterPosition.x - minDimensionOffset + MARGIN
+      const clientRight = windowCenterPosition.x + minDimensionOffset - MARGIN
 
       const minClientDimensions = Math.min(clientBottom - clientTop, clientRight - clientLeft)
       return {
@@ -182,12 +183,22 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     handleExpand(false)
   }
 
-  handleSandboxClick() {
+  handleHomeClick() {
+    console.log('hello')
     const { isExpanded, handleExpand } = this.props
     if (isExpanded === false) {
-      handleExpand(true)
       return
     }
+
+    handleExpand(false)
+  }
+
+  handleSandboxClick() {
+    // const { isExpanded, handleExpand } = this.props
+    // if (isExpanded === false) {
+    //   handleExpand(true)
+    //   return
+    // }
   }
 
   public render() {
@@ -198,6 +209,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
         <div
           id="js-home-container"
           className={classes.homeContainer}
+          onClick={this.handleHomeClick}
           ref={container => (this.homeElement = container)}
         >
           {<CloseButtonComponent isEnabled={isExpanded} onClick={this.handleCloseClick} />}

@@ -10,6 +10,7 @@ import { themeSelector } from '../core/Core.selectors'
 import { MapContainer } from 'ui/routes/map/Map.container'
 import { isExpandedSelector } from '../page/header/minimap/Minimap.selectors'
 import { setIsExpanded } from '../page/header/minimap/Minimap.redux'
+import { OfflineContainer } from '../page/offline/Offline.container'
 export const HomeComponent = props => {
   return <div />
 }
@@ -49,6 +50,7 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   public renderContent() {
     return (
       <>
+        <OfflineContainer />
         <MapContainer key="map" />
         {this.props.children}
       </>

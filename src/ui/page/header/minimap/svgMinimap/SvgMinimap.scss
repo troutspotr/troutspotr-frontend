@@ -10,7 +10,7 @@
 
 @media (max-width: 800px) {
   .container {
-    font-size: 0.7em;
+    font-size: 0.85em;
   }
 }
 
@@ -22,6 +22,7 @@
 :global(.ts-light) {
   .container {
     --backdrop-state-background: darken(transparentize($backgroundLight, 0.3), 50);
+    // --selected-state-background: darken(transparentize($backgroundLight, 0.1), 20);
     --selected-region-background: darken(transparentize($backgroundLight, 0.1), 20);
   }
 }
@@ -29,6 +30,7 @@
 :global(.ts-dark) {
   .container {
     --backdrop-state-background: lighten($backgroundDark, 2);
+    // --selected-state-background: lighten($backgroundDark, 10);
     --selected-region-background: lighten($backgroundDark, 10);
   }
 }
@@ -47,7 +49,7 @@
   composes: polygon;
   transition: stroke 800ms, fill 800ms;
   @include fallback(stroke, --text-color-primary, $textDark);
-  @include fallback(fill, --backdrop-state-background, $textDark);
+  @include fallback(fill, --backdrop-state-background, $backgroundLight);
   transform-origin: center;
   cursor: pointer;
 }

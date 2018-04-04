@@ -9,12 +9,17 @@ import {
   CORE_REDUCERS,
   GEO_SET_TABLE_OF_CONTENTS,
   setTableOfContents,
-  setSelectedMinimapGeometry,
-  GEO_SET_SELECTION,
+  // setSelectedMinimapGeometry,
+  // GEO_SET_SELECTION,
 } from 'ui/core/Core.redux'
 import { DEFAULT_CAMERA_PROPS } from './SvgMinimap.selectors'
 import { featureCollection } from '@turf/helpers'
 import { FeatureCollection } from 'geojson'
+import {
+  INITIAL_MINIMAP_STATE,
+  setSelectedMinimapGeometry,
+  GEO_SET_SELECTION,
+} from '../Minimap.redux'
 
 describe('SvgMinimap.selectors', () => {
   let reduxState: IReduxState = null
@@ -39,6 +44,7 @@ describe('SvgMinimap.selectors', () => {
       region: null,
       mapbox: null,
       minimap: {
+        ...INITIAL_MINIMAP_STATE,
         isExpanded: true,
       },
       map: null,
@@ -89,7 +95,7 @@ describe('SvgMinimap.selectors', () => {
   })
 
   describe('camera', () => {
-    it('handles non-selection', () => {
+    it('handles non-selection by zooming all the way out', () => {
       // arrange
       const unselectArguments = {
         usStateShortName: '',
@@ -143,6 +149,7 @@ describe('SvgMinimap.selectors', () => {
         ...reduxState,
         core: updatedCoreState,
         minimap: {
+          ...INITIAL_MINIMAP_STATE,
           isExpanded: true,
         },
       }

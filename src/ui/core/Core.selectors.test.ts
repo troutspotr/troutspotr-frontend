@@ -33,6 +33,7 @@ describe('Core.selectors', () => {
       mapbox: null,
       minimap: null,
       map: null,
+      errors: null,
     }
   })
 

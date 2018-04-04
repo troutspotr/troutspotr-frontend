@@ -14,7 +14,7 @@ export const decompressTopojsonSync = (topojsonLib, topojsonObject): IGeometryPa
   )
   const streamProperties = topojsonLib.feature(topojsonObject, topojsonObject.objects.stream)
   const pal_routes = topojsonLib.feature(topojsonObject, topojsonObject.objects.palSection)
-  const pal = topojsonLib.feature(topojsonObject, topojsonObject.objects.pal)
+  // const pal = topojsonLib.feature(topojsonObject, topojsonObject.objects.pal)
   const boundingCircle = topojsonLib.feature(topojsonObject, topojsonObject.objects.boundingCircle)
 
   const dictionary = {
@@ -22,7 +22,7 @@ export const decompressTopojsonSync = (topojsonLib, topojsonObject): IGeometryPa
     restriction_section,
     streamProperties,
     pal_routes,
-    pal,
+    pal: null,
     boundingCircle,
   }
   return dictionary

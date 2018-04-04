@@ -3,29 +3,14 @@ import { connect } from 'react-redux'
 import { FooterComponent } from 'ui/page/footer/Footer.component'
 import { PageLayoutComponent } from 'ui/page/PageLayout.component'
 import { HeaderContainer } from 'ui/page/header/Header.container'
-import { fetchTableOfContents, Theme } from 'ui/core/Core.redux'
-import { createStructuredSelector } from 'reselect'
-import { IReduxState } from '../redux/Store.redux.rootReducer'
-import { themeSelector } from '../core/Core.selectors'
 import { MapContainer } from 'ui/routes/map/Map.container'
-import { isExpandedSelector } from '../page/header/minimap/Minimap.selectors'
-import { setIsExpanded } from '../page/header/minimap/Minimap.redux'
 import { OfflineContainer } from '../page/offline/Offline.container'
+import { IPageLayoutProps } from '../page/IPageLayout'
+import { homeContainerMapDispatchToProps, homeComponentMapStateToProps } from './Home.container'
+import ErrorBoundaryComponent from 'ui/core/errorBoundary/ErrorBoundary.component'
 export const HomeComponent = props => {
   return <div />
 }
-
-export interface IPageLayoutDispatchProps {
-  fetchTableOfContents?(): any
-  resetMinimap(): void
-}
-
-export interface IPageLayoutStateProps {
-  theme: Theme
-  readonly isExpanded: boolean
-}
-
-export interface IPageLayoutProps extends IPageLayoutStateProps, IPageLayoutDispatchProps {}
 
 class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   constructor(props) {
@@ -40,19 +25,33 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   }
 
   public renderFooter() {
-    return <FooterComponent />
+    return (
+      <ErrorBoundaryComponent onError={this.props.handleError}>
+        <FooterComponent />
+      </ErrorBoundaryComponent>
+    )
   }
 
   public renderHeader() {
-    return <HeaderContainer />
+    return (
+      <ErrorBoundaryComponent onError={this.props.handleError}>
+        <HeaderContainer />
+      </ErrorBoundaryComponent>
+    )
   }
 
   public renderContent() {
     return (
       <>
-        <OfflineContainer />
-        <MapContainer key="map" />
-        {this.props.children}
+        <ErrorBoundaryComponent onError={this.props.handleError}>
+          <OfflineContainer />
+        </ErrorBoundaryComponent>
+        <ErrorBoundaryComponent onError={this.props.handleError}>
+          <MapContainer key="map" />
+        </ErrorBoundaryComponent>
+        <ErrorBoundaryComponent onError={this.props.handleError}>
+          {this.props.children}
+        </ErrorBoundaryComponent>
       </>
     )
   }
@@ -66,22 +65,12 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
         theme={this.props.theme}
         resetMinimap={this.props.resetMinimap}
         isExpanded={this.props.isExpanded}
+        handleError={this.props.handleError}
       />
     )
   }
 }
 
-const mapDispatchToProps: IPageLayoutDispatchProps = {
-  fetchTableOfContents: () => fetchTableOfContents(),
-  resetMinimap: () => setIsExpanded(false),
-}
-
-export const pageLayoutProps = createStructuredSelector<IReduxState, IPageLayoutStateProps>({
-  theme: themeSelector,
-  isExpanded: isExpandedSelector,
-})
-
-const mapStateToProps = (reduxState: IReduxState): IPageLayoutStateProps =>
-  pageLayoutProps(reduxState)
-
-export const PageContainer = connect(mapStateToProps, mapDispatchToProps)(PageContainerComponent)
+export const PageContainer = connect(homeComponentMapStateToProps, homeContainerMapDispatchToProps)(
+  PageContainerComponent
+)

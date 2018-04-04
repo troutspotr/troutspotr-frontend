@@ -3,7 +3,7 @@ import * as React from 'react'
 import { ICameraProps } from 'ui/core/map/ICameraProps'
 
 export interface IMapboxGlCameraPassedProps {
-  map: Map
+  map?: Map
 }
 
 export interface IMapboxGlCameraDispatchProps {}
@@ -23,11 +23,15 @@ export default class MapboxGlComponentCamera extends React.PureComponent<IMapbox
       return
     }
     if (padding == null) {
-      map.fitBounds(bbox)
+      setTimeout(() => map.fitBounds(bbox), 10)
     } else {
-      map.fitBounds(bbox, {
-        padding,
-      })
+      setTimeout(
+        () =>
+          map.fitBounds(bbox, {
+            padding,
+          }),
+        10
+      )
     }
   }
 

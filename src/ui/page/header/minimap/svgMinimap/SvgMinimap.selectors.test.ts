@@ -48,6 +48,7 @@ describe('SvgMinimap.selectors', () => {
         isExpanded: true,
       },
       map: null,
+      errors: null,
     }
   })
   describe('getMinimapCamera', () => {

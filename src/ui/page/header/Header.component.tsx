@@ -9,8 +9,10 @@ import { SubtitleComponent } from './subtitle/Subtitle.component'
 import TitleComponent from './title/Title.component'
 import { SvgMinimapContainer } from './minimap/svgMinimap/SvgMinimap.container'
 import { RouteComponentProps } from 'react-router'
+import ErrorBoundaryComponent from 'ui/core/errorBoundary/ErrorBoundary.component'
 export interface IHeaderStateDispatchProps {
   setIsExpanded(boolean): any
+  handleError(error: any): any
 }
 
 export interface IHeaderPassedProps {}
@@ -59,15 +61,27 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentWithRou
 
   private renderMinimap() {
     const content = <SvgMinimapContainer />
-    return <MinimapContainer mapComponent={content} />
+    return (
+      <ErrorBoundaryComponent onError={this.props.handleError}>
+        <MinimapContainer mapComponent={content} />
+      </ErrorBoundaryComponent>
+    )
   }
 
   private renderSearch() {
-    return <SearchContainer />
+    return (
+      <ErrorBoundaryComponent onError={this.props.handleError}>
+        <SearchContainer />
+      </ErrorBoundaryComponent>
+    )
   }
 
   private renderLocationSubtitle() {
-    return <SubtitleComponent subtitle={this.props.subtitle} />
+    return (
+      <ErrorBoundaryComponent onError={this.props.handleError}>
+        <SubtitleComponent subtitle={this.props.subtitle} />
+      </ErrorBoundaryComponent>
+    )
   }
 
   private doStuff() {
@@ -106,7 +120,11 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentWithRou
   }
 
   private renderBackButton() {
-    return <BackButtonContainer />
+    return (
+      <ErrorBoundaryComponent onError={this.props.handleError}>
+        <BackButtonContainer />
+      </ErrorBoundaryComponent>
+    )
   }
 
   public render() {

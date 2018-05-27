@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const genDefaultConfig = require('@storybook/react/dist/server/config/defaults/webpack.config.js')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const { preactAliases } = require('../config/preactAliases')
+const paths = require('../config/paths')
 // TODO: this was a giant pain in the ass, and this should be moved to /config tbh
 const postCSSLoaderOptions = {
   ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
@@ -21,16 +22,24 @@ const postCSSLoaderOptions = {
   ],
 }
 
-module.exports = (baseConfig, env) => {
-  const config = genDefaultConfig(baseConfig, env)
+module.exports = (baseConfig, env, defaultConfig) => {
   // Extend it as you need.
   // For example, add typescript loader:
-  config.module.rules.push({
+  defaultConfig.module.rules.push({
     test: /\.(ts|tsx)$/,
-    loader: require.resolve('awesome-typescript-loader'),
+    include: paths.appSrc,
+    use: [
+      {
+        loader: require.resolve('ts-loader'),
+        options: {
+          // disable type checker - we will use it in fork plugin
+          transpileOnly: true,
+        },
+      },
+    ],
   })
 
-  config.module.rules.push({
+  defaultConfig.module.rules.push({
     test: /\.scss$/,
     exclude: /\.global\.scss$/,
     use: [
@@ -59,7 +68,7 @@ module.exports = (baseConfig, env) => {
     ],
   })
 
-  config.resolve.extensions.push('.ts', '.tsx')
+  defaultConfig.resolve.extensions.push('.ts', '.tsx')
   // config.plugins.unshift(new ExtractTextPlugin({ filename: 'styles.css', allChunks: true }))
-  return config
+  return defaultConfig
 }

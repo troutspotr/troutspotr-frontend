@@ -1,56 +1,61 @@
-@import '_colors';
-@import '_fonts';
-@import '_variables';
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/_fonts';
+@import 'src/ui/styles/fallback';
+
 @import 'utilities';
-@import 'fallback';
 @import '../../../node_modules/mapbox-gl/dist/mapbox-gl.css';
 
+// https://github.com/sass/node-sass/issues/1943
+// wtf does #{whatever-variable-here} do??
+// some kind of interpolation???
 :global {
   .ts-light {
     // general colors
-    --blue: $blueLight;
-    --red: $redLight;
-    --green: $greenLight;
-    --yellow: $yellowLight;
-    --blue-gray: $blueGrayLight;
-    --white: $white;
-    --black: $black;
+    --blue: #{$blueLight};
+    --red: #{$redLight};
+    --green: #{$greenLight};
+    --yellow: #{$yellowLight};
+    --blue-gray: #{$blueGrayLight};
+    --white: #{$white};
+    --black: #{$black};
 
     // text colors
-    --text-color-primary: $textLight;
-    --text-color-secondary: $offTextLight;
-    --text-color-tertiary: $white;
+    --text-color-primary: #{$textLight};
+    --text-color-secondary: #{$offTextLight};
+    --text-color-tertiary: #{$white};
 
-    --message-background-color: $messageBackgroundLight;
-    --background-color: $backgroundLight;
-    --border-color: transparentize($offTextLight, 0.7);
+    --message-background-color: #{$messageBackgroundLight};
+    --background-color: #{$backgroundLight};
+    --border-color: #{transparentize($offTextLight, 0.7)};
     // exceptions. Consider importing these directly later? no idea.
-    --badge-unsafe-to-fish-content: darken($silver, 40);
-    --badge-unsafe-to-fish-border: $silver;
+    --badge-unsafe-to-fish-content: #{darken($silver, 40)};
+    --badge-unsafe-to-fish-border: #{$silver};
+    --some-Variable: #{$greenDark};
   }
 
   .ts-dark {
     // general colors
-    --blue: $blueDark;
-    --red: $redDark;
-    --green: $greenDark;
-    --yellow: $yellowDark;
-    --blue-gray: $blueGrayDark;
-    --white: $white;
-    --black: $black;
+    --blue: #{$blueDark};
+    --red: #{$redDark};
+    --green: #{$greenDark};
+    --yellow: #{$yellowDark};
+    --blue-gray: #{$blueGrayDark};
+    --white: #{$white};
+    --black: #{$black};
 
     // text colors
-    --text-color-primary: $textDark;
-    --text-color-secondary: $offTextDark;
-    --text-color-tertiary: $black;
+    --text-color-primary: #{$textDark};
+    --text-color-secondary: #{$offTextDark};
+    --text-color-tertiary: #{$black};
 
-    --message-background-color: $messageBackgroundDark;
-    --background-color: $backgroundDark;
-    --border-color: transparentize($offTextDark, 0.7);
+    --message-background-color: #{$messageBackgroundDark};
+    --background-color: #{$backgroundDark};
+    --border-color: #{transparentize($offTextDark, 0.7)};
 
     // exceptions. Consider importing these directly later? no idea.
-    --badge-unsafe-to-fish-content: lighten($blueGrayDark, 40);
-    --badge-unsafe-to-fish-border: $blueGrayDark;
+    --badge-unsafe-to-fish-content: #{lighten($blueGrayDark, 40)};
+    --badge-unsafe-to-fish-border: #{$blueGrayDark};
   }
 
   html,

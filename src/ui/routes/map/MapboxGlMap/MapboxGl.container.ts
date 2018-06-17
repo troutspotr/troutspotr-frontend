@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { mapboxGlStateProps } from './MapboxGl.selectors'
-import { setIsMapInitialized, selectMapFeature } from '../Map.redux.interactivity'
+import { setIsMapInitialized, handleFeatureSelection } from '../Map.redux.interactivity'
 import {
   IMapboxGlDispatchProps,
   IMapboxGlPassedProps,
@@ -9,10 +9,9 @@ import {
   IMapboxGlStateProps,
 } from 'ui/core/map/mapboxGl/MapboxGl.component'
 
-const mapDispatchToProps = (dispatch): IMapboxGlDispatchProps => ({
-  onFeaturesSelected: () => dispatch(selectMapFeature(null)),
-  onMapInitialized: () => dispatch(setIsMapInitialized(true)),
-})
+const mapDispatchToProps: IMapboxGlDispatchProps = {
+  onMapInitialized: () => setIsMapInitialized(true),
+}
 
 export const mapStateToProps = (reduxState: IReduxState): IMapboxGlStateProps =>
   mapboxGlStateProps(reduxState)

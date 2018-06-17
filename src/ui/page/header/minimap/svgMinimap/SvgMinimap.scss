@@ -21,16 +21,14 @@
 
 :global(.ts-light) {
   .container {
-    --backdrop-state-background: darken(transparentize($backgroundLight, 0.3), 50);
-    // --selected-state-background: darken(transparentize($backgroundLight, 0.1), 20);
-    --selected-region-background: darken(transparentize($backgroundLight, 0.1), 20);
+    --backdrop-state-background: #{darken(transparentize($backgroundLight, 0.3), 50)};
+    --selected-region-background: #{darken(transparentize($backgroundLight, 0.1), 20)};
   }
 }
 
 :global(.ts-dark) {
   .container {
     --backdrop-state-background: lighten($backgroundDark, 2);
-    // --selected-state-background: lighten($backgroundDark, 10);
     --selected-region-background: lighten($backgroundDark, 10);
   }
 }
@@ -182,10 +180,4 @@
 .gpsCoordinates {
   composes: centroids;
   // fill: transparentize($red, 0.3);
-}
-
-.expand from '../Minimap.scss' {
-  // .regions {
-  //   // stroke-width: 0.1px;
-  // }
 }

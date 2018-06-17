@@ -9,7 +9,7 @@ import {
   troutStreamDictionarySelector,
 } from 'ui/routes/@usState/@region/Region.selectors'
 import { MapComponent } from './Map.component'
-import { selectFoculPoint, selectMapFeature, setIsMapInitialized } from './Map.redux.interactivity'
+import { selectFoculPoint, selectMapFeature, setIsMapInitialized, navigateToAccessPoint, navigateToStream } from './Map.redux.interactivity'
 
 import { withRouter } from 'react-router'
 
@@ -23,6 +23,8 @@ import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/Location.s
 const mapDispatchToProps = {
   loadMapModuleAsync: () => loadMapModuleAsync(),
   setIsMapInitialized: isInitialized => setIsMapInitialized(isInitialized),
+  navigateToAccessPoint: (accessPointGid: number) => navigateToAccessPoint(accessPointGid),
+  navigateToStream: (streamGid: number) => navigateToStream(streamGid),
   selectMapFeature: feature => selectMapFeature(feature),
   selectFoculPoint: feature => selectFoculPoint(feature),
 }

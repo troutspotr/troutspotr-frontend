@@ -1,10 +1,10 @@
 import RegionLayout from './Region.container'
-// import StreamDetails from './@stream/StreamDetails.routes'
+import StreamDetails from './@stream/StreamDetails.routes'
 const createRoutes = store => ({
   path: '/:usState/:region',
   component: RegionLayout,
   childRoutes: [
-    // StreamDetails(store)
+    StreamDetails(store)
   ],
   // getChildRoutes(location, cb) {
   //   require.ensure(

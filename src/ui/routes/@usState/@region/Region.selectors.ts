@@ -13,6 +13,7 @@ import {
   selectedRegionSelector,
   viewSelector,
   hasAgreedToTermsSelector,
+  tableOfContentsLoadingStatusSelector,
 } from 'ui/core/Core.selectors'
 import {
   getHashSelector,
@@ -34,13 +35,14 @@ import {
   regulationsSelector,
   waterOpenersDictionarySelector,
 } from 'ui/routes/@usState/UsState.selectors'
+import { AccessPointFeature } from '../../../../api/region/IRegionGeoJSON';
 
 export const regionReduxStateSelector = (reduxState: IReduxState): IRegionState => reduxState.region
-export const troutStreamDictionarySelector = createSelector([regionReduxStateSelector], state => {
+export const troutStreamDictionarySelector = createSelector([regionReduxStateSelector], (state): Dictionary<IStreamObject> => {
   return state.troutStreamDictionary
 })
 
-export const regionLoadingStatusSelector = createSelector([regionReduxStateSelector], state => {
+export const regionLoadingStatusSelector = createSelector([regionReduxStateSelector], (state) => {
   return state.regionLoadingStatus
 })
 
@@ -63,6 +65,17 @@ export const palSectionsSelector = createSelector([regionReduxStateSelector], st
 export const streamAccessPointSelector = createSelector([regionReduxStateSelector], state => {
   return state.streamAccessPoint
 })
+
+const EMPTY_ACCESS_POINT_DICTIONARY = {}
+export const streamAccessPointIdDictionarySelector = createSelector(
+  streamAccessPointSelector,
+  (accessPoints): Dictionary<AccessPointFeature> => {
+    if (accessPoints == null) {
+      return EMPTY_ACCESS_POINT_DICTIONARY
+    }
+    return keyBy(accessPoints.features, x => x.properties.gid)
+  }
+)
 
 export const palsSelector = createSelector([regionReduxStateSelector], state => {
   return state.pals
@@ -429,4 +442,5 @@ export const getSvgMinimapStateProps = createStructuredSelector<
   selectedRegion: selectedRegionIdSelector,
   regionLoadingStatus: regionLoadingStatusSelector,
   hasAgreedToTerms: hasAgreedToTermsSelector,
+  tableOfContentsLoadingStatus: tableOfContentsLoadingStatusSelector,
 })

@@ -32,9 +32,3 @@ export class UsStateComponent extends React.PureComponent<IUsStateComponentProps
     return this.props.children
   }
 }
-
-// StateComponent.propTypes = {
-//   'selectedState': PropTypes.string.isRequired,
-//   'fetchStateData': PropTypes.func.isRequired,
-//   'children': PropTypes.element,
-// }

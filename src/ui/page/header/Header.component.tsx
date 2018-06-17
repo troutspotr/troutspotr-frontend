@@ -128,6 +128,14 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentWithRou
   }
 
   public render() {
+    const {
+      isTitleVisible,
+      isSearchVisible,
+    } = this.props
+    console.log(isTitleVisible, isSearchVisible)
+    const viewMode = isTitleVisible 
+      ? 'summary'
+      : 'search'
     return (
       <HeaderLayout
         backButton={this.renderBackButton()}
@@ -135,7 +143,7 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentWithRou
         title={this.renderTitle()}
         minimap={this.renderMinimap()}
         search={this.renderSearch()}
-        viewMode={'search'}
+        viewMode={viewMode}
       />
     )
   }

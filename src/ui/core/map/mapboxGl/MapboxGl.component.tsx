@@ -16,7 +16,6 @@ const token = 'pk.eyJ1IjoiYW5kZXN0MDEiLCJhIjoibW02QnJLSSJ9._I2ruvGf4OGDxlZBU2m3K
 // https://stackoverflow.com/a/44393954
 
 export interface IMapboxGlDispatchProps {
-  onFeaturesSelected(t: any): void
   onMapInitialized(t: boolean): void
 }
 
@@ -26,7 +25,9 @@ export interface IMapboxGlStateProps {
   readonly debugMode?: boolean
 }
 
-export interface IMapboxGlPassedProps {}
+export interface IMapboxGlPassedProps {
+  onFeaturesSelected(t: any): void
+}
 
 export interface IMapboxGlProps
   extends IMapboxGlDispatchProps,
@@ -39,6 +40,9 @@ export interface IMapboxGlState {
 }
 export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGlState> {
   private mapContainer: HTMLDivElement
+  static defaultProps = {
+    debugMode: process.env.NODE_ENV === 'development'
+  }
   constructor(props, state) {
     super(props, state)
     this.onClick = this.onClick.bind(this)
@@ -64,14 +68,13 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     const nextStyle = nextProps.style
     const { isLoaded, map } = nextState
     if (this.props.style !== nextStyle && isLoaded) {
-      console.log('setting style')
       map.setStyle(nextStyle, { diff: true })
     }
   }
 
   // tslint:disable-next-line:no-any
   public getInteractiveFeaturesOverPoint(point): MapboxGeoJSONLayers {
-    const BOX_DIMENSION = 2
+    const BOX_DIMENSION = 20
     const boundingBox = [
       [point.x - BOX_DIMENSION / 2, point.y - BOX_DIMENSION / 2],
       [point.x + BOX_DIMENSION / 2, point.y + BOX_DIMENSION / 2],
@@ -101,6 +104,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     if (this.props.debugMode === true) {
       setTimeout(() => map.resize(), 200)
     }
+
     map.on('click', this.onClick)
     map.on('load', e => {
       this.setState(
@@ -118,7 +122,6 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
   }
 
   public onDataLoad(e) {
-    // this.state.map.setStyle(this.props.style)
     this.props.onMapInitialized(true)
   }
 

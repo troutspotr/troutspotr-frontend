@@ -87,29 +87,31 @@ export const selectedRegionPathKeySelector = createSelector(
     if (isEmpty(selectedRegionId)) {
       return null
     }
-
     const regionPathKey = `${selectedStateId}/${selectedRegionId}`
     return regionPathKey
   }
 )
 
-export const selectedRegionSelector = createSelector(
-  [selectedRegionPathKeySelector, regionsDictionarySelector],
-  (regionPathKey, regionsDictionary) => {
-    if (isEmpty(regionsDictionary)) {
-      return null
-    }
 
-    if (isEmpty(selectedRegionPathKeySelector)) {
-      return null
-    }
-
-    const isRegionFound = has(regionsDictionary, regionPathKey)
-    if (isRegionFound === false) {
-      return null
-    }
-
-    const region = regionsDictionary[regionPathKey]
-    return region
+const selectedRegion = (regionPathKey: string, regionsDictionary): RegionFeature => {
+  if (isEmpty(regionsDictionary)) {
+    return null
   }
+
+  if (isEmpty(regionPathKey)) {
+    return null
+  }
+
+  const isRegionFound = has(regionsDictionary, regionPathKey)
+  if (isRegionFound === false) {
+    return null
+  }
+
+  const region = regionsDictionary[regionPathKey]
+  return region
+}
+
+export const selectedRegionSelector: RegionFeature = createSelector(
+  [selectedRegionPathKeySelector, regionsDictionarySelector],
+  selectedRegion
 )

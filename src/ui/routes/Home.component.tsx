@@ -20,7 +20,7 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   public componentWillMount() {
     const { fetchTableOfContents } = this.props
     if (fetchTableOfContents != null) {
-      setTimeout(() => fetchTableOfContents(), 200)
+      setTimeout(() => fetchTableOfContents(), 1000)
     }
   }
 

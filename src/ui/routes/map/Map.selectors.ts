@@ -17,7 +17,7 @@ export const bboxSelector = createSelector(
 )
 export const pitchSelector = createSelector(
   getMapCameraSelector,
-  (reduxCamera: ICameraReduxState): number => reduxCamera.angle
+  (reduxCamera: ICameraReduxState): number => reduxCamera.pitch
 )
 export const bearingSelector = createSelector(
   getMapCameraSelector,

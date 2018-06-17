@@ -22,17 +22,18 @@ export default class MapboxGlComponentCamera extends React.PureComponent<IMapbox
     if (bbox == null) {
       return
     }
-    if (padding == null) {
-      setTimeout(() => map.fitBounds(bbox), 10)
-    } else {
-      setTimeout(
-        () =>
-          map.fitBounds(bbox, {
-            padding,
-          }),
-        10
-      )
+
+    const { bearing, pitch } = camera
+    console.log(pitch)
+    const options = {
+      bearing,
+      pitch,
     }
+
+    if (padding != null) {
+      options['padding'] = padding
+    }
+    setTimeout(() => map.fitBounds(bbox, options), 10)
   }
 
   public componentDidMount() {
@@ -52,16 +53,7 @@ export default class MapboxGlComponentCamera extends React.PureComponent<IMapbox
     if (camera != null) {
       this.updateCamera(camera, map)
     }
-
-    const { bearing, pitch } = camera
-    if (this.props.camera.bearing != bearing && bearing != null) {
-      map.setBearing(bearing)
-    }
-
-    if (this.props.camera.pitch != pitch && pitch != null) {
-      map.setPitch(pitch)
-    }
-
+    
     return null
   }
 }

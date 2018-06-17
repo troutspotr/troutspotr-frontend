@@ -1,21 +1,22 @@
-import { bboxSelector, pitchSelector } from '../Map.selectors'
+import { bboxSelector, pitchSelector, bearingSelector } from '../Map.selectors'
 import { createSelector } from 'reselect'
 import { ICameraProps, ICameraPadding } from 'ui/core/map/ICameraProps'
 
 const DEFAULT_PADDING: ICameraPadding = {
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
+  top: 60 + 10,
+  bottom: 40 + 10,
+  left: 10,
+  right: 10,
 }
 export const cameraPropsSelector = createSelector(
   bboxSelector,
   pitchSelector,
-  (bbox: number[][], pitch: number): ICameraProps => {
+  bearingSelector,
+  (bbox: number[][], pitch: number, bearing: number): ICameraProps => {
     return {
       bbox,
       pitch,
-      bearing: 0,
+      bearing,
       padding: DEFAULT_PADDING,
       speed: 1,
     }

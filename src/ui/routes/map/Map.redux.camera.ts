@@ -19,14 +19,14 @@ export const MAP_CAMERA_SET_CAMERA = 'MAP_CAMERA_SET_CAMERA'
 export interface ICameraReduxState {
   bounds: number[][]
   bearing: number
-  angle: number
+  pitch: number
   pixelBuffer: number
   animationSpeed: number
 }
 export const DEFAULT_CAMERA_STATE: ICameraReduxState = {
   bounds: BOUNDING_BOX_OF_LOWER_48_STATES,
   bearing: 0.0,
-  angle: 0.0,
+  pitch: 0.0,
   pixelBuffer: 10,
   animationSpeed: 1.3,
 }
@@ -109,7 +109,7 @@ const actionHandlers: {} = {
   MAP_CAMERA_SET_ANGLE: (state: ICameraReduxState, { payload }): ICameraReduxState => {
     // Return { ...state, angle: clamp(payload, 0, 360) }
     const newState = { ...state }
-    newState.angle = clamp(payload, 0, 360)
+    newState.pitch = clamp(payload, 0, 360)
     return newState
   },
 

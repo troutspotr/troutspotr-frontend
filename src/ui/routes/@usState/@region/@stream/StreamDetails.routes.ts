@@ -1,7 +1,7 @@
 // Import { injectReducer } from 'ui/reducers'
 import StreamDetailsContainer from './StreamDetails.container'
 export default store => ({
-  path: '/:state/:region/:streamId',
+  path: '/:usState/:region/:streamId',
   component: StreamDetailsContainer,
   /*  Async getComponent is only invoked when route matches   */
   // getComponent(nextState, cb) {

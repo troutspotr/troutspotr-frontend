@@ -12,7 +12,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const getClientEnvironment = require('./env')
 const paths = require('./paths')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const { CheckerPlugin } = require('awesome-typescript-loader')
+// const { CheckerPlugin } = require('awesome-typescript-loader')
 const { preactAliases } = require('./preactAliases')
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -106,7 +106,7 @@ module.exports = {
     },
     plugins: [
       // allow async checking
-      new CheckerPlugin(),
+      // new CheckerPlugin(),
       // Prevents users from importing files from outside of src/ (or node_modules/).
       // This often causes confusion because we only process files within src/ with babel.
       // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
@@ -179,7 +179,9 @@ module.exports = {
                 {
                   loader: 'css-loader',
                   options: {
-                    modules: true,
+                    // SRA set this to false so that mapbox icons would show up.
+                    // i think it worked.
+                    modules: false,
                     localIdentName: '[name]__[local]__[hash:base64:5]',
                     importLoaders: 1,
                   },

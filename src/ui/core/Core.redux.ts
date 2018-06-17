@@ -115,6 +115,7 @@ export const agreeToTerms = (isAgreed: 'true' | 'false') => (dispatch): void => 
 export const fetchTableOfContents = () => async (dispatch, getState): Promise<void> => {
   dispatch(setTableOfContentsLoading())
   try {
+
     const { TableOfContentsApi } = await getApi()
     const gettingTableOfContents = TableOfContentsApi.getTableOfContents() as Promise<
       ITableOfContentsData

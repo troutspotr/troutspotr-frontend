@@ -79,7 +79,6 @@ export const fetchRegionData = (stateName: string, regionName: string) => async 
     const selectedRoad = getSelectedRoadSelector(state)
     const isStreamSelected = isEmpty(selectedStream) === false && isEmpty(selectedRoad)
     const isRoadSelected = isEmpty(selectedStream) === false && isEmpty(selectedRoad) === false
-
     if (isStreamSelected) {
       setTimeout(() => dispatch(selectMapFeature(selectedStream.stream)), 300)
       return

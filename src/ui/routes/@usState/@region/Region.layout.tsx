@@ -12,28 +12,40 @@ export interface IRegionLayoutStateProps {
   selectedRegion: string
   regionLoadingStatus: LoadingStatus
   hasAgreedToTerms: boolean
+  tableOfContentsLoadingStatus: LoadingStatus,
 }
 
-export interface IRegionLayourProps extends IRegionLayoutDispatchProps, IRegionLayoutStateProps {
+export interface IRegionLayoutProps extends IRegionLayoutDispatchProps, IRegionLayoutStateProps {
   children: React.ReactNode
 }
-export class RegionLayout extends React.Component<IRegionLayourProps> {
+export class RegionLayout extends React.Component<IRegionLayoutProps> {
   public componentDidMount() {
-    const { fetchRegionData, selectedState, selectedRegion } = this.props
+    const { fetchRegionData, selectedState, selectedRegion, tableOfContentsLoadingStatus } = this.props
     if (selectedState == null || selectedRegion == null) {
       return
     }
+
+    if (tableOfContentsLoadingStatus !== LoadingStatus.Success) {
+      return
+    }
+
     fetchRegionData(selectedState, selectedRegion)
   }
 
   public componentWillReceiveProps(nextProps) {
-    const { selectedState, selectedRegion } = nextProps
+    const { selectedState, selectedRegion, tableOfContentsLoadingStatus } = nextProps
     if (selectedState == null || selectedRegion == null) {
       return
     }
+    if (tableOfContentsLoadingStatus !== LoadingStatus.Success) {
+      return
+    }
+
+    const isTocLoadedForTheFirstTime = tableOfContentsLoadingStatus === LoadingStatus.Success && this.props.tableOfContentsLoadingStatus !== LoadingStatus.Success
+
     const nextCombo = (selectedState + selectedRegion).toLowerCase()
     const currentCombo = (this.props.selectedState + this.props.selectedRegion).toLowerCase()
-    if (nextCombo !== currentCombo) {
+    if (isTocLoadedForTheFirstTime || nextCombo !== currentCombo) {
       this.props.fetchRegionData(selectedState, selectedRegion)
     }
   }

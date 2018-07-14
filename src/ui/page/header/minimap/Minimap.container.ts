@@ -7,7 +7,7 @@ import {
 } from './Minimap.component'
 import { setIsExpanded } from './Minimap.redux'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
-import { isExpandedSelector } from './Minimap.selectors'
+import { isExpandedSelector, isCloseButtonShownSelector } from './Minimap.selectors'
 
 const mapDispatchToProps: IMinimapDispatchProps = {
   handleExpand: expanded => setIsExpanded(expanded),
@@ -16,6 +16,7 @@ const mapDispatchToProps: IMinimapDispatchProps = {
 const mapStateToProps = (state: IReduxState): IMinimapStateProps => {
   const props = {
     isExpanded: isExpandedSelector(state),
+    isCloseCloseButtonShown: isCloseButtonShownSelector(state),
     isReadyToReveal: true,
   }
   return props

@@ -3,13 +3,21 @@ import { createSelector } from 'reselect'
 import { hasAgreedToTermsSelector, isSearchingSelector } from 'ui/core/Core.selectors'
 import { waterOpenersDictionarySelector } from 'ui/routes/@usState/UsState.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+import { isRootPageSelector } from '../../../Location.selectors';
 export const isExpandedBoolSelector = (state: IReduxState) => state.minimap.isExpanded
 export const selectedUsStateName = (state: IReduxState) => state.minimap.selectedUsStateName
 export const selectedRegionPathName = (state: IReduxState) => state.minimap.selectedRegionPathName
 
 export const isExpandedSelector = createSelector(
-  [isExpandedBoolSelector, hasAgreedToTermsSelector],
-  (isExpanded, hasAgreedToTerms): boolean => isExpanded && hasAgreedToTerms
+  // add new selector
+  [isExpandedBoolSelector, hasAgreedToTermsSelector, isRootPageSelector],
+  (isExpanded, hasAgreedToTerms, isRootPage: boolean): boolean => (isExpanded && hasAgreedToTerms) || (isRootPage )
+)
+
+export const isCloseButtonShownSelector = createSelector(
+  // add new selector
+  [isExpandedSelector, isRootPageSelector],
+  (isExpanded, isRootPage: boolean): boolean => (isExpanded) && (isRootPage === false)
 )
 
 // This determines if the collection of stream centroids

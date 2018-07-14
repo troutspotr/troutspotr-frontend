@@ -12,6 +12,7 @@ export interface IMinimapDispatchProps {
 
 export interface IMinimapStateProps {
   readonly isExpanded: boolean
+  readonly isCloseCloseButtonShown: boolean
   readonly isReadyToReveal: boolean
 }
 
@@ -202,7 +203,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
   }
 
   public render() {
-    const { mapComponent, isReadyToReveal, isExpanded } = this.props
+    const { mapComponent, isReadyToReveal, isExpanded, isCloseCloseButtonShown } = this.props
     const sandboxClassName = isExpanded ? classes.sandboxContainerExpand : classes.sandboxContainer
     return (
       <div>
@@ -212,7 +213,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
           onClick={this.handleHomeClick}
           ref={container => (this.homeElement = container)}
         >
-          {<CloseButtonComponent isEnabled={isExpanded} onClick={this.handleCloseClick} />}
+          {<CloseButtonComponent isEnabled={isCloseCloseButtonShown} onClick={this.handleCloseClick} />}
         </div>
         <div
           id="js-sandbox-container"

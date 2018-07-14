@@ -23,12 +23,15 @@ const makeOverlay = (key: 'bottom' | 'top', overlay: React.ReactNode | undefined
 
 export const MapLayoutComponent: React.SFC<IMapLayoutProps> = (props): JSX.Element => {
   const { topOverlay, bottomOverlay, map } = props
-  const top = makeOverlay('top', topOverlay)
-  const bottom = makeOverlay('bottom', bottomOverlay)
+  const topMessageOverlay = makeOverlay('top', topOverlay)
+  const bottomMessageOverlay = makeOverlay('bottom', bottomOverlay)
   return (
     <div className={styles.container}>
-      {top}
-      {bottom}
+      {/* order doesnt matter here, but we're just
+      gonna have them go in cognitive order. */}
+      {topMessageOverlay}
+      {map}
+      {bottomMessageOverlay}
     </div>
   )
 }

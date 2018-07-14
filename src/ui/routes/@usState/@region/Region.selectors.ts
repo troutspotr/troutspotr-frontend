@@ -66,6 +66,10 @@ export const streamAccessPointSelector = createSelector([regionReduxStateSelecto
   return state.streamAccessPoint
 })
 
+export const streamCentroidsSelector = createSelector([regionReduxStateSelector], state => {
+  return state.streamCentroids
+})
+
 const EMPTY_ACCESS_POINT_DICTIONARY = {}
 export const streamAccessPointIdDictionarySelector = createSelector(
   streamAccessPointSelector,
@@ -89,31 +93,31 @@ export const hoveredRoadSelector = createSelector([regionReduxStateSelector], st
   return state.hoveredRoad
 })
 
-const EMPTY_STREAM_CENTROIDS = []
-export const streamCentroidsSelector = createSelector([streamsSelector], streams => {
-  if (isEmpty(streams)) {
-    return EMPTY_STREAM_CENTROIDS
-  }
+// const EMPTY_STREAM_CENTROIDS = []
+// export const streamCentroidsSelector = createSelector([streamsSelector], streams => {
+//   if (isEmpty(streams)) {
+//     return EMPTY_STREAM_CENTROIDS
+//   }
 
-  // Map them into centroids.
-  const centroidFeatures = streams.features.map((feature, id) => {
-    const { properties } = feature
-    const { centroid_longitude, centroid_latitude } = properties
-    /* eslint-disable camelcase */
-    const geometry = {
-      type: 'Point',
-      coordinates: [centroid_longitude, centroid_latitude],
-    }
-    /* eslint-enable camelcase */
-    const type = 'Feature'
-    return { geometry, id, properties, type }
-  })
+//   // Map them into centroids.
+//   const centroidFeatures = streams.features.map((feature, id) => {
+//     const { properties } = feature
+//     const { centroid_longitude, centroid_latitude } = properties
+//     /* eslint-disable camelcase */
+//     const geometry = {
+//       type: 'Point',
+//       coordinates: [centroid_longitude, centroid_latitude],
+//     }
+//     /* eslint-enable camelcase */
+//     const type = 'Feature'
+//     return { geometry, id, properties, type }
+//   })
 
-  return {
-    features: centroidFeatures,
-    type: 'FeatureCollection',
-  }
-})
+//   return {
+//     features: centroidFeatures,
+//     type: 'FeatureCollection',
+//   }
+// })
 
 export const isFinishedLoadingRegion = createSelector(
   [regionLoadingStatusSelector],

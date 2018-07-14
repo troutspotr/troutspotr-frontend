@@ -1,19 +1,23 @@
 import * as React from 'react'
 import { MapboxGlContainer } from './MapboxGlMap/MapboxGl.container'
 import { MapboxGlCameraContainer } from './MapboxGlMap/MapboxGl.camera.container'
-import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_CIRCLE_BORDER_LAYER, ACCESSPOINT_CIRCLE_LAYER } from './MapboxGlMap/styles/AccessPoints.layers'
+import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_ROAD_LABEL_LAYER, ACCESSPOINT_CIRCLE_BORDER_LAYER, ACCESSPOINT_CIRCLE_LAYER } from './MapboxGlMap/styles/AccessPoints.layers'
 import { STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers'
 import { AllGeoJSON } from '@turf/helpers'
 import { MapboxGlCameraDirectorContainer } from 'ui/routes/map/MapboxGlMap/MapboxGl.camera.director.container'
+import { STREAM_CENTROID_LABEL_SM, STREAM_CENTROID_LABEL_LG } from './MapboxGlMap/styles/MapLabels.layers';
 const classes = require('./Map.scss')
 
 const STREAM = 'stream'
 const ACCESS_POINT = 'accessPoint'
 
 export const LAYERS_IN_ORDER_OF_PRIORITY = {
+  [ACCESSPOINT_ROAD_LABEL_LAYER]: ACCESS_POINT,
   [ACCESSPOINT_CIRCLE_LABEL_LAYER]: ACCESS_POINT,
   [ACCESSPOINT_CIRCLE_BORDER_LAYER]: ACCESS_POINT,
   [ACCESSPOINT_CIRCLE_LAYER]: ACCESS_POINT,
+  [STREAM_CENTROID_LABEL_SM]: STREAM,
+  [STREAM_CENTROID_LABEL_LG]: STREAM,
   [STREAM_LAYER_ID]: STREAM,
 }
 
@@ -51,7 +55,6 @@ export class MapComponent extends React.Component<any> {
   public renderLoading() {}
 
   public onFeatureClick(features) {
-    // all we intend to do is set a url, if anything is clicked.
     this.setUrlFromFeatures(features)
   }
 
@@ -60,7 +63,6 @@ export class MapComponent extends React.Component<any> {
     if (mostImportantFeatureId == null || LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId] == null) {
       return
     }
-
     const type = LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId]
     const selectedFeatureProperties = features[mostImportantFeatureId][0].properties || {}
     const {

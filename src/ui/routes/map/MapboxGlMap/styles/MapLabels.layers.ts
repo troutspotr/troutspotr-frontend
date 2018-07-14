@@ -3,6 +3,8 @@ import { Layer } from 'mapbox-gl'
 import { ILayerProperties } from './ICreateLayer'
 
 // export const createHalo
+export const STREAM_CENTROID_LABEL_SM = 'stream_layer-label-centroid-sm'
+export const STREAM_CENTROID_LABEL_LG = 'stream_layer-label-centroid-lg'
 
 export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[] => {
   const { isOnline, isHighContrastEnabled } = originalLayerProps
@@ -514,18 +516,23 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
       maxzoom: 16,
       filter: ['==', 'type', 'hamlet'],
       layout: {
+        'icon-image': 'dot-11',
         'text-field': '{name_en}',
         'text-font': FONT_ROBOTO_REGULAR,
+        'text-offset': [0.3, 0.1],
         'text-size': {
           base: 1,
           stops: [[12, 11.5], [15, 16]],
         },
+        'text-anchor': 'left',
+        'text-justify': 'left',
       },
       paint: {
         'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1.25,
         'text-color': pallete.secondaryLabelFill,
         'text-halo-blur': 0,
+        'icon-opacity': 1,
       },
     },
     {
@@ -533,13 +540,17 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
       type: 'symbol',
       source: 'composite',
       'source-layer': 'place_label',
-      minzoom: 11,
-      maxzoom: 15,
+      minzoom: 9,
+      maxzoom: 17,
       filter: ['==', 'type', 'village'],
       layout: {
+        'icon-image': 'dot-11',
         'text-field': '{name_en}',
         'text-font': FONT_ROBOTO_REGULAR,
+        'text-offset': [0.3, 0.1],
         'text-max-width': 7,
+        'text-anchor': 'left',
+        'text-justify': 'left',
         'text-size': {
           base: 1,
           stops: [[10, 11.5], [16, 18]],
@@ -550,6 +561,7 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
         'text-halo-width': 1.25,
         'text-color': pallete.secondaryLabelFill,
         'text-halo-blur': 0,
+        'icon-opacity': 1,
       },
     },
     {
@@ -622,6 +634,7 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
       maxzoom: 14,
       filter: ['all', ['!in', 'scalerank', 0, 1, 2, 3, 4, 5], ['==', 'type', 'city']],
       layout: {
+        'icon-image': 'dot-11',
         'text-size': {
           base: 1,
           stops: [[6, 12], [14, 22]],
@@ -630,19 +643,23 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
           base: 1,
           stops: [[7, FONT_ROBOTO_REGULAR], [8, FONT_ROBOTO_REGULAR]],
         },
-        'text-offset': [0, 0],
+        // 'text-offset': [0, 0],
+        'text-offset': [0.3, 0.1],
         'text-field': '{name_en}',
         'text-max-width': 7,
+        'text-anchor': 'left',
+        'text-justify': 'left',
+        
       },
       paint: {
         'text-color': pallete.secondaryLabelFill,
         'text-halo-color': pallete.secondaryLabelBackground,
         'text-halo-width': 1.25,
+        'text-halo-blur': 0,
         'icon-opacity': {
           base: 1,
-          stops: [[7.99, 1], [8, 0]],
+          stops: [[7.99, 1], [8, 1]],
         },
-        'text-halo-blur': 0,
       },
     },
     {
@@ -663,11 +680,14 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
           base: 0.9,
           stops: [[5, 12], [12, 22]],
         },
-        'text-anchor': 'top',
-        'text-offset': {
-          base: 1,
-          stops: [[7.99, [0, 0.1]], [8, [0, 0]]],
-        },
+        'text-anchor': 'left',
+        'text-justify': 'left',
+        // 'text-anchor': 'top',
+        // 'text-offset': {
+        //   base: 1,
+        //   stops: [[7.99, [0, 0.1]], [8, [0, 0]]],
+        // },
+        'text-offset': [0.3, 0.1],
         'text-font': {
           base: 1,
           stops: [[7, FONT_ROBOTO_REGULAR], [8, FONT_ROBOTO_REGULAR]],
@@ -706,11 +726,13 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
           base: 1,
           stops: [[7, FONT_ROBOTO_REGULAR], [8, FONT_ROBOTO_REGULAR]],
         },
-        'text-offset': {
-          base: 1,
-          stops: [[7.99, [0, -0.25]], [8, [0, 0]]],
-        },
-        'text-anchor': 'bottom',
+        'text-offset': [0.3, 0.1],
+        // 'text-offset': {
+        //   base: 1,
+        //   stops: [[7.99, [0, -0.25]], [8, [0, 0]]],
+        // },
+        'text-anchor': 'left',
+        'text-justify': 'left',
         'text-field': '{name_en}',
         'text-max-width': 7,
         'icon-image': 'dot-10',
@@ -745,14 +767,17 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
           base: 1,
           stops: [[7, FONT_ROBOTO_REGULAR], [8, FONT_ROBOTO_REGULAR]],
         },
-        'text-offset': {
-          base: 1,
-          stops: [[7.99, [0, 0.15]], [8, [0, 0]]],
-        },
-        'text-anchor': {
-          base: 1,
-          stops: [[7, 'top'], [8, 'center']],
-        },
+        'text-offset': [0.3, 0.1],
+        // 'text-offset': {
+        //   base: 1,
+        //   stops: [[7.99, [0, 0.15]], [8, [0, 0]]],
+        // },
+        'text-anchor': 'left',
+        'text-justify': 'left',
+        // 'text-anchor': {
+        //   base: 1,
+        //   stops: [[7, 'top'], [8, 'center']],
+        // },
         'text-field': '{name_en}',
         'text-max-width': 7,
         'text-size': {
@@ -790,14 +815,13 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
           base: 1,
           stops: [[7, FONT_ROBOTO_REGULAR], [8, FONT_ROBOTO_REGULAR]],
         },
-        'text-offset': {
-          base: 1,
-          stops: [[7.99, [0, -0.25]], [8, [0, 0]]],
-        },
-        'text-anchor': {
-          base: 1,
-          stops: [[7, 'bottom'], [8, 'center']],
-        },
+        'text-offset': [0.3, 0.1],
+        // 'text-offset': {
+        //   base: 1,
+        //   stops: [[7.99, [0, -0.25]], [8, [0, 0]]],
+        // },
+        'text-anchor': 'left',
+        'text-justify': 'left',
         'text-field': '{name_en}',
         'text-max-width': 7,
         'text-size': {
@@ -817,8 +841,46 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
         'text-halo-blur': 0,
       },
     },
+    {
+      id: 'stream_layer-label-line',
+      type: 'symbol',
+      source: 'streams',
+      // 'source-layer': 'road_label',
+      minzoom: 12,
+      // filter: ['in', 'class', 'motorway', 'primary', 'secondary', 'tertiary', 'trunk'],
+      layout: {
+        'text-size': {
+          base: 1,
+          stops: [[9, 10], [20, 16]],
+        },
+        'text-max-angle': 20,
+        'symbol-spacing': 300,
+        'text-font': FONT_ROBOTO_REGULAR,
+        'symbol-placement': 'line',
+        'text-padding': 1,
+        'text-rotation-alignment': 'map',
+        'text-pitch-alignment': 'viewport',
+        'text-field': '{name}',
+        'text-letter-spacing': 0.01,
+      },
+      paint: {
+        'text-color': pallete.secondaryLabelFill,
+        'text-halo-color': pallete.secondaryLabelBackground,
+        'text-halo-width': 1,
+        'text-halo-blur': 0,
+      },
+    },
+    
+
   ] as Layer[]
 
+  labels.forEach(label => {
+    if (label.id.indexOf('place-') >= 0) {
+      const layout = label.layout
+      layout['text-rotate'] = -45
+      layout['text-transform'] = 'uppercase'
+    }
+  })
   if (isHighContrastEnabled) {
     labels.forEach(label => {
       if (label.type !== 'symbol') {
@@ -830,6 +892,7 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
       paint['text-halo-width'] = 10
       paint['text-halo-color'] = pallete.primaryLabelBackground
 
+      
       const layout = label.layout
       if (layout['text-size'] != null && layout['text-size'].stops != null) {
         layout['text-size'].stops.forEach(x => {
@@ -839,4 +902,86 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
     })
   }
   return labels
+}
+
+
+export const centroids = (originalLayerProps: ILayerProperties): Layer[] => {
+  const { isOnline, isHighContrastEnabled } = originalLayerProps
+  if (isOnline === false) {
+    return []
+  }
+
+  // if it's high contrast mode, update our pallete.
+  const layerProps = {
+    ...originalLayerProps,
+    pallete: {
+      ...originalLayerProps.pallete,
+    },
+  }
+
+  if (isHighContrastEnabled) {
+    layerProps.pallete.secondaryLabelFill = originalLayerProps.pallete.primaryLabelFill
+    layerProps.pallete.secondaryLabelBackground =
+      originalLayerProps.pallete.secondaryLabelBackground
+  }
+
+  const { pallete } = layerProps
+
+  const streamLabels = [{
+    id: STREAM_CENTROID_LABEL_SM,
+    type: 'symbol',
+    source: 'stream_centroid',
+    minzoom: 10,
+    maxzoom: 16.3,
+    filter: ["<", 'trout_stream_section_length', 16],
+    layout: {
+      'text-offset': [0.3, 0.1],
+      'text-field': '{name}',
+      'text-rotate': 0,
+      'text-anchor': 'left',
+      'text-justify': 'left',
+      'text-font': FONT_ROBOTO_REGULAR,
+      'text-max-width': 20,
+      'text-size': {
+        base: 1,
+        stops: [[10, 11.5 - 2], [16, 18 - 2]],
+      },
+    },
+    paint: {
+      'text-halo-color': pallete.primaryLabelBackground,
+      'text-halo-width': 1.25,
+      'text-color': pallete.primaryLabelFill,
+      'text-halo-blur': 0,
+    },
+  },
+  {
+    id: STREAM_CENTROID_LABEL_LG,
+    type: 'symbol',
+    source: 'stream_centroid',
+    minzoom: 5,
+    maxzoom: 16,
+    filter: [">=", 'trout_stream_section_length', 16],
+    layout: {
+      'text-offset': [0.3, 0.1],
+      'text-field': '{name}',
+      'text-rotate': 0,
+      'text-anchor': 'left',
+      'text-justify': 'left',
+      'text-font': FONT_ROBOTO_REGULAR,
+      'text-max-width': 10,
+      'text-size': {
+        base: 1,
+        stops: [[10, 11.5], [16, 18]],
+      },
+    },
+    paint: {
+      'text-halo-color': pallete.primaryLabelBackground,
+      'text-halo-width': 1.25,
+      'text-color': pallete.primaryLabelFill,
+      'text-halo-blur': 0,
+    },
+  },
+] as Layer[]
+
+return streamLabels
 }

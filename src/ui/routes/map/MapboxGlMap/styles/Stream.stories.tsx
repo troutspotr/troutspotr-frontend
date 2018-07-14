@@ -12,6 +12,7 @@ import {
   createStreamLayer,
   createTroutSectionBackdropLayer,
   createTroutSectionLayerLayer,
+  
   // createRestrictionBackdropLayer,
 } from './Stream.layers'
 
@@ -20,6 +21,7 @@ import { createGpsBorderLayer } from './Gps.layers'
 import {
   createAccessPointCircleLabelLayer,
   createAccessPointCircleLayerLayer,
+  createAccessPointRoadLabelLayer,
 } from './AccessPoints.layers'
 
 import { boolean, number } from '@storybook/addon-knobs'
@@ -93,6 +95,7 @@ stories.add('Default', () => {
     { id: 'restriction_section', geojson: dictionary.restriction_section },
     { id: 'pal', geojson: dictionary.pal },
     { id: 'stream_access_point', geojson: dictionary.stream_access_point },
+    { id: 'stream_centroid', geojson: dictionary.streamCentroid },
   ]
 
   if (isGpsEnabled) {
@@ -123,7 +126,7 @@ stories.add('Default', () => {
 
   const gpsLayers = isGpsEnabled ? createGpsBorderLayer(layerProperties, 'gps') : []
 
-  const labelsLayers = [createAccessPointCircleLabelLayer(layerProperties, 'stream_access_point')]
+  const labelsLayers = [createAccessPointCircleLabelLayer(layerProperties, 'stream_access_point'), createAccessPointRoadLabelLayer(layerProperties, 'stream_access_point')]
 
   const myLayers = createLayers(
     layerProperties,

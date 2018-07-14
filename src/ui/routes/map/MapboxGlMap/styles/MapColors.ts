@@ -58,8 +58,11 @@ const getColorPallete = (suffix: string): IMapColors => {
     petriDish: colors[`buildingfill${suffix}`],
     backdropFill: 'black',
   }
+  
   return item
 }
 
 export const LightMapColors: IMapColors = getColorPallete('-light')
 export const DarkMapColors: IMapColors = getColorPallete('-dark')
+console.log('ylakjsdflkjasdfklas')
+console.log(DarkMapColors.admin1BorderColor)

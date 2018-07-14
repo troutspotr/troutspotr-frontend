@@ -7,12 +7,10 @@ import * as stateSelectors from 'ui/routes/@usState/UsState.selectors'
 const EMPTY_STREAMS = []
 
 export const availableStreams = createSelector(
-  [
-    coreSelectors.selectedStateSelector,
-    coreSelectors.selectedRegionSelector,
-    stateSelectors.streamCentroidsSelector,
-    regionSelectors.streamsSelector,
-  ],
+  coreSelectors.selectedStateSelector,
+  coreSelectors.selectedRegionSelector,
+  stateSelectors.streamCentroidsSelector,
+  regionSelectors.streamsSelector,
   (selectedState, selectedRegion, displayedCentroids, availableTroutStreams) => {
     const isRegionSelected = isEmpty(selectedState) === false && isEmpty(selectedRegion) === false
     if (isRegionSelected === false) {
@@ -27,14 +25,12 @@ export const availableStreams = createSelector(
 )
 
 export const isDisplayed = createSelector(
-  [
-    coreSelectors.selectedStateSelector,
-    coreSelectors.selectedRegionSelector,
-    coreSelectors.hasAgreedToTermsSelector,
-    coreSelectors.isSearchingSelector,
-    stateSelectors.displayedCentroidsSelector,
-    regionSelectors.visibleTroutStreams,
-  ],
+  coreSelectors.selectedStateSelector,
+  coreSelectors.selectedRegionSelector,
+  coreSelectors.hasAgreedToTermsSelector,
+  coreSelectors.isSearchingSelector,
+  stateSelectors.displayedCentroidsSelector,
+  regionSelectors.visibleTroutStreams,
   (
     selectedState,
     selectedRegion,

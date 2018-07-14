@@ -2,6 +2,8 @@
 import * as transform from './Region.transform'
 import { IGeometryPackageDictionary, IGeoPackageOrWhatver } from './Region.transform'
 const topojson = require('topojson-client')
+import { point, featureCollection } from '@turf/helpers'
+import { StreamFeatureCollection } from './IRegionGeoJSON';
 
 export const decompressTopojsonSync = (topojsonLib, topojsonObject): IGeometryPackageDictionary => {
   const trout_stream_section = topojsonLib.feature(
@@ -17,6 +19,14 @@ export const decompressTopojsonSync = (topojsonLib, topojsonObject): IGeometryPa
   // const pal = topojsonLib.feature(topojsonObject, topojsonObject.objects.pal)
   const boundingCircle = topojsonLib.feature(topojsonObject, topojsonObject.objects.boundingCircle)
 
+  const streamCentroids = featureCollection((streamProperties as StreamFeatureCollection).features.map(feature => {
+    const pointFeature = point([
+      feature.properties.centroid_longitude, feature.properties.centroid_latitude],
+      feature.properties,
+    )
+    return pointFeature
+  }))
+
   const dictionary = {
     trout_stream_section,
     restriction_section,
@@ -24,6 +34,7 @@ export const decompressTopojsonSync = (topojsonLib, topojsonObject): IGeometryPa
     pal_routes,
     pal: null,
     boundingCircle,
+    streamCentroid: streamCentroids,
   }
   return dictionary
 }

@@ -61,6 +61,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
 
     const groups = groupBy(features, f => f.layer.id)
+    console.log(groups)
     this.props.onFeaturesSelected(groups)
   }
 
@@ -100,7 +101,8 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }) as Map
     map.dragRotate.disable()
     map.touchZoomRotate.disableRotation()
-
+    // TODO: REMOVE THIS
+    // map.showCollisionBoxes = true
     if (this.props.debugMode === true) {
       setTimeout(() => map.resize(), 200)
     }

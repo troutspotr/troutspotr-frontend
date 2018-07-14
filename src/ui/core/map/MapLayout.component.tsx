@@ -29,7 +29,6 @@ export const MapLayoutComponent: React.SFC<IMapLayoutProps> = (props): JSX.Eleme
     <div className={styles.container}>
       {top}
       {bottom}
-      {map}
     </div>
   )
 }

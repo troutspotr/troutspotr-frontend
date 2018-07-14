@@ -84,7 +84,7 @@ export const getAdminBorderLayers = (layerProps: ILayerProperties): Layer[] => {
           base: 1,
           stops: [[2, 0], [3, 1]],
         },
-        'line-color': pallete.secondaryRoadBorder,
+        'line-color': pallete.admin1BorderColor,
       },
     },
     {

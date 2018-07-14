@@ -15,6 +15,7 @@ import {
   palSectionsSelector,
   restrictionSectionsSelector,
   palsSelector,
+  streamCentroidsSelector,
 } from 'ui/routes/@usState/@region/Region.selectors'
 import { streamAccessPointSelector } from '../../@usState/@region/Region.selectors'
 import { StyleSourceId } from './styles/Style.constants'
@@ -26,6 +27,7 @@ import {
   gpsFeatureCollectionSelector,
 } from '../../../core/gps/Gps.selectors'
 import { createGpsBorderLayer } from './styles/Gps.layers'
+// import { streamCentroidsSelector } from '../../@usState/UsState.selectors';
 
 const DEFAULT_LAYER_PROPS = defaultLayerProperties()
 
@@ -76,6 +78,7 @@ export const sourceGeometryDictionarySelector = createSelector(
   palsSelector,
   streamAccessPointSelector,
   gpsFeatureCollectionSelector,
+  streamCentroidsSelector,
   (
     streams,
     troutSection,
@@ -83,7 +86,8 @@ export const sourceGeometryDictionarySelector = createSelector(
     restrictionSection,
     pals,
     streamAccessPoint,
-    gpsFeature
+    gpsFeature,
+    streamCentroids
   ): { [index: string]: any } => {
     const s = {}
     src(StyleSourceId.streams, streams, s)
@@ -93,6 +97,7 @@ export const sourceGeometryDictionarySelector = createSelector(
     src(StyleSourceId.pals, pals, s)
     src(StyleSourceId.streamAccessPoint, streamAccessPoint, s)
     src(StyleSourceId.gps, gpsFeature, s)
+    src(StyleSourceId.centroids, streamCentroids, s)
     return s
   }
 )
@@ -113,7 +118,6 @@ export const mapboxGlSourcesSelector = createSelector(
         tileSize: layerProps.satelliteResolution,
       },
     }
-
     let sources = {
       ...sourcesGeometry,
     }
@@ -157,6 +161,7 @@ export const mapboxGlLayersSelector = createSelector(
 
     const labelsLayers = [
       accessPointLib.createAccessPointCircleLabelLayer(layerProperties, 'stream_access_point'),
+      accessPointLib.createAccessPointRoadLabelLayer(layerProperties, 'stream_access_point'),
     ]
 
     const myLayers = createLayers(

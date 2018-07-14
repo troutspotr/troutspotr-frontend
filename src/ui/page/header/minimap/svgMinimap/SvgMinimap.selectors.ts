@@ -209,7 +209,7 @@ export const displayedStatesSelector = createSelector(
   selectedUsStatesSelector,
   isOfflineSelector,
   (allFeatures, isExpanded, selectedUsStates, isOffline): UsStateFeatureCollection => {
-    if (isExpanded) {
+    if (isExpanded && allFeatures != null && allFeatures.features != null) {
       return featureCollection(
         allFeatures.features.filter(x => isOffline === false || x.properties.isCached)
       ) as UsStateFeatureCollection

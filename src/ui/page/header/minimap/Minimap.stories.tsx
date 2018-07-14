@@ -12,8 +12,10 @@ const styles = require('ui/page/PageLayout.stories.scss')
 console.log(dimensions)
 stories.add('Deafult Container', () => {
   const mapComponent = <img src={kirby} />
+  const isExpanded = boolean('Expand', true)
   const props: IMinimapProps = {
-    isExpanded: boolean('Expand', true),
+    isExpanded: isExpanded,
+    isCloseCloseButtonShown: isExpanded,
     handleExpand: action('Handle expand'),
     isReadyToReveal: boolean('Is ready to reveal', true),
     mapComponent,
@@ -32,8 +34,11 @@ stories.add('Crazy content', () => {
       <span>yes its me</span>
     </span>
   )
+  const isExpanded = boolean('Expand', true)
+
   const props: IMinimapProps = {
-    isExpanded: boolean('Expand', false),
+    isExpanded: isExpanded,
+    isCloseCloseButtonShown: isExpanded,
     handleExpand: action('Handle expand'),
     isReadyToReveal: boolean('Is ready to reveal', true),
     mapComponent,
@@ -59,8 +64,10 @@ const createBackdrop = (): React.ReactNode => {
 
 stories.add('Real content', () => {
   const mapComponent = createStatesAndRegions(50, 50)
+  const isExpanded = boolean('Expand', true)
   const props: IMinimapProps = {
-    isExpanded: boolean('Expand', false),
+    isExpanded: isExpanded,
+    isCloseCloseButtonShown: isExpanded,
     handleExpand: action('Handle expand'),
     isReadyToReveal: boolean('Is ready to reveal', true),
     mapComponent,

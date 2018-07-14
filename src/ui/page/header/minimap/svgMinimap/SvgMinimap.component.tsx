@@ -475,7 +475,6 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     regionsGeoJson: RegionFeatureCollection
   ) {
     const { isExpanded } = this.props
-    console.log('drawing displayed regions')
     const regionsWithLabels = isExpanded ? regionsGeoJson.features : []
     const regionSelection = this.regionLabelsGroup
       .selectAll(`text.js-d3-regions-labels`)
@@ -489,7 +488,6 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     })
     regionSelection
       .enter()
-      .append('g')
       .append('text')
       .attr('data-name', item => item.properties.long_name)
       .text(item => {

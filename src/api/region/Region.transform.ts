@@ -1,6 +1,7 @@
 import { IStateData } from 'api/usState/IStateData'
 import { Dictionary } from 'lodash'
 import { IStreamObject } from 'coreTypes/IStreamObject'
+import { point, featureCollection } from '@turf/helpers'
 
 const groupBy = require('lodash-es/groupBy').default
 const keyBy = require('lodash-es/keyBy').default
@@ -32,6 +33,7 @@ import {
   AccessPointFeature,
   TributaryFeature,
   BoundingCircleFeature,
+  StreamCentroidFeatureCollection,
 } from './IRegionGeoJSON'
 
 const now = new Date()
@@ -45,6 +47,7 @@ export interface IGeometryPackageDictionary {
   boundingCircle: BoundingCircleFeatureCollection
   stream_access_point?: AccessPointFeatureCollection
   tributary?: TributaryFeatureCollection
+  streamCentroid: StreamCentroidFeatureCollection,
 }
 export const decompressTopojsonAsync = async (
   topojsonLib,
@@ -67,6 +70,14 @@ export const decompressTopojsonAsync = async (
     boundingCircle,
   ] = await throttleReduce(ops)
 
+  // create centroids:
+  const streamCentroids = featureCollection((streamProperties as StreamFeatureCollection).features.map(feature => {
+    const pointFeature = point([
+      feature.properties.centroid_longitude, feature.properties.centroid_latitude],
+      feature.properties,
+    )
+    return pointFeature
+  }))
   const dictionary = {
     trout_stream_section,
     restriction_section,
@@ -74,6 +85,7 @@ export const decompressTopojsonAsync = async (
     pal_routes,
     pal: null,
     boundingCircle,
+    streamCentroid: streamCentroids,
   }
   return dictionary
 }

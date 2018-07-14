@@ -6,4 +6,5 @@ export enum StyleSourceId {
   pals = 'pal',
   streamAccessPoint = 'stream_access_point',
   gps = 'gps',
+  centroids = 'stream_centroid',
 }

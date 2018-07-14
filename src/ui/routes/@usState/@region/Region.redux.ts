@@ -16,6 +16,7 @@ import {
   TroutStreamSectionFeatureCollection,
   StreamFeatureCollection,
   PalFeatureCollection,
+  StreamCentroidFeatureCollection,
 } from 'api/region/IRegionGeoJSON'
 
 // ------------------------------------
@@ -121,6 +122,7 @@ const ACTION_HANDLERS: {} = {
         regionLoadingStatus: LoadingStatus.Success,
         hoveredStream: initialState.hoveredStream,
         hoveredRoad: initialState.hoveredRoad,
+        streamCentroids: payload.streamCentroid
       },
     }
     return newState
@@ -158,6 +160,7 @@ export interface IRegionState {
   hoveredStream: any
   // SelectedRoad: null,
   hoveredRoad: any
+  streamCentroids: StreamCentroidFeatureCollection,
   regionLoadingStatus: LoadingStatus
 }
 const initialState: IRegionState = {
@@ -171,6 +174,7 @@ const initialState: IRegionState = {
   pals: null,
   hoveredStream: null,
   // SelectedRoad: null,
+  streamCentroids: null,
   hoveredRoad: null,
   regionLoadingStatus: LoadingStatus.NotStarted,
 }

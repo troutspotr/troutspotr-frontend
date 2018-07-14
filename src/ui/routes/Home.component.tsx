@@ -4,6 +4,7 @@ import { FooterComponent } from 'ui/page/footer/Footer.component'
 import { PageLayoutComponent } from 'ui/page/PageLayout.component'
 import { HeaderContainer } from 'ui/page/header/Header.container'
 import { MapContainer } from 'ui/routes/map/Map.container'
+import { MapLayoutComponent } from 'ui/core/map/MapLayout.component'
 import { OfflineContainer } from '../page/offline/Offline.container'
 import { IPageLayoutProps } from '../page/IPageLayout'
 import { homeContainerMapDispatchToProps, homeComponentMapStateToProps } from './Home.container'
@@ -47,7 +48,12 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
           <OfflineContainer />
         </ErrorBoundaryComponent>
         <ErrorBoundaryComponent onError={this.props.handleError}>
-          <MapContainer key="map" />
+          <MapLayoutComponent
+            topOverlay={null}
+            bottomOverlay={null}
+            middleOverlay={null}
+            map={<MapContainer key="map" />}>
+          </MapLayoutComponent>
         </ErrorBoundaryComponent>
         <ErrorBoundaryComponent onError={this.props.handleError}>
           {this.props.children}

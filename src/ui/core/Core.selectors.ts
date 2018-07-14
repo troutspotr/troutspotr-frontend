@@ -42,7 +42,7 @@ export const hasAgreedToTermsSelector = (reduxState: IReduxState): boolean =>
 //   reduxState.core.hasSeenTermsOfService
 // export const hasSeenPrivacyPolicySelector = (reduxState: IReduxState): boolean =>
 //   reduxState.core.hasSeenPrivacyPolicy
-// Export const streamCentroidsGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.streamCentroidsGeoJson
+// export const streamCentroidsGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.streamCentroidsGeoJson
 export const tableOfContentsLoadingStatusSelector = (reduxState: IReduxState): LoadingStatus =>
   reduxState.core.tableOfContentsLoadingStatus
 export const searchTextSelector = (reduxState: IReduxState): string => reduxState.core.searchText
@@ -52,8 +52,9 @@ export const viewSelector = (reduxState: IReduxState): View => reduxState.core.v
 export const isListVisible = createSelector([viewSelector], view => view === View.list)
 
 export const selectedStateSelector = createSelector(
-  [selectedStateIdSelector, statesDictionarySelector],
-  (stateId, statesDictionary) => {
+  selectedStateIdSelector,
+  statesDictionarySelector,
+  (stateId: string, statesDictionary) => {
     if (isEmpty(statesDictionary)) {
       return null
     }
@@ -79,7 +80,7 @@ export const isSearchingSelector = createSelector([searchTextSelector], searchTe
 
 export const selectedRegionPathKeySelector = createSelector(
   [selectedStateIdSelector, selectedRegionIdSelector],
-  (selectedStateId, selectedRegionId) => {
+  (selectedStateId, selectedRegionId): string => {
     if (isEmpty(selectedStateId)) {
       return null
     }
@@ -111,7 +112,7 @@ const selectedRegion = (regionPathKey: string, regionsDictionary): RegionFeature
   return region
 }
 
-export const selectedRegionSelector: RegionFeature = createSelector(
+export const selectedRegionSelector = createSelector(
   [selectedRegionPathKeySelector, regionsDictionarySelector],
   selectedRegion
 )

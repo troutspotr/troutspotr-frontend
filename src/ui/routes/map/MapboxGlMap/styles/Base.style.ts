@@ -5,7 +5,7 @@ export const FONT_ROBOTO_BOLD = ['roboto-bold']
 import { getAdminBorderLayers } from './AdminBorders.layers'
 import { getBridgeLayers } from './Bridge.layers'
 import { ILayerProperties } from './ICreateLayer'
-import { getMapLabelLayers } from './MapLabels.layers'
+import { getMapLabelLayers, centroids } from './MapLabels.layers'
 import { getRoadsLayers } from './Roads.layers'
 import { getSatelliteLayers } from './Satellite.layers'
 
@@ -226,11 +226,12 @@ export const createLayers = (
     ...getAdminBorderLayers(layerProps),
 
     // LABELS
-
     ...(accessPoints != null ? accessPoints : []),
     ...(gps != null ? gps : []),
-    ...getMapLabelLayers(layerProps),
+    
     ...(labels != null ? labels : []),
+    ...centroids(layerProps),
+    ...getMapLabelLayers(layerProps),
   ] as Layer[]
 }
 

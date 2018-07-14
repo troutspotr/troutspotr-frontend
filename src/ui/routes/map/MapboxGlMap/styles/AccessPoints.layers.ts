@@ -5,10 +5,11 @@ import { ILayerProperties } from './ICreateLayer'
 export const ACCESSPOINT_CIRCLE_LABEL_LAYER = 'access_point_circle_label_layer'
 export const ACCESSPOINT_CIRCLE_BORDER_LAYER = 'access_point_circle_border_layer'
 export const ACCESSPOINT_CIRCLE_LAYER = 'access_point_circle_layer'
+export const ACCESSPOINT_ROAD_LABEL_LAYER = 'access_point_road_label_layer'
 
 // const ACCESS_POINT_STREET_NAME_TEXT_OFFSET = [1.0, 0.15]
 const ACCESS_POINT_ALPHABET_TEXT_OFFSET = [0.0, 0.15]
-
+const ACCESS_POINT_LABEL_TEXT_OFFSET = [1, 0.15]
 const createCircleRadius = (diameter: number): StyleFunction => {
   const circleRadius: StyleFunction = {
     base: 1.6,
@@ -38,7 +39,37 @@ export const createAccessPointCircleLabelLayer = (
       ),
       'text-font': FONT_ROBOTO_BOLD,
     },
-    paint: { 'text-color': layerProps.pallete.accessPointLabelColor },
+    paint: {
+      'text-color': layerProps.pallete.accessPointLabelColor,
+     },
+  }
+
+  return label
+}
+
+export const createAccessPointRoadLabelLayer = (
+  layerProps: ILayerProperties,
+  sourceId: string
+): Layer => {
+  const label: Layer = {
+    id: ACCESSPOINT_ROAD_LABEL_LAYER,
+    type: 'symbol',
+    source: sourceId,
+    minzoom: 12,
+    layout: {
+      'text-field': '{street_name}',
+      'text-offset': ACCESS_POINT_LABEL_TEXT_OFFSET,
+      'text-anchor': 'left',
+      'text-size': createCircleRadius(
+        layerProps.accessPointSettings.publiclyAccessibleRadius * 1.5
+      ),
+      'text-font': FONT_ROBOTO_BOLD,
+    },
+    paint: {
+      'text-color': layerProps.pallete.primaryLabelFill,
+      'text-halo-color': layerProps.pallete.primaryLabelBackground,
+      'text-halo-width': 0.5,
+    },
   }
 
   return label

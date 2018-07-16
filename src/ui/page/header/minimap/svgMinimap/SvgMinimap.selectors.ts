@@ -4,6 +4,7 @@ import { ICameraProps } from 'ui/core/map/ICameraProps'
 import {
   RegionFeatureCollection,
   UsStateFeatureCollection,
+  RegionFeature,
 } from 'coreTypes/tableOfContents/ITableOfContentsGeoJSON'
 import {
   isExpandedSelector,
@@ -16,6 +17,7 @@ import { FeatureCollection, GeometryObject, Feature, MultiPolygon } from 'geojso
 import {
   isOfflineSelector,
   cachedEndpointsDictionarySelector,
+  cachedRegionsDictionarySelector
 } from 'ui/page/offline/Offline.selectors'
 import { ISvgMinimapStateProps } from './SvgMinimap.component'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
@@ -196,10 +198,31 @@ export const displayedRegionsSelector = createSelector(
     )
 
     regionsWithinSelectedStates.features.map(x => {
+      // this is super harmful.
       return updateRegionCachedStatus(x, cachedEndpoints)
     })
 
     return regionsWithinSelectedStates as RegionFeatureCollection
+  }
+)
+
+export const statesWithCachedRegionsSelector = createSelector(
+  coreSelectors.statesGeoJsonSelector,
+  cachedRegionsDictionarySelector,
+  (allFeatures, cachedRegions): UsStateFeatureCollection => {
+    if (allFeatures == null || cachedRegions == null) {
+      return EMPTY_STATES
+    }
+
+    const stateNamesOfCachedRegionsDictionary = Object.entries(cachedRegions).reduce((dictionary, [id, region]) => {
+      dictionary[(region as RegionFeature).properties.state_short_name] = true
+      return dictionary
+    }, {})
+
+    // HACK! This is a constant for now, but it works
+    const isUsStateCachedToo = true
+    const statesWithCachedRegions =  featureCollection(allFeatures.features.filter( x => stateNamesOfCachedRegionsDictionary[x.properties.short_name] === true && isUsStateCachedToo))
+    return statesWithCachedRegions
   }
 )
 
@@ -208,7 +231,11 @@ export const displayedStatesSelector = createSelector(
   isExpandedSelector,
   selectedUsStatesSelector,
   isOfflineSelector,
-  (allFeatures, isExpanded, selectedUsStates, isOffline): UsStateFeatureCollection => {
+  statesWithCachedRegionsSelector,
+  (allFeatures, isExpanded, selectedUsStates, isOffline, statesWithCachedRegions): UsStateFeatureCollection => {
+    if (isOffline) {
+      return statesWithCachedRegions || EMPTY_STATES
+    }
     if (isExpanded && allFeatures != null && allFeatures.features != null) {
       return featureCollection(
         allFeatures.features.filter(x => isOffline === false || x.properties.isCached)

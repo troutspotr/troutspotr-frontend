@@ -51,3 +51,4 @@ export const createPalBorderLayer = (layerProps: ILayerProperties, sourceId: str
 
   return [streamStyle]
 }
+

@@ -2,7 +2,7 @@
 import { Layer, Style as MapboxStyle } from 'mapbox-gl'
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 export const FONT_ROBOTO_BOLD = ['roboto-bold']
-import { getAdminBorderLayers } from './AdminBorders.layers'
+import { getAdminBorderLayers, drawRegion } from './AdminBorders.layers'
 import { getBridgeLayers } from './Bridge.layers'
 import { ILayerProperties } from './ICreateLayer'
 import { getMapLabelLayers, centroids } from './MapLabels.layers'
@@ -224,7 +224,7 @@ export const createLayers = (
 
     // ADMIN
     ...getAdminBorderLayers(layerProps),
-
+    ...drawRegion(layerProps, 'region'),
     // LABELS
     ...(accessPoints != null ? accessPoints : []),
     ...(gps != null ? gps : []),

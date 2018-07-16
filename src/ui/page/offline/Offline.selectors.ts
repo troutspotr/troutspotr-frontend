@@ -3,6 +3,8 @@ import keyBy from 'lodash-es/keyBy'
 import { createSelector } from 'reselect'
 import { regionsDictionarySelector } from 'ui/core/Core.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+
+const VERSION = 'v3'
 export const isOfflineSelector = (reduxState: IReduxState): boolean => {
   if (reduxState == null) {
     return false
@@ -43,7 +45,7 @@ export const cachedRegionsDictionarySelector = createSelector(
     }
 
     const cachedRegionDictionary = endpoints
-      .filter(x => x.indexOf('v3') >= 0)
+      .filter(x => x.indexOf(VERSION) >= 0)
       .reduce((dictionary, endpoint) => {
         const tokens = endpoint.split('/').filter(x => x.length > 0)
         const isNotStateRegion = tokens.length <= 3

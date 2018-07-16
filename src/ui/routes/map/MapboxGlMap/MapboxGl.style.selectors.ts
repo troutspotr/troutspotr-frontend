@@ -2,7 +2,7 @@ import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { ILayerProperties, defaultLayerProperties } from './styles/ICreateLayer'
 import { DarkMapColors, LightMapColors } from './styles/MapColors'
 import { createSelector } from 'reselect'
-import { themeSelector } from 'ui/core/Core.selectors'
+import { themeSelector, selectedRegionSelector } from 'ui/core/Core.selectors'
 import { Theme } from 'ui/core/Core.redux'
 import { IStreamSettings } from 'ui/core/micromap/Micromap.settings'
 import { isOfflineSelector } from 'ui/page/offline/Offline.selectors'
@@ -27,6 +27,7 @@ import {
   gpsFeatureCollectionSelector,
 } from '../../../core/gps/Gps.selectors'
 import { createGpsBorderLayer } from './styles/Gps.layers'
+import { drawRegion, drawLabelsRegion } from './styles/AdminBorders.layers';
 // import { streamCentroidsSelector } from '../../@usState/UsState.selectors';
 
 const DEFAULT_LAYER_PROPS = defaultLayerProperties()
@@ -79,6 +80,7 @@ export const sourceGeometryDictionarySelector = createSelector(
   streamAccessPointSelector,
   gpsFeatureCollectionSelector,
   streamCentroidsSelector,
+  selectedRegionSelector,
   (
     streams,
     troutSection,
@@ -87,7 +89,8 @@ export const sourceGeometryDictionarySelector = createSelector(
     pals,
     streamAccessPoint,
     gpsFeature,
-    streamCentroids
+    streamCentroids,
+    selectedRegion,
   ): { [index: string]: any } => {
     const s = {}
     src(StyleSourceId.streams, streams, s)
@@ -98,6 +101,7 @@ export const sourceGeometryDictionarySelector = createSelector(
     src(StyleSourceId.streamAccessPoint, streamAccessPoint, s)
     src(StyleSourceId.gps, gpsFeature, s)
     src(StyleSourceId.centroids, streamCentroids, s)
+    src('region', selectedRegion, s)
     return s
   }
 )
@@ -151,6 +155,7 @@ export const mapboxGlLayersSelector = createSelector(
     const palLayers = [
       ...palLayersLib.createPalLayer(layerProperties, 'pal'),
       ...palLayersLib.createPalBorderLayer(layerProperties, 'pal'),
+      
     ]
 
     const accessPointLayers = [
@@ -162,6 +167,7 @@ export const mapboxGlLayersSelector = createSelector(
     const labelsLayers = [
       accessPointLib.createAccessPointCircleLabelLayer(layerProperties, 'stream_access_point'),
       accessPointLib.createAccessPointRoadLabelLayer(layerProperties, 'stream_access_point'),
+      drawLabelsRegion(layerProperties, 'region')[0],
     ]
 
     const myLayers = createLayers(

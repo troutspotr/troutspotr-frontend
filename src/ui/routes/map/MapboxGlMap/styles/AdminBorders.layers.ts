@@ -1,6 +1,85 @@
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
-import { Layer } from 'mapbox-gl'
+import { Layer, LineLayout, LinePaint } from 'mapbox-gl'
 import { ILayerProperties } from './ICreateLayer'
+export const drawRegion = (layerProps: ILayerProperties, sourceId: string): Layer[]  => {
+  const lineLayout: LineLayout = {
+    'line-cap': 'round',
+    'line-join': 'round',
+  }
+  const baseLineWidth = {
+    base: 1.5,
+    stops: [[1, 6], [8.5, 5], [10, 4], [12.5, 2]],
+  }
+
+  const baselineOpacity = {
+    base: 1.0,
+    stops: [[1, 1], [8, 0.9], [10, 0.4], [15, 0.3]],
+  }
+  console.log(
+    layerProps.pallete.primaryLabelBackground,
+    layerProps.pallete.primaryLabelFill,
+  )
+  const linePaint: LinePaint = {
+    'line-color': layerProps.pallete.primaryLabelBackground,
+    'line-opacity': baselineOpacity,
+    'line-width': baseLineWidth,
+  }
+
+  return [
+    {
+    id: 'selected_region_background',
+    type: 'line',
+    source: 'region',
+    layout: {
+      ...lineLayout,
+    },
+    paint: linePaint
+  },
+  {
+    id: 'selected_region_foreground',
+    type: 'line',
+    source: 'region',
+    layout: lineLayout,
+    paint: {
+      ...linePaint,
+      'line-color':  layerProps.pallete.primaryLabelFill,
+      'line-dasharray': [2, 2],
+      'line-width': {
+        ...baseLineWidth,
+        stops: baseLineWidth.stops.map(stop => [stop[0], stop[1] * 0.4])
+      }
+    },
+  }]
+}
+
+export const drawLabelsRegion = (layerProps: ILayerProperties, sourceId: string): Layer[]  => {
+  return [
+    {
+    id: 'region_label',
+    type: 'symbol',
+    source: 'region',
+    minzoom: 8,
+    layout: {
+      'text-max-angle': 30,
+      'symbol-spacing': 500,
+      'text-font': FONT_ROBOTO_REGULAR,
+      'symbol-placement': 'line',
+      'text-field': '{long_name} Region',
+      'text-offset': [0, 0],
+      'text-anchor': 'top',
+      'text-size': 14,
+    },
+    paint: {
+      'text-color': layerProps.pallete.primaryLabelFill,
+      'text-halo-color': layerProps.pallete.primaryLabelBackground,
+      'text-halo-width': 0.5,
+      'text-opacity': 0.8,
+    },
+    }
+]
+}
+
+
 export const getAdminBorderLayers = (layerProps: ILayerProperties): Layer[] => {
   const { pallete, isOnline } = layerProps
   if (isOnline === false) {

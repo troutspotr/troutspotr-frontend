@@ -4,7 +4,7 @@
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es5", "dom", "es2015"],
+    "lib": ["es5", "dom", "es2015", "es2017.object"],
     "typeRoots": ["node_modules/@types", "manual_typings"],
     "sourceMap": true,
     "allowJs": true,

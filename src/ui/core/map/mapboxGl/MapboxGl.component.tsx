@@ -1,9 +1,9 @@
 import * as React from 'react'
 require('mapbox-gl/dist/mapbox-gl.css')
-require('mapbox-gl/dist/svg/mapboxgl-ctrl-compass.svg')
-require('mapbox-gl/dist/svg/mapboxgl-ctrl-geolocate.svg')
-require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg')
-require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg')
+// require('mapbox-gl/dist/svg/mapboxgl-ctrl-compass.svg')
+// require('mapbox-gl/dist/svg/mapboxgl-ctrl-geolocate.svg')
+// require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg')
+// require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg')
 
 import groupBy from 'lodash-es/groupBy'
 import { Map, Style as MapboxStyle } from 'mapbox-gl'

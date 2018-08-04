@@ -2,7 +2,7 @@ import { featureCollection } from '@turf/helpers'
 import { Layer, Style as MapboxStyle } from 'mapbox-gl'
 import { createSelector } from 'reselect'
 import { Theme } from '../../../core/Core.redux'
-import { selectedRegionSelector, themeSelector } from '../../../core/Core.selectors'
+import { selectedRegionSelector, themeSelector, selectedStateSelector } from '../../../core/Core.selectors'
 import {
   gpsFeatureCollectionSelector,
   isGpsTrackingActiveStateSelector,
@@ -20,7 +20,7 @@ import {
 } from '../../@usState/@region/Region.selectors'
 import { streamAccessPointSelector } from '../../@usState/@region/Region.selectors'
 import * as accessPointLib from './styles/AccessPoints.layers'
-import { drawLabelsRegion, drawRegion } from './styles/AdminBorders.layers';
+import { drawLabelsRegion } from './styles/AdminBorders.layers';
 import { createLayers } from './styles/Base.style'
 import { createGpsBorderLayer } from './styles/Gps.layers'
 import { defaultLayerProperties, ILayerProperties } from './styles/ICreateLayer'
@@ -81,6 +81,7 @@ export const sourceGeometryDictionarySelector = createSelector(
   gpsFeatureCollectionSelector,
   streamCentroidsSelector,
   selectedRegionSelector,
+  selectedStateSelector,
   (
     streams,
     troutSection,
@@ -91,6 +92,7 @@ export const sourceGeometryDictionarySelector = createSelector(
     gpsFeature,
     streamCentroids,
     selectedRegion,
+    selectedState,
   ): { [index: string]: any } => {
     const s = {}
     src(StyleSourceId.streams, streams, s)
@@ -102,6 +104,7 @@ export const sourceGeometryDictionarySelector = createSelector(
     src(StyleSourceId.gps, gpsFeature, s)
     src(StyleSourceId.centroids, streamCentroids, s)
     src('region', selectedRegion, s)
+    src('state', selectedState, s)
     return s
   }
 )

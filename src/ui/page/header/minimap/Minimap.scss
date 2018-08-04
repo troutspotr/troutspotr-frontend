@@ -10,9 +10,12 @@ $minimap-width-px: $minimap-width * 1px;
   height: $minimap-width-px;
   width: $minimap-width-px;
   user-select: none;
+  
+
 }
 // https://www.smashingmagazine.com/2016/12/gpu-animation-doing-it-right/
 .sandboxContainer {
+  
   user-select: none;
   z-index: 1000;
   transform: translateZ(0);
@@ -33,11 +36,12 @@ $minimap-width-px: $minimap-width * 1px;
   }
   @include fallback(color, --text-color-primary, $black);
   border: 1vmin solid;
+  cursor: pointer;
 }
 
 .sandboxContainerExpand {
   composes: sandboxContainer;
-  // border-radius: 0%;
+  cursor: default;
 }
 
 .backButtonContainer {

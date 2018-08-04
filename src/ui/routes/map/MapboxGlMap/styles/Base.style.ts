@@ -224,6 +224,7 @@ export const createLayers = (
 
     // ADMIN
     ...getAdminBorderLayers(layerProps),
+    ...drawRegion(layerProps, 'state'),
     ...drawRegion(layerProps, 'region'),
     // LABELS
     ...(accessPoints != null ? accessPoints : []),

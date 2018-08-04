@@ -3,41 +3,27 @@
 @import 'src/ui/styles/_fonts';
 @import 'src/ui/styles/fallback';
 
-@keyframes appearAnimation {
-  0% {
-    // transform: translateX(-100%);
-    opacity: 0;
-  }
-  100% {
-    // transform: translateX(0);
-    opacity: 1;
-  }
-}
-
 .container {
+  transition: background-color 800ms;
   @include fallback(background-color, --message-background-color, $messageBackgroundDark);
   position: absolute;
   padding: ($default-margin / 2) ($default-margin / 2);
   z-index: 10000;
   min-height: 2.7em;
-  max-height: calc(80vh / 2.4 - 60px);
+  max-height: calc(80vh / 2.4 - 50px);
   overflow-y: scroll;
-  animation-duration: 200ms;
-  animation-name: appearAnimation;
-  animation-fill-mode: forwards;
-  animation-iteration-count: 1;
 }
 
 .top {
   composes: container;
-  top: 0;
+  top: $page-header-height;
   left: 0;
   right: 0;
 }
 
 .bottom {
   composes: container;
-  bottom: 0;
+  bottom: $page-footer-height;
   left: 0;
   right: 0;
 }

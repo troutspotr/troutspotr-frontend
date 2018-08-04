@@ -1,12 +1,11 @@
 import * as React from 'react'
-const classes = require('./PublicBridges.scss')
-import * as Badge from 'ui/core/badge/Badge.component'
+import * as Badge from '../badge/Badge.component'
 
-interface IPublicBridgesComponent {
+export interface IPublicBridgesComponent {
   count: number
 }
 
-const PublicBridgesComponent: React.SFC<IPublicBridgesComponent> = (props): JSX.Element => {
+export const PublicBridgesComponent: React.SFC<IPublicBridgesComponent> = (props): JSX.Element => {
   const { count } = props
   const noun = count === 1 ? ' bridge' : ' bridges'
   const countSymbol =
@@ -15,17 +14,13 @@ const PublicBridgesComponent: React.SFC<IPublicBridgesComponent> = (props): JSX.
     ) : (
       <Badge.BadgeComponent
         badgeColor={Badge.Color.publiclyFishable}
-        fillType={Badge.Fill.hollow}
+        fillType={Badge.Fill.solid}
         content={count}
       />
     )
   return (
-    <div>
-      <span className={classes.text}>
-        {countSymbol} {noun} over publically fishable land.
-      </span>
-    </div>
+    <React.Fragment>
+      {countSymbol} {noun} over publically fishable land.
+    </React.Fragment>
   )
 }
-
-export { PublicBridgesComponent }

@@ -1,12 +1,14 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 @import "src/ui/styles/ZeldaText";
-@import "src/ui/styles/NumberCircle";
+@import "src/ui/core/badge/Badge";
 
 .regionContainer {
   display: flex;
   flex-direction: row;
   max-width: 400px;
+  // font-size: 0.6em;
+  line-height: 1.3;
 }
 
 .leftItems {
@@ -23,14 +25,13 @@
 
 .marker {
   width: 10px;
-  height: 2px;
+  height: 3.5px;
   display: inline-block;
   vertical-align: middle;
   order: 1;
 }
 
 .text {
-  font-size: 12px;
   order: 2;
   margin-left: 4px;
 }
@@ -43,25 +44,28 @@
 
 .publicMarker {
   composes: marker;
-  background-color: $green;
+  // background-color: $green;
+  background-color: $greenDark;
+  @include fallback(background-color, --green, $greenDark);
 }
 
 .nonPublicMarker {
   composes: marker;
-  background-color: $blue;
+  // background-color: $blue;
+  background-color: $blueDark;
+  @include fallback(background-color, --blue, $blueDark);
   height: 2px;
 }
 
 .publicBridgesBadge {
-  composes: numberCircle;
-  font-size: 5px;
-  background-color: $green;
-  color: $green;
+  @include make-solid($greenDark);
+  font-size: 0.8em;
+  // font-size: 5px;
+  // background-color: $green;
+  // color: $green;
 }
 
 .privateBridgesBadge {
-  composes: numberCircle;
-  font-size: 5px;
-  background-color: $blue;
-  color: $blue;
+  @include make-solid($blueDark);
+  font-size: 0.8em;
 }

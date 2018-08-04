@@ -1,14 +1,15 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { FooterComponent } from 'ui/page/footer/Footer.component'
-import { PageLayoutComponent } from 'ui/page/PageLayout.component'
-import { HeaderContainer } from 'ui/page/header/Header.container'
-import { MapContainer } from 'ui/routes/map/Map.container'
-import { MapLayoutComponent } from 'ui/core/map/MapLayout.component'
+import { FooterComponent } from '../page/footer/Footer.component'
+import { PageLayoutComponent } from '../page/PageLayout.component'
+import { HeaderContainer } from '../page/header/Header.container'
+import { MapContainer } from './map/Map.container'
+import { MapLayoutComponent } from '../core/map/MapLayout.component'
 import { OfflineContainer } from '../page/offline/Offline.container'
 import { IPageLayoutProps } from '../page/IPageLayout'
 import { homeContainerMapDispatchToProps, homeComponentMapStateToProps } from './Home.container'
-import ErrorBoundaryComponent from 'ui/core/errorBoundary/ErrorBoundary.component'
+import ErrorBoundaryComponent from '../core/errorBoundary/ErrorBoundary.component'
+import { PageLegendContainer } from '../page/page-legend/PageLegend.layout.container'
 export const HomeComponent = props => {
   return <div />
 }
@@ -31,6 +32,12 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
         <FooterComponent />
       </ErrorBoundaryComponent>
     )
+  }
+
+  public renderLegend() {
+    return (<ErrorBoundaryComponent onError={this.props.handleError}>
+      <PageLegendContainer />
+    </ErrorBoundaryComponent>)
   }
 
   public renderHeader() {
@@ -65,6 +72,7 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   public render() {
     return (
       <PageLayoutComponent
+        legend={this.renderLegend()}
         header={this.renderHeader()}
         footer={this.renderFooter()}
         content={this.renderContent()}

@@ -8,6 +8,7 @@ import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_CIRCLE_BORDER_LAYER, ACCESS
 import { TROUT_SECTION_LAYER_ID, STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
 import { streamAccessPointIdDictionarySelector, troutStreamDictionarySelector } from '../@usState/@region/Region.selectors';
 import { browserHistory } from 'react-router';
+import { access } from 'fs';
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -45,7 +46,6 @@ export const setIsMapInitialized = createAction(
 )
 
 export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
-  console.log('stream gid: ', streamGid)
   const reduxState = getState()
   const troutStreamDictionary = troutStreamDictionarySelector(reduxState)
 
@@ -54,10 +54,14 @@ export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
     console.error(`could not find stream id ${streamGid}`)
     return
   }
-  console.log(streamObject)
   const { stream } = streamObject
   const url = `/${selectedStateIdSelector(reduxState)}/${selectedRegionIdSelector(reduxState)}/${stream.properties.slug}`
   browserHistory.push(url)
+  try {
+    const allTroutSectionsOfSelectedStream = featureCollection(streamObject.sections)
+    dispatch(selectMapFeature(allTroutSectionsOfSelectedStream))
+  } catch(e) {
+  }
 }
 
 export const navigateToAccessPoint = (accessPointGid: number) => (dispatch, getState) => {
@@ -82,6 +86,11 @@ export const navigateToAccessPoint = (accessPointGid: number) => (dispatch, getS
   const { stream } = troutStreamDictionary[stream_gid]
   const url = `/${selectedStateIdSelector(reduxState)}/${selectedRegionIdSelector(reduxState)}/${stream.properties.slug}#${accessPoint.properties.slug}`
   browserHistory.push(url)
+
+  try {
+    dispatch(selectFoculPoint([accessPoint.properties.centroid_longitude, accessPoint.properties.centroid_latitude]))
+  } catch(e) {
+  }
 }
 
 export const handleFeatureSelection = (features: {[key:string]: AllGeoJSON[] }) => (dispatch, getState) => {
@@ -94,62 +103,6 @@ export const handleFeatureSelection = (features: {[key:string]: AllGeoJSON[] }) 
   const asdfasdf = features[mostImportantFeatureId][0].properties.gid
   navigateOracle[type](asdfasdf)(dispatch, getState)
 }
-
-// export const navigateToStream = (streamGid: string) => (dispatch, getState) => {
-//   console.log('stream gid: ', streamGid)
-//   const reduxState = getState()
-//   const troutStreamDictionary = troutStreamDictionarySelector(reduxState)
-
-//   const streamObject = troutStreamDictionary[streamGid]
-//   if (streamObject == null) {
-//     console.error(`could not find stream id ${streamGid}`)
-//     return
-//   }
-//   console.log(streamObject)
-//   const { stream } = streamObject
-//   const url = `/${selectedStateIdSelector(reduxState)}/${selectedRegionIdSelector(reduxState)}/${stream.properties.slug}`
-//   // const mostSpecificFeatures = streamObject
-//   // if (streamObject.sections == null || streamObject.sections.length === 0) {
-//   //   return
-//   // }
-//   // const mostSpecificFeatures = featureCollection<any, any>([
-//   //   ...streamObject.sections,
-//   //   ...(streamObject.restrictions || []),
-//   // ])
-//   setTimeout(() => {
-//     // selectMapFeature(mostSpecificFeatures)(dispatch, getState)
-//     browserHistory.push(url)
-//   }, 150)
-// }
-
-// export const navigateToAccessPoint = (accessPointGid: string) => (dispatch, getState) => {
-//   console.log('access point gid: ', accessPointGid)
-//   const reduxState = getState()
-//   const accessPointDictionary = streamAccessPointIdDictionarySelector(reduxState)
-//   const troutStreamDictionary = troutStreamDictionarySelector(reduxState)
-  
-//   const accessPoint = accessPointDictionary[accessPointGid]
-//   if (accessPoint == null) {
-//     console.error(`could not find accessPoint id ${accessPointGid}`)
-//     return
-//   }
-
-//   const {
-//     stream_gid = null
-//   } = accessPoint.properties
-
-//   if (stream_gid == null || troutStreamDictionary[stream_gid] == null) {
-//     console.error(`could not find stream_gid of ${stream_gid}`)
-//     return
-//   }
-//   const { stream } = troutStreamDictionary[stream_gid]
-//   console.log(accessPoint, stream)
-//   const url = `/${selectedStateIdSelector(reduxState)}/${selectedRegionIdSelector(reduxState)}/${stream.properties.slug}#${accessPoint.properties.slug}`
-//   setTimeout(() => {
-//     selectFoculPoint(accessPoint.geometry.coordinates)(dispatch, getState)
-//     // browserHistory.push(url)
-//   }, 10)
-// }
 
 const navigateOracle = {
   'accessPoint': navigateToAccessPoint,

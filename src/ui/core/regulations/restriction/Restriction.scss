@@ -1,0 +1,107 @@
+@import "src/ui/styles/_colors";
+@import "src/ui/styles/_variables";
+@import "src/ui/styles/_fonts";
+@import 'src/ui/styles/fallback';
+
+$circle-size: 1em;
+
+.container {
+  display: flex;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.length {
+  order: 2;
+  min-width: 40px;
+  text-align: right;
+}
+
+.definition {
+  order: 3;
+  flex-grow: 2;
+  padding-left: 10px;
+}
+
+.symbolContainer {
+  order: 1;
+  min-width: 25px;
+  display: flex;
+  height: 1.3em;
+  // padding-top: 0.1em;
+}
+
+.symbol {
+  order: 1;
+  width: 25px;
+  height: $circle-size * 0.6;
+  border-width: 0.2em;
+  border-radius: 0px;
+  border-left-style: none !important;
+  border-right-style: none !important;
+  display: inline-block;
+  margin-right: 10px;
+  background-color: transparent;
+  align-self: center;
+}
+
+.hollow {
+  background-color: transparent !important;
+}
+
+.solid {
+  composes: symbol;
+  border-style: solid;
+}
+
+
+
+.stipple {
+  composes: symbol;
+  border-style: dashed;
+}
+
+.dot {
+  composes: symbol;
+  border-style: dotted;
+}
+
+// COLORS
+
+// @mixin make-color($variable, $color) {
+//   background-color: $color;
+//   @include fallback(background-color, --black, $backgroundDark);
+//   border-color: $color;
+// }
+
+.red {
+  // border-color: $red;
+  @include fallback(border-color, --red, $redDark);
+  @include fallback(background-color, --red, $redDark);
+}
+
+.yellow {
+  @include fallback(border-color, --yellow, $yellowDark);
+  @include fallback(background-color, --yellow, $yellowDark);
+}
+
+.blue {
+  @include fallback(border-color, --blue, $blueDark);
+  @include fallback(background-color, --blue, $blueDark);
+}
+
+.green {
+  @include fallback(border-color, --green, $greenDark);
+  @include fallback(background-color, --green, $greenDark);
+}
+
+.offWhite {
+  @include fallback(border-color, --white, $white);
+  @include fallback(background-color, --white, $white);
+}
+
+.blueGray {
+  @include fallback(border-color, --blue-gray, $blueGrayDark);
+  // border-color: $blueGray;
+  // background-color: $blueGray;
+}

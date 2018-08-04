@@ -1,5 +1,5 @@
 import { Map } from 'mapbox-gl'
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { AccessPointFeature } from 'api/region/IRegionGeoJSON'
 import { IStreamObject } from 'coreTypes/IStreamObject'
@@ -27,7 +27,7 @@ interface IMapboxGlCameraDirectorPassedProps {
 interface IMapboxGlCameraDirectorProps extends IMapboxGlCameraDirectorStateProps, IMapboxGlCameraDirectorDispatchProps, IMapboxGlCameraDirectorPassedProps {}
 
 
-class MapboxGlCameraDirectorComponent extends PureComponent<IMapboxGlCameraDirectorProps> {
+class MapboxGlCameraDirectorComponent extends Component<IMapboxGlCameraDirectorProps> {
   componentDidUpdate(previousProps) {
     this.performZoomOnFeature(previousProps, this.props)
     try {

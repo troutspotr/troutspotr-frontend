@@ -6,8 +6,7 @@ import { STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers'
 import { AllGeoJSON } from '@turf/helpers'
 import { MapboxGlCameraDirectorContainer } from './MapboxGlMap/MapboxGl.camera.director.container'
 import { STREAM_CENTROID_LABEL_SM, STREAM_CENTROID_LABEL_LG } from './MapboxGlMap/styles/MapLabels.layers';
-import { MessageOverlayComponent } from '../../core/messageOverlay/MessageOverlay.component';
-import { RegionDetailsComponent } from './overlays/region/RegionDetails.component';
+import { DetailsOverlayContainer } from './overlays/DetailsOverlay.container';
 const classes = require('./Map.scss')
 
 const STREAM = 'stream'
@@ -87,7 +86,7 @@ export class MapComponent extends React.Component<any> {
   renderMap() {
     return (
       <React.Fragment>
-        <MessageOverlayComponent position={'top'}><RegionDetailsComponent /></MessageOverlayComponent>
+        <DetailsOverlayContainer />
         <MapboxGlContainer onFeaturesSelected={this.onFeatureClick}>
           <MapboxGlCameraContainer />
           <MapboxGlCameraDirectorContainer />

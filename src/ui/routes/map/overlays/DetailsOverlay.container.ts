@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 import {
   getSelectedRoadSelector,
   selectedStreamObjectSelector,
@@ -10,20 +11,15 @@ import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/Location.s
 
 const mapDispatchToProps = {}
 
-const mapStateToProps = (state): IDetailsOverlayComponent => {
-  const props = {
-    visibleTroutStreams: visibleTroutStreams(state),
-    selectedState: selectedStateIdSelector(state),
-    selectedRegion: selectedRegionIdSelector(state),
-    selectedStream: selectedStreamObjectSelector(state),
-    selectedAccessPoint: getSelectedRoadSelector(state),
-    streamDictionary: troutStreamDictionarySelector(state),
-  }
-  return props
-}
+export const detailsOverlayPropSelector = createStructuredSelector({
+  visibleTroutStreams: visibleTroutStreams,
+  selectedState: selectedStateIdSelector,
+  selectedRegion: selectedRegionIdSelector,
+  selectedStream: selectedStreamObjectSelector,
+  selectedAccessPoint: getSelectedRoadSelector,
+  streamDictionary: troutStreamDictionarySelector,
+})
 
-const DetailsOverlayContainer = connect(mapStateToProps, mapDispatchToProps)(
-  DetailsOverlayComponent
-)
+const mapStateToProps = (state): IDetailsOverlayComponent => detailsOverlayPropSelector(state)
 
-export { DetailsOverlayContainer }
+export const DetailsOverlayContainer = connect(mapStateToProps, mapDispatchToProps)(DetailsOverlayComponent)

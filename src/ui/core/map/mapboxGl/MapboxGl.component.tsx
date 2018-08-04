@@ -108,6 +108,9 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
 
     map.on('click', this.onClick)
+    map.on('zoom', e => {
+      console.log(map.getZoom())
+    })
     map.on('load', e => {
       this.setState(
         () => {

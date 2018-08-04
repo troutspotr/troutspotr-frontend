@@ -2,7 +2,7 @@ import * as React from 'react'
 import RegulationsSummaryContainer from '../../../../core/regulations/RegulationsSummary.container'
 import AccessPointComponent from '../../../@usState/@region/@stream/details/AccessPoint.component'
 import { IStreamObject } from '../../../../../coreTypes/IStreamObject'
-const classes = require('./MapOverlay.scss')
+const classes = require('../MapOverlay.scss')
 const AccessPointClasses = require('ui/routes/@usState/@region/@stream/details/Details.scss')
 
 // tslint:disable-next-line:no-any
@@ -76,4 +76,3 @@ export class AccessPointDetails extends React.Component<IAccessPointProps> {
     )
   }
 }
-export default AccessPointDetails

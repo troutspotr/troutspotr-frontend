@@ -4,8 +4,13 @@ import { ILayerProperties } from './ICreateLayer'
 export const PAL_LAYER_ID = 'pal_geom_layer'
 export const PAL_BORDER_LAYER_ID = 'pal_border_layer'
 
+const darkModePalLayerFillOpacityStops = [[7, 0], [9, 0.05], [12, 0.1], [14, 0.15], [16, 0.25], [18, 0.1]]
+const lightModePalLayerFillOpacityStops = [[6, 0.0], [7, 0.3], [9, 0.3], [12, 0.4], [14, 0.5], [15, 0.3], [17, 0.2], [18, 0.1]]
 export const createPalLayer = (layerProps: ILayerProperties, sourceId: string): Layer[] => {
   const { pallete } = layerProps
+  const opacityStops = layerProps.isHighContrastEnabled
+    ? lightModePalLayerFillOpacityStops
+    : darkModePalLayerFillOpacityStops
   const streamStyle: Layer = {
     id: PAL_LAYER_ID,
     type: 'fill',
@@ -15,7 +20,7 @@ export const createPalLayer = (layerProps: ILayerProperties, sourceId: string): 
       'fill-color': pallete.palSectionFill,
       'fill-opacity': {
         base: 1,
-        stops: [[7, 0], [9, 0.05], [12, 0.1], [14, 0.15], [16, 0.25], [18, 0.1]],
+        stops: opacityStops,
       },
     },
   }

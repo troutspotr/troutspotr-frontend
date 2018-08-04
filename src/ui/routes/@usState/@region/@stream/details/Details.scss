@@ -1,8 +1,8 @@
 @import "src/ui/styles/_colors";
 @import "src/ui/styles/_variables";
 @import "src/ui/styles/_fonts";
-@import "src/ui/styles/NumberCircle";
-@import "src/ui/styles/ZeldaText";
+// @import "src/ui/styles/NumberCircle";
+// @import "src/ui/styles/ZeldaText";
 
 .container {}
 
@@ -130,32 +130,32 @@
 }
 
 .publicBridgeTroutStream {
-  composes: numberCircle;
-  composes: badge;
-  color: $green;
+  // composes: numberCircle;
+  // composes: badge;
+  // color: $green;
 }
 
 .bridgeOverTroutStream {
-  composes: numberCircle;
-  composes: badge;
-  color: $blue;
+  // composes: numberCircle;
+  // composes: badge;
+  // color: $blue;
 }
 
 .unsafeBridgeOverTroutStream {
-  composes: numberCircle;
-  composes: badge;
-  color: $blueGray;
+  // composes: numberCircle;
+  // composes: badge;
+  // color: $blueGray;
 }
 
 .bridge {
-  composes: numberCircle;
-  color: $gray;
+  // composes: numberCircle;
+  // color: $gray;
   font-size: 12px;
   order: 1;
 }
 
 .selectedBridge {
-  composes: bridge;
+  // composes: bridge;
   font-weight: bold;
   color: black !important;
 
@@ -163,28 +163,28 @@
 }
 
 .selectedPublicBridgeTroutStream {
-  composes: publicBridgeTroutStream;
-  composes: selectedBridge;
-  color: $green;
-  background-color: $green;
+  // composes: publicBridgeTroutStream;
+  // composes: selectedBridge;
+  // color: $green;
+  // background-color: $green;
 }
 
 .selectedBridgeOverTroutStream {
-  composes: bridgeOverTroutStream;
-  composes: selectedBridge;
-  color: $blue;
-  background-color: $blue;
+  // composes: bridgeOverTroutStream;
+  // composes: selectedBridge;
+  // color: $blue;
+  // background-color: $blue;
 }
 
 .selectedUnsafeBridgeOverTroutStream {
-  composes: unsafeBridgeOverTroutStream;
-  composes: selectedBridge;
-  color: $blueGray;
-  background-color: $blueGray;
+  // composes: unsafeBridgeOverTroutStream;
+  // composes: selectedBridge;
+  // color: $blueGray;
+  // background-color: $blueGray;
 }
 
 .googleLink {
-  color: $blue;
+  // color: $blue;
   display: inline;
   text-decoration: none;
   margin-left: 5px;
@@ -201,67 +201,67 @@
 }
 
 .brownTrout {
-  composes: zeldaText;
-  color: $yellow;
+  // composes: zeldaText;
+  // color: $yellow;
 }
 
 .brookTrout {
-  composes: zeldaText;
-  color: $green;
+  // composes: zeldaText;
+  // color: $green;
 }
 
 .rainbowTrout {
-  composes: zeldaText;
-  color: $red;
+  // composes: zeldaText;
+  // color: $red;
 }
 
 .number {
-  composes: zeldaText;
-  order: 2;
-  text-align: left;
+  // composes: zeldaText;
+  // order: 2;
+  // text-align: left;
 }
 
 .totalMiles {
-  composes: number;
-  color: $off-white;
+  // composes: number;
+  // color: $off-white;
 }
 
 .troutMiles {
-  composes: number;
-  color: $blue;
+  // composes: number;
+  // color: $blue;
 }
 
 .publicMiles {
-  composes: number;
-  color: $green;
+  // composes: number;
+  // color: $green;
 }
 
 .summaryContainer {
-  display: flex;
-  align-items: baseline;
+  // display: flex;
+  // align-items: baseline;
 }
 
 .marker {
-  min-width: 10px;
-  order: 1;
-  display: inline-block;
-  margin-right: 4px;
+  // min-width: 10px;
+  // order: 1;
+  // display: inline-block;
+  // margin-right: 4px;
 }
 
 .publicMarker {
-  composes: marker;
-  height: 0.3em;
-  background-color: $green;
+  // composes: marker;
+  // height: 0.3em;
+  // background-color: $green;
 }
 
 .troutMarker {
-  composes: marker;
-  height: 0.2em;
-  background-color: $blue;
+  // composes: marker;
+  // height: 0.2em;
+  // background-color: $blue;
 }
 
 .waterMarker {
-  composes: marker;
-  height: 0.1em;
-  background-color: $blueGray;
+  // composes: marker;
+  // height: 0.1em;
+  // background-color: $blueGray;
 }

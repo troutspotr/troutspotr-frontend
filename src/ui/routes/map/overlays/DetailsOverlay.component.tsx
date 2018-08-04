@@ -1,9 +1,9 @@
 import * as React from 'react'
 const classes = require('./MapOverlay.scss')
 import { MessageOverlayComponent } from 'ui/core/messageOverlay/MessageOverlay.component'
-import { AccessPointDetails } from './AccessPointDetails.component'
-import RegionDetails from './RegionDetails.component'
-import { StreamDetailsComponent } from './StreamDetails.component'
+import { AccessPointDetails } from './accessPoint/AccessPointDetails.component'
+import { RegionDetailsComponent } from './region/RegionDetails.component'
+import { StreamDetailsContainer } from './stream/StreamDetails.container'
 
 import isEmpty from 'lodash-es/isEmpty'
 import { IStreamObject } from 'coreTypes/IStreamObject'
@@ -14,7 +14,7 @@ export interface IDetailsOverlayComponent {
   selectedStream: IStreamObject
 }
 
-class DetailsOverlayComponent extends React.Component<IDetailsOverlayComponent> {
+export class DetailsOverlayComponent extends React.Component<IDetailsOverlayComponent> {
   protected renderRegionDetails() {
     const { selectedStream, selectedAccessPoint } = this.props
     const isVisible = isEmpty(selectedStream) && isEmpty(selectedAccessPoint)
@@ -22,7 +22,7 @@ class DetailsOverlayComponent extends React.Component<IDetailsOverlayComponent> 
       return null
     }
 
-    return <RegionDetails />
+    return <RegionDetailsComponent />
   }
 
   protected renderStreamDetails() {
@@ -32,7 +32,7 @@ class DetailsOverlayComponent extends React.Component<IDetailsOverlayComponent> 
       return null
     }
 
-    return <StreamDetailsComponent selectedStream={selectedStream} />
+    return <StreamDetailsContainer />
   }
 
   protected renderAccessPointDetails() {
@@ -66,5 +66,3 @@ class DetailsOverlayComponent extends React.Component<IDetailsOverlayComponent> 
     )
   }
 }
-
-export { DetailsOverlayComponent }

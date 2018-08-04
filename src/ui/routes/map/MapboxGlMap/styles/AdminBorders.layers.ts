@@ -2,6 +2,60 @@ export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 import { Layer, LineLayout, LinePaint } from 'mapbox-gl'
 import { ILayerProperties } from './ICreateLayer'
 export const drawRegion = (layerProps: ILayerProperties, sourceId: string): Layer[]  => {
+  return sourceId === 'state'
+    ? drawRegionStuff(layerProps, sourceId, 0.2)
+    : drawRegionStuff(layerProps, sourceId)
+  // const lineLayout: LineLayout = {
+  //   'line-cap': 'round',
+  //   'line-join': 'round',
+  // }
+  // const baseLineWidth = {
+  //   base: 1.5,
+  //   stops: [[1, 6], [8.5, 5], [10, 4], [12.5, 2]],
+  // }
+
+  // const baselineOpacity = {
+  //   base: 1.0,
+  //   stops: [[1, 1], [8, 0.9], [10, 0.4], [15, 0.3]],
+  // }
+  // console.log(
+  //   layerProps.pallete.primaryLabelBackground,
+  //   layerProps.pallete.primaryLabelFill,
+  // )
+  // const linePaint: LinePaint = {
+  //   'line-color': layerProps.pallete.primaryLabelBackground,
+  //   'line-opacity': baselineOpacity,
+  //   'line-width': baseLineWidth,
+  // }
+
+  // return [
+  //   {
+  //   id: sourceId + '_selected_region_background',
+  //   type: 'line',
+  //   source: sourceId,
+  //   layout: {
+  //     ...lineLayout,
+  //   },
+  //   paint: linePaint
+  // },
+  // {
+  //   id: sourceId + 'selected_region_foreground',
+  //   type: 'line',
+  //   source: sourceId,
+  //   layout: lineLayout,
+  //   paint: {
+  //     ...linePaint,
+  //     'line-color':  layerProps.pallete.primaryLabelFill,
+  //     'line-dasharray': [2, 2],
+  //     'line-width': {
+  //       ...baseLineWidth,
+  //       stops: baseLineWidth.stops.map(stop => [stop[0], stop[1] * 0.4])
+  //     }
+  //   },
+  // }]
+}
+
+export const drawRegionStuff = (layerProps: ILayerProperties, sourceId: string, opacityMultiplier = 1): Layer[]  => {
   const lineLayout: LineLayout = {
     'line-cap': 'round',
     'line-join': 'round',
@@ -13,12 +67,9 @@ export const drawRegion = (layerProps: ILayerProperties, sourceId: string): Laye
 
   const baselineOpacity = {
     base: 1.0,
-    stops: [[1, 1], [8, 0.9], [10, 0.4], [15, 0.3]],
+    stops: [[1, 1], [8, 0.9], [10, 0.4], [15, 0.3]].map(stop => [stop[0], stop[1] * opacityMultiplier]),
   }
-  console.log(
-    layerProps.pallete.primaryLabelBackground,
-    layerProps.pallete.primaryLabelFill,
-  )
+
   const linePaint: LinePaint = {
     'line-color': layerProps.pallete.primaryLabelBackground,
     'line-opacity': baselineOpacity,
@@ -27,18 +78,18 @@ export const drawRegion = (layerProps: ILayerProperties, sourceId: string): Laye
 
   return [
     {
-    id: 'selected_region_background',
+    id: sourceId + '_selected_region_background',
     type: 'line',
-    source: 'region',
+    source: sourceId,
     layout: {
       ...lineLayout,
     },
     paint: linePaint
   },
   {
-    id: 'selected_region_foreground',
+    id: sourceId + 'selected_region_foreground',
     type: 'line',
-    source: 'region',
+    source: sourceId,
     layout: lineLayout,
     paint: {
       ...linePaint,

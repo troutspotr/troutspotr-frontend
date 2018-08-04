@@ -1,33 +1,33 @@
-import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
-import { ILayerProperties, defaultLayerProperties } from './styles/ICreateLayer'
-import { DarkMapColors, LightMapColors } from './styles/MapColors'
-import { createSelector } from 'reselect'
-import { themeSelector, selectedRegionSelector } from 'ui/core/Core.selectors'
-import { Theme } from 'ui/core/Core.redux'
-import { IStreamSettings } from 'ui/core/micromap/Micromap.settings'
-import { isOfflineSelector } from 'ui/page/offline/Offline.selectors'
-import { createLayers } from './styles/Base.style'
-import { Style as MapboxStyle, Layer } from 'mapbox-gl'
 import { featureCollection } from '@turf/helpers'
+import { Layer, Style as MapboxStyle } from 'mapbox-gl'
+import { createSelector } from 'reselect'
+import { Theme } from '../../../core/Core.redux'
+import { selectedRegionSelector, themeSelector } from '../../../core/Core.selectors'
 import {
+  gpsFeatureCollectionSelector,
+  isGpsTrackingActiveStateSelector,
+} from '../../../core/gps/Gps.selectors'
+import { IStreamSettings } from '../../../core/micromap/Micromap.settings'
+import { isOfflineSelector } from '../../../page/offline/Offline.selectors'
+import { IReduxState } from '../../../redux/Store.redux.rootReducer'
+import {
+  palSectionsSelector,
+  palsSelector,
+  restrictionSectionsSelector,
+  streamCentroidsSelector,
   streamsSelector,
   troutStreamSectionsSelector,
-  palSectionsSelector,
-  restrictionSectionsSelector,
-  palsSelector,
-  streamCentroidsSelector,
-} from 'ui/routes/@usState/@region/Region.selectors'
+} from '../../@usState/@region/Region.selectors'
 import { streamAccessPointSelector } from '../../@usState/@region/Region.selectors'
-import { StyleSourceId } from './styles/Style.constants'
-import * as streamLayersLib from './styles/Stream.layers'
-import * as palLayersLib from './styles/Pal.layers'
 import * as accessPointLib from './styles/AccessPoints.layers'
-import {
-  isGpsTrackingActiveStateSelector,
-  gpsFeatureCollectionSelector,
-} from '../../../core/gps/Gps.selectors'
+import { drawLabelsRegion, drawRegion } from './styles/AdminBorders.layers';
+import { createLayers } from './styles/Base.style'
 import { createGpsBorderLayer } from './styles/Gps.layers'
-import { drawRegion, drawLabelsRegion } from './styles/AdminBorders.layers';
+import { defaultLayerProperties, ILayerProperties } from './styles/ICreateLayer'
+import { DarkMapColors, LightMapColors } from './styles/MapColors'
+import * as palLayersLib from './styles/Pal.layers'
+import * as streamLayersLib from './styles/Stream.layers'
+import { StyleSourceId } from './styles/Style.constants'
 // import { streamCentroidsSelector } from '../../@usState/UsState.selectors';
 
 const DEFAULT_LAYER_PROPS = defaultLayerProperties()

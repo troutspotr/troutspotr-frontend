@@ -1,31 +1,31 @@
 import { createSelector, createStructuredSelector } from 'reselect'
-import * as coreSelectors from 'ui/core/Core.selectors'
-import { ICameraProps } from 'ui/core/map/ICameraProps'
 import {
+  RegionFeature,
   RegionFeatureCollection,
   UsStateFeatureCollection,
-  RegionFeature,
-} from 'coreTypes/tableOfContents/ITableOfContentsGeoJSON'
+} from '../../../../../coreTypes/tableOfContents/ITableOfContentsGeoJSON'
+import * as coreSelectors from '../../../../core/Core.selectors'
+import { ICameraProps } from '../../../../core/map/ICameraProps'
 import {
   isExpandedSelector,
-  selectedUsStateName,
   selectedRegionPathName,
+  selectedUsStateName,
 } from '../Minimap.selectors'
 
 import boundingBox from '@turf/bbox'
-import { FeatureCollection, GeometryObject, Feature, MultiPolygon } from 'geojson'
-import {
-  isOfflineSelector,
-  cachedEndpointsDictionarySelector,
-  cachedRegionsDictionarySelector
-} from 'ui/page/offline/Offline.selectors'
-import { ISvgMinimapStateProps } from './SvgMinimap.component'
-import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { featureCollection } from '@turf/helpers'
-import { IRegion } from 'coreTypes/tableOfContents/IRegion'
-import { IUsState } from 'coreTypes/tableOfContents/IState'
-import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/Location.selectors'
-import { updateRegionCachedStatus } from 'api/tableOfContents/TableOfContentsApi'
+import { Feature, FeatureCollection, GeometryObject, MultiPolygon } from 'geojson'
+import { updateRegionCachedStatus } from '../../../../../api/tableOfContents/TableOfContentsApi'
+import { IRegion } from '../../../../../coreTypes/tableOfContents/IRegion'
+import { IUsState } from '../../../../../coreTypes/tableOfContents/IState'
+import { selectedRegionIdSelector, selectedStateIdSelector } from '../../../../Location.selectors'
+import { IReduxState } from '../../../../redux/Store.redux.rootReducer'
+import {
+  cachedEndpointsDictionarySelector,
+  cachedRegionsDictionarySelector,
+  isOfflineSelector
+} from '../../../offline/Offline.selectors'
+import { ISvgMinimapStateProps } from './SvgMinimap.component'
 
 export const DEFAULT_CAMERA_PROPS = {
   bbox: [[-124.7317182880231, 31.332200267081696], [-96.43933500000001, 49.00241065464817]],

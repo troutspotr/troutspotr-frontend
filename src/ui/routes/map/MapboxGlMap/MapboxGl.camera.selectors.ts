@@ -1,12 +1,16 @@
-import { bboxSelector, pitchSelector, bearingSelector } from '../Map.selectors'
 import { createSelector } from 'reselect'
-import { ICameraProps, ICameraPadding } from 'ui/core/map/ICameraProps'
+import { ICameraPadding, ICameraProps } from '../../../core/map/ICameraProps'
+import { bboxSelector, bearingSelector, pitchSelector } from '../Map.selectors'
 
+const headerHeight = 60
+const footerHeight = 40
+const legendHeight = 56
+const extraMargin = 10
 const DEFAULT_PADDING: ICameraPadding = {
-  top: 60 + 10,
-  bottom: 40 + 10,
-  left: 10,
-  right: 10,
+  top: headerHeight + legendHeight + extraMargin,
+  bottom: footerHeight + extraMargin,
+  left: extraMargin,
+  right: extraMargin,
 }
 export const cameraPropsSelector = createSelector(
   bboxSelector,

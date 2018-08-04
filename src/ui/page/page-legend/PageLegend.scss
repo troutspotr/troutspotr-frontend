@@ -1,0 +1,33 @@
+
+
+$enter-speed: 500;
+$exit-speed: $enter-speed;
+
+$enter-speed-ms: $enter-speed * 1ms;
+$enter-delay-ms: 0;
+$enter-length-ms: $enter-speed-ms - $enter-delay-ms;
+$exit-speed-ms: $exit-speed * 1ms;
+
+$chenta-ease: cubic-bezier(0.75, 0, 0.25, 1);
+
+:global .page-legend--enter {
+  opacity: 0;
+  transition: opacity $enter-length-ms;
+  transition-delay: $enter-delay-ms;
+  transition-timing-function: $chenta-ease;
+}
+
+:global .page-legend--enter-active {
+  opacity: 1;
+}
+
+:global .page-legend--exit {
+  transition: opacity $exit-speed-ms;
+  opacity: 1;
+
+  transition-timing-function: $chenta-ease;
+}
+
+:global .page-legend--exit-active {
+  opacity: 0;
+}

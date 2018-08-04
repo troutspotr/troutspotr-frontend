@@ -4,8 +4,10 @@ import { MapboxGlCameraContainer } from './MapboxGlMap/MapboxGl.camera.container
 import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_ROAD_LABEL_LAYER, ACCESSPOINT_CIRCLE_BORDER_LAYER, ACCESSPOINT_CIRCLE_LAYER } from './MapboxGlMap/styles/AccessPoints.layers'
 import { STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers'
 import { AllGeoJSON } from '@turf/helpers'
-import { MapboxGlCameraDirectorContainer } from 'ui/routes/map/MapboxGlMap/MapboxGl.camera.director.container'
+import { MapboxGlCameraDirectorContainer } from './MapboxGlMap/MapboxGl.camera.director.container'
 import { STREAM_CENTROID_LABEL_SM, STREAM_CENTROID_LABEL_LG } from './MapboxGlMap/styles/MapLabels.layers';
+import { MessageOverlayComponent } from '../../core/messageOverlay/MessageOverlay.component';
+import { RegionDetailsComponent } from './overlays/region/RegionDetails.component';
 const classes = require('./Map.scss')
 
 const STREAM = 'stream'
@@ -84,10 +86,13 @@ export class MapComponent extends React.Component<any> {
 
   renderMap() {
     return (
-      <MapboxGlContainer onFeaturesSelected={this.onFeatureClick}>
-        <MapboxGlCameraContainer />
-        <MapboxGlCameraDirectorContainer />
-      </MapboxGlContainer>
+      <React.Fragment>
+        <MessageOverlayComponent position={'top'}><RegionDetailsComponent /></MessageOverlayComponent>
+        <MapboxGlContainer onFeaturesSelected={this.onFeatureClick}>
+          <MapboxGlCameraContainer />
+          <MapboxGlCameraDirectorContainer />
+        </MapboxGlContainer>
+      </React.Fragment>
     )
   }
 

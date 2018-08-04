@@ -14,4 +14,5 @@ export interface IPageLayoutProps extends IPageLayoutDispatchProps, IPageLayoutS
   readonly header: React.ReactNode
   readonly content: React.ReactNode
   readonly footer: React.ReactNode
+  readonly legend: React.ReactNode | null
 }

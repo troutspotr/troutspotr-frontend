@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { IPageLayoutProps } from './IPageLayout'
 const styles = require('./PageLayout.scss')
-
+// import { MessageOverlayComponent } from '../core/messageOverlay/MessageOverlay.component';
 export class PageLayoutComponent extends React.Component<IPageLayoutProps> {
   constructor(props) {
     super(props)
@@ -17,7 +17,7 @@ export class PageLayoutComponent extends React.Component<IPageLayoutProps> {
     resetMinimap()
   }
   render() {
-    const { header, content, footer, theme, isExpanded } = this.props
+    const { header, content, footer, theme, isExpanded, legend } = this.props
     const clickHandler = isExpanded ? this.handleClick : null
     const contentClassName = isExpanded ? styles.contentBlurred : styles.content
     const themeClass = theme === 'dark' || theme == null ? 'ts-dark' : 'ts-light'
@@ -27,6 +27,7 @@ export class PageLayoutComponent extends React.Component<IPageLayoutProps> {
         <section className={contentClassName} onClick={clickHandler}>
           {content}
         </section>
+        {legend}
         <footer className={styles.footer}>{footer}</footer>
       </div>
     )

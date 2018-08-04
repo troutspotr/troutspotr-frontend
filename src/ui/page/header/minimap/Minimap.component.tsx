@@ -1,9 +1,9 @@
 import debounce from 'lodash-es/debounce'
 import * as React from 'react'
-import { CloseButtonComponent } from 'ui/page/header/backButton/CloseButton.component'
+import { CloseButtonComponent } from '../backButton/CloseButton.component'
 const classes = require('./Minimap.scss')
 const cssVariables = require('ui/styles/_variables.scss')
-const headerHeight = parseInt(cssVariables['header-height'])
+const headerHeight = parseInt(cssVariables['header-height']) + 40
 const footerHeight = parseInt(cssVariables['footer-height'])
 
 export interface IMinimapDispatchProps {

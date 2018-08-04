@@ -4,9 +4,9 @@ import {
   getSpecialRegulationsCurrentSeasonSelector,
   selectedStreamObjectSelector,
   troutStreamDictionarySelector,
-} from 'ui/routes/@usState/@region/Region.selectors'
+} from '../../@usState/@region/Region.selectors'
 import RegulationsOverlayComponent from './RegulationsOverlay.component'
-import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/Location.selectors'
+import { selectedStateIdSelector, selectedRegionIdSelector } from '../../../Location.selectors'
 
 const mapDispatchToProps = {}
 

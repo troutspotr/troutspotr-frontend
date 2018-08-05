@@ -1,7 +1,7 @@
 import { getApi } from 'api/Api.module'
 import isEmpty from 'lodash-es/isEmpty'
 import { createAction, handleActions } from 'redux-actions'
-import { selectedRegionSelector } from 'ui/core/Core.selectors'
+import { selectedRegionSelector, regionsDictionarySelector } from 'ui/core/Core.selectors'
 import { selectFoculPoint, selectMapFeature } from 'ui/routes/map/Map.redux.interactivity'
 import { getSelectedRoadSelector, selectedStreamObjectSelector } from './Region.selectors'
 import { IGeoPackageOrWhatver } from 'api/region/Region.transform'
@@ -22,15 +22,11 @@ import {
 // ------------------------------------
 // Constants
 // ------------------------------------
-// Export const MAP = 'map'
-// Export const LIST = 'list'
 export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-// Export const setViewToMap = createAction(REGION_SET_VIEW, x => MAP)
-// Export const setViewToList = createAction(REGION_SET_VIEW, x => LIST)
 
 export const REGION_SET_REGION_DATA = 'REGION_SET_REGION_DATA'
 export const REGION_SET_REGION_LOADING = 'REGION_SET_REGION_LOADING'
@@ -63,21 +59,35 @@ export const fetchRegionData = (stateName: string, regionName: string) => async 
     if (regionName == null) {
       throw new Error('regionName cannot be null')
     }
+    const flyEarly = true
+    if (flyEarly) {
+      const reduxState = getState()
+      const regions = regionsDictionarySelector(reduxState)
+      const earlyRegion = (regions || {})[`${stateName}/${regionName}`] || null
+      if (earlyRegion != null) {
+        setTimeout(() => dispatch(selectMapFeature(earlyRegion)), 200)
+      }
+    }
+
     const { RegionApi } = await getApi()
     const gettingRegion = RegionApi.getRegionData(stateName, regionName)
     const regionData = await gettingRegion
-    dispatch(setRegionData(regionData))
     updateCachedEndpoints()(dispatch)
+    dispatch(setRegionData(regionData))
+    
     // Get selectedRegion and fly to coordinates
-    const state = getState()
-    const selectedRegion = selectedRegionSelector(state)
+    const reduxState = getState()
+    const selectedRegion = selectedRegionSelector(reduxState)
     if (selectedRegion == null || isEmpty(selectedRegion)) {
       return
     }
+    // Give the JS engine just a second to catch its breath before
+    // Navigating. it gives a better appearance to the user.
+    
 
     // Determine where to go. this might not be the best place to determine this.
-    const selectedStream = selectedStreamObjectSelector(state)
-    const selectedRoad = getSelectedRoadSelector(state)
+    const selectedStream = selectedStreamObjectSelector(reduxState)
+    const selectedRoad = getSelectedRoadSelector(reduxState)
     const isStreamSelected = isEmpty(selectedStream) === false && isEmpty(selectedRoad)
     const isRoadSelected = isEmpty(selectedStream) === false && isEmpty(selectedRoad) === false
     if (isStreamSelected) {
@@ -88,9 +98,8 @@ export const fetchRegionData = (stateName: string, regionName: string) => async 
       return
     }
 
-    // Give the JS engine just a second to catch its breath before
-    // Navigating. it gives a better appearance to the user.
-    setTimeout(() => dispatch(selectMapFeature(selectedRegion)), 300)
+    
+    
   } catch (error) {
     console.error(error) // eslint-disable-line
     dispatch(setRegionDataFailed())

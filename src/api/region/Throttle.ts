@@ -18,14 +18,15 @@ export const throttleReduce = async ops => {
 }
 
 function waitForNext(op) {
+  console.log('waitin')
   return new Promise((resolve, reject) => {
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       try {
         const result = op()
         resolve(result)
       } catch (error) {
         reject(error)
       }
-    })
+    }, 50)
   })
 }

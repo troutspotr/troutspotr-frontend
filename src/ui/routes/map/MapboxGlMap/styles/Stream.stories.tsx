@@ -28,8 +28,8 @@ import { boolean, number } from '@storybook/addon-knobs'
 import { createPalBorderLayer, createPalLayer } from './Pal.layers'
 import { formatStateData } from 'api/usState/FormatStateData'
 
-const topojson = require('static/data/v3/mn/driftless.topo.json')
-const stateData = require('static/data/v3/mn/mn.data.json')
+const topojson = require('static/data/v3/id/north-central.topo.json')
+const stateData = require('static/data/v3/id/id.data.json')
 const dictionary = transformGeo(topojson, formatStateData(stateData))
 const stories = storiesOf('Map Styles/Stream', module)
 

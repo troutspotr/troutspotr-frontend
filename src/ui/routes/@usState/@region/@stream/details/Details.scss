@@ -1,8 +1,7 @@
-@import "src/ui/styles/_colors";
-@import "src/ui/styles/_variables";
-@import "src/ui/styles/_fonts";
-// @import "src/ui/styles/NumberCircle";
-// @import "src/ui/styles/ZeldaText";
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/_fonts';
+@import 'src/ui/styles/fallback';
 
 .container {}
 
@@ -76,8 +75,9 @@
   clear: both;
   margin-bottom: 10px;
   display: inline-flex;
-  width: 100%;
-  color: $white;
+  transition: color 800ms;
+  @include fallback(color, --text-color-primary, $backgroundDark);
+  text-decoration: none;
 }
 
 .listItem {
@@ -101,9 +101,9 @@
 .selectedItem {
   composes: listItem;
   font-weight: bold;
-  color: $white;
   text-decoration: underline;
   margin-bottom: 0px;
+  margin-left: 0.3rem;
 }
 
 .listText {
@@ -162,29 +162,9 @@
   // the only time you'll see black in this app
 }
 
-.selectedPublicBridgeTroutStream {
-  // composes: publicBridgeTroutStream;
-  // composes: selectedBridge;
-  // color: $green;
-  // background-color: $green;
-}
-
-.selectedBridgeOverTroutStream {
-  // composes: bridgeOverTroutStream;
-  // composes: selectedBridge;
-  // color: $blue;
-  // background-color: $blue;
-}
-
-.selectedUnsafeBridgeOverTroutStream {
-  // composes: unsafeBridgeOverTroutStream;
-  // composes: selectedBridge;
-  // color: $blueGray;
-  // background-color: $blueGray;
-}
-
 .googleLink {
   // color: $blue;
+  @include fallback(color, --blue, $blueDark);
   display: inline;
   text-decoration: none;
   margin-left: 5px;

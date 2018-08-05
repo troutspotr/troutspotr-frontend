@@ -46,7 +46,8 @@ export const createTroutSectionLayerLayer = (
     'line-width': {
       base: 1.5,
       stops: [
-        [1, 1 * widthMultiplier],
+        [1, 0.1 * widthMultiplier],
+        [4.0, 0.1 * widthMultiplier],
         [8.5, 1 * widthMultiplier],
         [10, 1.25 * widthMultiplier],
         [12.5, 6],
@@ -82,7 +83,8 @@ export const createPalLayerLayer = (layerProps: ILayerProperties, sourceId: stri
     'line-width': {
       base: 1.5,
       stops: [
-        [1, 1.1 * widthMultiplier],
+        [1, 0.2 * widthMultiplier],
+        [4.0, 0.2 * widthMultiplier],
         [8.5, 1 * widthMultiplier],
         [10, 1.25 * widthMultiplier],
         [12.5, 8.5],

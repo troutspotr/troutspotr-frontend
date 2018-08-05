@@ -71,6 +71,32 @@ const src = (id, feature, dictionary) => {
     type: GEOJSON_TYPE,
   }
 }
+
+export const buildSources = (
+  streams = null,
+  troutSection = null,
+  palSection = null,
+  restrictionSection = null,
+  pals = null,
+  streamAccessPoint = null,
+  gpsFeature = null,
+  streamCentroids = null,
+  selectedRegion = null,
+  selectedState = null,
+): { [index: string]: any } => {
+  const s = {}
+  src(StyleSourceId.streams, streams, s)
+  src(StyleSourceId.troutStreamSection, troutSection, s)
+  src(StyleSourceId.palRoutes, palSection, s)
+  src(StyleSourceId.restrictionSection, restrictionSection, s)
+  src(StyleSourceId.pals, pals, s)
+  src(StyleSourceId.streamAccessPoint, streamAccessPoint, s)
+  src(StyleSourceId.gps, gpsFeature, s)
+  src(StyleSourceId.centroids, streamCentroids, s)
+  src('region', selectedRegion, s)
+  src('state', selectedState, s)
+  return s
+}
 export const sourceGeometryDictionarySelector = createSelector(
   streamsSelector,
   troutStreamSectionsSelector,
@@ -82,31 +108,7 @@ export const sourceGeometryDictionarySelector = createSelector(
   streamCentroidsSelector,
   selectedRegionSelector,
   selectedStateSelector,
-  (
-    streams,
-    troutSection,
-    palSection,
-    restrictionSection,
-    pals,
-    streamAccessPoint,
-    gpsFeature,
-    streamCentroids,
-    selectedRegion,
-    selectedState,
-  ): { [index: string]: any } => {
-    const s = {}
-    src(StyleSourceId.streams, streams, s)
-    src(StyleSourceId.troutStreamSection, troutSection, s)
-    src(StyleSourceId.palRoutes, palSection, s)
-    src(StyleSourceId.restrictionSection, restrictionSection, s)
-    src(StyleSourceId.pals, pals, s)
-    src(StyleSourceId.streamAccessPoint, streamAccessPoint, s)
-    src(StyleSourceId.gps, gpsFeature, s)
-    src(StyleSourceId.centroids, streamCentroids, s)
-    src('region', selectedRegion, s)
-    src('state', selectedState, s)
-    return s
-  }
+  buildSources
 )
 
 export const mapboxGlSourcesSelector = createSelector(

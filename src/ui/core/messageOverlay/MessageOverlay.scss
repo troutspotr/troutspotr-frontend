@@ -4,6 +4,7 @@
 @import 'src/ui/styles/fallback';
 
 .container {
+  font-size: 0.8rem;
   transition: background-color 800ms;
   @include fallback(background-color, --message-background-color, $messageBackgroundDark);
   position: absolute;

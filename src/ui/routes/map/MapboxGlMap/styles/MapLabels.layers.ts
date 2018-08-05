@@ -845,9 +845,7 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
       id: 'stream_layer-label-line',
       type: 'symbol',
       source: 'streams',
-      // 'source-layer': 'road_label',
       minzoom: 12,
-      // filter: ['in', 'class', 'motorway', 'primary', 'secondary', 'tertiary', 'trunk'],
       layout: {
         'text-size': {
           base: 1,
@@ -931,9 +929,9 @@ export const centroids = (originalLayerProps: ILayerProperties): Layer[] => {
     id: STREAM_CENTROID_LABEL_SM,
     type: 'symbol',
     source: 'stream_centroid',
-    minzoom: 10,
+    minzoom: 9,
     maxzoom: 16.3,
-    filter: ["<", 'trout_stream_section_length', 16],
+    filter: ["<", 'trout_stream_section_length', 25],
     layout: {
       'text-offset': [0.3, 0.1],
       'text-field': '{name}',
@@ -960,7 +958,7 @@ export const centroids = (originalLayerProps: ILayerProperties): Layer[] => {
     source: 'stream_centroid',
     minzoom: 5,
     maxzoom: 16,
-    filter: [">=", 'trout_stream_section_length', 16],
+    filter: [">=", 'trout_stream_section_length', 25],
     layout: {
       'text-offset': [0.3, 0.1],
       'text-field': '{name}',

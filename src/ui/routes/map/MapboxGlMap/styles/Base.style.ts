@@ -8,6 +8,7 @@ import { ILayerProperties } from './ICreateLayer'
 import { getMapLabelLayers, centroids } from './MapLabels.layers'
 import { getRoadsLayers } from './Roads.layers'
 import { getSatelliteLayers } from './Satellite.layers'
+import { buildSources } from '../MapboxGl.style.selectors';
 
 export const createBackgroundLayers = (layerProps: ILayerProperties): Layer[] => {
   const { pallete } = layerProps
@@ -263,7 +264,7 @@ export const createSources = (
   layerProps: ILayerProperties,
   geoJsons?: Array<{ id: string; geojson: {} }>
 ) => {
-  let sources = {}
+  let sources = buildSources()
   const { isOnline } = layerProps
 
   const coreItems = {
@@ -280,12 +281,14 @@ export const createSources = (
 
   if (isOnline) {
     sources = {
+      ...sources,
       ...coreItems,
     }
   }
 
   if (geoJsons == null || geoJsons.length === null) {
-    return sources
+    const defaultEmptySources = buildSources()
+    return { ...defaultEmptySources, ...sources }
   }
 
   return geoJsons.reduce((dictionary, item) => {

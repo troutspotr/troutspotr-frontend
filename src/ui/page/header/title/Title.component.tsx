@@ -7,7 +7,7 @@ export interface ITitleProps {
 export class TitleComponent extends React.PureComponent<ITitleProps> {
   public render() {
     const { children } = this.props
-    return <h4 className={classes.container}>{children}</h4>
+    return <h3 className={classes.container}>{children}</h3>
   }
 }
 

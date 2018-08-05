@@ -99,8 +99,8 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
       // touchZoomRotate: false,
       renderWorldCopies: true,
     }) as Map
-    map.dragRotate.disable()
-    map.touchZoomRotate.disableRotation()
+    // map.dragRotate.disable()
+    // map.touchZoomRotate.disableRotation()
     // TODO: REMOVE THIS
     // map.showCollisionBoxes = true
     if (this.props.debugMode === true) {

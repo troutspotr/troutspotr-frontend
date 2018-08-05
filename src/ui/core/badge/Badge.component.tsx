@@ -27,5 +27,5 @@ export const BadgeComponent: React.SFC<IBadgeProps> = (props): JSX.Element => {
   // const contentClassName = isLong ? classes.contentSmall : classes.content
   const key = `${badgeColor}${fillType === Fill.solid ? 'Solid' : ''}`
   const className = classes[key]
-  return <span className={className}>{safeContent}</span>
+  return <span className={className}><span>{safeContent}</span></span>
 }

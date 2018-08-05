@@ -1,7 +1,7 @@
 import * as React from 'react'
-import RegulationsSummaryContainer from '../../../../core/regulations/RegulationsSummary.container'
+import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 import AccessPointComponent from '../../../@usState/@region/@stream/details/AccessPoint.component'
-import { IStreamObject } from '../../../../../coreTypes/IStreamObject'
+import { IStreamObject } from 'coreTypes/IStreamObject'
 const classes = require('../MapOverlay.scss')
 const AccessPointClasses = require('ui/routes/@usState/@region/@stream/details/Details.scss')
 

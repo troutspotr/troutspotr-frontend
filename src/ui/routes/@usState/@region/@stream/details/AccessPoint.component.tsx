@@ -1,11 +1,20 @@
 import * as React from 'react'
 const classes = require('./Details.scss')
 import { AccessPointFeature } from 'api/region/IRegionGeoJSON'
+import { BadgeComponent, Color, Fill } from 'ui/core/badge/Badge.component';
 /* eslint-disable camelcase */
 // const DEFAULT_ZOOM = 16
 
+export const bridgeTypeToFillColorDictionary = {
+  permissionRequired: Color.privatelyFishable,
+  publicTrout: Color.publiclyFishable,
+  unsafe: Color.unsafeToFish,
+  uninteresting: Color.warning,
+}
+
 export interface IAccessPointsDispatchProps {
   onHover(feature: AccessPointFeature | null): void
+  onClickAccessPoint(feature: AccessPointFeature | null): void
 }
 
 export interface IAccessPointProps extends IAccessPointsDispatchProps {
@@ -39,34 +48,32 @@ class AccessPointComponent extends React.Component<IAccessPointProps> {
     if (location == null) {
       return
     }
-    const hash = `#${this.props.accessPoint.properties.slug}`
-    location.href = hash
-    // Return false
+    if (this.props.onClickAccessPoint != null) {
+      this.props.onClickAccessPoint(this.props.accessPoint)
+    }
   }
 
-  public openGoogleMaps(e) {
+  public openGoogleMaps(e, selectedAccessPoint: AccessPointFeature) {
     // When it rains it pours. Because of the iOS add to start menu
     // Bug, we have to manually do this. yuck. whatever.
     e.preventDefault()
-    const address = e.target.getAttribute('href')
+    const address = `https://www.google.com/maps/search/?api=1&query=${selectedAccessPoint.properties.centroid_latitude},${selectedAccessPoint.properties.centroid_longitude}&basemap=satellite&zoom=15`
     window.open(address, '_blank')
     // AnonymousAnalyzerApi.recordEvent('open_in_google_maps', { address })
     return false
   }
 
-  public renderOpenInGoogleMapsLink(selectedAccessPoint) {
+  public renderOpenInGoogleMapsLink(selectedAccessPoint: AccessPointFeature) {
+    
     return (
-      <span onClick={this.openGoogleMaps} className={classes.googleLink}>
+      <span onClick={(e) => this.openGoogleMaps(e, selectedAccessPoint)} className={classes.googleLink}>
         Google Maps
       </span>
     )
   }
 
-  public mapAccessPoints(bridge, defaultBridgeClass, selectedBridgeClass, isSelected, isHovered) {
-    const { street_name } = bridge.properties
-    const letter = bridge.properties.alphabetLetter
-    const bridgeClass = isSelected ? selectedBridgeClass : defaultBridgeClass
-    const badgeElement = <span className={bridgeClass}>{letter}</span>
+  public mapAccessPoints(bridge: AccessPointFeature, isSelected, isHovered) {
+    const { street_name, alphabetLetter, bridgeType } = bridge.properties
     const textClass = isSelected ? classes.selectedItem : classes.listText
     const listItemClass = isHovered ? classes.hoveredItem : classes.listItem
     const hash = `#${this.props.accessPoint.properties.slug}`
@@ -78,7 +85,7 @@ class AccessPointComponent extends React.Component<IAccessPointProps> {
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
       >
-        <span>{badgeElement}</span>
+        <BadgeComponent fillType={isSelected ? Fill.solid : Fill.hollow} content={alphabetLetter} badgeColor={bridgeTypeToFillColorDictionary[bridgeType]} />
         <span className={textClass}>
           {street_name} {isSelected && this.renderOpenInGoogleMapsLink(bridge)}
         </span>
@@ -87,8 +94,8 @@ class AccessPointComponent extends React.Component<IAccessPointProps> {
   }
 
   public render() {
-    const { accessPoint, selectedClass, defaultClass, isSelected, isHovered } = this.props
-    return this.mapAccessPoints(accessPoint, defaultClass, selectedClass, isSelected, isHovered)
+    const { accessPoint, isSelected, isHovered } = this.props
+    return this.mapAccessPoints(accessPoint, isSelected, isHovered)
   }
 }
 

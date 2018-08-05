@@ -22,6 +22,20 @@ $circle-size: 0.9em;
   transform: translateY(0.05em);
   @include heavy-font;
   transition: color 800ms, background-color 800ms;
+  // box-shadow: 0px 0px 0px black;
+  box-shadow: 0px 0px 0px 1px black;
+  // ::before {
+  //   content: '';
+  //   // background-color: purple;
+  //   border:1px solid black;
+  //   border-radius: 50%;
+  // }
+
+  // :after {
+  //   content: '';
+  //   background-color: purple;
+  //   border:1px solid #f30;
+  // }
 }
 
 .numberCircle::first-line {
@@ -38,6 +52,7 @@ $circle-size: 0.9em;
 @mixin make-hollow($color) {
   composes: numberCircle;
   color: $color;
+  text-shadow: 0px 0px 0px 0.06rem black;
 }
 
 .yellow {

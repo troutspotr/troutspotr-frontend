@@ -32,6 +32,7 @@
     --badge-unsafe-to-fish-content: #{darken($silver, 40)};
     --badge-unsafe-to-fish-border: #{$silver};
     --some-Variable: #{$greenDark};
+    font-weight: bold;
   }
 
   .ts-dark {
@@ -56,6 +57,7 @@
     // exceptions. Consider importing these directly later? no idea.
     --badge-unsafe-to-fish-content: #{lighten($blueGrayDark, 40)};
     --badge-unsafe-to-fish-border: #{$blueGrayDark};
+    font-weight: bold;
   }
 
   html,

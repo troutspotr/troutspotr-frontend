@@ -10,6 +10,7 @@ import { IPageLayoutProps } from '../page/IPageLayout'
 import { homeContainerMapDispatchToProps, homeComponentMapStateToProps } from './Home.container'
 import ErrorBoundaryComponent from '../core/errorBoundary/ErrorBoundary.component'
 import { PageLegendContainer } from '../page/page-legend/PageLegend.layout.container'
+import PageTitleContainer from 'ui/page/pageTitle/PageTitle.container'
 export const HomeComponent = props => {
   return <div />
 }
@@ -48,9 +49,16 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
     )
   }
 
+  public renderPageTitleComponent() {
+    return <ErrorBoundaryComponent onError={this.props.handleError}>
+      <PageTitleContainer />
+    </ErrorBoundaryComponent>
+  }
+
   public renderContent() {
     return (
       <>
+        {this.renderPageTitleComponent()}
         <ErrorBoundaryComponent onError={this.props.handleError}>
           <OfflineContainer />
         </ErrorBoundaryComponent>

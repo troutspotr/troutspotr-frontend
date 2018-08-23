@@ -16,9 +16,9 @@ export const getPageTitleSelector = createSelector(
     }
 
     if (streamTitle != null) {
-      return `${streamTitle}, (${selectedRegion.properties.state_short_name})`
+      return `${streamTitle}, (${selectedRegion.properties.state_short_name.toUpperCase()})`
     }
 
-    return selectedRegion.properties.long_name
+    return `${selectedRegion.properties.long_name}, (${selectedRegion.properties.state_short_name.toUpperCase()})`
   }
 )

@@ -1,13 +1,8 @@
 import * as React from 'react'
 require('mapbox-gl/dist/mapbox-gl.css')
-// require('mapbox-gl/dist/svg/mapboxgl-ctrl-compass.svg')
-// require('mapbox-gl/dist/svg/mapboxgl-ctrl-geolocate.svg')
-// require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg')
-// require('mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg')
 
 import groupBy from 'lodash-es/groupBy'
 import { Map, Style as MapboxStyle } from 'mapbox-gl'
-// import { ICameraProps } from '../ICameraProps'
 const styles = require('./MapboxGl.scss')
 
 type MapboxGeoJSONLayers = Array<any>
@@ -40,7 +35,7 @@ export interface IMapboxGlState {
 }
 export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGlState> {
   private mapContainer: HTMLDivElement
-  static defaultProps = {
+  private static defaultProps = {
     debugMode: process.env.NODE_ENV === 'development'
   }
   constructor(props, state) {
@@ -61,7 +56,6 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
 
     const groups = groupBy(features, f => f.layer.id)
-    console.log(groups)
     this.props.onFeaturesSelected(groups)
   }
 
@@ -108,9 +102,6 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
 
     map.on('click', this.onClick)
-    map.on('zoom', e => {
-      console.log(map.getZoom())
-    })
     map.on('load', e => {
       this.setState(
         () => {

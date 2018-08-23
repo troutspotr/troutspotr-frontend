@@ -34,7 +34,6 @@ stories.add('all combos', () => {
   const restrictions = []
   const restrictionText = text('text', 'some text that goes on and on and maybe goes on a little too long')
   const length = text('length', '20.3 mi')
-  const heights = [0.5, 0.75, 1.0, 1.25, 1.5]
   const constHeight =  number('height multiplier', 1, {
     range: true,
     min: 0.1,

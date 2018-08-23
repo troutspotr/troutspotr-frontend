@@ -3,7 +3,6 @@ import { IAccessPointGeoJsonProps } from 'coreTypes/accessPoint/IAccessPoint'
 /* eslint-disable camelcase */
 const kebabCase = require('lodash-es/kebabCase').default
 const has = require('lodash-es/has').default
-
 export enum CrossingTypes {
   publicTrout = 'publicTrout',
   permissionRequired = 'permissionRequired',
@@ -52,7 +51,9 @@ export const filterBadAccessPoints = (ap: AccessPointFeature): boolean => {
   const isTooClose =
     ap.properties.is_previous_neighbor_same_road &&
     ap.properties.distance_to_previous_neighbor < MINIMUM_LENGTH_MILES
-  if (isTooClose) {
+
+  const isTooCloseAndNonZero = isTooClose && ap.properties.distance_to_previous_neighbor > 0
+  if (isTooCloseAndNonZero) {
     return false
   }
   return true

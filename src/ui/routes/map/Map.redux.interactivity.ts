@@ -5,10 +5,9 @@ import { createAction, handleActions } from 'redux-actions'
 import { BOUNDING_BOX_OF_LOWER_48_STATES, mapCameraActions } from './Map.redux.camera'
 import { AllGeoJSON, Coord, featureCollection } from '@turf/helpers'
 import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_CIRCLE_BORDER_LAYER, ACCESSPOINT_CIRCLE_LAYER } from './MapboxGlMap/styles/AccessPoints.layers';
-import { TROUT_SECTION_LAYER_ID, STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
+import { STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
 import { streamAccessPointIdDictionarySelector, troutStreamDictionarySelector } from '../@usState/@region/Region.selectors';
 import { browserHistory } from 'react-router';
-import { access } from 'fs';
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -58,7 +57,7 @@ export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
   const url = `/${selectedStateIdSelector(reduxState)}/${selectedRegionIdSelector(reduxState)}/${stream.properties.slug}`
   browserHistory.push(url)
   try {
-    const allTroutSectionsOfSelectedStream = featureCollection(streamObject.sections)
+    const allTroutSectionsOfSelectedStream = featureCollection(streamObject.sections as any)
     dispatch(selectMapFeature(allTroutSectionsOfSelectedStream))
   } catch(e) {
   }
@@ -155,18 +154,6 @@ export const selectFoculPoint = (feature: Coord) => (dispatch, getState) => {
   const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
   const newCamera = { bounds: newCorners, pitch: 60 }
   dispatch(mapCameraActions.setCamera(newCamera))
-}
-
-export const navigateUp = () => (dispatch, getState) => {
-  const reduxState = getState()
-  const accessPointDictionary = null
-  const troutStreamDictionary = {}
-  const selectedRegion = {}
-  const selectedState = 'mn'
-
-
-  const url = `/${selectedState}`
-  return
 }
 
 // Set the map to the widest allowable bounds of the entire

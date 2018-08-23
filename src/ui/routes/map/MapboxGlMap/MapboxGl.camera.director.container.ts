@@ -1,5 +1,5 @@
 import { Map } from 'mapbox-gl'
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { connect } from 'react-redux'
 import { AccessPointFeature } from 'api/region/IRegionGeoJSON'
 import { IStreamObject } from 'coreTypes/IStreamObject'
@@ -85,8 +85,6 @@ class MapboxGlCameraDirectorComponent extends Component<IMapboxGlCameraDirectorP
     const boostBack = (normalizedBoost * boostMultiplier) + 0.2
     return currentZoom - boostBack
   }
-
-
 
   render () {
     return null

@@ -13,7 +13,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const paths = require('./paths')
 const getClientEnvironment = require('./env')
 const { preactAliases } = require('./preactAliases')
-
+var OfflinePlugin = require('offline-plugin')
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath
@@ -331,36 +331,64 @@ module.exports = {
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
+    new OfflinePlugin({
+      // publicPath: config.compiler_public_path,
+      publicPath: '/',
+      caches: 'all',
+      externals: [
+        'data/v3/TableOfContents.topo.json',
+        'map-fonts/roboto-regular/0-255.pbf',
+        'map-fonts/roboto-regular/65024-65279.pbf',
+        'map-fonts/roboto-regular/12288-12543.pbf',
+        'map-fonts/roboto-bold/0-255.pbf',
+        'map-fonts/roboto-bold/12288-12543.pbf',
+      ],
+      cacheMaps: [{
+        match: function (requestUrl) {
+          return new URL('/', location)
+        },
+        requestTypes: ['navigate'],
+      }],
+      updateStrategy: 'all',
+      AppCache: {
+        FALLBACK: { '/': '/' },
+      },
+      ServiceWorker: {
+        navigateFallbackURL: '/',
+      },
+      relativePaths: false,
+    }),
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
-    new SWPrecacheWebpackPlugin({
-      // By default, a cache-busting query parameter is appended to requests
-      // used to populate the caches, to ensure the responses are fresh.
-      // If a URL is already hashed by Webpack, then there is no concern
-      // about it being stale, and the cache-busting can be skipped.
-      dontCacheBustUrlsMatching: /\.\w{8}\./,
-      filename: 'service-worker.js',
-      logger(message) {
-        if (message.indexOf('Total precache size is') === 0) {
-          // This message occurs for every build and is a bit too noisy.
-          return
-        }
-        if (message.indexOf('Skipping static resource') === 0) {
-          // This message obscures real errors so we ignore it.
-          // https://github.com/facebookincubator/create-react-app/issues/2612
-          return
-        }
-        console.log(message)
-      },
-      minify: true,
-      // For unknown URLs, fallback to the index page
-      navigateFallback: publicUrl + '/index.html',
-      // Ignores URLs starting from /__ (useful for Firebase):
-      // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
-      navigateFallbackWhitelist: [/^(?!\/__).*/],
-      // Don't precache sourcemaps (they're large) and build asset manifest:
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-    }),
+    // SRA DOESNT WANT THIS
+    // new SWPrecacheWebpackPlugin({
+    //   // By default, a cache-busting query parameter is appended to requests
+    //   // used to populate the caches, to ensure the responses are fresh.
+    //   // If a URL is already hashed by Webpack, then there is no concern
+    //   // about it being stale, and the cache-busting can be skipped.
+    //   dontCacheBustUrlsMatching: /\.\w{8}\./,
+    //   filename: 'service-worker.js',
+    //   logger(message) {
+    //     if (message.indexOf('Total precache size is') === 0) {
+    //       // This message occurs for every build and is a bit too noisy.
+    //       return
+    //     }
+    //     if (message.indexOf('Skipping static resource') === 0) {
+    //       // This message obscures real errors so we ignore it.
+    //       // https://github.com/facebookincubator/create-react-app/issues/2612
+    //       return
+    //     }
+    //     console.log(message)
+    //   },
+    //   minify: true,
+    //   // For unknown URLs, fallback to the index page
+    //   navigateFallback: publicUrl + '/index.html',
+    //   // Ignores URLs starting from /__ (useful for Firebase):
+    //   // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
+    //   navigateFallbackWhitelist: [/^(?!\/__).*/],
+    //   // Don't precache sourcemaps (they're large) and build asset manifest:
+    //   staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+    // }),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
     // solution that requires the user to opt into importing specific locales.

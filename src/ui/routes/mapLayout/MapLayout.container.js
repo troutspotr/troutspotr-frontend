@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { MapLayoutComponent } from 'ui/core/map/MapLayout.component'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 
-export interface 
+// export interface 
 
-export class FooterLayout extends React.PureComponent<IFooterLayoutProps> {
+// export class FooterLayout extends React.PureComponent<IFooterLayoutProps> {
 
-}
+// }

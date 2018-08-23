@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react'
-import { MessageOverlayComponent, IMessageOverlayProps } from '../../core/messageOverlay/MessageOverlay.component';
+import { MessageOverlayComponent } from '../../core/messageOverlay/MessageOverlay.component';
 import { createStructuredSelector } from 'reselect';
 import { IReduxState } from '../../redux/Store.redux.rootReducer';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group'
 import { isPageLegendShownSelector, cachedRegionsTextSelector } from './PageLegend.selectors';
-const styles = require('./PageLegend.scss')
 
 export interface IPageLegendDispatchProps {
 

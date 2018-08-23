@@ -1,7 +1,7 @@
 import * as React from 'react'
 const classes = require('./Details.scss')
 import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
-import RestrictionComponent from 'ui/core/regulations/Restriction.component'
+import { RestrictionComponent } from '../../../../../core/regulations/restriction/Restriction.component';
 // Import { Link } from 'react-router'
 /* eslint-disable camelcase */
 

@@ -12,6 +12,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const getClientEnvironment = require('./env')
 const paths = require('./paths')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+var OfflinePlugin = require('offline-plugin')
 // const { CheckerPlugin } = require('awesome-typescript-loader')
 const { preactAliases } = require('./preactAliases')
 
@@ -269,6 +270,34 @@ module.exports = {
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new BundleAnalyzerPlugin(),
+    // new OfflinePlugin()
+    new OfflinePlugin({
+      // publicPath: config.compiler_public_path,
+      publicPath: '/',
+      caches: 'all',
+      externals: [
+        'data/v3/TableOfContents.topo.json',
+        'map-fonts/roboto-regular/0-255.pbf',
+        'map-fonts/roboto-regular/65024-65279.pbf',
+        'map-fonts/roboto-regular/12288-12543.pbf',
+        'map-fonts/roboto-bold/0-255.pbf',
+        'map-fonts/roboto-bold/12288-12543.pbf',
+      ],
+      cacheMaps: [{
+        match: function (requestUrl) {
+          return new URL('/', location)
+        },
+        requestTypes: ['navigate'],
+      }],
+      updateStrategy: 'all',
+      AppCache: {
+        FALLBACK: { '/': '/' },
+      },
+      ServiceWorker: {
+        navigateFallbackURL: '/',
+      },
+      relativePaths: false,
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

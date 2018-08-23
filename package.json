@@ -24,6 +24,7 @@
     "mapbox-gl": "0.47.0",
     "node-sass": "^4.9.0",
     "object-assign": "4.1.1",
+    "offline-plugin": "^5.0.5",
     "promise": "8.0.1",
     "react": "^16.2.0",
     "react-clipboard.js": "^1.1.3",

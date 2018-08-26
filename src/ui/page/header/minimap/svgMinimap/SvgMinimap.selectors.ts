@@ -14,7 +14,7 @@ import {
 
 import boundingBox from '@turf/bbox'
 import { featureCollection } from '@turf/helpers'
-import { Feature, FeatureCollection, GeometryObject, MultiPolygon } from 'geojson'
+import { Feature, FeatureCollection, GeometryObject, MultiPolygon, Point } from 'geojson'
 import { updateRegionCachedStatus } from '../../../../../api/tableOfContents/TableOfContentsApi'
 import { IRegion } from '../../../../../coreTypes/tableOfContents/IRegion'
 import { IUsState } from '../../../../../coreTypes/tableOfContents/IState'
@@ -26,6 +26,9 @@ import {
   isOfflineSelector
 } from '../../../offline/Offline.selectors'
 import { ISvgMinimapStateProps } from './SvgMinimap.component'
+import { displayedCentroidsSelector, displayedCentroidsGeoJsonSelector } from 'ui/routes/@usState/UsState.selectors';
+import { searchTextSelector } from 'ui/core/Core.selectors'
+import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid';
 
 export const DEFAULT_CAMERA_PROPS = {
   bbox: [[-124.7317182880231, 31.332200267081696], [-96.43933500000001, 49.00241065464817]],
@@ -125,9 +128,6 @@ export const getMinimapCamera = (
     return defaultCamera
   }
 
-  if (isExpanded === false) {
-  }
-
   if (states.features.length > 0) {
     return createCameraObjectFromFeature(states)
   }
@@ -170,6 +170,39 @@ export const selectedUsStatesSelector = createSelector(
     }
 
     return activeOrSelectedFeatures as UsStateFeatureCollection
+  }
+)
+
+const EMPTY_CENTROID_GEO_JSON: FeatureCollection<Point, IStreamCentroid> = {
+  "type": "FeatureCollection",
+  "features": []
+}
+export const filteredCentroidsWithinSelectedUsStateSelector = createSelector(
+  selectedUsStatesSelector,
+  displayedCentroidsGeoJsonSelector,
+  searchTextSelector,
+  isExpandedSelector,
+  (
+    selectedUsState,
+    displayedCentroidGeoJsonFeatureCollection,
+    searchText,
+    isExpanded,
+  ): FeatureCollection<Point, IStreamCentroid> => {
+    if (isExpanded === false) {
+      return EMPTY_CENTROID_GEO_JSON
+    }
+    if (searchText.length === 0) {
+      return EMPTY_CENTROID_GEO_JSON
+    }
+
+    if (selectedUsState == null || selectedUsState.features.length === 0 
+      || displayedCentroidGeoJsonFeatureCollection == null || displayedCentroidGeoJsonFeatureCollection.features.length === 0) {
+      return EMPTY_CENTROID_GEO_JSON
+    }
+    
+    // TODO: filter by selected state if possible
+    console.log(displayedCentroidGeoJsonFeatureCollection)
+    return displayedCentroidGeoJsonFeatureCollection
   }
 )
 
@@ -268,5 +301,6 @@ export const getSvgMinimapStateProps = createStructuredSelector<IReduxState, ISv
     camera: minimapCameraSelector,
     isOffline: isOfflineSelector,
     isExpanded: isExpandedSelector,
+    displayedStreams: filteredCentroidsWithinSelectedUsStateSelector,
   }
 )

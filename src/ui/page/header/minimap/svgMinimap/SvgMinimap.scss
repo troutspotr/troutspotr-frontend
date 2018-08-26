@@ -117,6 +117,14 @@
   @include fallback(stroke, --blue, $blueDark);
 }
 
+.streamCentroids {
+  composes: polygon;
+  @include fallback(stroke, --text-color-primary, $black);
+  @include fallback(fill, --blue, $blueDark);
+  stroke-width: 0.01em;
+  // stroke-width: 0.004em;
+}
+
 @keyframes dash {
   to {
     stroke-dashoffset: 1500;

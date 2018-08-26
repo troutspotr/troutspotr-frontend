@@ -44,6 +44,10 @@ export const createAccessPointCircleLabelLayer = (
      },
   }
 
+  if (layerProps.streamFilter != null) {
+    label.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
+  }
+
   return label
 }
 
@@ -72,6 +76,10 @@ export const createAccessPointRoadLabelLayer = (
     },
   }
 
+  if (layerProps.streamFilter != null) {
+    label.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
+  }
+
   return label
 }
 
@@ -93,6 +101,10 @@ export const createAccessPointCircleBorderLayer = (
       'circle-color': color,
       'circle-radius': borderRadius,
     },
+  }
+
+  if (layerProps.streamFilter != null) {
+    border.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
   }
   return border
 }
@@ -125,5 +137,10 @@ export const createAccessPointCircleLayerLayer = (
   }
 
   const border = createAccessPointCircleBorderLayer(layerProps, sourceId)
-  return [border, colorCircle]
+  return [border, colorCircle].map(x => {
+    if (layerProps.streamFilter != null) {
+      x.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
+    }
+    return x
+  })
 }

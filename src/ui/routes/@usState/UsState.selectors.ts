@@ -11,6 +11,7 @@ import { LoadingStatus } from 'coreTypes/Ui'
 import { selectedStreamIdSelector } from '../../Location.selectors'
 import { selectedStateIdSelector } from 'ui/Location.selectors'
 import { IUsStateComponentStateProps } from './UsState.component'
+import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid';
 const emptyCentroids = []
 export const usStateReduxStateSelector = (reduxState: IReduxState): IUsStateReduxState =>
   reduxState.usState
@@ -95,7 +96,7 @@ export const getWatersObjectSelector = createSelector(
 
 export const streamCentroidsSelector = createSelector(
   [stateDataLoadingStatusSelector, streamCentroidsStateSelector],
-  (isLoading, streamCentroids) => {
+  (isLoading, streamCentroids): IStreamCentroid[] => {
     if (isLoading !== LoadingStatus.Success) {
       return emptyCentroids
     }

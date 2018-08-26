@@ -8,6 +8,7 @@ export interface ILayerProperties {
   satelliteZoomLevel: number
   satellitePrefetchZoomLevel: number
   satelliteTransitionScalar: number
+  streamFilter: number[],
   satelliteResolution: 128 | 256 | 512 | 1024
   roadTransparencyZoomLevel: number
   roadTransparency: number
@@ -34,6 +35,7 @@ export const defaultLayerProperties = (): ILayerProperties => {
     isOnline: false,
     isHighContrastEnabled: false,
     satelliteZoomLevel: 14,
+    streamFilter: null,
     satellitePrefetchZoomLevel: 13,
     satelliteTransitionScalar: 0.3,
     satelliteResolution: 256,
@@ -46,12 +48,4 @@ export const defaultLayerProperties = (): ILayerProperties => {
       permissionRequiredRadius: 6,
     },
   }
-}
-
-export const darkModeLayerProperties = (): ILayerProperties => {
-  return null
-}
-
-export const highContrastkModeLayerProperties = (): ILayerProperties => {
-  return null
 }

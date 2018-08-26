@@ -28,7 +28,7 @@ import { DarkMapColors, LightMapColors } from './styles/MapColors'
 import * as palLayersLib from './styles/Pal.layers'
 import * as streamLayersLib from './styles/Stream.layers'
 import { StyleSourceId } from './styles/Style.constants'
-// import { streamCentroidsSelector } from '../../@usState/UsState.selectors';
+import { displayedCentroidsSelector } from 'ui/routes/@usState/UsState.selectors';
 
 const DEFAULT_LAYER_PROPS = defaultLayerProperties()
 
@@ -48,13 +48,16 @@ export const layerPropertiesSelector = createSelector(
   themeSelector,
   streamSettingsSelector,
   isOfflineSelector,
-  (theme: Theme, streamSettings: IStreamSettings, isOffline: boolean): ILayerProperties => {
+  displayedCentroidsSelector,
+  (theme: Theme, streamSettings: IStreamSettings, isOffline: boolean, displayedCentroids): ILayerProperties => {
     const pallete = theme === Theme.dark ? DarkMapColors : LightMapColors
+    const filter = displayedCentroids.map(x => x.gid)
     const layerProps = {
       ...DEFAULT_LAYER_PROPS,
       pallete,
       isOnline: isOffline === false,
       isHighContrastEnabled: theme === Theme.light,
+      streamFilter: filter,
       streamSettings,
     }
 

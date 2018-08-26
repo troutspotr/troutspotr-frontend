@@ -7,7 +7,7 @@ export const PAL_LAYER_ID = 'pal_layer'
 export const RESTRICTION_SECTION_HIGH_LAYER = 'restriction_layer_high'
 export const RESTRICTION_SECTION_LOW_LAYER = 'restriction_layer_low'
 export const createStreamLayer = (layerProps: ILayerProperties, sourceId: string): Layer[] => {
-  const { pallete, streamSettings } = layerProps
+  const { pallete, streamSettings, streamFilter = [] } = layerProps
   const lineLayout: LineLayout = {
     'line-cap': 'round',
     'line-join': 'round',
@@ -23,6 +23,10 @@ export const createStreamLayer = (layerProps: ILayerProperties, sourceId: string
     source: sourceId,
     layout: lineLayout,
     paint: linePaint,
+  }
+
+  if (streamFilter != null) {
+    streamStyle.filter = ['in', 'gid', ...streamFilter]
   }
 
   return [streamStyle]
@@ -64,6 +68,11 @@ export const createTroutSectionLayerLayer = (
     paint: linePaint,
   }
 
+  if (layerProps.streamFilter != null) {
+    streamStyle.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
+  }
+
+
   return [streamStyle]
 }
 
@@ -99,6 +108,10 @@ export const createPalLayerLayer = (layerProps: ILayerProperties, sourceId: stri
     source: sourceId,
     layout: lineLayout,
     paint: linePaint,
+  }
+
+  if (layerProps.streamFilter != null) {
+    streamStyle.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
   }
 
   return [streamStyle]

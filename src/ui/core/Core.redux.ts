@@ -101,7 +101,11 @@ export const setAgreementState = createAction(CORE_SET_AGREEMENT_STATE)
 const updateSearchTextAction = createAction(GEO_UPDATE_SEARCH_TEXT, item => item)
 // tslint:disable-next-line:typedef
 export const updateSearchText = (searchText: string) => async (dispatch): Promise<void> => {
-  const sanitizedString = searchText == null ? '' : searchText.trim()
+  const sanitizedString = searchText == null
+    ? ''
+    : searchText.trim().length === 0
+      ? searchText.trim()
+      : searchText
   dispatch(updateSearchTextAction(sanitizedString))
 }
 

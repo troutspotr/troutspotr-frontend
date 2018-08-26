@@ -12,6 +12,8 @@ import { selectedStreamIdSelector } from '../../Location.selectors'
 import { selectedStateIdSelector } from 'ui/Location.selectors'
 import { IUsStateComponentStateProps } from './UsState.component'
 import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid';
+import { featureCollection, point, Point } from '@turf/helpers';
+import { FeatureCollection } from 'geojson';
 const emptyCentroids = []
 export const usStateReduxStateSelector = (reduxState: IReduxState): IUsStateReduxState =>
   reduxState.usState
@@ -131,6 +133,21 @@ export const displayedCentroidsSelector = createSelector(
     })
 
     return filteredCentroids
+  }
+)
+
+const EMPTY_CENTROID_GEO_JSON: FeatureCollection<Point, IStreamCentroid> = {
+  "type": "FeatureCollection",
+  "features": []
+}
+export const displayedCentroidsGeoJsonSelector = createSelector(
+  displayedCentroidsSelector,
+  (centroids): FeatureCollection<Point, IStreamCentroid> => {
+    if (centroids == null || centroids.length === 0) {
+      return EMPTY_CENTROID_GEO_JSON
+    }
+
+    return featureCollection(centroids.map(c => point(c.centroid, c, { id: c.gid })))
   }
 )
 

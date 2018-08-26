@@ -45,7 +45,7 @@ export const hasAgreedToTermsSelector = (reduxState: IReduxState): boolean =>
 // export const streamCentroidsGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.streamCentroidsGeoJson
 export const tableOfContentsLoadingStatusSelector = (reduxState: IReduxState): LoadingStatus =>
   reduxState.core.tableOfContentsLoadingStatus
-export const searchTextSelector = (reduxState: IReduxState): string => reduxState.core.searchText
+export const searchTextSelector = (reduxState: IReduxState): string => (reduxState.core.searchText || '')
 
 export const viewSelector = (reduxState: IReduxState): View => reduxState.core.view
 

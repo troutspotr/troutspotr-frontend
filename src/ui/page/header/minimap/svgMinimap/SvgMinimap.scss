@@ -83,6 +83,7 @@
   text-anchor: middle;
   @include fallback(fill, --text-color-primary, $offTextDark);
   user-select: none;
+  text-transform: uppercase;
 }
 
 .stateLabelsInactive {

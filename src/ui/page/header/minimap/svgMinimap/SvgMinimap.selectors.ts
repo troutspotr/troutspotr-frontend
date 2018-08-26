@@ -74,18 +74,19 @@ export const safeSelectedRegionPathNameForMinimap = createSelector(
     selectedMinimapRegionPathName,
     selectedMinimapStateName
   ): string => {
+    const defaultSelectedRegion = selectedStateParam != null && selectedRegionParam != null
+      ? `${selectedStateParam}/${selectedRegionParam}`
+      : null 
     if (isExpanded === false) {
       // if it's collapsed and theres a URL for both the state and region, then return region.
-      if (selectedStateParam != null && selectedRegionParam != null) {
-        return `${selectedStateParam}/${selectedRegionParam}`
-      }
+      return defaultSelectedRegion
     }
-
     if (selectedMinimapStateName != null && selectedMinimapRegionPathName != null) {
       const path = `${selectedMinimapRegionPathName}`
       return path
     }
-    return null
+
+    return defaultSelectedRegion
   }
 )
 

@@ -1,6 +1,11 @@
 import { createAction, handleActions } from 'redux-actions'
 import { IMinimapSelection } from 'ui/core/Core.redux'
 import { browserHistory } from 'react-router'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer';
+import { selectedRegionSelector } from 'ui/core/Core.selectors';
+import { regionLoadingStatusSelector } from 'ui/routes/@usState/@region/Region.selectors';
+import { LoadingStatus } from 'coreTypes/Ui';
+import { selectMapFeature } from 'ui/routes/map/Map.redux.interactivity';
 
 export interface IMinimapReduxState {
   isExpanded: boolean
@@ -30,15 +35,21 @@ export const setSelectedMinimapGeometry = createAction(
 )
 
 export const handleRegionSelection = (minimapSelection: IMinimapSelection) => async (
-  dispatch
+  dispatch, getState
 ): Promise<void> => {
   if (minimapSelection == null || minimapSelection.usStateShortName == null) {
     return
   }
-
   dispatch(setSelectedMinimapGeometry(minimapSelection))
-
-  if (minimapSelection.regionPathName != null) {
+  const reduxState = getState() as IReduxState
+  const region = selectedRegionSelector(reduxState)
+  const isRegionLoading = regionLoadingStatusSelector(reduxState)
+  const isRegionBeingViewedRightNow = isRegionLoading === LoadingStatus.Success && region != null && region.properties.path === minimapSelection.regionPathName
+  if (isRegionBeingViewedRightNow) {
+    // reset the view to the region.
+    dispatch(selectMapFeature(region))
+    dispatch(setIsExpanded(false))
+  } else if (minimapSelection.regionPathName != null) {
     setTimeout(() => browserHistory.push(`/${minimapSelection.regionPathName}`), 150)
   }
 }

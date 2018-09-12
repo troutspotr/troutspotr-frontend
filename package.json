@@ -45,21 +45,7 @@
     "reselect": "^3.0.1",
     "typings-for-css-modules-loader": "^1.7.0",
     "url-loader": "0.5.9",
-    "whatwg-fetch": "2.0.3"
-  },
-  "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
-    "test:ci": "CI=true node scripts/test.js --env=jsdom --forceExit",
-    "test:inspect": "node --inspect-brk=58585 scripts/test.js --runInBand",
-    "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/ui/core/**/*.{ts,tsx}\"",
-    "lint:fix": "node_modules/.bin/tslint --project tsconfig.json \"src/ui/**/*.selectors.ts\" --fix --format codeFrame",
-    "storybook": "cross-env NODE_PATH=src/ start-storybook -p 6006 -s src/static",
-    "build-storybook": "build-storybook",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json"
-  },
-  "devDependencies": {
+    "whatwg-fetch": "2.0.3",
     "@storybook/addon-actions": "^3.3.15",
     "@storybook/addon-knobs": "^3.3.15",
     "@storybook/addon-links": "^3.3.15",
@@ -114,6 +100,22 @@
     "webpack-bundle-analyzer": "^2.10.0",
     "webpack-dev-server": "2.7.1",
     "webpack-manifest-plugin": "1.2.1"
+  },
+  "scripts": {
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js --env=jsdom",
+    "test:ci": "CI=true node scripts/test.js --env=jsdom --forceExit",
+    "test:inspect": "node --inspect-brk=58585 scripts/test.js --runInBand",
+    "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/ui/core/**/*.{ts,tsx}\"",
+    "lint:fix": "node_modules/.bin/tslint --project tsconfig.json \"src/ui/**/*.selectors.ts\" --fix --format codeFrame",
+    "storybook": "cross-env NODE_PATH=src/ start-storybook -p 6006 -s src/static",
+    "build-storybook": "build-storybook",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "heroku-postbuild": "node scripts/build.js"
+  },
+  "devDependencies": {
+    
   },
   "jest": {
     "mapCoverage": true,

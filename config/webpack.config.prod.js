@@ -122,12 +122,13 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Typescript runs.
-      {
-        test: /\.(ts|tsx)$/,
-        loader: require.resolve('tslint-loader'),
-        enforce: 'pre',
-        include: paths.appSrc,
-      },
+      // TODO: UN-COMMENT THIS OPTION!
+      // {
+      //   test: /\.(ts|tsx)$/,
+      //   loader: require.resolve('tslint-loader'),
+      //   enforce: 'pre',
+      //   include: paths.appSrc,
+      // },
       {
         test: /\.js$/,
         loader: require.resolve('source-map-loader'),
@@ -154,6 +155,11 @@ module.exports = {
             test: /\.(ts|tsx)$/,
             include: paths.appSrc,
             loader: require.resolve('ts-loader'),
+            options: {
+              // disable type checker - we will use it in fork plugin
+              // TODO: REMOVE THIS OPTION!
+              transpileOnly: true,
+            },
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.

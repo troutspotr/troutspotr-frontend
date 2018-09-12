@@ -1,4 +1,5 @@
 import * as React from 'react'
+import debounce from 'lodash-es/debounce'
 require('mapbox-gl/dist/mapbox-gl.css')
 
 import groupBy from 'lodash-es/groupBy'
@@ -40,6 +41,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
   }
   constructor(props, state) {
     super(props, state)
+    this.resizeEvent = this.resizeEvent.bind(this)
     this.onClick = this.onClick.bind(this)
     this.getInteractiveFeaturesOverPoint = this.getInteractiveFeaturesOverPoint.bind(this)
     this.onDataLoad = this.onDataLoad.bind(this)
@@ -49,6 +51,15 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
   }
 
+  private resizeEvent() {
+    if (this.state != null && this.state.map != null) {
+      const map = this.state.map
+      map.resize()
+    }
+  }
+
+  protected debouncedResizeEvent = () => {}
+
   public onClick(e) {
     const features = this.getInteractiveFeaturesOverPoint(e.point)
     if (features == null || features.length === 0) {
@@ -57,6 +68,14 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
 
     const groups = groupBy(features, f => f.layer.id)
     this.props.onFeaturesSelected(groups)
+  }
+
+  public componentWillMount() {
+    if (window) {
+      this.debouncedResizeEvent = debounce(this.resizeEvent, 80)
+      window.addEventListener('resize', this.debouncedResizeEvent)
+      window.addEventListener('orientationchange', this.debouncedResizeEvent)
+    }
   }
 
   public componentWillUpdate(nextProps, nextState) {

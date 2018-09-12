@@ -28,7 +28,7 @@ interface IMapboxGlCameraDirectorProps extends IMapboxGlCameraDirectorStateProps
 
 
 class MapboxGlCameraDirectorComponent extends Component<IMapboxGlCameraDirectorProps> {
-  componentDidUpdate(previousProps) {
+  public componentDidUpdate(previousProps) {
     this.performZoomOnFeature(previousProps, this.props)
     try {
       const isUserLookingAtMap = true
@@ -45,7 +45,7 @@ class MapboxGlCameraDirectorComponent extends Component<IMapboxGlCameraDirectorP
     }
   }
 
-  performZoomOnFeature (previousProps, nextProps) {
+  private performZoomOnFeature (previousProps, nextProps) {
     if (isEmpty(nextProps.selectedStreamObject)) {
       return
     }
@@ -79,14 +79,14 @@ class MapboxGlCameraDirectorComponent extends Component<IMapboxGlCameraDirectorP
     }
   }
 
-  getZoomBackbounce (currentZoom, minZoom = 10, maxZoom = 15, boostMultiplier = 3.5) {
+  private getZoomBackbounce (currentZoom, minZoom = 7, maxZoom = 15, boostMultiplier = 3.5) {
     const clampedZoom = clamp(currentZoom, minZoom, maxZoom)
     const normalizedBoost = (clampedZoom - minZoom) / (maxZoom - minZoom)
     const boostBack = (normalizedBoost * boostMultiplier) + 0.2
     return currentZoom - boostBack
   }
 
-  render () {
+  public render () {
     return null
   }
 }

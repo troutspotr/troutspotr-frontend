@@ -111,8 +111,7 @@
     "lint:fix": "node_modules/.bin/tslint --project tsconfig.json \"src/ui/**/*.selectors.ts\" --fix --format codeFrame",
     "storybook": "cross-env NODE_PATH=src/ start-storybook -p 6006 -s src/static",
     "build-storybook": "build-storybook",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "heroku-postbuild": "node scripts/build.js"
+    "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
   "devDependencies": {
     

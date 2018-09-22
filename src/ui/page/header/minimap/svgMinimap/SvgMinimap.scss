@@ -28,8 +28,8 @@
 
 :global(.ts-dark) {
   .container {
-    --backdrop-state-background: lighten($backgroundDark, 2);
-    --selected-region-background: lighten($backgroundDark, 10);
+    --backdrop-state-background: #{lighten($black, 0)};
+    --selected-region-background: #{lighten($backgroundDark, 10)};
   }
 }
 

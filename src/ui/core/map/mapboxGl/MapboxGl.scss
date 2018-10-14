@@ -29,5 +29,12 @@
     @include fallback(color, --text-color-primary, $textDark);
     box-sizing: border-box;
   }
+
+  .mapboxgl-map {
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    position: relative;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
 }
 

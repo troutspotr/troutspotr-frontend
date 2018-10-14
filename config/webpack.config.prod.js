@@ -225,9 +225,9 @@ module.exports = {
                 {
                   loader: 'css-loader',
                   options: {
-                    importLoaders: 2,
+                    importLoaders: 1,
                     minimize: true,
-                    modules: true,
+                    modules: false,
                     localIdentName: '[name]__[local]__[hash:base64:5]',
                   },
                 },

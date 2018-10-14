@@ -1,7 +1,6 @@
 import * as React from 'react'
 import debounce from 'lodash-es/debounce'
 require('mapbox-gl/dist/mapbox-gl.css')
-
 import groupBy from 'lodash-es/groupBy'
 import { Map, Style as MapboxStyle } from 'mapbox-gl'
 const styles = require('./MapboxGl.scss')

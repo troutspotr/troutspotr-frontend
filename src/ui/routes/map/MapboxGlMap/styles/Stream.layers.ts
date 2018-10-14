@@ -328,7 +328,7 @@ export const createStreamHighlightLayers = (
     streamSettings,
   } = layerProps
   streamLayer.id = 'STREAM_SECTION_HIGHLIGHT'
-  const baseLine = layerProps.isHighContrastEnabled ? 15 : 15
+  const baseLine = layerProps.isHighContrastEnabled ? 15 : 10
   const paint: LinePaint = {
     'line-offset': 0,
     'line-color': layerProps.pallete.troutSectionFill,

@@ -14,6 +14,7 @@
 :global {
   .mapboxgl-ctrl-scale {
     transition: background-color 800ms, color 800ms;
+    opacity: 0.8;
     @include fallback(background-color, --message-background-color, $messageBackgroundDark);
     font-size: 1em;
     border-width: 1px 1px 1px;
@@ -21,10 +22,12 @@
     border-right-style: solid;
     border-bottom-style: solid;
     border-left-style: solid;
-    border-color: transparentize($black, 0.4);
+    // border-color: transparentize($black, 0.4);
+    @include fallback(border-color, --text-color-primary, $textDark);
     padding: 0 5px;
     margin-left: 7px !important;
     @include fallback(color, --text-color-primary, $textDark);
     box-sizing: border-box;
   }
 }
+

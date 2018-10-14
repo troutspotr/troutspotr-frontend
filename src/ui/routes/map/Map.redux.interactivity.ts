@@ -5,7 +5,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { BOUNDING_BOX_OF_LOWER_48_STATES, mapCameraActions } from './Map.redux.camera'
 import { AllGeoJSON, Coord, featureCollection } from '@turf/helpers'
 import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_CIRCLE_BORDER_LAYER, ACCESSPOINT_CIRCLE_LAYER } from './MapboxGlMap/styles/AccessPoints.layers';
-import { STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
+import { STREAM_LAYER_ID, TROUT_SECTION_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
 import { streamAccessPointIdDictionarySelector, troutStreamDictionarySelector } from '../@usState/@region/Region.selectors';
 import { browserHistory } from 'react-router';
 // ------------------------------------
@@ -113,14 +113,14 @@ export const LAYERS_IN_ORDER_OF_PRIORITY = {
   [ACCESSPOINT_CIRCLE_BORDER_LAYER]: 'accessPoint',
   [ACCESSPOINT_CIRCLE_LAYER]: 'accessPoint',
   [STREAM_LAYER_ID]: 'stream',
+  // [TROUT_SECTION_LAYER_ID]: 'stream',
+  // [`${TROUT_SECTION_LAYER_ID}_DEACTIVATED`]: 'stream',
 }
 
 export const findMostImportantFeatureThatWasClicked = (featureLookupTable: {[key:string]: AllGeoJSON[] }) => {
   if (featureLookupTable == null) {
     return null
   }
-
-
   const keyValue = Object.entries(LAYERS_IN_ORDER_OF_PRIORITY)
     .find(([layerIdKey, type]) => {
       const lookupValue = featureLookupTable[layerIdKey]

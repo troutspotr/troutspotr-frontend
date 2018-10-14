@@ -5,7 +5,7 @@ import { waterOpenersDictionarySelector } from 'ui/routes/@usState/UsState.selec
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { isRootPageSelector } from '../../../Location.selectors';
 export const isExpandedBoolSelector = (state: IReduxState) => state.minimap.isExpanded
-export const selectedUsStateName = (state: IReduxState) => state.minimap.selectedUsStateName
+export const selectedUsStateNameSelector = (state: IReduxState) => state.minimap.selectedUsStateName
 export const selectedRegionPathName = (state: IReduxState) => state.minimap.selectedRegionPathName
 
 export const isExpandedSelector = createSelector(

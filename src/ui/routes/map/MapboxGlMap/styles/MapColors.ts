@@ -44,6 +44,7 @@ const getColorPallete = (suffix: string): IMapColors => {
     streamFill: colors[`stream${suffix}`],
     troutSectionFill: colors[`troutstreamsection${suffix}`],
     palSectionFill: colors[`palsection${suffix}`],
+    filteredStreamFill: colors[`stream-filtered${suffix}`],
 
     restrictionYellow: colors[`restrictionyellow${suffix}`],
     restrictionRed: colors[`restrictionred${suffix}`],
@@ -64,5 +65,3 @@ const getColorPallete = (suffix: string): IMapColors => {
 
 export const LightMapColors: IMapColors = getColorPallete('-light')
 export const DarkMapColors: IMapColors = getColorPallete('-dark')
-console.log('ylakjsdflkjasdfklas')
-console.log(DarkMapColors.admin1BorderColor)

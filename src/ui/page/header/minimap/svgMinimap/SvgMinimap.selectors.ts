@@ -9,7 +9,7 @@ import { ICameraProps } from '../../../../core/map/ICameraProps'
 import {
   isExpandedSelector,
   selectedRegionPathName,
-  selectedUsStateName,
+  selectedUsStateNameSelector,
 } from '../Minimap.selectors'
 
 import boundingBox from '@turf/bbox'
@@ -29,6 +29,7 @@ import { ISvgMinimapStateProps } from './SvgMinimap.component'
 import { displayedCentroidsSelector, displayedCentroidsGeoJsonSelector } from 'ui/routes/@usState/UsState.selectors';
 import { searchTextSelector } from 'ui/core/Core.selectors'
 import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid';
+import { gpsFeatureCollectionSelector } from 'ui/core/gps/Gps.selectors';
 
 export const DEFAULT_CAMERA_PROPS = {
   bbox: [[-124.7317182880231, 31.332200267081696], [-96.43933500000001, 49.00241065464817]],
@@ -59,7 +60,7 @@ const safeParam = (isExpanded: boolean, paramId: string, selectedId: string): st
 export const safeSelectedUsStateNameForMinimapSelector = createSelector(
   isExpandedSelector,
   selectedStateIdSelector,
-  selectedUsStateName,
+  selectedUsStateNameSelector,
   safeParam
 )
 
@@ -69,7 +70,7 @@ export const safeSelectedRegionPathNameForMinimap = createSelector(
   selectedStateIdSelector,
   selectedRegionIdSelector,
   selectedRegionPathName,
-  selectedUsStateName,
+  selectedUsStateNameSelector,
   (
     isExpanded,
     selectedStateParam,
@@ -267,6 +268,9 @@ export const displayedStatesSelector = createSelector(
   isOfflineSelector,
   statesWithCachedRegionsSelector,
   (allFeatures, isExpanded, selectedUsStates, isOffline, statesWithCachedRegions): UsStateFeatureCollection => {
+    if (isExpanded === false) {
+      return selectedUsStates
+    }
     if (isOffline) {
       return statesWithCachedRegions || EMPTY_STATES
     }
@@ -298,6 +302,7 @@ export const getSvgMinimapStateProps = createStructuredSelector<IReduxState, ISv
     displayedRegionsGeoJson: displayedRegionsSelector,
     selectedUsStatesGeoJson: selectedUsStatesSelector,
     selectedRegionGeoJson: getSelectedRegions,
+    gpsGeoJson: gpsFeatureCollectionSelector,
     camera: minimapCameraSelector,
     isOffline: isOfflineSelector,
     isExpanded: isExpandedSelector,

@@ -2,7 +2,7 @@ import { featureCollection } from '@turf/helpers'
 import { Layer, Style as MapboxStyle } from 'mapbox-gl'
 import { createSelector } from 'reselect'
 import { Theme } from '../../../core/Core.redux'
-import { selectedRegionSelector, themeSelector, selectedStateSelector } from '../../../core/Core.selectors'
+import { selectedRegionSelector, themeSelector, selectedStateSelector, searchTextSelector } from '../../../core/Core.selectors'
 import {
   gpsFeatureCollectionSelector,
   isGpsTrackingActiveStateSelector,
@@ -28,7 +28,8 @@ import { DarkMapColors, LightMapColors } from './styles/MapColors'
 import * as palLayersLib from './styles/Pal.layers'
 import * as streamLayersLib from './styles/Stream.layers'
 import { StyleSourceId } from './styles/Style.constants'
-import { displayedCentroidsSelector } from 'ui/routes/@usState/UsState.selectors';
+import { displayedCentroidsSelector, displayedStreamCentroidDataSelector } from 'ui/routes/@usState/UsState.selectors';
+import { selectedStreamIdSelector } from 'ui/Location.selectors';
 
 const DEFAULT_LAYER_PROPS = defaultLayerProperties()
 
@@ -44,17 +45,47 @@ const DEFAULT_STREAM_SETTINGS = {
 export const streamSettingsSelector = (reduxState: IReduxState): IStreamSettings =>
   DEFAULT_STREAM_SETTINGS
 
+  const EMPTY_HIGHTLIGHT_FILTER = []
+export const filterSelector = createSelector(
+  displayedCentroidsSelector,
+  displayedStreamCentroidDataSelector,
+  (displayedCentroids, streamCentroid) => {
+    if (streamCentroid != null) {
+      return [streamCentroid.gid]
+    }
+    return displayedCentroids.map(x => x.gid)
+  }
+)
+
+
+export const highlightFilterSelector = createSelector(
+  searchTextSelector,
+  selectedStreamIdSelector,
+  filterSelector,
+  (searchText, selectedStreamId, filter) => {
+    if (searchText == null || searchText.length === 0) {
+      return EMPTY_HIGHTLIGHT_FILTER
+    }
+
+    if (selectedStreamId != null) {
+      return EMPTY_HIGHTLIGHT_FILTER
+    }
+
+    return filter
+  }
+)
 export const layerPropertiesSelector = createSelector(
   themeSelector,
   streamSettingsSelector,
   isOfflineSelector,
-  displayedCentroidsSelector,
-  (theme: Theme, streamSettings: IStreamSettings, isOffline: boolean, displayedCentroids): ILayerProperties => {
+  filterSelector,
+  highlightFilterSelector,
+  (theme: Theme, streamSettings: IStreamSettings, isOffline: boolean, filter, highlightFilter: number[]): ILayerProperties => {
     const pallete = theme === Theme.dark ? DarkMapColors : LightMapColors
-    const filter = displayedCentroids.map(x => x.gid)
     const layerProps = {
       ...DEFAULT_LAYER_PROPS,
       pallete,
+      streamHighlightFilter: highlightFilter,
       isOnline: isOffline === false,
       isHighContrastEnabled: theme === Theme.light,
       streamFilter: filter,
@@ -150,11 +181,11 @@ export const mapboxGlLayersSelector = createSelector(
   isGpsTrackingActiveStateSelector,
   (layerProperties: ILayerProperties, isGpsEnabled: boolean): Layer[] => {
     const streamLayers = [
+      ...streamLayersLib.createStreamHighlightLayers(layerProperties, 'trout_stream_section'),
       ...streamLayersLib.createRestrictionSectionLayer(layerProperties, 'restriction_section'),
-      ...streamLayersLib.createTroutSectionBackdropLayer(layerProperties, 'trout_stream_section'),
       ...streamLayersLib.createPalBackdropLayer(layerProperties, 'pal_routes'),
+      ...streamLayersLib.createTroutSectionBackdropLayer(layerProperties, 'trout_stream_section'),
       // ...layers.createRestrictionBackdropLayer(layerProperties, 'restriction_section'),
-
       ...streamLayersLib.createStreamLayer(layerProperties, 'streams'),
       ...streamLayersLib.createTroutSectionLayerLayer(layerProperties, 'trout_stream_section'),
       ...streamLayersLib.createPalLayerLayer(layerProperties, 'pal_routes'),

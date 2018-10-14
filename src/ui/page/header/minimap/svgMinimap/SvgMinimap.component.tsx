@@ -57,6 +57,8 @@ export interface ISvgMinimapStateProps {
   readonly displayedRegionsGeoJson: RegionFeatureCollection
   readonly selectedUsStatesGeoJson: UsStateFeatureCollection
   readonly selectedRegionGeoJson: RegionFeatureCollection
+
+  readonly gpsGeoJson: FeatureCollection<any, any>
   readonly camera?: ICameraProps
   readonly isOffline: boolean
   readonly isExpanded: boolean
@@ -98,6 +100,8 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
   private selectedStatesGroup: any
   private stateLabelsGroup: any
   private regionLabelsGroup: any
+
+  private gpsGroup: any
   private svg: any
   // private rect: any
   private zoom: any
@@ -139,7 +143,6 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
   }
 
   public setCameraToItem(d) {
-    // const { width, height } = this.props
     const width = this.worldWidth
     const height = this.worldHeight
 
@@ -172,11 +175,9 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     this.regionsBackdrop.style(sw, this.strokeWidthEm * 1.0 / event.transform.k + 'em')
     this.selectedRegionsGroup.style(sw, this.strokeWidthEm * 3.3 / event.transform.k + 'em')
     this.selectedStatesGroup.style(sw, this.strokeWidthEm * 3 / event.transform.k + 'em')
-    // console.log(this.displayedStreamCentroidsGroup)
-    // console.log(this.selectedStatesGroup)
-    
-    // this.displayedStreamCentroidsGroup.style('fill', 'blue')
     this.displayedStreamCentroidsGroup.style('font-size', this.fontSizeEm * 10 / event.transform.k + 'em')
+    this.gpsGroup.style('font-size', this.fontSizeEm * (this.props.isExpanded ? 10 : 7) / event.transform.k + 'em')
+    // this.gpsGroup.style(sw, this.strokeWidthEm * 10 / event.transform.k + 'em')
     this.stateLabelsGroup.style('font-size', this.fontSizeEm * 1 / event.transform.k + 'em')
     this.regionLabelsGroup.style('font-size', this.fontSizeEm * 0.87 / event.transform.k + 'em')
 
@@ -199,11 +200,11 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
       this.svg.call(this.zoom)
     }
 
-    this.renderData()
+    this.renderData(prevProps)
 
     const previousCamera = prevProps.camera
     if (
-      previousCamera != camera &&
+      previousCamera !== camera &&
       camera != null
       // bboxesAreEqual(previousCamera, camera) === false
     ) {
@@ -266,6 +267,7 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     this.selectedStatesGroup = this.mapGroup.append('g').attr('class', 'selected-states')
     this.selectedRegionsGroup = this.mapGroup.append('g').attr('class', 'selected-regions')
     this.displayedStreamCentroidsGroup = this.mapGroup.append('g').attr('class', 'displayed-stream-centroids')
+    this.gpsGroup = this.mapGroup.append('g').attr('class', 'displayed-gps-centroids')
     this.stateLabelsGroup = this.mapGroup.append('g').attr('class', 'state-labels')
     this.regionLabelsGroup = this.mapGroup.append('g').attr('class', 'region-labels')
   }
@@ -283,7 +285,7 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     this.initializeElements()
 
     this.svg.call(this.zoom) // delete this line to disable free zooming
-    this.renderData()
+    this.renderData(null)
     this.centerCameraOnCamera(this.props.camera)
   }
 
@@ -528,7 +530,9 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
       .remove()
   }
 
-  public renderData() {
+  public renderData(prevProps: ISvgMinimapStateProps) {
+    const start = performance.now()
+
     const {
       usStatesGeoJson,
       displayedUsStatesGeoJson,
@@ -559,7 +563,41 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     this.renderSelectedStates(this.path, selectedUsStatesGeoJson)
     this.renderStateLabels(this.path, displayedUsStatesGeoJson)
     this.renderRegionLabels(this.path, displayedRegionsGeoJson)
+    this.renderGpsCentroid(this.path, this.props.gpsGeoJson)
+    const end = performance.now() -  start
+    console.log(`${end}ms`)
   }
+  private renderGpsCentroid(svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>, gpsGeoJson: FeatureCollection<any, any>): any {
+    const displayedGpsCentroids = gpsGeoJson
+    const displayedGpsCentroidSelection = this.gpsGroup
+      .selectAll(`circle.js-d3-displayed-gps-centroids`)
+      .data(displayedGpsCentroids.features, x => {
+        return x.properties.gid
+      })
+    displayedGpsCentroidSelection
+      .enter()
+      .append('circle')
+      .attr('class', `js-d3-displayed-gps-centroids ${styles.gpsCentroids}`)
+      .attr('cx', (d: Feature<Point, IStreamCentroid>) => {
+        return this.projection(d.geometry.coordinates  as [number, number])[0]
+      })
+      .attr('cy', d => this.projection(d.geometry.coordinates  as [number, number])[1])
+      .attr('r', '0.05em')
+      .style('opacity', 0)
+      .transition()
+      .duration(400)
+      .style('opacity', 0.9)
+    displayedGpsCentroidSelection
+      .exit()
+      .transition()
+      .duration(300)
+      .style('opacity', 0)
+      .remove()
+      .duration(300)
+      .style('opacity', 0)
+      .remove()
+  }
+
   private renderDisplayedStreamCentroids(
     svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>,
     displayedStreams: FeatureCollection<Point, IStreamCentroid>): any {

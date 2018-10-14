@@ -78,6 +78,8 @@ export interface IColorSettings {
   readonly backgroundFill: string
   readonly petriDish: string
   readonly streamFill: string
+
+  readonly filteredStreamFill: string
   readonly troutSectionFill: string
   readonly restrictionYellow: string
   readonly palSectionFill: string
@@ -96,6 +98,7 @@ export const DEFAULT_COLOR_SETTINGS: IColorSettings = {
   petriDish: '#212121',
   streamFill: '#fff',
   backdropFill: 'black',
+  filteredStreamFill: 'black',
 }
 
 export interface IMicromapSettings {

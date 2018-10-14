@@ -126,6 +126,46 @@
   // stroke-width: 0.004em;
 }
 
+.gpsCentroids {
+  composes: streamCentroids;
+  @include fallback(fill, --red, $redDark);
+  stroke-width: 0.02em;
+  animation-duration: 2s;
+  animation-name: gps-pulse;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  // stroke-width: 0.2px;
+}
+
+@keyframes gps-pulse {
+  0% {
+    opacity: 1.0
+  }
+  66% {
+    opacity: 1.0
+  }
+  100% {
+    opacity: 0.7
+  }
+}
+
+.counties {
+  composes: polygon;
+}
+
+.centroids {
+  composes: polygon;
+  pointer-events: none;
+
+  .closed {
+    // fill: transparentize($blueGray, 0.3);
+  }
+
+  .open {
+    // fill: transparentize($blue, 0.3);
+  }
+}
+
 @keyframes dash {
   to {
     stroke-dashoffset: 1500;

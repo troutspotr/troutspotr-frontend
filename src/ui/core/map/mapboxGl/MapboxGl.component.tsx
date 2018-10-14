@@ -131,7 +131,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
         },
         () => {
           const scale = new mapboxGl.ScaleControl({
-            maxWidth: 80,
+            maxWidth: 90,
             unit: 'imperial'
           });
           map.addControl(scale);

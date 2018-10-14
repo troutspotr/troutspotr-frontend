@@ -25,9 +25,9 @@ export const createStreamLayer = (layerProps: ILayerProperties, sourceId: string
     paint: linePaint,
   }
 
-  if (streamFilter != null) {
-    streamStyle.filter = ['in', 'gid', ...streamFilter]
-  }
+  // if (streamFilter != null) {
+  //   streamStyle.filter = ['in', 'gid', ...streamFilter]
+  // }
 
   return [streamStyle]
 }
@@ -72,14 +72,27 @@ export const createTroutSectionLayerLayer = (
     streamStyle.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
   }
 
+  const deactivatedStreamStyle = {
+    ...streamStyle,
+    id: streamStyle.id + '_DEACTIVATED',
+    paint: {
+      ...streamStyle.paint,
+      'line-color': pallete.filteredStreamFill,
+    },
+  }
 
-  return [streamStyle]
+  if (layerProps.streamFilter != null) {
+    deactivatedStreamStyle.filter = ['!in', 'stream_gid', ...layerProps.streamFilter]
+  }
+
+
+  return [deactivatedStreamStyle, streamStyle ]
 }
 
 export const createPalLayerLayer = (layerProps: ILayerProperties, sourceId: string): Layer[] => {
   const { pallete, streamSettings, isHighContrastEnabled } = layerProps
   const widthMultiplier = isHighContrastEnabled
-    ? streamSettings.publicSectionWidth * 1.75
+    ? streamSettings.publicSectionWidth * 1.0
     : streamSettings.publicSectionWidth
 
   const lineLayout: LineLayout = {
@@ -114,7 +127,20 @@ export const createPalLayerLayer = (layerProps: ILayerProperties, sourceId: stri
     streamStyle.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
   }
 
-  return [streamStyle]
+  const deactivatedStreamStyle = {
+    ...streamStyle,
+    id: streamStyle.id + '_DEACTIVATED',
+    paint: {
+      ...streamStyle.paint,
+      'line-color': pallete.filteredStreamFill,
+    },
+  }
+
+  if (layerProps.streamFilter != null) {
+    deactivatedStreamStyle.filter = ['!in', 'stream_gid', ...layerProps.streamFilter]
+  }
+
+  return [deactivatedStreamStyle, streamStyle]
 }
 
 export const createPalBackdropLayer = (layerProps: ILayerProperties, sourceId: string): Layer[] => {
@@ -124,6 +150,8 @@ export const createPalBackdropLayer = (layerProps: ILayerProperties, sourceId: s
   palBackdropStyle.paint['line-width'].stops.forEach(stop => {
     stop[1] *= 1.7
   })
+
+  delete palBackdropStyle.filter
   return [palBackdropStyle]
 }
 
@@ -131,13 +159,15 @@ export const createTroutSectionBackdropLayer = (
   layerProps: ILayerProperties,
   sourceId: string
 ): Layer[] => {
-  const palBackdropStyle = createTroutSectionLayerLayer(layerProps, sourceId)[0]
-  palBackdropStyle.id = 'trout_section_backdrop_layer'
-  palBackdropStyle.paint['line-color'] = 'black'
-  palBackdropStyle.paint['line-width'].stops.forEach(stop => {
+  const troutSectionBackdropStyle = createTroutSectionLayerLayer(layerProps, sourceId)[0]
+  troutSectionBackdropStyle.id = 'trout_section_backdrop_layer'
+  troutSectionBackdropStyle.paint['line-color'] = 'black'
+  troutSectionBackdropStyle.paint['line-width'].stops.forEach(stop => {
     stop[1] *= 1.7
   })
-  return [palBackdropStyle]
+
+  delete troutSectionBackdropStyle.filter
+  return [troutSectionBackdropStyle]
 }
 
 export const createRestrictionSectionLayer = (
@@ -153,11 +183,6 @@ export const createRestrictionSectionLayer = (
   }
   const paint: LinePaint = {
     'line-offset': 0,
-    // 'line-dasharray': [2, 4],
-    // {
-    //   base: 1,
-    //   stops: [[10, [1, 0]], [12, [4, 1]], [16, [3, 4]]],
-    // },
     'line-color': {
       property: 'color',
       type: 'categorical',
@@ -225,6 +250,10 @@ export const createRestrictionSectionLayer = (
     paint,
   }
 
+  if (layerProps.streamFilter != null) {
+    lowZoomRestrictionLayer.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
+  }
+
   const highZoomOpacity: StyleFunction = {
     base: 1,
     stops: [[10, 0], [11, 1], [12, 1]],
@@ -239,18 +268,86 @@ export const createRestrictionSectionLayer = (
     },
   }
 
-  return [lowZoomRestrictionLayer, highZoomRestrictionLayer]
+  if (layerProps.streamFilter != null) {
+    highZoomRestrictionLayer.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
+  }
+
+  const asdf = {
+    ...lowZoomRestrictionLayer,
+    id: lowZoomRestrictionLayer.id + '_DEACTIVATED',
+    paint: {
+      ...lowZoomRestrictionLayer.paint,
+      'line-color': pallete.filteredStreamFill,
+    }
+  }
+
+  if (layerProps.streamFilter != null) {
+    asdf.filter = ['!in', 'stream_gid', ...layerProps.streamFilter]
+  }
+
+  const asdfasdf = {
+    ...highZoomRestrictionLayer,
+    id: highZoomRestrictionLayer.id + '_DEACTIVATED',
+    paint: {
+      ...highZoomRestrictionLayer.paint,
+      'line-color': pallete.filteredStreamFill,
+    }
+  }
+
+  if (layerProps.streamFilter != null) {
+    asdfasdf.filter = ['!in', 'stream_gid', ...layerProps.streamFilter]
+  }
+
+  const originalLayers = [
+    asdf,
+    asdfasdf,
+    lowZoomRestrictionLayer,
+    highZoomRestrictionLayer,
+  ]
+  return originalLayers
+
 }
 
-export const createRestrictionBackdropLayer = (
+
+export const createStreamHighlightLayers = (
   layerProps: ILayerProperties,
   sourceId: string
 ): Layer[] => {
-  const backdropLayer = createRestrictionSectionLayer(layerProps, sourceId)[0]
-  backdropLayer.id = 'restriction_backdrop_layer'
-  backdropLayer.paint['line-color'] = 'black'
-  backdropLayer.paint['line-blur'] = 2
-  // backdropLayer.paint['line-width'].stops.forEach(stop => (stop[1] *= 1.3))
-  // backdropLayer.paint['line-gap-width'].stops.forEach(stop => (stop[1] *= 1.1))
-  return [backdropLayer]
+  if (layerProps.streamHighlightFilter == null || layerProps.streamHighlightFilter.length === 0) {
+    return []
+  }
+
+  const streamLayer = {
+    ...createTroutSectionLayerLayer(layerProps, sourceId)[1],
+  }
+  const widthMultiplier = (layerProps.isHighContrastEnabled
+    ? layerProps.streamSettings.publicSectionWidth * 1.0
+    : layerProps.streamSettings.publicSectionWidth) * 2
+  const {
+    pallete,
+    streamSettings,
+  } = layerProps
+  streamLayer.id = 'STREAM_SECTION_HIGHLIGHT'
+  const baseLine = layerProps.isHighContrastEnabled ? 15 : 15
+  const paint: LinePaint = {
+    'line-offset': 0,
+    'line-color': layerProps.pallete.troutSectionFill,
+    'line-width': {
+      base: 1.0,
+      stops: [[1, baseLine], [9, baseLine], [11.1, 0.0]],
+    },  //layerProps.isHighContrastEnabled ? 13 : 10,
+    'line-opacity': {
+      base: 1.0,
+      stops: [[1, 1], [9, 1], [11.1, 0.0]].map(stop => [stop[0], stop[1]]),
+    },
+  }
+
+  streamLayer.paint = paint
+
+  if (layerProps.streamHighlightFilter != null) {
+    streamLayer.filter = ['in', 'stream_gid', ...layerProps.streamHighlightFilter]
+  }
+
+  return [streamLayer]
 }
+

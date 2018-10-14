@@ -23,6 +23,7 @@
   admin1bordercolor-dark: $tundora;
 
   stream-dark: $blueGrayDark;
+  stream-filtered-dark: $blueGrayDark;
   troutstreamsection-dark: $blueDark;
   palsection-dark: $greenDark;
 
@@ -49,9 +50,10 @@
   secondarylabelfill-light: $woodsmoke;
   secondarylabelbackground-light: $white;
   admin0bordercolor-light: pink;
-  admin1bordercolor-light: indigo;
+  admin1bordercolor-light: $tundora;
 
   stream-light: $tundora;
+  stream-filtered-light: $mercury;
   troutstreamsection-light: $blueLight;
   palsection-light: $greenLight;
 

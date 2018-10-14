@@ -44,10 +44,6 @@ export const createAccessPointCircleLabelLayer = (
      },
   }
 
-  if (layerProps.streamFilter != null) {
-    label.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
-  }
-
   return label
 }
 
@@ -121,12 +117,12 @@ export const createAccessPointCircleLayerLayer = (
       ['publicTrout', pallete.palSectionFill],
       ['permissionRequired', pallete.troutSectionFill],
       ['unsafe', pallete.restrictionYellow],
-      ['uninteresting', 'red'],
+      ['uninteresting', pallete.filteredStreamFill],
     ],
   }
 
   const circleRadius = createCircleRadius(layerProps.accessPointSettings.publiclyAccessibleRadius)
-  const colorCircle: Layer = {
+  const colorCircleLayer: Layer = {
     id: ACCESSPOINT_CIRCLE_LAYER,
     source: sourceId,
     type: 'circle',
@@ -137,10 +133,31 @@ export const createAccessPointCircleLayerLayer = (
   }
 
   const border = createAccessPointCircleBorderLayer(layerProps, sourceId)
-  return [border, colorCircle].map(x => {
-    if (layerProps.streamFilter != null) {
-      x.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
+  if (layerProps.streamFilter != null) {
+    colorCircleLayer.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
+    border.filter = ['in', 'stream_gid', ...layerProps.streamFilter]
+  }
+
+
+  const filteredOutCircleLayer = {
+    ...colorCircleLayer,
+    id: `${ACCESSPOINT_CIRCLE_LAYER}_DEACTIVATED`,
+    paint: {
+      ...colorCircleLayer.paint,
+      'circle-color': pallete.filteredStreamFill,
     }
-    return x
-  })
+  }
+
+  const filteredBorder = createAccessPointCircleBorderLayer(layerProps, sourceId)
+  filteredBorder.id = `${ACCESSPOINT_ROAD_LABEL_LAYER}_DEACTIVATED`
+  if (layerProps.streamFilter != null) {
+    filteredOutCircleLayer.filter = ['!in', 'stream_gid', ...layerProps.streamFilter]
+    filteredBorder.filter = ['!in', 'stream_gid', ...layerProps.streamFilter]
+  }
+  return [
+    filteredBorder,
+    filteredOutCircleLayer,
+    border,
+    colorCircleLayer,
+  ]
 }

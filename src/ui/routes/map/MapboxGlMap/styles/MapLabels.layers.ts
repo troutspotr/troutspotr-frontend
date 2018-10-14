@@ -877,6 +877,7 @@ export const getMapLabelLayers = (originalLayerProps: ILayerProperties): Layer[]
       const layout = label.layout
       layout['text-rotate'] = -45
       layout['text-transform'] = 'uppercase'
+      label.paint['text-opacity'] = 1
     }
   })
   if (isHighContrastEnabled) {
@@ -925,13 +926,18 @@ export const centroids = (originalLayerProps: ILayerProperties): Layer[] => {
 
   const { pallete } = layerProps
 
+  const hasFilter = layerProps.streamFilter != null && layerProps.streamFilter.length > 0
+  const streamFilter = ['in', 'gid', ...layerProps.streamFilter]
+
+  const smallFilter = hasFilter ? ['all', streamFilter, ["<", 'trout_stream_section_length', 25]] : ["<", 'trout_stream_section_length', 25]
+  const bigFilter = hasFilter ? ['all', streamFilter, [">=", 'trout_stream_section_length', 25]] : [">=", 'trout_stream_section_length', 25]
   const streamLabels = [{
     id: STREAM_CENTROID_LABEL_SM,
     type: 'symbol',
     source: 'stream_centroid',
     minzoom: 9,
     maxzoom: 16.3,
-    filter: ["<", 'trout_stream_section_length', 25],
+    filter: smallFilter,
     layout: {
       'text-offset': [0.3, 0.1],
       'text-field': '{name}',
@@ -958,7 +964,7 @@ export const centroids = (originalLayerProps: ILayerProperties): Layer[] => {
     source: 'stream_centroid',
     minzoom: 5,
     maxzoom: 16,
-    filter: [">=", 'trout_stream_section_length', 25],
+    filter: bigFilter,
     layout: {
       'text-offset': [0.3, 0.1],
       'text-field': '{name}',

@@ -173,7 +173,7 @@
     "mapbox-gl": "0.50.0",
     "mocha": "^3.5.0",
     "moment": "^2.15.1",
-    "node-sass": "^3.13.1",
+    "node-sass": "4.10.0",
     "nodemon": "^1.10.2",
     "normalize.css": "^5.0.0",
     "offline-plugin": "^4.8.3",

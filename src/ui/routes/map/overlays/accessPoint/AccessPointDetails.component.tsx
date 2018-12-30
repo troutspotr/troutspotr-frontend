@@ -17,9 +17,9 @@ export class AccessPointDetails extends React.Component<IAccessPointProps> {
         accessPoint={selectedAccessPoint}
         selectedClass={AccessPointClasses.selectedPublicBridgeTroutStream}
         defaultClass={AccessPointClasses.publicBridgeTroutStream}
-        isSelected
+        isSelected={true}
         isHovered={false}
-        onHover={() => {}}
+        onHover={null}
       />
     )
   }
@@ -32,9 +32,9 @@ export class AccessPointDetails extends React.Component<IAccessPointProps> {
           accessPoint={selectedAccessPoint}
           selectedClass={AccessPointClasses.selectedBridgeOverTroutStream}
           defaultClass={AccessPointClasses.bridgeOverTroutStream}
-          isSelected
+          isSelected={true}
           isHovered={false}
-          onHover={() => {}}
+          onHover={null}
         />
       </div>
     )
@@ -46,9 +46,9 @@ export class AccessPointDetails extends React.Component<IAccessPointProps> {
         accessPoint={selectedAccessPoint}
         selectedClass={AccessPointClasses.selectedUnsafeBridgeOverTroutStream}
         defaultClass={AccessPointClasses.unsafeBridgeOverTroutStream}
-        isSelected
+        isSelected={true}
         isHovered={false}
-        onHover={() => {}}
+        onHover={null}
       />
     )
   }

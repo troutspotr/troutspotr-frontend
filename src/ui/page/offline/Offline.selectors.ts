@@ -55,7 +55,7 @@ export const cachedRegionsDictionarySelector = createSelector(
 
         const regionFileName = tokens[3]
         const stateName = tokens[2]
-        const isTopojsonFile = regionFileName.indexOf('.topo.json') >= 0
+        const isTopojsonFile = regionFileName.indexOf('.topojson') >= 0
         if (isTopojsonFile === false) {
           return dictionary
         }

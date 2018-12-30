@@ -26,7 +26,7 @@ import {
   isOfflineSelector
 } from '../../../offline/Offline.selectors'
 import { ISvgMinimapStateProps } from './SvgMinimap.component'
-import { displayedCentroidsSelector, displayedCentroidsGeoJsonSelector } from 'ui/routes/@usState/UsState.selectors';
+import { displayedCentroidsGeoJsonSelector } from 'ui/routes/@usState/UsState.selectors';
 import { searchTextSelector } from 'ui/core/Core.selectors'
 import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid';
 import { gpsFeatureCollectionSelector } from 'ui/core/gps/Gps.selectors';
@@ -202,7 +202,6 @@ export const filteredCentroidsWithinSelectedUsStateSelector = createSelector(
     }
     
     // TODO: filter by selected state if possible
-    console.log(displayedCentroidGeoJsonFeatureCollection)
     return displayedCentroidGeoJsonFeatureCollection
   }
 )

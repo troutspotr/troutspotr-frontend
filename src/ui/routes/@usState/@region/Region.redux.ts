@@ -17,7 +17,9 @@ import {
   StreamFeatureCollection,
   PalFeatureCollection,
   StreamCentroidFeatureCollection,
+  RestrictedLandFeatureCollection,
 } from 'api/region/IRegionGeoJSON'
+import { IReduxState } from 'ui/redux/Store.redux.rootReducer';
 
 // ------------------------------------
 // Constants
@@ -61,8 +63,8 @@ export const fetchRegionData = (stateName: string, regionName: string) => async 
     }
     const flyEarly = true
     if (flyEarly) {
-      const reduxState = getState()
-      const regions = regionsDictionarySelector(reduxState)
+      const flyEarlyState = getState() as IReduxState
+      const regions = regionsDictionarySelector(flyEarlyState)
       const earlyRegion = (regions || {})[`${stateName}/${regionName}`] || null
       if (earlyRegion != null) {
         setTimeout(() => dispatch(selectMapFeature(earlyRegion)), 200)
@@ -70,7 +72,9 @@ export const fetchRegionData = (stateName: string, regionName: string) => async 
     }
 
     const { RegionApi } = await getApi()
-    const gettingRegion = RegionApi.getRegionData(stateName, regionName)
+    // HEY! You can override this to see different times! Neato!
+    const time = (getState() as IReduxState).core.time
+    const gettingRegion = RegionApi.getRegionData(stateName, regionName, time)
     const regionData = await gettingRegion
     updateCachedEndpoints()(dispatch)
     dispatch(setRegionData(regionData))
@@ -119,7 +123,6 @@ const ACTION_HANDLERS: {} = {
   [REGION_SET_REGION_DATA]: (state: IRegionState, { payload }): IRegionState => {
     const newState = {
       ...state,
-
       ...{
         troutStreamDictionary: payload.streamDictionary,
         troutStreamSections: payload.trout_stream_section,
@@ -128,6 +131,7 @@ const ACTION_HANDLERS: {} = {
         palSections: payload.pal_routes,
         streamAccessPoint: payload.stream_access_point,
         pals: payload.pal,
+        restrictedLands: payload.restricted_land,
         regionLoadingStatus: LoadingStatus.Success,
         hoveredStream: initialState.hoveredStream,
         hoveredRoad: initialState.hoveredRoad,
@@ -166,6 +170,7 @@ export interface IRegionState {
   palSections: PalSectionFeatureCollection
   streamAccessPoint: AccessPointFeatureCollection
   pals: PalFeatureCollection
+  restrictedLands: RestrictedLandFeatureCollection
   hoveredStream: any
   // SelectedRoad: null,
   hoveredRoad: any
@@ -179,6 +184,7 @@ const initialState: IRegionState = {
   restrictionSections: null,
   streams: null,
   palSections: null,
+  restrictedLands: null,
   streamAccessPoint: null,
   pals: null,
   hoveredStream: null,

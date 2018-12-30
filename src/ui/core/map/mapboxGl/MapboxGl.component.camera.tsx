@@ -24,14 +24,19 @@ export default class MapboxGlComponentCamera extends React.PureComponent<IMapbox
     }
 
     const { bearing, pitch } = camera
-    console.log(pitch)
     const options = {
       bearing,
       pitch,
+      padding: {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      },
     }
 
     if (padding != null) {
-      options['padding'] = padding
+      options.padding = padding
     }
     setTimeout(() => map.fitBounds(bbox, options), 10)
   }

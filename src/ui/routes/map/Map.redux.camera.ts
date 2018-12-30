@@ -1,7 +1,6 @@
 import clamp from 'lodash-es/clamp'
 import some from 'lodash-es/some'
 import { createAction, handleActions } from 'redux-actions'
-// import { ICameraReduxState } from 'ui/redux/Store.redux.rootReducer'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -56,8 +55,8 @@ const MERCATOR_PROJECTION_BOUNDS = {
 }
 
 const cleanBounds = (minLong, minLat, maxLong, maxLat) => {
-  ;[minLong, minLat, maxLong, maxLat] = [minLong, minLat, maxLong, maxLat].map(x => parseFloat(x))
-  const isInvalid = some([minLong, minLat, maxLong, maxLat], isNaN)
+  const [floatMinLong, floatMinLat, floatMaxLong, floatMaxLat] = [minLong, minLat, maxLong, maxLat].map(x => parseFloat(x))
+  const isInvalid = some([floatMinLong, floatMinLat, floatMaxLong, floatMaxLat], isNaN)
   if (isInvalid) {
     return null
   }
@@ -65,19 +64,19 @@ const cleanBounds = (minLong, minLat, maxLong, maxLat) => {
   const bounds = [
     [
       clamp(
-        minLong,
+        floatMinLong,
         MERCATOR_PROJECTION_BOUNDS.longitude[0],
         MERCATOR_PROJECTION_BOUNDS.longitude[1]
       ),
-      clamp(minLat, MERCATOR_PROJECTION_BOUNDS.latitude[0], MERCATOR_PROJECTION_BOUNDS.latitude[1]),
+      clamp(floatMinLat, MERCATOR_PROJECTION_BOUNDS.latitude[0], MERCATOR_PROJECTION_BOUNDS.latitude[1]),
     ],
     [
       clamp(
-        maxLong,
+        floatMaxLong,
         MERCATOR_PROJECTION_BOUNDS.longitude[0],
         MERCATOR_PROJECTION_BOUNDS.longitude[1]
       ),
-      clamp(maxLat, MERCATOR_PROJECTION_BOUNDS.latitude[0], MERCATOR_PROJECTION_BOUNDS.latitude[1]),
+      clamp(floatMaxLat, MERCATOR_PROJECTION_BOUNDS.latitude[0], MERCATOR_PROJECTION_BOUNDS.latitude[1]),
     ],
   ]
 

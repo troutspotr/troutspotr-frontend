@@ -85,6 +85,10 @@ export const palsSelector = createSelector([regionReduxStateSelector], state => 
   return state.pals
 })
 
+export const restrictedLandsSelector = createSelector([regionReduxStateSelector], state => {
+  return state.restrictedLands
+})
+
 export const hoveredStreamSelector = createSelector([regionReduxStateSelector], state => {
   return state.hoveredStream
 })
@@ -92,32 +96,6 @@ export const hoveredStreamSelector = createSelector([regionReduxStateSelector], 
 export const hoveredRoadSelector = createSelector([regionReduxStateSelector], state => {
   return state.hoveredRoad
 })
-
-// const EMPTY_STREAM_CENTROIDS = []
-// export const streamCentroidsSelector = createSelector([streamsSelector], streams => {
-//   if (isEmpty(streams)) {
-//     return EMPTY_STREAM_CENTROIDS
-//   }
-
-//   // Map them into centroids.
-//   const centroidFeatures = streams.features.map((feature, id) => {
-//     const { properties } = feature
-//     const { centroid_longitude, centroid_latitude } = properties
-//     /* eslint-disable camelcase */
-//     const geometry = {
-//       type: 'Point',
-//       coordinates: [centroid_longitude, centroid_latitude],
-//     }
-//     /* eslint-enable camelcase */
-//     const type = 'Feature'
-//     return { geometry, id, properties, type }
-//   })
-
-//   return {
-//     features: centroidFeatures,
-//     type: 'FeatureCollection',
-//   }
-// })
 
 export const isFinishedLoadingRegion = createSelector(
   [regionLoadingStatusSelector],

@@ -2,7 +2,7 @@ import * as lf from 'localforage'
 import * as topojson from 'topojson-client'
 import BaseApi, { IBaseApi } from 'api/BaseApi'
 import { ITableOfContentsData } from './ITableOfContentsData'
-export const buildTableOfContentsEndpoint = (): string => `/data/v3/TableOfContents.topo.json`
+export const buildTableOfContentsEndpoint = (): string => `/data/v3/TableOfContents.topojson`
 import keyBy from 'lodash-es/keyBy'
 import { RegionFeature } from 'coreTypes/tableOfContents/ITableOfContentsGeoJSON'
 // tslint:disable-next-line:no-any
@@ -11,7 +11,7 @@ export const updateRegionCachedStatus = (
   region: RegionFeature,
   dictionary: { [key: string]: string }
 ): RegionFeature => {
-  const key = `/data/v3/${region.properties.path}.topo.json`
+  const key = `/data/v3/${region.properties.path}.topojson`
   const isCached = dictionary != null && dictionary[key] != null
   region.properties = {
     ...region.properties,
@@ -26,7 +26,6 @@ export const updateCacheStatusForItems = (
   items: string[]
 ): ITableOfContentsData => {
   try {
-    // const reduxState = getState()
     const itemsDictionary = keyBy(items, x => x)
 
     tableOfContents.states.features.forEach(state => {
@@ -40,7 +39,9 @@ export const updateCacheStatusForItems = (
     tableOfContents.regions.features.map(region => {
       return updateRegionCachedStatus(region, itemsDictionary)
     })
-  } catch {}
+  } catch (e) {
+    console.error(e)
+  }
 
   return tableOfContents
 }

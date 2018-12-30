@@ -36,13 +36,7 @@ export const regionsDictionarySelector = (reduxState: IReduxState): Dictionary<R
   reduxState.core.regionDictionary
 export const hasAgreedToTermsSelector = (reduxState: IReduxState): boolean =>
   reduxState.core.hasAgreedToTerms
-// export const hasSeenIntroScreenSelector = (reduxState: IReduxState): boolean =>
-//   reduxState.core.hasSeenIntroScreen
-// export const hasSeenTermsOfServiceSelector = (reduxState: IReduxState): boolean =>
-//   reduxState.core.hasSeenTermsOfService
-// export const hasSeenPrivacyPolicySelector = (reduxState: IReduxState): boolean =>
-//   reduxState.core.hasSeenPrivacyPolicy
-// export const streamCentroidsGeoJsonSelector = (reduxState: IReduxState) => reduxState.core.streamCentroidsGeoJson
+
 export const tableOfContentsLoadingStatusSelector = (reduxState: IReduxState): LoadingStatus =>
   reduxState.core.tableOfContentsLoadingStatus
 export const searchTextSelector = (reduxState: IReduxState): string => (reduxState.core.searchText || '')

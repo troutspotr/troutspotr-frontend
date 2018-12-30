@@ -5,7 +5,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { BOUNDING_BOX_OF_LOWER_48_STATES, mapCameraActions } from './Map.redux.camera'
 import { AllGeoJSON, Coord, featureCollection } from '@turf/helpers'
 import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_CIRCLE_BORDER_LAYER, ACCESSPOINT_CIRCLE_LAYER } from './MapboxGlMap/styles/AccessPoints.layers';
-import { STREAM_LAYER_ID, TROUT_SECTION_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
+import { STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
 import { streamAccessPointIdDictionarySelector, troutStreamDictionarySelector } from '../@usState/@region/Region.selectors';
 import { browserHistory } from 'react-router';
 // ------------------------------------
@@ -60,6 +60,7 @@ export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
     const allTroutSectionsOfSelectedStream = featureCollection(streamObject.sections as any)
     dispatch(selectMapFeature(allTroutSectionsOfSelectedStream))
   } catch(e) {
+    console.error(e)
   }
 }
 
@@ -89,6 +90,7 @@ export const navigateToAccessPoint = (accessPointGid: number) => (dispatch, getS
   try {
     dispatch(selectFoculPoint([accessPoint.properties.centroid_longitude, accessPoint.properties.centroid_latitude]))
   } catch(e) {
+    console.error(e)
   }
 }
 
@@ -99,7 +101,7 @@ export const handleFeatureSelection = (features: {[key:string]: AllGeoJSON[] }) 
   }
 
   const type = LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId]
-  const asdfasdf = features[mostImportantFeatureId][0].properties.gid
+  const asdfasdf = (features[mostImportantFeatureId][0] as any).properties.gid
   navigateOracle[type](asdfasdf)(dispatch, getState)
 }
 

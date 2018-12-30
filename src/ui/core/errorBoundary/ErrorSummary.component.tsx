@@ -6,7 +6,7 @@ export interface IErrorSummaryProps {
 }
 
 export default class ErrorSummaryComponent extends React.PureComponent<IErrorSummaryProps> {
-  render() {
+  public render() {
     const { error, errorInfo } = this.props
 
     if (error == null || errorInfo == null) {

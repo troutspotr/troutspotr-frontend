@@ -26,7 +26,7 @@ export class RegulationsSummary extends React.PureComponent<IRegulationsSummaryP
   public renderOpenClosedHelper({ statusClass, statusText, explainerText, dateText }) {
     const props: IRegulationsSummaryLayout = {
       status: statusClass,
-      statusText: statusText,
+      statusText,
       untilDateText: dateText,
       additionalText: explainerText,
     }

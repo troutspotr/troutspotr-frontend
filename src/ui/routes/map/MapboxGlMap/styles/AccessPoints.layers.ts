@@ -7,7 +7,6 @@ export const ACCESSPOINT_CIRCLE_BORDER_LAYER = 'access_point_circle_border_layer
 export const ACCESSPOINT_CIRCLE_LAYER = 'access_point_circle_layer'
 export const ACCESSPOINT_ROAD_LABEL_LAYER = 'access_point_road_label_layer'
 
-// const ACCESS_POINT_STREET_NAME_TEXT_OFFSET = [1.0, 0.15]
 const ACCESS_POINT_ALPHABET_TEXT_OFFSET = [0.0, 0.15]
 const ACCESS_POINT_LABEL_TEXT_OFFSET = [1, 0.15]
 const createCircleRadius = (diameter: number): StyleFunction => {
@@ -18,8 +17,6 @@ const createCircleRadius = (diameter: number): StyleFunction => {
 
   return circleRadius
 }
-
-export const filter = () => {}
 
 export const createAccessPointCircleLabelLayer = (
   layerProps: ILayerProperties,

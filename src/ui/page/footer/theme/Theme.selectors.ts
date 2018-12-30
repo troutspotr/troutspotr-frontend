@@ -17,7 +17,7 @@ export const themeLoadingSelector = createSelector(
   (theme: Theme, isSuccess: boolean): boolean => {
     return false
   }
-) //(reduxState: IReduxState): boolean => false
+)
 const DEFAULT_LABELS = {
   onText: 'Light',
   waitText: ' ',

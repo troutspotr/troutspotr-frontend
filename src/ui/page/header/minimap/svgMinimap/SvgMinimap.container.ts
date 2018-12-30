@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch): ISvgMinimapDispatchProps => ({
   handleSelection: (usStateShortName: string, regionPath: string) =>
     dispatch(
       handleRegionSelection({
-        usStateShortName: usStateShortName,
+        usStateShortName,
         regionPathName: regionPath,
       })
     ),

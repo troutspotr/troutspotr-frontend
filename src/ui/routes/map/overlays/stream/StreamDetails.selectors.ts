@@ -5,24 +5,24 @@ import { AccessPointFeature } from 'api/region/IRegionGeoJSON';
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer';
 import { IStreamDetailsComponentProps } from './StreamDetails.component';
 
-export const getStreamStatus = (streamObject: IStreamObject): 'open' | 'closed' | 'openCaution' => {
+export const getStreamStatus = (streamObject: IStreamObject): 'open' | 'closed' | 'openCaution' | null => {
   if (streamObject == null) {
     return null
   }
 
-  return 'open'
+  return 'open '
 }
 export const streamStatusSelector = createSelector(
   selectedStreamObjectSelector,
   getStreamStatus
 )
 
-export const getStreamStatusText = (streamObject: IStreamObject): string => {
+export const getStreamStatusText = (streamObject: IStreamObject): string | null => {
   if (streamObject == null) {
     return null
   }
 
-  return 'some fake status text'
+  return 'some fake status text 453'
 }
 
 export const streamStatusTextSelector = createSelector(
@@ -30,12 +30,12 @@ export const streamStatusTextSelector = createSelector(
   getStreamStatusText
 )
 
-export const getStreamUntilDateText = (streamObject: IStreamObject): string => {
+export const getStreamUntilDateText = (streamObject: IStreamObject): string | null => {
   if (streamObject == null) {
     return null
   }
 
-  return 'like next week or whatever'
+  return 'like next week or whatever 2'
 }
 
 export const streamUntilDateTextSelector = createSelector(
@@ -48,7 +48,7 @@ export const getStreamAdditionalTextText = (streamObject: IStreamObject): string
     return null
   }
 
-  return 'like next week or whatever'
+  return 'like next week or whatever 3'
 }
 
 export const streamAdditionalTextTextSelector = createSelector(
@@ -72,7 +72,6 @@ export const streamBridgeCountSelector = createSelector(
   selectedStreamObjectSelector,
   getStreamPubliclyFishableAndTroutStreamBridgeCount
 )
-//<IReduxState, ISwitchComponentStateProps>({
 export const StreamDetailsPropsSelector = createStructuredSelector<IReduxState, IStreamDetailsComponentProps>({
   status: streamStatusSelector,
   statusText: streamStatusTextSelector,

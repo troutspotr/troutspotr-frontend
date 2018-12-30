@@ -3,7 +3,7 @@ const classes = require('./BackButton.scss')
 import { CSSTransition } from 'react-transition-group'
 
 export interface ICloseButton {
-  onClick(any): void
+  onClick(args): void
   isEnabled: boolean
 }
 

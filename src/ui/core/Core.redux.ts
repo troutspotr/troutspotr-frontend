@@ -12,7 +12,6 @@ import {
   RegionFeature,
 } from 'coreTypes/tableOfContents/ITableOfContentsGeoJSON'
 import { LoadingStatus } from 'coreTypes/Ui'
-// import { cachedEndpointsSelectorByType } from '../page/offline/Offline.selectors'
 import { ITableOfContentsData } from 'api/tableOfContents/ITableOfContentsData'
 
 // ------------------------------------
@@ -61,7 +60,8 @@ export interface ICoreState {
   regionsGeoJson: RegionFeatureCollection
   regionDictionary: Dictionary<RegionFeature>
   tableOfContentsLoadingStatus: LoadingStatus
-  hasAgreedToTerms: boolean
+  hasAgreedToTerms: boolean,
+  time: Date
 }
 
 export const INITIAL_CORE_STATE: ICoreState = {
@@ -78,6 +78,7 @@ export const INITIAL_CORE_STATE: ICoreState = {
   regionDictionary: {},
   tableOfContentsLoadingStatus: LoadingStatus.NotStarted,
   hasAgreedToTerms: true,
+  time: new Date(),
 }
 
 // ------------------------------------
@@ -85,7 +86,7 @@ export const INITIAL_CORE_STATE: ICoreState = {
 // ------------------------------------
 export const setViewToMap = createAction(CORE_SET_REGION_VIEW, x => View.map)
 export const setViewToList = createAction(CORE_SET_REGION_VIEW, x => View.list)
-export const setTheme = createAction(CORE_SET_THEME, (theme: Theme) => ({ theme: theme }))
+export const setTheme = createAction(CORE_SET_THEME, (theme: Theme) => ({ theme }))
 
 export const GEO_SET_TABLE_OF_CONTENTS = 'GEO_SET_TABLE_OF_CONTENTS'
 export const GEO_TABLE_OF_CONTENTS_LOADING = 'GEO_TABLE_OF_CONTENTS_LOADING'

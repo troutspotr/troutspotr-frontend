@@ -4,17 +4,17 @@ import StateApi from 'api/usState/StateApi'
 const topojson = require('topojson-client')
 
 export const buildRegionEndpoint = (stateName: string, regionName: string): string =>
-  `/data/v3/${stateName}/${regionName}.topo.json`
+  `/data/v3/${stateName}/${regionName}.topojson`
 
 export const buildRegionPalEndpoint = (stateName: string, regionName: string): string =>
-  `/data/v3/${stateName}/${regionName}.pal.topo.json`
+  `/data/v3/${stateName}/${regionName}.pal.topojson`
 
 export interface IRegionApi extends IBaseApi {
-  getRegionData(stateName: string, regionName: string): Promise<IGeoPackageOrWhatver>
+  getRegionData(stateName: string, regionName: string, now: Date): Promise<IGeoPackageOrWhatver>
 }
 
 export class RegionApi extends BaseApi implements IRegionApi {
-  public async getRegionData(stateName: string, regionName: string): Promise<IGeoPackageOrWhatver> {
+  public async getRegionData(stateName: string, regionName: string, now: Date): Promise<IGeoPackageOrWhatver> {
     if (stateName == null) {
       return Promise.reject('state name was not specificed')
     }
@@ -28,15 +28,15 @@ export class RegionApi extends BaseApi implements IRegionApi {
       const endpoint = buildRegionEndpoint(stateName, regionName)
       const palEndpoint = buildRegionPalEndpoint(stateName, regionName)
       try {
-        const [region, pal, stateData] = await Promise.all([
+        const [endpointRegion, endpointPal, endpointStateData] = await Promise.all([
           this.get(endpoint),
           this.get(palEndpoint),
           StateApi.getStateData(stateName),
         ])
         regionGeoData = {
-          region,
-          pal,
-          stateData,
+          region: endpointRegion,
+          pal: endpointPal,
+          stateData: endpointStateData,
         }
         // Sometimes the cache may send us bad data.
         // See if it's valid.
@@ -48,11 +48,13 @@ export class RegionApi extends BaseApi implements IRegionApi {
 
       // tslint:disable-next-line:no-let
       try {
-        const transformedGeography = await transformGeo(region, stateData)
+        const transformedGeography = await transformGeo(region, stateData, now)
         const palGeoJson = topojson.feature(pal, pal.objects.pal)
+        const restrictedLand = topojson.feature(pal, pal.objects['restricted-land'])
         return {
           ...transformedGeography,
           pal: palGeoJson,
+          restricted_land: restrictedLand,
         }
       } catch (error) {
         // Yes, we're going to super-murder their cache.

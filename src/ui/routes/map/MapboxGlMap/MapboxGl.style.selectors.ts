@@ -13,6 +13,7 @@ import { IReduxState } from '../../../redux/Store.redux.rootReducer'
 import {
   palSectionsSelector,
   palsSelector,
+  restrictedLandsSelector,
   restrictionSectionsSelector,
   streamCentroidsSelector,
   streamsSelector,
@@ -26,6 +27,7 @@ import { createGpsBorderLayer } from './styles/Gps.layers'
 import { defaultLayerProperties, ILayerProperties } from './styles/ICreateLayer'
 import { DarkMapColors, LightMapColors } from './styles/MapColors'
 import * as palLayersLib from './styles/Pal.layers'
+import * as restrictedLandsLayersLib from './styles/RestrictedLands.layers'
 import * as streamLayersLib from './styles/Stream.layers'
 import { StyleSourceId } from './styles/Style.constants'
 import { displayedCentroidsSelector, displayedStreamCentroidDataSelector } from 'ui/routes/@usState/UsState.selectors';
@@ -45,7 +47,7 @@ const DEFAULT_STREAM_SETTINGS = {
 export const streamSettingsSelector = (reduxState: IReduxState): IStreamSettings =>
   DEFAULT_STREAM_SETTINGS
 
-  const EMPTY_HIGHTLIGHT_FILTER = []
+  const EMPTY_HIGHTLIGHT_FILTER: any[] = []
 export const filterSelector = createSelector(
   displayedCentroidsSelector,
   displayedStreamCentroidDataSelector,
@@ -99,7 +101,7 @@ export const layerPropertiesSelector = createSelector(
 export const EMPTY_FEATURE_COLLECTION = featureCollection([])
 
 const GEOJSON_TYPE = 'geojson'
-const src = (id, feature, dictionary) => {
+const src = (id: string, feature, dictionary: any) => {
   dictionary[id] = {
     data: feature || EMPTY_FEATURE_COLLECTION,
     type: GEOJSON_TYPE,
@@ -112,6 +114,7 @@ export const buildSources = (
   palSection = null,
   restrictionSection = null,
   pals = null,
+  restricedLands = null,
   streamAccessPoint = null,
   gpsFeature = null,
   streamCentroids = null,
@@ -124,6 +127,7 @@ export const buildSources = (
   src(StyleSourceId.palRoutes, palSection, s)
   src(StyleSourceId.restrictionSection, restrictionSection, s)
   src(StyleSourceId.pals, pals, s)
+  src(StyleSourceId.restrictedLands, restricedLands, s)
   src(StyleSourceId.streamAccessPoint, streamAccessPoint, s)
   src(StyleSourceId.gps, gpsFeature, s)
   src(StyleSourceId.centroids, streamCentroids, s)
@@ -137,6 +141,7 @@ export const sourceGeometryDictionarySelector = createSelector(
   palSectionsSelector,
   restrictionSectionsSelector,
   palsSelector,
+  restrictedLandsSelector,
   streamAccessPointSelector,
   gpsFeatureCollectionSelector,
   streamCentroidsSelector,
@@ -194,7 +199,8 @@ export const mapboxGlLayersSelector = createSelector(
     const palLayers = [
       ...palLayersLib.createPalLayer(layerProperties, 'pal'),
       ...palLayersLib.createPalBorderLayer(layerProperties, 'pal'),
-      
+      ...restrictedLandsLayersLib.createRestrictedLandsLayer(layerProperties, StyleSourceId.restrictedLands),
+      ...restrictedLandsLayersLib.createRestrictedLandsBorderLayer(layerProperties, StyleSourceId.restrictedLands),
     ]
 
     const accessPointLayers = [

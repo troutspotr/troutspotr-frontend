@@ -56,13 +56,11 @@ export class DetailsOverlayComponent extends React.Component<IDetailsOverlayComp
     }
 
     return (
-      <MessageOverlayComponent position="top">
-        <div className={classes.container}>
-          {this.renderRegionDetails()}
-          {this.renderStreamDetails()}
-          {this.renderAccessPointDetails()}
-        </div>
-      </MessageOverlayComponent>
+      <div className={classes.container}>
+        {this.renderRegionDetails()}
+        {this.renderStreamDetails()}
+        {this.renderAccessPointDetails()}
+      </div>
     )
   }
 }

@@ -18,7 +18,6 @@ export const throttleReduce = async ops => {
 }
 
 function waitForNext(op) {
-  console.log('waitin')
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       try {

@@ -11,7 +11,7 @@ import { SvgMinimapContainer } from './minimap/svgMinimap/SvgMinimap.container'
 import { RouteComponentProps } from 'react-router'
 import ErrorBoundaryComponent from 'ui/core/errorBoundary/ErrorBoundary.component'
 export interface IHeaderStateDispatchProps {
-  setIsExpanded(boolean): any
+  setIsExpanded(bool): any
   handleError(error: any): any
 }
 
@@ -45,7 +45,7 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentWithRou
     this.listenToRoutes()
   }
 
-  listenToRoutes() {
+  private listenToRoutes() {
     const { router } = this.props
     const farts = router as any
     farts.listen(({ pathname }) => {
@@ -132,7 +132,6 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentWithRou
       isTitleVisible,
       isSearchVisible,
     } = this.props
-    console.log(isTitleVisible, isSearchVisible)
     const viewMode = isTitleVisible 
       ? 'summary'
       : 'search'

@@ -12,7 +12,7 @@ import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/Location.s
 const mapDispatchToProps = {}
 
 export const detailsOverlayPropSelector = createStructuredSelector({
-  visibleTroutStreams: visibleTroutStreams,
+  visibleTroutStreams,
   selectedState: selectedStateIdSelector,
   selectedRegion: selectedRegionIdSelector,
   selectedStream: selectedStreamObjectSelector,

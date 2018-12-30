@@ -1,6 +1,6 @@
 import * as selectors from './Core.selectors'
 import keyBy from 'lodash-es/keyBy'
-const tableOfContents = require('static/data/v3/TableOfContents.topo.json')
+const tableOfContents = require('api/_stubs/TableOfContents.topo.json')
 import {
   INITIAL_CORE_STATE,
   GEO_SET_TABLE_OF_CONTENTS,
@@ -38,42 +38,6 @@ describe('Core.selectors', () => {
   })
 
   it('selectedStateIdSelector', () => {
-    selectors.statesGeoJsonSelector(reduxState)
-    const result = keyBy(null)
-    expect(result).toEqual({})
-  })
-
-  it('selectedRegionIdSelector', () => {
-    selectors.statesGeoJsonSelector(reduxState)
-    const result = keyBy(null)
-    expect(result).toEqual({})
-  })
-
-  it('selectedStreamIdSelector', () => {
-    selectors.statesGeoJsonSelector(reduxState)
-    const result = keyBy(null)
-    expect(result).toEqual({})
-  })
-
-  it('selectedStateSelector', () => {
-    selectors.statesGeoJsonSelector(reduxState)
-    const result = keyBy(null)
-    expect(result).toEqual({})
-  })
-
-  it('isSearchingSelector', () => {
-    selectors.statesGeoJsonSelector(reduxState)
-    const result = keyBy(null)
-    expect(result).toEqual({})
-  })
-
-  it('selectedRegionPathKeySelector', () => {
-    selectors.statesGeoJsonSelector(reduxState)
-    const result = keyBy(null)
-    expect(result).toEqual({})
-  })
-
-  it('selectedRegionSelector', () => {
     selectors.statesGeoJsonSelector(reduxState)
     const result = keyBy(null)
     expect(result).toEqual({})

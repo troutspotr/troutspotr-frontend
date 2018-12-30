@@ -49,8 +49,6 @@ const sizeOfDevice = (): number => {
 
   return 600
 }
-// type RegionGeoJson = FeatureCollection<MultiPolygon, IRegion>
-// type StateGeoJson = FeatureCollection<MultiPolygon, IUsState>
 export interface ISvgMinimapStateProps {
   readonly usStatesGeoJson: UsStateFeatureCollection
   readonly displayedUsStatesGeoJson: UsStateFeatureCollection
@@ -531,8 +529,6 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
   }
 
   public renderData(prevProps: ISvgMinimapStateProps) {
-    const start = performance.now()
-
     const {
       usStatesGeoJson,
       displayedUsStatesGeoJson,
@@ -564,8 +560,6 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     this.renderStateLabels(this.path, displayedUsStatesGeoJson)
     this.renderRegionLabels(this.path, displayedRegionsGeoJson)
     this.renderGpsCentroid(this.path, this.props.gpsGeoJson)
-    const end = performance.now() -  start
-    console.log(`${end}ms`)
   }
   private renderGpsCentroid(svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>, gpsGeoJson: FeatureCollection<any, any>): any {
     const displayedGpsCentroids = gpsGeoJson

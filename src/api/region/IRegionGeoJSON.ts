@@ -9,6 +9,7 @@ import { IPal } from 'coreTypes/pal/IPal'
 import { Polygon } from '@turf/helpers'
 import { IBoundingCircle } from 'coreTypes/boundingCircle/IBoundingCircle'
 import { ITributary } from 'coreTypes/tributary/ITributary'
+import { IRestrictedLand } from 'coreTypes/pal/IRestrictedLand';
 
 export type AccessPointFeature = Feature<Point, IAccessPointGeoJsonProps>
 export type StreamFeature = Feature<LineString, IStream>
@@ -16,6 +17,9 @@ export type PalSectionFeature = Feature<LineString, IPalSection>
 export type TroutStreamSectionFeature = Feature<LineString, ITroutStreamSection>
 export type RestrictionFeature = Feature<LineString, IRestrictionSection>
 export type PalFeature = Feature<MultiPolygon, IPal>
+
+export type RestrictedLandFeature = Feature<MultiPolygon, IPal>
+
 export type BoundingCircleFeature = Feature<Polygon, IBoundingCircle>
 export type TributaryFeature = Feature<Point, ITributary>
 export type StreamCentroid = Feature<Point, IStream>
@@ -26,6 +30,7 @@ export type PalSectionFeatureCollection = FeatureCollection<LineString, IPalSect
 export type TroutStreamSectionFeatureCollection = FeatureCollection<LineString, ITroutStreamSection>
 export type RestrictionFeatureCollection = FeatureCollection<LineString, IRestrictionSection>
 export type PalFeatureCollection = FeatureCollection<MultiPolygon, IPal>
+export type RestrictedLandFeatureCollection = FeatureCollection<MultiPolygon, IRestrictedLand>
 export type BoundingCircleFeatureCollection = FeatureCollection<Polygon, IBoundingCircle>
 export type TributaryFeatureCollection = FeatureCollection<Point, ITributary>
 export type StreamCentroidFeatureCollection = FeatureCollection<Point, IStream>

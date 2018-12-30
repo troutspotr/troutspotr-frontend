@@ -1,22 +1,13 @@
 import { connect } from 'react-redux'
-
-import { RegulationsOverlayComponent } from './RegulationsOverlay.component'
-import { selectedStateIdSelector, selectedRegionIdSelector } from '../../../../Location.selectors';
-import { selectedStreamObjectSelector, getSelectedRoadSelector, troutStreamDictionarySelector, getSpecialRegulationsCurrentSeasonSelector } from '../../../@usState/@region/Region.selectors';
-
+import { createStructuredSelector } from 'reselect'
+import { IRegulationsOverlayStateProps, RegulationsOverlayComponent } from 'ui/routes/map/overlays/regulations/RegulationsOverlay.component'
+import { selectedStreamRestrictions } from 'ui/routes/map/overlays/regulations/RegulationsOverlay.selectors'
 const mapDispatchToProps = {}
 
-const mapStateToProps = state => {
-  const props = {
-    selectedState: selectedStateIdSelector(state),
-    selectedRegion: selectedRegionIdSelector(state),
-    selectedStream: selectedStreamObjectSelector(state),
-    selectedAccessPoint: getSelectedRoadSelector(state),
-    streamDictionary: troutStreamDictionarySelector(state),
-    specialRegulationsCurrentSeason: getSpecialRegulationsCurrentSeasonSelector(state),
-  }
+export const restrictionPropsSelector = createStructuredSelector({
+  restrictions: selectedStreamRestrictions,
+})
 
-  return props
-}
+const mapStateToProps = (state):IRegulationsOverlayStateProps => restrictionPropsSelector(state)
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegulationsOverlayComponent)
+export const RegulationsOverlayContainer = connect(mapStateToProps, mapDispatchToProps)(RegulationsOverlayComponent)

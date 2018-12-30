@@ -24,7 +24,7 @@ export const updateCachedEndpoints = () => async dispatch => {
     // Remap our keys -- this avoids array equality issues.
     dispatch(setCachedEndpoints(keys))
   } catch (error) {
-    console.log(error) // eslint-disable-line
+    console.error(error)
   }
 }
 
@@ -35,7 +35,7 @@ export const setIsOffline = (isOffline = false) => async dispatch => {
     const keys = await RegionApi.getAllCachedEndpoints()
     dispatch(updateOfflineStatus(isOffline, keys))
   } catch (error) {
-    console.log(error) // eslint-disable-line
+    console.error(error) // eslint-disable-line
   }
 }
 
@@ -66,14 +66,12 @@ export const INITIAL_OFFLINE_STATE: IOfflineState = {
 const ACTION_HANDLERS: {} = {
   [OFFLINE_UPDATE_CACHED_ENDPOINTS]: (state: IOfflineState, { payload }): IOfflineState => {
     let { cachedEndpoints } = payload
-    console.log('doing things with the cache')
     cachedEndpoints = cachedEndpoints == null ? [] : cachedEndpoints.slice()
     const newState = { ...state, ...{ cachedEndpoints } }
     return newState
   },
   [OFFLINE_SET_OFFLINE_STATUS]: (state: IOfflineState, { payload }): IOfflineState => {
     const { isOffline, cachedEndpoints } = payload
-    console.log('oooofline????', payload)
     const newState = { ...state, ...{ isOffline, cachedEndpoints } }
     return newState
   },

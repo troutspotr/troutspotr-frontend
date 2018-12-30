@@ -2,8 +2,6 @@ import * as React from 'react'
 const classes = require('./Details.scss')
 import { AccessPointFeature } from 'api/region/IRegionGeoJSON'
 import { BadgeComponent, Color, Fill } from 'ui/core/badge/Badge.component';
-/* eslint-disable camelcase */
-// const DEFAULT_ZOOM = 16
 
 export const bridgeTypeToFillColorDictionary = {
   permissionRequired: Color.privatelyFishable,
@@ -64,8 +62,8 @@ class AccessPointComponent extends React.Component<IAccessPointProps> {
   }
 
   public renderOpenInGoogleMapsLink(selectedAccessPoint: AccessPointFeature) {
-    
     return (
+      // tslint:disable-next-line:jsx-no-lambda
       <span onClick={(e) => this.openGoogleMaps(e, selectedAccessPoint)} className={classes.googleLink}>
         Google Maps
       </span>

@@ -16,8 +16,8 @@ interface IMapboxGlCameraDirectorStateProps {
 }
 
 interface IMapboxGlCameraDirectorDispatchProps {
-  selectMapFeature: (feature) => void,
-  selectFoculPoint: (feature) => void,
+  selectMapFeature(feature): void,
+  selectFoculPoint(feature): void,
 }
 
 interface IMapboxGlCameraDirectorPassedProps {

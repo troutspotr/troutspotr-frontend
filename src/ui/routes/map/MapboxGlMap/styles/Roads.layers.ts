@@ -27,11 +27,9 @@ export const setMaximumAtZoomsAboveSatellite = (
       stop[1] = Math.min(stop[1], props.roadTransparency)
     }
 
-    if (i + 1 === length) {
-      if (stop[0] < props.roadTransparencyZoomLevel) {
-        newStops.push([props.roadTransparencyZoomLevel, stop[1]])
-        newStops.push([props.roadTransparencyZoomLevel + fadeLength, props.roadTransparency])
-      }
+    if (i + 1 === length && stop[0] < props.roadTransparencyZoomLevel) {
+      newStops.push([props.roadTransparencyZoomLevel, stop[1]])
+      newStops.push([props.roadTransparencyZoomLevel + fadeLength, props.roadTransparency])
     }
   }
   return {

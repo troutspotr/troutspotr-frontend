@@ -7,7 +7,7 @@ export const PAL_LAYER_ID = 'pal_layer'
 export const RESTRICTION_SECTION_HIGH_LAYER = 'restriction_layer_high'
 export const RESTRICTION_SECTION_LOW_LAYER = 'restriction_layer_low'
 export const createStreamLayer = (layerProps: ILayerProperties, sourceId: string): Layer[] => {
-  const { pallete, streamSettings, streamFilter = [] } = layerProps
+  const { pallete, streamSettings } = layerProps
   const lineLayout: LineLayout = {
     'line-cap': 'round',
     'line-join': 'round',
@@ -24,10 +24,6 @@ export const createStreamLayer = (layerProps: ILayerProperties, sourceId: string
     layout: lineLayout,
     paint: linePaint,
   }
-
-  // if (streamFilter != null) {
-  //   streamStyle.filter = ['in', 'gid', ...streamFilter]
-  // }
 
   return [streamStyle]
 }
@@ -320,13 +316,7 @@ export const createStreamHighlightLayers = (
   const streamLayer = {
     ...createTroutSectionLayerLayer(layerProps, sourceId)[1],
   }
-  const widthMultiplier = (layerProps.isHighContrastEnabled
-    ? layerProps.streamSettings.publicSectionWidth * 1.0
-    : layerProps.streamSettings.publicSectionWidth) * 2
-  const {
-    pallete,
-    streamSettings,
-  } = layerProps
+
   streamLayer.id = 'STREAM_SECTION_HIGHLIGHT'
   const baseLine = layerProps.isHighContrastEnabled ? 15 : 10
   const paint: LinePaint = {
@@ -335,7 +325,7 @@ export const createStreamHighlightLayers = (
     'line-width': {
       base: 1.0,
       stops: [[1, baseLine], [9, baseLine], [11.1, 0.0]],
-    },  //layerProps.isHighContrastEnabled ? 13 : 10,
+    },
     'line-opacity': {
       base: 1.0,
       stops: [[1, 1], [9, 1], [11.1, 0.0]].map(stop => [stop[0], stop[1]]),
@@ -350,4 +340,3 @@ export const createStreamHighlightLayers = (
 
   return [streamLayer]
 }
-

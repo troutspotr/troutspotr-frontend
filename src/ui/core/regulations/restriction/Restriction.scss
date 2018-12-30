@@ -13,7 +13,7 @@ $circle-size: 1em;
 
 .length {
   order: 2;
-  min-width: 40px;
+  min-width: 43px;
   text-align: right;
 }
 
@@ -26,6 +26,7 @@ $circle-size: 1em;
 .symbolContainer {
   order: 1;
   min-width: 25px;
+  max-width: 25px;
   display: flex;
   height: 1.3em;
   // padding-top: 0.1em;
@@ -40,7 +41,7 @@ $circle-size: 1em;
   border-left-style: none !important;
   border-right-style: none !important;
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 7px;
   background-color: transparent;
   align-self: center;
 }

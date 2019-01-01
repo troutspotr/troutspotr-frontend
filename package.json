@@ -109,8 +109,8 @@
     "test:clear": "jest  --clearCache",
     "test:ci": "CI=true node scripts/test.js --env=jsdom --forceExit",
     "test:inspect": "node --inspect-brk scripts/test.js --runInBand --silent --env=jsdom",
-    "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/ui/**/*.{ts,tsx}\"",
-    "lint:fix": "node_modules/.bin/tslint --project tsconfig.json \"src/ui/**/*.{ts,tsx}\" --fix --format codeFrame",
+    "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "node_modules/.bin/tslint --project tsconfig.json \"src/**/*.{ts,tsx}\" --fix --format codeFrame",
     "storybook": "cross-env NODE_PATH=src/ start-storybook -p 6006 -s src/static",
     "build-storybook": "build-storybook",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"

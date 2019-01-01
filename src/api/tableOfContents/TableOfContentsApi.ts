@@ -34,8 +34,8 @@ export const updateCacheStatusForItems = (
       }
     })
 
-    tableOfContents.regions.features.map(region => {
-      return updateRegionCachedStatus(region, itemsDictionary)
+    tableOfContents.regions.features.forEach(region => {
+      updateRegionCachedStatus(region, itemsDictionary)
     })
   } catch (e) {
     console.error(e)

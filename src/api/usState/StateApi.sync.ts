@@ -10,10 +10,10 @@ const stateDictionary = {
 }
 
 export class StateApiSync implements IStateApi {
-  get<T>(endpoint: string, config: IApiConfig): Promise<T> {
+  public get<T>(endpoint: string, config: IApiConfig): Promise<T> {
     throw new Error('Method not implemented.')
   }
-  getAllCachedEndpoints(): Promise<string[]> {
+  public getAllCachedEndpoints(): Promise<string[]> {
     throw new Error('Method not implemented.')
   }
   public getStateData(stateName: string) {

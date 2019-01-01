@@ -12,6 +12,15 @@ import { browserHistory } from 'react-router';
 // Constants
 // ------------------------------------
 
+export const LAYERS_IN_ORDER_OF_PRIORITY = {
+  [ACCESSPOINT_CIRCLE_LABEL_LAYER]: 'accessPoint',
+  [ACCESSPOINT_CIRCLE_BORDER_LAYER]: 'accessPoint',
+  [ACCESSPOINT_CIRCLE_LAYER]: 'accessPoint',
+  [STREAM_LAYER_ID]: 'stream',
+  // [TROUT_SECTION_LAYER_ID]: 'stream',
+  // [`${TROUT_SECTION_LAYER_ID}_DEACTIVATED`]: 'stream',
+}
+
 const TURF_CIRCLE_RADIUS_KM = 0.16
 export const MAP_INTERACTIVITY_SET_SELECTED_FEATURES = 'MAP_INTERACTIVITY_SET_SELECTED_FEATURES'
 export const MAP_INTERACTIVITY_SET_SELECTED_FEATURE_COLLECTION =
@@ -44,6 +53,19 @@ export const setIsMapInitialized = createAction(
   isMapInitialized => ({ isMapInitialized: isMapInitialized })
 )
 
+export const selectMapFeature = (feature: AllGeoJSON) => (dispatch, getState) => {
+  if (feature == null) {
+    console.error('cannot zoom on null feature.')
+    return
+  }
+  const selectedState = feature
+  const boundingBox = extent(selectedState)
+
+  const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
+  const newCamera = { bounds: newCorners, pitch: 0 }
+  dispatch(mapCameraActions.setCamera(newCamera))
+}
+
 export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
   const reduxState = getState()
   const troutStreamDictionary = troutStreamDictionarySelector(reduxState)
@@ -62,6 +84,17 @@ export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
   } catch(e) {
     console.error(e)
   }
+}
+
+export const selectFoculPoint = (feature: Coord) => (dispatch, getState) => {
+  if (feature == null) {
+    throw new Error('feature cannot be null')
+  }
+  const selectedState = turfCircle(feature, TURF_CIRCLE_RADIUS_KM)
+  const boundingBox = extent(selectedState)
+  const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
+  const newCamera = { bounds: newCorners, pitch: 60 }
+  dispatch(mapCameraActions.setCamera(newCamera))
 }
 
 export const navigateToAccessPoint = (accessPointGid: number) => (dispatch, getState) => {
@@ -94,31 +127,6 @@ export const navigateToAccessPoint = (accessPointGid: number) => (dispatch, getS
   }
 }
 
-export const handleFeatureSelection = (features: {[key:string]: AllGeoJSON[] }) => (dispatch, getState) => {
-  const mostImportantFeatureId = findMostImportantFeatureThatWasClicked(features)
-  if (mostImportantFeatureId == null || LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId] == null) {
-    return
-  }
-
-  const type = LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId]
-  const asdfasdf = (features[mostImportantFeatureId][0] as any).properties.gid
-  navigateOracle[type](asdfasdf)(dispatch, getState)
-}
-
-const navigateOracle = {
-  'accessPoint': navigateToAccessPoint,
-  'stream': navigateToStream,
-}
-
-export const LAYERS_IN_ORDER_OF_PRIORITY = {
-  [ACCESSPOINT_CIRCLE_LABEL_LAYER]: 'accessPoint',
-  [ACCESSPOINT_CIRCLE_BORDER_LAYER]: 'accessPoint',
-  [ACCESSPOINT_CIRCLE_LAYER]: 'accessPoint',
-  [STREAM_LAYER_ID]: 'stream',
-  // [TROUT_SECTION_LAYER_ID]: 'stream',
-  // [`${TROUT_SECTION_LAYER_ID}_DEACTIVATED`]: 'stream',
-}
-
 export const findMostImportantFeatureThatWasClicked = (featureLookupTable: {[key:string]: AllGeoJSON[] }) => {
   if (featureLookupTable == null) {
     return null
@@ -134,28 +142,20 @@ export const findMostImportantFeatureThatWasClicked = (featureLookupTable: {[key
     : keyValue[0]
 }
 
-export const selectMapFeature = (feature: AllGeoJSON) => (dispatch, getState) => {
-  if (feature == null) {
-    console.error('cannot zoom on null feature.')
-    return
-  }
-  const selectedState = feature
-  const boundingBox = extent(selectedState)
-
-  const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
-  const newCamera = { bounds: newCorners, pitch: 0 }
-  dispatch(mapCameraActions.setCamera(newCamera))
+const navigateOracle = {
+  'accessPoint': navigateToAccessPoint,
+  'stream': navigateToStream,
 }
 
-export const selectFoculPoint = (feature: Coord) => (dispatch, getState) => {
-  if (feature == null) {
-    throw new Error('feature cannot be null')
+export const handleFeatureSelection = (features: {[key:string]: AllGeoJSON[] }) => (dispatch, getState) => {
+  const mostImportantFeatureId = findMostImportantFeatureThatWasClicked(features)
+  if (mostImportantFeatureId == null || LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId] == null) {
+    return
   }
-  const selectedState = turfCircle(feature, TURF_CIRCLE_RADIUS_KM)
-  const boundingBox = extent(selectedState)
-  const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
-  const newCamera = { bounds: newCorners, pitch: 60 }
-  dispatch(mapCameraActions.setCamera(newCamera))
+
+  const type = LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId]
+  const asdfasdf = (features[mostImportantFeatureId][0] as any).properties.gid
+  navigateOracle[type](asdfasdf)(dispatch, getState)
 }
 
 // Set the map to the widest allowable bounds of the entire

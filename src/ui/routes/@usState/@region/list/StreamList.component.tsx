@@ -10,7 +10,7 @@ export interface IStreamListComponent {
 }
 
 class StreamListComponent extends React.Component<IStreamListComponent> {
-  render() {
+  public render() {
     const { selectedRegion, selectedState, visibleTroutStreams } = this.props
     return (
       <>

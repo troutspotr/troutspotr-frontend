@@ -11,7 +11,7 @@ const mapDispatchToProps = {}
 
 const mapStateToProps = (state: IReduxState): IRegulationsSummaryStateProps => {
   const getSummary = getRegulationsSummarySelector(state)
-  const props = { getSummary }
+  const props = { getSummary: getSummary }
   return props
 }
 

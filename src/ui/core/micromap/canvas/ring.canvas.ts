@@ -118,7 +118,7 @@ export const renderStreamRing = (
     streamObject.stream.properties == null ? 0 : streamObject.stream.properties.length_mi
   const start = 0
   const stop = length
-  const ring: ISection = { start, stop, length }
+  const ring: ISection = { start: start, stop: stop, length: length }
 
   renderRing(
     ring,

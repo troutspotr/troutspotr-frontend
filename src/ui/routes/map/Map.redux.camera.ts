@@ -41,12 +41,12 @@ export const setCameraAnimationSpeed = createAction(MAP_CAMERA_SET_ANIMATION_SPE
 export const setCamera = createAction(MAP_CAMERA_SET_CAMERA, x => x)
 
 export const mapCameraActions = {
-  setCameraBounds,
-  setCameraBearing,
-  setCameraAngle,
-  setCameraPixelBuffer,
-  setCameraAnimationSpeed,
-  setCamera,
+  setCameraBounds: setCameraBounds,
+  setCameraBearing: setCameraBearing,
+  setCameraAngle: setCameraAngle,
+  setCameraPixelBuffer: setCameraPixelBuffer,
+  setCameraAnimationSpeed: setCameraAnimationSpeed,
+  setCamera: setCamera,
 }
 
 const MERCATOR_PROJECTION_BOUNDS = {

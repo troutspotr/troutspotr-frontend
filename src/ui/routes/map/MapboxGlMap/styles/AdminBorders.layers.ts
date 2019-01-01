@@ -1,11 +1,6 @@
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 import { Layer, LineLayout, LinePaint } from 'mapbox-gl'
 import { ILayerProperties } from './ICreateLayer'
-export const drawRegion = (layerProps: ILayerProperties, sourceId: string): Layer[]  => {
-  return sourceId === 'state'
-    ? drawRegionStuff(layerProps, sourceId, 0.2)
-    : drawRegionStuff(layerProps, sourceId)
-}
 
 export const drawRegionStuff = (layerProps: ILayerProperties, sourceId: string, opacityMultiplier = 1): Layer[]  => {
   const lineLayout: LineLayout = {
@@ -54,6 +49,14 @@ export const drawRegionStuff = (layerProps: ILayerProperties, sourceId: string, 
     },
   }]
 }
+
+
+export const drawRegion = (layerProps: ILayerProperties, sourceId: string): Layer[]  => {
+  return sourceId === 'state'
+    ? drawRegionStuff(layerProps, sourceId, 0.2)
+    : drawRegionStuff(layerProps, sourceId)
+}
+
 
 export const drawLabelsRegion = (layerProps: ILayerProperties, sourceId: string): Layer[]  => {
   return [

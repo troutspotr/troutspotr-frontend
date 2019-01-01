@@ -10,7 +10,8 @@ export const createLegalRoutes = (store = null): PlainRoute => ({
   indexRoute: {
     component: LegalIntroComponent,
   },
-  getChildRoutes(location, cb) {
+// tslint:disable-next-line: only-arrow-functions
+  getChildRoutes: function(location, cb) {
     import(/* webpackChunkName: "legal" */ './Legal.imports').then(
       ({ createPrivacyPolicyRoutes, createThankYouRoutes, createTermsOfServiceRoutes }) => {
         cb(null, [

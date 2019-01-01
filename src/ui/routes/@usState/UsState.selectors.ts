@@ -73,7 +73,7 @@ export const waterOpenersDictionarySelector = createSelector(
 
         const isOpenSeason = openSeasons.length >= 1
 
-        const newObject = { ...water, isOpenSeason, openSeasons }
+        const newObject = { ...water, isOpenSeason: isOpenSeason, openSeasons: openSeasons }
         dictionary[key] = newObject
         return dictionary
       },

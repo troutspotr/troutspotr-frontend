@@ -70,7 +70,7 @@ const ACTION_HANDLERS: {
 } = {
   [REGION_SET_VIEW]: (state: IUsStateReduxState, { payload }): IUsStateReduxState => {
     const view = payload || INITIAL_US_STATE_STATE
-    const newState = { ...state, ...{ view } }
+    const newState = { ...state, ...{ view: view } }
     return newState
   },
 

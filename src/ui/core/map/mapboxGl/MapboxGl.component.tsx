@@ -125,7 +125,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
       this.setState(
         () => {
           return {
-            map,
+            map: map,
             isLoaded: true,
           }
         },
@@ -165,7 +165,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     const activeChildren = React.Children.toArray(children).filter(x => x != null && x)
 
     return activeChildren.map(child =>
-      React.cloneElement(child as React.ReactElement<any>, { map })
+      React.cloneElement(child as React.ReactElement<any>, { map: map })
     )
   }
 

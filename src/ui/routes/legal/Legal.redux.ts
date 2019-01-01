@@ -1,8 +1,6 @@
 import { getApi } from 'api/Api.module'
 import { handleActions } from 'redux-actions'
-// import { Loading } from 'coreTypes/Ui'
 import { isBot } from 'ui/core/Core.redux'
-// import AnonymousAnalyzerApi from 'api/AnonymousAnalyzerApi'
 
 export const HAS_AGREED_TO_TERMS = 'HAS_AGREED_TO_TERMS'
 export const SET_AGREEMENT_STATE = 'SET_AGREEMENT_STATE'
@@ -37,7 +35,7 @@ export const ACTION_HANDLERS: {} = {
       try {
         localStorage.setItem(HAS_AGREED_TO_TERMS, payload)
       } catch (e) {
-        console.log('could not store token; perhaps private mode?') // eslint-disable-line
+        console.error('could not store token; perhaps private mode?') // eslint-disable-line
       }
     }
 
@@ -54,26 +52,28 @@ export const ACTION_HANDLERS: {} = {
       const newState = { ...state, ...{ hasSeenIntroScreen: true } }
       try {
         getApi().then(({ AnonymousAnalyzerApi }) => {
-          AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+          AnonymousAnalyzerApi.recordEvent('agreement_update', { view: view, timeEllapsed: time })
         })
-      } catch (error) {}
+      } catch (error) { console.error(error) }
       return newState
     } else if (view === 'termsOfService') {
       const newState = { ...state, ...{ hasSeenTermsOfService: true } }
 
       try {
         getApi().then(({ AnonymousAnalyzerApi }) => {
-          AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+          AnonymousAnalyzerApi.recordEvent('agreement_update', { view: view, timeEllapsed: time })
         })
-      } catch (error) {}
+      } catch (error) { console.error(error) }
       return newState
     } else if (view === 'privacyPolicy') {
       const newState = { ...state, ...{ hasSeenPrivacyPolicy: true } }
       try {
         getApi().then(({ AnonymousAnalyzerApi }) => {
-          AnonymousAnalyzerApi.recordEvent('agreement_update', { view, timeEllapsed: time })
+          AnonymousAnalyzerApi.recordEvent('agreement_update', { view: view, timeEllapsed: time })
         })
-      } catch (error) {}
+      } catch (error) {
+        console.error(error)
+      }
       return newState
     }
     return { ...state }

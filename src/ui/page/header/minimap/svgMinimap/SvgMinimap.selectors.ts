@@ -120,8 +120,8 @@ export const nationalCameraSelector = createSelector(
 )
 
 export const getMinimapCamera = (
-  regions: RegionFeatureCollection,
-  states: UsStateFeatureCollection,
+  regions: RegionFeatureCollection | null,
+  states: UsStateFeatureCollection | null,
   defaultCamera: ICameraProps,
   isExpanded: boolean
 ): ICameraProps => {
@@ -221,6 +221,10 @@ export const displayedRegionsSelector = createSelector(
       return EMPTY_REGIONS
     }
 
+    if (regions == null) {
+      return EMPTY_REGIONS
+    }
+
     const selectedStateIds = selectedUsStates.features.map(x => x.properties.short_name)[0]
 
     const regionsWithinSelectedStates = featureCollection(
@@ -231,9 +235,8 @@ export const displayedRegionsSelector = createSelector(
       )
     )
 
-    regionsWithinSelectedStates.features.map(x => {
-      // this is super harmful.
-      return updateRegionCachedStatus(x, cachedEndpoints)
+    regionsWithinSelectedStates.features.forEach(x => {
+      updateRegionCachedStatus(x, cachedEndpoints)
     })
 
     return regionsWithinSelectedStates as RegionFeatureCollection
@@ -251,7 +254,7 @@ export const statesWithCachedRegionsSelector = createSelector(
     const stateNamesOfCachedRegionsDictionary = Object.entries(cachedRegions).reduce((dictionary, [id, region]) => {
       dictionary[(region as RegionFeature).properties.state_short_name] = true
       return dictionary
-    }, {})
+    }, ({} as any))
 
     // HACK! This is a constant for now, but it works
     const isUsStateCachedToo = true
@@ -280,7 +283,8 @@ export const displayedStatesSelector = createSelector(
     }
 
     if (selectedUsStates == null || selectedUsStates.features.length === 0) {
-      return allFeatures
+// tslint:disable-next-line: no-useless-cast
+      return allFeatures!
     }
     return selectedUsStates
   }

@@ -21,18 +21,18 @@ export const themeSelector = (reduxState: IReduxState): Theme => {
   return reduxState.core.theme
 }
 
-export const statesGeoJsonSelector = (reduxState: IReduxState): UsStateFeatureCollection =>
+export const statesGeoJsonSelector = (reduxState: IReduxState): UsStateFeatureCollection | null =>
   reduxState.core.statesGeoJson
-export const countiesGeoJsonSelector = (reduxState: IReduxState): CountyFeatureCollection =>
+export const countiesGeoJsonSelector = (reduxState: IReduxState): CountyFeatureCollection | null =>
   reduxState.core.countiesGeoJson
-export const regionsGeoJsonSelector = (reduxState: IReduxState): RegionFeatureCollection =>
+export const regionsGeoJsonSelector = (reduxState: IReduxState): RegionFeatureCollection | null =>
   reduxState.core.regionsGeoJson
 
-export const statesDictionarySelector = (reduxState: IReduxState): Dictionary<UsStateFeature> =>
+export const statesDictionarySelector = (reduxState: IReduxState): Dictionary<UsStateFeature> | null =>
   reduxState.core.statesDictionary
-export const countiesDictionarySelector = (reduxState: IReduxState): Dictionary<CountyFeature> =>
+export const countiesDictionarySelector = (reduxState: IReduxState): Dictionary<CountyFeature> | null =>
   reduxState.core.countyDictionary
-export const regionsDictionarySelector = (reduxState: IReduxState): Dictionary<RegionFeature> =>
+export const regionsDictionarySelector = (reduxState: IReduxState): Dictionary<RegionFeature> | null =>
   reduxState.core.regionDictionary
 export const hasAgreedToTermsSelector = (reduxState: IReduxState): boolean =>
   reduxState.core.hasAgreedToTerms
@@ -44,6 +44,8 @@ export const searchTextSelector = (reduxState: IReduxState): string => (reduxSta
 export const viewSelector = (reduxState: IReduxState): View => reduxState.core.view
 
 export const isListVisible = createSelector([viewSelector], view => view === View.list)
+
+export const timeSelector = (reduxState: IReduxState): Date => reduxState.core.time
 
 export const selectedStateSelector = createSelector(
   selectedStateIdSelector,
@@ -74,7 +76,7 @@ export const isSearchingSelector = createSelector([searchTextSelector], searchTe
 
 export const selectedRegionPathKeySelector = createSelector(
   [selectedStateIdSelector, selectedRegionIdSelector],
-  (selectedStateId, selectedRegionId): string => {
+  (selectedStateId, selectedRegionId): string | null => {
     if (isEmpty(selectedStateId)) {
       return null
     }
@@ -88,7 +90,7 @@ export const selectedRegionPathKeySelector = createSelector(
 )
 
 
-const selectedRegion = (regionPathKey: string, regionsDictionary): RegionFeature => {
+const selectedRegion = (regionPathKey: string, regionsDictionary: any): RegionFeature | null => {
   if (isEmpty(regionsDictionary)) {
     return null
   }

@@ -41,7 +41,7 @@ export const setSelectedFeatureCollection = createAction(
 )
 export const setIsMapInitialized = createAction(
   MAP_INTERACTIVITY_IS_MAP_INITIALIZED,
-  isMapInitialized => ({ isMapInitialized })
+  isMapInitialized => ({ isMapInitialized: isMapInitialized })
 )
 
 export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
@@ -166,15 +166,15 @@ export const resetMap = () => (dispatch, getState) => {
 }
 
 export const mapInteractivityActions = {
-  selectMapFeature,
-  setIsMapInitialized,
-  resetMap,
+  selectMapFeature: selectMapFeature,
+  setIsMapInitialized: setIsMapInitialized,
+  resetMap: resetMap,
 }
 
 const actionHandlers: {} = {
   [MAP_INTERACTIVITY_IS_MAP_INITIALIZED]: (state, { payload: { isMapInitialized } }) => ({
     ...state,
-    isMapInitialized,
+    isMapInitialized: isMapInitialized,
   }),
 }
 

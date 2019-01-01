@@ -31,12 +31,12 @@ class AccessPointComponent extends React.Component<IAccessPointProps> {
   }
   public onMouseLeave(e) {
     e.stopPropagation()
-    this.props.onHover(null)
+    // this.props.onHover(null)
   }
 
   public onMouseEnter(e) {
     e.stopPropagation()
-    this.props.onHover(this.props.accessPoint)
+    // this.props.onHover(this.props.accessPoint)
   }
 
   public onClick(e) {
@@ -70,7 +70,7 @@ class AccessPointComponent extends React.Component<IAccessPointProps> {
     )
   }
 
-  public mapAccessPoints(bridge: AccessPointFeature, isSelected, isHovered) {
+  public mapAccessPoints(bridge: AccessPointFeature, isSelected: boolean, isHovered: boolean) {
     const { street_name, alphabetLetter, bridgeType } = bridge.properties
     const textClass = isSelected ? classes.selectedItem : classes.listText
     const listItemClass = isHovered ? classes.hoveredItem : classes.listItem

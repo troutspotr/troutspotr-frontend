@@ -36,8 +36,8 @@ class ErrorBoundaryComponent extends React.Component<IErrorBoundaryProps, IError
     this.setState(() => {
       this.handleError(error, errorInfo)
       return {
-        error,
-        errorInfo,
+        error: error,
+        errorInfo: errorInfo,
       }
     })
     // You can also log error messages to an error reporting service here

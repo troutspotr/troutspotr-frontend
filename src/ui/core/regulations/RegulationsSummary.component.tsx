@@ -26,7 +26,7 @@ export class RegulationsSummary extends React.PureComponent<IRegulationsSummaryP
   public renderOpenClosedHelper({ statusClass, statusText, explainerText, dateText }) {
     const props: IRegulationsSummaryLayout = {
       status: statusClass,
-      statusText,
+      statusText: statusText,
       untilDateText: dateText,
       additionalText: explainerText,
     }
@@ -34,6 +34,7 @@ export class RegulationsSummary extends React.PureComponent<IRegulationsSummaryP
   }
   // TODO: FIX THIS
   // move this to the Region API so we don't have to re-calc this in the view.
+// tslint:disable-next-line: mccabe-complexity cognitive-complexity
   public renderOpenOrClosed(streamObject: IStreamObject) {
     const now = new Date()
 
@@ -56,7 +57,7 @@ export class RegulationsSummary extends React.PureComponent<IRegulationsSummaryP
         statusClass: classes.closed,
         statusText: 'Closed',
         explainerText: '',
-        dateText,
+        dateText: dateText,
       }
 
       return this.renderOpenClosedHelper(args)
@@ -69,7 +70,7 @@ export class RegulationsSummary extends React.PureComponent<IRegulationsSummaryP
         statusClass: classes.open,
         statusText: 'Open',
         explainerText: openers[0].restriction.shortText,
-        dateText,
+        dateText: dateText,
       }
 
       return this.renderOpenClosedHelper(args)
@@ -85,8 +86,8 @@ export class RegulationsSummary extends React.PureComponent<IRegulationsSummaryP
       const args = {
         statusClass: classes.openCaution,
         statusText: 'Closed with exceptions',
-        explainerText,
-        dateText,
+        explainerText: explainerText,
+        dateText: dateText,
       }
 
       return this.renderOpenClosedHelper(args)
@@ -101,8 +102,8 @@ export class RegulationsSummary extends React.PureComponent<IRegulationsSummaryP
       const args = {
         statusClass: classes.openCaution,
         statusText: 'Open',
-        explainerText,
-        dateText,
+        explainerText: explainerText,
+        dateText: dateText,
       }
 
       return this.renderOpenClosedHelper(args)

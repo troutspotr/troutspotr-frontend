@@ -1,3 +1,4 @@
+// tslint:disable:max-file-line-count
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 import { Layer, StyleFunction } from 'mapbox-gl'
 import { ILayerProperties } from './ICreateLayer'

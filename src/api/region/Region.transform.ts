@@ -1,3 +1,4 @@
+// tslint:disable:object-literal-shorthand
 import { IStateData } from 'api/usState/IStateData'
 import { Dictionary } from 'lodash'
 import { IStreamObject } from 'coreTypes/IStreamObject'
@@ -299,5 +300,6 @@ export const transformGeo = async (
   return {
     streamDictionary,
     ...geometryDictionary,
+    
   }
 }

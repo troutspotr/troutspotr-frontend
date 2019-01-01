@@ -52,9 +52,9 @@ export class MicroMapComponentCanvas extends React.PureComponent<
       return {
         ...previousState,
         isInitialized: true,
-        width,
-        height,
-        canvasContext,
+        width: width,
+        height: height,
+        canvasContext: canvasContext,
       }
     })
   }
@@ -96,7 +96,7 @@ export class MicroMapComponentCanvas extends React.PureComponent<
     this.setState(previousState => {
       return {
         ...previousState,
-        canvasElement,
+        canvasElement: canvasElement,
       }
     })
   }

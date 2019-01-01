@@ -1,6 +1,5 @@
 import * as React from 'react'
 const classes = require('./MapOverlay.scss')
-import { MessageOverlayComponent } from 'ui/core/messageOverlay/MessageOverlay.component'
 import { AccessPointDetails } from './accessPoint/AccessPointDetails.component'
 import { RegionDetailsComponent } from './region/RegionDetails.component'
 import { StreamDetailsContainer } from './stream/StreamDetails.container'

@@ -10,7 +10,7 @@ export interface IStreamItemLayoutProps {
 }
 
 export class StreamItemLayout extends React.Component<IStreamItemLayoutProps> {
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     const { title, micromap, body, link, isVisible } = this.props
     const containerClass = isVisible ? classes.container : classes.invisible
     return (

@@ -86,12 +86,12 @@ export const layerPropertiesSelector = createSelector(
     const pallete = theme === Theme.dark ? DarkMapColors : LightMapColors
     const layerProps = {
       ...DEFAULT_LAYER_PROPS,
-      pallete,
+      pallete: pallete,
       streamHighlightFilter: highlightFilter,
       isOnline: isOffline === false,
       isHighContrastEnabled: theme === Theme.light,
       streamFilter: filter,
-      streamSettings,
+      streamSettings: streamSettings,
     }
 
     return layerProps
@@ -120,6 +120,7 @@ export const buildSources = (
   streamCentroids = null,
   selectedRegion = null,
   selectedState = null,
+// tslint:disable-next-line: parameters-max-number
 ): { [index: string]: any } => {
   const s = {}
   src(StyleSourceId.streams, streams, s)
@@ -251,8 +252,8 @@ export const mapboxGlStyleSelector = createSelector(
   (layerProps: ILayerProperties, sources: any, layers): MapboxStyle => {
     const style = {
       ...DEFAULT_STYLE,
-      sources,
-      layers,
+      sources: sources,
+      layers: layers,
     }
 
     return style

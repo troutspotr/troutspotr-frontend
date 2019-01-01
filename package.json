@@ -29,6 +29,7 @@
     "@types/storybook__addon-actions": "^3.0.3",
     "@types/storybook__addon-knobs": "^3.2.3",
     "@types/storybook__react": "^3.0.7",
+    "@types/topojson-client": "^3.0.0",
     "autoprefixer": "8.5.1",
     "axios": "^0.18.0",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
@@ -84,14 +85,14 @@
     "topojson-client": "^3.0.0",
     "ts-jest": "23.10.5",
     "ts-loader": "^3.5.0",
-    "tslint": "^5.9.1",
+    "tslint": "5.12.0",
     "tslint-config-prettier": "^1.9.0",
     "tslint-eslint-rules": "5.4.0",
     "tslint-immutable": "^4.4.0",
     "tslint-loader": "^3.5.3",
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.5.1",
-    "tslint-sonarts": "^1.6.0",
+    "tslint-sonarts": "1.8.0",
     "typescript": "3.2.2",
     "typings-for-css-modules-loader": "^1.7.0",
     "url-loader": "0.5.9",
@@ -105,10 +106,11 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
+    "test:clear": "jest  --clearCache",
     "test:ci": "CI=true node scripts/test.js --env=jsdom --forceExit",
     "test:inspect": "node --inspect-brk scripts/test.js --runInBand --silent --env=jsdom",
-    "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/ui/core/**/*.{ts,tsx}\"",
-    "lint:fix": "node_modules/.bin/tslint --project tsconfig.json \"src/ui/**/*.selectors.ts\" --fix --format codeFrame",
+    "lint": "node_modules/.bin/tslint  --project tsconfig.json \"src/ui/**/*.{ts,tsx}\"",
+    "lint:fix": "node_modules/.bin/tslint --project tsconfig.json \"src/ui/**/*.{ts,tsx}\" --fix --format codeFrame",
     "storybook": "cross-env NODE_PATH=src/ start-storybook -p 6006 -s src/static",
     "build-storybook": "build-storybook",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
@@ -124,7 +126,7 @@
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
-      "^.+\\.(j|t)sx?$": "ts-jest",
+      "^.+\\.[tj]sx?$": "ts-jest",
       "^.+\\.scss$": "<rootDir>/config/jest/cssTransform.js"
     },
     "transformIgnorePatterns": [
@@ -134,24 +136,25 @@
       "^react-native$": "react-native-web"
     },
     "moduleFileExtensions": [
-      "web.ts",
+      "js",
+      "json",
+      "jsx",
+      "node",
+      "topojson",
       "ts",
-      "web.tsx",
       "tsx",
       "web.js",
-      "js",
       "web.jsx",
-      "jsx",
-      "json",
-      "topojson",
-      "node"
+      "web.ts",
+      "web.tsx"
     ],
     "globals": {
       "window": null,
       "ts-jest": {
-        "tsConfigFile": "tsconfig.test.json"
+        "tsConfig": "tsconfig.test.json"
       }
-    }
+    },
+    "preset": "ts-jest/presets/js-with-ts"
   },
   "babel": {
     "presets": [

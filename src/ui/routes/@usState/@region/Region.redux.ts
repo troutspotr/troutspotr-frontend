@@ -1,7 +1,7 @@
 import { getApi } from 'api/Api.module'
 import isEmpty from 'lodash-es/isEmpty'
 import { createAction, handleActions } from 'redux-actions'
-import { selectedRegionSelector, regionsDictionarySelector } from 'ui/core/Core.selectors'
+import { selectedRegionSelector, regionsDictionarySelector, timeSelector } from 'ui/core/Core.selectors'
 import { selectFoculPoint, selectMapFeature } from 'ui/routes/map/Map.redux.interactivity'
 import { getSelectedRoadSelector, selectedStreamObjectSelector } from './Region.selectors'
 import { IGeoPackageOrWhatver } from 'api/region/Region.transform'
@@ -24,6 +24,22 @@ import { IReduxState } from 'ui/redux/Store.redux.rootReducer';
 // ------------------------------------
 // Constants
 // ------------------------------------
+const initialState: IRegionState = {
+  // View: MAP,
+  troutStreamDictionary: {},
+  troutStreamSections: null,
+  restrictionSections: null,
+  streams: null,
+  palSections: null,
+  restrictedLands: null,
+  streamAccessPoint: null,
+  pals: null,
+  hoveredStream: null,
+  // SelectedRoad: null,
+  streamCentroids: null,
+  hoveredRoad: null,
+  regionLoadingStatus: LoadingStatus.NotStarted,
+}
 export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 
 // ------------------------------------
@@ -51,6 +67,7 @@ export const setHoveredStream = createAction(REGION_SET_HOVERED_STREAM, x => x)
 export const fetchRegionData = (stateName: string, regionName: string) => async (
   dispatch,
   getState
+// tslint:disable-next-line: mccabe-complexity
 ) => {
   dispatch(setRegionDataLoading())
   try {
@@ -73,7 +90,7 @@ export const fetchRegionData = (stateName: string, regionName: string) => async 
 
     const { RegionApi } = await getApi()
     // HEY! You can override this to see different times! Neato!
-    const time = (getState() as IReduxState).core.time
+    const time = timeSelector(getState())
     const gettingRegion = RegionApi.getRegionData(stateName, regionName, time)
     const regionData = await gettingRegion
     updateCachedEndpoints()(dispatch)
@@ -116,7 +133,7 @@ export const fetchRegionData = (stateName: string, regionName: string) => async 
 const ACTION_HANDLERS: {} = {
   [REGION_SET_VIEW]: (state: IRegionState, { payload }): IRegionState => {
     const view = payload
-    const newState = { ...state, ...{ view } }
+    const newState = { ...state, ...{ view: view } }
     return newState
   },
 
@@ -177,21 +194,6 @@ export interface IRegionState {
   streamCentroids: StreamCentroidFeatureCollection,
   regionLoadingStatus: LoadingStatus
 }
-const initialState: IRegionState = {
-  // View: MAP,
-  troutStreamDictionary: {},
-  troutStreamSections: null,
-  restrictionSections: null,
-  streams: null,
-  palSections: null,
-  restrictedLands: null,
-  streamAccessPoint: null,
-  pals: null,
-  hoveredStream: null,
-  // SelectedRoad: null,
-  streamCentroids: null,
-  hoveredRoad: null,
-  regionLoadingStatus: LoadingStatus.NotStarted,
-}
+
 
 export default handleActions(ACTION_HANDLERS, initialState)

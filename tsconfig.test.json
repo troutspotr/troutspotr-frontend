@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./src/",
+    "baseUrl": "./src",
     "module": "commonjs",
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "types": ["jest"],
     "allowJs": true
   }

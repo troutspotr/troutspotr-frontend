@@ -13,3 +13,6 @@ export interface IOpener {
   restriction_id: number
   restriction?: IRegulation
 }
+
+
+export type WaterbodyStatus = 'open' | 'closed' | 'openCaution' | 'unknown'

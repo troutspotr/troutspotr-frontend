@@ -1,10 +1,11 @@
 import * as React from 'react'
+import { WaterbodyStatus } from 'coreTypes/state/IWaterOpener';
 const classes = require('./RegulationsSummary.scss')
 
 export interface IRegulationsSummaryLayout {
-  status: 'open' | 'closed' | 'openCaution'
+  status: WaterbodyStatus
   statusText: string
-  untilDateText: string
+  untilDateText: string | null
   additionalText: string
 }
 

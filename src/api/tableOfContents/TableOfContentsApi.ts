@@ -5,8 +5,6 @@ import { ITableOfContentsData } from './ITableOfContentsData'
 export const buildTableOfContentsEndpoint = (): string => `/data/v3/TableOfContents.topojson`
 import keyBy from 'lodash-es/keyBy'
 import { RegionFeature } from 'coreTypes/tableOfContents/ITableOfContentsGeoJSON'
-// tslint:disable-next-line:no-any
-
 export const updateRegionCachedStatus = (
   region: RegionFeature,
   dictionary: { [key: string]: string }
@@ -47,12 +45,12 @@ export const updateCacheStatusForItems = (
 }
 
 export const decompress = (tocTopojson: any): ITableOfContentsData => {
-  const states = topojson.feature(tocTopojson, tocTopojson.objects.states)
-  states.features.forEach(s => (s.properties.short_name = s.properties.short_name.toLowerCase()))
-  const counties = topojson.feature(tocTopojson, tocTopojson.objects.counties)
-  const regions = topojson.feature(tocTopojson, tocTopojson.objects.region_stats)
+  const states = topojson.feature(tocTopojson, tocTopojson.objects.states) as any
+  states.features.forEach((s: any) => (s.properties.short_name = s.properties.short_name.toLowerCase()))
+  const counties = topojson.feature(tocTopojson, tocTopojson.objects.counties) as any
+  const regions = topojson.feature(tocTopojson, tocTopojson.objects.region_stats) as any
   regions.features.forEach(
-    s => (s.properties.state_short_name = s.properties.state_short_name.toLowerCase())
+    (s: any) => (s.properties.state_short_name = s.properties.state_short_name.toLowerCase())
   )
   return {
     states,

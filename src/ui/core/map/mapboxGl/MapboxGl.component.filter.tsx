@@ -1,6 +1,5 @@
 import { Map } from 'mapbox-gl'
 import * as React from 'react'
-// import { ICameraProps } from 'ui/core/map/ICameraProps'
 
 export interface IMapboxGlFilterPassedProps {
   map?: Map
@@ -25,15 +24,6 @@ export class MapboxGlComponentFilter extends React.Component<IMapboxGlCameraProp
       return
     }
 
-    console.log('style-loaded?', map.isStyleLoaded())
-    if (map.isStyleLoaded() === false) {
-      // return
-    }
-    //   map.once('styledata', () => {
-    //     map.setFilter(layerId, filter)
-    //   })
-    //   return
-    // }
     map.setFilter(layerId, filter)
   }
 
@@ -62,7 +52,6 @@ export class MapboxGlComponentFilter extends React.Component<IMapboxGlCameraProp
   }
 
   public render() {
-    console.log(this.props)
     return null
   }
 }

@@ -208,6 +208,7 @@ export const createLayers = (
   labels?: Layer[],
   gps?: Layer[]
 ): Layer[] => {
+// tslint:disable-next-line: no-useless-cast
   return [
     ...createBackgroundLayers(layerProps),
     ...getSatelliteLayers(layerProps),

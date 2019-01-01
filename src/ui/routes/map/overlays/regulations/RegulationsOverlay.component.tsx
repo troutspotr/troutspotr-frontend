@@ -1,4 +1,3 @@
-import isEmpty from 'lodash-es/isEmpty'
 import * as React from 'react'
 import { RestrictionComponent, IRestrictionComponent } from 'ui/core/regulations/restriction/Restriction.component'
 export interface IRegulationsOverlayStateProps {

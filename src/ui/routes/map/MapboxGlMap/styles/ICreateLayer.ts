@@ -43,7 +43,7 @@ export const defaultLayerProperties = (): ILayerProperties => {
     satelliteResolution: 256,
     roadTransparencyZoomLevel: 14,
     roadTransparency: 0.3,
-    streamSettings,
+    streamSettings: streamSettings,
     accessPointSettings: {
       publiclyAccessibleRadius: 10,
       borderWidth: 2,

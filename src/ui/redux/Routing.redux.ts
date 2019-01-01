@@ -29,6 +29,7 @@ export const INITIAL_ROUTING_STATE: IRoutingState = {
 // to add `previousRouting` history to redux.
 // This, in conjuction with `*isLoading` propertis in redux stores,
 // allows us to determine what should and should not yet be displayed.
+// tslint:disable-next-line: cognitive-complexity
 export function routingWithHistoryReducer(reduxState, action) {
   // this line was pretty much copied over from `routeParamsReducer`
   const previousState =

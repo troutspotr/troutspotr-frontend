@@ -18,9 +18,9 @@ export const cameraPropsSelector = createSelector(
   bearingSelector,
   (bbox: number[][], pitch: number, bearing: number): ICameraProps => {
     return {
-      bbox,
-      pitch,
-      bearing,
+      bbox: bbox,
+      pitch: pitch,
+      bearing: bearing,
       padding: DEFAULT_PADDING,
       speed: 1,
     }

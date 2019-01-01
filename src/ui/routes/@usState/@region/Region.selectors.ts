@@ -254,14 +254,14 @@ export const getSpecialRegulationsSelector = createSelector(
         const result: IAsdf = {
           startTime: start_time,
           stopTime: end_time,
-          isFishSanctuary,
-          isOpenerOverride,
-          color,
+          isFishSanctuary: isFishSanctuary,
+          isOpenerOverride: isOpenerOverride,
+          color: color,
           restrictionId: restriction_id,
           streamId: stream_gid,
-          shortText,
-          legalText,
-          length,
+          shortText: shortText,
+          legalText: legalText,
+          length: length,
         }
 
         return result
@@ -390,8 +390,8 @@ export const getCountyListSelector = createSelector(
       const byName = stream => stream.stream.properties.name
       try {
         const countyList = {
-          gid,
-          name,
+          gid: gid,
+          name: name,
           streamCount: stream_count,
           streams: sortBy(visibleStreamsInCounty, [byOpenStatus, byName]),
         }

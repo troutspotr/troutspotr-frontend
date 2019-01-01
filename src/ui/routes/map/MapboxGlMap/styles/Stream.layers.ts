@@ -243,7 +243,7 @@ export const createRestrictionSectionLayer = (
       'line-cap': 'round',
       'line-join': 'round',
     },
-    paint,
+    paint: paint,
   }
 
   if (layerProps.streamFilter != null) {

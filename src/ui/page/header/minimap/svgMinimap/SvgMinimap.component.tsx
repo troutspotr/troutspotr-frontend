@@ -50,17 +50,17 @@ const sizeOfDevice = (): number => {
   return 600
 }
 export interface ISvgMinimapStateProps {
-  readonly usStatesGeoJson: UsStateFeatureCollection
-  readonly displayedUsStatesGeoJson: UsStateFeatureCollection
-  readonly displayedRegionsGeoJson: RegionFeatureCollection
-  readonly selectedUsStatesGeoJson: UsStateFeatureCollection
-  readonly selectedRegionGeoJson: RegionFeatureCollection
+  readonly usStatesGeoJson: UsStateFeatureCollection | null
+  readonly displayedUsStatesGeoJson: UsStateFeatureCollection | null
+  readonly displayedRegionsGeoJson: RegionFeatureCollection | null
+  readonly selectedUsStatesGeoJson: UsStateFeatureCollection | null
+  readonly selectedRegionGeoJson: RegionFeatureCollection | null
 
-  readonly gpsGeoJson: FeatureCollection<any, any>
-  readonly camera?: ICameraProps
-  readonly isOffline: boolean
-  readonly isExpanded: boolean
-  readonly displayedStreams: FeatureCollection<Point, IStreamCentroid>
+  readonly gpsGeoJson: FeatureCollection<any, any> | null
+  readonly camera?: ICameraProps | null
+  readonly isOffline: boolean | null
+  readonly isExpanded: boolean | null
+  readonly displayedStreams: FeatureCollection<Point, IStreamCentroid> | null
 }
 
 export interface ISvgMinimapPassedProps {}

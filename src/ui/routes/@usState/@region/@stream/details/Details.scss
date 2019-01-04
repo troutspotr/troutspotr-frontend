@@ -73,7 +73,7 @@
 .listItemBasis {
   font-size: 12px;
   clear: both;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   display: inline-flex;
   transition: color 800ms;
   @include fallback(color, --text-color-primary, $backgroundDark);

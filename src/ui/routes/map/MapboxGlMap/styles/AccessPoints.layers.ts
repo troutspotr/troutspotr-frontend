@@ -7,12 +7,13 @@ export const ACCESSPOINT_CIRCLE_BORDER_LAYER = 'access_point_circle_border_layer
 export const ACCESSPOINT_CIRCLE_LAYER = 'access_point_circle_layer'
 export const ACCESSPOINT_ROAD_LABEL_LAYER = 'access_point_road_label_layer'
 
+const ABSOLUTE_MINIMUM_ZOOM_LEVEL = 9.0
 const ACCESS_POINT_ALPHABET_TEXT_OFFSET = [0.0, 0.15]
 const ACCESS_POINT_LABEL_TEXT_OFFSET = [1, 0.15]
 const createCircleRadius = (diameter: number): StyleFunction => {
   const circleRadius: StyleFunction = {
     base: 1.6,
-    stops: [[7, 0], [10, diameter * 0.5], [11.5, diameter]],
+    stops: [[ABSOLUTE_MINIMUM_ZOOM_LEVEL, diameter * 0.1], [10.5, diameter * 0.5], [11.2, diameter]],
   }
 
   return circleRadius
@@ -26,7 +27,8 @@ export const createAccessPointCircleLabelLayer = (
     id: ACCESSPOINT_CIRCLE_LABEL_LAYER,
     type: 'symbol',
     source: sourceId,
-    minzoom: 7,
+    // minzoom: 7,
+    minzoom: ABSOLUTE_MINIMUM_ZOOM_LEVEL + 1,
     layout: {
       'text-field': '{alphabetLetter}',
       'text-offset': ACCESS_POINT_ALPHABET_TEXT_OFFSET,
@@ -52,7 +54,8 @@ export const createAccessPointRoadLabelLayer = (
     id: ACCESSPOINT_ROAD_LABEL_LAYER,
     type: 'symbol',
     source: sourceId,
-    minzoom: 12,
+    // minzoom: 12,
+    minzoom: ABSOLUTE_MINIMUM_ZOOM_LEVEL + 1,
     layout: {
       'text-field': '{street_name}',
       'text-offset': ACCESS_POINT_LABEL_TEXT_OFFSET,
@@ -90,6 +93,7 @@ export const createAccessPointCircleBorderLayer = (
     id: ACCESSPOINT_CIRCLE_BORDER_LAYER,
     source: sourceId,
     type: 'circle',
+    minzoom: ABSOLUTE_MINIMUM_ZOOM_LEVEL,
     paint: {
       'circle-color': color,
       'circle-radius': borderRadius,
@@ -123,6 +127,7 @@ export const createAccessPointCircleLayerLayer = (
     id: ACCESSPOINT_CIRCLE_LAYER,
     source: sourceId,
     type: 'circle',
+    minzoom: ABSOLUTE_MINIMUM_ZOOM_LEVEL,
     paint: {
       'circle-color': circleColor,
       'circle-radius': circleRadius,

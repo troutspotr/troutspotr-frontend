@@ -69,10 +69,10 @@ export class AccessPointDetails extends React.Component<IAccessPointProps> {
 
   public render() {
     return (
-      <div className={classes.container}>
+      <React.Fragment>
         <RegulationsSummaryContainer streamObject={this.props.selectedStream} />
         {this.renderAccessPoint()}
-      </div>
+      </React.Fragment>
     )
   }
 }

@@ -29,8 +29,9 @@ import { createPalBorderLayer, createPalLayer } from './Pal.layers'
 import { formatStateData } from 'api/usState/FormatStateData'
 
 const topojson = require('ui/routes/map/MapboxGlMap/styles/_stubs/driftless.topo.json')
+const topojsonPal = require('ui/routes/map/MapboxGlMap/styles/_stubs/driftless.pal.topo.json')
 const stateData = require('ui/routes/map/MapboxGlMap/styles/_stubs/mn.data.json')
-const dictionary = transformGeo(topojson, formatStateData(stateData), new Date())
+const dictionary = transformGeo(topojson, topojsonPal, formatStateData(stateData), new Date())
 const stories = storiesOf('Map Styles/Stream', module)
 
 stories.add('Default', () => {

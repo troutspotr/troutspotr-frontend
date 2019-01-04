@@ -14,9 +14,7 @@ export class BridgeSummaryComponent extends React.Component<IBridgeSummaryProps>
       this.props.stream.stream.properties.publicTroutBridgeCount === 0
         ? '0'
         : this.props.stream.stream.properties.publicTroutBridgeCount + ''
-    if (content.length === 0) {
-      console.log(content)
-    }
+
     const badgeColor =
       this.props.stream.stream.properties.publicTroutBridgeCount === 0
         ? Color.unsafeToFish

@@ -24,13 +24,15 @@ export class RegulationsSummary extends React.PureComponent<IRegulationsSummaryP
   }
 
   public renderOpenClosedHelper({ statusClass, statusText, explainerText, dateText }) {
-    const props: IRegulationsSummaryLayout = {
-      status: statusClass,
-      statusText: statusText,
-      untilDateText: dateText,
-      additionalText: explainerText,
-    }
-    return <RegulationsSummaryLayout {...props} />
+    // const props: IRegulationsSummaryLayout = {
+    //   status: statusClass,
+    //   statusText: statusText,
+    //   untilDateText: dateText,
+    //   additionalText: explainerText,
+    // }
+    // return <RegulationsSummaryLayout {...props} />
+    // SRA got rid of this because I'm tired of telling people when things are open.
+    return null
   }
   // TODO: FIX THIS
   // move this to the Region API so we don't have to re-calc this in the view.

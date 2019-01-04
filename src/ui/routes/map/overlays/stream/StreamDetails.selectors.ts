@@ -110,8 +110,8 @@ export const getStreamStatus = (releventStreamOpeners: IReleventOpeners): Waterb
   if (releventStreamOpeners == null) {
     return 'unknown'
   }
-
-  return convertReleventStreamOpenersToWaterbodyStatus(releventStreamOpeners)
+  const status = convertReleventStreamOpenersToWaterbodyStatus(releventStreamOpeners)
+  return status
 }
 export const streamStatusSelector = createSelector(
   getReleventStreamOpenersForDateSelector,

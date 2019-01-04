@@ -3,7 +3,6 @@
 @import 'src/ui/styles/fallback';
 
 .footer {
-  // background-color: $messageBackgroundDark;
   @include fallback(background-color, --message-background-color, $messageBackgroundDark);
   transition: background-color 800ms, color 800ms;
   height: 100%;
@@ -12,8 +11,6 @@
   font-size: 18px;
   border-top: 1px solid transparentize($offTextDark, 0.7);
   border-top: 1px solid var(--border-color);
-
-  // backdrop-filter: blur(2px);
 }
 
 .menu {
@@ -29,7 +26,6 @@
   align-self: center;
   text-align: center;
   border: none;
-  // color: $offTextDark;
 
   @include fallback(color, --text-color-primary, $offTextDark);
   font-size: 0.8em;

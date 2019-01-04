@@ -79,7 +79,7 @@ export const INITIAL_CORE_STATE: ICoreState = {
   regionDictionary: {},
   tableOfContentsLoadingStatus: LoadingStatus.NotStarted,
   hasAgreedToTerms: true,
-  time: new Date(),
+  time: new Date(2019, 4, 15),
 }
 
 // ------------------------------------

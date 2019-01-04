@@ -7,6 +7,21 @@ export interface IStreamItemComponent {
   selectedStream: IStreamObject
 }
 
+const renderStream = props => {
+  const { selectedStream } = props
+  if (selectedStream == null) {
+    return null
+  }
+  return null // <SvgBubbleComponent streamPackage={selectedStream} index={0} />
+}
+const renderDetails = props => {
+  const { selectedStream } = props
+  if (selectedStream == null) {
+    return null
+  }
+  return <DetailsContainer selectedStream={props.selectedStream} />
+}
+
 const StreamItemComponent = (props: IStreamItemComponent) => (
   <div className={classes.streamDetailsContainer}>
     <div className={classes.layout}>
@@ -15,22 +30,7 @@ const StreamItemComponent = (props: IStreamItemComponent) => (
     </div>
   </div>
 )
-/* eslint-disable react/prop-types */
-const renderStream = props => {
-  const { selectedStream } = props
-  if (selectedStream == null) {
-    return null
-  }
-  return null // <SvgBubbleComponent streamPackage={selectedStream} index={0} />
-}
 
-const renderDetails = props => {
-  const { selectedStream } = props
-  if (selectedStream == null) {
-    return null
-  }
-  return <DetailsContainer selectedStream={props.selectedStream} />
-}
 /* eslint-enable react/prop-types */
 
 export default StreamItemComponent

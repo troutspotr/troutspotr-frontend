@@ -49,6 +49,24 @@ const sizeOfDevice = (): number => {
 
   return 600
 }
+
+export const getProjectionFromFeature = (
+  feature: GeoJsonObject,
+  dimensions: MicromapSettings.IDimensionsSettings,
+  diameter: number
+): GeoProjection => {
+  const { width, height } = dimensions
+  const streamGeometry = feature as GeoGeometryObjects
+
+  const lower = [(width - diameter) / 2, (height - diameter) / 2]
+  const upper = [width - lower[0], height - lower[1]]
+  const projection = geoMercator()
+    .fitExtent([[lower[0], lower[1]], [upper[0], upper[1]]], streamGeometry)
+    .translate([width, height])
+
+  return projection
+}
+
 export interface ISvgMinimapStateProps {
   readonly usStatesGeoJson: UsStateFeatureCollection | null
   readonly displayedUsStatesGeoJson: UsStateFeatureCollection | null
@@ -629,21 +647,4 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     const containerClass = this.props.isExpanded ? styles.container : styles.containerExpanded
     return <div className={containerClass} ref={element => (this.containerElement = element)} />
   }
-}
-
-export const getProjectionFromFeature = (
-  feature: GeoJsonObject,
-  dimensions: MicromapSettings.IDimensionsSettings,
-  diameter: number
-): GeoProjection => {
-  const { width, height } = dimensions
-  const streamGeometry = feature as GeoGeometryObjects
-
-  const lower = [(width - diameter) / 2, (height - diameter) / 2]
-  const upper = [width - lower[0], height - lower[1]]
-  const projection = geoMercator()
-    .fitExtent([[lower[0], lower[1]], [upper[0], upper[1]]], streamGeometry)
-    .translate([width, height])
-
-  return projection
 }

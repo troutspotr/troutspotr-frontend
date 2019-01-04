@@ -132,6 +132,7 @@ export const updateStreamDictionary = (asdf: {
 
   // Update waters
   dictionary.streamProperties.features.forEach(feature => {
+    
     const props = feature.properties
     if (has(watersDictionary, props.water_id) === false) {
       throw new Error(`couldnt find water id ${props.water_id}`)

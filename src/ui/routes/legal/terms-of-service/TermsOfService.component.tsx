@@ -40,8 +40,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     preambles = preambles.concat([element])
     if (preambles.length === MAGICAL_NUMBER_OF_PREAMBLES) {
       setTimeout(() => {
-        let { preambleIsFinished } = this.state
-        preambleIsFinished = true
+        const preambleIsFinished = true
         this.setState({ preambleIsFinished: preambleIsFinished })
       }, 1200 * scalar)
     }

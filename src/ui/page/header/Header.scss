@@ -18,8 +18,8 @@ $smallFontSize: 0.85em;
 
   z-index: 10000;
   transition: background-color 800ms, border-bottom 800ms;
-  border-bottom: 1px solid transparentize($white, 0.4);
-  border-bottom: 1px solid var(--text-color-primary);
+  border-bottom: 1px solid transparentize($offTextDark, 0.7);
+  border-bottom: 1px solid var(--border-color);
   font-size: $fontSize;
 }
 

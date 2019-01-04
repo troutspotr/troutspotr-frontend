@@ -126,16 +126,16 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      {
-        test: /\.(ts|tsx)$/,
-        loader: require.resolve('tslint-loader'),
-        enforce: 'pre',
-        include: paths.appSrc,
-        options: {
-          emitErrors: true,
-          failOnHint: true,
-        }
-      },
+      // {
+      //   test: /\.(ts|tsx)$/,
+      //   loader: require.resolve('tslint-loader'),
+      //   enforce: 'pre',
+      //   include: paths.appSrc,
+      //   options: {
+      //     emitErrors: true,
+      //     failOnHint: true,
+      //   }
+      // },
       {
         test: /\.js$/,
         loader: require.resolve('source-map-loader'),

@@ -130,7 +130,6 @@ export class HeaderComponent extends React.PureComponent<IHeaderComponentWithRou
   public render() {
     const {
       isTitleVisible,
-      isSearchVisible,
     } = this.props
     const viewMode = isTitleVisible 
       ? 'summary'

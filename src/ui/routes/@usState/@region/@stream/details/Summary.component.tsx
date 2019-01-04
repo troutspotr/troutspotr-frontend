@@ -2,12 +2,9 @@ import * as React from 'react'
 const classes = require('./Details.scss')
 import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 import { RestrictionComponent } from '../../../../../core/regulations/restriction/Restriction.component';
-// Import { Link } from 'react-router'
 /* eslint-disable camelcase */
-
 class SummaryComponent extends React.Component<any> {
   public renderSummary({ miles, textClass, pattern, text, heightMultiplier }) {
-    // const roundedMiles = parseFloat(Math.round(miles * 10) / 10).toFixed(1)
     const roundedMiles = 1.1
     return (
       <RestrictionComponent
@@ -19,12 +16,6 @@ class SummaryComponent extends React.Component<any> {
         length={`${roundedMiles} mi`}
       />
     )
-    // If (miles === 0) {
-    //   Return <div><mark className={markerClass} /> No {text}</div>
-    // }
-    // Return (<div>
-    //   <mark className={markerClass} /><emphasis className={textClass}>{roundedMiles} miles</emphasis>of {text}
-    // </div>)
   }
 
   public render() {
@@ -72,7 +63,5 @@ class SummaryComponent extends React.Component<any> {
     )
   }
 }
-
-// SummaryComponent.propTypes = {'selectedStream': PropTypes.object.isRequired}
 
 export default SummaryComponent

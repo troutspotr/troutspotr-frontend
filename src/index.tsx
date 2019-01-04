@@ -13,6 +13,6 @@ const routes = createRoutes()
 setTimeout(() => {
   ReactDOM.render(
     <TroutSpotrAppContainer history={browserHistory} store={store} routes={routes} />,
-    document.getElementById('root') as HTMLElement
+    document.getElementById('root')
   )
 }, 200)

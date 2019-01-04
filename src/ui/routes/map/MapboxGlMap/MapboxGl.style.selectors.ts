@@ -212,8 +212,11 @@ export const mapboxGlLayersSelector = createSelector(
 
     const labelsLayers = [
       accessPointLib.createAccessPointCircleLabelLayer(layerProperties, 'stream_access_point'),
-      accessPointLib.createAccessPointRoadLabelLayer(layerProperties, 'stream_access_point'),
       drawLabelsRegion(layerProperties, 'region')[0],
+    ]
+
+    const accessPointLabelLayers = [
+      accessPointLib.createAccessPointRoadLabelLayer(layerProperties, 'stream_access_point'),
     ]
 
     const myLayers = createLayers(
@@ -222,7 +225,8 @@ export const mapboxGlLayersSelector = createSelector(
       palLayers,
       accessPointLayers,
       labelsLayers,
-      gpsLayers
+      gpsLayers,
+      accessPointLabelLayers,
     )
 
     return myLayers

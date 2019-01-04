@@ -206,7 +206,8 @@ export const createLayers = (
   pals?: Layer[],
   accessPoints?: Layer[],
   labels?: Layer[],
-  gps?: Layer[]
+  gps?: Layer[],
+  accessPointLabelLayers?: Layer[],
 ): Layer[] => {
 // tslint:disable-next-line: no-useless-cast
   return [
@@ -230,11 +231,13 @@ export const createLayers = (
     ...drawRegion(layerProps, 'region'),
     // LABELS
     ...(accessPoints != null ? accessPoints : []),
-    ...(gps != null ? gps : []),
     
     ...(labels != null ? labels : []),
+    
     ...centroids(layerProps),
     ...getMapLabelLayers(layerProps),
+    ...(accessPointLabelLayers != null ? accessPointLabelLayers : []),
+    ...(gps != null ? gps : []),
   ] as Layer[]
 }
 

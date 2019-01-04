@@ -5,8 +5,8 @@ import { CSSTransition } from 'react-transition-group'
 const classes = require('./Header.scss')
 
 const SEARCH = 'search'
-const enterAnimationSpeed = parseInt(classes['enter-speed'])
-const exitAnimationSpeed = parseInt(classes['exit-speed'])
+const enterAnimationSpeed = parseInt(classes['enter-speed'], 10)
+const exitAnimationSpeed = parseInt(classes['exit-speed'], 10)
 const timeoutSettings = {
   enter: enterAnimationSpeed,
   exit: exitAnimationSpeed,
@@ -21,7 +21,7 @@ export interface IHeaderLayout {
 }
 
 export class HeaderLayout extends React.Component<IHeaderLayout> {
-  renderBody() {
+  private renderBody() {
     const { title, search, viewMode } = this.props
     const isSearch = viewMode === SEARCH
     const asdf = (
@@ -50,7 +50,6 @@ export class HeaderLayout extends React.Component<IHeaderLayout> {
       </CSSTransition>
     )
 
-    // return null
     return (
       <div>
         {asdf}
@@ -58,7 +57,7 @@ export class HeaderLayout extends React.Component<IHeaderLayout> {
       </div>
     )
   }
-  render() {
+  public render() {
     const { backButton, locationSubtitle, minimap } = this.props
     return (
       <div className={classes.headerContainer} role="navigation">

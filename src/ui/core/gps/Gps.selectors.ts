@@ -46,9 +46,9 @@ export const getGpsCoordinateFeatureSelector = createSelector(
     }
     const message = getMessage(loadingStatus)
     const props = {
-      message,
-      loadingStatus,
-      accuracy,
+      message: message,
+      loadingStatus: loadingStatus,
+      accuracy: accuracy,
     }
 
     const feature = point(gpsCoordinates, props)

@@ -57,7 +57,7 @@ export const handleRegionSelection = (minimapSelection: IMinimapSelection) => as
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: {
+export const MINIMAP_REDUCER: {
   [name: string]: (state: IMinimapReduxState, action: any) => IMinimapReduxState
 } = {
   [MINIMAP_SET_SIZE]: (state: IMinimapReduxState, { payload }): IMinimapReduxState => {
@@ -82,4 +82,4 @@ const ACTION_HANDLERS: {
 // Reducer
 // ------------------------------------
 
-export default handleActions(ACTION_HANDLERS, INITIAL_MINIMAP_STATE)
+export default handleActions(MINIMAP_REDUCER, INITIAL_MINIMAP_STATE)

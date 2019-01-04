@@ -23,7 +23,7 @@ export interface IPageLegendProps extends IPageLegendDispatchProps, IPageLegendS
 }
 
 export class PageLegendLayoutComponent extends PureComponent<IPageLegendProps> {
-  render() {
+  public render() {
     const {
       cachedRegionsText,
       isPageLegendShown,

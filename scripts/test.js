@@ -19,7 +19,13 @@ const jest = require('jest');
 const argv = process.argv.slice(2);
 
 // Watch unless on CI or in coverage mode
-if (!process.env.CI && argv.indexOf('--coverage') < 0) {
+const doesNotHaveCoverage = argv.indexOf('--coverage') < 0
+if (doesNotHaveCoverage) {
+  console.log('does not have coverage')
+} else {
+  console.log('does have coverage')
+}
+if (!process.env.CI && doesNotHaveCoverage) {
   argv.push('--watch');
 }
 

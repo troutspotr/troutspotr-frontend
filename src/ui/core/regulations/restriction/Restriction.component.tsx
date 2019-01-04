@@ -15,8 +15,7 @@ export const RestrictionComponent = (props: IRestrictionComponent) => {
   const { color, pattern, text, length } = props
   const colorClass = classes[color]
   const patternClass = classes[pattern]
-  const hollow = props.hollow !== false ? true : false
-  const hollowClass = hollow ? classes.hollow : ''
+  const hollowClass = props.hollow ? classes.hollow : ''
   const heightMultiplier = props.heightMultiplier == null ? 0 : props.heightMultiplier
   const heightOverride = heightMultiplier > 0 ? { height: `${heightMultiplier}em` } : {}
   return (
@@ -29,4 +28,3 @@ export const RestrictionComponent = (props: IRestrictionComponent) => {
     </div>
   )
 }
-

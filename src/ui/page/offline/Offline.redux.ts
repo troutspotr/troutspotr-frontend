@@ -8,15 +8,17 @@ export const OFFLINE_UPDATE_CACHED_ENDPOINTS = 'OFFLINE_UPDATE_CACHED_ENDPOINTS'
 
 export const updateOfflineStatus = createAction(
   OFFLINE_SET_OFFLINE_STATUS,
-  (isOffline, cachedEndpoints) => ({ isOffline, cachedEndpoints })
+  (isOffline: boolean, cachedEndpoints: string[]) => ({ isOffline: isOffline, cachedEndpoints: cachedEndpoints })
 )
 
 export const setCachedEndpoints = createAction(
   OFFLINE_UPDATE_CACHED_ENDPOINTS,
-  cachedEndpoints => ({ cachedEndpoints })
+  (cachedEndpoints: any) => ({ 
+    cachedEndpoints: cachedEndpoints,
+   })
 )
 
-export const updateCachedEndpoints = () => async dispatch => {
+export const updateCachedEndpoints = () => async (dispatch: any) => {
   try {
     // First off, get our keys.
     const { RegionApi } = await getApi()
@@ -24,18 +26,18 @@ export const updateCachedEndpoints = () => async dispatch => {
     // Remap our keys -- this avoids array equality issues.
     dispatch(setCachedEndpoints(keys))
   } catch (error) {
-    console.log(error) // eslint-disable-line
+    console.error(error)
   }
 }
 
-export const setIsOffline = (isOffline = false) => async dispatch => {
+export const setIsOffline = (isOffline = false) => async (dispatch: any) => {
   try {
     // First off, get our keys.
     const { RegionApi } = await getApi()
     const keys = await RegionApi.getAllCachedEndpoints()
     dispatch(updateOfflineStatus(isOffline, keys))
   } catch (error) {
-    console.log(error) // eslint-disable-line
+    console.error(error) // eslint-disable-line
   }
 }
 
@@ -64,17 +66,15 @@ export const INITIAL_OFFLINE_STATE: IOfflineState = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS: {} = {
-  [OFFLINE_UPDATE_CACHED_ENDPOINTS]: (state: IOfflineState, { payload }): IOfflineState => {
+  [OFFLINE_UPDATE_CACHED_ENDPOINTS]: (state: IOfflineState, { payload }: any): IOfflineState => {
     let { cachedEndpoints } = payload
-    console.log('doing things with the cache')
     cachedEndpoints = cachedEndpoints == null ? [] : cachedEndpoints.slice()
-    const newState = { ...state, ...{ cachedEndpoints } }
+    const newState = { ...state, ...{ cachedEndpoints: cachedEndpoints } }
     return newState
   },
-  [OFFLINE_SET_OFFLINE_STATUS]: (state: IOfflineState, { payload }): IOfflineState => {
+  [OFFLINE_SET_OFFLINE_STATUS]: (state: IOfflineState, { payload }: any): IOfflineState => {
     const { isOffline, cachedEndpoints } = payload
-    console.log('oooofline????', payload)
-    const newState = { ...state, ...{ isOffline, cachedEndpoints } }
+    const newState = { ...state, ...{ isOffline: isOffline, cachedEndpoints: cachedEndpoints } }
     return newState
   },
 }

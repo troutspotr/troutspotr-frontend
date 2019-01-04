@@ -16,7 +16,7 @@ export const decompressTopojsonSync = (topojsonLib, topojsonObject): IGeometryPa
   )
   const streamProperties = topojsonLib.feature(topojsonObject, topojsonObject.objects.stream)
   const pal_routes = topojsonLib.feature(topojsonObject, topojsonObject.objects.palSection)
-  // const pal = topojsonLib.feature(topojsonObject, topojsonObject.objects.pal)
+  const restrictedLand = topojsonLib.feature(topojsonObject, topojsonObject.objects['restricted-land'])
   const boundingCircle = topojsonLib.feature(topojsonObject, topojsonObject.objects.boundingCircle)
 
   const streamCentroids = featureCollection((streamProperties as StreamFeatureCollection).features.map(feature => {
@@ -34,22 +34,23 @@ export const decompressTopojsonSync = (topojsonLib, topojsonObject): IGeometryPa
     pal_routes,
     pal: null,
     boundingCircle,
+    restricted_land: restrictedLand,
     streamCentroid: streamCentroids,
   }
   return dictionary
 }
 
-export const decompressSync = (topojsonObject, stateData): IGeometryPackageDictionary => {
+export const decompressSync = (topojsonObject, stateData, time: Date): IGeometryPackageDictionary => {
   const dictionary = decompressTopojsonSync(topojson, topojsonObject)
   return transform.updateStreamDictionary({
     dictionary,
     topojsonObject,
     stateData,
-  })
+  }, time)
 }
 
-export const transformGeo = (topojsonObject, stateData): IGeoPackageOrWhatver => {
-  const geoJsonObjects = decompressSync(topojsonObject, stateData)
+export const transformGeo = (topojsonObject, stateData, time: Date): IGeoPackageOrWhatver => {
+  const geoJsonObjects = decompressSync(topojsonObject, stateData, time)
   const dictionaries = transform.createStreamDictionariesByStreamGid(geoJsonObjects)
   const streamDictionary = transform.createStreamDictionary(geoJsonObjects, dictionaries)
   const t = Object.assign({ streamDictionary }, geoJsonObjects)

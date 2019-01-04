@@ -8,9 +8,12 @@
     "tslint-config-prettier"
   ],
   "rules": {
+    "no-duplicate-string": false,
     "ban": false,
     "class-name": true,
-    "cognitive-complexity": [true, 5],
+    "max-union-size": false,
+    "no-empty-interface": false,
+    "cognitive-complexity": [true, 10],
     "comment-format": [true, "check-space"],
     "curly": true,
     "forin": true,
@@ -21,12 +24,13 @@
     "label-position": true,
     "object-literal-sort-keys": false,
     "no-var-requires": false,
-    "no-identical-functions": true,
-    "max-file-line-count": [true, 300],
-    "mccabe-complexity": [true, 7],
-    "no-big-function": [true, 50],
+    "no-identical-functions": false,
+    "max-file-line-count": [true, 500],
+    "mccabe-complexity": [true, 10],
+    "no-big-function": [true, 10000],
     "ordered-imports": false,
     "prefer-immediate-return": false,
+    "object-literal-shorthand": [false, "never"],
     "member-ordering": [
       false,
       {
@@ -98,8 +102,8 @@
       "allow-pascal-case",
       "allow-snake-case"
     ],
-    "react-tsx-curly-spacing": true,
-    "no-relative-imports": false,
+    // "react-tsx-curly-spacing": true,
+    // "no-relative-imports": true,
     "no-import-side-effect": [true, { "ignore-module": "(\\.html|\\.css|\\.scss)$" }]
   },
   "linterOptions": {

@@ -11,6 +11,9 @@ import { homeContainerMapDispatchToProps, homeComponentMapStateToProps } from '.
 import ErrorBoundaryComponent from '../core/errorBoundary/ErrorBoundary.component'
 import { PageLegendContainer } from '../page/page-legend/PageLegend.layout.container'
 import PageTitleContainer from 'ui/page/pageTitle/PageTitle.container'
+import { DetailsOverlayContainer } from 'ui/routes/map/overlays/DetailsOverlay.container';
+import { RegulationsOverlayContainer } from 'ui/routes/map/overlays/regulations/RegulationsOverlay.container'
+
 export const HomeComponent = props => {
   return <div />
 }
@@ -56,6 +59,8 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   }
 
   public renderContent() {
+    const detailsOverlay = <DetailsOverlayContainer />
+    const restrictionsOverlay = <RegulationsOverlayContainer />
     return (
       <>
         {this.renderPageTitleComponent()}
@@ -64,11 +69,10 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
         </ErrorBoundaryComponent>
         <ErrorBoundaryComponent onError={this.props.handleError}>
           <MapLayoutComponent
-            topOverlay={null}
-            bottomOverlay={null}
+            topOverlay={detailsOverlay}
+            bottomOverlay={restrictionsOverlay}
             middleOverlay={null}
-            map={<MapContainer key="map" />}>
-          </MapLayoutComponent>
+            map={<MapContainer key="map" />} />
         </ErrorBoundaryComponent>
         <ErrorBoundaryComponent onError={this.props.handleError}>
           {this.props.children}

@@ -46,11 +46,11 @@ export const getRegulationsSummarySelector = createSelector(
     const hasRegulationThatOverridesOpenSeason = openSeasonOverrides.length >= 1
 
     return {
-      hasRegulationThatOverridesOpenSeason,
-      isOpenSeason,
-      openSeasonOverrides,
-      openers,
-      closestOpener,
+      hasRegulationThatOverridesOpenSeason: hasRegulationThatOverridesOpenSeason,
+      isOpenSeason: isOpenSeason,
+      openSeasonOverrides: openSeasonOverrides,
+      openers: openers,
+      closestOpener: closestOpener,
     }
   }
 )

@@ -22,7 +22,7 @@ class ErrorBoundaryComponent extends React.Component<IErrorBoundaryProps, IError
     }
   }
 
-  handleError(error, errorInfo) {
+  public handleError(error, errorInfo) {
     const { onError } = this.props
     if (onError == null) {
       console.error('No error handler found')
@@ -31,7 +31,7 @@ class ErrorBoundaryComponent extends React.Component<IErrorBoundaryProps, IError
     onError(error, errorInfo)
   }
 
-  componentDidCatch(error, errorInfo) {
+  public componentDidCatch(error, errorInfo) {
     // Catch errors in any components below and re-render with error message
     this.setState(() => {
       this.handleError(error, errorInfo)
@@ -43,7 +43,7 @@ class ErrorBoundaryComponent extends React.Component<IErrorBoundaryProps, IError
     // You can also log error messages to an error reporting service here
   }
 
-  render() {
+  public render() {
     const { error, errorInfo } = this.state
 
     const { fallbackComponent, children } = this.props

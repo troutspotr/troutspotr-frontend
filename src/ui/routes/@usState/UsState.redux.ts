@@ -1,7 +1,5 @@
-// import StateApi from 'api/StateApi'
 import { getApi } from 'api/Api.module'
 import { IUsStateMetadata } from 'coreTypes/state/IUsState'
-// import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
 import keyBy from 'lodash-es/keyBy'
 import { createAction, handleActions } from 'redux-actions'
 import { Dictionary } from 'lodash'
@@ -39,9 +37,6 @@ const INITIAL_US_STATE_STATE: IUsStateReduxState = {
 // ------------------------------------
 // Actions
 // ------------------------------------
-// Export const setViewToMap = createAction(REGION_SET_VIEW, x => MAP)
-// Export const setViewToList = createAction(REGION_SET_VIEW, x => LIST)
-
 export const STATE_SET_STATE_DATA = 'STATE_SET_STATE_DATA'
 export const STATE_SET_STATE_LOADING = 'STATE_SET_STATE_LOADING'
 export const STATE_SET_STATE_LOADING_FAILED = 'STATE_SET_STATE_LOADING_FAILED'
@@ -75,7 +70,7 @@ const ACTION_HANDLERS: {
 } = {
   [REGION_SET_VIEW]: (state: IUsStateReduxState, { payload }): IUsStateReduxState => {
     const view = payload || INITIAL_US_STATE_STATE
-    const newState = { ...state, ...{ view } }
+    const newState = { ...state, ...{ view: view } }
     return newState
   },
 

@@ -1,13 +1,12 @@
 import * as React from 'react'
 import { IPageLayoutProps } from './IPageLayout'
 const styles = require('./PageLayout.scss')
-// import { MessageOverlayComponent } from '../core/messageOverlay/MessageOverlay.component';
 export class PageLayoutComponent extends React.Component<IPageLayoutProps> {
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
   }
-  handleClick(event) {
+  private handleClick(event) {
     const { resetMinimap, isExpanded } = this.props
 
     if (isExpanded === false || resetMinimap == null) {
@@ -16,7 +15,7 @@ export class PageLayoutComponent extends React.Component<IPageLayoutProps> {
 
     resetMinimap()
   }
-  render() {
+  public render() {
     const { header, content, footer, theme, isExpanded, legend } = this.props
     const clickHandler = isExpanded ? this.handleClick : null
     const contentClassName = isExpanded ? styles.contentBlurred : styles.content

@@ -3,6 +3,7 @@ import keyBy from 'lodash-es/keyBy'
 import { createAction, handleActions } from 'redux-actions'
 import { updateCachedEndpoints } from 'ui/page/offline/Offline.redux'
 import { Dictionary } from 'lodash'
+
 import {
   UsStateFeatureCollection,
   CountyFeatureCollection,
@@ -12,7 +13,6 @@ import {
   RegionFeature,
 } from 'coreTypes/tableOfContents/ITableOfContentsGeoJSON'
 import { LoadingStatus } from 'coreTypes/Ui'
-// import { cachedEndpointsSelectorByType } from '../page/offline/Offline.selectors'
 import { ITableOfContentsData } from 'api/tableOfContents/ITableOfContentsData'
 
 // ------------------------------------
@@ -54,14 +54,15 @@ export interface ICoreState {
   isMapModuleLoaded: boolean
   isMapReadyToDisplay: boolean
   searchText: string
-  statesGeoJson: UsStateFeatureCollection
-  statesDictionary: Dictionary<UsStateFeature>
-  countiesGeoJson: CountyFeatureCollection
-  countyDictionary: Dictionary<CountyFeature>
-  regionsGeoJson: RegionFeatureCollection
-  regionDictionary: Dictionary<RegionFeature>
+  statesGeoJson: UsStateFeatureCollection | null
+  statesDictionary: Dictionary<UsStateFeature> | null
+  countiesGeoJson: CountyFeatureCollection | null
+  countyDictionary: Dictionary<CountyFeature> | null
+  regionsGeoJson: RegionFeatureCollection | null
+  regionDictionary: Dictionary<RegionFeature> | null
   tableOfContentsLoadingStatus: LoadingStatus
-  hasAgreedToTerms: boolean
+  hasAgreedToTerms: boolean,
+  time: Date
 }
 
 export const INITIAL_CORE_STATE: ICoreState = {
@@ -78,13 +79,14 @@ export const INITIAL_CORE_STATE: ICoreState = {
   regionDictionary: {},
   tableOfContentsLoadingStatus: LoadingStatus.NotStarted,
   hasAgreedToTerms: true,
+  time: new Date(2019, 4, 15),
 }
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const setViewToMap = createAction(CORE_SET_REGION_VIEW, x => View.map)
-export const setViewToList = createAction(CORE_SET_REGION_VIEW, x => View.list)
+export const setViewToMap = createAction(CORE_SET_REGION_VIEW, () => View.map)
+export const setViewToList = createAction(CORE_SET_REGION_VIEW, () => View.list)
 export const setTheme = createAction(CORE_SET_THEME, (theme: Theme) => ({ theme: theme }))
 
 export const GEO_SET_TABLE_OF_CONTENTS = 'GEO_SET_TABLE_OF_CONTENTS'
@@ -92,15 +94,15 @@ export const GEO_TABLE_OF_CONTENTS_LOADING = 'GEO_TABLE_OF_CONTENTS_LOADING'
 export const GEO_TABLE_OF_CONTENTS_LOADING_FAILED = 'GEO_TABLE_OF_CONTENTS_LOADING_FAILED'
 export const GEO_UPDATE_SEARCH_TEXT = 'GEO_UPDATE_SEARCH_TEXT'
 
-export const setTableOfContents = createAction(GEO_SET_TABLE_OF_CONTENTS, x => x)
+export const setTableOfContents = createAction(GEO_SET_TABLE_OF_CONTENTS)
 export const setTableOfContentsLoading = createAction(GEO_TABLE_OF_CONTENTS_LOADING)
 export const setTableOfContentsFailed = createAction(GEO_TABLE_OF_CONTENTS_LOADING_FAILED)
-export const setAgreeToTerms = createAction(CORE_SET_HAS_AGREED_TO_TERMS, x => x)
+export const setAgreeToTerms = createAction(CORE_SET_HAS_AGREED_TO_TERMS)
 export const setAgreementState = createAction(CORE_SET_AGREEMENT_STATE)
 
-const updateSearchTextAction = createAction(GEO_UPDATE_SEARCH_TEXT, item => item)
+const updateSearchTextAction = createAction(GEO_UPDATE_SEARCH_TEXT)
 // tslint:disable-next-line:typedef
-export const updateSearchText = (searchText: string) => async (dispatch): Promise<void> => {
+export const updateSearchText = (searchText: string) => async (dispatch: any): Promise<void> => {
   const sanitizedString = searchText == null
     ? ''
     : searchText.trim().length === 0
@@ -110,13 +112,13 @@ export const updateSearchText = (searchText: string) => async (dispatch): Promis
 }
 
 // tslint:disable-next-line:typedef
-export const agreeToTerms = (isAgreed: 'true' | 'false') => (dispatch): void => {
+export const agreeToTerms = (isAgreed: 'true' | 'false') => (dispatch: any): void => {
   const agreement = isAgreed ? 'true' : 'false'
   dispatch(setAgreeToTerms(agreement))
 }
 
 // tslint:disable-next-line:typedef
-export const fetchTableOfContents = () => async (dispatch, getState): Promise<void> => {
+export const fetchTableOfContents = () => async (dispatch: any, getState: any): Promise<void> => {
   dispatch(setTableOfContentsLoading())
   try {
 
@@ -143,7 +145,7 @@ export interface IMinimapSelection {
 export const CORE_REDUCERS: { [name: string]: (state: ICoreState, action: any) => ICoreState } = {
   [CORE_SET_REGION_VIEW]: (state: ICoreState, { payload }): ICoreState => {
     try {
-      getApi().then(({ AnonymousAnalyzerApi }) => {
+      getApi().then(({ AnonymousAnalyzerApi }: any) => {
         AnonymousAnalyzerApi.recordEvent('view_change', { view: payload })
       })
     } catch (error) {
@@ -151,13 +153,13 @@ export const CORE_REDUCERS: { [name: string]: (state: ICoreState, action: any) =
     }
 
     const view = payload || INITIAL_CORE_STATE.view
-    const newState = { ...state, ...{ view } }
+    const newState = { ...state, ...{ view: view } }
     return newState
   },
 
   [CORE_SET_THEME]: (state: ICoreState, { payload }): ICoreState => {
     const { theme } = payload
-    const newState = { ...state, ...{ theme } }
+    const newState = { ...state, ...{ theme: theme } }
     return newState
   },
 

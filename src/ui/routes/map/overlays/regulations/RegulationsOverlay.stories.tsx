@@ -6,7 +6,7 @@ import { MessageOverlayComponent } from 'ui/core/messageOverlay/MessageOverlay.c
 const stories = storiesOf('Map/Regulations Overlay', module)
   
 stories.add('Plain', () => {
-  return <RegulationsOverlayComponent />
+  return <RegulationsOverlayComponent restrictions={null}/>
 })
 
 stories.add('Inside message overlay', () => {

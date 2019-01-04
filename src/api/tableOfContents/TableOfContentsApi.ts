@@ -2,16 +2,14 @@ import * as lf from 'localforage'
 import * as topojson from 'topojson-client'
 import BaseApi, { IBaseApi } from 'api/BaseApi'
 import { ITableOfContentsData } from './ITableOfContentsData'
-export const buildTableOfContentsEndpoint = (): string => `/data/v3/TableOfContents.topo.json`
+export const buildTableOfContentsEndpoint = (): string => `/data/v3/TableOfContents.topojson`
 import keyBy from 'lodash-es/keyBy'
 import { RegionFeature } from 'coreTypes/tableOfContents/ITableOfContentsGeoJSON'
-// tslint:disable-next-line:no-any
-
 export const updateRegionCachedStatus = (
   region: RegionFeature,
   dictionary: { [key: string]: string }
 ): RegionFeature => {
-  const key = `/data/v3/${region.properties.path}.topo.json`
+  const key = `/data/v3/${region.properties.path}.topojson`
   const isCached = dictionary != null && dictionary[key] != null
   region.properties = {
     ...region.properties,
@@ -26,7 +24,6 @@ export const updateCacheStatusForItems = (
   items: string[]
 ): ITableOfContentsData => {
   try {
-    // const reduxState = getState()
     const itemsDictionary = keyBy(items, x => x)
 
     tableOfContents.states.features.forEach(state => {
@@ -37,21 +34,23 @@ export const updateCacheStatusForItems = (
       }
     })
 
-    tableOfContents.regions.features.map(region => {
-      return updateRegionCachedStatus(region, itemsDictionary)
+    tableOfContents.regions.features.forEach(region => {
+      updateRegionCachedStatus(region, itemsDictionary)
     })
-  } catch {}
+  } catch (e) {
+    console.error(e)
+  }
 
   return tableOfContents
 }
 
 export const decompress = (tocTopojson: any): ITableOfContentsData => {
-  const states = topojson.feature(tocTopojson, tocTopojson.objects.states)
-  states.features.forEach(s => (s.properties.short_name = s.properties.short_name.toLowerCase()))
-  const counties = topojson.feature(tocTopojson, tocTopojson.objects.counties)
-  const regions = topojson.feature(tocTopojson, tocTopojson.objects.region_stats)
+  const states = topojson.feature(tocTopojson, tocTopojson.objects.states) as any
+  states.features.forEach((s: any) => (s.properties.short_name = s.properties.short_name.toLowerCase()))
+  const counties = topojson.feature(tocTopojson, tocTopojson.objects.counties) as any
+  const regions = topojson.feature(tocTopojson, tocTopojson.objects.region_stats) as any
   regions.features.forEach(
-    s => (s.properties.state_short_name = s.properties.state_short_name.toLowerCase())
+    (s: any) => (s.properties.state_short_name = s.properties.state_short_name.toLowerCase())
   )
   return {
     states,

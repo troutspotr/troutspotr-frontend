@@ -58,7 +58,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
         this.setState({ preambleIsFinished: true })
       }, 600)
     }
-    this.setState({ preambles })
+    this.setState({ preambles: preambles })
   }
 
   public componentDidMount() {
@@ -179,7 +179,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       </div>
     )
 
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderIpAddress(index) {
@@ -194,7 +194,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       </div>
     )
 
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderCookies(index) {
@@ -205,7 +205,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       </div>
     )
 
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderDataSecurity(index) {
@@ -224,7 +224,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       </div>
     )
 
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderUseOfInformation(index) {
@@ -261,7 +261,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       </div>
     )
 
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderDisclosureOfInformation(index) {
@@ -295,7 +295,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       </div>
     )
 
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderPrivacyPolicyUpdates(index) {
@@ -310,7 +310,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       </div>
     )
 
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderContact(index) {
@@ -328,7 +328,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       </div>
     )
 
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderKeen(index) {

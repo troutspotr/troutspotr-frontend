@@ -40,12 +40,11 @@ export class TermsOfServiceComponent extends React.PureComponent<
     preambles = preambles.concat([element])
     if (preambles.length === MAGICAL_NUMBER_OF_PREAMBLES) {
       setTimeout(() => {
-        let { preambleIsFinished } = this.state
-        preambleIsFinished = true
-        this.setState({ preambleIsFinished })
+        const preambleIsFinished = true
+        this.setState({ preambleIsFinished: preambleIsFinished })
       }, 1200 * scalar)
     }
-    this.setState({ preambles })
+    this.setState({ preambles: preambles })
   }
 
   public componentDidMount() {
@@ -137,7 +136,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         </p>
       </div>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderDontTresspass = index => {
@@ -169,7 +168,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         </p>
       </div>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderObeyLaw(index) {
@@ -181,7 +180,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         license and to follow all applicable regulations.
       </p>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderTermsOfServiceUpdates(index) {
@@ -193,7 +192,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         check back often.
       </p>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderDataIsNotGuaranteed(index) {
@@ -210,7 +209,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         of the App.
       </p>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderAppropriateUse(index) {
@@ -236,7 +235,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         </p>
       </div>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderOwnershipOfTroutspotrMaterials(index) {
@@ -250,7 +249,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         Content without our express written permission.{' '}
       </p>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderDisclaimerOfWarranties(index) {
@@ -275,7 +274,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         </p>
       </div>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderGoverningLaw(index) {
@@ -286,7 +285,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         States of America.
       </p>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderTermination(index) {
@@ -297,7 +296,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         access to or use of the App.
       </p>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderEntireAgreement(index) {
@@ -308,7 +307,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
         regarding the use of the App and supersede any prior agreements.
       </p>
     )
-    return this.renderTerm({ index, title, body })
+    return this.renderTerm({ index: index, title: title, body: body })
   }
 
   public renderContactUs(index) {
@@ -353,7 +352,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     if (preambleIsFinished && isAgreementShown === false) {
       setTimeout(() => {
         isAgreementShown = true
-        this.setState({ isAgreementShown })
+        this.setState({ isAgreementShown: isAgreementShown })
       }, 0)
     } else {
       const ellapsed = +new Date() - this.state.time

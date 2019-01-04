@@ -1,3 +1,4 @@
+// tslint:disable:object-literal-shorthand
 import { IStateData } from 'api/usState/IStateData'
 import { Dictionary } from 'lodash'
 import { IStreamObject } from 'coreTypes/IStreamObject'
@@ -34,9 +35,8 @@ import {
   TributaryFeature,
   BoundingCircleFeature,
   StreamCentroidFeatureCollection,
+  RestrictedLandFeatureCollection,
 } from './IRegionGeoJSON'
-
-const now = new Date()
 
 export interface IGeometryPackageDictionary {
   trout_stream_section: TroutStreamSectionFeatureCollection
@@ -44,6 +44,7 @@ export interface IGeometryPackageDictionary {
   streamProperties: StreamFeatureCollection
   pal_routes: PalSectionFeatureCollection
   pal: PalFeatureCollection
+  restricted_land: RestrictedLandFeatureCollection,
   boundingCircle: BoundingCircleFeatureCollection
   stream_access_point?: AccessPointFeatureCollection
   tributary?: TributaryFeatureCollection
@@ -78,14 +79,17 @@ export const decompressTopojsonAsync = async (
     )
     return pointFeature
   }))
-  const dictionary = {
+  const dictionary: IGeometryPackageDictionary = {
     trout_stream_section,
     restriction_section,
     streamProperties,
     pal_routes,
-    pal: null,
     boundingCircle,
     streamCentroid: streamCentroids,
+    // pal and restricted_land are provided elsewhere.
+    // null them out here for now.
+    pal: null,
+    restricted_land: null,
   }
   return dictionary
 }
@@ -95,7 +99,7 @@ export const updateStreamDictionary = (asdf: {
   topojsonObject: any
   dictionary: IGeometryPackageDictionary
   stateData: IStateData
-}): IGeometryPackageDictionary => {
+}, now: Date): IGeometryPackageDictionary => {
   const { topojsonObject, dictionary, stateData } = asdf
   // Time to update our objects to be more useful upstream!
   const regsDictionary = stateData.regulationsDictionary
@@ -121,12 +125,14 @@ export const updateStreamDictionary = (asdf: {
     if (start_time == null || end_time == null) {
       return true
     }
+    
     const isInBounds = start_time < now && end_time > now
     return isInBounds
   })
 
   // Update waters
   dictionary.streamProperties.features.forEach(feature => {
+    
     const props = feature.properties
     if (has(watersDictionary, props.water_id) === false) {
       throw new Error(`couldnt find water id ${props.water_id}`)
@@ -157,14 +163,15 @@ export const updateStreamDictionary = (asdf: {
 export const decompressAsync = async (
   // tslint:disable-next-line:no-any
   topojsonObject: any,
-  stateData: IStateData
+  stateData: IStateData,
+  now: Date
 ): Promise<IGeometryPackageDictionary> => {
   const dictionary = await decompressTopojsonAsync(topojson, topojsonObject)
   return updateStreamDictionary({
     dictionary,
     topojsonObject,
     stateData,
-  })
+  }, now)
 }
 
 export interface IGeometryFeatureDictionary {
@@ -284,14 +291,16 @@ export interface IGeoPackageOrWhatver extends IGeometryPackageDictionary {
 export const transformGeo = async (
   // tslint:disable-next-line:no-any
   topojsonObject: any,
-  stateData: IStateData
+  stateData: IStateData,
+  now: Date
 ): Promise<IGeoPackageOrWhatver> => {
-  const geometryDictionary = await decompressAsync(topojsonObject, stateData)
+  const geometryDictionary = await decompressAsync(topojsonObject, stateData, now)
   const dictionaries = createStreamDictionariesByStreamGid(geometryDictionary)
   const streamDictionary = createStreamDictionary(geometryDictionary, dictionaries)
 
   return {
     streamDictionary,
     ...geometryDictionary,
+    
   }
 }

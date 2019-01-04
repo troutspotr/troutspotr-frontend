@@ -5,12 +5,21 @@ import { createAction, handleActions } from 'redux-actions'
 import { BOUNDING_BOX_OF_LOWER_48_STATES, mapCameraActions } from './Map.redux.camera'
 import { AllGeoJSON, Coord, featureCollection } from '@turf/helpers'
 import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_CIRCLE_BORDER_LAYER, ACCESSPOINT_CIRCLE_LAYER } from './MapboxGlMap/styles/AccessPoints.layers';
-import { STREAM_LAYER_ID, TROUT_SECTION_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
+import { STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
 import { streamAccessPointIdDictionarySelector, troutStreamDictionarySelector } from '../@usState/@region/Region.selectors';
 import { browserHistory } from 'react-router';
 // ------------------------------------
 // Constants
 // ------------------------------------
+
+export const LAYERS_IN_ORDER_OF_PRIORITY = {
+  [ACCESSPOINT_CIRCLE_LABEL_LAYER]: 'accessPoint',
+  [ACCESSPOINT_CIRCLE_BORDER_LAYER]: 'accessPoint',
+  [ACCESSPOINT_CIRCLE_LAYER]: 'accessPoint',
+  [STREAM_LAYER_ID]: 'stream',
+  // [TROUT_SECTION_LAYER_ID]: 'stream',
+  // [`${TROUT_SECTION_LAYER_ID}_DEACTIVATED`]: 'stream',
+}
 
 const TURF_CIRCLE_RADIUS_KM = 0.16
 export const MAP_INTERACTIVITY_SET_SELECTED_FEATURES = 'MAP_INTERACTIVITY_SET_SELECTED_FEATURES'
@@ -41,8 +50,21 @@ export const setSelectedFeatureCollection = createAction(
 )
 export const setIsMapInitialized = createAction(
   MAP_INTERACTIVITY_IS_MAP_INITIALIZED,
-  isMapInitialized => ({ isMapInitialized })
+  isMapInitialized => ({ isMapInitialized: isMapInitialized })
 )
+
+export const selectMapFeature = (feature: AllGeoJSON) => (dispatch, getState) => {
+  if (feature == null) {
+    console.error('cannot zoom on null feature.')
+    return
+  }
+  const selectedState = feature
+  const boundingBox = extent(selectedState)
+
+  const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
+  const newCamera = { bounds: newCorners, pitch: 0 }
+  dispatch(mapCameraActions.setCamera(newCamera))
+}
 
 export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
   const reduxState = getState()
@@ -60,7 +82,19 @@ export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
     const allTroutSectionsOfSelectedStream = featureCollection(streamObject.sections as any)
     dispatch(selectMapFeature(allTroutSectionsOfSelectedStream))
   } catch(e) {
+    console.error(e)
   }
+}
+
+export const selectFoculPoint = (feature: Coord) => (dispatch, getState) => {
+  if (feature == null) {
+    throw new Error('feature cannot be null')
+  }
+  const selectedState = turfCircle(feature, TURF_CIRCLE_RADIUS_KM)
+  const boundingBox = extent(selectedState)
+  const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
+  const newCamera = { bounds: newCorners, pitch: 60 }
+  dispatch(mapCameraActions.setCamera(newCamera))
 }
 
 export const navigateToAccessPoint = (accessPointGid: number) => (dispatch, getState) => {
@@ -89,32 +123,8 @@ export const navigateToAccessPoint = (accessPointGid: number) => (dispatch, getS
   try {
     dispatch(selectFoculPoint([accessPoint.properties.centroid_longitude, accessPoint.properties.centroid_latitude]))
   } catch(e) {
+    console.error(e)
   }
-}
-
-export const handleFeatureSelection = (features: {[key:string]: AllGeoJSON[] }) => (dispatch, getState) => {
-  const mostImportantFeatureId = findMostImportantFeatureThatWasClicked(features)
-  if (mostImportantFeatureId == null || LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId] == null) {
-    return
-  }
-
-  const type = LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId]
-  const asdfasdf = features[mostImportantFeatureId][0].properties.gid
-  navigateOracle[type](asdfasdf)(dispatch, getState)
-}
-
-const navigateOracle = {
-  'accessPoint': navigateToAccessPoint,
-  'stream': navigateToStream,
-}
-
-export const LAYERS_IN_ORDER_OF_PRIORITY = {
-  [ACCESSPOINT_CIRCLE_LABEL_LAYER]: 'accessPoint',
-  [ACCESSPOINT_CIRCLE_BORDER_LAYER]: 'accessPoint',
-  [ACCESSPOINT_CIRCLE_LAYER]: 'accessPoint',
-  [STREAM_LAYER_ID]: 'stream',
-  // [TROUT_SECTION_LAYER_ID]: 'stream',
-  // [`${TROUT_SECTION_LAYER_ID}_DEACTIVATED`]: 'stream',
 }
 
 export const findMostImportantFeatureThatWasClicked = (featureLookupTable: {[key:string]: AllGeoJSON[] }) => {
@@ -132,28 +142,20 @@ export const findMostImportantFeatureThatWasClicked = (featureLookupTable: {[key
     : keyValue[0]
 }
 
-export const selectMapFeature = (feature: AllGeoJSON) => (dispatch, getState) => {
-  if (feature == null) {
-    console.error('cannot zoom on null feature.')
-    return
-  }
-  const selectedState = feature
-  const boundingBox = extent(selectedState)
-
-  const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
-  const newCamera = { bounds: newCorners, pitch: 0 }
-  dispatch(mapCameraActions.setCamera(newCamera))
+const navigateOracle = {
+  'accessPoint': navigateToAccessPoint,
+  'stream': navigateToStream,
 }
 
-export const selectFoculPoint = (feature: Coord) => (dispatch, getState) => {
-  if (feature == null) {
-    throw new Error('feature cannot be null')
+export const handleFeatureSelection = (features: {[key:string]: AllGeoJSON[] }) => (dispatch, getState) => {
+  const mostImportantFeatureId = findMostImportantFeatureThatWasClicked(features)
+  if (mostImportantFeatureId == null || LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId] == null) {
+    return
   }
-  const selectedState = turfCircle(feature, TURF_CIRCLE_RADIUS_KM)
-  const boundingBox = extent(selectedState)
-  const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
-  const newCamera = { bounds: newCorners, pitch: 60 }
-  dispatch(mapCameraActions.setCamera(newCamera))
+
+  const type = LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId]
+  const asdfasdf = (features[mostImportantFeatureId][0] as any).properties.gid
+  navigateOracle[type](asdfasdf)(dispatch, getState)
 }
 
 // Set the map to the widest allowable bounds of the entire
@@ -164,15 +166,15 @@ export const resetMap = () => (dispatch, getState) => {
 }
 
 export const mapInteractivityActions = {
-  selectMapFeature,
-  setIsMapInitialized,
-  resetMap,
+  selectMapFeature: selectMapFeature,
+  setIsMapInitialized: setIsMapInitialized,
+  resetMap: resetMap,
 }
 
 const actionHandlers: {} = {
   [MAP_INTERACTIVITY_IS_MAP_INITIALIZED]: (state, { payload: { isMapInitialized } }) => ({
     ...state,
-    isMapInitialized,
+    isMapInitialized: isMapInitialized,
   }),
 }
 

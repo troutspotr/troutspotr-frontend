@@ -16,7 +16,7 @@ export const createGpsCenterLayer = (layerProps: ILayerProperties, sourceId: str
     source: sourceId,
     type: 'circle',
     paint: {
-      // 'circle-color': colors.PalGreen,
+      // tslint:disable-next-line:no-duplicate-string
       'circle-color': pallete.gpsCenterColor,
       'circle-opacity': 1,
       'circle-blur': 0,

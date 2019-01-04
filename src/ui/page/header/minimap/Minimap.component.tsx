@@ -3,11 +3,11 @@ import * as React from 'react'
 import { CloseButtonComponent } from '../backButton/CloseButton.component'
 const classes = require('./Minimap.scss')
 const cssVariables = require('ui/styles/_variables.scss')
-const headerHeight = parseInt(cssVariables['header-height']) + 40
-const footerHeight = parseInt(cssVariables['footer-height'])
+const headerHeight = parseInt(cssVariables['header-height'], 10) + 40
+const footerHeight = parseInt(cssVariables['footer-height'], 10)
 
 export interface IMinimapDispatchProps {
-  handleExpand(boolean): any
+  handleExpand(bool): any
 }
 
 export interface IMinimapStateProps {
@@ -63,6 +63,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
   }
   private homeElement: HTMLDivElement
   private sandboxElement: HTMLDivElement
+  // tslint:disable-next-line:no-empty
   protected debouncedResizeEvent = () => {}
 
   public componentWillMount() {
@@ -99,7 +100,6 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     const { isExpanded } = this.props
     const { homeRect } = this.state
     if (isExpanded === false && homeRect != null) {
-      const { homeRect } = this.state
       const sandboxCenterPosition = {
         x: sandboxRect.left + sandboxRect.width * 0.5,
         y: sandboxRect.top + sandboxRect.height * 0.5,
@@ -132,7 +132,6 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
 
   public resizeEvent() {
     const homeRect = this.homeElement.getBoundingClientRect()
-    // const clientRect = this.homeElement.getBoundingClientRect()
 
     this.setState(() => {
       const width = window.innerWidth > 0 ? window.innerWidth : screen.width
@@ -175,7 +174,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     })
   }
 
-  handleCloseClick() {
+  private handleCloseClick() {
     const { isExpanded, handleExpand } = this.props
     if (isExpanded === false) {
       return
@@ -184,8 +183,7 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     handleExpand(false)
   }
 
-  handleHomeClick() {
-    console.log('hello')
+  private handleHomeClick() {
     const { isExpanded, handleExpand } = this.props
     if (isExpanded === false) {
       return
@@ -194,12 +192,9 @@ export class MinimapComponent extends React.Component<IMinimapProps, IMinimapSta
     handleExpand(false)
   }
 
-  handleSandboxClick() {
-    // const { isExpanded, handleExpand } = this.props
-    // if (isExpanded === false) {
-    //   handleExpand(true)
-    //   return
-    // }
+  // tslint:disable-next-line:no-empty
+  private handleSandboxClick() {
+
   }
 
   public render() {

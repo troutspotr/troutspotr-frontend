@@ -1,6 +1,5 @@
 import * as React from 'react'
 const classes = require('./MapOverlay.scss')
-import { MessageOverlayComponent } from 'ui/core/messageOverlay/MessageOverlay.component'
 import { AccessPointDetails } from './accessPoint/AccessPointDetails.component'
 import { RegionDetailsComponent } from './region/RegionDetails.component'
 import { StreamDetailsContainer } from './stream/StreamDetails.container'
@@ -56,13 +55,11 @@ export class DetailsOverlayComponent extends React.Component<IDetailsOverlayComp
     }
 
     return (
-      <MessageOverlayComponent position="top">
-        <div className={classes.container}>
-          {this.renderRegionDetails()}
-          {this.renderStreamDetails()}
-          {this.renderAccessPointDetails()}
-        </div>
-      </MessageOverlayComponent>
+      <div className={classes.container}>
+        {this.renderRegionDetails()}
+        {this.renderStreamDetails()}
+        {this.renderAccessPointDetails()}
+      </div>
     )
   }
 }

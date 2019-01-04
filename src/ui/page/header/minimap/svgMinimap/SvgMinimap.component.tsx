@@ -49,20 +49,36 @@ const sizeOfDevice = (): number => {
 
   return 600
 }
-// type RegionGeoJson = FeatureCollection<MultiPolygon, IRegion>
-// type StateGeoJson = FeatureCollection<MultiPolygon, IUsState>
-export interface ISvgMinimapStateProps {
-  readonly usStatesGeoJson: UsStateFeatureCollection
-  readonly displayedUsStatesGeoJson: UsStateFeatureCollection
-  readonly displayedRegionsGeoJson: RegionFeatureCollection
-  readonly selectedUsStatesGeoJson: UsStateFeatureCollection
-  readonly selectedRegionGeoJson: RegionFeatureCollection
 
-  readonly gpsGeoJson: FeatureCollection<any, any>
-  readonly camera?: ICameraProps
-  readonly isOffline: boolean
-  readonly isExpanded: boolean
-  readonly displayedStreams: FeatureCollection<Point, IStreamCentroid>
+export const getProjectionFromFeature = (
+  feature: GeoJsonObject,
+  dimensions: MicromapSettings.IDimensionsSettings,
+  diameter: number
+): GeoProjection => {
+  const { width, height } = dimensions
+  const streamGeometry = feature as GeoGeometryObjects
+
+  const lower = [(width - diameter) / 2, (height - diameter) / 2]
+  const upper = [width - lower[0], height - lower[1]]
+  const projection = geoMercator()
+    .fitExtent([[lower[0], lower[1]], [upper[0], upper[1]]], streamGeometry)
+    .translate([width, height])
+
+  return projection
+}
+
+export interface ISvgMinimapStateProps {
+  readonly usStatesGeoJson: UsStateFeatureCollection | null
+  readonly displayedUsStatesGeoJson: UsStateFeatureCollection | null
+  readonly displayedRegionsGeoJson: RegionFeatureCollection | null
+  readonly selectedUsStatesGeoJson: UsStateFeatureCollection | null
+  readonly selectedRegionGeoJson: RegionFeatureCollection | null
+
+  readonly gpsGeoJson: FeatureCollection<any, any> | null
+  readonly camera?: ICameraProps | null
+  readonly isOffline: boolean | null
+  readonly isExpanded: boolean | null
+  readonly displayedStreams: FeatureCollection<Point, IStreamCentroid> | null
 }
 
 export interface ISvgMinimapPassedProps {}
@@ -531,8 +547,6 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
   }
 
   public renderData(prevProps: ISvgMinimapStateProps) {
-    const start = performance.now()
-
     const {
       usStatesGeoJson,
       displayedUsStatesGeoJson,
@@ -564,8 +578,6 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     this.renderStateLabels(this.path, displayedUsStatesGeoJson)
     this.renderRegionLabels(this.path, displayedRegionsGeoJson)
     this.renderGpsCentroid(this.path, this.props.gpsGeoJson)
-    const end = performance.now() -  start
-    console.log(`${end}ms`)
   }
   private renderGpsCentroid(svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>, gpsGeoJson: FeatureCollection<any, any>): any {
     const displayedGpsCentroids = gpsGeoJson
@@ -635,21 +647,4 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     const containerClass = this.props.isExpanded ? styles.container : styles.containerExpanded
     return <div className={containerClass} ref={element => (this.containerElement = element)} />
   }
-}
-
-export const getProjectionFromFeature = (
-  feature: GeoJsonObject,
-  dimensions: MicromapSettings.IDimensionsSettings,
-  diameter: number
-): GeoProjection => {
-  const { width, height } = dimensions
-  const streamGeometry = feature as GeoGeometryObjects
-
-  const lower = [(width - diameter) / 2, (height - diameter) / 2]
-  const upper = [width - lower[0], height - lower[1]]
-  const projection = geoMercator()
-    .fitExtent([[lower[0], lower[1]], [upper[0], upper[1]]], streamGeometry)
-    .translate([width, height])
-
-  return projection
 }

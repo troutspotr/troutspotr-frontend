@@ -5,7 +5,7 @@ import groupBy from 'lodash-es/groupBy'
 import { Map, Style as MapboxStyle } from 'mapbox-gl'
 const styles = require('./MapboxGl.scss')
 
-type MapboxGeoJSONLayers = Array<any>
+type MapboxGeoJSONLayers = any[]
 
 const token = 'pk.eyJ1IjoiYW5kZXN0MDEiLCJhIjoibW02QnJLSSJ9._I2ruvGf4OGDxlZBU2m3KQ'
 // https://stackoverflow.com/a/44393954
@@ -57,6 +57,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
   }
 
+  // tslint:disable-next-line:no-empty
   protected debouncedResizeEvent = () => {}
 
   public onClick(e) {
@@ -124,7 +125,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
       this.setState(
         () => {
           return {
-            map,
+            map: map,
             isLoaded: true,
           }
         },
@@ -151,7 +152,7 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     }
   }
 
-  renderChildren(children) {
+  private renderChildren(children) {
     if (children == null || !children) {
       return null
     }
@@ -164,11 +165,11 @@ export class MapboxGlComponent extends React.Component<IMapboxGlProps, IMapboxGl
     const activeChildren = React.Children.toArray(children).filter(x => x != null && x)
 
     return activeChildren.map(child =>
-      React.cloneElement(child as React.ReactElement<any>, { map })
+      React.cloneElement(child as React.ReactElement<any>, { map: map })
     )
   }
 
-  componentDidCatch(error, info) {
+  public componentDidCatch(error, info) {
     console.error('an error was caught in mapbox-gl-component')
     console.error(error)
   }

@@ -1,8 +1,8 @@
+// tslint:disable:max-file-line-count
 export const FONT_ROBOTO_REGULAR = ['roboto-regular']
 import { Layer } from 'mapbox-gl'
 import { ILayerProperties } from './ICreateLayer'
 
-// export const createHalo
 export const STREAM_CENTROID_LABEL_SM = 'stream_layer-label-centroid-sm'
 export const STREAM_CENTROID_LABEL_LG = 'stream_layer-label-centroid-lg'
 

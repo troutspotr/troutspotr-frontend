@@ -8,7 +8,7 @@ export class StreamDetailsComponent extends React.PureComponent<IStreamDetailsCo
   public render() {
     return (
       <div>
-        <RegulationsSummaryLayout { ...this.props } />
+        {/* <RegulationsSummaryLayout { ...this.props } /> */}
         <PublicBridgesComponent count={this.props.count} />
       </div>
     )

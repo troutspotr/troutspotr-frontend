@@ -6,15 +6,9 @@ import {
   geoOrthographic,
   GeoProjection,
 } from 'd3-geo'
-import { GeoJsonObject } from 'geojson'
+import { GeoJsonObject, BBox } from 'geojson'
 import { ICameraProps } from 'ui/core/map/ICameraProps'
 import * as MicromapSettings from 'ui/core/micromap/Micromap.settings'
-export const getProjectionFromFeatureAndSettings = (
-  feature: GeoJsonObject,
-  settings: MicromapSettings.IMicromapSettings
-): GeoProjection => {
-  return getProjectionFromFeature(feature, settings.dimensions, settings.settings.stream.radius)
-}
 
 export const getProjectionFromFeature = (
   feature: GeoJsonObject,
@@ -33,6 +27,12 @@ export const getProjectionFromFeature = (
 
   return projection
 }
+export const getProjectionFromFeatureAndSettings = (
+  feature: GeoJsonObject,
+  settings: MicromapSettings.IMicromapSettings
+): GeoProjection => {
+  return getProjectionFromFeature(feature, settings.dimensions, settings.settings.stream.radius)
+}
 
 export const getProjectionFromBoundingBox = (
   camera: ICameraProps,
@@ -40,13 +40,8 @@ export const getProjectionFromBoundingBox = (
 ): GeoProjection => {
   const { width, height } = dimmensions
   const { bbox } = camera
-  const bboxArray = [bbox[0][0], bbox[0][1], bbox[1][0], bbox[1][1]] as [
-    number,
-    number,
-    number,
-    number
-  ]
-  const streamGeometry = bboxPolygon(bboxArray) as ExtendedFeature<GeoGeometryObjects, {}>
+  const bboxArray = [bbox[0][0], bbox[0][1], bbox[1][0], bbox[1][1]]
+  const streamGeometry = bboxPolygon(bboxArray as BBox) as ExtendedFeature<GeoGeometryObjects, {}>
   const centroid = geoCentroid(streamGeometry)
   const lower = [0 / 2, 0 / 2]
   const upper = [width - lower[0], height - lower[1]]

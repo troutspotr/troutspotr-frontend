@@ -28,9 +28,9 @@ import { boolean, number } from '@storybook/addon-knobs'
 import { createPalBorderLayer, createPalLayer } from './Pal.layers'
 import { formatStateData } from 'api/usState/FormatStateData'
 
-const topojson = require('static/data/v3/id/north-central.topo.json')
-const stateData = require('static/data/v3/id/id.data.json')
-const dictionary = transformGeo(topojson, formatStateData(stateData))
+const topojson = require('ui/routes/map/MapboxGlMap/styles/_stubs/driftless.topo.json')
+const stateData = require('ui/routes/map/MapboxGlMap/styles/_stubs/mn.data.json')
+const dictionary = transformGeo(topojson, formatStateData(stateData), new Date())
 const stories = storiesOf('Map Styles/Stream', module)
 
 stories.add('Default', () => {
@@ -94,6 +94,7 @@ stories.add('Default', () => {
     { id: 'pal_routes', geojson: dictionary.pal_routes },
     { id: 'restriction_section', geojson: dictionary.restriction_section },
     { id: 'pal', geojson: dictionary.pal },
+    { id: 'restricted_land', geojson: dictionary.restricted_land },
     { id: 'stream_access_point', geojson: dictionary.stream_access_point },
     { id: 'stream_centroid', geojson: dictionary.streamCentroid },
   ]

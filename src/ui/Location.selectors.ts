@@ -35,7 +35,7 @@ export const getIsStatePage = (location: ILocation, params: any) => {
 
 export const isStatePageSelector = createSelector(locationSelector, paramsSelector, getIsStatePage)
 
-export const getHashSelector = createSelector(locationSelector, (location: ILocation): string => {
+export const getHashSelector = createSelector(locationSelector, (location: ILocation): string | null => {
   if (isEmpty(location)) {
     return null
   }

@@ -3,10 +3,10 @@ const styles = require('./MapLayout.scss')
 import { MessageOverlayComponent } from 'ui/core/messageOverlay/MessageOverlay.component'
 
 export interface IMapLayoutProps {
-  readonly topOverlay: React.ReactNode | undefined
-  readonly bottomOverlay: React.ReactNode | undefined
+  readonly topOverlay?: React.ReactNode
+  readonly bottomOverlay?: React.ReactNode
   readonly map: React.ReactNode
-  readonly middleOverlay: React.ReactNode | undefined
+  readonly middleOverlay?: React.ReactNode
 }
 
 const makeOverlay = (key: 'bottom' | 'top', overlay: React.ReactNode | undefined): JSX.Element => {

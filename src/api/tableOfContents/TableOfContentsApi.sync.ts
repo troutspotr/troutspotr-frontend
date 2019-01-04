@@ -1,4 +1,4 @@
-const tableOfContents = require('static/data/v3/TableOfContents.topo.json')
+const tableOfContents = require('api/_stubs/TableOfContents.topo.json')
 import { decompress } from './TableOfContentsApi'
 import { ITableOfContentsData } from './ITableOfContentsData'
 

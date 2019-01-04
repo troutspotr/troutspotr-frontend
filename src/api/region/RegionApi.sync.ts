@@ -1,16 +1,16 @@
 import { transformGeo } from './Region.transform.sync'
 import StateApi from 'api/usState/StateApi.sync'
 
-const mnBwca = require('static/data/v3/mn/upper-superior.topo.json')
-const mnDriftless = require('static/data/v3/mn/driftless.topo.json')
-const mnLowerSuperior = require('static/data/v3/mn/lower-superior.topo.json')
-const mnMetro = require('static/data/v3/mn/metro.topo.json')
+const mnBwca = require('static/data/v3/mn/upper-superior.topojson')
+const mnDriftless = require('static/data/v3/mn/driftless.topojson')
+const mnLowerSuperior = require('static/data/v3/mn/lower-superior.topojson')
+const mnMetro = require('static/data/v3/mn/metro.topojson')
 
-const wiDriftlessCentral = require('static/data/v3/wi/driftless-central.topo.json')
-const wiDriftlessLower = require('static/data/v3/wi/driftless-lower.topo.json')
-const wiDriftlessUpper = require('static/data/v3/wi/driftless-upper.topo.json')
-const wiHighlandHeadwaters = require('static/data/v3/wi/highland-headwaters.topo.json')
-const wiHighlandFreestone = require('static/data/v3/wi/highland-freestone.topo.json')
+const wiDriftlessCentral = require('static/data/v3/wi/driftless-central.topojson')
+const wiDriftlessLower = require('static/data/v3/wi/driftless-lower.topojson')
+const wiDriftlessUpper = require('static/data/v3/wi/driftless-upper.topojson')
+const wiHighlandHeadwaters = require('static/data/v3/wi/highland-headwaters.topojson')
+const wiHighlandFreestone = require('static/data/v3/wi/highland-freestone.topojson')
 
 const dictionary = {
   mn: {

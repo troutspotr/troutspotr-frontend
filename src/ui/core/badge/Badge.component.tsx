@@ -23,8 +23,6 @@ export interface IBadgeProps {
 export const BadgeComponent: React.SFC<IBadgeProps> = (props): JSX.Element => {
   const { content, badgeColor, fillType } = props
   const safeContent = content === '' ? ' ' : content
-  // const isLong = safeContent.toString().length >= 2
-  // const contentClassName = isLong ? classes.contentSmall : classes.content
   const key = `${badgeColor}${fillType === Fill.solid ? 'Solid' : ''}`
   const className = classes[key]
   return <span className={className}><span>{safeContent}</span></span>

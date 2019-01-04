@@ -5,8 +5,7 @@ import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_ROAD_LABEL_LAYER, ACCESSPOI
 import { STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers'
 import { AllGeoJSON } from '@turf/helpers'
 import { MapboxGlCameraDirectorContainer } from './MapboxGlMap/MapboxGl.camera.director.container'
-import { STREAM_CENTROID_LABEL_SM, STREAM_CENTROID_LABEL_LG } from './MapboxGlMap/styles/MapLabels.layers';
-import { DetailsOverlayContainer } from './overlays/DetailsOverlay.container';
+import { STREAM_CENTROID_LABEL_SM, STREAM_CENTROID_LABEL_LG } from './MapboxGlMap/styles/MapLabels.layers'
 const classes = require('./Map.scss')
 
 const STREAM = 'stream'
@@ -51,15 +50,11 @@ export class MapComponent extends React.Component<any> {
     }
   }
 
-  public componentWillReceiveProps(nextProps) {}
-
-  public renderLoading() {}
-
   public onFeatureClick(features) {
     this.setUrlFromFeatures(features)
   }
 
-  setUrlFromFeatures(features) {
+  private setUrlFromFeatures(features) {
     const mostImportantFeatureId = findMostImportantFeatureThatWasClicked(features)
     if (mostImportantFeatureId == null || LAYERS_IN_ORDER_OF_PRIORITY[mostImportantFeatureId] == null) {
       return
@@ -83,10 +78,9 @@ export class MapComponent extends React.Component<any> {
     }
   }
 
-  renderMap() {
+  private renderMap() {
     return (
       <React.Fragment>
-        <DetailsOverlayContainer />
         <MapboxGlContainer onFeaturesSelected={this.onFeatureClick}>
           <MapboxGlCameraContainer />
           <MapboxGlCameraDirectorContainer />
@@ -95,8 +89,6 @@ export class MapComponent extends React.Component<any> {
     )
   }
 
-  public onFeatureHover = feature => {}
-
   public render() {
     const isVisible = true
     const isMapLoaded = true
@@ -104,7 +96,7 @@ export class MapComponent extends React.Component<any> {
     return (
       <div className={isVisible ? classes.mapContainer : classes.invisible}>
         {isMapLoaded && this.renderMap()}
-        {isReadyToInsertLayers === false && this.renderLoading()}
+        {isReadyToInsertLayers === false}
       </div>
     )
   }

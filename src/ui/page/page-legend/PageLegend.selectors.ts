@@ -9,6 +9,7 @@ export const isPageLegendShownSelector = createSelector(
 )
 
 export const cachedRegionsTextSelector = createSelector(
+  // tslint:disable-next-line:no-empty
   () => {},
   (): string => {
     return '✅: Region is cached and viewable offline.'

@@ -98,6 +98,7 @@ module.exports = {
       '.json',
       '.web.jsx',
       '.jsx',
+      '.topojson'
     ],
     alias: {
       // Support React Native Web
@@ -130,6 +131,10 @@ module.exports = {
       //   loader: require.resolve('tslint-loader'),
       //   enforce: 'pre',
       //   include: paths.appSrc,
+      //   options: {
+      //     emitErrors: true,
+      //     failOnHint: true,
+      //   }
       // },
       {
         test: /\.js$/,

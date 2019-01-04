@@ -1,6 +1,5 @@
 import * as React from 'react'
 const classes = require('./Switch.scss')
-// const GPS_ELEMENT_ID = 'js-footer-gps-id'
 
 const getId = (label: string) => {
   return `js-footer-gps-id-${label}`

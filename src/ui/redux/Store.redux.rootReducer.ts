@@ -22,7 +22,7 @@ export interface IReduxState {
   readonly errors: IErrorsState
 }
 export const AllReducers = combineReducers<IReduxState>({
-  usState,
+  usState: usState,
   routing: routingWithHistoryReducer,
   core: coreReducer,
   gps: gpsReducer,

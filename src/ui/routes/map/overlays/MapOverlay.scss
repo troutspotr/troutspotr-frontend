@@ -1,13 +1,11 @@
-// @import "src/ui/styles/_colors";
-// @import "src/ui/styles/_variables";
-// @import "src/ui/styles/ZeldaText";
-// @import "src/ui/styles/NumberCircle";
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/_fonts';
+@import 'src/ui/styles/fallback';
 
 .container {
-  // font-size: 12px;
-  // a {
-  //   margin-bottom: 0px !important;
-  // }
+  min-height: 2.7em;
+  padding: ($default-margin / 2) ($default-margin / 2);
 }
 
 .importantNote {

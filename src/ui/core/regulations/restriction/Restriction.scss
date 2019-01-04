@@ -8,7 +8,14 @@ $circle-size: 1em;
 .container {
   display: flex;
   font-size: 12px;
+}
+.container:after
+{
   margin-bottom: 5px;
+}
+.container:last-child:after
+{
+  margin-bottom: 0px;
 }
 
 .length {

@@ -8,9 +8,7 @@
   transition: background-color 800ms;
   @include fallback(background-color, --message-background-color, $messageBackgroundDark);
   position: absolute;
-  padding: ($default-margin / 2) ($default-margin / 2);
   z-index: 10000;
-  min-height: 2.7em;
   max-height: calc(80vh / 2.4 - 50px);
   overflow-y: scroll;
 }

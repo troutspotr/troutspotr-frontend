@@ -5,7 +5,7 @@ import { IReduxState } from '../../redux/Store.redux.rootReducer';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group'
 import { isPageLegendShownSelector, cachedRegionsTextSelector } from './PageLegend.selectors';
-
+import styles from 'ui/page/page-legend/PageLegend.scss'
 export interface IPageLegendDispatchProps {
 
 }
@@ -31,7 +31,9 @@ export class PageLegendLayoutComponent extends PureComponent<IPageLegendProps> {
 
 
     return (<CSSTransition timeout={500} classNames='page-legend-' in={isPageLegendShown} unmountOnExit={true}>
-      <MessageOverlayComponent position='top'>{cachedRegionsText}</MessageOverlayComponent>
+      <MessageOverlayComponent position='top'>
+        <div className={styles.container}>{cachedRegionsText}</div>
+      </MessageOverlayComponent>
       {/* <div style={{backgroundColor: 'yellowgreen', height: '90px'}}>hello</div> */}
     </CSSTransition>)
 

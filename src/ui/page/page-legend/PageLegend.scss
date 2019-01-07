@@ -10,6 +10,11 @@ $exit-speed-ms: $exit-speed * 1ms;
 
 $chenta-ease: cubic-bezier(0.75, 0, 0.25, 1);
 
+.container {
+  min-height: 2.7em;
+  padding: 10px 10px;
+}
+
 :global .page-legend--enter {
   opacity: 0;
   transition: opacity $enter-length-ms;

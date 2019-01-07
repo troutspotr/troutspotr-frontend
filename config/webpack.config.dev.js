@@ -281,7 +281,7 @@ module.exports = {
       publicPath: '/',
       caches: 'all',
       externals: [
-        'data/v3/TableOfContents.topo.json',
+        'data/v3/TableOfContents.topojson',
         'map-fonts/roboto-regular/0-255.pbf',
         'map-fonts/roboto-regular/65024-65279.pbf',
         'map-fonts/roboto-regular/12288-12543.pbf',

@@ -8,9 +8,10 @@ export enum CrossingTypes {
   permissionRequired = 'permissionRequired',
   unsafe = 'unsafe',
   uninteresting = 'uninteresting',
+  trail = 'trail',
 }
 
-const MINIMUM_LENGTH_MILES = 0.05
+const MINIMUM_LENGTH_MILES = 0.07
 
 export const NONE_TEXT = 'No bridges over publically fishable land.'
 export const SINGLE_TEXT = ' bridge over publically fishable land.'
@@ -45,6 +46,18 @@ export const addLettersToCrossings = (
 export const filterBadAccessPoints = (ap: AccessPointFeature): boolean => {
   const isUninteresting = ap.properties.bridgeType === CrossingTypes.uninteresting
   if (isUninteresting) {
+    return false
+  }
+
+  // For now, remove unsafe places to park. I don't want to catalog them.
+  // If you want to track these places, remove this but filter them out of the map
+  // or be prepared to be overwhelmed with too much data.
+  if (ap.properties.bridgeType === CrossingTypes.unsafe) {
+    return false
+  }
+
+  const isTrail = ap.properties.bridgeType === CrossingTypes.trail
+  if (isTrail) {
     return false
   }
 
@@ -92,6 +105,11 @@ export const determineBridgeType = (
   bridgeProperties: IAccessPointGeoJsonProps,
   roadTypesDictionary
 ): CrossingTypes => {
+  const stateRoadCrossingType = roadTypesDictionary[bridgeProperties.road_type_id]
+  if (stateRoadCrossingType == null) {
+    return CrossingTypes.uninteresting
+  }
+
   const is_over_publicly_accessible_land = bridgeProperties.is_over_publicly_accessible_land
   const is_over_trout_stream = bridgeProperties.is_over_trout_stream
   const isParkable = bridgeProperties.isParkable
@@ -99,6 +117,11 @@ export const determineBridgeType = (
     return CrossingTypes.uninteresting
   }
 
+  const isTrail = stateRoadCrossingType.type === CrossingTypes.trail
+
+  if (isTrail) {
+    return CrossingTypes.trail
+  }
   if (isParkable === false) {
     return CrossingTypes.unsafe
   }

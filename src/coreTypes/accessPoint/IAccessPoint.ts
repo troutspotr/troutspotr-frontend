@@ -17,7 +17,7 @@ export interface IAccessPoint {
 
 export interface IAccessPointGeoJsonProps extends IAccessPoint, ISelectable {
   isParkable: boolean
-  bridgeType: 'permissionRequired' | 'publicTrout' | 'unsafe' | 'uninteresting'
+  bridgeType: 'permissionRequired' | 'publicTrout' | 'unsafe' | 'uninteresting' | 'trail'
   alphabetLetter: string
   slug: string
   road_shield_text?: string

@@ -1,7 +1,7 @@
 import { PlainRoute } from 'react-router'
-import { PrivacyPolicyComponent } from './PrivacyPolicy.component'
+import { PrivacyPolicyContainer } from 'ui/routes/legal/privacy-policy/PrivacyPolicy.container'
 export const createPrivacyPolicyRoutes = (store = null): PlainRoute => ({
   path: '/legal/privacy-policy',
-  component: PrivacyPolicyComponent,
+  component: PrivacyPolicyContainer,
   childRoutes: [],
 })

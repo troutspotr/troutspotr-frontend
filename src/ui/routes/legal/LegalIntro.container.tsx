@@ -14,4 +14,4 @@ export const restrictionPropsSelector = createStructuredSelector({
 
 const mapStateToProps = (state: IReduxState): ILegalIntroStateProps => restrictionPropsSelector(state)
 
-export const RegulationsOverlayContainer = connect(mapStateToProps, mapDispatchToProps)(LegalIntroComponent)
+export const LegalIntroContainer = connect(mapStateToProps, mapDispatchToProps)(LegalIntroComponent)

@@ -27,6 +27,10 @@ export const setHasSeenIntroScreen = () => setAgreementState('intro', new Date()
 export const setHasSeenTermsOfService = () => setAgreementState('termsOfService', new Date())
 export const setHasSeenPrivacyPolicy = () => setAgreementState('privacyPolicy', new Date())
 
+export const setHasAgreedToAllTerms = () => createAction(HAS_AGREED_TO_TERMS, () => {
+  return { hasAgreed: true }
+})
+
 export interface ILegalState {
   hasAgreedToTerms: boolean
   hasSeenIntroScreen: boolean
@@ -50,7 +54,15 @@ export const ACTION_HANDLERS: {} = {
       }
     }
 
-    const newState = { ...state, ...{ hasAgreedToTerms: payload === 'true' } }
+    const newState = {
+      ...state,
+      ...{
+        hasAgreedToTerms: payload.hasAgreed === true,
+        hasSeenIntroScreen: true,
+        hasSeenPrivacyPolicy: true,
+        hasSeenTermsOfService: true,
+      }
+    }
     return newState
   },
   [SET_AGREEMENT_STATE]: (state: ILegalState, { payload }): ILegalState => {

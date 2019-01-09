@@ -1,6 +1,6 @@
 import { PlainRoute } from 'react-router'
 import { LegalLayout } from './Legal.layout'
-import { RegulationsOverlayContainer } from 'ui/routes/legal/LegalIntro.container'
+import { LegalIntroContainer } from 'ui/routes/legal/LegalIntro.container'
 
 // routes
 
@@ -8,7 +8,7 @@ export const createLegalRoutes = (store = null): PlainRoute => ({
   path: '/legal',
   component: LegalLayout,
   indexRoute: {
-    component: RegulationsOverlayContainer,
+    component: LegalIntroContainer,
   },
 // tslint:disable-next-line: only-arrow-functions
   getChildRoutes: function(location, cb) {

@@ -7,7 +7,8 @@ export interface IPageLayoutDispatchProps {
 
 export interface IPageLayoutStateProps {
   theme: Theme
-  readonly isExpanded: boolean
+  readonly isExpanded: boolean,
+  readonly hasAgreedToTerms: boolean,
 }
 
 export interface IPageLayoutProps extends IPageLayoutDispatchProps, IPageLayoutStateProps {

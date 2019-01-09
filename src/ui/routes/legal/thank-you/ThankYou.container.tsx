@@ -15,4 +15,4 @@ export const restrictionPropsSelector = createStructuredSelector({
 
 const mapStateToProps = (state: IReduxState): any => restrictionPropsSelector(state)
 
-export const TermsOfServiceContainer = connect(mapStateToProps, mapDispatchToProps)(ThankYouComponent)
+export const ThankYouContainer = connect(mapStateToProps, mapDispatchToProps)(ThankYouComponent)

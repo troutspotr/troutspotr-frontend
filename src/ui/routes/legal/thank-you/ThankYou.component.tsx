@@ -13,6 +13,7 @@ export class ThankYouComponent extends React.PureComponent<IThankYouComponentPro
   public componentDidMount() {
     setTimeout(() => {
       if (this.props.advance != null) {
+        debugger
         this.props.advance()
       }
     }, 1500)

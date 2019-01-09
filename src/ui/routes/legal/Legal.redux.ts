@@ -12,24 +12,45 @@ const getHasAgreedToTerms = (): boolean => {
   if (localStorage == null) {
     return false
   }
-
-  return localStorage.getItem(HAS_AGREED_TO_TERMS) === 'true'
+  const hasAggredInStorage = localStorage.getItem(HAS_AGREED_TO_TERMS)
+  const hasAgreed = hasAggredInStorage != null && hasAggredInStorage.toString() === 'true'
+  return hasAgreed
 }
 
 export const setAgreementState = createAction(SET_AGREEMENT_STATE, (view: string, time: Date) => {
   return { view, time }
 })
 
+const lookup = {
+  'intro': '/legal/terms-of-service',
+  'termsOfService': '/legal/privacy-policy',
+  'privacyPolicy': '/legal/thank-you',
+}
+export const setAgrementStateAndNavigate = (view, date) => (dispatch) => {
+  dispatch(setAgreementState(view, date))
+  const nextUrl = lookup[view]
+  if (nextUrl == null) {
+    throw new Error('nope')
+  }
+
+  // browserHistory.push(nextUrl)
+}
+
 // intro
 // termsOfService
 // privacyPolicy
-export const setHasSeenIntroScreen = () => setAgreementState('intro', new Date())
-export const setHasSeenTermsOfService = () => setAgreementState('termsOfService', new Date())
-export const setHasSeenPrivacyPolicy = () => setAgreementState('privacyPolicy', new Date())
+export const setHasSeenIntroScreen = () => setAgrementStateAndNavigate('intro', new Date())
+export const setHasSeenTermsOfService = () => setAgrementStateAndNavigate('termsOfService', new Date())
+export const setHasSeenPrivacyPolicy = () => setAgrementStateAndNavigate('privacyPolicy', new Date())
 
-export const setHasAgreedToAllTerms = () => createAction(HAS_AGREED_TO_TERMS, () => {
+export const setHasAgreedToAllTermsInRedux = createAction(HAS_AGREED_TO_TERMS, () => {
   return { hasAgreed: true }
 })
+
+export const setHasAgreedToAllTerms = () => (dispatcher) => {
+  dispatcher(setHasAgreedToAllTermsInRedux())
+  // browserHistory.push('/')
+}
 
 export interface ILegalState {
   hasAgreedToTerms: boolean
@@ -48,7 +69,7 @@ export const ACTION_HANDLERS: {} = {
   [HAS_AGREED_TO_TERMS]: (state: ILegalState, { payload }): ILegalState => {
     if (localStorage != null && localStorage.setItem != null) {
       try {
-        localStorage.setItem(HAS_AGREED_TO_TERMS, payload)
+        localStorage.setItem(HAS_AGREED_TO_TERMS, (payload != null && payload.hasAgreed === true).toString())
       } catch (e) {
         console.error('could not store token; perhaps private mode?') // eslint-disable-line
       }
@@ -67,6 +88,7 @@ export const ACTION_HANDLERS: {} = {
   },
   [SET_AGREEMENT_STATE]: (state: ILegalState, { payload }): ILegalState => {
     const { view, time } = payload
+    debugger
     if (view == null || time == null) {
       throw new Error('view and time cannot be null')
     }
@@ -74,10 +96,12 @@ export const ACTION_HANDLERS: {} = {
     if (view === 'intro') {
       const newState = { ...state, ...{ hasSeenIntroScreen: true } }
       try {
+        
         getApi().then(({ AnonymousAnalyzerApi }) => {
           AnonymousAnalyzerApi.recordEvent('agreement_update', { view: view, timeEllapsed: time })
         })
       } catch (error) { console.error(error) }
+
       return newState
     } else if (view === 'termsOfService') {
       const newState = { ...state, ...{ hasSeenTermsOfService: true } }

@@ -13,6 +13,7 @@ import { PageLegendContainer } from '../page/page-legend/PageLegend.layout.conta
 import PageTitleContainer from 'ui/page/pageTitle/PageTitle.container'
 import { DetailsOverlayContainer } from 'ui/routes/map/overlays/DetailsOverlay.container';
 import { RegulationsOverlayContainer } from 'ui/routes/map/overlays/regulations/RegulationsOverlay.container'
+import { LegalModalContainer } from 'ui/routes/legal/modal/Legal.modal.container';
 
 export const HomeComponent = props => {
   return <div />
@@ -61,6 +62,7 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   public renderContent() {
     const detailsOverlay = <DetailsOverlayContainer />
     const restrictionsOverlay = <RegulationsOverlayContainer />
+    const termsOfServiceComponent = this.props.hasAgreedToTerms === false && <LegalModalContainer />
     return (
       <>
         {this.renderPageTitleComponent()}
@@ -77,6 +79,9 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
         <ErrorBoundaryComponent onError={this.props.handleError}>
           {this.props.children}
         </ErrorBoundaryComponent>
+        <ErrorBoundaryComponent onError={this.props.handleError}>
+          {termsOfServiceComponent}
+        </ErrorBoundaryComponent>
       </>
     )
   }
@@ -84,6 +89,7 @@ class PageContainerComponent extends React.PureComponent<IPageLayoutProps> {
   public render() {
     return (
       <PageLayoutComponent
+        hasAgreedToTerms={this.props.hasAgreedToTerms}
         legend={this.renderLegend()}
         header={this.renderHeader()}
         footer={this.renderFooter()}

@@ -25,11 +25,11 @@ export class LegalIntroComponent extends React.PureComponent<ILegalIntroComponen
     import(/* webpackChunkName: "legal" */ './Legal.imports')
   }
   private handleClick(e: any) {
-    debugger
     if (this.props.advance == null) {
       return
     }
-    debugger
+
+    e.preventDefault()
     this.props.advance()
   }
   public render() {

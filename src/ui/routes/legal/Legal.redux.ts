@@ -1,5 +1,5 @@
 import { getApi } from 'api/Api.module'
-import { handleActions } from 'redux-actions'
+import { handleActions, createAction } from 'redux-actions'
 import { isBot } from 'ui/core/Core.redux'
 
 export const HAS_AGREED_TO_TERMS = 'HAS_AGREED_TO_TERMS'
@@ -16,13 +16,24 @@ const getHasAgreedToTerms = (): boolean => {
   return localStorage.getItem(HAS_AGREED_TO_TERMS) === 'true'
 }
 
-export interface ICoreState {
+export const setAgreementState = createAction(SET_AGREEMENT_STATE, (view: string, time: Date) => {
+  return { view, time }
+})
+
+// intro
+// termsOfService
+// privacyPolicy
+export const setHasSeenIntroScreen = () => setAgreementState('intro', new Date())
+export const setHasSeenTermsOfService = () => setAgreementState('termsOfService', new Date())
+export const setHasSeenPrivacyPolicy = () => setAgreementState('privacyPolicy', new Date())
+
+export interface ILegalState {
   hasAgreedToTerms: boolean
   hasSeenIntroScreen: boolean
   hasSeenTermsOfService: boolean
   hasSeenPrivacyPolicy: boolean
 }
-const INITIAL_CORE_STATE: ICoreState = {
+const INITIAL_CORE_STATE: ILegalState = {
   hasSeenIntroScreen: false,
   hasSeenTermsOfService: false,
   hasSeenPrivacyPolicy: false,
@@ -30,7 +41,7 @@ const INITIAL_CORE_STATE: ICoreState = {
 }
 
 export const ACTION_HANDLERS: {} = {
-  [HAS_AGREED_TO_TERMS]: (state: ICoreState, { payload }): ICoreState => {
+  [HAS_AGREED_TO_TERMS]: (state: ILegalState, { payload }): ILegalState => {
     if (localStorage != null && localStorage.setItem != null) {
       try {
         localStorage.setItem(HAS_AGREED_TO_TERMS, payload)
@@ -42,7 +53,7 @@ export const ACTION_HANDLERS: {} = {
     const newState = { ...state, ...{ hasAgreedToTerms: payload === 'true' } }
     return newState
   },
-  [SET_AGREEMENT_STATE]: (state: ICoreState, { payload }): ICoreState => {
+  [SET_AGREEMENT_STATE]: (state: ILegalState, { payload }): ILegalState => {
     const { view, time } = payload
     if (view == null || time == null) {
       throw new Error('view and time cannot be null')

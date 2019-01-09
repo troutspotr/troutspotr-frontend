@@ -78,8 +78,8 @@ export const INITIAL_CORE_STATE: ICoreState = {
   regionsGeoJson: null,
   regionDictionary: {},
   tableOfContentsLoadingStatus: LoadingStatus.NotStarted,
-  hasAgreedToTerms: true,
-  time: new Date(2019, 4, 15),
+  hasAgreedToTerms: false,
+  time: new Date(),
 }
 
 // ------------------------------------

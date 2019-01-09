@@ -9,6 +9,7 @@ import usState, { IUsStateReduxState } from 'ui/routes/@usState/UsState.redux'
 import { IRoutingState, routingWithHistoryReducer } from './Routing.redux'
 import mapReducer, { IMapRedux } from 'ui/routes/map/Map.redux'
 import errorsReducer, { IErrorsState } from './Errors.redux'
+import legalReducer, { ILegalState } from 'ui/routes/legal/Legal.redux'
 export interface IReduxState {
   readonly usState: IUsStateReduxState
   readonly offline: IOfflineState
@@ -20,6 +21,7 @@ export interface IReduxState {
   readonly minimap: IMinimapReduxState
   readonly map: IMapRedux
   readonly errors: IErrorsState
+  readonly legal: ILegalState
 }
 export const AllReducers = combineReducers<IReduxState>({
   usState: usState,
@@ -32,4 +34,5 @@ export const AllReducers = combineReducers<IReduxState>({
   minimap: minimapReducer,
   map: mapReducer,
   errors: errorsReducer,
+  legal: legalReducer,
 })

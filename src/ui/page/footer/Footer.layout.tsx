@@ -9,11 +9,11 @@ export interface IFooterLayoutProps {
 
 export class FooterLayout extends React.PureComponent<IFooterLayoutProps> {
   public render() {
-    const { view, theme, gps } = this.props
+    // TODO: add view
+    const { theme, gps } = this.props
     return (
       <div className={classes.footer}>
         <div className={classes.menu}>
-          {view}
           {theme}
           {gps}
         </div>

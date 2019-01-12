@@ -11,7 +11,25 @@ export const selectedRegionPathName = (state: IReduxState) => state.minimap.sele
 export const isExpandedSelector = createSelector(
   // add new selector
   [isExpandedBoolSelector, hasAgreedToTermsSelector, isRootPageSelector],
-  (isExpanded, hasAgreedToTerms, isRootPage: boolean): boolean => (isExpanded && hasAgreedToTerms) || (isRootPage )
+  (isExpanded, hasAgreedToTerms, isRootPage: boolean): boolean => {
+    if (hasAgreedToTerms === false) {
+      return false
+    }
+
+    return isExpanded || isRootPage
+  }
+)
+
+export const isBackgroundBlurredSelector = createSelector(
+  isExpandedSelector,
+  hasAgreedToTermsSelector,
+  (isExpanded, hasAgreedToTerms) => {
+    if (hasAgreedToTerms === false) {
+      return true
+    }
+
+    return isExpanded
+  }
 )
 
 export const isCloseButtonShownSelector = createSelector(

@@ -59,10 +59,10 @@ export interface ILegalState {
   hasSeenPrivacyPolicy: boolean
 }
 const INITIAL_CORE_STATE: ILegalState = {
-  hasSeenIntroScreen: false,
+  hasSeenIntroScreen: true,
   hasSeenTermsOfService: false,
   hasSeenPrivacyPolicy: false,
-  hasAgreedToTerms: getHasAgreedToTerms(),
+  hasAgreedToTerms: false, // getHasAgreedToTerms(),
 }
 
 export const ACTION_HANDLERS: {} = {
@@ -88,7 +88,6 @@ export const ACTION_HANDLERS: {} = {
   },
   [SET_AGREEMENT_STATE]: (state: ILegalState, { payload }): ILegalState => {
     const { view, time } = payload
-    debugger
     if (view == null || time == null) {
       throw new Error('view and time cannot be null')
     }

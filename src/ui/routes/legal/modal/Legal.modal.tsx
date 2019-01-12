@@ -1,6 +1,6 @@
 import * as React from 'react'
 const styles = require('ui/routes/legal/Legal.layout.scss')
-import { LegalIntroContainer } from 'ui/routes/legal/LegalIntro.container'
+import { LegalIntroContainer } from 'ui/routes/legal/intro/LegalIntro.container'
 import { TermsOfServiceContainer } from 'ui/routes/legal/terms-of-service/TermsOfService.container'
 import { PrivacyPolicyContainer } from 'ui/routes/legal/privacy-policy/PrivacyPolicy.container'
 import { ThankYouContainer } from 'ui/routes/legal/thank-you/ThankYou.container'
@@ -31,10 +31,6 @@ export class LegalModalComponent extends React.PureComponent<ILegalModalProps> {
     super(props)
   }
 
-  
-
-
-
   private renderAgreementStep() {
     const {
       hasSeenIntro,
@@ -42,7 +38,6 @@ export class LegalModalComponent extends React.PureComponent<ILegalModalProps> {
       hasSeenPrivacyPolicy,
       hasAgreedToAllTerms,
     } = this.props
-    debugger
     if (hasSeenIntro === false) {
       return <LegalIntroContainer />
     }

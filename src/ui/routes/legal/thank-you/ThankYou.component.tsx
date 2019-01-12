@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router'
-
+const classes = require('ui/routes/legal/Legal.scss')
 export interface IThankYouComponentProps {
   advance(): void,
 }
@@ -10,13 +10,20 @@ export class ThankYouComponent extends React.PureComponent<IThankYouComponentPro
     super(props)
   }
 
+  private renderTitle () {
+    return (
+      <div className={classes.thanksContainer}>
+        <div className={classes.thanks}>Thanks!</div>
+        <div className={classes.fishing}>{"Let's go fishing!"}</div>
+      </div>)
+  }
+
   public componentDidMount() {
     setTimeout(() => {
       if (this.props.advance != null) {
-        debugger
         this.props.advance()
       }
-    }, 1500)
+    }, 2000)
   }
   private handleAdvance(e: any) {
     if (this.props.advance == null) {
@@ -26,21 +33,6 @@ export class ThankYouComponent extends React.PureComponent<IThankYouComponentPro
     this.props.advance()
   }
   public render() {
-    
-    return (
-      <div>
-        <h1>Thanks!</h1>
-        <Link onClick={this.handleAdvance} to={'/'}>Go to app or whatever</Link>
-      </div>
-    )
+    return this.renderTitle()
   }
 }
-
-// export const ThankYouComponent = props => {
-//   return (
-//     <div>
-//       <h1>Thanks!</h1>
-//       <Link to={'/'}>Go to app or whatever</Link>
-//     </div>
-//   )
-// }

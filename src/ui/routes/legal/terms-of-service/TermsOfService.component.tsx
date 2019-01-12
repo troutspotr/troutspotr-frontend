@@ -388,7 +388,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
   public renderLastUpdate(index) {
     return (
       <div key={index} className={classes.update}>
-        Last Updated: January 20, 2017
+        Last Updated: January 12, 2019
       </div>
     )
   }

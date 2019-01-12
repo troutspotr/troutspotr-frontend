@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Arizona",
+    "gid": 3,
+    "short_name": "AZ",
+    "total_ap_on_trout": 475,
+    "total_trout_streams": 172,
+    "total_trout_pal_length": 854.2
+  },
+  {
+    "name": "California",
+    "gid": 1,
+    "short_name": "CA",
+    "total_ap_on_trout": 5548,
+    "total_trout_streams": 2512,
+    "total_trout_pal_length": 8143.6
+  },
+  {
+    "name": "Colorado",
+    "gid": 45,
+    "short_name": "CO",
+    "total_ap_on_trout": 7906,
+    "total_trout_streams": 2104,
+    "total_trout_pal_length": 8980.0
+  },
+  {
+    "name": "Idaho",
+    "gid": 32,
+    "short_name": "ID",
+    "total_ap_on_trout": 7769,
+    "total_trout_streams": 3811,
+    "total_trout_pal_length": 15995.6
+  },
+  {
+    "name": "Iowa",
+    "gid": 33,
+    "short_name": "IA",
+    "total_ap_on_trout": 393,
+    "total_trout_streams": 130,
+    "total_trout_pal_length": 121.3
+  },
+  {
+    "name": "Minnesota",
+    "gid": 48,
+    "short_name": "MN",
+    "total_ap_on_trout": 1782,
+    "total_trout_streams": 927,
+    "total_trout_pal_length": 1729.9
+  },
+  {
+    "name": "Montana",
+    "gid": 6,
+    "short_name": "MT",
+    "total_ap_on_trout": 7729,
+    "total_trout_streams": 3025,
+    "total_trout_pal_length": 10670.3
+  },
+  {
+    "name": "Nevada",
+    "gid": 11,
+    "short_name": "NV",
+    "total_ap_on_trout": 681,
+    "total_trout_streams": 356,
+    "total_trout_pal_length": 1847.0
+  },
+  {
+    "name": "New Mexico",
+    "gid": 39,
+    "short_name": "NM",
+    "total_ap_on_trout": 2119,
+    "total_trout_streams": 307,
+    "total_trout_pal_length": 1568.9
+  },
+  {
+    "name": "Oregon",
+    "gid": 21,
+    "short_name": "OR",
+    "total_ap_on_trout": 11652,
+    "total_trout_streams": 3566,
+    "total_trout_pal_length": 10592.2
+  },
+  {
+    "name": "South Dakota",
+    "gid": 16,
+    "short_name": "SD",
+    "total_ap_on_trout": 925,
+    "total_trout_streams": 102,
+    "total_trout_pal_length": 378.4
+  },
+  {
+    "name": "Utah",
+    "gid": 10,
+    "short_name": "UT",
+    "total_ap_on_trout": 3114,
+    "total_trout_streams": 796,
+    "total_trout_pal_length": 3677.4
+  },
+  {
+    "name": "Washington",
+    "gid": 12,
+    "short_name": "WA",
+    "total_ap_on_trout": 8895,
+    "total_trout_streams": 3315,
+    "total_trout_pal_length": 6494.6
+  },
+  {
+    "name": "Wisconsin",
+    "gid": 42,
+    "short_name": "WI",
+    "total_ap_on_trout": 8072,
+    "total_trout_streams": 2962,
+    "total_trout_pal_length": 3867.0
+  },
+  {
+    "name": "Wyoming",
+    "gid": 46,
+    "short_name": "WY",
+    "total_ap_on_trout": 4249,
+    "total_trout_streams": 1835,
+    "total_trout_pal_length": 8941.5
+  }
+]

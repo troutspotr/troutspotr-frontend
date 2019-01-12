@@ -5,7 +5,6 @@ import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 export const legalReduxStateSelector = (reduxState: IReduxState): ILegalState => reduxState.legal
 
 export const hasSeenIntroScreenStateSelector = createSelector(legalReduxStateSelector, (legalState): boolean => {
-  debugger
   return legalState.hasSeenIntroScreen
 })
 export const hasSeenTermsOfServiceStateSelector = createSelector(legalReduxStateSelector, (legalState): boolean => {

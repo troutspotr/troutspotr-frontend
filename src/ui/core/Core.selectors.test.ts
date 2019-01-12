@@ -20,6 +20,7 @@ import { IRegionState } from 'ui/routes/@usState/@region/Region.redux';
 import { IMapboxModuleState } from 'ui/core/MapboxModule.redux';
 import { IMinimapReduxState } from 'ui/page/header/minimap/Minimap.redux';
 import { IMapRedux } from 'ui/routes/map/Map.redux';
+import { ILegalState } from 'ui/routes/legal/Legal.redux';
 
 describe('Core.selectors', () => {
   let reduxState: IReduxState
@@ -43,6 +44,7 @@ describe('Core.selectors', () => {
       minimap: (null as unknown) as IMinimapReduxState,
       map: (null as unknown) as IMapRedux,
       errors: (null as unknown) as IErrorsState,
+      legal: (null as unknown) as ILegalState,
     }
   })
 

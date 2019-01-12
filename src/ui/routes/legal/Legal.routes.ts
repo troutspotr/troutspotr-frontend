@@ -1,6 +1,6 @@
 import { PlainRoute } from 'react-router'
 import { LegalLayout } from './Legal.layout'
-import { LegalIntroContainer } from 'ui/routes/legal/LegalIntro.container'
+import { LegalIntroContainer } from 'ui/routes/legal/intro/LegalIntro.container'
 
 // routes
 

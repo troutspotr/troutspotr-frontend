@@ -14,13 +14,14 @@
   font-size: 5vmin;
   margin-bottom: 20vmin;
   padding: 10px;
+  line-height: 1.2;
 }
 
 .thanksContainer {
   margin: 0 auto;
   display: table;
   position: relative;
-  top: 50%;
+  top: 0;
   margin-top: 40vmin;
 }
 
@@ -43,7 +44,7 @@
 
 .jumbo {
   font-weight: bold;
-  @include fallback(color, --white, $textDark);
+  // @include fallback(color, --white, $textDark);
 }
 
 .equation {
@@ -52,6 +53,7 @@
   width: 60vmin;
   margin-bottom: 8vmin;
   font-weight: bold;
+  line-height: 1.1;
 }
 
 .list {
@@ -76,7 +78,7 @@
 }
 
 .white {
-  color: $white;
+  // color: $white;
 }
 
 .alert {
@@ -108,13 +110,13 @@
 .termBody {
   // font-size: 4vmin;
   font-weight: medium;
-  color: $white;
+  // color: $white;
 }
 
 .title {
   // font-size: 9vmin;
   font-weight: bold;
-  color: $white;
+  // color: $white;
 }
 
 .link {
@@ -129,7 +131,7 @@
 
 .shieldRight {
   // background-color: transparentize($background, 0);
-  @include fallback(background-color, --background-color, $backgroundDark);
+  // @include fallback(background-color, transparent, $backgroundDark);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -198,7 +200,7 @@
   // font-size: 6vmin;
 
   // font-weight: bold;
-  color: $white;
+  // color: $white;
 
   hr {
     margin: 3vmin 0 10vmin 0;
@@ -208,17 +210,21 @@
 .private {
   composes: zeldaText;
   @include fallback(color, --blue, $blueDark);
+  font-weight: bold;
 }
 
 .public {
   composes: zeldaText;
-  // color: $green;
   @include fallback(color, --green, $greenDark);
+  font-weight: bold;
 }
 
 .warning {
   // color: $yellow;
   @include fallback(color, --yellow, $yellowDark);
+  font-weight: bold;
+  // color: $green;
+
 }
 
 .body {
@@ -257,7 +263,7 @@
   @include fallback(border-color, --blue, $blueDark);
   transform-origin: 50% 50%;
   cursor: pointer;
-  // font-size: 5vmin;
+  font-size: 5vmin;
   animation: buttonAnimation 500ms ease-out;
   margin-bottom: 4vmin;
 }

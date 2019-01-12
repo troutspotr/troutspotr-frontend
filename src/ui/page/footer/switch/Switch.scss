@@ -80,8 +80,9 @@ $slider_height: $switch_height - (2 * $slider_margin);
   justify-content: center;
 
   .left {
+    transform: translateX(4px);
     text-align: left;
-    font-size: 0.6em;
+    font-size: 0.5em;
     width: $switch_width;
   }
 
@@ -91,9 +92,9 @@ $slider_height: $switch_height - (2 * $slider_margin);
 
   .right {
     text-align: left;
-    font-size: 0.6em;
-    margin-left: 4px;
-    width: $switch_width;
+    font-size: 0.5em;
+    margin-left: 12px;
+    width: 3.5em;
   }
 }
 

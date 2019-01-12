@@ -4,7 +4,7 @@ const styles = require('./Legal.layout.scss')
 export const LegalLayout = props => {
   return (
     <div className={styles.container}>
-      <div>{props.children}</div>
+      {props.children}
     </div>
   )
 }

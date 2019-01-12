@@ -68,13 +68,13 @@ export class LegalIntroComponent extends React.PureComponent<ILegalIntroComponen
 
   public render() {
     return (
-      <div>
+      <React.Fragment>
         {this.renderTitle()}
         {this.renderPreamble()}
         {this.renderAPP()}
         <button className={classes.button} onClick={this.handleClick}>Continue to Terms of Service</button>
         {/* <Link onClick={this.handleClick} to={'/legal/terms-of-service'}>Go to tos</Link> */}
-      </div>
+      </React.Fragment>
     )
   }
 }

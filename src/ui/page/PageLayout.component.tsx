@@ -23,11 +23,11 @@ export class PageLayoutComponent extends React.Component<IPageLayoutProps> {
     return (
       <div className={`${styles.viewport} ${themeClass}`}>
         <header className={styles.header}>{header}</header>
-        {termsOfService}
         <section className={contentClassName} onClick={clickHandler}>
           {content}
         </section>
         {legend}
+        {termsOfService}
         <footer className={styles.footer}>{footer}</footer>
       </div>
     )

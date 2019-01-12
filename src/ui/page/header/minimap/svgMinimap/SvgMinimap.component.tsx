@@ -441,6 +441,7 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
       .remove()
   }
 
+// tslint:disable-next-line: cognitive-complexity
   public renderStateLabels(
     svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>,
     usStatesGeoJson: UsStateFeatureCollection

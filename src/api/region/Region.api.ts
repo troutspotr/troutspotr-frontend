@@ -4,10 +4,10 @@ import StateApi from 'api/usState/StateApi'
 const topojson = require('topojson-client')
 
 export const buildRegionEndpoint = (stateName: string, regionName: string): string =>
-  `/data/v3/${stateName}/${regionName}.topojson`
+  `/data/v4/${stateName}/${regionName}.topojson`
 
 export const buildRegionPalEndpoint = (stateName: string, regionName: string): string =>
-  `/data/v3/${stateName}/${regionName}.pal.topojson`
+  `/data/v4/${stateName}/${regionName}.pal.topojson`
 
 export interface IRegionApi extends IBaseApi {
   getRegionData(stateName: string, regionName: string, now: Date): Promise<IGeoPackageOrWhatver>

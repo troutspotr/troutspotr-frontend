@@ -41,7 +41,7 @@ export const cachedRegionsDictionary = createSelector(
     }
 
     const cachedRegionDictionary = endpoints
-      .filter(x => x.indexOf('v3') >= 0)
+      .filter(x => x.indexOf('v4') >= 0)
       .reduce((dictionary, endpoint) => {
         const tokens = endpoint.split('/').filter(x => x.length > 0)
         const isNotStateRegion = tokens.length <= 3

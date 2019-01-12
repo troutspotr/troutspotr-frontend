@@ -446,13 +446,17 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     usStatesGeoJson: UsStateFeatureCollection
   ) {
     const { isExpanded } = this.props
+    const hasSelectedState = (this.props.selectedUsStatesGeoJson.features == null || this.props.selectedUsStatesGeoJson.features.length === 0) === false
     const nonSelectedStates = {
       ...usStatesGeoJson,
       features: isExpanded ? usStatesGeoJson.features : [],
     }
     const stateSelection = this.stateLabelsGroup
       .selectAll(`text.js-d3-states-labels`)
-      .data([...nonSelectedStates.features], x => {
+      .data([...nonSelectedStates.features.filter(item => {
+        const isThisStateSelected = hasSelectedState && this.props.selectedUsStatesGeoJson.features.find(x => x.properties.short_name === item.properties.short_name) != null
+        return isThisStateSelected === false
+      })], x => {
         return x.properties.gid
       })
 
@@ -463,12 +467,24 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
       const className = isInactive ? styles.stateLabelsInactive : styles.stateLabels
       return `js-d3-states-labels ${className}`
     })
-
+    
+    
     stateSelection
       .enter()
       .append('text')
       .attr('data-name', item => item.properties.short_name)
-      .text(item => item.properties.name)
+      .text(item => {
+        const isThisStateSelected = hasSelectedState && this.props.selectedUsStatesGeoJson.features.find(x => x.properties.short_name === item.properties.short_name) != null
+        if (isThisStateSelected === true) {
+          return ''
+        }
+
+        if (hasSelectedState) {
+          return item.properties.name.toUpperCase()
+        }
+
+        return item.properties.short_name.toUpperCase()
+      })
       .attr('x', d => {
         return svgPathGenerator.centroid(d)[0]
       })
@@ -487,7 +503,20 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
       .delay(200)
       .duration(300)
       .style('opacity', 1)
+    
+    stateSelection
+      .text(item => {
+        const isThisStateSelected = hasSelectedState && this.props.selectedUsStatesGeoJson.features.find(x => x.properties.short_name === item.properties.short_name) != null
+        if (isThisStateSelected === true) {
+          return ''
+        }
 
+        if (hasSelectedState) {
+          return item.properties.name.toUpperCase()
+        }
+
+        return item.properties.short_name.toUpperCase()
+      })
     stateSelection
       .exit()
       .transition()

@@ -16,18 +16,23 @@ export class PageLayoutComponent extends React.Component<IPageLayoutProps> {
     resetMinimap()
   }
   public render() {
-    const { header, content, footer, theme, isExpanded, legend, termsOfService } = this.props
+    const { header, content, footer, theme, isExpanded, legend, termsOfService, hasAgreedToTerms } = this.props
     const clickHandler = isExpanded ? this.handleClick : null
-    const contentClassName = isExpanded ? styles.contentBlurred : styles.content
+    const contentClassName =
+      hasAgreedToTerms === false
+        ? styles.contentCompletelyLocked
+        : isExpanded 
+          ? styles.contentBlurred 
+          : styles.content
     const themeClass = theme === 'dark' || theme == null ? 'ts-dark' : 'ts-light'
     return (
       <div className={`${styles.viewport} ${themeClass}`}>
         <header className={styles.header}>{header}</header>
-        {termsOfService}
         <section className={contentClassName} onClick={clickHandler}>
           {content}
         </section>
         {legend}
+        {termsOfService}
         <footer className={styles.footer}>{footer}</footer>
       </div>
     )

@@ -433,10 +433,10 @@ export class PrivacyPolicyComponent extends React.PureComponent<
 
   public render() {
     return (
-      <div>
+      <React.Fragment>
         {this.renderPreamble()}
         {this.renderBody()}
-      </div>
+      </React.Fragment>
     )
   }
 }

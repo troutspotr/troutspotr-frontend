@@ -62,7 +62,7 @@ const INITIAL_CORE_STATE: ILegalState = {
   hasSeenIntroScreen: true,
   hasSeenTermsOfService: false,
   hasSeenPrivacyPolicy: false,
-  hasAgreedToTerms: false, // getHasAgreedToTerms(),
+  hasAgreedToTerms: getHasAgreedToTerms(),
 }
 
 export const ACTION_HANDLERS: {} = {

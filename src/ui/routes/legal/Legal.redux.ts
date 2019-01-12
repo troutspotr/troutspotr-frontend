@@ -59,7 +59,7 @@ export interface ILegalState {
   hasSeenPrivacyPolicy: boolean
 }
 const INITIAL_CORE_STATE: ILegalState = {
-  hasSeenIntroScreen: true,
+  hasSeenIntroScreen: false,
   hasSeenTermsOfService: false,
   hasSeenPrivacyPolicy: false,
   hasAgreedToTerms: getHasAgreedToTerms(),

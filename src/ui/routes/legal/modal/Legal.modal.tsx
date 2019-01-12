@@ -58,8 +58,10 @@ export class LegalModalComponent extends React.PureComponent<ILegalModalProps> {
   }
   public render() {
     const agreementStepComponent = this.renderAgreementStep()
-    return <div className={styles.container}>
-      {agreementStepComponent}
-      </div>
+    return (<div className={styles.container}>
+        <div>
+          {agreementStepComponent}
+        </div>
+      </div>)
   }
 }

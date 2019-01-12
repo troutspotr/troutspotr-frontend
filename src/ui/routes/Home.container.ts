@@ -5,14 +5,16 @@ import { fetchTableOfContents } from 'ui/core/Core.redux'
 import { createStructuredSelector } from 'reselect'
 import { themeSelector } from '../core/Core.selectors'
 import { setIsExpanded } from '../page/header/minimap/Minimap.redux'
-import { isExpandedSelector } from '../page/header/minimap/Minimap.selectors'
+import { isBackgroundBlurredSelector } from '../page/header/minimap/Minimap.selectors'
 import { addError } from '../redux/Errors.redux'
 import { IPageLayoutStateProps, IPageLayoutDispatchProps } from '../page/IPageLayout'
 import { PageLayoutComponent } from 'ui/page/PageLayout.component'
+import { hasAgreedToTermsStateSelector } from 'ui/routes/legal/Legal.selectors';
 
 export const pageLayoutProps = createStructuredSelector<IReduxState, IPageLayoutStateProps>({
   theme: themeSelector,
-  isExpanded: isExpandedSelector,
+  isExpanded: isBackgroundBlurredSelector,
+  hasAgreedToTerms: hasAgreedToTermsStateSelector,
 })
 
 export const homeComponentMapStateToProps = (reduxState: IReduxState): IPageLayoutStateProps =>

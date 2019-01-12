@@ -1,7 +1,7 @@
 import { PlainRoute } from 'react-router'
-import { TermsOfServiceComponent } from './TermsOfService.component'
+import { TermsOfServiceContainer } from './TermsOfService.container'
 export const createTermsOfServiceRoutes = (store = null): PlainRoute => ({
   path: '/legal/terms-of-service',
-  component: TermsOfServiceComponent,
+  component: TermsOfServiceContainer,
   childRoutes: [],
 })

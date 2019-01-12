@@ -35,7 +35,7 @@ export const countiesDictionarySelector = (reduxState: IReduxState): Dictionary<
 export const regionsDictionarySelector = (reduxState: IReduxState): Dictionary<RegionFeature> | null =>
   reduxState.core.regionDictionary
 export const hasAgreedToTermsSelector = (reduxState: IReduxState): boolean =>
-  reduxState.core.hasAgreedToTerms
+  reduxState.legal.hasAgreedToTerms
 
 export const tableOfContentsLoadingStatusSelector = (reduxState: IReduxState): LoadingStatus =>
   reduxState.core.tableOfContentsLoadingStatus

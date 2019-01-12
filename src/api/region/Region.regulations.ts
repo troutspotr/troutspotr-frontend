@@ -8,7 +8,6 @@ export enum NaiveColor {
   white = 'white',
 }
 export const naiveRegColorizer = (reg, index = 1): NaiveColor => {
-  debugger
   const isSanctuary = reg.legalText.toLowerCase().indexOf('sanctuary') >= 0
   const isClosed = reg.legalText.toLowerCase().indexOf('closed') >= 0
   const isMilitary = reg.legalText.toLowerCase().indexOf('military land') >= 0

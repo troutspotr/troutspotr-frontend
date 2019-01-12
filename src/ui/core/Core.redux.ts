@@ -61,7 +61,6 @@ export interface ICoreState {
   regionsGeoJson: RegionFeatureCollection | null
   regionDictionary: Dictionary<RegionFeature> | null
   tableOfContentsLoadingStatus: LoadingStatus
-  hasAgreedToTerms: boolean,
   time: Date
 }
 
@@ -78,8 +77,7 @@ export const INITIAL_CORE_STATE: ICoreState = {
   regionsGeoJson: null,
   regionDictionary: {},
   tableOfContentsLoadingStatus: LoadingStatus.NotStarted,
-  hasAgreedToTerms: true,
-  time: new Date(2019, 4, 15),
+  time: new Date(),
 }
 
 // ------------------------------------

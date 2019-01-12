@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 const classes = require('ui/routes/legal/Legal.scss')
 
 const MAGICAL_NUMBER_OF_PREAMBLES = 5
@@ -357,6 +358,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
     } else {
       const ellapsed = +new Date() - this.state.time
       this.props.advance(ellapsed)
+      
     }
   }
 
@@ -386,7 +388,7 @@ export class TermsOfServiceComponent extends React.PureComponent<
   public renderLastUpdate(index) {
     return (
       <div key={index} className={classes.update}>
-        Last Updated: January 20, 2017
+        Last Updated: January 12, 2019
       </div>
     )
   }

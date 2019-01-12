@@ -90,7 +90,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
     setTimeout(() => {
       this.addElement(
         <h2 className={classes.preambleItem}>
-          To that end, we track usage, not users, <strong>and you can opt out</strong>.
+          To that end, we track usage, not users, <strong className={classes.alert}>and you can opt out</strong>.
         </h2>
       )
     }, 6100 * scalar)
@@ -124,10 +124,10 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       <div className={classes.summary}>
         <p>
           TroutSpotr and its parent company, Stuart Anderson, LLC (“TroutSpotr” “we” or “us”) is
-          committed to protecting and respecting your privacy. We are not interested in learning
-          your secret fishing spots. We are very interested in using the web to help anglers make
-          safe and legal choices. To that end, we review usage data in order to improve the app.
+          committed to protecting and respecting your privacy. You hear that a lot these days, and judging
+          from the news we read every day, skepticism is warranted, and <span className={classes.alert}>trust should not be given lightly.</span>
         </p>
+        <p >People have the right to know how their data is being used.</p>
         <p>
           This Privacy Policy and the Terms of Service sets out the manner in which any personal
           data we collect from you via the TroutSpotr App, or that you provide to us, will be
@@ -270,7 +270,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       <div>
         <div className={classes.term} />
         <p>
-          It is our general policy not to share your information with third parties. We do reserve
+          <span className={classes.alert}>It is our general policy not to share your information with third parties.</span> We do reserve
           the right to share your information with third parties in the following limited
           circumstances:
         </p>

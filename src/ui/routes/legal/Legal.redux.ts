@@ -32,13 +32,8 @@ export const setAgrementStateAndNavigate = (view, date) => (dispatch) => {
   if (nextUrl == null) {
     throw new Error('nope')
   }
-
-  // browserHistory.push(nextUrl)
 }
 
-// intro
-// termsOfService
-// privacyPolicy
 export const setHasSeenIntroScreen = () => setAgrementStateAndNavigate('intro', new Date())
 export const setHasSeenTermsOfService = () => setAgrementStateAndNavigate('termsOfService', new Date())
 export const setHasSeenPrivacyPolicy = () => setAgrementStateAndNavigate('privacyPolicy', new Date())
@@ -49,7 +44,6 @@ export const setHasAgreedToAllTermsInRedux = createAction(HAS_AGREED_TO_TERMS, (
 
 export const setHasAgreedToAllTerms = () => (dispatcher) => {
   dispatcher(setHasAgreedToAllTermsInRedux())
-  // browserHistory.push('/')
 }
 
 export interface ILegalState {

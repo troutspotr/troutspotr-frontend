@@ -15,9 +15,6 @@ import {
 import { LoadingStatus } from 'coreTypes/Ui'
 import { ITableOfContentsData } from 'api/tableOfContents/ITableOfContentsData'
 
-// ------------------------------------
-// Constants
-// ------------------------------------
 export enum View {
   map = 'map',
   list = 'list',
@@ -27,6 +24,24 @@ export enum Theme {
   dark = 'dark',
   light = 'light',
 }
+
+const SELECTED_THEME = 'SELECTED_THEME'
+const getLightModeStatus = (): Theme => {
+  if (localStorage == null) {
+    return Theme.dark
+  }
+
+  const selectedThemeFromLocalStorage = localStorage.getItem(SELECTED_THEME)
+  if (selectedThemeFromLocalStorage == null) {
+    return Theme.dark
+  }
+  return selectedThemeFromLocalStorage === 'dark' ? Theme.dark : Theme.light
+}
+
+// ------------------------------------
+// Constants
+// ------------------------------------
+
 
 export const CORE_SET_REGION_VIEW = 'CORE_SET_REGION_VIEW'
 export const CORE_SET_HAS_AGREED_TO_TERMS = 'CORE_SET_HAS_AGREED_TO_TERMS'
@@ -66,7 +81,7 @@ export interface ICoreState {
 
 export const INITIAL_CORE_STATE: ICoreState = {
   view: isBot() ? View.list : View.map,
-  theme: Theme.dark,
+  theme: getLightModeStatus(),
   isMapModuleLoaded: false,
   isMapReadyToDisplay: false,
   searchText: '',
@@ -157,6 +172,12 @@ export const CORE_REDUCERS: { [name: string]: (state: ICoreState, action: any) =
 
   [CORE_SET_THEME]: (state: ICoreState, { payload }): ICoreState => {
     const { theme } = payload
+    try {
+      localStorage.setItem(SELECTED_THEME, theme.toString())
+    } catch (e) {
+      console.error('could not store token; perhaps private mode?') // eslint-disable-line
+    }
+
     const newState = { ...state, ...{ theme: theme } }
     return newState
   },

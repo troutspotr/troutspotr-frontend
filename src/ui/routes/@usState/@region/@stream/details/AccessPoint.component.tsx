@@ -64,7 +64,7 @@ class AccessPointComponent extends React.Component<IAccessPointProps> {
   public renderOpenInGoogleMapsLink(selectedAccessPoint: AccessPointFeature) {
     return (
       // tslint:disable-next-line:jsx-no-lambda
-      <span onClick={(e) => this.openGoogleMaps(e, selectedAccessPoint)} className={classes.googleLink}>
+      <span style={{ marginLeft: '5px' }} onClick={(e) => this.openGoogleMaps(e, selectedAccessPoint)} className={classes.googleLink}>
         Google Maps
       </span>
     )

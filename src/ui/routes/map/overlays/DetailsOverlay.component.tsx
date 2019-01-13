@@ -3,6 +3,7 @@ const classes = require('./MapOverlay.scss')
 import { AccessPointDetails } from './accessPoint/AccessPointDetails.component'
 import { RegionDetailsComponent } from './region/RegionDetails.component'
 import { StreamDetailsContainer } from './stream/StreamDetails.container'
+import { RegulationsReminderContainer } from 'ui/routes/map/overlays/stream/reminder/RegulationsReminder.container'
 
 import isEmpty from 'lodash-es/isEmpty'
 import { IStreamObject } from 'coreTypes/IStreamObject'
@@ -21,7 +22,10 @@ export class DetailsOverlayComponent extends React.Component<IDetailsOverlayComp
       return null
     }
 
-    return <RegionDetailsComponent />
+    return <React.Fragment>
+      <RegulationsReminderContainer />
+      <RegionDetailsComponent />
+    </React.Fragment>
   }
 
   protected renderStreamDetails() {

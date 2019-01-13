@@ -1,6 +1,5 @@
 import * as React from 'react'
 const classes = require('./Reminder.scss')
-/* eslint no-unneeded-ternary: 0 */
 
 export interface IReminderComponent {
   stateName: string,

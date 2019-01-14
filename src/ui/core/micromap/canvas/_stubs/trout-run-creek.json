@@ -84,7 +84,7 @@
       "permissionRequiredBridgeCount": 2,
       "unsafeBridgeCount": 0,
       "uninterestingBridgeCount": 0,
-      "bridgeText": " bridges over publically fishable land."
+      "bridgeText": " bridges over publicly fishable land."
     },
     "geometry": {
       "type": "LineString",

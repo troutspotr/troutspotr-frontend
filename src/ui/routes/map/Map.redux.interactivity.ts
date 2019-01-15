@@ -8,6 +8,8 @@ import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_CIRCLE_BORDER_LAYER, ACCESS
 import { STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
 import { streamAccessPointIdDictionarySelector, troutStreamDictionarySelector } from '../@usState/@region/Region.selectors';
 import { browserHistory } from 'react-router';
+const { getApi } = require('api/Api.module')
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -81,6 +83,13 @@ export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
   try {
     const allTroutSectionsOfSelectedStream = featureCollection(streamObject.sections as any)
     dispatch(selectMapFeature(allTroutSectionsOfSelectedStream))
+    try {
+      getApi().then(({ AnonymousAnalyzerApi }: any) => {
+        AnonymousAnalyzerApi.recordEvent('page_navigation', { stream: streamObject.stream.properties.slug })
+      })
+    } catch (error) {
+      console.error(error)
+    }
   } catch(e) {
     console.error(e)
   }
@@ -122,6 +131,14 @@ export const navigateToAccessPoint = (accessPointGid: number) => (dispatch, getS
 
   try {
     dispatch(selectFoculPoint([accessPoint.properties.centroid_longitude, accessPoint.properties.centroid_latitude]))
+    try {
+      getApi().then(({ AnonymousAnalyzerApi }: any) => {
+        AnonymousAnalyzerApi.recordEvent('page_navigation_ap', { accessPoint: url })
+      })
+    } catch (error) {
+      console.error(error)
+    }
+
   } catch(e) {
     console.error(e)
   }

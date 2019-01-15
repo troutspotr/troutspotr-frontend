@@ -178,6 +178,14 @@ export const CORE_REDUCERS: { [name: string]: (state: ICoreState, action: any) =
       console.error('could not store token; perhaps private mode?') // eslint-disable-line
     }
 
+    try {
+      getApi().then(({ AnonymousAnalyzerApi }: any) => {
+        AnonymousAnalyzerApi.recordEvent('theme_change', { theme: theme })
+      })
+    } catch (error) {
+      console.error(error)
+    }
+
     const newState = { ...state, ...{ theme: theme } }
     return newState
   },

@@ -413,7 +413,7 @@ export class PrivacyPolicyComponent extends React.PureComponent<
       this.renderContact.bind(this),
       this.renderKeen.bind(this),
       this.renderDoNotTrack.bind(this),
-      index => <p key={index}>Last Updated: January 20, 2017</p>,
+      index => <p key={index}>Last Updated: January 13, 2019</p>,
     ]
   }
 

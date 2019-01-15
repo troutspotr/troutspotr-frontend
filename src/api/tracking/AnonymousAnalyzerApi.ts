@@ -15,7 +15,7 @@ const localKey: IKey = {
     '2F3E05B5CDE1B50589EE501589924913487247730F14F9F45C3C1C44C720ADE1A8EC5BE7EA49A6473B6963D4724A8B2E454A07D0A4E9352266E1A98A876429D3D957C59576F298FEDBFD3A61A4A24C567F339F544824AE23CE4EE224455A97C7',
 }
 
-const getKey = (): IKey => (process.env.__PROD__ ? prodKey : localKey)
+const getKey = (): IKey => (process.env.NODE_ENV === 'development' ? localKey : prodKey)
 
 // tslint:disable-next-line:no-any
 const createRootEvent = (): any => {

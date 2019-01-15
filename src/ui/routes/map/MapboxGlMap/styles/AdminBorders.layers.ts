@@ -9,7 +9,7 @@ export const drawRegionStuff = (layerProps: ILayerProperties, sourceId: string, 
   }
   const baseLineWidth = {
     base: 1.5,
-    stops: [[1, 6], [8.5, 5], [10, 4], [12.5, 2]],
+    stops: [[1, 4], [8.5, 4], [10, 4], [12.5, 2]],
   }
 
   const baselineOpacity = {

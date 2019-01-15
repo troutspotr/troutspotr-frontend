@@ -13,9 +13,9 @@ export enum CrossingTypes {
 
 const MINIMUM_LENGTH_MILES = 0.07
 
-export const NONE_TEXT = 'No bridges over publically fishable land.'
-export const SINGLE_TEXT = ' bridge over publically fishable land.'
-export const MANY_TEXT = ' bridges over publically fishable land.'
+export const NONE_TEXT = 'No bridges over publicly fishable land.'
+export const SINGLE_TEXT = ' bridge over publicly fishable land.'
+export const MANY_TEXT = ' bridges over publicly fishable land.'
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 const alphabetLength = alphabet.length

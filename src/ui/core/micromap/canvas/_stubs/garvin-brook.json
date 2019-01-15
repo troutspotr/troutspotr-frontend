@@ -84,7 +84,7 @@
       "permissionRequiredBridgeCount": 3,
       "unsafeBridgeCount": 10,
       "uninterestingBridgeCount": 0,
-      "bridgeText": " bridges over publically fishable land."
+      "bridgeText": " bridges over publicly fishable land."
     },
     "geometry": {
       "type": "LineString",
@@ -9344,7 +9344,7 @@
               "permissionRequiredBridgeCount": 2,
               "unsafeBridgeCount": 0,
               "uninterestingBridgeCount": 0,
-              "bridgeText": "No bridges over publically fishable land."
+              "bridgeText": "No bridges over publicly fishable land."
             },
             "geometry": {
               "type": "LineString",
@@ -12560,7 +12560,7 @@
                       "permissionRequiredBridgeCount": 0,
                       "unsafeBridgeCount": 0,
                       "uninterestingBridgeCount": 0,
-                      "bridgeText": "No bridges over publically fishable land."
+                      "bridgeText": "No bridges over publicly fishable land."
                     },
                     "geometry": {
                       "type": "LineString",
@@ -12980,7 +12980,7 @@
               "permissionRequiredBridgeCount": 0,
               "unsafeBridgeCount": 2,
               "uninterestingBridgeCount": 0,
-              "bridgeText": " bridge over publically fishable land."
+              "bridgeText": " bridge over publicly fishable land."
             },
             "geometry": {
               "type": "LineString",

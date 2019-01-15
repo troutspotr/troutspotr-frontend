@@ -20,7 +20,7 @@ export const PublicBridgesComponent: React.SFC<IPublicBridgesComponent> = (props
     )
   return (
     <React.Fragment>
-      {countSymbol} {noun} over publically fishable land.
+      {countSymbol} {noun} over publicly fishable land.
     </React.Fragment>
   )
 }

@@ -1,5 +1,5 @@
-const mnStateData = require('static/data/v4/mn/mn.data.json')
-const wiStateData = require('static/data/v4/wi/wi.data.json')
+const mnStateData = require('static/data/v5/mn/mn.data.json')
+const wiStateData = require('static/data/v5/wi/wi.data.json')
 import { IStateApi } from './StateApi'
 import { formatStateData } from './FormatStateData'
 import { IApiConfig } from '../BaseApi.config'

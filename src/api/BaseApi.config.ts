@@ -4,12 +4,12 @@ export interface IApiConfig {
 }
 export const config = (): IApiConfig => {
   if (process.env.NODE_ENV === 'development') {
-    return { apiRoot: '', version: 'v4' }
+    return { apiRoot: '', version: 'v5' }
   }
 
   if (process.env.NODE_ENV === 'test') {
-    return { apiRoot: '/', version: 'v4' }
+    return { apiRoot: '/', version: 'v5' }
   }
 
-  return { apiRoot: '/', version: 'v4' }
+  return { apiRoot: '/', version: 'v5' }
 }

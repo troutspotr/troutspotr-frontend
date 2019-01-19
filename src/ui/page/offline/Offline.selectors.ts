@@ -4,7 +4,7 @@ import { createSelector } from 'reselect'
 import { regionsDictionarySelector } from 'ui/core/Core.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 
-const VERSION = 'v4'
+const VERSION = 'v5'
 export const isOfflineSelector = (reduxState: IReduxState): boolean => {
   if (reduxState == null) {
     return false

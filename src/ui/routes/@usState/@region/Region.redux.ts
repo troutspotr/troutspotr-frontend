@@ -158,7 +158,10 @@ const ACTION_HANDLERS: {} = {
     return newState
   },
   [REGION_SET_REGION_LOADING]: (state: IRegionState, { payload }): IRegionState => {
-    const newState = { ...state, ...{ regionLoadingStatus: LoadingStatus.Pending } }
+    const newState = { 
+      ...state, 
+      ...initialState,
+      ...{ regionLoadingStatus: LoadingStatus.Pending } }
     return newState
   },
   [REGION_SET_REGION_LOADING_FAILED]: (state: IRegionState, { payload }): IRegionState => {

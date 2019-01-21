@@ -158,7 +158,6 @@ const ACTION_HANDLERS: {} = {
     return newState
   },
   [REGION_SET_REGION_LOADING]: (state: IRegionState, { payload }): IRegionState => {
-    debugger
     const newState = { 
       ...state, 
       ...initialState,

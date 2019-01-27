@@ -98,7 +98,7 @@ class RegulationsSummary extends Component {
 
   render () {
     const {streamObject} = this.props
-    return this.renderOpenOrClosed(streamObject)
+    return <div>2018 Season has ended. Read State Regulations for latest Season Openers and Closers.</div>
   }
 }
 

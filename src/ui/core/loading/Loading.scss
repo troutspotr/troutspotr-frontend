@@ -47,48 +47,8 @@
   }
 }
 
-#root {
-  height: 100%;
-}
-
-.box {
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-
-  /*align-items: center;*/
-  flex-direction: column;
-  padding-top: 20vh;
-  font-size: calc(24px + 1.5vw);
-  overflow: hidden;
-  margin: 0 auto;
-  // width: 50vmin;
-  opacity: 0;
-  -webkit-animation: copyFadeIn ease-in 1;
-  -moz-animation: copyFadeIn ease-in 1;
-  animation: copyFadeIn ease-in 1;
-
-  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
-  animation-fill-mode: forwards;
-  animation-duration: 0.5s;
-  animation-delay: 0.2;
-  transform: translateZ(0);
-  transform: scale(1);
-  z-index: 99999;
-  position: fixed;
-  overflow: hidden;
-  // left: 25%;
-  padding: 10vmin;
-  .title {
-    font-size: 1em;
-    text-transform: capitalize;
-    margin-bottom: 0.2em;
-  }
-
-  .boxSub {
-    font-size: 0.5em;
-    margin-bottom: 1em;
-  }
+.container {
+  line-height: 1.2;
 }
 
 @keyframes dash {

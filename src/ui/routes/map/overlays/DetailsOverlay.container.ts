@@ -3,21 +3,20 @@ import { createStructuredSelector } from 'reselect'
 import {
   getSelectedRoadSelector,
   selectedStreamObjectSelector,
-  troutStreamDictionarySelector,
   visibleTroutStreams,
+  regionLoadingStatusSelector,
 } from 'ui/routes/@usState/@region/Region.selectors'
 import { DetailsOverlayComponent, IDetailsOverlayComponent } from './DetailsOverlay.component'
-import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/Location.selectors'
+import { selectedStateIdSelector } from 'ui/Location.selectors'
 
 const mapDispatchToProps = {}
 
 export const detailsOverlayPropSelector = createStructuredSelector({
   visibleTroutStreams: visibleTroutStreams,
   selectedState: selectedStateIdSelector,
-  selectedRegion: selectedRegionIdSelector,
   selectedStream: selectedStreamObjectSelector,
   selectedAccessPoint: getSelectedRoadSelector,
-  streamDictionary: troutStreamDictionarySelector,
+  loadingStatus: regionLoadingStatusSelector,
 })
 
 const mapStateToProps = (state): IDetailsOverlayComponent => detailsOverlayPropSelector(state)

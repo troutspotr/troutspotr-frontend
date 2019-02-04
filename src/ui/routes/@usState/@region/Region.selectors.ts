@@ -34,6 +34,7 @@ import {
   regionIndexSelector,
   regulationsSelector,
   waterOpenersDictionarySelector,
+  stateDataLoadingStatusSelector,
 } from 'ui/routes/@usState/UsState.selectors'
 import { AccessPointFeature } from '../../../../api/region/IRegionGeoJSON';
 
@@ -42,8 +43,18 @@ export const troutStreamDictionarySelector = createSelector([regionReduxStateSel
   return state.troutStreamDictionary
 })
 
-export const regionLoadingStatusSelector = createSelector([regionReduxStateSelector], (state) => {
-  return state.regionLoadingStatus
+export const regionLoadingStatusSelector = createSelector(
+  [regionReduxStateSelector, stateDataLoadingStatusSelector],
+  (regionState, usStateLoadingStatus: LoadingStatus): LoadingStatus => {
+    if (usStateLoadingStatus == LoadingStatus.Failed) {
+      return LoadingStatus.Failed
+    }
+
+    if (usStateLoadingStatus === LoadingStatus.Pending) {
+      return LoadingStatus.Pending
+    }
+    // return LoadingStatus.Pending
+    return regionState.regionLoadingStatus
 })
 
 export const troutStreamSectionsSelector = createSelector([regionReduxStateSelector], state => {

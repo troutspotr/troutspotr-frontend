@@ -103,6 +103,8 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
+    "export-pdf": "node scripts/export-to-pdf.js",
+    "export-pdf:inspect": "cross-env node --inspect-brk  scripts/export-to-pdf.js --runInBand --silent",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
@@ -115,7 +117,9 @@
     "build-storybook": "build-storybook",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "puppeteer": "^1.11.0"
+  },
   "jest": {
     "setupFiles": [
       "<rootDir>/config/polyfills.js"

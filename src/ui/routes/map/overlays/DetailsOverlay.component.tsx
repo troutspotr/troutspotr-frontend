@@ -7,11 +7,14 @@ import { RegulationsReminderContainer } from 'ui/routes/map/overlays/stream/remi
 
 import isEmpty from 'lodash-es/isEmpty'
 import { IStreamObject } from 'coreTypes/IStreamObject'
+import { LoadingStatus } from 'coreTypes/Ui';
+import { LoadingContainer } from 'ui/routes/map/overlays/loading/Loading.container';
 
 export interface IDetailsOverlayComponent {
   visibleTroutStreams: any
   selectedAccessPoint: any
-  selectedStream: IStreamObject
+  selectedStream: IStreamObject,
+  loadingStatus: LoadingStatus,
 }
 
 export class DetailsOverlayComponent extends React.Component<IDetailsOverlayComponent> {
@@ -54,6 +57,10 @@ export class DetailsOverlayComponent extends React.Component<IDetailsOverlayComp
   }
 
   public render() {
+    if (this.props.loadingStatus === LoadingStatus.Pending) {
+      return <div className={classes.container}><LoadingContainer /></div>
+    }
+
     if (isEmpty(this.props.visibleTroutStreams)) {
       return null
     }

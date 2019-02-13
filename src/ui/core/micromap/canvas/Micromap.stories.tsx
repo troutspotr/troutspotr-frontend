@@ -53,6 +53,8 @@ const getContentSettings = (
 const getStreamSettings = (
   dimensions: MicromapSettings.IDimensionsSettings
 ): MicromapSettings.IStreamSettings => {
+  const maxStreamWidth = Math.min(dimensions.width, dimensions.height)
+
   const radiusRatio = number('Stream Radius Ratio', 0.9, {
     range: true,
     min: 0,
@@ -63,39 +65,40 @@ const getStreamSettings = (
   const backdropWidth = number('stream backdrop width', 1, {
     range: true,
     min: 0,
-    max: 10,
+    max: 8,
     step: 0.01,
   })
 
   const radius = getRadius(dimensions.height, radiusRatio)
+  
   const streamWidth = number('Stream Width', 1, {
     range: true,
     min: 0,
-    max: 60,
+    max: 8,
     step: 0.01,
   })
   const troutSectionWidth = number('Trout Section Width', 1.1, {
     range: true,
     min: 0,
-    max: 60,
+    max: 8,
     step: 0.01,
   })
   const publicSectionWidth = number('Public Section Width', 1.2, {
     range: true,
     min: 0,
-    max: 60,
+    max: 8,
     step: 0.01,
   })
   const specialRegulationsWidth = number('Special Regulations Width', 1.3, {
     range: true,
     min: 0,
-    max: 60,
+    max: 8,
     step: 0.01,
   })
   const terminusDiameter = number('Terminus Diameter', 1, {
     range: true,
     min: 0,
-    max: 60,
+    max: 8,
     step: 0.01,
   })
 
@@ -146,15 +149,15 @@ const getAccessPointSettings = (
     step: 0.01,
   })
 
-  const radius = getRadius(dimensions.height, radiusRatio)
+  const radius = getRadius(Math.min(dimensions.height, dimensions.width), radiusRatio)
 
-  const permissionRequiredDiameter = number('Permission Required Diameter', 0, {
+  const permissionRequiredDiameter = number('Permission Required Diameter', 4, {
     range: true,
     min: 0,
     max: 10,
     step: 0.01,
   })
-  const publiclyFishableDiameter = number('Publicly Fishable Diameter', 0, {
+  const publiclyFishableDiameter = number('Publicly Fishable Diameter', 4, {
     range: true,
     min: 0,
     max: 10,
@@ -196,9 +199,22 @@ export const getMicromapColorSettings = (): MicromapSettings.IColorSettings => {
     secondaryLabelFill,
     petriDish,
     backdropFill: backdropColor,
+    filteredStreamFill: 'green',
   }
 }
 
+export const getLinemapCanvasSettings = (defaultSettings: MicromapSettings.IMicromapCanvasSettings = null): MicromapSettings.IMicromapCanvasSettings => {
+  const dimensions = getDimensions()
+  const settings = getContentSettings(dimensions)
+  const colorsSettings = getMicromapColorSettings()
+  const micromapSettings = {
+    dimensions,
+    settings,
+    colors: colorsSettings,
+  }
+
+  return micromapSettings
+}
 export const getMicromapCanvasSettings = (): MicromapSettings.IMicromapCanvasSettings => {
   const dimensions = getDimensions()
   const settings = getContentSettings(dimensions)

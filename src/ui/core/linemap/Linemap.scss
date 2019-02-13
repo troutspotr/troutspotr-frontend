@@ -1,0 +1,132 @@
+@import 'src/ui/styles/_colors';
+@import 'src/ui/styles/_variables';
+@import 'src/ui/styles/_fonts';
+@import 'src/ui/styles/fallback';
+@import 'src/ui/styles/_mapboxOverrides';
+
+.container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.svgContainer {
+  padding: 0;
+  margin: 0;
+  shape-rendering: crispEdges;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.streamGroup {
+}
+
+.palSectionGroup {
+  stroke-linejoin: round;
+  stroke-linecap: butt;
+}
+
+.troutSectionGroup {
+  // stroke: black;
+  // stroke-width: 1px;
+}
+
+.backdrop {
+  shape-rendering: initial;
+}
+
+.xAxis {
+  shape-rendering: geometricPrecision;
+}
+
+.accessPoint {
+  // mix-blend-mode: screen;
+  font-size: 8px;
+}
+
+
+:global(.tick) {
+  font-size: 12px;
+  font-weight: 600;
+  > text {
+    text-anchor: end;
+    stroke-width: 1px;
+    font-weight: 100;
+    font-size: 8px;
+    opacity: 0.35;
+  }
+
+  > line {
+    // opacity: 0.35;
+  }
+
+  :global {
+    .primaryTick {
+      opacity: 0.35;
+    }
+  
+    .secondaryTick {
+      opacity: 0.2;
+    }
+  }
+  
+  // > line {
+  //   fill: 
+  // }
+}
+
+.accessPoints {
+  text-anchor: middle;
+  shape-rendering: geometricPrecision;
+  // dominant-baseline
+  // dominantBaseline: middle;
+}
+
+
+
+.accessPointText {
+  stroke-width: 0;
+  font-weight: 800;
+}
+
+.deselectedAccessPoints {
+  opacity: 0.35;
+}
+
+.selectedAccessPoints {
+  opacity: 1;
+}
+
+
+:global(.ts-light) {
+  .accessPointText {
+    // stroke-width: 1px;
+    // stroke: black;
+  }
+
+  .deselectedAccessPoints {
+    opacity: 0.2;
+  }
+
+  :global(.tick) {
+    text {
+      font-weight: 600;
+    }
+  }
+}
+
+.lineOffset {
+  opacity: 1;
+  @include fallback(fill, --red, $redDark);
+  @include fallback(color, --red, $redDark);
+  > text {
+    alignment-baseline: middle;
+    text-anchor: middle;
+    font-size: 8px;
+  }
+  > line {
+    shape-rendering: geometricPrecision;
+    stroke-width: 1px;
+    @include fallback(stroke, --red, $redDark);
+  }
+}

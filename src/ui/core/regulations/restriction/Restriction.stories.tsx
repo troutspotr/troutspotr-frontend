@@ -22,7 +22,7 @@ stories.add('basic', () => {
     hollow: boolean('hollow', true),
     heightMultiplier: number('height multiplier', 1, {
       range: true,
-      min: 0.1,
+      min: 0.0,
       max: 2,
       step: 0.001,
    }),

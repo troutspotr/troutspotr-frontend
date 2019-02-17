@@ -8,7 +8,10 @@ import { IAccessPointGeoJsonProps } from 'coreTypes/accessPoint/IAccessPoint';
 import { SelectionStatus } from 'coreTypes/Ui';
 import { findTick } from './TickGuide'
 import clamp from 'lodash-es/clamp'
-import { AccessPointFeature } from 'api/region/IRegionGeoJSON';
+import Measure from 'react-measure'
+import debounce from 'lodash-es/debounce'
+import { IStream } from 'coreTypes/stream/IStream';
+import { StreamFeature } from 'api/region/IRegionGeoJSON';
 
 const styles = require('./Linemap.scss')
 
@@ -19,26 +22,71 @@ const margin = {
   bottom: 5,
 }
 
-export interface ILineMapComponentProps extends IMicromapCanvasProps {
-  lineOffsetLength: number,
-  onLineOffsetChange(offset: number): void,
-  onAccessPointClick(ap: AccessPointFeature): void
+export interface ILineMapComponentStateProps extends IMicromapCanvasProps {
+  lineOffsetLength: number | null,
+}
+
+export interface ILineMapComponentPassedProps {
+  onLineOffsetChange(offset: number, radius: number, stream: StreamFeature): void
+  onAccessPointSelect(selectedStream: IStream, ap: IAccessPointGeoJsonProps)
+}
+
+export interface ILineMapComponentProps extends ILineMapComponentStateProps, ILineMapComponentPassedProps {
+
+}
+
+export interface IRizisableState {
+  bottom: number,
+  height: number,
+  left: number,
+  right: number,
+  top: number,
+  width: number,
 }
 
 export class LineMapComponentCanvas extends React.PureComponent<
 ILineMapComponentProps,
-  IMicromapCanvasState
+  IRizisableState
 > {
   private rootElement: React.Ref<SVGSVGElement>;
+  private debouncedResize: any;
   constructor(props) {
     super(props)
     this.rootElement = React.createRef()
     this.onTouchMove = this.onTouchMove.bind(this)
+    this.onTouchEnd = this.onTouchEnd.bind(this)
+    const debouncedResize = debounce(this.resizeEvent, 60, { leading: true, maxWait: 60 })
+    this.debouncedResize = debouncedResize.bind(this)
+    this.state = {
+      width: 100,
+      height: 24,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      top: 0,
+    }
   }
+
+  private resizeEvent(contentRect) {
+    // eslint-disable-next-line react/no-set-state
+    this.setState((state) => {
+      return {
+        ...state,
+        margin,
+        width: contentRect.bounds.width,
+        height: contentRect.bounds.height,
+        bottom: contentRect.bounds.bottom,
+        left: contentRect.bounds.left,
+        right: contentRect.bounds.right,
+        top: contentRect.bounds.top,
+      }
+    })
+  }
+
   private getXScale(): d3Scale.ScaleLinear<number, number> {
     const {
       width,
-    } = this.props.settings.dimensions
+    } = this.state
 
     const length = this.props.streamObject.stream.properties.length_mi
 
@@ -50,7 +98,7 @@ ILineMapComponentProps,
   private getYScale(): d3Scale.ScaleLinear<number, number> {
     const {
       height,
-    } = this.props.settings.dimensions
+    } = this.state
 
     return d3Scale.scaleLinear()
       .domain([0, height])
@@ -71,11 +119,26 @@ ILineMapComponentProps,
     this.renderXAxis()
   }
 
+  public onAccessPointClick(event: any, ap: IAccessPointGeoJsonProps) {
+    event.preventDefault()
+    if (this.props.onAccessPointSelect == null) {
+      return
+    }
+
+    this.props.onAccessPointSelect(this.props.streamObject.stream.properties, ap)
+  } 
+
   private renderFilledAccessPoint(xScale: d3Scale.ScaleLinear<number, number>, yScale: d3Scale.ScaleLinear<number, number>, ap: IAccessPointGeoJsonProps, diameter: number, color: string) {
     const length = this.props.streamObject.stream.properties.length_mi
     const x = xScale(ap.linear_offset * length)
     const y = yScale(this.props.settings.settings.accessPoints.radius)
-    return <a className={styles.accessPoint} href={ap.slug}>
+// tslint:disable-next-line: jsx-no-lambda
+    return <a className={styles.accessPoint} href={ap.slug} onClick={(e) => this.onAccessPointClick(e, ap)}>
+      <circle
+        cx={x}
+        className={styles.accessPointHitbox}
+        cy={y}
+        r={diameter * 1.5}/>
       <circle
         cx={x}
         cy={y}
@@ -95,8 +158,10 @@ ILineMapComponentProps,
     const {
       accessPoints
     } = this.props.streamObject
-    const unselectedAccessPoints = accessPoints.filter(x => x.properties.selectionStatus !== SelectionStatus.Selected)
-    const selectedAccessPoints = accessPoints.filter(x => x.properties.selectionStatus === SelectionStatus.Selected)
+    const unselectedAccessPoints = accessPoints.filter(x => x.properties.selectionStatus === SelectionStatus.Inactive)
+    const selectedAccessPoints = accessPoints.filter(
+      x => x.properties.selectionStatus === SelectionStatus.Selected
+      || x.properties.selectionStatus === SelectionStatus.Active)
 
     const unselectedPalAccessPoints = unselectedAccessPoints.filter(ap => ap.properties.bridgeType === 'publicTrout')
     const unselectedPrivateAccessPoints = unselectedAccessPoints.filter(ap => ap.properties.bridgeType === 'permissionRequired')
@@ -128,23 +193,24 @@ ILineMapComponentProps,
     const length =this.props.streamObject.stream.properties.length_mi
     const tickGuide = findTick(length)
     const xAxis = g => g
-      .attr('transform', `translate(0,${this.props.settings.dimensions.height})`)
+      .attr('transform', `translate(0,${this.state.height})`)
       .attr('class', `js-tick-x-axis ${styles.xAxis}`)
       .call(d3Axis.axisBottom(this.getXScale())
-        .ticks(Math.floor(length / tickGuide.secondary || 1))
-        .tickSizeInner(-this.props.settings.dimensions.height)
+        .ticks(Math.floor(this.state.width / 50 || 1))
+        .tickSizeInner(-this.state.height)
         .tickSizeOuter(120)
       ).call(g => g.select('.domain').remove())
       .call(g => {
         g.selectAll(`.tick text`)
-          .attr('style', (d, index) => index % (tickGuide.lessThan / tickGuide.primary) !== 0 ? 'display: none' : '')
+          .attr('style', (d, index) => index % (tickGuide.lessThan / tickGuide.primary) !== 0 ? 'display: display' : '')
+          .attr('class', (d, index) => index % (tickGuide.lessThan / tickGuide.primary) !== 0 ? 'secondaryTick' : 'primaryTick')
           .attr('dy', (d, index) => '0px')
           .attr('y', (d, index) => '0px')
           .attr('dx', (d, index) => '-2px')
       })
       .call(g => {
         g.selectAll(`.tick line`)
-          .attr('y2', (d, index) => index % (tickGuide.lessThan / tickGuide.primary) !== 0 ? '-3' : '-9')
+          .attr('y2', (d, index) => index % (tickGuide.lessThan / tickGuide.primary) !== 0 ? '-9' : '-9')
           .attr('class', (d, index) => index % (tickGuide.lessThan / tickGuide.primary) !== 0 ? 'secondaryTick' : 'primaryTick')
       })
 
@@ -168,10 +234,10 @@ ILineMapComponentProps,
 
     const displayOffset = lineOffsetLength.toFixed(2)
     const xPosition = xScale(lineOffsetLength)
-    const clampedX = clamp(xPosition, 0 + (margin.left * 2), this.props.settings.dimensions.width - (margin.right * 2))
+    const clampedX = clamp(xPosition, 0 + (margin.left * 2), this.state.width - (margin.right * 2))
     return <g className={styles.lineOffset}>
-      <line x1={xPosition} y1="0" x2={xPosition} y2={this.props.settings.dimensions.height - 8} />
-      <text filter="url(#solidBackdrop)" x={clampedX} y={this.props.settings.dimensions.height - 2}>{displayOffset}</text>
+      <line x1={xPosition} y1="0" x2={xPosition} y2={this.state.height - 8} />
+      <text filter="url(#solidBackdrop)" x={clampedX} y={this.state.height - 2}>{displayOffset}</text>
     </g>
   }
 
@@ -179,7 +245,7 @@ ILineMapComponentProps,
     const pathGenerator = this.getPath(xScale, yScale)
     const x0 = this.props.streamObject.stream.properties.length_mi
     const x1 = 0
-    const y = (this.props.settings.dimensions.height * 0.5)
+    const y = (Math.floor(this.state.height * 0.63))
 
     const path = pathGenerator([
       [x0, y],
@@ -191,7 +257,7 @@ ILineMapComponentProps,
 
   private renderPalSections(xScale: d3Scale.ScaleLinear<number, number>, yScale: d3Scale.ScaleLinear<number, number>) {
     const pathGenerator = this.getPath(xScale, yScale)
-    const y = (this.props.settings.dimensions.height * 0.5)
+    const y = (Math.floor(this.state.height * 0.63))
     const {
       palSections,
     } = this.props.streamObject
@@ -229,7 +295,7 @@ ILineMapComponentProps,
 
   private renderTroutSections(xScale: d3Scale.ScaleLinear<number, number>, yScale: d3Scale.ScaleLinear<number, number>) {
     const pathGenerator = this.getPath(xScale, yScale)
-    const y = (this.props.settings.dimensions.height * 0.5)
+    const y = (Math.floor(this.state.height * 0.63))
     const {
       sections,
     } = this.props.streamObject
@@ -249,36 +315,56 @@ ILineMapComponentProps,
     return
   }
 
+  private onTouchEnd(e: React.TouchEvent<SVGSVGElement>) {
+    try {
+      e.preventDefault()
+    } catch (error) {
+      console.error(error)
+    }
+
+    this.props.onLineOffsetChange(null, 0, this.props.streamObject.stream)
+  }
+
   private onTouchMove(e: React.TouchEvent<SVGSVGElement>) {
-    e.preventDefault()
+    try {
+      e.preventDefault()
+    } catch (error) {
+      console.error(error)
+    }
+
     const leftOffset = ((this.rootElement as any).current as SVGElement).getBoundingClientRect().left
     const relativeOffset = e.targetTouches[0].clientX - leftOffset
     const scale = d3Scale.scaleLinear()
-      .domain([0, margin.left, this.props.settings.dimensions.width - margin.right, this.props.settings.dimensions.width])
+      .domain([0, margin.left, this.state.width - margin.right, this.state.width])
       .range([this.props.streamObject.stream.properties.length_mi, this.props.streamObject.stream.properties.length_mi, 0, 0])
       .clamp(true)
     const newOffsetInMiles = scale(relativeOffset)
+    const scaleRadius = d3Scale.scalePow()
+      .exponent(0.3)
+      .domain([0, window.innerHeight * 0.75, window.innerHeight])
+      .range([this.props.streamObject.stream.properties.length_mi * 0.2, 0.1, 0.03])
+    
+    const radius = scaleRadius(e.targetTouches[0].clientY)
+    console.log(radius, e.targetTouches[0].clientY)
     if (this.props.onLineOffsetChange != null) {
-      this.props.onLineOffsetChange(newOffsetInMiles)
+      this.props.onLineOffsetChange(newOffsetInMiles, radius, this.props.streamObject.stream)
     }
   }
 
-  public render() {
+  private renderContent() {
     const {
       width,
       height,
-    } = this.props.settings.dimensions
-
+    } = this.state
     const xScale = this.getXScale()
     const yScale = this.getYScale()
-
-    return <div className={styles.container}>
-      <svg
+    return (<svg
         ref={this.rootElement}
         width={width}
         height={height}
         viewBox={`0 0 ${width} ${height}`}
         onTouchMove={this.onTouchMove}
+        onTouchEnd={this.onTouchEnd}
         className={styles.svgContainer}>
         <filter x="-0.05" y="-0.05" width="1.1" height="1.1" id="solidBackdrop">
           <feFlood floodColor={this.props.settings.colors.primaryLabelFill} floodOpacity="0.8"/>
@@ -306,7 +392,24 @@ ILineMapComponentProps,
         <g className={styles.palSectionGroup}  stroke={this.props.settings.colors.palSectionFill} strokeWidth={this.props.settings.settings.stream.publicSectionWidth}>
           {this.renderPalSections(xScale, yScale)}
         </g>
-      </svg>
-    </div>
+      </svg>)
+  }
+
+  public render() {
+    // if you plan to re-use this container,
+    // then try to pre-calculate just one bounds,
+    // and share those dimensions with the rest of the team.
+    const content = this.renderContent()
+
+    return (<Measure
+      bounds={true}
+      onResize={this.debouncedResize}
+    >
+      {({ measureRef }) => (
+        <div className={styles.container} ref={measureRef}>
+          {content}
+        </div>
+      )}
+    </Measure>)
   }
 }

@@ -95,11 +95,11 @@ export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
   }
 }
 
-export const selectFoculPoint = (feature: Coord) => (dispatch, getState) => {
+export const selectFoculPoint = (feature: Coord, defaultRadius = TURF_CIRCLE_RADIUS_KM) => (dispatch, getState) => {
   if (feature == null) {
     throw new Error('feature cannot be null')
   }
-  const selectedState = turfCircle(feature, TURF_CIRCLE_RADIUS_KM)
+  const selectedState = turfCircle(feature, defaultRadius)
   const boundingBox = extent(selectedState)
   const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
   const newCamera = { bounds: newCorners, pitch: 60 }

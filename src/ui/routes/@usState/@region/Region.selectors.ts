@@ -14,18 +14,20 @@ import {
   viewSelector,
   hasAgreedToTermsSelector,
   tableOfContentsLoadingStatusSelector,
+  timeSelector,
 } from 'ui/core/Core.selectors'
 import {
   getHashSelector,
   selectedStateIdSelector,
   selectedRegionIdSelector,
+  selectedAccessPointIdSelector,
 } from 'ui/Location.selectors'
 
 import { getRegulationsSummarySelector } from 'ui/core/regulations/RegulationsSummary.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
 import { IRegionState } from './Region.redux'
 import { Dictionary } from 'lodash'
-import { LoadingStatus } from 'coreTypes/Ui'
+import { LoadingStatus, SelectionStatus } from 'coreTypes/Ui'
 import { IRegionLayoutStateProps } from './Region.layout'
 import { IStreamObject } from 'coreTypes/IStreamObject'
 import {
@@ -168,9 +170,10 @@ export const filterRestrictionsByTime = (now, sp) => {
   return isInBounds
 }
 
+
 export const selectedStreamObjectSelector = createSelector(
-  [troutStreamDictionarySelector, displayedStreamCentroidDataSelector],
-  (streamDictionary, displayedCentroid) => {
+  [troutStreamDictionarySelector, displayedStreamCentroidDataSelector, timeSelector, selectedAccessPointIdSelector],
+  (streamDictionary, displayedCentroid, now, selectedApSlug) => {
     // Assume things aren't loaded yet. see displayedStreamCentroidDataSelector for details
     if (displayedCentroid == null) {
       return null
@@ -179,15 +182,43 @@ export const selectedStreamObjectSelector = createSelector(
     if (has(streamDictionary, displayedCentroid.gid) === false) {
       return null
     }
-    const now = new Date()
     const stream = { ...streamDictionary[displayedCentroid.gid] }
     stream.restrictions = stream.restrictions.filter(x =>
       filterRestrictionsByTime(now, x.properties)
     )
+
+    stream.accessPoints.forEach(ap => {
+      if (selectedApSlug == null) {
+        ap.properties.selectionStatus = SelectionStatus.Active
+        return
+      }
+
+      ap.properties.selectionStatus = ap.properties.slug === selectedApSlug
+        ? SelectionStatus.Selected
+        : SelectionStatus.Inactive
+    })
+
     return stream
   }
 )
 
+
+export const selectedAccessPointSelector = createSelector(
+  selectedAccessPointIdSelector,
+  selectedStreamObjectSelector,
+  (accessPointId, streamObject) => {
+    if (accessPointId == null) {
+      return null
+    }
+
+    if (streamObject == null) {
+      return null
+    }
+
+    const ap = streamObject.accessPoints.find(ap => ap.properties.slug === accessPointId) || null
+    return ap
+  }
+)
 export const showNoResultsFoundSelector = createSelector(
   [
     searchTextSelector,

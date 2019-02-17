@@ -39,6 +39,7 @@ const initialState: IRegionState = {
   streamCentroids: null,
   hoveredRoad: null,
   regionLoadingStatus: LoadingStatus.NotStarted,
+  offset: null,
 }
 export const REGION_SET_VIEW = 'REGION_SET_VIEW'
 
@@ -52,6 +53,7 @@ export const REGION_SET_REGION_LOADING_FAILED = 'REGION_SET_REGION_LOADING_FAILE
 export const REGION_SET_HOVERED_ROAD = 'REGION_SET_HOVERED_ROAD'
 export const REGION_SET_SELECTED_ROAD = 'REGION_SET_SELECTED_ROAD'
 export const REGION_SET_HOVERED_STREAM = 'REGION_SET_HOVERED_STREAM'
+export const REGION_SET_OFFSET = 'REGION_SET_OFFSET'
 
 export const setRegionData = createAction(
   REGION_SET_REGION_DATA,
@@ -63,6 +65,12 @@ export const setRegionDataFailed = createAction(REGION_SET_REGION_LOADING_FAILED
 export const setHoveredRoad = createAction(REGION_SET_HOVERED_ROAD, x => x)
 export const setSelectedRoad = createAction(REGION_SET_SELECTED_ROAD, x => x)
 export const setHoveredStream = createAction(REGION_SET_HOVERED_STREAM, x => x)
+
+export const setLinestringOffset = createAction(REGION_SET_OFFSET, (offset: number | null) => {
+  return {
+    offset: offset,
+  }
+})
 
 export const fetchRegionData = (stateName: string, regionName: string) => async (
   dispatch,
@@ -176,6 +184,10 @@ const ACTION_HANDLERS: {} = {
     const newState = { ...state, ...{ hoveredStream: payload } }
     return newState
   },
+  [REGION_SET_OFFSET]: (state: IRegionState, { payload }): IRegionState => {
+    console.error('setting offset', payload.offset)
+    return { ...state, offset: payload.offset || null }
+   }
 }
 
 // ------------------------------------
@@ -195,7 +207,8 @@ export interface IRegionState {
   // SelectedRoad: null,
   hoveredRoad: any
   streamCentroids: StreamCentroidFeatureCollection,
-  regionLoadingStatus: LoadingStatus
+  regionLoadingStatus: LoadingStatus,
+  offset: number | null
 }
 
 

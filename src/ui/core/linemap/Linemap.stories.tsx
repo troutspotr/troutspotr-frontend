@@ -68,7 +68,7 @@ stories.add('Customize', () => {
     id: '123',
     lineOffsetLength,
     onLineOffsetChange: action('onLineOffsetChange'),
-    onAccessPointClick: action('onAccessPointClick'),
+    onAccessPointSelect: action('onAccessPointSelect'),
   }
   return (<div className={storyStyles.container}>
     <span className={storyStyles.text}>
@@ -79,6 +79,46 @@ stories.add('Customize', () => {
         {renderStuff(TroutRunCreek)}
       </span>
     </span>
+    <LineMapComponentCanvas {...props} />
+  </div>)
+})
+
+stories.add('Resize', () => {
+  const lineOffsetLength = getLineOffsetLength(TroutRunCreek)
+  const selectedAccesPointIndex = getSelectedIndex(TroutRunCreek)
+  const defaultSettings = getLinemapCanvasSettings()
+  const settings: MicromapSettings.IMicromapCanvasSettings = {
+    ...defaultSettings,
+    dimensions: {
+      ...defaultSettings.dimensions,
+      height: DEFAULT_HEIGHT,
+    }
+  }
+  
+  
+  TroutRunCreek.accessPoints.forEach((x, index) => {
+    x.properties = { ...x.properties, selectionStatus: SelectionStatus.Inactive }
+    if (index === selectedAccesPointIndex) {
+      x.properties = { ...x.properties, selectionStatus: SelectionStatus.Selected }
+    }
+  })
+
+  const props = {
+    settings,
+    streamObject: TroutRunCreek,
+    id: '123',
+    lineOffsetLength,
+    onLineOffsetChange: action('onLineOffsetChange'),
+    onAccessPointSelect: action('onAccessPointClick'),
+  }
+  return (<div className={storyStyles.container} style={
+    {
+      margin: '20vmin',
+      backgroundColor: '#222',
+      padding: '2vmin',
+      
+    }
+  }>
     <LineMapComponentCanvas {...props} />
   </div>)
 })

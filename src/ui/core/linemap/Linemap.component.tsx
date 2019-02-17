@@ -16,8 +16,8 @@ import { StreamFeature } from 'api/region/IRegionGeoJSON';
 const styles = require('./Linemap.scss')
 
 const margin = {
-  left: 5,
-  right: 5,
+  left: 0,
+  right: 0,
   top: 5,
   bottom: 5,
 }
@@ -42,9 +42,10 @@ export interface IRizisableState {
   right: number,
   top: number,
   width: number,
+  priorDragEvent: Partial<React.Touch> | null,
 }
 
-export class LineMapComponentCanvas extends React.PureComponent<
+export class LineMapComponentCanvas extends React.Component<
 ILineMapComponentProps,
   IRizisableState
 > {
@@ -53,6 +54,7 @@ ILineMapComponentProps,
   constructor(props) {
     super(props)
     this.rootElement = React.createRef()
+    // this.onTouchMove = debounce(this.onTouchMove, 60)
     this.onTouchMove = this.onTouchMove.bind(this)
     this.onTouchEnd = this.onTouchEnd.bind(this)
     const debouncedResize = debounce(this.resizeEvent, 60, { leading: true, maxWait: 60 })
@@ -64,6 +66,7 @@ ILineMapComponentProps,
       left: 0,
       right: 0,
       top: 0,
+      priorDragEvent: null,
     }
   }
 
@@ -317,6 +320,12 @@ ILineMapComponentProps,
 
   private onTouchEnd(e: React.TouchEvent<SVGSVGElement>) {
     this.props.onLineOffsetChange(null, 0, this.props.streamObject.stream)
+    this.setState((state) => {
+      return {
+        ...state,
+        priorDragEvent: null,
+      }
+    })
   }
 
   private onTouchMove(e: React.TouchEvent<SVGSVGElement>) {
@@ -325,22 +334,39 @@ ILineMapComponentProps,
     } catch (error) {
       console.error(error)
     }
+    const firstTouch = e.targetTouches[0]
+    const { clientX, clientY } = firstTouch
 
+    const xDelta = this.state.priorDragEvent == null ? null : this.state.priorDragEvent.clientX - clientX
+    const yDelta = this.state.priorDragEvent == null ? null : this.state.priorDragEvent.clientY - clientY
+
+    // const slope = xDelta == null ? null : 
+    const isAssumedToBeMovingVertically = xDelta === 0 && yDelta !== 0 || Math.abs(yDelta / xDelta) > 1.8
     const leftOffset = ((this.rootElement as any).current as SVGElement).getBoundingClientRect().left
-    const relativeOffset = e.targetTouches[0].clientX - leftOffset
+    const relativeOffset = clientX - leftOffset
     const scale = d3Scale.scaleLinear()
       .domain([0, margin.left, this.state.width - margin.right, this.state.width])
       .range([this.props.streamObject.stream.properties.length_mi, this.props.streamObject.stream.properties.length_mi, 0, 0])
       .clamp(true)
-    const newOffsetInMiles = scale(relativeOffset)
+    const usePriorScale = isAssumedToBeMovingVertically && this.props.lineOffsetLength != null
+    const newOffsetInMiles = usePriorScale ? this.props.lineOffsetLength : scale(relativeOffset)
+    if (usePriorScale) {
+      console.log(this.props.lineOffsetLength, newOffsetInMiles)
+    }
     const scaleRadius = d3Scale.scalePow()
       .exponent(0.3)
       .domain([0, window.innerHeight * 0.75, window.innerHeight])
       .range([this.props.streamObject.stream.properties.length_mi * 0.2, 0.1, 0.03])
     
-    const radius = scaleRadius(e.targetTouches[0].clientY)
+    const radius = scaleRadius(clientY)
     if (this.props.onLineOffsetChange != null) {
       this.props.onLineOffsetChange(newOffsetInMiles, radius, this.props.streamObject.stream)
+      this.setState((state) => {
+        return {
+          ...state,
+          priorDragEvent: { clientX: firstTouch.clientX, clientY: firstTouch.clientY },
+        }
+      })
     }
   }
 

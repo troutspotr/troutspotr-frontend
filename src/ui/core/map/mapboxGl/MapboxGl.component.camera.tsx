@@ -46,7 +46,6 @@ export default class MapboxGlComponentCamera extends React.PureComponent<IMapbox
     if (padding != null) {
       options.padding = padding
     }
-    console.log(options)
     setTimeout(() => map.fitBounds(bbox, options), 10)
   }
 

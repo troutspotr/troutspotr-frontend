@@ -90,7 +90,7 @@ export const handleOffsetChange = (offset: number | null, radius: number, stream
   const overrides = {
     pitch: 0,
     linear: true,
-    animationDurationMs: 250,
+    animationDurationMs: 160,
   }
   dispatch(selectFoculPoint(pointAlong.geometry.coordinates, radius, overrides))
   // updateUrlFromOffset(pointAlong, stream)(dispatch, getState)

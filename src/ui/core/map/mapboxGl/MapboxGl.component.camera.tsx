@@ -18,18 +18,19 @@ export interface IMapboxGlCameraProps
 
 export default class MapboxGlComponentCamera extends React.PureComponent<IMapboxGlCameraProps> {
   public updateCamera(camera: ICameraProps, map: Map) {
-    const { bbox, padding } = camera
+    const { bbox, padding, duration, linear = null } = camera
     if (bbox == null) {
       return
     }
 
     const { bearing, pitch } = camera
-    const options = {
+    const options: any = {
       bearing: 0,
-      pitch: 0,
-      duration: 200,
-      linear: true,
-      easing: (x) => x,
+      pitch: pitch,
+      linear: linear || false,
+      // duration: duration,
+      // linear: true,
+      // easing: (x) => x,
       padding: {
         top: 0,
         bottom: 0,
@@ -38,9 +39,14 @@ export default class MapboxGlComponentCamera extends React.PureComponent<IMapbox
       },
     }
 
+    if (duration != null) {
+      options.duration = duration
+    }
+
     if (padding != null) {
       options.padding = padding
     }
+    console.log(options)
     setTimeout(() => map.fitBounds(bbox, options), 10)
   }
 

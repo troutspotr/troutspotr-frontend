@@ -64,11 +64,9 @@ const debouncedUrlUpdate = debounce((pointAlong: Feature<Point, any>, stream: St
   // solve the go to url problem
 
   const { pathname = null } = locationSelector(state)
-  // const hash = hashSelector(state) || ''
   if (pathname == null) {
     return
   }
-  debugger
   const newUrl = `${pathname}?${serializedString}`
   browserHistory.push(newUrl)
 }, 500)
@@ -89,7 +87,12 @@ export const handleOffsetChange = (offset: number | null, radius: number, stream
   }
 
   dispatch(setLinestringOffset(offset))
-  dispatch(selectFoculPoint(pointAlong.geometry.coordinates, radius))
+  const overrides = {
+    pitch: 0,
+    linear: true,
+    animationDurationMs: 250,
+  }
+  dispatch(selectFoculPoint(pointAlong.geometry.coordinates, radius, overrides))
   // updateUrlFromOffset(pointAlong, stream)(dispatch, getState)
 }
 

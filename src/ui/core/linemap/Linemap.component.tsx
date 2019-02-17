@@ -133,7 +133,7 @@ ILineMapComponentProps,
     const x = xScale(ap.linear_offset * length)
     const y = yScale(this.props.settings.settings.accessPoints.radius)
 // tslint:disable-next-line: jsx-no-lambda
-    return <a className={styles.accessPoint} href={ap.slug} onClick={(e) => this.onAccessPointClick(e, ap)}>
+    return <a className={styles.accessPoint} key={ap.gid} href={ap.slug} onClick={(e) => this.onAccessPointClick(e, ap)}>
       <circle
         cx={x}
         className={styles.accessPointHitbox}
@@ -316,12 +316,6 @@ ILineMapComponentProps,
   }
 
   private onTouchEnd(e: React.TouchEvent<SVGSVGElement>) {
-    try {
-      e.preventDefault()
-    } catch (error) {
-      console.error(error)
-    }
-
     this.props.onLineOffsetChange(null, 0, this.props.streamObject.stream)
   }
 
@@ -345,7 +339,6 @@ ILineMapComponentProps,
       .range([this.props.streamObject.stream.properties.length_mi * 0.2, 0.1, 0.03])
     
     const radius = scaleRadius(e.targetTouches[0].clientY)
-    console.log(radius, e.targetTouches[0].clientY)
     if (this.props.onLineOffsetChange != null) {
       this.props.onLineOffsetChange(newOffsetInMiles, radius, this.props.streamObject.stream)
     }

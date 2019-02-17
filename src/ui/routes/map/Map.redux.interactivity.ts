@@ -2,7 +2,7 @@ import { selectedStateIdSelector, selectedRegionIdSelector } from 'ui/Location.s
 import extent from '@turf/bbox'
 import turfCircle from '@turf/circle'
 import { createAction, handleActions } from 'redux-actions'
-import { BOUNDING_BOX_OF_LOWER_48_STATES, mapCameraActions } from './Map.redux.camera'
+import { BOUNDING_BOX_OF_LOWER_48_STATES, mapCameraActions, ICameraReduxState, DEFAULT_CAMERA_STATE } from './Map.redux.camera'
 import { AllGeoJSON, Coord, featureCollection } from '@turf/helpers'
 import { ACCESSPOINT_CIRCLE_LABEL_LAYER, ACCESSPOINT_CIRCLE_BORDER_LAYER, ACCESSPOINT_CIRCLE_LAYER } from './MapboxGlMap/styles/AccessPoints.layers';
 import { STREAM_LAYER_ID } from './MapboxGlMap/styles/Stream.layers';
@@ -95,14 +95,20 @@ export const navigateToStream = (streamGid: number) => (dispatch, getState) => {
   }
 }
 
-export const selectFoculPoint = (feature: Coord, defaultRadius = TURF_CIRCLE_RADIUS_KM) => (dispatch, getState) => {
+export const selectFoculPoint = (feature: Coord, defaultRadius = TURF_CIRCLE_RADIUS_KM, cameraOverrides: Partial<ICameraReduxState> = null) => (dispatch, getState) => {
   if (feature == null) {
     throw new Error('feature cannot be null')
   }
   const selectedState = turfCircle(feature, defaultRadius)
   const boundingBox = extent(selectedState)
   const newCorners = [[boundingBox[0], boundingBox[1]], [boundingBox[2], boundingBox[3]]]
-  const newCamera = { bounds: newCorners, pitch: 60 }
+  const newCamera = {
+    ...DEFAULT_CAMERA_STATE,
+    pitch: 60,
+    linear: false,
+    ...(cameraOverrides || {}),
+    bounds: newCorners,
+  }
   dispatch(mapCameraActions.setCamera(newCamera))
 }
 

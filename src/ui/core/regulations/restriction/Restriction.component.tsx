@@ -13,12 +13,6 @@ export interface IRestrictionComponent {
   heightMultiplier: number
 }
 
-// const createBorderWidthOverride = (heightMultiplier: number): {} => {
-//   const scale = d3Scale.scaleLinear()
-//     .domain([0, 0.2, 2])
-//     .
-// }
-
 export const RestrictionComponent = (props: IRestrictionComponent) => {
   const { color, pattern, text, length } = props
   const colorClass = classes[color]
@@ -30,7 +24,6 @@ export const RestrictionComponent = (props: IRestrictionComponent) => {
     boxSizing: 'border-box',
   } : {}
   const heightOverride = heightMultiplier > 0 ? { ...borderWidthOverride, height: `${heightMultiplier}em` } : { ...borderWidthOverride }
-  console.log(heightOverride)
   return (
     <div className={classes.container}>
       <div className={classes.symbolContainer}>

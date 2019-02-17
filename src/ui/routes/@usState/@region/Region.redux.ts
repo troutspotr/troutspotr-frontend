@@ -185,7 +185,6 @@ const ACTION_HANDLERS: {} = {
     return newState
   },
   [REGION_SET_OFFSET]: (state: IRegionState, { payload }): IRegionState => {
-    console.error('setting offset', payload.offset)
     return { ...state, offset: payload.offset || null }
    }
 }

@@ -10,5 +10,6 @@ export interface ICameraProps {
   readonly pitch: number
   readonly bearing: number
   readonly padding: ICameraPadding
-  readonly speed: number
+  readonly duration: number | null
+  readonly linear: boolean | null
 }

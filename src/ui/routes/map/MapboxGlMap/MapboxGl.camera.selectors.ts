@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { ICameraPadding, ICameraProps } from '../../../core/map/ICameraProps'
-import { bboxSelector, bearingSelector, pitchSelector } from '../Map.selectors'
+import { bboxSelector, bearingSelector, pitchSelector, getMapCameraSelector } from 'ui/routes/map/Map.selectors'
+import { ICameraReduxState } from 'ui/routes/map/Map.redux.camera';
 
 const headerHeight = 60
 const footerHeight = 40
@@ -16,13 +17,15 @@ export const cameraPropsSelector = createSelector(
   bboxSelector,
   pitchSelector,
   bearingSelector,
-  (bbox: number[][], pitch: number, bearing: number): ICameraProps => {
+  getMapCameraSelector,
+  (bbox: number[][], pitch: number, bearing: number, camera: ICameraReduxState): ICameraProps => {
     return {
       bbox: bbox,
       pitch: pitch,
       bearing: bearing,
       padding: DEFAULT_PADDING,
-      speed: 1,
+      duration: camera.animationDurationMs || null,
+      linear: camera.linear,
     }
   }
 )

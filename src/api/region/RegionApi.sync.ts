@@ -1,6 +1,6 @@
 import { transformGeo } from './Region.transform.sync'
 import StateApi from 'api/usState/StateApi.sync'
-
+import { VERSION } from 'api/BaseApi.config'
 const mnBwca = require('static/data/v5/mn/upper-superior.topojson')
 const mnDriftless = require('static/data/v5/mn/driftless.topojson')
 const mnLowerSuperior = require('static/data/v5/mn/lower-superior.topojson')

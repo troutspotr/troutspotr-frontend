@@ -3,8 +3,8 @@ import keyBy from 'lodash-es/keyBy'
 import { createSelector } from 'reselect'
 import { regionsDictionarySelector } from 'ui/core/Core.selectors'
 import { IReduxState } from 'ui/redux/Store.redux.rootReducer'
+import { VERSION } from 'api/BaseApi.config'
 
-const VERSION = 'v5'
 export const isOfflineSelector = (reduxState: IReduxState): boolean => {
   if (reduxState == null) {
     return false

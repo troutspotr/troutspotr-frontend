@@ -2,12 +2,13 @@ import BaseApi, { IBaseApi } from 'api/BaseApi'
 import { transformGeo, IGeoPackageOrWhatver } from './Region.transform'
 import StateApi from 'api/usState/StateApi'
 const topojson = require('topojson-client')
+import { VERSION } from 'api/BaseApi.config'
 
 export const buildRegionEndpoint = (stateName: string, regionName: string): string =>
-  `/data/v5/${stateName}/${regionName}.topojson`
+  `/data/${VERSION}/${stateName}/${regionName}.topojson`
 
 export const buildRegionPalEndpoint = (stateName: string, regionName: string): string =>
-  `/data/v5/${stateName}/${regionName}.pal.topojson`
+  `/data/${VERSION}/${stateName}/${regionName}.pal.topojson`
 
 export interface IRegionApi extends IBaseApi {
   getRegionData(stateName: string, regionName: string, now: Date): Promise<IGeoPackageOrWhatver>

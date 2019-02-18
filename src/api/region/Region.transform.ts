@@ -70,7 +70,6 @@ export const decompressTopojsonAsync = async (
     // pal,
     boundingCircle,
   ] = await throttleReduce(ops)
-
   // create centroids:
   const streamCentroids = featureCollection((streamProperties as StreamFeatureCollection).features.map(feature => {
     const pointFeature = point([

@@ -44,6 +44,9 @@ export const addLettersToCrossings = (
 }
 
 export const filterBadAccessPoints = (ap: AccessPointFeature): boolean => {
+  if (ap.properties.bridgeType == null) {
+    return false
+  }
   const isUninteresting = ap.properties.bridgeType === CrossingTypes.uninteresting
   if (isUninteresting) {
     return false

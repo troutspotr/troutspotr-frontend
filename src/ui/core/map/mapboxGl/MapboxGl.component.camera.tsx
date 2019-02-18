@@ -23,7 +23,7 @@ export default class MapboxGlComponentCamera extends React.PureComponent<IMapbox
       return
     }
 
-    const { bearing, pitch } = camera
+    const { pitch } = camera
     const options: any = {
       bearing: 0,
       pitch: pitch,

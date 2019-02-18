@@ -1,7 +1,5 @@
 import * as React from 'react'
 const classes = require('./Restriction.scss')
-// import * as d3Scale from 'd3-scale'
-
 /* eslint no-unneeded-ternary: 0 */
 
 export interface IRestrictionComponent {

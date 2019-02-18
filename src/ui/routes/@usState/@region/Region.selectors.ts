@@ -48,14 +48,13 @@ export const troutStreamDictionarySelector = createSelector([regionReduxStateSel
 export const regionLoadingStatusSelector = createSelector(
   [regionReduxStateSelector, stateDataLoadingStatusSelector],
   (regionState, usStateLoadingStatus: LoadingStatus): LoadingStatus => {
-    if (usStateLoadingStatus == LoadingStatus.Failed) {
+    if (usStateLoadingStatus === LoadingStatus.Failed) {
       return LoadingStatus.Failed
     }
 
     if (usStateLoadingStatus === LoadingStatus.Pending) {
       return LoadingStatus.Pending
     }
-    // return LoadingStatus.Pending
     return regionState.regionLoadingStatus
 })
 
@@ -215,8 +214,8 @@ export const selectedAccessPointSelector = createSelector(
       return null
     }
 
-    const ap = streamObject.accessPoints.find(ap => ap.properties.slug === accessPointId) || null
-    return ap
+    const accessPoint = streamObject.accessPoints.find(ap => ap.properties.slug === accessPointId) || null
+    return accessPoint
   }
 )
 export const showNoResultsFoundSelector = createSelector(

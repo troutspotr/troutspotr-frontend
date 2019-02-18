@@ -16,8 +16,8 @@ import { StreamFeature } from 'api/region/IRegionGeoJSON';
 const styles = require('./Linemap.scss')
 
 const margin = {
-  left: 0,
-  right: 0,
+  left: 5,
+  right: 5,
   top: 5,
   bottom: 5,
 }
@@ -192,10 +192,11 @@ ILineMapComponentProps,
     </React.Fragment>
   }
 
+// tslint:disable-next-line: cognitive-complexity
   private renderXAxis() {
     const length =this.props.streamObject.stream.properties.length_mi
     const tickGuide = findTick(length)
-    const xAxis = g => g
+    const xAxis = group => group
       .attr('transform', `translate(0,${this.state.height})`)
       .attr('class', `js-tick-x-axis ${styles.xAxis}`)
       .call(d3Axis.axisBottom(this.getXScale())
@@ -213,7 +214,7 @@ ILineMapComponentProps,
       })
       .call(g => {
         g.selectAll(`.tick line`)
-          .attr('y2', (d, index) => index % (tickGuide.lessThan / tickGuide.primary) !== 0 ? '-9' : '-9')
+          .attr('y2', '-9')
           .attr('class', (d, index) => index % (tickGuide.lessThan / tickGuide.primary) !== 0 ? 'secondaryTick' : 'primaryTick')
       })
 
@@ -350,9 +351,7 @@ ILineMapComponentProps,
       .clamp(true)
     const usePriorScale = isAssumedToBeMovingVertically && this.props.lineOffsetLength != null
     const newOffsetInMiles = usePriorScale ? this.props.lineOffsetLength : scale(relativeOffset)
-    if (usePriorScale) {
-      console.log(this.props.lineOffsetLength, newOffsetInMiles)
-    }
+
     const scaleRadius = d3Scale.scalePow()
       .exponent(0.3)
       .domain([0, window.innerHeight * 0.75, window.innerHeight])

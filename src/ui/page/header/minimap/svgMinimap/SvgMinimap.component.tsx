@@ -191,9 +191,9 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     this.regionsBackdrop.style(sw, this.strokeWidthEm * 1.0 / event.transform.k + 'em')
     this.selectedRegionsGroup.style(sw, this.strokeWidthEm * 3.3 / event.transform.k + 'em')
     this.selectedStatesGroup.style(sw, this.strokeWidthEm * 3 / event.transform.k + 'em')
-    this.displayedStreamCentroidsGroup.style('font-size', this.fontSizeEm * 10 / event.transform.k + 'em')
+
+    this.displayedStreamCentroidsGroup.style('font-size', this.fontSizeEm * (this.props.isExpanded ? 10 : 7) / event.transform.k + 'em')
     this.gpsGroup.style('font-size', this.fontSizeEm * (this.props.isExpanded ? 10 : 7) / event.transform.k + 'em')
-    // this.gpsGroup.style(sw, this.strokeWidthEm * 10 / event.transform.k + 'em')
     this.stateLabelsGroup.style('font-size', this.fontSizeEm * 1 / event.transform.k + 'em')
     this.regionLabelsGroup.style('font-size', this.fontSizeEm * 0.87 / event.transform.k + 'em')
 
@@ -610,10 +610,10 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
     this.renderGpsCentroid(this.path, this.props.gpsGeoJson)
   }
   private renderGpsCentroid(svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>, gpsGeoJson: FeatureCollection<any, any>): any {
-    const displayedGpsCentroids = gpsGeoJson
+    const displayedGpsCentroids = gpsGeoJson == null ? [] : gpsGeoJson.features
     const displayedGpsCentroidSelection = this.gpsGroup
       .selectAll(`circle.js-d3-displayed-gps-centroids`)
-      .data(displayedGpsCentroids.features, x => {
+      .data(displayedGpsCentroids, x => {
         return x.properties.gid
       })
     displayedGpsCentroidSelection
@@ -643,21 +643,29 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
   private renderDisplayedStreamCentroids(
     svgPathGenerator: GeoPath<SVGPathElement, GeoPermissibleObjects>,
     displayedStreams: FeatureCollection<Point, IStreamCentroid>): any {
-      const selectedStreamCentroids = displayedStreams
+      const selectedStreamCentroids = displayedStreams == null ? [] : displayedStreams.features
       const selectedStreamCentroidsSelection = this.displayedStreamCentroidsGroup
         .selectAll(`circle.js-d3-displayed-stream-centroids`)
-        .data(selectedStreamCentroids.features, x => {
+        .data(selectedStreamCentroids, x => {
           return x.properties.gid
         })
       selectedStreamCentroidsSelection
         .enter()
         .append('circle')
-        .attr('class', `js-d3-displayed-stream-centroids ${styles.streamCentroids}`)
+        .attr('class', d => {
+          return d.properties.selectionStatus === 'selected'
+            ? `js-d3-displayed-stream-centroids ${styles.selectedStreamCentroids}`
+            : `js-d3-displayed-stream-centroids ${styles.streamCentroids}`
+        })
         .attr('cx', (d: Feature<Point, IStreamCentroid>) => {
           return this.projection(d.geometry.coordinates  as [number, number])[0]
         })
         .attr('cy', d => this.projection(d.geometry.coordinates  as [number, number])[1])
-        .attr('r', '0.05em')
+        .attr('r', d => {
+          return d.properties.selectionStatus === 'selected'
+            ? '0.07em'
+            : '0.05em'
+        })
         .style('opacity', 0)
         .transition()
         .duration(400)

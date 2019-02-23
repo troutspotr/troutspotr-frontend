@@ -1,7 +1,7 @@
 import { boolean, select } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import boundingBox from '@turf/bbox'
-import { featureCollection } from '@turf/helpers'
+import { featureCollection, point } from '@turf/helpers'
 import keyBy from 'lodash-es/keyBy'
 import * as React from 'react'
 import { IMinimapSvgProps, SvgMinimapComponent } from './SvgMinimap.component'
@@ -121,6 +121,7 @@ stories.add('Just states', () => {
     camera: cameraProps,
     isOffline,
     isExpanded: boolean('expanded', true),
+    gpsGeoJson: featureCollection([point([93, 44], {})]),
   }
 
   console.log(cameraProps)
@@ -184,6 +185,8 @@ export const createStatesAndRegions = (width = 500, height = 500) => {
     displayedRegionsGeoJson: regions,
     isOffline: boolean('offline', false),
     isExpanded: boolean('expanded', true),
+    gpsGeoJson: featureCollection([point([-110, 44], {})]),
+    displayedStreams: featureCollection([point([-105, 42], {})]) as any,
   }
   return <SvgMinimapComponent {...props} />
 }

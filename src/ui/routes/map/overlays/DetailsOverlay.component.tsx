@@ -32,8 +32,8 @@ export class DetailsOverlayComponent extends React.Component<IDetailsOverlayComp
   }
 
   protected renderStreamDetails() {
-    const { selectedStream, selectedAccessPoint } = this.props
-    const isVisible = isEmpty(selectedStream) === false && isEmpty(selectedAccessPoint)
+    const { selectedStream } = this.props
+    const isVisible = isEmpty(selectedStream) === false
     if (isVisible === false) {
       return null
     }
@@ -64,7 +64,6 @@ export class DetailsOverlayComponent extends React.Component<IDetailsOverlayComp
     if (isEmpty(this.props.visibleTroutStreams)) {
       return null
     }
-
     return (
       <div className={classes.container}>
         {this.renderRegionDetails()}

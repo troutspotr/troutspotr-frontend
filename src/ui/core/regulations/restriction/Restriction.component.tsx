@@ -17,11 +17,15 @@ export const RestrictionComponent = (props: IRestrictionComponent) => {
   const patternClass = classes[pattern]
   const hollowClass = props.hollow ? classes.hollow : ''
   const heightMultiplier = props.heightMultiplier == null ? 0 : props.heightMultiplier
-  const heightOverride = heightMultiplier > 0 ? { height: `${heightMultiplier}em` } : {}
+  const borderWidthOverride = heightMultiplier < 0.2 ? {
+    borderWidth: `${heightMultiplier * 1.2}em`,
+    boxSizing: 'border-box',
+  } : {}
+  const heightOverride = heightMultiplier > 0 ? { ...borderWidthOverride, height: `${heightMultiplier}em` } : { ...borderWidthOverride }
   return (
     <div className={classes.container}>
       <div className={classes.symbolContainer}>
-        <span style={heightOverride} className={`${patternClass} ${colorClass} ${hollowClass}`} />
+        <span className={`${patternClass} ${colorClass} ${hollowClass}`} style={heightOverride}/>
       </div>
       <span className={classes.length}>{length}</span>
       <span className={classes.definition}>{text}</span>

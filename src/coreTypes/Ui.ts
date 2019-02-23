@@ -14,7 +14,7 @@ export enum SelectionStatus {
 }
 
 export interface ISelectable {
-  readonly selectionStatus: SelectionStatus
+  selectionStatus: SelectionStatus
 }
 
 export interface ILoadable {

@@ -4,6 +4,7 @@ import AccessPointComponent from '../../../@usState/@region/@stream/details/Acce
 import { IStreamObject } from 'coreTypes/IStreamObject'
 const classes = require('../MapOverlay.scss')
 const AccessPointClasses = require('ui/routes/@usState/@region/@stream/details/Details.scss')
+import { LinemapContainer } from 'ui/routes/map/overlays/stream/linemap/Linemap.container'
 
 // tslint:disable-next-line:no-any
 export interface IAccessPointProps {
@@ -27,7 +28,6 @@ export class AccessPointDetails extends React.Component<IAccessPointProps> {
   protected renderPrivateAccess(selectedAccessPoint) {
     return (
       <div>
-        <div className={classes.private}>Access requires landowner permission.</div>
         <AccessPointComponent
           accessPoint={selectedAccessPoint}
           selectedClass={AccessPointClasses.selectedBridgeOverTroutStream}
@@ -36,6 +36,7 @@ export class AccessPointDetails extends React.Component<IAccessPointProps> {
           isHovered={false}
           onHover={null}
         />
+        <div className={classes.private}>Access requires landowner permission.</div>
       </div>
     )
   }
@@ -70,8 +71,11 @@ export class AccessPointDetails extends React.Component<IAccessPointProps> {
   public render() {
     return (
       <React.Fragment>
-        <RegulationsSummaryContainer streamObject={this.props.selectedStream} />
-        {this.renderAccessPoint()}
+        <LinemapContainer />
+        <div style={{marginTop: '5px'}}>
+          {/* <RegulationsSummaryContainer streamObject={this.props.selectedStream} /> */}
+          {this.renderAccessPoint()}
+        </div>
       </React.Fragment>
     )
   }

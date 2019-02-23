@@ -25,7 +25,7 @@ export const bearingSelector = createSelector(
 )
 export const speedSelector = createSelector(
   getMapCameraSelector,
-  (reduxCamera: ICameraReduxState): number => reduxCamera.animationSpeed
+  (reduxCamera: ICameraReduxState): number => reduxCamera.animationDurationMs
 )
 
 export const isReadyToInsertLayersSelector = createSelector(

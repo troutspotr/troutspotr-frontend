@@ -1,9 +1,11 @@
 import has from 'lodash-es/has'
 import BaseApi, { IBaseApi } from 'api/BaseApi'
-export const buildStateEndpoint = (stateName: string): string =>
-  `/data/v5/${stateName}/${stateName}.data.json`
+import { VERSION } from 'api/BaseApi.config'
 import { formatStateData } from './FormatStateData'
 import { IStateData } from 'api/usState/IStateData'
+export const buildStateEndpoint = (stateName: string): string =>
+  `/data/${VERSION}/${stateName}/${stateName}.data.json`
+
 const stateCache = {}
 
 export interface IStateApi extends IBaseApi {

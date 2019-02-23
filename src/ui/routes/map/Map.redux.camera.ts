@@ -1,6 +1,7 @@
 import clamp from 'lodash-es/clamp'
 import some from 'lodash-es/some'
 import { createAction, handleActions } from 'redux-actions'
+import { number } from '@storybook/addon-knobs';
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -20,14 +21,18 @@ export interface ICameraReduxState {
   bearing: number
   pitch: number
   pixelBuffer: number
-  animationSpeed: number
+  animationDurationMs: number | null
+  linear: boolean
+  easing(x: number): number
 }
 export const DEFAULT_CAMERA_STATE: ICameraReduxState = {
   bounds: BOUNDING_BOX_OF_LOWER_48_STATES,
   bearing: 0.0,
   pitch: 0.0,
   pixelBuffer: 10,
-  animationSpeed: 1.3,
+  animationDurationMs: null,
+  linear: false,
+  easing: (x: number) => x
 }
 
 // ------------------------------------
@@ -38,7 +43,7 @@ export const setCameraBearing = createAction(MAP_CAMERA_SET_BEARING, x => x)
 export const setCameraAngle = createAction(MAP_CAMERA_SET_ANGLE, x => x)
 export const setCameraPixelBuffer = createAction(MAP_CAMERA_SET_PIXEL_BUFFER, x => x)
 export const setCameraAnimationSpeed = createAction(MAP_CAMERA_SET_ANIMATION_SPEED, x => x)
-export const setCamera = createAction(MAP_CAMERA_SET_CAMERA, x => x)
+export const setCamera = createAction(MAP_CAMERA_SET_CAMERA, (x: Partial<ICameraReduxState>) => x)
 
 export const mapCameraActions = {
   setCameraBounds: setCameraBounds,
@@ -121,7 +126,13 @@ const actionHandlers: {} = {
   }),
 
   MAP_CAMERA_SET_CAMERA: (state: ICameraReduxState, { payload }): ICameraReduxState => {
-    const newState = { ...state, ...payload }
+    // NOTE: I want this to be very explicity and not use prior state.
+    const newState = {
+      ...state,
+      ...payload,
+      animationDurationMs: payload.animationDurationMs || null,
+      linear: payload.linear || false,
+    }
     return newState
   },
 
@@ -130,7 +141,7 @@ const actionHandlers: {} = {
     { payload: { animationSpeed } }
   ): ICameraReduxState => ({
     ...state,
-    animationSpeed: clamp(animationSpeed, 0.00001, 5),
+    animationDurationMs: clamp(animationSpeed, 0.00001, 5),
   }),
 }
 

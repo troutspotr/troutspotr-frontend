@@ -5,41 +5,29 @@
 $circle-size: 0.9em;
 
 .numberCircle {
-  display: inline-block;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: $circle-size;
   height: $circle-size;
   box-sizing: initial;
-
   border: 0.1em solid;
-
   text-align: center;
   border-radius: 50%;
-  line-height: $circle-size + 0.1em;
   box-sizing: content-box;
   text-transform: uppercase;
-  transform: translateY(0.05em);
   @include heavy-font;
   transition: color 800ms, background-color 800ms;
-  // box-shadow: 0px 0px 0px black;
   box-shadow: 0px 0px 0px 1px black;
-  // ::before {
-  //   content: '';
-  //   // background-color: purple;
-  //   border:1px solid black;
-  //   border-radius: 50%;
-  // }
-
-  // :after {
-  //   content: '';
-  //   background-color: purple;
-  //   border:1px solid #f30;
-  // }
+  transform: translateY(-0.1em);
 }
 
 .numberCircle::first-line {
   font-size: 0.62em;
+}
+
+.content {
+  font-size: 0.6em;
 }
 
 @mixin make-solid($color) {

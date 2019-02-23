@@ -55,7 +55,7 @@ export const createAccessPointRoadLabelLayer = (
     type: 'symbol',
     source: sourceId,
     // minzoom: 12,
-    minzoom: ABSOLUTE_MINIMUM_ZOOM_LEVEL + 1,
+    minzoom: 14, // ABSOLUTE_MINIMUM_ZOOM_LEVEL + 3.5,
     layout: {
       'text-field': '{street_name}',
       'text-offset': ACCESS_POINT_LABEL_TEXT_OFFSET,

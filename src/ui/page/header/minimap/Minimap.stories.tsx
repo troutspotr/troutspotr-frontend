@@ -81,3 +81,23 @@ stories.add('Real content', () => {
     </div>
   )
 })
+
+stories.add('GPS Coordinate', () => {
+  const mapComponent = createStatesAndRegions(50, 50)
+  const isExpanded = boolean('Expand', true)
+  const props: IMinimapProps = {
+    isExpanded: isExpanded,
+    isCloseCloseButtonShown: isExpanded,
+    handleExpand: action('Handle expand'),
+    isReadyToReveal: boolean('Is ready to reveal', true),
+    mapComponent,
+  }
+  return (
+    <div>
+      <div style={{ position: 'absolute', top: 0, right: 0 }}>
+        <MinimapComponent {...props} />
+      </div>
+      {createBackdrop()}
+    </div>
+  )
+})

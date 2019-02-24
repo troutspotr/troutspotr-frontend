@@ -5,6 +5,7 @@
 $padding: 7px;
 $search-max-width: 170px;
 .streamSearch {
+  padding-top: 3px;
   input[type='search'] {
     max-width: $search-max-width;
     -webkit-appearance: textfield;

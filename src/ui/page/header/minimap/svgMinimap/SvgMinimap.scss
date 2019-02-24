@@ -122,8 +122,28 @@
   composes: polygon;
   @include fallback(stroke, --text-color-primary, $black);
   @include fallback(fill, --blue, $blueDark);
-  stroke-width: 0.01em;
+  stroke-width: 0.02em;
   // stroke-width: 0.004em;
+}
+@keyframes selectedCentroid-pulse {
+  0% {
+    opacity: 1.0
+  }
+  66% {
+    opacity: 0.4
+  }
+  100% {
+    opacity: 1
+  }
+}
+
+.selectedStreamCentroids {
+  composes: streamCentroids;
+  stroke-width: 0.03em;
+  animation-duration: 2s;
+  animation-name: gps-pulse;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 .gpsCentroids {
@@ -145,7 +165,7 @@
     opacity: 1.0
   }
   100% {
-    opacity: 0.7
+    opacity: 0.06
   }
 }
 

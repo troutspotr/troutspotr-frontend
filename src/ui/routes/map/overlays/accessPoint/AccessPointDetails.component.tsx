@@ -1,10 +1,8 @@
 import * as React from 'react'
-import RegulationsSummaryContainer from 'ui/core/regulations/RegulationsSummary.container'
 import AccessPointComponent from '../../../@usState/@region/@stream/details/AccessPoint.component'
 import { IStreamObject } from 'coreTypes/IStreamObject'
 const classes = require('../MapOverlay.scss')
 const AccessPointClasses = require('ui/routes/@usState/@region/@stream/details/Details.scss')
-import { LinemapContainer } from 'ui/routes/map/overlays/stream/linemap/Linemap.container'
 
 // tslint:disable-next-line:no-any
 export interface IAccessPointProps {
@@ -70,8 +68,8 @@ export class AccessPointDetails extends React.Component<IAccessPointProps> {
 
   public render() {
     return (
+      
       <React.Fragment>
-        <LinemapContainer />
         <div style={{marginTop: '5px'}}>
           {/* <RegulationsSummaryContainer streamObject={this.props.selectedStream} /> */}
           {this.renderAccessPoint()}

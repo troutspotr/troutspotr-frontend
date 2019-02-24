@@ -13,7 +13,7 @@ import {
 } from '../Minimap.selectors'
 
 import boundingBox from '@turf/bbox'
-import { featureCollection } from '@turf/helpers'
+import { featureCollection, point } from '@turf/helpers'
 import { Feature, FeatureCollection, GeometryObject, MultiPolygon, Point } from 'geojson'
 import { updateRegionCachedStatus } from '../../../../../api/tableOfContents/TableOfContentsApi'
 import { IRegion } from '../../../../../coreTypes/tableOfContents/IRegion'
@@ -30,6 +30,39 @@ import { displayedCentroidsGeoJsonSelector } from 'ui/routes/@usState/UsState.se
 import { searchTextSelector } from 'ui/core/Core.selectors'
 import { IStreamCentroid } from 'coreTypes/state/IStreamCentroid';
 import { gpsFeatureCollectionSelector } from 'ui/core/gps/Gps.selectors';
+import { selectedStreamObjectSelector } from 'ui/routes/@usState/@region/Region.selectors';
+import { SelectionStatus } from 'coreTypes/Ui';
+
+const EMPTY_CENTROID_GEO_JSON: FeatureCollection<Point, IStreamCentroid> = {
+  "type": "FeatureCollection",
+  "features": []
+}
+
+export const selectedStreamCentroidFeatureCollectionSelector = createSelector(
+  selectedStreamObjectSelector,
+  (streamObject): FeatureCollection<Point, IStreamCentroid> => {
+    if (streamObject == null) {
+      return EMPTY_CENTROID_GEO_JSON
+    }
+
+    const selectedStreamPoint: Feature<Point, IStreamCentroid>  = point([
+      streamObject.stream.properties.centroid_longitude, 
+      streamObject.stream.properties.centroid_latitude,
+    ], {
+      ...streamObject.stream.properties,
+      selectionStatus: SelectionStatus.Selected,
+      altName: '',
+// tslint:disable-next-line: no-useless-cast
+      centroid: [
+        streamObject.stream.properties.centroid_longitude, 
+        streamObject.stream.properties.centroid_latitude
+      ] as [number, number],
+      waterId: 123,
+    })
+
+    return featureCollection([selectedStreamPoint])
+  }
+)
 
 export const DEFAULT_CAMERA_PROPS = {
   bbox: [[-124.7317182880231, 31.332200267081696], [-96.43933500000001, 49.00241065464817]],
@@ -136,13 +169,14 @@ export const getMinimapCamera = (
 }
 
 const EMPTY_REGIONS = featureCollection<MultiPolygon, IRegion>([]) as RegionFeatureCollection
-export const getSelectedRegions = createSelector(
+export const getSelectedRegionsSelector = createSelector(
   coreSelectors.regionsGeoJsonSelector,
   safeSelectedRegionPathNameForMinimap,
   (regions: RegionFeatureCollection, selectedId: string): RegionFeatureCollection => {
     if (regions == null || selectedId == null) {
       return EMPTY_REGIONS
     }
+
     const activeOrSelectedFeatures = featureCollection(
       regions.features.filter(x => x.properties.path === selectedId)
     )
@@ -174,35 +208,43 @@ export const selectedUsStatesSelector = createSelector(
   }
 )
 
-const EMPTY_CENTROID_GEO_JSON: FeatureCollection<Point, IStreamCentroid> = {
-  "type": "FeatureCollection",
-  "features": []
-}
+
+
+
 export const filteredCentroidsWithinSelectedUsStateSelector = createSelector(
   selectedUsStatesSelector,
   displayedCentroidsGeoJsonSelector,
   searchTextSelector,
   isExpandedSelector,
+  selectedStreamCentroidFeatureCollectionSelector,
   (
     selectedUsState,
     displayedCentroidGeoJsonFeatureCollection,
     searchText,
     isExpanded,
+    selectedStreamCentroidFeatureCollection,
   ): FeatureCollection<Point, IStreamCentroid> => {
     if (isExpanded === false) {
-      return EMPTY_CENTROID_GEO_JSON
+      // this might be empty.
+      return selectedStreamCentroidFeatureCollection
     }
+
     if (searchText.length === 0) {
-      return EMPTY_CENTROID_GEO_JSON
+      return selectedStreamCentroidFeatureCollection
     }
+
 
     if (selectedUsState == null || selectedUsState.features.length === 0 
       || displayedCentroidGeoJsonFeatureCollection == null || displayedCentroidGeoJsonFeatureCollection.features.length === 0) {
       return EMPTY_CENTROID_GEO_JSON
     }
-    
+
+
     // TODO: filter by selected state if possible
-    return displayedCentroidGeoJsonFeatureCollection
+    return featureCollection([
+      ...displayedCentroidGeoJsonFeatureCollection.features,
+      ...selectedStreamCentroidFeatureCollection.features,
+    ])
   }
 )
 
@@ -304,7 +346,7 @@ export const getSvgMinimapStateProps = createStructuredSelector<IReduxState, ISv
     displayedUsStatesGeoJson: displayedStatesSelector,
     displayedRegionsGeoJson: displayedRegionsSelector,
     selectedUsStatesGeoJson: selectedUsStatesSelector,
-    selectedRegionGeoJson: getSelectedRegions,
+    selectedRegionGeoJson: getSelectedRegionsSelector,
     gpsGeoJson: gpsFeatureCollectionSelector,
     camera: minimapCameraSelector,
     isOffline: isOfflineSelector,

@@ -10,7 +10,7 @@
   display: flex;
   font-size: 0;
   height: 28px;
-  width: 100%;
+  // width: 100%;
   -webkit-user-drag: none;
 
   user-select: none;
@@ -138,7 +138,7 @@
   }
   > line {
     shape-rendering: geometricPrecision;
-    stroke-width: 1px;
+    stroke-width: 2px;
     @include fallback(stroke, --red, $redDark);
   }
 }

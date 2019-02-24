@@ -22,6 +22,8 @@ export interface IMapColors extends IColorSettings {
 
   gpsCenterColor: string
   gpsBorderColor: string
+
+  contourColor: string
 }
 
 const getColorPallete = (suffix: string): IMapColors => {
@@ -58,6 +60,7 @@ const getColorPallete = (suffix: string): IMapColors => {
     gpsBorderColor: colors[`gpsborder${suffix}`],
     petriDish: colors[`buildingfill${suffix}`],
     backdropFill: 'black',
+    contourColor: colors[`contourColor${suffix}`],
   }
   
   return item

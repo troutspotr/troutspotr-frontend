@@ -2,7 +2,7 @@ import { IStream } from 'coreTypes/stream/IStream';
 import { IAccessPointGeoJsonProps } from 'coreTypes/accessPoint/IAccessPoint';
 import { navigateToAccessPoint, selectFoculPoint } from 'ui/routes/map/Map.redux.interactivity';
 import { browserHistory } from 'react-router'
-import * as qs from 'query-string'
+// import * as qs from 'query-string'
 import { StreamFeature } from 'api/region/IRegionGeoJSON';
 import along from '@turf/along'
 import * as d3Scale from 'd3-scale'
@@ -28,52 +28,52 @@ const findPointAlong = (offset: number, stream: StreamFeature): Feature<Point, a
   }
 }
 
-const debouncedUrlUpdate = debounce((pointAlong: Feature<Point, any>, stream: StreamFeature, state: IReduxState) => {
-  if (pointAlong == null) {
-    return
-  }
+// const debouncedUrlUpdate = debounce((pointAlong: Feature<Point, any>, stream: StreamFeature, state: IReduxState) => {
+//   if (pointAlong == null) {
+//     return
+//   }
 
-  const zoom = zoomScale(stream.properties.length_mi)
-  if (pointAlong == null) {
-    return
-  }
+//   const zoom = zoomScale(stream.properties.length_mi)
+//   if (pointAlong == null) {
+//     return
+//   }
   
-  const [longitude, latitude] = pointAlong.geometry.coordinates
-  if (isNaN(longitude) || isNaN(latitude)) {
-    return
-  }
+//   const [longitude, latitude] = pointAlong.geometry.coordinates
+//   if (isNaN(longitude) || isNaN(latitude)) {
+//     return
+//   }
 
-  const newQueryString = {
-    x: longitude.toFixed(5),
-    y: latitude.toFixed(5),
-    z: zoom.toFixed(1),
-  }
+//   const newQueryString = {
+//     x: longitude.toFixed(5),
+//     y: latitude.toFixed(5),
+//     z: zoom.toFixed(1),
+//   }
 
-  // solve the query string problem
-  if (newQueryString == null) {
-    return
-  }
+//   // solve the query string problem
+//   if (newQueryString == null) {
+//     return
+//   }
 
-  const previousQueryString = {}
-  const newQueryParams = {
-    ...previousQueryString,
-    ...newQueryString
-  }
-  const serializedString = qs.stringify(newQueryParams)
+//   const previousQueryString = {}
+//   const newQueryParams = {
+//     ...previousQueryString,
+//     ...newQueryString
+//   }
+//   const serializedString = qs.stringify(newQueryParams)
 
-  // solve the go to url problem
+//   // solve the go to url problem
 
-  const { pathname = null } = locationSelector(state)
-  if (pathname == null) {
-    return
-  }
-  const newUrl = `${pathname}?${serializedString}`
-  browserHistory.push(newUrl)
-}, 500)
+//   const { pathname = null } = locationSelector(state)
+//   if (pathname == null) {
+//     return
+//   }
+//   const newUrl = `${pathname}?${serializedString}`
+//   browserHistory.push(newUrl)
+// }, 500)
 
-export const updateUrlFromOffset = (pointAlong: Feature<Point, any>, stream: StreamFeature) => (dispatch, getState) => {
-  debouncedUrlUpdate(pointAlong, stream, getState())
-}
+// export const updateUrlFromOffset = (pointAlong: Feature<Point, any>, stream: StreamFeature) => (dispatch, getState) => {
+//   debouncedUrlUpdate(pointAlong, stream, getState())
+// }
 export const handleOffsetChange = (offset: number | null, radius: number, stream: StreamFeature) => (dispatch: any, getState: () => IReduxState): void => {
   // solve the "along" problem
   if (offset ==  null || offset < 0) {

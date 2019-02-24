@@ -174,19 +174,19 @@ ILineMapComponentProps,
 
     return <React.Fragment>
       <g className={styles.deselectedAccessPoints}>
-        <g fontSize={this.props.settings.settings.accessPoints.publiclyFishableDiameter * 1.2}>
-          {unselectedPalAccessPoints.map(ap => this.renderFilledAccessPoint(xScale, yScale, ap.properties, this.props.settings.settings.accessPoints.publiclyFishableDiameter, this.props.settings.colors.palSectionFill))}
-        </g>
         <g fontSize={this.props.settings.settings.accessPoints.permissionRequiredDiameter * 1.2}>
           {unselectedPrivateAccessPoints.map(ap => this.renderFilledAccessPoint(xScale, yScale, ap.properties, this.props.settings.settings.accessPoints.permissionRequiredDiameter, this.props.settings.colors.troutSectionFill))}
         </g>
+        <g fontSize={this.props.settings.settings.accessPoints.publiclyFishableDiameter * 1.2}>
+          {unselectedPalAccessPoints.map(ap => this.renderFilledAccessPoint(xScale, yScale, ap.properties, this.props.settings.settings.accessPoints.publiclyFishableDiameter, this.props.settings.colors.palSectionFill))}
+        </g>
       </g>
       <g className={styles.selectedAccessPoints}>
-        <g fontSize={this.props.settings.settings.accessPoints.publiclyFishableDiameter * 1.2}>
-          {selectedPalAccessPoints.map(ap => this.renderFilledAccessPoint(xScale, yScale, ap.properties, this.props.settings.settings.accessPoints.publiclyFishableDiameter, this.props.settings.colors.palSectionFill))}
-        </g>
         <g fontSize={this.props.settings.settings.accessPoints.permissionRequiredDiameter * 1.2}>
           {selectedPrivateAccessPoints.map(ap => this.renderFilledAccessPoint(xScale, yScale, ap.properties, this.props.settings.settings.accessPoints.permissionRequiredDiameter, this.props.settings.colors.troutSectionFill))}
+        </g>
+        <g fontSize={this.props.settings.settings.accessPoints.publiclyFishableDiameter * 1.2}>
+          {selectedPalAccessPoints.map(ap => this.renderFilledAccessPoint(xScale, yScale, ap.properties, this.props.settings.settings.accessPoints.publiclyFishableDiameter, this.props.settings.colors.palSectionFill))}
         </g>
       </g>
     </React.Fragment>
@@ -391,7 +391,7 @@ ILineMapComponentProps,
         <g className={'js-tick-x-axis'}>
           {this.renderXAxis()}
         </g>
-        {this.renderLineOffset(xScale, yScale)}
+        
         <g
           className={styles.accessPoints}
           strokeWidth={this.props.settings.settings.accessPoints.backdropWidth}
@@ -410,6 +410,7 @@ ILineMapComponentProps,
         <g className={styles.palSectionGroup}  stroke={this.props.settings.colors.palSectionFill} strokeWidth={this.props.settings.settings.stream.publicSectionWidth}>
           {this.renderPalSections(xScale, yScale)}
         </g>
+        {this.renderLineOffset(xScale, yScale)}
       </svg>)
   }
 

@@ -13,7 +13,7 @@
 
 :global {
   .mapboxgl-ctrl-scale {
-    transition: background-color 800ms, color 800ms;
+    transition: background-color 800ms, color 800ms, border-color 800ms;
     opacity: 0.8;
     @include fallback(background-color, --message-background-color, $messageBackgroundDark);
     font-size: 1em;
@@ -30,4 +30,3 @@
     box-sizing: border-box;
   }
 }
-

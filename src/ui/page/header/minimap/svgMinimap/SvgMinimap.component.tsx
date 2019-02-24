@@ -663,8 +663,8 @@ export class SvgMinimapComponent extends React.Component<IMinimapSvgProps> {
         .attr('cy', d => this.projection(d.geometry.coordinates  as [number, number])[1])
         .attr('r', d => {
           return d.properties.selectionStatus === 'selected'
-            ? '0.07em'
-            : '0.05em'
+            ? '0.05em'
+            : '0.04em'
         })
         .style('opacity', 0)
         .transition()

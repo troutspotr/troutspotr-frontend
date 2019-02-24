@@ -26,6 +26,7 @@ $largeFontSize: 1em;
   }
 
   .backdrop {
+    transition: fill 800ms;
     @include fallback(fill, --message-background-color, $messageBackgroundDark);
   }
 }

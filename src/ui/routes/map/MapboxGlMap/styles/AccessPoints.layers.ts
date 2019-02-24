@@ -1,5 +1,5 @@
 import { Layer, StyleFunction } from 'mapbox-gl'
-import { FONT_ROBOTO_BOLD } from './Base.style'
+import { FONT_ROBOTO_BOLD, FONT_ROBOTO_REGULAR } from './Base.style'
 import { ILayerProperties } from './ICreateLayer'
 
 export const ACCESSPOINT_CIRCLE_LABEL_LAYER = 'access_point_circle_label_layer'
@@ -63,12 +63,12 @@ export const createAccessPointRoadLabelLayer = (
       'text-size': createCircleRadius(
         layerProps.accessPointSettings.publiclyAccessibleRadius * 1.5
       ),
-      'text-font': FONT_ROBOTO_BOLD,
+      'text-font': layerProps.isHighContrastEnabled ? FONT_ROBOTO_REGULAR : FONT_ROBOTO_BOLD,
     },
     paint: {
       'text-color': layerProps.pallete.primaryLabelFill,
       'text-halo-color': layerProps.pallete.primaryLabelBackground,
-      'text-halo-width': 0.5,
+      'text-halo-width': layerProps.isHighContrastEnabled ? 10 : 0.5,
     },
   }
 

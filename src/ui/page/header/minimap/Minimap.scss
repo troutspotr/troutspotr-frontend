@@ -21,7 +21,7 @@ $minimap-width-px: $minimap-width * 1px;
   transform: translateZ(0);
   padding: 0;
   transform-origin: center;
-  transition: transform 200ms ease-in-out;
+  transition: transform 200ms ease-in-out, border-color 800ms;
   margin: 0;
   overflow: hidden;
   touch-action: manipulation;
@@ -36,6 +36,7 @@ $minimap-width-px: $minimap-width * 1px;
   }
   @include fallback(color, --text-color-primary, $black);
   border: 1vmin solid;
+  @include fallback(border-color, --text-color-primary, $black);
   cursor: pointer;
 }
 

@@ -158,7 +158,7 @@ export const mapboxGlSourcesSelector = createSelector(
     const { isOnline } = layerProps
     const onlineSources = {
       composite: {
-        url: 'mapbox://mapbox.mapbox-streets-v7',
+        url: 'mapbox://mapbox.mapbox-streets-v7,mapbox.mapbox-terrain-v2',
         type: 'vector',
       },
       'mapbox://mapbox.satellite': {

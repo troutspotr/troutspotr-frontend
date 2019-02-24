@@ -215,6 +215,43 @@ export const createLayers = (
     ...getSatelliteLayers(layerProps),
     ...createWaterLayers(layerProps),
     ...(pals != null ? pals : []),
+    ...layerProps.isOnline ? [{
+      "id": "contour-line",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "contour",
+      "minzoom": layerProps.satellitePrefetchZoomLevel,
+      "filter": ["!=", ["get", "index"], -1],
+      "layout": {},
+      "paint": {
+          "line-opacity": {
+            base: 1,
+            stops: [
+              [layerProps.satelliteZoomLevel, 0],
+              [layerProps.satelliteZoomLevel + 2 * layerProps.satelliteTransitionScalar, 0.35],
+            ],
+          },
+          "line-color": layerProps.pallete.contourColor,
+          "line-width": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              13,
+              ["match", ["get", "index"], [1, 2], 1, 1.2],
+              16,
+              ["match", ["get", "index"], [1, 2], 1.2, 1.4]
+          ],
+          "line-offset": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              13,
+              ["match", ["get", "index"], [1, 2], 1, 0.6],
+              16,
+              ["match", ["get", "index"], [1, 2], 1.6, 1.2]
+          ]
+      }
+  }] : [],
     ...(streams != null ? streams : []),
     ...createAirports(layerProps),
     ...createBuildingsAndBarrierLayers(layerProps),
@@ -230,6 +267,43 @@ export const createLayers = (
     ...drawRegion(layerProps, 'state'),
     ...drawRegion(layerProps, 'region'),
     // LABELS
+    ...layerProps.isOnline ? [ 
+      {
+        "id": "contour-label",
+        "type": "symbol",
+        "source": "composite",
+        "source-layer": "contour",
+        "minzoom": layerProps.satelliteZoomLevel + 0.4,
+        "filter": [
+            "any",
+            ["==", ["get", "index"], 10],
+            ["==", ["get", "index"], 5]
+        ],
+        "layout": {
+            // "text-field": ["concat",["to-string",["get","ele"]],"m (",["to-string",["*",["get","ele"],3.3]],"ft)"],
+            "text-field": ["concat",["to-string",["*",["get","ele"],3.3]],"ft"],
+            "symbol-placement": "line",
+            "text-pitch-alignment": "viewport",
+            "text-max-angle": 25,
+            "text-padding": 5,
+            "text-font": ['roboto-regular'],
+            "text-size": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                layerProps.satelliteZoomLevel + 0.4,
+                10 * (layerProps.isHighContrastEnabled ? 1.2 : 1),
+                20,
+                14 * (layerProps.isHighContrastEnabled ? 1.2 : 1)
+            ]
+        },
+        "paint": {
+            "text-color": "black",
+            "text-halo-width": layerProps.isHighContrastEnabled ? 10 : 1,
+            "text-halo-color": "white"
+        }
+    }
+    ]: [],
     ...(accessPoints != null ? accessPoints : []),
     
     ...(labels != null ? labels : []),
@@ -250,7 +324,7 @@ export const BaseStyle: MapboxStyle = {
   pitch: 0,
   sources: {
     composite: {
-      url: 'mapbox://mapbox.mapbox-streets-v7',
+      url: 'mapbox://mapbox.mapbox-streets-v7,mapbox.mapbox-terrain-v2',
       type: 'vector',
     },
   },
@@ -273,7 +347,7 @@ export const createSources = (
 
   const coreItems = {
     composite: {
-      url: 'mapbox://mapbox.mapbox-streets-v7',
+      url: 'mapbox://mapbox.mapbox-streets-v7,mapbox.mapbox-terrain-v2',
       type: 'vector',
     },
     'mapbox://mapbox.satellite': {

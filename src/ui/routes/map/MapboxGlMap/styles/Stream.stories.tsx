@@ -24,7 +24,7 @@ import {
   createAccessPointRoadLabelLayer,
 } from './AccessPoints.layers'
 
-import { boolean, number } from '@storybook/addon-knobs'
+import { boolean, number, color } from '@storybook/addon-knobs'
 import { createPalBorderLayer, createPalLayer } from './Pal.layers'
 import { formatStateData } from 'api/usState/FormatStateData'
 
@@ -34,26 +34,7 @@ const stateData = require('ui/routes/map/MapboxGlMap/styles/_stubs/mn.data.json'
 const dictionary = transformGeo(topojson, topojsonPal, formatStateData(stateData), new Date())
 const stories = storiesOf('Map Styles/Stream', module)
 
-stories.add('Default', () => {
-  const isGpsEnabled = boolean('gps', false)
-  const gpsLat = number('gps lat 123', 43.892, {
-    range: true,
-    min: 43.458,
-    max: 44.277,
-    step: 0.001,
-  })
-
-  const gpsLng = number('gps lng 123', -91.828, {
-    range: true,
-    min: -92.8,
-    max: -91.148,
-    step: 0.001,
-  })
-
-  console.log(gpsLng, gpsLat)
-  const gpsFeature = point([gpsLng, gpsLat])
-  const gpsFeatureCollection = featureCollection([gpsFeature])
-
+const makeLayerProps = () => {
   const streamWidth = number('stream Width', 1, {
     range: true,
     min: 0,
@@ -85,10 +66,15 @@ stories.add('Default', () => {
     publicSectionWidth,
     troutSectionWidth,
   }
-  const props = createDefaultSettings(layerProperties)
+  
   // layerProperties.satelliteZoomLevel = 16.6
   // layerProperties.satellitePrefetchZoomLevel = 16.51
   layerProperties.satelliteResolution = 256
+
+  return layerProperties
+}
+
+const makeProps = (layerProperties: ILayerProperties) => {
   const newSources: any = [
     { id: 'streams', geojson: dictionary.streamProperties },
     { id: 'trout_stream_section', geojson: dictionary.trout_stream_section },
@@ -100,9 +86,25 @@ stories.add('Default', () => {
     { id: 'stream_centroid', geojson: dictionary.streamCentroid },
   ]
 
-  if (isGpsEnabled) {
-    newSources.push({ id: 'gps', geojson: gpsFeatureCollection })
-  }
+  const gpsLat = number('gps lat 123', 43.892, {
+    range: true,
+    min: 43.458,
+    max: 44.277,
+    step: 0.001,
+  })
+
+  const gpsLng = number('gps lng 123', -91.828, {
+    range: true,
+    min: -92.8,
+    max: -91.148,
+    step: 0.001,
+  })
+
+  console.log(gpsLng, gpsLat)
+  const gpsFeature = point([gpsLng, gpsLat])
+  const gpsFeatureCollection = featureCollection([gpsFeature])
+
+  newSources.push({ id: 'gps', geojson: gpsFeatureCollection })
 
   const sources = createSources(layerProperties, newSources)
   const myStyle = createStyle(layerProperties)
@@ -126,7 +128,7 @@ stories.add('Default', () => {
     ...createAccessPointCircleLayerLayer(layerProperties, 'stream_access_point'),
   ]
 
-  const gpsLayers = isGpsEnabled ? createGpsBorderLayer(layerProperties, 'gps') : []
+  const gpsLayers = createGpsBorderLayer(layerProperties, 'gps')
 
   const labelsLayers = [createAccessPointCircleLabelLayer(layerProperties, 'stream_access_point'), createAccessPointRoadLabelLayer(layerProperties, 'stream_access_point')]
 
@@ -140,11 +142,25 @@ stories.add('Default', () => {
   )
   myStyle.sources = sources
   myStyle.layers = myLayers
-
+  const props = createDefaultSettings(layerProperties)
   const newProps = {
     ...props,
     style: myStyle,
   }
 
+  return newProps
+}
+
+stories.add('Default', () => {
+  const layerProps = makeLayerProps()
+  const newProps = makeProps(layerProps)
+  return <MapboxGlComponent {...newProps} />
+})
+
+stories.add('contour lines', () => {
+  const layerProps = makeLayerProps()
+  layerProps.pallete.contourColor = color('contour color', 'deeppink')
+  const newProps = makeProps(layerProps)
+  // newProps.style.layers
   return <MapboxGlComponent {...newProps} />
 })

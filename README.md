@@ -1,4 +1,7 @@
 # troutspotr-frontend
+troutspotr uses the torutspotr database which can be found here:
+https://github.com/troutspotr/troutspotr-db
+
 <img height="350px" align="right" src="https://user-images.githubusercontent.com/1424223/28183333-b5a00d9a-67d4-11e7-8932-93420c714ddc.jpg">
 Help anglers make safe and legal choices when fishing for trout.
 
